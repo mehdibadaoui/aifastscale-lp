@@ -414,42 +414,42 @@ export default function AgentLandingPage() {
 
   const SecureCheckout = memo(() => (
     <div className="mt-6 w-full max-w-4xl px-4">
-      <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-        <div className="group flex-1 min-w-[140px] max-w-[180px]">
+      <div className="flex flex-nowrap justify-center gap-2 md:gap-4">
+        <div className="group flex-1">
           <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
-            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-3 md:p-4 text-center transform group-hover:scale-105 transition-all duration-300">
-              <div className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
-                <Users className="w-5 h-5 md:w-6 md:h-6 text-black" />
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg md:rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
+            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-lg md:rounded-xl p-2 md:p-4 text-center transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-6 h-6 md:w-12 md:h-12 mx-auto mb-1 md:mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
+                <Users className="w-3 h-3 md:w-6 md:h-6 text-black" />
               </div>
-              <div className="text-xl md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-1">500+</div>
-              <div className="text-gray-300 text-[10px] md:text-xs font-semibold">Active Agents</div>
+              <div className="text-sm md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-0.5 md:mb-1">500+</div>
+              <div className="text-gray-300 text-[8px] md:text-xs font-semibold">Active Agents</div>
             </div>
           </div>
         </div>
 
-        <div className="group flex-1 min-w-[140px] max-w-[180px]">
+        <div className="group flex-1">
           <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
-            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-3 md:p-4 text-center transform group-hover:scale-105 transition-all duration-300">
-              <div className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
-                <Video className="w-5 h-5 md:w-6 md:h-6 text-black" />
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg md:rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
+            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-lg md:rounded-xl p-2 md:p-4 text-center transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-6 h-6 md:w-12 md:h-12 mx-auto mb-1 md:mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
+                <Video className="w-3 h-3 md:w-6 md:h-6 text-black" />
               </div>
-              <div className="text-xl md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-1">7 Min</div>
-              <div className="text-gray-300 text-[10px] md:text-xs font-semibold">Video Creation</div>
+              <div className="text-sm md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-0.5 md:mb-1">7 Min</div>
+              <div className="text-gray-300 text-[8px] md:text-xs font-semibold">Video Creation</div>
             </div>
           </div>
         </div>
 
-        <div className="group flex-1 min-w-[140px] max-w-[180px]">
+        <div className="group flex-1">
           <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
-            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-3 md:p-4 text-center transform group-hover:scale-105 transition-all duration-300">
-              <div className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
-                <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-black" />
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg md:rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
+            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-lg md:rounded-xl p-2 md:p-4 text-center transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-6 h-6 md:w-12 md:h-12 mx-auto mb-1 md:mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
+                <TrendingUp className="w-3 h-3 md:w-6 md:h-6 text-black" />
               </div>
-              <div className="text-xl md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-1">100+</div>
-              <div className="text-gray-300 text-[10px] md:text-xs font-semibold">Monthly Leads</div>
+              <div className="text-sm md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-0.5 md:mb-1">100+</div>
+              <div className="text-gray-300 text-[8px] md:text-xs font-semibold">Monthly Leads</div>
             </div>
           </div>
         </div>
@@ -460,37 +460,58 @@ export default function AgentLandingPage() {
   SecureCheckout.displayName = 'SecureCheckout';
 
   const GuaranteeSection = memo(() => (
-    <section className="relative py-12 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <section className="relative py-12 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute w-96 h-96 bg-green-500 rounded-full blur-3xl top-1/4 left-1/4 animate-pulse" style={{ animationDuration: '6s' }} />
+        <div className="absolute w-96 h-96 bg-yellow-500 rounded-full blur-3xl bottom-1/4 right-1/4 animate-pulse" style={{ animationDuration: '8s' }} />
+      </div>
       <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         <div className={`bg-white rounded-3xl shadow-2xl border-2 border-gray-200 p-6 md:p-12 ${tilt}`}>
           <div className="flex justify-center mb-6 md:mb-8">
             <div className="relative">
-              <div className="w-24 h-24 md:w-40 md:h-40 bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 rounded-full grid place-items-center shadow-2xl">
+              <div className="w-24 h-24 md:w-40 md:h-40 bg-gradient-to-br from-green-500 to-green-600 rounded-full grid place-items-center shadow-2xl animate-pulse" style={{ animationDuration: '3s' }}>
                 <Shield className="w-12 h-12 md:w-20 md:h-20 text-white" />
               </div>
-              <div className="absolute -top-2 -right-2 w-12 h-12 md:w-16 md:h-16 bg-green-500 rounded-full grid place-items-center shadow-xl border-4 border-white">
+              <div className="absolute -top-2 -right-2 w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full grid place-items-center shadow-xl border-4 border-white">
                 <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-white" />
               </div>
             </div>
           </div>
           <div className="text-center mb-4 md:mb-6">
-            <div className="inline-block px-4 py-2 md:px-6 md:py-2 bg-yellow-100 border-2 border-yellow-400 rounded-full mb-3 md:mb-4">
-              <p className="text-yellow-800 font-black text-xs md:text-base uppercase tracking-wide">30 Day Money Back</p>
+            <div className="inline-block px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-500/40 rounded-full mb-3 md:mb-4">
+              <p className="text-green-700 font-black text-xs md:text-base uppercase tracking-wide">100% Money-Back Guarantee</p>
             </div>
           </div>
-          <h2 className="text-2xl md:text-5xl font-black text-gray-900 mb-4 md:mb-6 leading-tight text-center">No Questions Asked Guarantee</h2>
-          <div className="max-w-3xl mx-auto space-y-3 md:space-y-5 text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
-            <p className="text-center">Try <span className="font-black text-yellow-600">7 Min AgentClone</span> today, enjoy templates, prompts, trainings, and the quick start plan.</p>
-            <p className="text-center">If within <span className="font-black text-yellow-600">30 days</span> you do not feel it is worth every dollar, <span className="font-black text-yellow-600">email us for a full refund.</span></p>
-            <div className="flex justify-center">
-              <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-400/50 rounded-full px-4 py-2 md:px-8 md:py-3 shadow-lg">
-                <p className="text-yellow-700 font-black text-xs md:text-lg">30 Day Money Back, 100% Risk Free</p>
+          <h2 className="text-2xl md:text-5xl font-black text-gray-900 mb-4 md:mb-6 leading-tight text-center">Zero Risk, All Reward</h2>
+          <div className="max-w-3xl mx-auto space-y-4 md:space-y-5 text-sm md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
+            <p className="text-center">Try <span className="font-black text-gray-900">7 Min AgentClone</span> risk-free. Get instant access to all templates, system prompts, and training videos.</p>
+            <div className="bg-gradient-to-r from-green-50 to-yellow-50 border-2 border-green-500/30 rounded-2xl p-4 md:p-6">
+              <p className="text-center text-gray-800 font-semibold">If you don't generate quality leads within <span className="font-black text-green-700">30 days</span>, simply email us for a <span className="font-black text-green-700">full refund</span>. No questions asked. You even keep all the materials.</p>
+            </div>
+            <div className="flex justify-center gap-4 md:gap-6 flex-wrap">
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 md:w-6 md:h-6 bg-green-500 rounded-full grid place-items-center">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                </div>
+                <span className="text-gray-700 font-semibold text-xs md:text-sm">30 Day Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 md:w-6 md:h-6 bg-green-500 rounded-full grid place-items-center">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                </div>
+                <span className="text-gray-700 font-semibold text-xs md:text-sm">Keep All Materials</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 md:w-6 md:h-6 bg-green-500 rounded-full grid place-items-center">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                </div>
+                <span className="text-gray-700 font-semibold text-xs md:text-sm">No Questions Asked</span>
               </div>
             </div>
           </div>
           <div className="flex justify-center">
             <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-               className="group relative inline-block w-full max-w-4xl">
+               className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
               <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
                 <span>Yes, I want the $37 AI Mastery Course</span>
@@ -554,7 +575,7 @@ export default function AgentLandingPage() {
             <span className="text-white font-bold text-xs md:text-base">7 Min AgentClone - $37</span>
           </div>
           <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-             className="px-4 py-2 md:px-6 md:py-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-lg font-black text-xs md:text-sm uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap">
+             className="px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl font-black text-base md:text-xl uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap">
             Get Access Now
           </a>
         </div>
@@ -904,12 +925,12 @@ export default function AgentLandingPage() {
               </div>
 
               <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-                 className="group relative inline-block w-full max-w-4xl">
+                 className="group relative inline-block w-full max-w-3xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-xl transition duration-300"></div>
-                <div className="relative px-6 py-4 md:px-10 md:py-6 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-[1.02] font-black text-base md:text-2xl uppercase tracking-wider flex items-center justify-center gap-3 md:gap-4">
-                  <Zap className="w-6 h-6 md:w-8 md:h-8" />
+                <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-[1.02] font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
+                  <Zap className="w-5 h-5 md:w-7 md:h-7" />
                   <span>Get Complete System For $37</span>
-                  <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
+                  <ArrowRight className="w-5 h-5 md:w-7 md:h-7" />
                 </div>
               </a>
 
@@ -932,116 +953,121 @@ export default function AgentLandingPage() {
           <div className="absolute w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[150px] bottom-0 right-1/4 animate-pulse" style={{ animationDuration: '10s' }} />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6">
-          <Card>
-            <div className="text-center mb-8 md:mb-10">
-              <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm border border-yellow-500/30 rounded-full">
-                <span className="text-yellow-400 font-black text-xs md:text-sm uppercase tracking-wide">Real Success Story</span>
-              </div>
-              <h2 className="text-2xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight px-4">
-                <span>How Mr. Lucas Sold a </span>
-                <span className="text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text">Palm Jumeirah Villa</span>
-                <br /><span>with a </span>
-                <span className="text-transparent bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text">$1 Video</span>
-              </h2>
+          <div className="text-center mb-8 md:mb-12">
+            <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm border border-yellow-500/30 rounded-full">
+              <Award className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 animate-pulse" />
+              <span className="text-yellow-400 font-black text-xs md:text-sm uppercase tracking-wide">Real Success Story</span>
             </div>
-          </Card>
+            <h2 className="text-2xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight px-4">
+              <span>How Mr. Lucas Sold a </span>
+              <span className="text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text">Palm Jumeirah Villa</span>
+              <br /><span>with a </span>
+              <span className="text-transparent bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text">$1 Video</span>
+            </h2>
+          </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-start max-w-7xl mx-auto mb-8 md:mb-10">
-            <Card>
-              <div className={`relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl ${tilt}`}>
-                <div className="p-2 md:p-3">
-                  <div className="rounded-2xl overflow-hidden bg-black/50 border border-white/5">
-                    <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
-                      <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                        <iframe
-                          src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true&videoFoam=true"
-                          title="Mr Lucas Video"
-                          allow="autoplay; fullscreen"
-                          frameBorder="0"
-                          scrolling="no"
-                          width="100%"
-                          height="100%"
-                        />
-                      </div>
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-10 items-start max-w-7xl mx-auto mb-10 md:mb-14">
+            <div className={`relative bg-gradient-to-br from-gray-900/95 to-black rounded-3xl overflow-hidden border border-yellow-400/20 shadow-2xl ${tilt}`}>
+              <div className="p-3 md:p-4">
+                <div className="rounded-2xl overflow-hidden bg-black/50">
+                  <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                    <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                      <iframe
+                        src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true&videoFoam=true"
+                        title="Mr Lucas Video"
+                        allow="autoplay; fullscreen"
+                        frameBorder="0"
+                        scrolling="no"
+                        width="100%"
+                        height="100%"
+                      />
                     </div>
                   </div>
-                </div>
-                <div className="p-4 md:p-6 bg-gradient-to-t from-black to-transparent">
-                  <div className="flex items-center gap-3 mb-2 md:mb-3">
-                    <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-yellow-400" />
-                    <h3 className="text-xl md:text-2xl font-black">Mr. Lucas Actual Video</h3>
-                  </div>
-                  <p className="text-gray-400 text-xs md:text-sm">Created in 6 min, Edited in 12 min, Sold for 17.9M AED</p>
                 </div>
               </div>
-            </Card>
+              <div className="px-4 md:px-6 pb-4 md:pb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-yellow-400" />
+                  <h3 className="text-lg md:text-xl font-black text-white">Mr. Lucas Actual Video</h3>
+                </div>
+                <p className="text-gray-400 text-xs md:text-sm">Created in 6 min • Sold for 17.9M AED</p>
+              </div>
+            </div>
 
-            <div className="space-y-4 md:space-y-6">
-              <Card>
-                <div className="bg-gradient-to-br from-yellow-900/30 to-yellow-950/20 backdrop-blur-sm border border-yellow-400/30 rounded-2xl p-4 md:p-8 hover:border-yellow-400/50 transition-all duration-300">
-                  <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center shadow-xl"><span className="text-black text-xl md:text-2xl font-black">1</span></div>
-                    <h4 className="text-yellow-400 font-black text-xl md:text-2xl">The Challenge</h4>
+            <div className="space-y-5 md:space-y-6">
+              <div className="bg-gray-900/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl p-5 md:p-7 hover:border-yellow-400/40 transition-all duration-300">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <Upload className="w-5 h-5 md:w-6 md:h-6 text-black" />
                   </div>
-                  <p className="text-gray-200 text-sm md:text-lg">Mr. Lucas listed a 6 bedroom beachfront villa in Palm Jumeirah priced at <span className="text-yellow-400 font-bold">18.5M AED</span>, posted a simple phone video for $1 on Instagram and TikTok.</p>
-                </div>
-              </Card>
-              <Card>
-                <div className="bg-gradient-to-br from-purple-900/30 to-blue-950/20 backdrop-blur-sm border border-purple-400/30 rounded-2xl p-4 md:p-8 hover:border-purple-400/50 transition-all duration-300">
-                  <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full grid place-items-center shadow-xl"><span className="text-white text-xl md:text-2xl font-black">2</span></div>
-                    <h4 className="text-purple-400 font-black text-xl md:text-2xl">What He Did</h4>
-                  </div>
-                  <p className="text-gray-200 text-sm md:text-lg">Used the <span className="text-purple-400 font-bold">7 Min AgentClone System</span> to turn one photo into an AI talking video, posted with a <span className="text-purple-400 font-bold">$1 boost</span>.</p>
-                </div>
-              </Card>
-              <Card>
-                <div className="bg-gradient-to-br from-yellow-900/40 to-amber-950/30 backdrop-blur-sm border-2 border-yellow-400/40 rounded-2xl p-4 md:p-8">
-                  <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full grid place-items-center shadow-xl"><span className="text-black text-xl md:text-2xl font-black">3</span></div>
-                    <h4 className="text-yellow-400 font-black text-xl md:text-2xl">The Result</h4>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 mb-4 md:mb-6">
-                    <div className="bg-black/40 rounded-xl p-3 md:p-4 border border-yellow-400/20">
-                      <DollarSign className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mb-2" />
-                      <p className="text-white font-bold text-base md:text-lg">$1 boost</p>
-                      <p className="text-gray-400 text-[10px] md:text-xs">Instagram + TikTok</p>
-                    </div>
-                    <div className="bg-black/40 rounded-xl p-3 md:p-4 border border-yellow-400/20">
-                      <MessageCircle className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mb-2" />
-                      <p className="text-white font-bold text-base md:text-lg">11 DMs</p>
-                      <p className="text-gray-400 text-[10px] md:text-xs">By morning</p>
-                    </div>
-                    <div className="bg-black/40 rounded-xl p-3 md:p-4 border border-yellow-400/20">
-                      <Eye className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mb-2" />
-                      <p className="text-white font-bold text-base md:text-lg">400K+ views</p>
-                      <p className="text-gray-400 text-[10px] md:text-xs">37 inquiries</p>
-                    </div>
-                    <div className="bg-black/40 rounded-xl p-3 md:p-4 border border-yellow-400/20">
-                      <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 mb-2" />
-                      <p className="text-white font-bold text-base md:text-lg">9 days</p>
-                      <p className="text-gray-400 text-[10px] md:text-xs">To acceptance</p>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-r from-yellow-900/60 to-amber-900/60 rounded-xl p-4 md:p-6 border-2 border-yellow-400/60">
-                    <div className="flex items-start gap-3 md:gap-4">
-                      <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-yellow-400" />
-                      <div>
-                        <p className="text-yellow-400 font-black text-2xl md:text-3xl mb-2">17.9M AED Offer</p>
-                        <p className="text-white font-bold text-base md:text-lg">Accepted 9 days after first viewing</p>
-                        <p className="text-gray-300 text-xs md:text-sm mt-1">Title transfer completed in 21 days</p>
-                      </div>
-                    </div>
+                  <div>
+                    <h4 className="text-yellow-400 font-black text-lg md:text-xl mb-2">The Challenge</h4>
+                    <p className="text-gray-300 text-sm md:text-base leading-relaxed">6 bedroom beachfront villa in Palm Jumeirah • <span className="text-yellow-400 font-bold">18.5M AED</span> listing price • Needed qualified buyer leads fast</p>
                   </div>
                 </div>
-              </Card>
+              </div>
+
+              <div className="bg-gray-900/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl p-5 md:p-7 hover:border-yellow-400/40 transition-all duration-300">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <Video className="w-5 h-5 md:w-6 md:h-6 text-black animate-pulse" />
+                  </div>
+                  <div>
+                    <h4 className="text-yellow-400 font-black text-lg md:text-xl mb-2">The Solution</h4>
+                    <p className="text-gray-300 text-sm md:text-base leading-relaxed">Used <span className="text-yellow-400 font-bold">7 Min AgentClone</span> to create AI talking video from one photo • Posted with <span className="text-yellow-400 font-bold">$1 boost</span> on Instagram + TikTok</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-yellow-900/30 to-amber-900/20 backdrop-blur-sm border-2 border-yellow-400/30 rounded-2xl p-5 md:p-7">
+                <div className="flex items-start gap-4 mb-5">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-black" />
+                  </div>
+                  <div>
+                    <h4 className="text-yellow-400 font-black text-lg md:text-xl">The Results</h4>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 md:gap-4 mb-5">
+                  <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-yellow-400/20 hover:border-yellow-400/40 transition-all">
+                    <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mb-2" />
+                    <p className="text-white font-bold text-sm md:text-base">$1 boost</p>
+                    <p className="text-gray-400 text-[10px] md:text-xs">Total ad spend</p>
+                  </div>
+                  <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-yellow-400/20 hover:border-yellow-400/40 transition-all">
+                    <Eye className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mb-2" />
+                    <p className="text-white font-bold text-sm md:text-base">400K+ views</p>
+                    <p className="text-gray-400 text-[10px] md:text-xs">Organic reach</p>
+                  </div>
+                  <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-yellow-400/20 hover:border-yellow-400/40 transition-all">
+                    <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mb-2" />
+                    <p className="text-white font-bold text-sm md:text-base">11 DMs</p>
+                    <p className="text-gray-400 text-[10px] md:text-xs">By morning</p>
+                  </div>
+                  <div className="bg-black/30 rounded-xl p-3 md:p-4 border border-yellow-400/20 hover:border-yellow-400/40 transition-all">
+                    <Clock className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 mb-2" />
+                    <p className="text-white font-bold text-sm md:text-base">9 days</p>
+                    <p className="text-gray-400 text-[10px] md:text-xs">To offer</p>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-yellow-400/20 to-amber-500/20 rounded-xl p-4 md:p-5 border border-yellow-400/30">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-8 h-8 md:w-10 md:h-10 text-yellow-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-yellow-400 font-black text-xl md:text-2xl mb-1">17.9M AED Sold</p>
+                      <p className="text-white font-semibold text-sm md:text-base">Offer accepted 9 days after posting</p>
+                      <p className="text-gray-300 text-xs md:text-sm mt-1">Closed in 21 days</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <Card>
             <div className="text-center mt-8 md:mt-12 px-4">
               <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-                 className="group relative inline-block w-full max-w-4xl">
+                 className="group relative inline-block w-full max-w-3xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
                 <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
                   <Video className="w-5 h-5 md:w-7 md:h-7" />
@@ -1061,69 +1087,6 @@ export default function AgentLandingPage() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 md:px-6">
-          <Card>
-            <div className="text-center mb-8 md:mb-10">
-              <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-400/30 rounded-full">
-                <Users className="w-4 h-4 md:w-5 md:h-5 text-yellow-600" />
-                <span className="text-yellow-800 font-black text-xs md:text-sm uppercase tracking-wide">Agent Success Stories</span>
-              </div>
-              <h2 className="text-2xl md:text-5xl font-black mb-3 md:mb-4">Real Agents, <span className="text-transparent bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text">Real Results</span></h2>
-              <p className="text-gray-700 text-sm md:text-xl max-w-2xl mx-auto">Agents just like you are closing more deals with AI videos</p>
-            </div>
-          </Card>
-
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-10">
-            {(showAllTestimonials ? testimonials : testimonials.slice(0, 6)).map((t, i) => (
-              <Card key={i}>
-                <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt} p-4 md:p-6`}>
-                  <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
-                    <div className="relative w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
-                      <Image
-                        src={t.image}
-                        alt={t.name}
-                        fill
-                        sizes="64px"
-                        className="rounded-full object-cover border-2 border-yellow-400 shadow-lg"
-                        loading="lazy"
-                      />
-                      {t.verified && (
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
-                          <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-gray-900 font-black text-base md:text-lg">{t.name}</h4>
-                      </div>
-                      <p className="text-gray-600 text-xs md:text-sm font-semibold mb-2">{t.location}</p>
-                      <div className="flex gap-1">
-                        {[...Array(t.rating)].map((_, idx) => (
-                          <span key={idx} className="text-yellow-500 text-base md:text-lg">★</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"{t.text}"</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          {!showAllTestimonials && (
-            <div className="text-center">
-              <button
-                onClick={() => setShowAllTestimonials(true)}
-                className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
-              >
-                <Eye className="w-5 h-5" />
-                <span>Show All {testimonials.length} Success Stories</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <p className="text-gray-500 text-sm mt-3">See what {testimonials.length - 6} more agents are saying</p>
-            </div>
-          )}
-
           <div className="text-center mb-8 md:mb-10">
             <Card>
               <h2 className="text-2xl md:text-5xl font-black mb-3 md:mb-4">See More <span className="text-transparent bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text">AI Videos</span> in Action</h2>
@@ -1249,32 +1212,104 @@ export default function AgentLandingPage() {
               </div>
             </div>
           </Card>
+
+          <Card>
+            <div className="text-center mt-12 md:mt-16 mb-8 md:mb-10">
+              <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-400/30 rounded-full">
+                <Users className="w-4 h-4 md:w-5 md:h-5 text-yellow-600" />
+                <span className="text-yellow-800 font-black text-xs md:text-sm uppercase tracking-wide">Agent Success Stories</span>
+              </div>
+              <h2 className="text-2xl md:text-5xl font-black mb-3 md:mb-4">Real Agents, <span className="text-transparent bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text">Real Results</span></h2>
+              <p className="text-gray-700 text-sm md:text-xl max-w-2xl mx-auto">Agents just like you are closing more deals with AI videos</p>
+            </div>
+          </Card>
+
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-10">
+            {(showAllTestimonials ? testimonials : testimonials.slice(0, 6)).map((t, i) => (
+              <Card key={i}>
+                <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt} p-4 md:p-6`}>
+                  <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
+                    <div className="relative w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
+                      <Image
+                        src={t.image}
+                        alt={t.name}
+                        fill
+                        sizes="64px"
+                        className="rounded-full object-cover border-2 border-yellow-400 shadow-lg"
+                        loading="lazy"
+                      />
+                      {t.verified && (
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
+                          <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="text-gray-900 font-black text-base md:text-lg">{t.name}</h4>
+                      </div>
+                      <p className="text-gray-600 text-xs md:text-sm font-semibold mb-2">{t.location}</p>
+                      <div className="flex gap-1">
+                        {[...Array(t.rating)].map((_, idx) => (
+                          <span key={idx} className="text-yellow-500 text-base md:text-lg">★</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed italic">"{t.text}"</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {!showAllTestimonials && (
+            <div className="text-center">
+              <button
+                onClick={() => setShowAllTestimonials(true)}
+                className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              >
+                <Eye className="w-5 h-5" />
+                <span>Show All {testimonials.length} Success Stories</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <p className="text-gray-500 text-sm mt-3">See what {testimonials.length - 6} more agents are saying</p>
+            </div>
+          )}
         </div>
       </section>
 
       {/* TRIPLE GUARANTEE - DARK */}
-      <section className="relative py-10 md:py-20 bg-black text-white">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
-          <Card>
-            <h2 className="text-2xl md:text-5xl font-black mb-6 md:mb-8">Triple Guarantee Protection</h2>
-            <div className="grid md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
-              {[
-                { icon: Shield, title: '30 Day Money Back', desc: 'Full refund if you do not get leads' },
-                { icon: Zap, title: 'Instant Access', desc: 'Start in 5 minutes' },
-                { icon: TrendingUp, title: 'Free Updates for Life', desc: 'All improvements included' },
-              ].map((it, i) => (
-                <Card key={i}>
-                  <div className={`bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-400/30 rounded-2xl p-4 md:p-6 ${tilt}`}>
-                    <div className="w-14 h-14 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl grid place-items-center">
-                      <it.icon className="w-7 h-7 md:w-8 md:h-8 text-black" />
-                    </div>
-                    <h3 className="font-black text-white mb-2 md:mb-3 text-base md:text-xl">{it.title}</h3>
-                    <p className="text-gray-400 text-xs md:text-sm">{it.desc}</p>
-                  </div>
-                </Card>
-              ))}
+      <section className="relative py-12 md:py-20 bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute w-96 h-96 bg-green-500 rounded-full blur-3xl top-0 left-1/4 animate-pulse" style={{ animationDuration: '7s' }} />
+          <div className="absolute w-96 h-96 bg-yellow-500 rounded-full blur-3xl bottom-0 right-1/4 animate-pulse" style={{ animationDuration: '9s' }} />
+        </div>
+        <div className="relative max-w-6xl mx-auto px-4 md:px-6 text-center">
+          <div className="mb-8 md:mb-12">
+            <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-4 py-2 md:px-6 md:py-3 bg-green-500/10 border border-green-500/30 rounded-full">
+              <Shield className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
+              <span className="text-green-400 font-black text-xs md:text-sm uppercase tracking-wide">Your Protection</span>
             </div>
-          </Card>
+            <h2 className="text-2xl md:text-5xl font-black text-white mb-3 md:mb-4">Complete Peace of Mind</h2>
+            <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto">Three guarantees to ensure your success and satisfaction</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6 max-w-5xl mx-auto">
+            {[
+              { icon: Shield, title: '30 Day Money Back', desc: 'Full refund if not satisfied. No questions, no hassle, keep all materials.', color: 'from-green-500 to-green-600' },
+              { icon: Zap, title: 'Instant Access', desc: 'Start creating AI videos in under 5 minutes. All materials delivered immediately.', color: 'from-yellow-400 to-amber-500' },
+              { icon: Award, title: 'Lifetime Updates', desc: 'Free access to all future improvements, templates, and training forever.', color: 'from-yellow-400 to-orange-500' },
+            ].map((it, i) => (
+              <div key={i}>
+                <div className={`bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border-2 border-gray-700/50 hover:border-gray-600/80 rounded-2xl p-5 md:p-7 h-full transition-all duration-300 hover:scale-105 ${tilt}`}>
+                  <div className={`w-14 h-14 md:w-16 md:h-16 mx-auto mb-4 md:mb-5 bg-gradient-to-br ${it.color} rounded-xl grid place-items-center shadow-lg`}>
+                    <it.icon className="w-7 h-7 md:w-8 md:h-8 text-black" />
+                  </div>
+                  <h3 className="font-black text-white mb-3 md:mb-4 text-lg md:text-xl">{it.title}</h3>
+                  <p className="text-gray-300 text-xs md:text-sm leading-relaxed">{it.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1299,7 +1334,7 @@ export default function AgentLandingPage() {
             <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6">Enrollment open now</h2>
             <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-10">Price jumps to $97 at midnight</p>
             <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-               className="group relative inline-block w-full max-w-4xl">
+               className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
               <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center">
                 <span>Get instant access $37</span>
