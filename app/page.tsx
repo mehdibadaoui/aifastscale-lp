@@ -770,9 +770,10 @@ export default function AgentLandingPage() {
 
                           {/* Unmute Notification as INITIAL THUMBNAIL - Shows BEFORE video starts */}
                           {!videoStarted && !showContinueModal && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/70 z-40">
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-40">
                               <div
-                                className="bg-gray-700/90 backdrop-blur-sm rounded-3xl px-12 py-10 border-4 border-white/80 max-w-xl mx-4 cursor-pointer hover:bg-gray-600/90 transition-all duration-300"
+                                className="relative bg-gradient-to-br from-yellow-600/95 via-yellow-500/95 to-amber-600/95 backdrop-blur-md rounded-3xl px-12 py-10 border-4 border-white/90 max-w-xl mx-4 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/50 transition-all duration-300 animate-pulse"
+                                style={{ animationDuration: '3s' }}
                                 onClick={() => {
                                   if (videoRef.current) {
                                     setVideoStarted(true);
@@ -783,18 +784,26 @@ export default function AgentLandingPage() {
                                   }
                                 }}
                               >
-                                <h3 className="text-white text-2xl md:text-3xl font-bold text-center mb-8">
-                                  Your video has already started
-                                </h3>
+                                {/* Animated glow effect */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 rounded-3xl blur-xl animate-pulse" style={{ animationDuration: '2s' }}></div>
 
-                                {/* Muted speaker icon - Simple and clean */}
-                                <div className="flex justify-center mb-8">
-                                  <VolumeX className="w-20 h-20 md:w-24 md:h-24 text-white" strokeWidth={3} />
+                                <div className="relative z-10">
+                                  <h3 className="text-white text-2xl md:text-3xl font-black text-center mb-8 drop-shadow-lg">
+                                    Your video has already started
+                                  </h3>
+
+                                  {/* Animated muted speaker icon */}
+                                  <div className="flex justify-center mb-8">
+                                    <div className="relative">
+                                      <div className="absolute inset-0 bg-white/20 rounded-full blur-lg animate-ping" style={{ animationDuration: '2s' }}></div>
+                                      <VolumeX className="relative w-24 h-24 md:w-32 md:h-32 text-white drop-shadow-2xl animate-bounce" style={{ animationDuration: '2s' }} strokeWidth={2.5} />
+                                    </div>
+                                  </div>
+
+                                  <p className="text-white text-xl md:text-2xl font-black text-center drop-shadow-lg">
+                                    Click to listen
+                                  </p>
                                 </div>
-
-                                <p className="text-white text-xl md:text-2xl font-bold text-center">
-                                  Click to listen
-                                </p>
                               </div>
                             </div>
                           )}
@@ -859,13 +868,17 @@ export default function AgentLandingPage() {
                             </div>
                           </div>
 
-                          {/* Click anywhere to pause when playing */}
-                          {videoPlaying && (
+                          {/* Click anywhere to TOGGLE play/pause */}
+                          {videoStarted && !showContinueModal && (
                             <div
                               className="absolute inset-0 z-20 cursor-pointer"
                               onClick={() => {
                                 if (videoRef.current) {
-                                  videoRef.current.pause();
+                                  if (videoPlaying) {
+                                    videoRef.current.pause();
+                                  } else {
+                                    videoRef.current.play();
+                                  }
                                 }
                               }}
                             />
