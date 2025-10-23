@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
-  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube
+  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play
 } from 'lucide-react';
 
 // Simple Card component without animations for better performance
@@ -24,6 +24,95 @@ const Card: React.FC<CardProps> = memo(({ children, className = '' }) => {
 });
 
 Card.displayName = 'Card';
+
+// Lazy video component with click-to-play facade for performance
+interface LazyVideoProps {
+  videoId: string;
+  title: string;
+  aspectRatio: string;
+  posterImage?: string;
+  className?: string;
+}
+
+const LazyVideo: React.FC<LazyVideoProps> = memo(({ videoId, title, aspectRatio, posterImage, className = '' }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
+  const loadWistiaScript = () => {
+    if (!scriptLoaded && !document.querySelector('script[src="https://fast.wistia.net/player.js"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://fast.wistia.net/player.js';
+      s.async = true;
+      document.body.appendChild(s);
+      setScriptLoaded(true);
+    }
+  };
+
+  const handlePlay = () => {
+    loadWistiaScript();
+    setIsPlaying(true);
+  };
+
+  if (isPlaying) {
+    return (
+      <div className={className}>
+        <div className="wistia_responsive_padding" style={{ padding: aspectRatio, position: 'relative' }}>
+          <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+            <iframe
+              src={`https://fast.wistia.net/embed/iframe/${videoId}?web_component=true&seo=true&autoPlay=true`}
+              title={title}
+              allow="autoplay; fullscreen"
+              frameBorder="0"
+              scrolling="no"
+              width="100%"
+              height="100%"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={className}>
+      <button
+        onClick={handlePlay}
+        className="relative w-full group cursor-pointer"
+        style={{ paddingTop: aspectRatio }}
+        aria-label={`Play ${title}`}
+      >
+        <div className="absolute inset-0 bg-black rounded-xl overflow-hidden">
+          {posterImage && (
+            <Image
+              src={posterImage}
+              alt={title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 800px"
+              loading="lazy"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-yellow-500 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
+              <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                <Play className="w-8 h-8 md:w-10 md:h-10 text-black ml-1" fill="currentColor" />
+              </div>
+            </div>
+          </div>
+          <div className="absolute bottom-4 left-4 right-4 text-white">
+            <p className="text-xs md:text-sm font-bold bg-black/60 backdrop-blur-sm px-3 py-2 rounded-lg inline-block">
+              Click to play video
+            </p>
+          </div>
+        </div>
+      </button>
+    </div>
+  );
+});
+
+LazyVideo.displayName = 'LazyVideo';
 
 export default function AgentLandingPage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -68,12 +157,7 @@ export default function AgentLandingPage() {
   }, []);
 
   useEffect(() => {
-    if (!document.querySelector('script[src="https://fast.wistia.net/player.js"]')) {
-      const s = document.createElement('script');
-      s.src = 'https://fast.wistia.net/player.js';
-      s.async = true;
-      document.body.appendChild(s);
-    }
+    // Wistia script now loads on-demand when videos are played (lazy loading for performance)
 
     const style = document.createElement('style');
     style.textContent = `
@@ -96,13 +180,22 @@ export default function AgentLandingPage() {
     `;
     document.head.appendChild(style);
 
+    // Throttled scroll handler for better performance on mobile
+    let ticking = false;
     const onScroll = () => {
-      const t = document.documentElement.scrollTop;
-      const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      setScrollProgress((t / h) * 100);
-      setShowStickyCTA(t > 800);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const t = document.documentElement.scrollTop;
+          const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          setScrollProgress((t / h) * 100);
+          setShowStickyCTA(t > 800);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', onScroll);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);
       if (style.parentNode) {
@@ -348,17 +441,17 @@ export default function AgentLandingPage() {
         </div>
       )}
 
-      {/* Sticky CTA Bar */}
+      {/* Sticky CTA Bar - Optimized for mobile */}
       <div
         className={`fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-yellow-500/20 shadow-2xl transition-transform duration-300 ${showStickyCTA ? 'translate-y-0' : '-translate-y-full'}`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Sparkles className="w-5 h-5 text-yellow-400" />
-            <span className="text-white font-bold text-sm md:text-base">7 Min AgentClone - Limited Time $37</span>
+        <div className="max-w-7xl mx-auto px-3 py-2.5 md:py-3 flex items-center justify-between gap-2 md:gap-4">
+          <div className="flex items-center gap-2 md:gap-3">
+            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 flex-shrink-0" />
+            <span className="text-white font-bold text-xs md:text-base">7 Min AgentClone - $37</span>
           </div>
           <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-             className="px-4 py-2 md:px-6 md:py-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-lg font-black text-xs md:text-sm uppercase hover:scale-105 transition-transform duration-200">
+             className="px-4 py-2 md:px-6 md:py-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-lg font-black text-xs md:text-sm uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap">
             Get Access Now
           </a>
         </div>
@@ -389,14 +482,14 @@ export default function AgentLandingPage() {
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6">
           <Card>
             <div className="text-center space-y-6 md:space-y-8">
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight uppercase">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.2] tracking-tight uppercase px-2">
                 <span className="text-white">Get </span>
                 <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse">5-15 Leads</span>
                 <span className="text-white"> This Week by turning your image to AI Video in </span>
                 <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>7 Minutes</span>
               </h1>
 
-              <p className="text-sm md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
                 Zero experience needed, start getting <span className="text-yellow-400 font-bold">100+ Real Buyer Leads Monthly</span>
               </p>
 
@@ -409,41 +502,32 @@ export default function AgentLandingPage() {
                         <p className="text-yellow-300 font-bold text-xs md:text-sm mb-2 uppercase tracking-wider">PLAY THIS WITH SOUND ON</p>
                       </div>
                       <div className="rounded-xl overflow-hidden bg-black/50">
-                        <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
-                          <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                            <iframe
-                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&preload=metadata&autoPlay=false&silentAutoPlay=false&controlsVisibleOnLoad=true&qualityControl=true"
-                              title="VSL"
-                              allow="autoplay; fullscreen"
-                              frameBorder="0"
-                              scrolling="no"
-                              className="wistia_embed"
-                              loading="eager"
-                              width="100%"
-                              height="100%"
-                            />
-                          </div>
-                        </div>
+                        <LazyVideo
+                          videoId="skseake2i0"
+                          title="VSL - 7 Minute AgentClone Course"
+                          aspectRatio="56.67% 0 0 0"
+                          posterImage="/images/P1_result.webp"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-4 md:gap-6 pt-4">
+              <div className="flex flex-col items-center gap-4 md:gap-6 pt-4 px-2">
                 <div className="text-center space-y-2 md:space-y-3">
-                  <div className="flex items-center justify-center gap-2 flex-wrap">
-                    <span className="text-red-400 text-base md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
-                    <span className="text-white text-base md:text-xl font-black uppercase">FOR ONLY</span>
+                  <div className="flex items-center justify-center gap-2 flex-wrap px-2">
+                    <span className="text-red-400 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
+                    <span className="text-white text-lg md:text-xl font-black uppercase">FOR ONLY</span>
                   </div>
-                  <div className="text-green-400 text-4xl md:text-6xl font-black tracking-tight">US$ 37</div>
+                  <div className="text-green-400 text-5xl md:text-6xl font-black tracking-tight">US$ 37</div>
                 </div>
 
                 <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-                   className="group relative inline-block w-full max-w-3xl">
+                   className="group relative inline-block w-full max-w-3xl px-2">
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-                  <div className="relative px-4 py-3 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-sm md:text-xl text-white uppercase tracking-wider transition-transform duration-300 group-hover:scale-105 shadow-2xl flex items-center justify-center gap-2 md:gap-3">
-                    <Zap className="w-4 h-4 md:w-7 md:h-7" />
+                  <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3">
+                    <Zap className="w-5 h-5 md:w-7 md:h-7" />
                     <span>Get instant access $37</span>
                   </div>
                 </a>
@@ -754,11 +838,12 @@ export default function AgentLandingPage() {
               <div className={`relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl ${tilt}`}>
                 <div className="p-2 md:p-3">
                   <div className="rounded-2xl overflow-hidden bg-black/50 border border-white/5">
-                    <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
-                      <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                        <iframe src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true" title="Mr Lucas Video" allow="autoplay; fullscreen" frameBorder="0" scrolling="no" width="100%" height="100%" loading="lazy" />
-                      </div>
-                    </div>
+                    <LazyVideo
+                      videoId="4o934arsbs"
+                      title="Mr Lucas Actual Video"
+                      aspectRatio="177.78% 0 0 0"
+                      posterImage="/images/P3_result.webp"
+                    />
                   </div>
                 </div>
                 <div className="p-4 md:p-6 bg-gradient-to-t from-black to-transparent">
@@ -907,8 +992,8 @@ export default function AgentLandingPage() {
 
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto mb-8 md:mb-10">
             {[
-              { id: 'k1gfuxd7uw', title: 'Agent Steven Video' },
-              { id: 'eilfzivcqu', title: 'Agent Gabriel Video' },
+              { id: 'k1gfuxd7uw', title: 'Agent Steven Video', aspectRatio: '175.83% 0 0 0', poster: '/images/IMG_3365_result.webp' },
+              { id: 'eilfzivcqu', title: 'Agent Gabriel Video', aspectRatio: '177.22% 0 0 0', poster: '/images/IMG_3367_result.webp' },
             ].map((v, i) => (
               <Card key={i} delay={i * 0.2}>
                 <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt}`}>
@@ -919,11 +1004,12 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="rounded-2xl overflow-hidden bg-black">
-                      <div className="wistia_responsive_padding" style={{ padding: i === 0 ? '175.83% 0 0 0' : '177.22% 0 0 0', position: 'relative' }}>
-                        <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                          <iframe src={`https://fast.wistia.net/embed/iframe/${v.id}?web_component=true&seo=true`} title={v.title} allow="autoplay; fullscreen" frameBorder="0" scrolling="no" width="100%" height="100%" loading="lazy" />
-                        </div>
-                      </div>
+                      <LazyVideo
+                        videoId={v.id}
+                        title={v.title}
+                        aspectRatio={v.aspectRatio}
+                        posterImage={v.poster}
+                      />
                     </div>
                   </div>
                   <div className="p-4 md:p-6 bg-gradient-to-t from-gray-50 to-white">
