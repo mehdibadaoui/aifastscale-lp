@@ -96,7 +96,7 @@ export default function AgentLandingPage() {
       setVideoPlaying(false);
     };
 
-    // Time update - track progress with FASTER, SMOOTHER animation
+    // Time update - track progress with VERY FAST beginning
     const handleTimeUpdate = () => {
       if (!video.duration) return;
 
@@ -107,18 +107,20 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - MUCH FASTER progression
-      // Makes progress bar appear to move 2-3x faster than actual video
+      // Calculate fake progress - VERY FAST at beginning!
       let fake = 0;
-      if (percent <= 0.3) {
-        // First 30% of video -> show 0-50% progress (fast)
-        fake = percent * 1.67;
-      } else if (percent <= 0.7) {
-        // Next 40% of video (30-70%) -> show 50-85% progress (medium)
-        fake = 0.5 + (percent - 0.3) * 0.875;
+      if (percent <= 0.15) {
+        // First 15% of video -> show 0-60% progress (VERY FAST!)
+        fake = percent * 4;
+      } else if (percent <= 0.5) {
+        // Next 35% of video (15-50%) -> show 60-85% progress (medium)
+        fake = 0.6 + (percent - 0.15) * 0.714;
+      } else if (percent <= 0.8) {
+        // Next 30% of video (50-80%) -> show 85-95% progress (slower)
+        fake = 0.85 + (percent - 0.5) * 0.333;
       } else {
-        // Last 30% of video (70-100%) -> show 85-100% progress (slower)
-        fake = 0.85 + (percent - 0.7) * 0.5;
+        // Last 20% of video (80-100%) -> show 95-100% progress (slowest)
+        fake = 0.95 + (percent - 0.8) * 0.25;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -782,24 +784,13 @@ export default function AgentLandingPage() {
                           )}
                         </div>
 
-                        {/* Professional Progress Bar - Bigger, Clearer, Smoother */}
-                        <div className="relative w-full h-3 md:h-4 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-inner">
-                          {/* Background shine effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-
-                          {/* Actual progress bar */}
+                        {/* Simple Clean Progress Bar */}
+                        <div className="relative w-full h-2 bg-gray-900">
+                          {/* Simple green progress bar */}
                           <div
-                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 via-orange-400 to-green-400 transition-all duration-100 ease-linear shadow-lg"
+                            className="absolute top-0 left-0 h-full bg-green-500 transition-all duration-100 ease-linear"
                             style={{ width: `${fakeProgress}%` }}
-                          >
-                            {/* Shine effect on progress */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
-
-                            {/* Progress indicator dot */}
-                            <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-4 h-4 md:w-5 md:h-5 bg-white rounded-full shadow-lg border-2 border-orange-400">
-                              <div className="absolute inset-0 bg-orange-400 rounded-full animate-ping opacity-50"></div>
-                            </div>
-                          </div>
+                          />
                         </div>
                       </div>
                     </div>
@@ -844,6 +835,79 @@ export default function AgentLandingPage() {
                 </div>
 
                 <SecureCheckout />
+
+                {/* Guarantee Section - Matching Screenshot Design */}
+                <div className="mt-8 md:mt-12 w-full max-w-4xl mx-auto">
+                  <div className="bg-gradient-to-br from-green-900 via-green-800 to-green-900 rounded-3xl p-8 md:p-12 border-4 border-green-700/50 shadow-2xl">
+                    {/* Gold Badge */}
+                    <div className="flex justify-center mb-6 md:mb-8">
+                      <div className="relative w-32 h-32 md:w-40 md:h-40">
+                        {/* Outer gold ring */}
+                        <div className="absolute inset-0 rounded-full border-8 border-yellow-600" style={{ borderStyle: 'double' }}></div>
+
+                        {/* Inner gold circle */}
+                        <div className="absolute inset-3 rounded-full bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 flex items-center justify-center shadow-xl">
+                          {/* Money text */}
+                          <div className="text-center">
+                            <div className="text-xs md:text-sm font-black text-black uppercase tracking-wider mb-1">Money</div>
+                            <div className="text-3xl md:text-4xl font-black text-black">100%</div>
+                            <div className="text-xs md:text-sm font-black text-black uppercase tracking-wider mt-1">Back</div>
+                          </div>
+                        </div>
+
+                        {/* Stars and text around badge */}
+                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-yellow-400 text-xs font-black">★★ GUARANTEED ★★</div>
+                      </div>
+                    </div>
+
+                    {/* Heading */}
+                    <h3 className="text-2xl md:text-4xl font-black text-white text-center mb-6 md:mb-8">
+                      No-Questions-Asked Guarantee
+                    </h3>
+
+                    {/* Description */}
+                    <div className="text-center space-y-4 mb-8 md:mb-10 text-white">
+                      <p className="text-base md:text-lg leading-relaxed">
+                        Join the VIP experience today and enjoy it all—the exclusive sessions, private Q&As, insane bonuses, and the full 7-day immersion.
+                      </p>
+
+                      <p className="text-base md:text-lg leading-relaxed">
+                        And if, up to 7 days after the event ends, you feel it wasn't worth every penny, <span className="font-black text-yellow-400">just ask for your money back</span>.
+                      </p>
+
+                      <p className="text-base md:text-lg font-bold leading-relaxed">
+                        No awkward questions. No hoops to jump through. Just a <span className="font-black text-yellow-400">full refund, straight to your account</span>.
+                      </p>
+                    </div>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col gap-4 items-center">
+                      {/* Primary CTA - Gold */}
+                      <a
+                        href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full max-w-xl group relative"
+                      >
+                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
+                        <div className="relative px-8 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400 rounded-2xl font-black text-lg md:text-xl text-black uppercase tracking-wide transition-transform duration-300 active:scale-95 shadow-2xl text-center hover:shadow-yellow-500/50">
+                          YES, I WANT THE VIP TICKET FOR $97
+                        </div>
+                      </a>
+
+                      {/* Secondary CTA - Yellow */}
+                      <button
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className="w-full max-w-xl group relative"
+                      >
+                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-2xl opacity-60 group-hover:opacity-90 blur transition duration-300"></div>
+                        <div className="relative px-8 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 rounded-2xl font-black text-lg md:text-xl text-black uppercase tracking-wide transition-transform duration-300 active:scale-95 shadow-xl text-center border-2 border-yellow-500/50">
+                          NO, I WANT TO KEEP MY FREE TICKET
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </Card>
