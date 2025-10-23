@@ -492,7 +492,7 @@ export default function AgentLandingPage() {
               { num: '3', title: 'Video Created', desc: 'Realistic AI video ready', icon: Video, gradient: 'from-orange-500 to-amber-600', bg: 'bg-orange-500' },
               { num: '4', title: 'Get Leads', desc: 'Watch leads pour in', icon: TrendingUp, gradient: 'from-yellow-500 to-amber-600', bg: 'bg-yellow-500' }
             ].map((s, i) => (
-              <Card key={i} delay={i * 0.1}>
+              <Card key={i}>
                 <div className={`bg-white border-2 border-gray-200 rounded-3xl p-3 md:p-6 text-center hover:shadow-2xl hover:border-gray-300 ${tilt}`}>
                   <div className={`w-12 h-12 md:w-20 md:h-20 mx-auto mb-3 md:mb-6 rounded-full bg-gradient-to-br ${s.gradient} grid place-items-center shadow-xl`}>
                     <span className="text-white font-black text-lg md:text-3xl">{s.num}</span>
@@ -519,7 +519,7 @@ export default function AgentLandingPage() {
                 </div>
               </div>
             </Card>
-            <Card delay={0.2}>
+            <Card>
               <div className={`bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 border-2 border-yellow-300 rounded-3xl p-4 md:p-8 shadow-lg ${tilt}`}>
                 <div className="flex items-start gap-3 md:gap-4">
                   <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl grid place-items-center shadow-xl"><Sparkles className="w-6 h-6 md:w-8 md:h-8 text-white" /></div>
@@ -567,7 +567,7 @@ export default function AgentLandingPage() {
 
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
             {products.map((p, i) => (
-              <Card key={i} delay={i * 0.1}>
+              <Card key={i}>
                 <div className="group relative bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl overflow-hidden border border-yellow-500/10 hover:border-yellow-500/30 transition-all duration-500">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -648,7 +648,7 @@ export default function AgentLandingPage() {
 
               <div className="relative grid md:grid-cols-3 gap-4 md:gap-6">
                 {bonuses.map((b, i) => (
-                  <Card key={i} delay={i * 0.1}>
+                  <Card key={i}>
                     <div className="group relative bg-gradient-to-br from-gray-800 to-black rounded-2xl overflow-hidden border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-500">
                       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl"></div>
 
@@ -798,7 +798,7 @@ export default function AgentLandingPage() {
                   <p className="text-gray-200 text-sm md:text-lg">Mr. Lucas listed a 6 bedroom beachfront villa in Palm Jumeirah priced at <span className="text-yellow-400 font-bold">18.5M AED</span>, posted a simple phone video for $1 on Instagram and TikTok.</p>
                 </div>
               </Card>
-              <Card delay={0.2}>
+              <Card>
                 <div className="bg-gradient-to-br from-purple-900/30 to-blue-950/20 backdrop-blur-sm border border-purple-400/30 rounded-2xl p-4 md:p-8 hover:border-purple-400/50 transition-all duration-300">
                   <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
                     <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full grid place-items-center shadow-xl"><span className="text-white text-xl md:text-2xl font-black">2</span></div>
@@ -807,7 +807,7 @@ export default function AgentLandingPage() {
                   <p className="text-gray-200 text-sm md:text-lg">Used the <span className="text-purple-400 font-bold">7 Min AgentClone System</span> to turn one photo into an AI talking video, posted with a <span className="text-purple-400 font-bold">$1 boost</span>.</p>
                 </div>
               </Card>
-              <Card delay={0.4}>
+              <Card>
                 <div className="bg-gradient-to-br from-yellow-900/40 to-amber-950/30 backdrop-blur-sm border-2 border-yellow-400/40 rounded-2xl p-4 md:p-8">
                   <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
                     <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full grid place-items-center shadow-xl"><span className="text-black text-xl md:text-2xl font-black">3</span></div>
@@ -886,7 +886,7 @@ export default function AgentLandingPage() {
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-10">
             {testimonials.map((t, i) => (
-              <Card key={i} delay={i * 0.1}>
+              <Card key={i}>
                 <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt} p-4 md:p-6`}>
                   <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
                     <div className="relative w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
@@ -927,7 +927,7 @@ export default function AgentLandingPage() {
               { id: 'k1gfuxd7uw', title: 'Agent Steven Video', aspectRatio: '175.83%' },
               { id: 'eilfzivcqu', title: 'Agent Gabriel Video', aspectRatio: '177.22%' },
             ].map((v, i) => (
-              <Card key={i} delay={i * 0.2}>
+              <Card key={i}>
                 <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt}`}>
                   <div className="relative p-3 md:p-4">
                     <div className="absolute top-5 left-5 md:top-6 md:left-6 z-10">
@@ -1054,7 +1054,7 @@ export default function AgentLandingPage() {
                 { icon: Zap, title: 'Instant Access', desc: 'Start in 5 minutes' },
                 { icon: TrendingUp, title: 'Free Updates for Life', desc: 'All improvements included' },
               ].map((it, i) => (
-                <Card key={i} delay={i * 0.1}>
+                <Card key={i}>
                   <div className={`bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-400/30 rounded-2xl p-4 md:p-6 ${tilt}`}>
                     <div className="w-14 h-14 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl grid place-items-center">
                       <it.icon className="w-7 h-7 md:w-8 md:h-8 text-black" />
@@ -1075,7 +1075,7 @@ export default function AgentLandingPage() {
           <Card><h2 className="text-2xl md:text-5xl font-black text-center mb-8 md:mb-10">Common Questions</h2></Card>
           <div className="space-y-3 md:space-y-4">
             {faqs.map((f, i) => (
-              <Card key={i} delay={i * 0.05}>
+              <Card key={i}>
                 <FAQItem question={f.q} answer={f.a} index={i} />
               </Card>
             ))}
