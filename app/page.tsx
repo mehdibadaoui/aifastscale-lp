@@ -170,14 +170,6 @@ export default function AgentLandingPage() {
       verified: true
     },
     {
-      name: 'James Thompson',
-      location: 'Miami Beach, Florida',
-      image: '/images/IMG_3365_result.webp',
-      text: 'My listings now get 10x more engagement. The AI clone is so natural, clients think I personally recorded each video. Already referred 4 agents to this course.',
-      rating: 5,
-      verified: true
-    },
-    {
       name: 'Aisha Al Mansoori',
       location: 'Dubai, UAE',
       image: '/images/IMG_3200_result.webp',
@@ -202,42 +194,10 @@ export default function AgentLandingPage() {
       verified: true
     },
     {
-      name: 'Jennifer Williams',
-      location: 'Atlanta, Georgia',
-      image: '/images/IMG_3329_result.webp',
-      text: 'Single mom, full-time agent, zero time for complicated tech. This system saved my sanity. I batch create 5 videos on Sunday, post throughout the week. Lead quality is phenomenal.',
-      rating: 5,
-      verified: true
-    },
-    {
       name: 'Mohammed Al Rashid',
       location: 'Riyadh, Saudi Arabia',
       image: '/images/IMG_3379_result.webp',
       text: 'Premium properties need premium marketing. These AI videos deliver both. My Arabic and English content now reaches wider audience. 8 new high-net-worth clients in one month.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Sophie Laurent',
-      location: 'Paris, France',
-      image: '/images/IMG_3360_result.webp',
-      text: 'Incroyable! The videos look so professional, clients ask if I hired a production team. My conversion rate doubled, my workload halved. This is not just a tool, it\'s a complete game changer.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Raj Sharma',
-      location: 'Mumbai, India',
-      image: '/images/IMG_3424_result.webp',
-      text: 'Competitive market here requires constant innovation. AI clone videos made me the go-to agent in my area. My broker now trains new agents using my system. Revenue up 340% this quarter.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Tyler Brooks',
-      location: 'Austin, Texas',
-      image: '/images/IMG_3375_result.webp',
-      text: 'Tech capital of Texas, and even here people are blown away. My videos feel personal, authentic, and scale infinitely. Went from cold calling to inbound leads flowing daily. Life changing.',
       rating: 5,
       verified: true
     },
@@ -250,34 +210,10 @@ export default function AgentLandingPage() {
       verified: true
     },
     {
-      name: 'Andre Santos',
-      location: 'São Paulo, Brazil',
-      image: '/images/IMG_3367_result.webp',
-      text: 'Mercado imobiliário nunca foi tão fácil. My Portuguese videos connect with clients emotionally. They trust me before we even meet. 19 showings booked last week alone. Incredible system.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Hannah Schmidt',
-      location: 'Berlin, Germany',
-      image: '/images/IMG_3329_result.webp',
-      text: 'German clients value precision and professionalism. These videos deliver both flawlessly. My close rate improved 60%. Other agents ask how I scaled so fast. This course is my secret weapon.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Omar Hassan',
-      location: 'Cairo, Egypt',
-      image: '/images/IMG_3379_result.webp',
-      text: 'Working with both local and international buyers. The multilingual capability is perfect. Created videos in Arabic and English. Response rate is 4x higher than traditional methods. Exceptional value.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Rachel Cohen',
-      location: 'Tel Aviv, Israel',
-      image: '/images/IMG_3360_result.webp',
-      text: 'Tech-savvy market demands innovation. This exceeded expectations. My Hebrew and English videos both convert beautifully. Closed 3 luxury condos this month, all from video-generated leads. Worth every penny.',
+      name: 'Tyler Brooks',
+      location: 'Austin, Texas',
+      image: '/images/IMG_3375_result.webp',
+      text: 'Tech capital of Texas, and even here people are blown away. My videos feel personal, authentic, and scale infinitely. Went from cold calling to inbound leads flowing daily. Life changing.',
       rating: 5,
       verified: true
     },
@@ -1269,10 +1205,10 @@ export default function AgentLandingPage() {
                 className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
               >
                 <Eye className="w-5 h-5" />
-                <span>Show All {testimonials.length} Success Stories</span>
+                <span>See More Success Stories</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <p className="text-gray-500 text-sm mt-3">See what {testimonials.length - 6} more agents are saying</p>
+              <p className="text-gray-500 text-sm mt-3">Discover what other agents are achieving</p>
             </div>
           )}
         </div>
