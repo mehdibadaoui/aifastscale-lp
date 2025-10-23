@@ -131,8 +131,10 @@ export default function AgentLandingPage() {
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, [priceUnlocked])
+  }, [priceUnlocked]);
 
+  // Styles and scroll tracking
+  useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
       @keyframes scroll {
