@@ -33,7 +33,7 @@ export default function AgentLandingPage() {
   const [priceUnlocked, setPriceUnlocked] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const videoRef = useRef<any>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     // Security: Light anti-inspect measures - NOTE: This only stops casual users, not developers
@@ -71,82 +71,67 @@ export default function AgentLandingPage() {
     }
   }, []);
 
+  // HTML5 Video Setup - much simpler and faster than Wistia!
   useEffect(() => {
-    // Initialize Wistia script if not loaded
-    if (!document.querySelector('script[src="https://fast.wistia.com/assets/external/E-v1.js"]')) {
-      const s = document.createElement('script');
-      s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
-      s.async = true;
-      document.head.appendChild(s);
-    }
+    const video = videoRef.current;
+    if (!video) return;
 
-    // Set up Wistia video once ready
-    const setupVideo = () => {
-      if (typeof window !== 'undefined' && (window as any).Wistia) {
-        const wistiaVideo = (window as any).Wistia.api('skseake2i0');
-        if (wistiaVideo) {
-          console.log('Wistia video found:', wistiaVideo);
-          // Store video instance in ref
-          videoRef.current = wistiaVideo;
-
-          // Hide all native controls
-          wistiaVideo.ready(() => {
-            // Disable captions
-            if (wistiaVideo.hasData()) {
-              wistiaVideo.plugin?.('captions-v1')?.disable();
-            }
-          });
-
-          // Track play/pause state
-          wistiaVideo.bind('play', () => {
-            console.log('Video playing');
-            setVideoPlaying(true);
-          });
-
-          wistiaVideo.bind('pause', () => {
-            console.log('Video paused');
-            setVideoPlaying(false);
-          });
-
-          wistiaVideo.bind('end', () => {
-            console.log('Video ended');
-            setVideoPlaying(false);
-          });
-
-          // Track progress
-          wistiaVideo.bind('percentwatchedchanged', (percent: number) => {
-            console.log('Percent watched:', percent);
-            // Unlock price at 80%
-            if (percent >= 0.8 && !priceUnlocked) {
-              setPriceUnlocked(true);
-            }
-
-            // Calculate fake progress
-            let fake = 0;
-            if (percent <= 0.5) {
-              fake = percent;
-            } else if (percent <= 0.9) {
-              fake = 0.5 + (percent - 0.5) * 1.0;
-            } else {
-              fake = 0.9 + (percent - 0.9) * 1.0;
-            }
-            setFakeProgress(Math.min(fake * 100, 100));
-          });
-        }
-      }
+    // Play event
+    const handlePlay = () => {
+      console.log('Video playing');
+      setVideoPlaying(true);
     };
 
-    // Try to setup immediately if Wistia is already loaded
-    if ((window as any).Wistia) {
-      setupVideo();
-    } else {
-      // Otherwise wait for Wistia to load
-      (window as any)._wq = (window as any)._wq || [];
-      (window as any)._wq.push({
-        id: 'skseake2i0',
-        onReady: setupVideo
-      });
-    }
+    // Pause event
+    const handlePause = () => {
+      console.log('Video paused');
+      setVideoPlaying(false);
+    };
+
+    // Ended event
+    const handleEnded = () => {
+      console.log('Video ended');
+      setVideoPlaying(false);
+    };
+
+    // Time update - track progress
+    const handleTimeUpdate = () => {
+      if (!video.duration) return;
+
+      const percent = video.currentTime / video.duration;
+      console.log('Progress:', percent);
+
+      // Unlock price at 80%
+      if (percent >= 0.8 && !priceUnlocked) {
+        setPriceUnlocked(true);
+      }
+
+      // Calculate fake progress (fast 0-50%, slower 50-90%, slowest 90-100%)
+      let fake = 0;
+      if (percent <= 0.5) {
+        fake = percent;
+      } else if (percent <= 0.9) {
+        fake = 0.5 + (percent - 0.5) * 1.0;
+      } else {
+        fake = 0.9 + (percent - 0.9) * 1.0;
+      }
+      setFakeProgress(Math.min(fake * 100, 100));
+    };
+
+    // Add event listeners
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+    video.addEventListener('ended', handleEnded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+
+    // Cleanup
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, [priceUnlocked])
 
     const style = document.createElement('style');
     style.textContent = `
@@ -194,21 +179,15 @@ export default function AgentLandingPage() {
         animation: pump 0.6s ease-in-out 3;
       }
 
-      /* Hide all Wistia native controls */
-      .wistia_embed .w-control-bar,
-      .wistia_embed .w-play-button,
-      .wistia_embed .w-big-play-button,
-      .wistia_embed .w-playbar,
-      .wistia_embed .w-vulcan-v2-button,
-      .wistia_embed .w-bottom-bar,
-      .wistia_embed .w-chrome,
-      .wistia_embed .w-captions-button,
-      .wistia_embed .w-settings-button,
-      .wistia_embed .w-fullscreen-button,
-      .wistia_embed .w-volume-button {
+      /* Hide HTML5 video native controls */
+      video::-webkit-media-controls {
         display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
+      }
+      video::-webkit-media-controls-enclosure {
+        display: none !important;
+      }
+      video::-webkit-media-controls-panel {
+        display: none !important;
       }
     `;
     document.head.appendChild(style);
@@ -680,53 +659,26 @@ export default function AgentLandingPage() {
                       </div>
                       <div className="rounded-xl overflow-hidden bg-black/50">
                         <div className="relative" style={{ padding: '56.67% 0 0 0' }}>
-                          {/* Wistia Video Embed - Class-based for JavaScript API */}
-                          <div
-                            className="wistia_embed wistia_async_skseake2i0 seo=true videoFoam=true"
-                            style={{
-                              position: 'absolute',
-                              top: 0,
-                              left: 0,
-                              width: '100%',
-                              height: '100%'
-                            }}
+                          {/* HTML5 Video - Fast, Reliable, Full Control */}
+                          <video
+                            ref={videoRef}
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                            playsInline
+                            preload="metadata"
+                            poster="/videos/Hero-VSL.mp4?time=0"
                           >
-                            <div className="wistia_swatch" style={{
-                              height: '100%',
-                              left: 0,
-                              opacity: 0,
-                              overflow: 'hidden',
-                              position: 'absolute',
-                              top: 0,
-                              transition: 'opacity 200ms',
-                              width: '100%'
-                            }}>
-                              <img
-                                src="https://fast.wistia.com/embed/medias/skseake2i0/swatch"
-                                style={{
-                                  filter: 'blur(5px)',
-                                  height: '100%',
-                                  objectFit: 'contain',
-                                  width: '100%'
-                                }}
-                                alt=""
-                                aria-hidden="true"
-                              />
-                            </div>
-                          </div>
+                            <source src="/videos/Hero-VSL.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
 
                           {/* Custom Play Button Overlay */}
                           {!videoPlaying && (
                             <div
                               className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] cursor-pointer z-50 transition-opacity duration-300 hover:bg-black/30"
                               onClick={() => {
-                                // Play video using stored ref
-                                console.log('Play button clicked, videoRef:', videoRef.current);
+                                console.log('Play button clicked');
                                 if (videoRef.current) {
-                                  console.log('Playing video...');
                                   videoRef.current.play();
-                                } else {
-                                  console.error('Video ref not available yet');
                                 }
                               }}
                             >
