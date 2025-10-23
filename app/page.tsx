@@ -7,33 +7,19 @@ import {
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
   Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube
 } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
 
-// Optimized reveal hook with Framer Motion
-function useReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  return { ref, isInView };
-}
-
+// Simple Card component without animations for better performance
 interface CardProps {
   children: ReactNode;
   className?: string;
   delay?: number;
 }
 
-const Card: React.FC<CardProps> = memo(({ children, className = '', delay = 0 }) => {
-  const { ref, isInView } = useReveal();
+const Card: React.FC<CardProps> = memo(({ children, className = '' }) => {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className={className}
-    >
+    <div className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 });
 
@@ -332,12 +318,7 @@ export default function AgentLandingPage() {
 
       {/* Security Popup */}
       {showSecurityPopup && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] max-w-md w-[90%]"
-        >
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] max-w-md w-[90%] animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 rounded-2xl blur-lg opacity-75 animate-pulse"></div>
             <div className="relative bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-500/50 rounded-2xl p-6 shadow-2xl">
@@ -364,15 +345,12 @@ export default function AgentLandingPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Sticky CTA Bar */}
-      <motion.div
-        initial={{ y: -100 }}
-        animate={{ y: showStickyCTA ? 0 : -100 }}
-        transition={{ duration: 0.3 }}
-        className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-yellow-500/20 shadow-2xl"
+      <div
+        className={`fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-yellow-500/20 shadow-2xl transition-transform duration-300 ${showStickyCTA ? 'translate-y-0' : '-translate-y-full'}`}
       >
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -384,7 +362,7 @@ export default function AgentLandingPage() {
             Get Access Now
           </a>
         </div>
-      </motion.div>
+      </div>
 
       {/* Top banner */}
       <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 border-b-2 border-yellow-400 sticky top-0 z-30 shadow-xl">
@@ -396,44 +374,11 @@ export default function AgentLandingPage() {
 
       {/* HERO SECTION - DARK */}
       <section className="relative overflow-hidden py-6 md:py-12 bg-black">
-        {/* Animated background gradient */}
+        {/* Static background gradient - removed animations for performance */}
         <div className="absolute inset-0 opacity-40 pointer-events-none">
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 90, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute w-[600px] h-[600px] bg-gradient-to-r from-yellow-500/30 to-orange-500/30 rounded-full blur-[120px] -top-48 -left-48"
-          />
-          <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              rotate: [90, 0, 90],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-yellow-500/20 rounded-full blur-[140px] top-1/4 right-0"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              x: [0, 100, 0],
-            }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute w-[700px] h-[700px] bg-gradient-to-r from-orange-500/15 to-yellow-400/15 rounded-full blur-[160px] bottom-0 left-1/3"
-          />
+          <div className="absolute w-[600px] h-[600px] bg-gradient-to-r from-yellow-500/30 to-orange-500/30 rounded-full blur-[120px] -top-48 -left-48" />
+          <div className="absolute w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-yellow-500/20 rounded-full blur-[140px] top-1/4 right-0" />
+          <div className="absolute w-[700px] h-[700px] bg-gradient-to-r from-orange-500/15 to-yellow-400/15 rounded-full blur-[160px] bottom-0 left-1/3" />
         </div>
 
         <div className="absolute inset-0 opacity-10" style={{
@@ -444,33 +389,18 @@ export default function AgentLandingPage() {
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6">
           <Card>
             <div className="text-center space-y-6 md:space-y-8">
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight uppercase"
-              >
+              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight uppercase">
                 <span className="text-white">Get </span>
                 <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse">5-15 Leads</span>
                 <span className="text-white"> This Week by turning your image to AI Video in </span>
                 <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>7 Minutes</span>
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="text-sm md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed"
-              >
+              <p className="text-sm md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
                 Zero experience needed, start getting <span className="text-yellow-400 font-bold">100+ Real Buyer Leads Monthly</span>
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="max-w-4xl mx-auto"
-              >
+              <div className="max-w-4xl mx-auto">
                 <div className="relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 rounded-3xl opacity-75 group-hover:opacity-100 blur-xl transition duration-500"></div>
                   <div className="relative">
@@ -498,14 +428,9 @@ export default function AgentLandingPage() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-                className="flex flex-col items-center gap-4 md:gap-6 pt-4"
-              >
+              <div className="flex flex-col items-center gap-4 md:gap-6 pt-4">
                 <div className="text-center space-y-2 md:space-y-3">
                   <div className="flex items-center justify-center gap-2 flex-wrap">
                     <span className="text-red-400 text-base md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
@@ -530,7 +455,7 @@ export default function AgentLandingPage() {
                 </div>
 
                 <SecureCheckout />
-              </motion.div>
+              </div>
             </div>
           </Card>
         </div>
