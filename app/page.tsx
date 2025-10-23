@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
-  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play
+  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube
 } from 'lucide-react';
 
 // Simple Card component without animations for better performance
@@ -24,107 +24,6 @@ const Card: React.FC<CardProps> = memo(({ children, className = '' }) => {
 });
 
 Card.displayName = 'Card';
-
-// Lazy video component with click-to-play facade for performance
-interface LazyVideoProps {
-  videoId: string;
-  title: string;
-  aspectRatio: string;
-  posterImage?: string;
-  className?: string;
-}
-
-const LazyVideo: React.FC<LazyVideoProps> = memo(({ videoId, title, aspectRatio, posterImage, className = '' }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-
-  const loadWistiaScript = () => {
-    if (!scriptLoaded && !document.querySelector('script[src="https://fast.wistia.net/player.js"]')) {
-      const s = document.createElement('script');
-      s.src = 'https://fast.wistia.net/player.js';
-      s.async = true;
-      document.body.appendChild(s);
-      setScriptLoaded(true);
-    }
-  };
-
-  const handlePlay = () => {
-    loadWistiaScript();
-    setIsPlaying(true);
-  };
-
-  if (isPlaying) {
-    return (
-      <div className={className}>
-        <div className="wistia_responsive_padding" style={{ padding: aspectRatio, position: 'relative' }}>
-          <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-            <iframe
-              src={`https://fast.wistia.net/embed/iframe/${videoId}?web_component=true&seo=true&autoPlay=true`}
-              title={title}
-              allow="autoplay; fullscreen"
-              frameBorder="0"
-              scrolling="no"
-              width="100%"
-              height="100%"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className={className}>
-      <button
-        onClick={handlePlay}
-        className="relative w-full group cursor-pointer"
-        style={{ paddingTop: aspectRatio }}
-        aria-label={`Play ${title}`}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-xl overflow-hidden">
-          {posterImage && (
-            <Image
-              src={posterImage}
-              alt={title}
-              fill
-              className="object-cover opacity-60"
-              sizes="(max-width: 768px) 100vw, 800px"
-              loading="lazy"
-            />
-          )}
-          {!posterImage && (
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-900/20 via-black to-orange-900/20" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
-
-          {/* Play button */}
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-yellow-500 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse" />
-              <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform border-4 border-white/20">
-                <Play className="w-10 h-10 md:w-12 md:h-12 text-black ml-1.5" fill="currentColor" />
-              </div>
-            </div>
-          </div>
-
-          {/* Video title overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
-            <div className="flex items-center gap-2 mb-2">
-              <Video className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-              <p className="text-white font-bold text-sm md:text-base">{title}</p>
-            </div>
-            <p className="text-yellow-300 text-xs md:text-sm font-bold flex items-center gap-2">
-              <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-              Click to play video
-            </p>
-          </div>
-        </div>
-      </button>
-    </div>
-  );
-});
-
-LazyVideo.displayName = 'LazyVideo';
 
 export default function AgentLandingPage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -169,7 +68,12 @@ export default function AgentLandingPage() {
   }, []);
 
   useEffect(() => {
-    // Wistia script now loads on-demand when videos are played (lazy loading for performance)
+    if (!document.querySelector('script[src="https://fast.wistia.net/player.js"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://fast.wistia.net/player.js';
+      s.async = true;
+      document.body.appendChild(s);
+    }
 
     const style = document.createElement('style');
     style.textContent = `
@@ -514,11 +418,20 @@ export default function AgentLandingPage() {
                         <p className="text-yellow-300 font-bold text-xs md:text-sm mb-2 uppercase tracking-wider">PLAY THIS WITH SOUND ON</p>
                       </div>
                       <div className="rounded-xl overflow-hidden bg-black/50">
-                        <LazyVideo
-                          videoId="skseake2i0"
-                          title="VSL - 7 Minute AgentClone Course"
-                          aspectRatio="56.67%"
-                        />
+                        <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
+                          <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                            <iframe
+                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true"
+                              title="VSL"
+                              allow="autoplay; fullscreen"
+                              frameBorder="0"
+                              scrolling="no"
+                              className="wistia_embed"
+                              width="100%"
+                              height="100%"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -849,11 +762,19 @@ export default function AgentLandingPage() {
               <div className={`relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl ${tilt}`}>
                 <div className="p-2 md:p-3">
                   <div className="rounded-2xl overflow-hidden bg-black/50 border border-white/5">
-                    <LazyVideo
-                      videoId="4o934arsbs"
-                      title="Mr Lucas Actual Video"
-                      aspectRatio="177.78%"
-                    />
+                    <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                      <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                        <iframe
+                          src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true&videoFoam=true"
+                          title="Mr Lucas Video"
+                          allow="autoplay; fullscreen"
+                          frameBorder="0"
+                          scrolling="no"
+                          width="100%"
+                          height="100%"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="p-4 md:p-6 bg-gradient-to-t from-black to-transparent">
@@ -1014,11 +935,19 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="rounded-2xl overflow-hidden bg-black">
-                      <LazyVideo
-                        videoId={v.id}
-                        title={v.title}
-                        aspectRatio={v.aspectRatio}
-                      />
+                      <div className="wistia_responsive_padding" style={{ padding: i === 0 ? '175.83% 0 0 0' : '177.22% 0 0 0', position: 'relative' }}>
+                        <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                          <iframe
+                            src={`https://fast.wistia.net/embed/iframe/${v.id}?web_component=true&seo=true&videoFoam=true`}
+                            title={v.title}
+                            allow="autoplay; fullscreen"
+                            frameBorder="0"
+                            scrolling="no"
+                            width="100%"
+                            height="100%"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="p-4 md:p-6 bg-gradient-to-t from-gray-50 to-white">
