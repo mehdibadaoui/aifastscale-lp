@@ -768,41 +768,41 @@ export default function AgentLandingPage() {
                             </div>
                           )}
 
-                          {/* Unmute Notification as INITIAL THUMBNAIL - Shows BEFORE video starts */}
+                          {/* Minimal Play Button Overlay - Shows video thumbnail! */}
                           {!videoStarted && !showContinueModal && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-40">
-                              <div
-                                className="relative bg-gradient-to-br from-yellow-600/95 via-yellow-500/95 to-amber-600/95 backdrop-blur-md rounded-3xl px-12 py-10 border-4 border-white/90 max-w-xl mx-4 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/50 transition-all duration-300 animate-pulse"
-                                style={{ animationDuration: '3s' }}
-                                onClick={() => {
-                                  if (videoRef.current) {
-                                    setVideoStarted(true);
-                                    // Clear completed flag when starting fresh
-                                    localStorage.removeItem('heroVideoCompleted');
-                                    videoRef.current.muted = false; // Start WITH SOUND!
-                                    videoRef.current.play();
-                                  }
-                                }}
-                              >
-                                {/* Animated glow effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 rounded-3xl blur-xl animate-pulse" style={{ animationDuration: '2s' }}></div>
+                            <div
+                              className="absolute inset-0 z-40 cursor-pointer group"
+                              onClick={() => {
+                                if (videoRef.current) {
+                                  setVideoStarted(true);
+                                  localStorage.removeItem('heroVideoCompleted');
+                                  videoRef.current.muted = false;
+                                  videoRef.current.play();
+                                }
+                              }}
+                            >
+                              {/* Dark overlay on hover */}
+                              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300"></div>
 
-                                <div className="relative z-10">
-                                  <h3 className="text-white text-2xl md:text-3xl font-black text-center mb-8 drop-shadow-lg">
-                                    Your video has already started
-                                  </h3>
+                              {/* Large Play Button Center */}
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="relative">
+                                  {/* Animated rings */}
+                                  <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" style={{ animationDuration: '2s' }}></div>
+                                  <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" style={{ animationDuration: '3s' }}></div>
 
-                                  {/* Animated muted speaker icon */}
-                                  <div className="flex justify-center mb-8">
-                                    <div className="relative">
-                                      <div className="absolute inset-0 bg-white/20 rounded-full blur-lg animate-ping" style={{ animationDuration: '2s' }}></div>
-                                      <VolumeX className="relative w-24 h-24 md:w-32 md:h-32 text-white drop-shadow-2xl animate-bounce" style={{ animationDuration: '2s' }} strokeWidth={2.5} />
-                                    </div>
+                                  {/* Play button */}
+                                  <div className="relative bg-white rounded-full p-8 md:p-10 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <Play className="w-16 h-16 md:w-20 md:h-20 text-black fill-black" />
                                   </div>
+                                </div>
+                              </div>
 
-                                  <p className="text-white text-xl md:text-2xl font-black text-center drop-shadow-lg">
-                                    Click to listen
-                                  </p>
+                              {/* Top banner with sound instruction */}
+                              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+                                <div className="bg-black/80 backdrop-blur-md rounded-full px-6 py-3 border border-white/20 flex items-center gap-3 animate-bounce" style={{ animationDuration: '2s' }}>
+                                  <Volume2 className="w-5 h-5 text-white" />
+                                  <span className="text-white font-bold text-sm md:text-base">Click to play with sound</span>
                                 </div>
                               </div>
                             </div>
