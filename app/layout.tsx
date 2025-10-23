@@ -5,11 +5,13 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -75,6 +77,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Resource hints for performance */}
+        <link rel="preconnect" href="https://fast.wistia.net" />
+        <link rel="preconnect" href="https://embed-ssl.wistia.com" />
+        <link rel="dns-prefetch" href="https://fast.wistia.net" />
+        <link rel="dns-prefetch" href="https://embed-ssl.wistia.com" />
+
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script
