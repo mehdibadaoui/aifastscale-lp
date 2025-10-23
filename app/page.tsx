@@ -72,99 +72,80 @@ export default function AgentLandingPage() {
   }, []);
 
   useEffect(() => {
-    if (!document.querySelector('script[src="https://fast.wistia.net/player.js"]')) {
+    // Initialize Wistia script if not loaded
+    if (!document.querySelector('script[src="https://fast.wistia.com/assets/external/E-v1.js"]')) {
       const s = document.createElement('script');
-      s.src = 'https://fast.wistia.net/player.js';
+      s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
       s.async = true;
-      document.body.appendChild(s);
+      document.head.appendChild(s);
+    }
 
-      // Track when Wistia is ready and set up video tracking
-      s.onload = () => {
-        if (typeof window !== 'undefined' && (window as any)._wq) {
-          (window as any)._wq = (window as any)._wq || [];
-          (window as any)._wq.push({
-            id: 'skseake2i0',
-            onReady: (video: any) => {
-              // Store video instance in ref
-              videoRef.current = video;
+    // Set up Wistia video once ready
+    const setupVideo = () => {
+      if (typeof window !== 'undefined' && (window as any).Wistia) {
+        const wistiaVideo = (window as any).Wistia.api('skseake2i0');
+        if (wistiaVideo) {
+          console.log('Wistia video found:', wistiaVideo);
+          // Store video instance in ref
+          videoRef.current = wistiaVideo;
 
-              // Track play/pause state
-              video.bind('play', () => {
-                setVideoPlaying(true);
-              });
-
-              video.bind('pause', () => {
-                setVideoPlaying(false);
-              });
-
-              // Track progress
-              video.bind('percentwatchedchanged', (percent: number) => {
-                // Unlock price at 80%
-                if (percent >= 0.8 && !priceUnlocked) {
-                  setPriceUnlocked(true);
-                }
-
-                // Calculate fake progress
-                let fake = 0;
-                if (percent <= 0.5) {
-                  // 0-50% real = 0-50% fake (fast, 1:1 ratio)
-                  fake = percent;
-                } else if (percent <= 0.9) {
-                  // 50-90% real = 50-90% fake (slower, takes 40% real for 40% fake)
-                  fake = 0.5 + (percent - 0.5) * 1.0;
-                } else {
-                  // 90-100% real = 90-100% fake (very slow, takes 10% real for 10% fake)
-                  fake = 0.9 + (percent - 0.9) * 1.0;
-                }
-                setFakeProgress(Math.min(fake * 100, 100));
-              });
+          // Hide all native controls
+          wistiaVideo.ready(() => {
+            // Disable captions
+            if (wistiaVideo.hasData()) {
+              wistiaVideo.plugin?.('captions-v1')?.disable();
             }
           });
+
+          // Track play/pause state
+          wistiaVideo.bind('play', () => {
+            console.log('Video playing');
+            setVideoPlaying(true);
+          });
+
+          wistiaVideo.bind('pause', () => {
+            console.log('Video paused');
+            setVideoPlaying(false);
+          });
+
+          wistiaVideo.bind('end', () => {
+            console.log('Video ended');
+            setVideoPlaying(false);
+          });
+
+          // Track progress
+          wistiaVideo.bind('percentwatchedchanged', (percent: number) => {
+            console.log('Percent watched:', percent);
+            // Unlock price at 80%
+            if (percent >= 0.8 && !priceUnlocked) {
+              setPriceUnlocked(true);
+            }
+
+            // Calculate fake progress
+            let fake = 0;
+            if (percent <= 0.5) {
+              fake = percent;
+            } else if (percent <= 0.9) {
+              fake = 0.5 + (percent - 0.5) * 1.0;
+            } else {
+              fake = 0.9 + (percent - 0.9) * 1.0;
+            }
+            setFakeProgress(Math.min(fake * 100, 100));
+          });
         }
-      };
-    } else {
-      // If script already loaded, set up tracking immediately
-      if (typeof window !== 'undefined' && (window as any)._wq) {
-        (window as any)._wq = (window as any)._wq || [];
-        (window as any)._wq.push({
-          id: 'skseake2i0',
-          onReady: (video: any) => {
-            // Store video instance in ref
-            videoRef.current = video;
-
-            // Track play/pause state
-            video.bind('play', () => {
-              setVideoPlaying(true);
-            });
-
-            video.bind('pause', () => {
-              setVideoPlaying(false);
-            });
-
-            // Track progress
-            video.bind('percentwatchedchanged', (percent: number) => {
-              // Unlock price at 80%
-              if (percent >= 0.8 && !priceUnlocked) {
-                setPriceUnlocked(true);
-              }
-
-              // Calculate fake progress
-              let fake = 0;
-              if (percent <= 0.5) {
-                // 0-50% real = 0-50% fake (fast, 1:1 ratio)
-                fake = percent;
-              } else if (percent <= 0.9) {
-                // 50-90% real = 50-90% fake (slower, takes 40% real for 40% fake)
-                fake = 0.5 + (percent - 0.5) * 1.0;
-              } else {
-                // 90-100% real = 90-100% fake (very slow, takes 10% real for 10% fake)
-                fake = 0.9 + (percent - 0.9) * 1.0;
-              }
-              setFakeProgress(Math.min(fake * 100, 100));
-            });
-          }
-        });
       }
+    };
+
+    // Try to setup immediately if Wistia is already loaded
+    if ((window as any).Wistia) {
+      setupVideo();
+    } else {
+      // Otherwise wait for Wistia to load
+      (window as any)._wq = (window as any)._wq || [];
+      (window as any)._wq.push({
+        id: 'skseake2i0',
+        onReady: setupVideo
+      });
     }
 
     const style = document.createElement('style');
@@ -211,6 +192,23 @@ export default function AgentLandingPage() {
       }
       .pump-animation {
         animation: pump 0.6s ease-in-out 3;
+      }
+
+      /* Hide all Wistia native controls */
+      .wistia_embed .w-control-bar,
+      .wistia_embed .w-play-button,
+      .wistia_embed .w-big-play-button,
+      .wistia_embed .w-playbar,
+      .wistia_embed .w-vulcan-v2-button,
+      .wistia_embed .w-bottom-bar,
+      .wistia_embed .w-chrome,
+      .wistia_embed .w-captions-button,
+      .wistia_embed .w-settings-button,
+      .wistia_embed .w-fullscreen-button,
+      .wistia_embed .w-volume-button {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
       }
     `;
     document.head.appendChild(style);
@@ -681,33 +679,58 @@ export default function AgentLandingPage() {
                         <p className="text-yellow-300 font-bold text-xs md:text-sm mb-2 uppercase tracking-wider">PLAY THIS WITH SOUND ON</p>
                       </div>
                       <div className="rounded-xl overflow-hidden bg-black/50">
-                        <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
-                          <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                            <iframe
-                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true&preload=metadata&playbar=false&playButton=false&fullscreenButton=false&settingsControl=false&volumeControl=false&qualityControl=false&controlsVisibleOnLoad=false&time=false&captions=false&plugin[captions-v1][onByDefault]=false"
-                              title="VSL"
-                              allow="autoplay; fullscreen"
-                              frameBorder="0"
-                              scrolling="no"
-                              className="wistia_embed"
-                              width="100%"
-                              height="100%"
-                              loading="eager"
-                            />
+                        <div className="relative" style={{ padding: '56.67% 0 0 0' }}>
+                          {/* Wistia Video Embed - Class-based for JavaScript API */}
+                          <div
+                            className="wistia_embed wistia_async_skseake2i0 seo=true videoFoam=true"
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%'
+                            }}
+                          >
+                            <div className="wistia_swatch" style={{
+                              height: '100%',
+                              left: 0,
+                              opacity: 0,
+                              overflow: 'hidden',
+                              position: 'absolute',
+                              top: 0,
+                              transition: 'opacity 200ms',
+                              width: '100%'
+                            }}>
+                              <img
+                                src="https://fast.wistia.com/embed/medias/skseake2i0/swatch"
+                                style={{
+                                  filter: 'blur(5px)',
+                                  height: '100%',
+                                  objectFit: 'contain',
+                                  width: '100%'
+                                }}
+                                alt=""
+                                aria-hidden="true"
+                              />
+                            </div>
                           </div>
 
                           {/* Custom Play Button Overlay */}
                           {!videoPlaying && (
                             <div
-                              className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] cursor-pointer z-10 transition-opacity duration-300 hover:bg-black/30"
+                              className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] cursor-pointer z-50 transition-opacity duration-300 hover:bg-black/30"
                               onClick={() => {
                                 // Play video using stored ref
+                                console.log('Play button clicked, videoRef:', videoRef.current);
                                 if (videoRef.current) {
+                                  console.log('Playing video...');
                                   videoRef.current.play();
+                                } else {
+                                  console.error('Video ref not available yet');
                                 }
                               }}
                             >
-                              <div className="relative group">
+                              <div className="relative group pointer-events-none">
                                 {/* Glowing ring animation */}
                                 <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-75 blur-xl group-hover:opacity-100 transition duration-300 animate-pulse"></div>
 
