@@ -30,6 +30,7 @@ export default function AgentLandingPage() {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [showSecurityPopup, setShowSecurityPopup] = useState(false);
   const [showAllTestimonials, setShowAllTestimonials] = useState(false);
+  const [priceUnlocked, setPriceUnlocked] = useState(false);
 
   useEffect(() => {
     // Security: Light anti-inspect measures - NOTE: This only stops casual users, not developers
@@ -73,6 +74,38 @@ export default function AgentLandingPage() {
       s.src = 'https://fast.wistia.net/player.js';
       s.async = true;
       document.body.appendChild(s);
+
+      // Track when Wistia is ready and set up video tracking
+      s.onload = () => {
+        if (typeof window !== 'undefined' && (window as any)._wq) {
+          (window as any)._wq = (window as any)._wq || [];
+          (window as any)._wq.push({
+            id: 'skseake2i0',
+            onReady: (video: any) => {
+              video.bind('percentwatchedchanged', (percent: number) => {
+                if (percent >= 0.8 && !priceUnlocked) {
+                  setPriceUnlocked(true);
+                }
+              });
+            }
+          });
+        }
+      };
+    } else {
+      // If script already loaded, set up tracking immediately
+      if (typeof window !== 'undefined' && (window as any)._wq) {
+        (window as any)._wq = (window as any)._wq || [];
+        (window as any)._wq.push({
+          id: 'skseake2i0',
+          onReady: (video: any) => {
+            video.bind('percentwatchedchanged', (percent: number) => {
+              if (percent >= 0.8 && !priceUnlocked) {
+                setPriceUnlocked(true);
+              }
+            });
+          }
+        });
+      }
     }
 
     const style = document.createElement('style');
@@ -92,6 +125,33 @@ export default function AgentLandingPage() {
       }
       .animate-scroll-reverse:hover {
         animation-play-state: paused;
+      }
+      @keyframes priceReveal {
+        0% {
+          opacity: 0;
+          transform: scale(0.8) translateY(20px);
+        }
+        50% {
+          transform: scale(1.1) translateY(0);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      @keyframes pump {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+      .price-reveal {
+        animation: priceReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .pump-animation {
+        animation: pump 0.6s ease-in-out 3;
       }
     `;
     document.head.appendChild(style);
@@ -585,19 +645,31 @@ export default function AgentLandingPage() {
 
               <div className="flex flex-col items-center gap-4 md:gap-6 pt-4 px-2">
                 <div className="text-center space-y-2 md:space-y-3">
-                  <div className="flex items-center justify-center gap-2 flex-wrap px-2">
-                    <span className="text-red-400 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
-                    <span className="text-white text-lg md:text-xl font-black uppercase">FOR ONLY</span>
-                  </div>
-                  <div className="text-green-400 text-5xl md:text-6xl font-black tracking-tight">US$ 37</div>
+                  {!priceUnlocked ? (
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full backdrop-blur-sm">
+                        <Eye className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 animate-pulse" />
+                        <span className="text-yellow-400 text-sm md:text-base font-bold">Watch 80% to unlock special price</span>
+                      </div>
+                      <div className="text-gray-400 text-3xl md:text-5xl font-black tracking-tight blur-sm select-none">US$ ??</div>
+                    </div>
+                  ) : (
+                    <div className="price-reveal">
+                      <div className="flex items-center justify-center gap-2 flex-wrap px-2">
+                        <span className="text-red-400 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
+                        <span className="text-white text-lg md:text-xl font-black uppercase">FOR ONLY</span>
+                      </div>
+                      <div className="text-green-400 text-5xl md:text-6xl font-black tracking-tight mt-2">US$ 37</div>
+                    </div>
+                  )}
                 </div>
 
                 <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
                    className="group relative inline-block w-full max-w-3xl px-2">
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-                  <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3">
+                  <div className={`relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3 ${priceUnlocked ? 'pump-animation' : ''}`}>
                     <Zap className="w-5 h-5 md:w-7 md:h-7" />
-                    <span>Get instant access $37</span>
+                    <span>{priceUnlocked ? 'Get instant access $37' : 'Watch video to unlock'}</span>
                   </div>
                 </a>
 
