@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
-  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube
+  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play
 } from 'lucide-react';
 
 // Simple Card component without animations for better performance
@@ -32,6 +32,7 @@ export default function AgentLandingPage() {
   const [showAllTestimonials, setShowAllTestimonials] = useState(false);
   const [priceUnlocked, setPriceUnlocked] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   useEffect(() => {
     // Security: Light anti-inspect measures - NOTE: This only stops casual users, not developers
@@ -83,6 +84,16 @@ export default function AgentLandingPage() {
           (window as any)._wq.push({
             id: 'skseake2i0',
             onReady: (video: any) => {
+              // Track play/pause state
+              video.bind('play', () => {
+                setVideoPlaying(true);
+              });
+
+              video.bind('pause', () => {
+                setVideoPlaying(false);
+              });
+
+              // Track progress
               video.bind('percentwatchedchanged', (percent: number) => {
                 // Unlock price at 80%
                 if (percent >= 0.8 && !priceUnlocked) {
@@ -114,10 +125,35 @@ export default function AgentLandingPage() {
         (window as any)._wq.push({
           id: 'skseake2i0',
           onReady: (video: any) => {
+            // Track play/pause state
+            video.bind('play', () => {
+              setVideoPlaying(true);
+            });
+
+            video.bind('pause', () => {
+              setVideoPlaying(false);
+            });
+
+            // Track progress
             video.bind('percentwatchedchanged', (percent: number) => {
+              // Unlock price at 80%
               if (percent >= 0.8 && !priceUnlocked) {
                 setPriceUnlocked(true);
               }
+
+              // Calculate fake progress
+              let fake = 0;
+              if (percent <= 0.5) {
+                // 0-50% real = 0-50% fake (fast, 1:1 ratio)
+                fake = percent;
+              } else if (percent <= 0.9) {
+                // 50-90% real = 50-90% fake (slower, takes 40% real for 40% fake)
+                fake = 0.5 + (percent - 0.5) * 1.0;
+              } else {
+                // 90-100% real = 90-100% fake (very slow, takes 10% real for 10% fake)
+                fake = 0.9 + (percent - 0.9) * 1.0;
+              }
+              setFakeProgress(Math.min(fake * 100, 100));
             });
           }
         });
@@ -641,7 +677,7 @@ export default function AgentLandingPage() {
                         <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
                           <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
                             <iframe
-                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true&preload=metadata&playbar=false&playButton=false&fullscreenButton=false&settingsControl=false&volumeControl=false&qualityControl=false&controlsVisibleOnLoad=false&time=false"
+                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true&preload=metadata&playbar=false&playButton=false&fullscreenButton=false&settingsControl=false&volumeControl=false&qualityControl=false&controlsVisibleOnLoad=false&time=false&captions=false&plugin[captions-v1][onByDefault]=false"
                               title="VSL"
                               allow="autoplay; fullscreen"
                               frameBorder="0"
@@ -652,6 +688,34 @@ export default function AgentLandingPage() {
                               loading="eager"
                             />
                           </div>
+
+                          {/* Custom Play Button Overlay */}
+                          {!videoPlaying && (
+                            <div
+                              className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] cursor-pointer z-10 transition-opacity duration-300 hover:bg-black/30"
+                              onClick={() => {
+                                // Play video via Wistia API
+                                if (typeof window !== 'undefined' && (window as any)._wq) {
+                                  (window as any)._wq.push({
+                                    id: 'skseake2i0',
+                                    onReady: (video: any) => {
+                                      video.play();
+                                    }
+                                  });
+                                }
+                              }}
+                            >
+                              <div className="relative group">
+                                {/* Glowing ring animation */}
+                                <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-75 blur-xl group-hover:opacity-100 transition duration-300 animate-pulse"></div>
+
+                                {/* Play button */}
+                                <div className="relative bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full p-6 md:p-8 shadow-2xl transform group-hover:scale-110 transition-transform duration-300">
+                                  <Play className="w-10 h-10 md:w-16 md:h-16 text-black fill-black" />
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
 
                         {/* Custom Fake Progress Bar */}
