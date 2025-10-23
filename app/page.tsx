@@ -34,7 +34,10 @@ export default function AgentLandingPage() {
   const [priceUnlocked, setPriceUnlocked] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [videoMuted, setVideoMuted] = useState(false);
+  const [videoMuted, setVideoMuted] = useState(true); // Start muted
+  const [showUnmuteNotification, setShowUnmuteNotification] = useState(false);
+  const [showContinueModal, setShowContinueModal] = useState(false);
+  const [savedVideoTime, setSavedVideoTime] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -82,6 +85,13 @@ export default function AgentLandingPage() {
     const handlePlay = () => {
       console.log('Video playing');
       setVideoPlaying(true);
+
+      // Show unmute notification when video starts
+      if (videoMuted) {
+        setShowUnmuteNotification(true);
+        // Auto-hide after 5 seconds
+        setTimeout(() => setShowUnmuteNotification(false), 5000);
+      }
     };
 
     // Pause event
@@ -96,31 +106,37 @@ export default function AgentLandingPage() {
       setVideoPlaying(false);
     };
 
-    // Time update - track progress with VERY FAST beginning
+    // Time update - track progress with SUPER FAST beginning
     const handleTimeUpdate = () => {
       if (!video.duration) return;
 
       const percent = video.currentTime / video.duration;
+      const currentTime = video.currentTime;
+
+      // Save progress to localStorage every 2 seconds
+      if (currentTime % 2 < 0.1) {
+        localStorage.setItem('heroVideoTime', currentTime.toString());
+      }
 
       // Unlock price at 80%
       if (percent >= 0.8 && !priceUnlocked) {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - VERY FAST at beginning!
+      // Calculate fake progress - SUPER FAST at beginning! (like screenshot)
       let fake = 0;
-      if (percent <= 0.15) {
-        // First 15% of video -> show 0-60% progress (VERY FAST!)
-        fake = percent * 4;
-      } else if (percent <= 0.5) {
-        // Next 35% of video (15-50%) -> show 60-85% progress (medium)
-        fake = 0.6 + (percent - 0.15) * 0.714;
-      } else if (percent <= 0.8) {
-        // Next 30% of video (50-80%) -> show 85-95% progress (slower)
-        fake = 0.85 + (percent - 0.5) * 0.333;
+      if (percent <= 0.1) {
+        // First 10% of video -> show 0-70% progress (SUPER FAST!!!)
+        fake = percent * 7;
+      } else if (percent <= 0.4) {
+        // Next 30% of video (10-40%) -> show 70-88% progress (fast)
+        fake = 0.7 + (percent - 0.1) * 0.6;
+      } else if (percent <= 0.75) {
+        // Next 35% of video (40-75%) -> show 88-96% progress (medium)
+        fake = 0.88 + (percent - 0.4) * 0.229;
       } else {
-        // Last 20% of video (80-100%) -> show 95-100% progress (slowest)
-        fake = 0.95 + (percent - 0.8) * 0.25;
+        // Last 25% of video (75-100%) -> show 96-100% progress (slow)
+        fake = 0.96 + (percent - 0.75) * 0.16;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -139,7 +155,19 @@ export default function AgentLandingPage() {
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, [priceUnlocked]);
+  }, [priceUnlocked, videoMuted]);
+
+  // Check for saved video progress on load
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTime = localStorage.getItem('heroVideoTime');
+      if (savedTime && parseFloat(savedTime) > 5) {
+        // If user watched more than 5 seconds, show continue modal
+        setSavedVideoTime(parseFloat(savedTime));
+        setShowContinueModal(true);
+      }
+    }
+  }, []);
 
   // Styles and scroll tracking
   useEffect(() => {
@@ -682,6 +710,89 @@ export default function AgentLandingPage() {
                             <source src="/videos/Hero-VSL.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                           </video>
+
+                          {/* Continue Watching Modal - Screenshot 3 */}
+                          {showContinueModal && !videoPlaying && (
+                            <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/95">
+                              <div className="text-center px-6 max-w-2xl">
+                                {/* Green bar at top */}
+                                <div className="h-2 bg-green-500 mb-8"></div>
+
+                                <h2 className="text-white text-3xl md:text-4xl font-bold mb-8">
+                                  You have already started watching this video
+                                </h2>
+
+                                <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
+                                  {/* Continue watching button */}
+                                  <button
+                                    onClick={() => {
+                                      setShowContinueModal(false);
+                                      if (videoRef.current) {
+                                        videoRef.current.currentTime = savedVideoTime;
+                                        videoRef.current.play();
+                                      }
+                                    }}
+                                    className="flex items-center gap-4 text-white hover:text-green-400 transition-colors group"
+                                  >
+                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-white group-hover:border-green-400 flex items-center justify-center transition-colors">
+                                      <Play className="w-8 h-8 md:w-10 md:h-10 fill-white group-hover:fill-green-400 transition-colors" />
+                                    </div>
+                                    <span className="text-xl md:text-2xl font-bold">Continue watching?</span>
+                                  </button>
+
+                                  {/* Start from beginning button */}
+                                  <button
+                                    onClick={() => {
+                                      setShowContinueModal(false);
+                                      localStorage.removeItem('heroVideoTime');
+                                      if (videoRef.current) {
+                                        videoRef.current.currentTime = 0;
+                                        videoRef.current.play();
+                                      }
+                                    }}
+                                    className="flex items-center gap-4 text-white hover:text-green-400 transition-colors group"
+                                  >
+                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-white group-hover:border-green-400 flex items-center justify-center transition-colors">
+                                      <div className="w-8 h-8 md:w-10 md:h-10 text-2xl md:text-3xl font-bold flex items-center justify-center">↻</div>
+                                    </div>
+                                    <span className="text-xl md:text-2xl font-bold">Start from beginning?</span>
+                                  </button>
+                                </div>
+
+                                {/* Green bar at bottom */}
+                                <div className="h-2 bg-green-500 mt-8"></div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Unmute Notification - Screenshot 1 */}
+                          {showUnmuteNotification && videoPlaying && (
+                            <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
+                              <div
+                                className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-8 md:p-10 border-4 border-white shadow-2xl max-w-md mx-4 pointer-events-auto cursor-pointer"
+                                onClick={() => {
+                                  if (videoRef.current) {
+                                    setVideoMuted(false);
+                                    videoRef.current.muted = false;
+                                    setShowUnmuteNotification(false);
+                                  }
+                                }}
+                              >
+                                <h3 className="text-white text-xl md:text-2xl font-black text-center mb-6">
+                                  Your video has already started
+                                </h3>
+
+                                {/* Muted speaker icon */}
+                                <div className="flex justify-center mb-6">
+                                  <VolumeX className="w-20 h-20 md:w-24 md:h-24 text-white" strokeWidth={2} />
+                                </div>
+
+                                <p className="text-white text-xl md:text-2xl font-black text-center">
+                                  Click to listen
+                                </p>
+                              </div>
+                            </div>
+                          )}
 
                           {/* Center Play/Pause Button - Only shows when not playing */}
                           {!videoPlaying && (
