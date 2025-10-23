@@ -34,8 +34,8 @@ export default function AgentLandingPage() {
   const [priceUnlocked, setPriceUnlocked] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [videoMuted, setVideoMuted] = useState(true); // Start muted
-  const [showUnmuteNotification, setShowUnmuteNotification] = useState(false);
+  const [videoStarted, setVideoStarted] = useState(false); // Track if user clicked to start
+  const [videoMuted, setVideoMuted] = useState(false); // Video starts unmuted (with sound)
   const [showContinueModal, setShowContinueModal] = useState(false);
   const [savedVideoTime, setSavedVideoTime] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -85,13 +85,6 @@ export default function AgentLandingPage() {
     const handlePlay = () => {
       console.log('Video playing');
       setVideoPlaying(true);
-
-      // Show unmute notification when video starts
-      if (videoMuted) {
-        setShowUnmuteNotification(true);
-        // Auto-hide after 5 seconds
-        setTimeout(() => setShowUnmuteNotification(false), 5000);
-      }
     };
 
     // Pause event
@@ -123,20 +116,20 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - SUPER FAST at beginning! (like screenshot)
+      // Calculate fake progress - FAST first 50%, then gradual slowdown (looks natural!)
       let fake = 0;
-      if (percent <= 0.1) {
-        // First 10% of video -> show 0-70% progress (SUPER FAST!!!)
-        fake = percent * 7;
-      } else if (percent <= 0.4) {
-        // Next 30% of video (10-40%) -> show 70-88% progress (fast)
-        fake = 0.7 + (percent - 0.1) * 0.6;
-      } else if (percent <= 0.75) {
-        // Next 35% of video (40-75%) -> show 88-96% progress (medium)
-        fake = 0.88 + (percent - 0.4) * 0.229;
+      if (percent <= 0.5) {
+        // First 50% of video -> show 0-80% progress (FAST - viewers engaged!)
+        fake = percent * 1.6;
+      } else if (percent <= 0.7) {
+        // Next 20% of video (50-70%) -> show 80-90% progress (medium speed)
+        fake = 0.8 + (percent - 0.5) * 0.5;
+      } else if (percent <= 0.85) {
+        // Next 15% of video (70-85%) -> show 90-95% progress (slower)
+        fake = 0.9 + (percent - 0.7) * 0.333;
       } else {
-        // Last 25% of video (75-100%) -> show 96-100% progress (slow)
-        fake = 0.96 + (percent - 0.75) * 0.16;
+        // Last 15% of video (85-100%) -> show 95-100% progress (slowest - natural finish)
+        fake = 0.95 + (percent - 0.85) * 0.333;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -155,7 +148,7 @@ export default function AgentLandingPage() {
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, [priceUnlocked, videoMuted]);
+  }, [priceUnlocked]);
 
   // Check for saved video progress on load
   useEffect(() => {
@@ -727,7 +720,9 @@ export default function AgentLandingPage() {
                                   <button
                                     onClick={() => {
                                       setShowContinueModal(false);
+                                      setVideoStarted(true);
                                       if (videoRef.current) {
+                                        videoRef.current.muted = false;
                                         videoRef.current.currentTime = savedVideoTime;
                                         videoRef.current.play();
                                       }
@@ -744,8 +739,10 @@ export default function AgentLandingPage() {
                                   <button
                                     onClick={() => {
                                       setShowContinueModal(false);
+                                      setVideoStarted(true);
                                       localStorage.removeItem('heroVideoTime');
                                       if (videoRef.current) {
+                                        videoRef.current.muted = false;
                                         videoRef.current.currentTime = 0;
                                         videoRef.current.play();
                                       }
@@ -765,59 +762,31 @@ export default function AgentLandingPage() {
                             </div>
                           )}
 
-                          {/* Unmute Notification - Screenshot 1 */}
-                          {showUnmuteNotification && videoPlaying && (
-                            <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
+                          {/* Unmute Notification as INITIAL THUMBNAIL - Shows BEFORE video starts */}
+                          {!videoStarted && !showContinueModal && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-40">
                               <div
-                                className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-8 md:p-10 border-4 border-white shadow-2xl max-w-md mx-4 pointer-events-auto cursor-pointer"
+                                className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-8 md:p-12 border-4 border-white shadow-2xl max-w-lg mx-4 cursor-pointer hover:scale-105 transition-transform duration-300"
                                 onClick={() => {
                                   if (videoRef.current) {
-                                    setVideoMuted(false);
-                                    videoRef.current.muted = false;
-                                    setShowUnmuteNotification(false);
+                                    setVideoStarted(true);
+                                    videoRef.current.muted = false; // Start WITH SOUND!
+                                    videoRef.current.play();
                                   }
                                 }}
                               >
-                                <h3 className="text-white text-xl md:text-2xl font-black text-center mb-6">
+                                <h3 className="text-white text-2xl md:text-3xl font-black text-center mb-6">
                                   Your video has already started
                                 </h3>
 
                                 {/* Muted speaker icon */}
                                 <div className="flex justify-center mb-6">
-                                  <VolumeX className="w-20 h-20 md:w-24 md:h-24 text-white" strokeWidth={2} />
+                                  <VolumeX className="w-24 h-24 md:w-32 md:h-32 text-white" strokeWidth={2.5} />
                                 </div>
 
-                                <p className="text-white text-xl md:text-2xl font-black text-center">
+                                <p className="text-white text-2xl md:text-3xl font-black text-center">
                                   Click to listen
                                 </p>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Center Play/Pause Button - Only shows when not playing */}
-                          {!videoPlaying && (
-                            <div
-                              className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 via-black/20 to-black/60 cursor-pointer z-40 transition-all duration-500"
-                              onClick={() => {
-                                if (videoRef.current) {
-                                  videoRef.current.play();
-                                }
-                              }}
-                            >
-                              <div className="relative group/play">
-                                {/* Animated gradient ring */}
-                                <div className="absolute -inset-6 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-full opacity-60 blur-2xl group-hover/play:opacity-90 transition-all duration-500 animate-pulse"></div>
-
-                                {/* Outer glow ring */}
-                                <div className="absolute -inset-3 bg-gradient-to-br from-yellow-300/40 to-orange-400/40 rounded-full blur-lg group-hover/play:scale-110 transition-transform duration-300"></div>
-
-                                {/* Main play button */}
-                                <div className="relative bg-gradient-to-br from-yellow-400 via-orange-400 to-yellow-500 rounded-full p-8 md:p-12 shadow-2xl transform group-hover/play:scale-105 transition-all duration-300 border-4 border-white/20">
-                                  <Play className="w-12 h-12 md:w-20 md:h-20 text-black fill-black drop-shadow-lg" style={{ marginLeft: '4px' }} />
-                                </div>
-
-                                {/* Ripple effect */}
-                                <div className="absolute inset-0 rounded-full border-2 border-yellow-400/30 animate-ping"></div>
                               </div>
                             </div>
                           )}
@@ -895,12 +864,15 @@ export default function AgentLandingPage() {
                           )}
                         </div>
 
-                        {/* Simple Clean Progress Bar */}
-                        <div className="relative w-full h-2 bg-gray-900">
-                          {/* Simple green progress bar */}
+                        {/* BIGGER, SMOOTH Progress Bar */}
+                        <div className="relative w-full h-3 md:h-4 bg-gray-900">
+                          {/* Simple green progress bar - SMOOTH with no transition jumps */}
                           <div
-                            className="absolute top-0 left-0 h-full bg-green-500 transition-all duration-100 ease-linear"
-                            style={{ width: `${fakeProgress}%` }}
+                            className="absolute top-0 left-0 h-full bg-green-500"
+                            style={{
+                              width: `${fakeProgress}%`,
+                              transition: 'width 0.3s linear'
+                            }}
                           />
                         </div>
                       </div>
@@ -946,79 +918,6 @@ export default function AgentLandingPage() {
                 </div>
 
                 <SecureCheckout />
-
-                {/* Guarantee Section - Matching Screenshot Design */}
-                <div className="mt-8 md:mt-12 w-full max-w-4xl mx-auto">
-                  <div className="bg-gradient-to-br from-green-900 via-green-800 to-green-900 rounded-3xl p-8 md:p-12 border-4 border-green-700/50 shadow-2xl">
-                    {/* Gold Badge */}
-                    <div className="flex justify-center mb-6 md:mb-8">
-                      <div className="relative w-32 h-32 md:w-40 md:h-40">
-                        {/* Outer gold ring */}
-                        <div className="absolute inset-0 rounded-full border-8 border-yellow-600" style={{ borderStyle: 'double' }}></div>
-
-                        {/* Inner gold circle */}
-                        <div className="absolute inset-3 rounded-full bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 flex items-center justify-center shadow-xl">
-                          {/* Money text */}
-                          <div className="text-center">
-                            <div className="text-xs md:text-sm font-black text-black uppercase tracking-wider mb-1">Money</div>
-                            <div className="text-3xl md:text-4xl font-black text-black">100%</div>
-                            <div className="text-xs md:text-sm font-black text-black uppercase tracking-wider mt-1">Back</div>
-                          </div>
-                        </div>
-
-                        {/* Stars and text around badge */}
-                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-yellow-400 text-xs font-black">★★ GUARANTEED ★★</div>
-                      </div>
-                    </div>
-
-                    {/* Heading */}
-                    <h3 className="text-2xl md:text-4xl font-black text-white text-center mb-6 md:mb-8">
-                      No-Questions-Asked Guarantee
-                    </h3>
-
-                    {/* Description */}
-                    <div className="text-center space-y-4 mb-8 md:mb-10 text-white">
-                      <p className="text-base md:text-lg leading-relaxed">
-                        Join the VIP experience today and enjoy it all—the exclusive sessions, private Q&As, insane bonuses, and the full 7-day immersion.
-                      </p>
-
-                      <p className="text-base md:text-lg leading-relaxed">
-                        And if, up to 7 days after the event ends, you feel it wasn't worth every penny, <span className="font-black text-yellow-400">just ask for your money back</span>.
-                      </p>
-
-                      <p className="text-base md:text-lg font-bold leading-relaxed">
-                        No awkward questions. No hoops to jump through. Just a <span className="font-black text-yellow-400">full refund, straight to your account</span>.
-                      </p>
-                    </div>
-
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col gap-4 items-center">
-                      {/* Primary CTA - Gold */}
-                      <a
-                        href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full max-w-xl group relative"
-                      >
-                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-                        <div className="relative px-8 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400 rounded-2xl font-black text-lg md:text-xl text-black uppercase tracking-wide transition-transform duration-300 active:scale-95 shadow-2xl text-center hover:shadow-yellow-500/50">
-                          YES, I WANT THE VIP TICKET FOR $97
-                        </div>
-                      </a>
-
-                      {/* Secondary CTA - Yellow */}
-                      <button
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        className="w-full max-w-xl group relative"
-                      >
-                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-2xl opacity-60 group-hover:opacity-90 blur transition duration-300"></div>
-                        <div className="relative px-8 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 rounded-2xl font-black text-lg md:text-xl text-black uppercase tracking-wide transition-transform duration-300 active:scale-95 shadow-xl text-center border-2 border-yellow-500/50">
-                          NO, I WANT TO KEEP MY FREE TICKET
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </Card>
