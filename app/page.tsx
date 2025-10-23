@@ -1,65 +1,915 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useEffect, useRef, useState, ReactNode } from 'react';
+import {
+  Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
+  Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award
+} from 'lucide-react';
+
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !isVisible) {
+        setIsVisible(true);
+        io.disconnect();
+      }
+    }, { threshold: 0.12 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [isVisible]);
+  
+  return { ref, isVisible };
+}
+
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = '' }) => {
+  const { ref, isVisible } = useReveal();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div 
+      ref={ref} 
+      className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'} ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default function AgentLandingPage() {
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    if (!document.querySelector('script[src="https://fast.wistia.net/player.js"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://fast.wistia.net/player.js';
+      s.async = true;
+      document.body.appendChild(s);
+    }
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-scroll {
+        animation: scroll 8s linear infinite;
+      }
+      .animate-scroll:hover {
+        animation-play-state: paused;
+      }
+      .animate-scroll-reverse {
+        animation: scroll 8s linear infinite reverse;
+      }
+      .animate-scroll-reverse:hover {
+        animation-play-state: paused;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    const onScroll = () => {
+      const t = document.documentElement.scrollTop;
+      const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      setScrollProgress((t / h) * 100);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (style.parentNode) {
+        style.parentNode.removeChild(style);
+      }
+    };
+  }, []);
+
+  const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const tilt = 'transition-transform duration-500 will-change-transform hover:-translate-y-1';
+
+  const products = [
+    { title: '7min AgentClone Course', value: '547', description: 'Complete step by step blueprint with system prompts and workflows', image: '/images/P1_result.webp' },
+    { title: 'Real Estate System Prompt', value: '297', description: 'High converting scripts for listings and DMs', image: '/images/P2_result.webp' },
+    { title: 'Photo to Talking Video', value: '217', description: 'Turn photos into natural talking videos in minutes', image: '/images/P3_result.webp' },
+    { title: '10 Min Phone Edit Templates', value: '376', description: 'Captions, logos, CTAs ready to export', image: '/images/P4_result.webp' },
+  ];
+  
+  const bonuses = [
+    { title: '2026 Personal Brand Blueprint', value: '197', image: '/images/P5_result.webp' },
+    { title: '17 Unskippable Real Estate Hooks', value: '107', image: '/images/P6_result.webp' },
+    { title: 'Realtor Canva Pack 100 Templates', value: '147', image: '/images/P7_result.webp' },
+  ];
+  
+  const faqs = [
+    { q: 'Do I need to film or record audio?', a: 'No, you only need one good image, the system generates the script and the AI creates the speech.' },
+    { q: 'Is this legal with MLS and broker rules?', a: 'Yes, we include a broker compliance overlay kit and export templates.' },
+    { q: 'Will it look fake?', a: 'Videos are human paced and preserve your natural features.' },
+    { q: 'How long does it take?', a: '7 minutes for the full workflow, phone editing takes under 10 minutes total.' },
+    { q: 'What if I do not get leads?', a: '30 day full refund, you keep everything.' },
+  ];
+
+  const agents1 = [
+    { img: '/images/IMG_3197_result.webp', name: 'Iman Al Farsi', loc: 'Dubai' },
+    { img: '/images/IMG_3199_result.webp', name: 'Camila Silva', loc: 'Sao Paulo' },
+    { img: '/images/IMG_3200_result.webp', name: 'Aisha Al Mansoori', loc: 'Abu Dhabi' },
+    { img: '/images/IMG_3203_result.webp', name: 'Noor Al Zahra', loc: 'Dubai' },
+    { img: '/images/IMG_3329_result.webp', name: 'Hannah Schmidt', loc: 'Berlin' },
+    { img: '/images/IMG_3360_result.webp', name: 'Isabella Martinez', loc: 'Barcelona' },
+    { img: '/images/IMG_3364_result.webp', name: 'Chinedu Okafor', loc: 'Lagos' },
+    { img: '/images/IMG_3365_result.webp', name: 'James Thompson', loc: 'Miami' },
+    { img: '/images/IMG_3366_result.webp', name: 'Tyrone Davis', loc: 'Houston' }
+  ];
+
+  const agents2 = [
+    { img: '/images/IMG_3367_result.webp', name: 'David Martinez', loc: 'Los Angeles' },
+    { img: '/images/IMG_3368_result.webp', name: 'Alexei Volkov', loc: 'Moscow' },
+    { img: '/images/IMG_3375_result.webp', name: 'Jamal Washington', loc: 'Chicago' },
+    { img: '/images/IMG_3376_result.webp', name: 'DeAndre Carter', loc: 'Detroit' },
+    { img: '/images/IMG_3379_result.webp', name: 'Rashid Ahmed', loc: 'Dubai' },
+    { img: '/images/IMG_3380_result.webp', name: 'Michael Brown', loc: 'New York' },
+    { img: '/images/IMG_3424_result.webp', name: 'Raj Sharma', loc: 'Mumbai' },
+    { img: '/images/IMG_3425_result.webp', name: 'Oliver Harris', loc: 'London' }
+  ];
+
+  interface FAQItemProps {
+    question: string;
+    answer: string;
+    index: number;
+  }
+
+  const FAQItem: React.FC<FAQItemProps> = ({ question, answer, index }) => {
+    const isOpen = openFAQ === index;
+    return (
+      <div className={`rounded-2xl border border-yellow-500/20 bg-gradient-to-br from-gray-900 to-black ${tilt}`}>
+        <button onClick={() => setOpenFAQ(isOpen ? null : index)} className="w-full p-5 md:p-7 text-left flex items-start justify-between gap-4">
+          <h3 className="text-base md:text-xl font-bold text-white/90 leading-tight flex-1">{question}</h3>
+          <div className="w-8 h-8 flex-shrink-0 bg-yellow-400/15 border border-yellow-500/30 rounded-full grid place-items-center">
+            <span className="text-yellow-400 text-xl">{isOpen ? '−' : '+'}</span>
+          </div>
+        </button>
+        <div className={`grid transition-all duration-300 ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+          <div className="overflow-hidden px-5 md:px-7 pb-5 md:pb-7">
+            <p className="text-gray-300 text-sm md:text-lg leading-relaxed">{answer}</p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+    );
+  };
+
+  const SecureCheckout = () => (
+    <div className="mt-6 w-full max-w-4xl px-4">
+      <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+        <div className="group flex-1 min-w-[140px] max-w-[180px]">
+          <div className="relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
+            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-4 text-center transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
+                <Users className="w-6 h-6 text-black" />
+              </div>
+              <div className="text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-1">500+</div>
+              <div className="text-gray-300 text-xs font-semibold">Active Agents</div>
+            </div>
+          </div>
         </div>
-      </main>
+
+        <div className="group flex-1 min-w-[140px] max-w-[180px]">
+          <div className="relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
+            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-4 text-center transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
+                <Video className="w-6 h-6 text-black" />
+              </div>
+              <div className="text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-1">7 Min</div>
+              <div className="text-gray-300 text-xs font-semibold">Video Creation</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="group flex-1 min-w-[140px] max-w-[180px]">
+          <div className="relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl opacity-30 group-hover:opacity-50 blur transition duration-300"></div>
+            <div className="relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl p-4 text-center transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/50 transition-shadow duration-300">
+                <TrendingUp className="w-6 h-6 text-black" />
+              </div>
+              <div className="text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-1">100+</div>
+              <div className="text-gray-300 text-xs font-semibold">Monthly Leads</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const GuaranteeSection = () => (
+    <section className="relative py-16 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="relative max-w-4xl mx-auto px-4 md:px-6">
+        <div className={`bg-white rounded-3xl shadow-2xl border-2 border-gray-200 p-8 md:p-12 ${tilt}`}>
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <div className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 rounded-full grid place-items-center shadow-2xl">
+                <Shield className="w-16 h-16 md:w-20 md:h-20 text-white" />
+              </div>
+              <div className="absolute -top-2 -right-2 w-16 h-16 bg-green-500 rounded-full grid place-items-center shadow-xl border-4 border-white">
+                <CheckCircle className="w-8 h-8 text-white" />
+              </div>
+            </div>
+          </div>
+          <div className="text-center mb-6">
+            <div className="inline-block px-6 py-2 bg-yellow-100 border-2 border-yellow-400 rounded-full mb-4">
+              <p className="text-yellow-800 font-black text-sm md:text-base uppercase tracking-wide">30 Day Money Back</p>
+            </div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-tight text-center">No Questions Asked Guarantee</h2>
+          <div className="max-w-3xl mx-auto space-y-5 text-base md:text-lg text-gray-700 leading-relaxed mb-8">
+            <p className="text-center">Try <span className="font-black text-yellow-600">7 Min AgentClone</span> today, enjoy templates, prompts, trainings, and the quick start plan.</p>
+            <p className="text-center">If within <span className="font-black text-yellow-600">30 days</span> you do not feel it is worth every dollar, <span className="font-black text-yellow-600">email us for a full refund.</span></p>
+            <div className="flex justify-center">
+              <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-400/50 rounded-full px-8 py-3 shadow-lg">
+                <p className="text-yellow-700 font-black text-base md:text-lg">30 Day Money Back, 100% Risk Free</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+               className="group relative inline-block w-full max-w-4xl">
+              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
+              <div className="relative px-10 py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-xl uppercase tracking-wider flex items-center justify-center gap-3">
+                <span>Yes, I want the $37 AI Mastery Course</span>
+                <ArrowRight className="w-7 h-7" />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  return (
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      <div className="fixed top-0 left-0 w-full h-1 bg-gray-900 z-50">
+        <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
+      </div>
+
+      <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 border-b-2 border-yellow-400 sticky top-0 z-40 shadow-xl">
+        <div className="max-w-7xl mx-auto px-3 py-3 text-center">
+          <p className="text-white font-black text-xs md:text-sm uppercase tracking-wide">Limited Time {today}</p>
+          <p className="text-white/90 text-xs font-semibold">Price jumps to $97 at midnight</p>
+        </div>
+      </div>
+
+      <section className="relative overflow-hidden py-8 md:py-12" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)' }}>
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute w-[600px] h-[600px] bg-yellow-500/20 rounded-full blur-[150px] -top-48 -left-48 animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute w-[500px] h-[500px] bg-orange-500/15 rounded-full blur-[140px] top-1/4 right-0 animate-pulse" style={{ animationDuration: '10s', animationDelay: '1s' }} />
+          <div className="absolute w-[700px] h-[700px] bg-yellow-400/10 rounded-full blur-[160px] bottom-0 left-1/3 animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
+        </div>
+
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(251, 191, 36, 0.15) 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }} />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6">
+          <Card>
+            <div className="text-center space-y-8">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight uppercase">
+                <span className="text-white">Get </span>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse">5-15 Leads</span>
+                <span className="text-white"> This Week by turning your image to AI Video in </span>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>7 Minutes</span>
+              </h1>
+
+              <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Zero experience needed, start getting <span className="text-yellow-400 font-bold">100+ Real Buyer Leads Monthly</span>
+              </p>
+
+              <div className="max-w-4xl mx-auto">
+                <div className="relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 rounded-3xl opacity-75 group-hover:opacity-100 blur-xl transition duration-500"></div>
+                  <div className="relative">
+                    <div className="bg-gradient-to-br from-yellow-400/20 to-orange-400/20 backdrop-blur-sm border-2 border-yellow-400/40 rounded-2xl p-1 shadow-2xl">
+                      <div className="bg-yellow-400/5 rounded-xl p-2 text-center">
+                        <p className="text-yellow-300 font-bold text-sm mb-2 uppercase tracking-wider">PLAY THIS WITH SOUND ON</p>
+                      </div>
+                      <div className="rounded-xl overflow-hidden bg-black/50">
+                        <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
+                          <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                            <iframe
+                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&preload=true&autoPlay=false"
+                              title="VSL"
+                              allow="autoplay; fullscreen"
+                              frameBorder="0"
+                              scrolling="no"
+                              className="wistia_embed"
+                              loading="eager"
+                              width="100%"
+                              height="100%"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center gap-6 pt-4">
+                <div className="text-center space-y-3">
+                  <div className="flex items-center justify-center gap-2 flex-wrap">
+                    <span className="text-red-400 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
+                    <span className="text-white text-lg md:text-xl font-black uppercase">FOR ONLY</span>
+                  </div>
+                  <div className="text-green-400 text-5xl md:text-6xl font-black tracking-tight">US$ 37</div>
+                </div>
+
+                <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+                   className="group relative inline-block w-full max-w-3xl">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
+                  <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 group-hover:scale-105 shadow-2xl flex items-center justify-center gap-2 md:gap-3">
+                    <Zap className="w-5 h-5 md:w-7 md:h-7" />
+                    <span>Get instant access $37</span>
+                  </div>
+                </a>
+
+                <div className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600/95 to-red-700/95 backdrop-blur-sm border border-red-500/50 rounded-full shadow-lg">
+                  <AlertCircle className="w-4 h-4 text-white" />
+                  <span className="text-white font-bold text-xs md:text-sm uppercase tracking-wide">Price jumps to <span className="text-yellow-300">$97</span> tonight</span>
+                  <Clock className="w-4 h-4 text-white" />
+                </div>
+
+                <SecureCheckout />
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section className="relative py-12 md:py-16 bg-white text-black">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <Card>
+            <div className="text-center mb-8 md:mb-10">
+              <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-400 border-2 border-yellow-600 rounded-full shadow-lg">
+                <span className="text-black font-black text-sm md:text-base uppercase">7 Minute AI Agent System</span>
+                <Zap className="w-5 h-5 text-black" />
+              </div>
+            </div>
+            <div className="text-center mb-10 px-4">
+              <h3 className="text-3xl md:text-5xl font-black mb-4">From Image to Realistic Talking Video <span className="text-transparent bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text">4 Simple Steps</span></h3>
+              <p className="text-gray-700 text-base md:text-xl max-w-2xl mx-auto">No technical skills, no filming, <span className="text-yellow-700 font-black">just copy and paste.</span></p>
+            </div>
+          </Card>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 px-4 mb-10">
+            {[
+              { num: '1', title: 'AI Video Script', desc: 'Paste a ready prompt', icon: Wand2, gradient: 'from-pink-500 to-rose-600', bg: 'bg-pink-500' },
+              { num: '2', title: 'Upload Photo', desc: 'Just one image needed', icon: Upload, gradient: 'from-purple-500 to-violet-600', bg: 'bg-purple-500' },
+              { num: '3', title: 'Video Created', desc: 'Realistic AI video ready', icon: Video, gradient: 'from-orange-500 to-amber-600', bg: 'bg-orange-500' },
+              { num: '4', title: 'Get Leads', desc: 'Watch leads pour in', icon: TrendingUp, gradient: 'from-yellow-500 to-amber-600', bg: 'bg-yellow-500' }
+            ].map((s, i) => (
+              <Card key={i}>
+                <div className={`bg-white border-2 border-gray-200 rounded-3xl p-4 md:p-6 text-center hover:shadow-2xl hover:border-gray-300 ${tilt}`}>
+                  <div className={`w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 md:mb-6 rounded-full bg-gradient-to-br ${s.gradient} grid place-items-center shadow-xl`}>
+                    <span className="text-white font-black text-2xl md:text-3xl">{s.num}</span>
+                  </div>
+                  <div className={`w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 ${s.bg} rounded-2xl grid place-items-center shadow-lg`}>
+                    <s.icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                  </div>
+                  <h4 className="text-gray-900 font-black text-sm md:text-xl mb-2">{s.title}</h4>
+                  <p className="text-gray-600 font-semibold text-xs md:text-sm">{s.desc}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 px-4 max-w-5xl mx-auto">
+            <Card>
+              <div className={`bg-gradient-to-br from-red-50 via-pink-50 to-red-50 border-2 border-red-200 rounded-3xl p-6 md:p-8 shadow-lg ${tilt}`}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl grid place-items-center shadow-xl"><X className="w-7 h-7 md:w-8 md:h-8 text-white" /></div>
+                  <div>
+                    <h5 className="text-red-900 font-black text-lg md:text-xl mb-2">Unlike traditional methods</h5>
+                    <p className="text-gray-700 text-sm md:text-base">You do not need expensive equipment or a film crew.</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+            <Card>
+              <div className={`bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 border-2 border-yellow-300 rounded-3xl p-6 md:p-8 shadow-lg ${tilt}`}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl grid place-items-center shadow-xl"><Sparkles className="w-7 h-7 md:w-8 md:h-8 text-white" /></div>
+                  <div>
+                    <h5 className="text-yellow-900 font-black text-lg md:text-xl mb-2">AI handles everything</h5>
+                    <p className="text-gray-700 text-sm md:text-base">Automatic script, voice, and video generation.</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-16 md:py-24 bg-gradient-to-b from-black via-gray-950 to-black overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute w-[800px] h-[800px] bg-yellow-500/5 rounded-full blur-[200px] top-0 left-1/2 -translate-x-1/2" />
+          <div className="absolute w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[180px] bottom-0 right-1/4" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 md:px-6">
+          <Card>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-8 px-4">
+                <span className="text-white block mb-2">You Don't Need More Information.</span>
+                <span className="text-white block mb-2">You Need Execution.</span>
+                <span className="text-white">That's </span>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 bg-clip-text">What We Deliver.</span>
+              </h2>
+              
+              <div className="flex items-center justify-center gap-6 mb-6">
+                <div className="h-px w-16 bg-gradient-to-r from-transparent to-yellow-500/50"></div>
+                <span className="text-5xl md:text-6xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text">$37</span>
+                <div className="h-px w-16 bg-gradient-to-l from-transparent to-yellow-500/50"></div>
+              </div>
+              
+              <div className="inline-flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 border border-yellow-500/30 rounded-full backdrop-blur-sm">
+                <span className="text-gray-400 text-lg line-through">$1,561</span>
+                <ArrowRight className="w-5 h-5 text-yellow-400" />
+                <span className="text-yellow-400 text-lg font-black">Save $1,524 Today</span>
+              </div>
+            </div>
+          </Card>
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {products.map((p, i) => (
+              <Card key={i}>
+                <div className="group relative bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl overflow-hidden border border-yellow-500/10 hover:border-yellow-500/30 transition-all duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className="relative p-8">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex-1">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full mb-4">
+                          <Award className="w-4 h-4 text-yellow-400" />
+                          <span className="text-yellow-400 font-bold text-sm uppercase tracking-wider">Core Module {i + 1}</span>
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-black text-white mb-3 leading-tight">{p.title}</h3>
+                        <p className="text-gray-400 text-base leading-relaxed">{p.description}</p>
+                      </div>
+                      
+                      <div className="ml-6 flex-shrink-0">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                          <div className="relative px-6 py-3 bg-gradient-to-br from-yellow-400 via-amber-400 to-orange-500 rounded-2xl shadow-2xl">
+                            <div className="text-center">
+                              <div className="text-xs font-bold text-black/70 uppercase tracking-wider mb-0.5">Value</div>
+                              <div className="text-2xl font-black text-black">${p.value}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-yellow-500/20 shadow-2xl">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+                      {p.image && (
+                        <img 
+                          src={p.image} 
+                          alt={p.title} 
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                          loading="lazy"
+                        />
+                      )}
+                      <div className="absolute bottom-4 right-4 z-20">
+                        <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                          <CheckCircle className="w-6 h-6 text-black" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 grid grid-cols-3 gap-2">
+                      {[
+                        { label: 'Instant Access' },
+                        { label: 'Step by Step' },
+                        { label: 'Ready to Use' }
+                      ].map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 px-2 py-1.5 bg-yellow-500/5 border border-yellow-500/20 rounded-lg">
+                          <CheckCircle className="w-3 h-3 text-yellow-400 flex-shrink-0" />
+                          <span className="text-[10px] font-semibold text-gray-300 leading-tight">{feature.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <Card>
+            <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl overflow-hidden border border-yellow-500/20 p-8 md:p-12">
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-transparent to-orange-500/5"></div>
+              
+              <div className="relative text-center mb-10">
+                <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl mb-6 shadow-2xl">
+                  <Sparkles className="w-7 h-7 text-black" />
+                  <span className="text-black font-black text-xl uppercase tracking-wider">Exclusive Bonuses</span>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-black text-white mb-2">3 Premium Add-Ons</h3>
+                <p className="text-gray-400 text-lg">Included at no extra cost</p>
+              </div>
+
+              <div className="relative grid md:grid-cols-3 gap-6">
+                {bonuses.map((b, i) => (
+                  <Card key={i}>
+                    <div className="group relative bg-gradient-to-br from-gray-800 to-black rounded-2xl overflow-hidden border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-500">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl"></div>
+                      
+                      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+                        {b.image && (
+                          <img 
+                            src={b.image} 
+                            alt={b.title} 
+                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                            loading="lazy"
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div className="absolute top-4 left-4">
+                          <div className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-xl">
+                            <span className="text-black font-black text-sm uppercase tracking-wide">Bonus {i + 1}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="relative p-6">
+                        <h4 className="text-xl font-black text-white mb-4 leading-tight">{b.title}</h4>
+                        <div className="flex items-center justify-between">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                            <span className="text-yellow-400 font-black text-2xl">${b.value}</span>
+                            <span className="text-gray-400 text-xs font-semibold uppercase">Value</span>
+                          </div>
+                          <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center shadow-lg group-hover:scale-110 transition-transform">
+                            <CheckCircle className="w-5 h-5 text-black" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </Card>
+
+          <Card>
+            <div className="flex flex-col items-center gap-6 px-4 mt-12">
+              <div className="w-full max-w-4xl">
+                <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 border-2 border-yellow-500/30 rounded-2xl p-8 mb-6">
+                  <div className="grid md:grid-cols-4 gap-6 text-center">
+                    <div className="space-y-2">
+                      <div className="text-4xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text">$1,561</div>
+                      <div className="text-sm text-gray-400 font-semibold">Total Value</div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-4xl font-black text-green-400">$37</div>
+                      <div className="text-sm text-gray-400 font-semibold">Today's Price</div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-4xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text">98%</div>
+                      <div className="text-sm text-gray-400 font-semibold">Discount</div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-4xl font-black text-white">7min</div>
+                      <div className="text-sm text-gray-400 font-semibold">To Results</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+                 className="group relative inline-block w-full max-w-4xl">
+                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-xl transition duration-300"></div>
+                <div className="relative px-10 py-6 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-[1.02] font-black text-xl md:text-2xl uppercase tracking-wider flex items-center justify-center gap-4">
+                  <Zap className="w-8 h-8" />
+                  <span>Get Complete System For $37</span>
+                  <ArrowRight className="w-8 h-8" />
+                </div>
+              </a>
+
+              <div className="flex items-center gap-2 text-gray-400 text-sm">
+                <Shield className="w-5 h-5 text-green-400" />
+                <span className="font-semibold">30-Day Money-Back Guarantee • Instant Access • Secure Checkout</span>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <GuaranteeSection />
+
+      <section className="relative py-12 md:py-20 bg-gradient-to-br from-gray-950 via-black to-gray-950 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute w-[600px] h-[600px] bg-yellow-500/10 rounded-full blur-[150px] top-0 left-1/4 animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[150px] bottom-0 right-1/4 animate-pulse" style={{ animationDuration: '10s' }} />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 md:px-6">
+          <Card>
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 mb-6 px-6 py-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm border border-yellow-500/30 rounded-full">
+                <span className="text-yellow-400 font-black text-sm uppercase tracking-wide">Real Success Story</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight">
+                <span>How Mr. Lucas Sold a </span>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text">Palm Jumeirah Villa</span>
+                <br /><span>with a </span>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text">$1 Video</span>
+              </h2>
+            </div>
+          </Card>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start max-w-7xl mx-auto mb-10">
+            <Card>
+              <div className={`relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl ${tilt}`}>
+                <div className="p-3">
+                  <div className="rounded-2xl overflow-hidden bg-black/50 border border-white/5">
+                    <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                      <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                        <iframe src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true" title="Mr Lucas Video" allow="autoplay; fullscreen" frameBorder="0" scrolling="no" width="100%" height="100%" loading="lazy" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 bg-gradient-to-t from-black to-transparent">
+                  <div className="flex items-center gap-3 mb-3">
+                    <CheckCircle className="w-6 h-6 text-yellow-400" />
+                    <h3 className="text-2xl font-black">Mr. Lucas Actual Video</h3>
+                  </div>
+                  <p className="text-gray-400 text-sm">Created in 6 min, Edited in 12 min, Sold for 17.9M AED</p>
+                </div>
+              </div>
+            </Card>
+
+            <div className="space-y-6">
+              <Card>
+                <div className="bg-gradient-to-br from-yellow-900/30 to-yellow-950/20 backdrop-blur-sm border border-yellow-400/30 rounded-2xl p-6 md:p-8 hover:border-yellow-400/50 transition-all duration-300">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center shadow-xl"><span className="text-black text-2xl font-black">1</span></div>
+                    <h4 className="text-yellow-400 font-black text-2xl">The Challenge</h4>
+                  </div>
+                  <p className="text-gray-200 text-base md:text-lg">Mr. Lucas listed a 6 bedroom beachfront villa in Palm Jumeirah priced at <span className="text-yellow-400 font-bold">18.5M AED</span>, posted a simple phone video for $1 on Instagram and TikTok.</p>
+                </div>
+              </Card>
+              <Card>
+                <div className="bg-gradient-to-br from-purple-900/30 to-blue-950/20 backdrop-blur-sm border border-purple-400/30 rounded-2xl p-6 md:p-8 hover:border-purple-400/50 transition-all duration-300">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full grid place-items-center shadow-xl"><span className="text-white text-2xl font-black">2</span></div>
+                    <h4 className="text-purple-400 font-black text-2xl">What He Did</h4>
+                  </div>
+                  <p className="text-gray-200 text-base md:text-lg">Used the <span className="text-purple-400 font-bold">7 Min AgentClone System</span> to turn one photo into an AI talking video, posted with a <span className="text-purple-400 font-bold">$1 boost</span>.</p>
+                </div>
+              </Card>
+              <Card>
+                <div className="bg-gradient-to-br from-yellow-900/40 to-amber-950/30 backdrop-blur-sm border-2 border-yellow-400/40 rounded-2xl p-6 md:p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full grid place-items-center shadow-xl"><span className="text-black text-2xl font-black">3</span></div>
+                    <h4 className="text-yellow-400 font-black text-2xl">The Result</h4>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-black/40 rounded-xl p-4 border border-yellow-400/20">
+                      <DollarSign className="w-8 h-8 text-yellow-400 mb-2" />
+                      <p className="text-white font-bold text-lg">$1 boost</p>
+                      <p className="text-gray-400 text-xs">Instagram + TikTok</p>
+                    </div>
+                    <div className="bg-black/40 rounded-xl p-4 border border-yellow-400/20">
+                      <MessageCircle className="w-8 h-8 text-yellow-400 mb-2" />
+                      <p className="text-white font-bold text-lg">11 DMs</p>
+                      <p className="text-gray-400 text-xs">By morning</p>
+                    </div>
+                    <div className="bg-black/40 rounded-xl p-4 border border-yellow-400/20">
+                      <Eye className="w-8 h-8 text-yellow-400 mb-2" />
+                      <p className="text-white font-bold text-lg">400K+ views</p>
+                      <p className="text-gray-400 text-xs">37 inquiries</p>
+                    </div>
+                    <div className="bg-black/40 rounded-xl p-4 border border-yellow-400/20">
+                      <TrendingUp className="w-8 h-8 text-yellow-400 mb-2" />
+                      <p className="text-white font-bold text-lg">9 days</p>
+                      <p className="text-gray-400 text-xs">To acceptance</p>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-r from-yellow-900/60 to-amber-900/60 rounded-xl p-6 border-2 border-yellow-400/60">
+                    <div className="flex items-start gap-4">
+                      <CheckCircle className="w-12 h-12 text-yellow-400" />
+                      <div>
+                        <p className="text-yellow-400 font-black text-3xl mb-2">17.9M AED Offer</p>
+                        <p className="text-white font-bold text-lg">Accepted 9 days after first viewing</p>
+                        <p className="text-gray-300 text-sm mt-1">Title transfer completed in 21 days</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <Card>
+            <div className="text-center mt-12 px-4">
+              <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+                 className="group relative inline-block w-full max-w-4xl">
+                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
+                <div className="relative px-10 py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-xl uppercase tracking-wider flex items-center justify-center gap-3">
+                  <Video className="w-7 h-7" />
+                  <span>I Want Results Like Mr. Lucas</span>
+                </div>
+              </a>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section className="relative py-12 md:py-20 bg-white overflow-hidden text-black">
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute w-96 h-96 bg-yellow-500 rounded-full blur-3xl top-0 right-0" />
+          <div className="absolute w-96 h-96 bg-orange-500 rounded-full blur-3xl bottom-0 left-0" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 md:px-6">
+          <Card>
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 mb-6 px-6 py-3 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-400/30 rounded-full">
+                <Video className="w-5 h-5 text-yellow-600" />
+                <span className="text-yellow-800 font-black text-sm uppercase tracking-wide">AI Generated Videos</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-black mb-4">See More <span className="text-transparent bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text">AI Videos</span> in Action</h2>
+              <p className="text-gray-700 text-lg md:text-xl max-w-2xl mx-auto">Real agents getting real results with AI powered videos, zero filming required</p>
+            </div>
+          </Card>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-10">
+            {[
+              { id: 'k1gfuxd7uw', title: 'Agent Steven Video' },
+              { id: 'eilfzivcqu', title: 'Agent Gabriel Video' },
+            ].map((v, i) => (
+              <Card key={i}>
+                <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt}`}>
+                  <div className="relative p-4">
+                    <div className="absolute top-6 left-6 z-10">
+                      <div className="px-4 py-2 bg-black/80 backdrop-blur-sm rounded-full border border-white/20">
+                        <span className="text-white text-xs font-bold uppercase tracking-wide">Real AI Video</span>
+                      </div>
+                    </div>
+                    <div className="rounded-2xl overflow-hidden bg-black">
+                      <div className="wistia_responsive_padding" style={{ padding: i === 0 ? '175.83% 0 0 0' : '177.22% 0 0 0', position: 'relative' }}>
+                        <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                          <iframe src={`https://fast.wistia.net/embed/iframe/${v.id}?web_component=true&seo=true`} title={v.title} allow="autoplay; fullscreen" frameBorder="0" scrolling="no" width="100%" height="100%" loading="lazy" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6 bg-gradient-to-t from-gray-50 to-white">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center">
+                        <CheckCircle className="w-7 h-7 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-gray-900">{v.title.replace(' Video', '')}</h3>
+                        <p className="text-gray-600 text-sm font-semibold">Generated in 6,7 minutes</p>
+                      </div>
+                    </div>
+                    <p className="text-gray-500 text-sm">AI powered video, no filming, no equipment</p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="space-y-4 mb-10">
+            <Card>
+              <div className="relative overflow-hidden">
+                <div className="flex animate-scroll">
+                  {[...Array(2)].map((_, setIndex) => (
+                    <div key={setIndex} className="flex gap-4 pr-4">
+                      {agents1.map((a, i) => (
+                        <div key={i} className="flex-shrink-0 w-40 md:w-48 group">
+                          <div className={`relative bg-white rounded-xl overflow-hidden border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:scale-105 ${tilt}`}>
+                            <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <img src={a.img} alt={a.name} className="w-full h-48 md:h-56 object-cover" loading="lazy" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-full group-hover:translate-y-0 transition-transform">
+                              <div className="flex items-start gap-2 text-white">
+                                <CheckCircle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                                <div>
+                                  <p className="font-black text-xs mb-0.5">{a.name}</p>
+                                  <p className="text-yellow-400 text-[10px] font-semibold">{a.loc}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Card>
+
+            <Card>
+              <div className="relative overflow-hidden">
+                <div className="flex animate-scroll-reverse">
+                  {[...Array(2)].map((_, setIndex) => (
+                    <div key={setIndex} className="flex gap-4 pr-4">
+                      {agents2.map((a, i) => (
+                        <div key={i} className="flex-shrink-0 w-40 md:w-48 group">
+                          <div className={`relative bg-white rounded-xl overflow-hidden border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:scale-105 ${tilt}`}>
+                            <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <img src={a.img} alt={a.name} className="w-full h-48 md:h-56 object-cover" loading="lazy" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-full group-hover:translate-y-0 transition-transform">
+                              <div className="flex items-start gap-2 text-white">
+                                <CheckCircle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                                <div>
+                                  <p className="font-black text-xs mb-0.5">{a.name}</p>
+                                  <p className="text-yellow-400 text-[10px] font-semibold">{a.loc}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <Card>
+            <div className="text-center">
+              <div className="inline-flex flex-col items-center gap-3 px-8 py-6 bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-400/30 rounded-2xl">
+                <Sparkles className="w-8 h-8 text-yellow-600" />
+                <p className="text-gray-800 font-bold text-lg">Create videos like these in <span className="text-yellow-700 font-black">7 minutes</span></p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section className="relative py-12 md:py-20 bg-white text-black">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
+          <Card>
+            <h2 className="text-3xl md:text-5xl font-black mb-8">Triple Guarantee Protection</h2>
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                { icon: Shield, title: '30 Day Money Back', desc: 'Full refund if you do not get leads' },
+                { icon: Zap, title: 'Instant Access', desc: 'Start in 5 minutes' },
+                { icon: TrendingUp, title: 'Free Updates for Life', desc: 'All improvements included' },
+              ].map((it, i) => (
+                <Card key={i}>
+                  <div className={`bg-white border-2 border-yellow-400/30 rounded-2xl p-6 ${tilt}`}>
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl grid place-items-center">
+                      <it.icon className="w-8 h-8 text-black" />
+                    </div>
+                    <h3 className="font-black text-gray-900 mb-3 text-xl">{it.title}</h3>
+                    <p className="text-gray-600 text-sm">{it.desc}</p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section className="relative py-12 md:py-20 bg-black">
+        <div className="max-w-5xl mx-auto px-4 md:px-6">
+          <Card><h2 className="text-3xl md:text-5xl font-black text-center mb-10">Common Questions</h2></Card>
+          <div className="space-y-4">
+            {faqs.map((f, i) => (
+              <Card key={i}>
+                <FAQItem question={f.q} answer={f.a} index={i} />
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-12 md:py-20 bg-black">
+        <Card>
+          <div className="max-w-5xl mx-auto px-4 md:px-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-black mb-6">Enrollment open now</h2>
+            <p className="text-xl text-gray-300 mb-10">Price jumps to $97 at midnight</p>
+            <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+               className="group relative inline-block w-full max-w-4xl">
+              <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
+              <div className="relative px-10 py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-xl uppercase tracking-wider flex items-center justify-center">
+                <span>Get instant access $37</span>
+              </div>
+            </a>
+          </div>
+        </Card>
+      </section>
     </div>
   );
 }
