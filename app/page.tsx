@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, ReactNode, memo } from 'react';
+import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
@@ -481,13 +482,14 @@ export default function AgentLandingPage() {
                         <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
                           <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
                             <iframe
-                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&preload=true&autoPlay=false"
+                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&preload=metadata&autoPlay=false&silentAutoPlay=false&controlsVisibleOnLoad=true&qualityControl=true"
                               title="VSL"
                               allow="autoplay; fullscreen"
                               frameBorder="0"
                               scrolling="no"
                               className="wistia_embed"
                               loading="eager"
+                              fetchPriority="high"
                               width="100%"
                               height="100%"
                             />
@@ -664,10 +666,12 @@ export default function AgentLandingPage() {
                     <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-yellow-500/20 shadow-2xl">
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
                       {p.image && (
-                        <img
+                        <Image
                           src={p.image}
                           alt={p.title}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
                           loading="lazy"
                         />
                       )}
@@ -717,10 +721,12 @@ export default function AgentLandingPage() {
 
                       <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
                         {b.image && (
-                          <img
+                          <Image
                             src={b.image}
                             alt={b.title}
-                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
                             loading="lazy"
                           />
                         )}
@@ -942,12 +948,16 @@ export default function AgentLandingPage() {
               <Card key={i} delay={i * 0.1}>
                 <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt} p-4 md:p-6`}>
                   <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
-                    <img
-                      src={t.image}
-                      alt={t.name}
-                      className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-2 border-yellow-400 shadow-lg"
-                      loading="lazy"
-                    />
+                    <div className="relative w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
+                      <Image
+                        src={t.image}
+                        alt={t.name}
+                        fill
+                        sizes="64px"
+                        className="rounded-full object-cover border-2 border-yellow-400 shadow-lg"
+                        loading="lazy"
+                      />
+                    </div>
                     <div className="flex-1">
                       <h4 className="text-gray-900 font-black text-base md:text-lg mb-1">{t.name}</h4>
                       <p className="text-gray-600 text-xs md:text-sm font-semibold mb-2">{t.location}</p>
@@ -1019,7 +1029,9 @@ export default function AgentLandingPage() {
                         <div key={i} className="flex-shrink-0 w-32 md:w-48 group">
                           <div className={`relative bg-white rounded-xl overflow-hidden border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:scale-105 ${tilt}`}>
                             <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <img src={a.img} alt={a.name} className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                            <div className="relative w-full h-40 md:h-56">
+                              <Image src={a.img} alt={a.name} fill sizes="(max-width: 768px) 128px, 192px" className="object-cover" loading="lazy" />
+                            </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                             <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 transform translate-y-full group-hover:translate-y-0 transition-transform">
                               <div className="flex items-start gap-2 text-white">
@@ -1048,7 +1060,9 @@ export default function AgentLandingPage() {
                         <div key={i} className="flex-shrink-0 w-32 md:w-48 group">
                           <div className={`relative bg-white rounded-xl overflow-hidden border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:scale-105 ${tilt}`}>
                             <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <img src={a.img} alt={a.name} className="w-full h-40 md:h-56 object-cover" loading="lazy" />
+                            <div className="relative w-full h-40 md:h-56">
+                              <Image src={a.img} alt={a.name} fill sizes="(max-width: 768px) 128px, 192px" className="object-cover" loading="lazy" />
+                            </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                             <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 transform translate-y-full group-hover:translate-y-0 transition-transform">
                               <div className="flex items-start gap-2 text-white">
