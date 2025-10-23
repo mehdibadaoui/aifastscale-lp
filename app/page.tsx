@@ -5,7 +5,8 @@ import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
-  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play
+  Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play, Pause,
+  Volume2, VolumeX, Maximize
 } from 'lucide-react';
 
 // Simple Card component without animations for better performance
@@ -33,6 +34,7 @@ export default function AgentLandingPage() {
   const [priceUnlocked, setPriceUnlocked] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [videoMuted, setVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -94,27 +96,31 @@ export default function AgentLandingPage() {
       setVideoPlaying(false);
     };
 
-    // Time update - track progress
+    // Time update - track progress with FASTER, SMOOTHER animation
     const handleTimeUpdate = () => {
       if (!video.duration) return;
 
       const percent = video.currentTime / video.duration;
-      console.log('Progress:', percent);
 
       // Unlock price at 80%
       if (percent >= 0.8 && !priceUnlocked) {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress (fast 0-50%, slower 50-90%, slowest 90-100%)
+      // Calculate fake progress - MUCH FASTER progression
+      // Makes progress bar appear to move 2-3x faster than actual video
       let fake = 0;
-      if (percent <= 0.5) {
-        fake = percent;
-      } else if (percent <= 0.9) {
-        fake = 0.5 + (percent - 0.5) * 1.0;
+      if (percent <= 0.3) {
+        // First 30% of video -> show 0-50% progress (fast)
+        fake = percent * 1.67;
+      } else if (percent <= 0.7) {
+        // Next 40% of video (30-70%) -> show 50-85% progress (medium)
+        fake = 0.5 + (percent - 0.3) * 0.875;
       } else {
-        fake = 0.9 + (percent - 0.9) * 1.0;
+        // Last 30% of video (70-100%) -> show 85-100% progress (slower)
+        fake = 0.85 + (percent - 0.7) * 0.5;
       }
+
       setFakeProgress(Math.min(fake * 100, 100));
     };
 
@@ -659,51 +665,140 @@ export default function AgentLandingPage() {
                       <div className="bg-yellow-400/5 rounded-xl p-2 text-center">
                         <p className="text-yellow-300 font-bold text-xs md:text-sm mb-2 uppercase tracking-wider">PLAY THIS WITH SOUND ON</p>
                       </div>
-                      <div className="rounded-xl overflow-hidden bg-black/50">
-                        <div className="relative" style={{ padding: '56.67% 0 0 0' }}>
+                      {/* Professional Video Player */}
+                      <div className="rounded-2xl overflow-hidden bg-black shadow-2xl border border-gray-800/50">
+                        <div className="relative group" style={{ padding: '56.67% 0 0 0' }}>
                           {/* HTML5 Video - Fast, Reliable, Full Control */}
                           <video
                             ref={videoRef}
                             className="absolute top-0 left-0 w-full h-full object-cover"
                             playsInline
-                            preload="metadata"
-                            poster="/videos/Hero-VSL.mp4?time=0"
+                            preload="auto"
+                            muted={videoMuted}
+                            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23000000'/%3E%3Cstop offset='100%25' style='stop-color:%231a1a1a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23g)'/%3E%3C/svg%3E"
                           >
                             <source src="/videos/Hero-VSL.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                           </video>
 
-                          {/* Custom Play Button Overlay */}
+                          {/* Center Play/Pause Button - Only shows when not playing */}
                           {!videoPlaying && (
                             <div
-                              className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] cursor-pointer z-50 transition-opacity duration-300 hover:bg-black/30"
+                              className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 via-black/20 to-black/60 cursor-pointer z-40 transition-all duration-500"
                               onClick={() => {
-                                console.log('Play button clicked');
                                 if (videoRef.current) {
                                   videoRef.current.play();
                                 }
                               }}
                             >
-                              <div className="relative group pointer-events-none">
-                                {/* Glowing ring animation */}
-                                <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-75 blur-xl group-hover:opacity-100 transition duration-300 animate-pulse"></div>
+                              <div className="relative group/play">
+                                {/* Animated gradient ring */}
+                                <div className="absolute -inset-6 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-full opacity-60 blur-2xl group-hover/play:opacity-90 transition-all duration-500 animate-pulse"></div>
 
-                                {/* Play button */}
-                                <div className="relative bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full p-6 md:p-8 shadow-2xl transform group-hover:scale-110 transition-transform duration-300">
-                                  <Play className="w-10 h-10 md:w-16 md:h-16 text-black fill-black" />
+                                {/* Outer glow ring */}
+                                <div className="absolute -inset-3 bg-gradient-to-br from-yellow-300/40 to-orange-400/40 rounded-full blur-lg group-hover/play:scale-110 transition-transform duration-300"></div>
+
+                                {/* Main play button */}
+                                <div className="relative bg-gradient-to-br from-yellow-400 via-orange-400 to-yellow-500 rounded-full p-8 md:p-12 shadow-2xl transform group-hover/play:scale-105 transition-all duration-300 border-4 border-white/20">
+                                  <Play className="w-12 h-12 md:w-20 md:h-20 text-black fill-black drop-shadow-lg" style={{ marginLeft: '4px' }} />
                                 </div>
+
+                                {/* Ripple effect */}
+                                <div className="absolute inset-0 rounded-full border-2 border-yellow-400/30 animate-ping"></div>
                               </div>
                             </div>
                           )}
+
+                          {/* Video Controls Overlay - Shows on hover when playing */}
+                          <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 pointer-events-none ${videoPlaying ? '' : 'hidden'}`}>
+                            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 pointer-events-auto">
+                              {/* Controls Container */}
+                              <div className="flex items-center gap-3 md:gap-4">
+                                {/* Play/Pause Toggle */}
+                                <button
+                                  onClick={() => {
+                                    if (videoRef.current) {
+                                      if (videoPlaying) {
+                                        videoRef.current.pause();
+                                      } else {
+                                        videoRef.current.play();
+                                      }
+                                    }
+                                  }}
+                                  className="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full p-2 md:p-3 transition-all duration-200 transform hover:scale-110 active:scale-95"
+                                >
+                                  {videoPlaying ? (
+                                    <Pause className="w-5 h-5 md:w-6 md:h-6 text-white fill-white" />
+                                  ) : (
+                                    <Play className="w-5 h-5 md:w-6 md:h-6 text-white fill-white" />
+                                  )}
+                                </button>
+
+                                {/* Mute/Unmute */}
+                                <button
+                                  onClick={() => {
+                                    if (videoRef.current) {
+                                      const newMuted = !videoMuted;
+                                      setVideoMuted(newMuted);
+                                      videoRef.current.muted = newMuted;
+                                    }
+                                  }}
+                                  className="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full p-2 md:p-3 transition-all duration-200 transform hover:scale-110 active:scale-95"
+                                >
+                                  {videoMuted ? (
+                                    <VolumeX className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                                  ) : (
+                                    <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                                  )}
+                                </button>
+
+                                {/* Fullscreen */}
+                                <button
+                                  onClick={() => {
+                                    if (videoRef.current) {
+                                      if (videoRef.current.requestFullscreen) {
+                                        videoRef.current.requestFullscreen();
+                                      }
+                                    }
+                                  }}
+                                  className="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full p-2 md:p-3 transition-all duration-200 transform hover:scale-110 active:scale-95 ml-auto"
+                                >
+                                  <Maximize className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Click anywhere to pause when playing */}
+                          {videoPlaying && (
+                            <div
+                              className="absolute inset-0 z-20 cursor-pointer"
+                              onClick={() => {
+                                if (videoRef.current) {
+                                  videoRef.current.pause();
+                                }
+                              }}
+                            />
+                          )}
                         </div>
 
-                        {/* Custom Fake Progress Bar */}
-                        <div className="relative w-full h-1.5 md:h-2 bg-gray-800/80">
+                        {/* Professional Progress Bar - Bigger, Clearer, Smoother */}
+                        <div className="relative w-full h-3 md:h-4 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-inner">
+                          {/* Background shine effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+
+                          {/* Actual progress bar */}
                           <div
-                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-green-400 transition-all duration-300 ease-linear"
+                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 via-orange-400 to-green-400 transition-all duration-100 ease-linear shadow-lg"
                             style={{ width: `${fakeProgress}%` }}
                           >
-                            <div className="absolute top-0 right-0 h-full w-2 bg-white/30 blur-sm"></div>
+                            {/* Shine effect on progress */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+
+                            {/* Progress indicator dot */}
+                            <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-4 h-4 md:w-5 md:h-5 bg-white rounded-full shadow-lg border-2 border-orange-400">
+                              <div className="absolute inset-0 bg-orange-400 rounded-full animate-ping opacity-50"></div>
+                            </div>
                           </div>
                         </div>
                       </div>
