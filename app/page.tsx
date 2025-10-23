@@ -118,20 +118,20 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - FAST first 50%, then gradual slowdown (looks natural!)
+      // Calculate fake progress - SUPER FAST first 40%, then gradual slowdown
       let fake = 0;
-      if (percent <= 0.5) {
-        // First 50% of video -> show 0-80% progress (FAST - viewers engaged!)
-        fake = percent * 1.6;
-      } else if (percent <= 0.7) {
-        // Next 20% of video (50-70%) -> show 80-90% progress (medium speed)
-        fake = 0.8 + (percent - 0.5) * 0.5;
-      } else if (percent <= 0.85) {
-        // Next 15% of video (70-85%) -> show 90-95% progress (slower)
-        fake = 0.9 + (percent - 0.7) * 0.333;
+      if (percent <= 0.4) {
+        // First 40% of video -> show 0-85% progress (SUPER FAST!)
+        fake = percent * 2.125;
+      } else if (percent <= 0.6) {
+        // Next 20% of video (40-60%) -> show 85-92% progress (fast)
+        fake = 0.85 + (percent - 0.4) * 0.35;
+      } else if (percent <= 0.8) {
+        // Next 20% of video (60-80%) -> show 92-96% progress (medium)
+        fake = 0.92 + (percent - 0.6) * 0.2;
       } else {
-        // Last 15% of video (85-100%) -> show 95-100% progress (slowest - natural finish)
-        fake = 0.95 + (percent - 0.85) * 0.333;
+        // Last 20% of video (80-100%) -> show 96-100% progress (natural finish)
+        fake = 0.96 + (percent - 0.8) * 0.2;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -770,9 +770,9 @@ export default function AgentLandingPage() {
 
                           {/* Unmute Notification as INITIAL THUMBNAIL - Shows BEFORE video starts */}
                           {!videoStarted && !showContinueModal && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-40">
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/70 z-40">
                               <div
-                                className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-8 md:p-12 border-4 border-white shadow-2xl max-w-lg mx-4 cursor-pointer hover:scale-105 transition-transform duration-300"
+                                className="bg-gray-700/90 backdrop-blur-sm rounded-3xl px-12 py-10 border-4 border-white/80 max-w-xl mx-4 cursor-pointer hover:bg-gray-600/90 transition-all duration-300"
                                 onClick={() => {
                                   if (videoRef.current) {
                                     setVideoStarted(true);
@@ -783,24 +783,24 @@ export default function AgentLandingPage() {
                                   }
                                 }}
                               >
-                                <h3 className="text-white text-2xl md:text-3xl font-black text-center mb-6">
+                                <h3 className="text-white text-2xl md:text-3xl font-bold text-center mb-8">
                                   Your video has already started
                                 </h3>
 
-                                {/* Muted speaker icon */}
-                                <div className="flex justify-center mb-6">
-                                  <VolumeX className="w-24 h-24 md:w-32 md:h-32 text-white" strokeWidth={2.5} />
+                                {/* Muted speaker icon - Simple and clean */}
+                                <div className="flex justify-center mb-8">
+                                  <VolumeX className="w-20 h-20 md:w-24 md:h-24 text-white" strokeWidth={3} />
                                 </div>
 
-                                <p className="text-white text-2xl md:text-3xl font-black text-center">
+                                <p className="text-white text-xl md:text-2xl font-bold text-center">
                                   Click to listen
                                 </p>
                               </div>
                             </div>
                           )}
 
-                          {/* Video Controls Overlay - Shows on hover when playing */}
-                          <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 pointer-events-none ${videoPlaying ? '' : 'hidden'}`}>
+                          {/* Video Controls Overlay - Shows on hover */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 pointer-events-none">
                             <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 pointer-events-auto">
                               {/* Controls Container */}
                               <div className="flex items-center gap-3 md:gap-4">
@@ -872,14 +872,14 @@ export default function AgentLandingPage() {
                           )}
                         </div>
 
-                        {/* BIGGER, SMOOTH Progress Bar */}
+                        {/* BIGGER, SUPER SMOOTH Progress Bar */}
                         <div className="relative w-full h-3 md:h-4 bg-gray-900">
-                          {/* Simple green progress bar - SMOOTH with no transition jumps */}
+                          {/* Simple green progress bar - ULTRA SMOOTH with fast transitions */}
                           <div
                             className="absolute top-0 left-0 h-full bg-green-500"
                             style={{
                               width: `${fakeProgress}%`,
-                              transition: 'width 0.3s linear'
+                              transition: 'width 0.1s linear'
                             }}
                           />
                         </div>
