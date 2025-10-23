@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, ReactNode, memo } from 'react';
+import React, { useEffect, useState, useRef, ReactNode, memo } from 'react';
 import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
@@ -33,6 +33,7 @@ export default function AgentLandingPage() {
   const [priceUnlocked, setPriceUnlocked] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const videoRef = useRef<any>(null);
 
   useEffect(() => {
     // Security: Light anti-inspect measures - NOTE: This only stops casual users, not developers
@@ -84,6 +85,9 @@ export default function AgentLandingPage() {
           (window as any)._wq.push({
             id: 'skseake2i0',
             onReady: (video: any) => {
+              // Store video instance in ref
+              videoRef.current = video;
+
               // Track play/pause state
               video.bind('play', () => {
                 setVideoPlaying(true);
@@ -125,6 +129,9 @@ export default function AgentLandingPage() {
         (window as any)._wq.push({
           id: 'skseake2i0',
           onReady: (video: any) => {
+            // Store video instance in ref
+            videoRef.current = video;
+
             // Track play/pause state
             video.bind('play', () => {
               setVideoPlaying(true);
@@ -694,14 +701,9 @@ export default function AgentLandingPage() {
                             <div
                               className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] cursor-pointer z-10 transition-opacity duration-300 hover:bg-black/30"
                               onClick={() => {
-                                // Play video via Wistia API
-                                if (typeof window !== 'undefined' && (window as any)._wq) {
-                                  (window as any)._wq.push({
-                                    id: 'skseake2i0',
-                                    onReady: (video: any) => {
-                                      video.play();
-                                    }
-                                  });
+                                // Play video using stored ref
+                                if (videoRef.current) {
+                                  videoRef.current.play();
                                 }
                               }}
                             >
