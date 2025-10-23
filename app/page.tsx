@@ -81,28 +81,40 @@ const LazyVideo: React.FC<LazyVideoProps> = memo(({ videoId, title, aspectRatio,
         style={{ paddingTop: aspectRatio }}
         aria-label={`Play ${title}`}
       >
-        <div className="absolute inset-0 bg-black rounded-xl overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-xl overflow-hidden">
           {posterImage && (
             <Image
               src={posterImage}
               alt={title}
               fill
-              className="object-cover"
+              className="object-cover opacity-60"
               sizes="(max-width: 768px) 100vw, 800px"
               loading="lazy"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-          <div className="absolute inset-0 flex items-center justify-center">
+          {!posterImage && (
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-900/20 via-black to-orange-900/20" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
+
+          {/* Play button */}
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="relative">
-              <div className="absolute -inset-4 bg-yellow-500 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
-              <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                <Play className="w-8 h-8 md:w-10 md:h-10 text-black ml-1" fill="currentColor" />
+              <div className="absolute -inset-4 bg-yellow-500 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse" />
+              <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform border-4 border-white/20">
+                <Play className="w-10 h-10 md:w-12 md:h-12 text-black ml-1.5" fill="currentColor" />
               </div>
             </div>
           </div>
-          <div className="absolute bottom-4 left-4 right-4 text-white">
-            <p className="text-xs md:text-sm font-bold bg-black/60 backdrop-blur-sm px-3 py-2 rounded-lg inline-block">
+
+          {/* Video title overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
+            <div className="flex items-center gap-2 mb-2">
+              <Video className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
+              <p className="text-white font-bold text-sm md:text-base">{title}</p>
+            </div>
+            <p className="text-yellow-300 text-xs md:text-sm font-bold flex items-center gap-2">
+              <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
               Click to play video
             </p>
           </div>
