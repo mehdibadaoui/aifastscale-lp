@@ -489,7 +489,6 @@ export default function AgentLandingPage() {
                               scrolling="no"
                               className="wistia_embed"
                               loading="eager"
-                              fetchPriority="high"
                               width="100%"
                               height="100%"
                             />
