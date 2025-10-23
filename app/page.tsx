@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState, ReactNode, memo } from 'react';
+import React, { useEffect, useState, ReactNode, memo } from 'react';
 import Image from 'next/image';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
@@ -12,7 +12,6 @@ import {
 interface CardProps {
   children: ReactNode;
   className?: string;
-  delay?: number;
 }
 
 const Card: React.FC<CardProps> = memo(({ children, className = '' }) => {
@@ -421,7 +420,7 @@ export default function AgentLandingPage() {
                         <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
                           <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
                             <iframe
-                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true"
+                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true&preload=metadata&playbar=true&fullscreenButton=true&settingsControl=false&volumeControl=true&qualityControl=false&controlsVisibleOnLoad=false"
                               title="VSL"
                               allow="autoplay; fullscreen"
                               frameBorder="0"
@@ -429,6 +428,8 @@ export default function AgentLandingPage() {
                               className="wistia_embed"
                               width="100%"
                               height="100%"
+                              loading="eager"
+                              fetchPriority="high"
                             />
                           </div>
                         </div>
@@ -602,9 +603,10 @@ export default function AgentLandingPage() {
                           src={p.image}
                           alt={p.title}
                           fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
+                          sizes="(max-width: 768px) 100vw, 50vw"
                           className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                          loading="lazy"
+                          priority={i < 2}
+                          loading={i < 2 ? undefined : "lazy"}
                         />
                       )}
                       <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-20">

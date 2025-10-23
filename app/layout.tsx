@@ -78,10 +78,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://fast.wistia.net" />
-        <link rel="preconnect" href="https://embed-ssl.wistia.com" />
+        <link rel="preconnect" href="https://fast.wistia.net" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://embed-ssl.wistia.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://buy.stripe.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fast.wistia.net" />
         <link rel="dns-prefetch" href="https://embed-ssl.wistia.com" />
+        <link rel="dns-prefetch" href="https://buy.stripe.com" />
 
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
