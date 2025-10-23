@@ -97,6 +97,8 @@ export default function AgentLandingPage() {
     const handleEnded = () => {
       console.log('Video ended');
       setVideoPlaying(false);
+      // Mark video as completed when it reaches the end
+      localStorage.setItem('heroVideoCompleted', 'true');
     };
 
     // Time update - track progress with SUPER FAST beginning
@@ -150,12 +152,14 @@ export default function AgentLandingPage() {
     };
   }, [priceUnlocked]);
 
-  // Check for saved video progress on load
+  // Check for saved video progress on load - ONLY show if video was completed
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedTime = localStorage.getItem('heroVideoTime');
-      if (savedTime && parseFloat(savedTime) > 5) {
-        // If user watched more than 5 seconds, show continue modal
+      const videoCompleted = localStorage.getItem('heroVideoCompleted');
+
+      // ONLY show continue modal if user COMPLETED the video (watched to the end)
+      if (videoCompleted === 'true' && savedTime && parseFloat(savedTime) > 5) {
         setSavedVideoTime(parseFloat(savedTime));
         setShowContinueModal(true);
       }
@@ -740,7 +744,9 @@ export default function AgentLandingPage() {
                                     onClick={() => {
                                       setShowContinueModal(false);
                                       setVideoStarted(true);
+                                      // Clear both time and completed flag when starting from beginning
                                       localStorage.removeItem('heroVideoTime');
+                                      localStorage.removeItem('heroVideoCompleted');
                                       if (videoRef.current) {
                                         videoRef.current.muted = false;
                                         videoRef.current.currentTime = 0;
@@ -770,6 +776,8 @@ export default function AgentLandingPage() {
                                 onClick={() => {
                                   if (videoRef.current) {
                                     setVideoStarted(true);
+                                    // Clear completed flag when starting fresh
+                                    localStorage.removeItem('heroVideoCompleted');
                                     videoRef.current.muted = false; // Start WITH SOUND!
                                     videoRef.current.play();
                                   }
