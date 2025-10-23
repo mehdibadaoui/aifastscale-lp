@@ -518,7 +518,6 @@ export default function AgentLandingPage() {
                           videoId="skseake2i0"
                           title="VSL - 7 Minute AgentClone Course"
                           aspectRatio="56.67%"
-                          posterImage="/images/P1_result.webp"
                         />
                       </div>
                     </div>
@@ -854,7 +853,6 @@ export default function AgentLandingPage() {
                       videoId="4o934arsbs"
                       title="Mr Lucas Actual Video"
                       aspectRatio="177.78%"
-                      posterImage="/images/P3_result.webp"
                     />
                   </div>
                 </div>
@@ -1004,8 +1002,8 @@ export default function AgentLandingPage() {
 
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto mb-8 md:mb-10">
             {[
-              { id: 'k1gfuxd7uw', title: 'Agent Steven Video', aspectRatio: '175.83%', poster: '/images/IMG_3365_result.webp' },
-              { id: 'eilfzivcqu', title: 'Agent Gabriel Video', aspectRatio: '177.22%', poster: '/images/IMG_3367_result.webp' },
+              { id: 'k1gfuxd7uw', title: 'Agent Steven Video', aspectRatio: '175.83%' },
+              { id: 'eilfzivcqu', title: 'Agent Gabriel Video', aspectRatio: '177.22%' },
             ].map((v, i) => (
               <Card key={i} delay={i * 0.2}>
                 <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt}`}>
@@ -1020,7 +1018,6 @@ export default function AgentLandingPage() {
                         videoId={v.id}
                         title={v.title}
                         aspectRatio={v.aspectRatio}
-                        posterImage={v.poster}
                       />
                     </div>
                   </div>
