@@ -359,7 +359,7 @@ export default function AgentLandingPage() {
                 <Users className="w-3 h-3 md:w-6 md:h-6 text-black" />
               </div>
               <div className="text-sm md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-0.5 md:mb-1">500+</div>
-              <div className="text-gray-300 text-[8px] md:text-xs font-semibold">Active Agents</div>
+              <div className="text-gray-300 text-[10px] md:text-xs font-semibold">Active Agents</div>
             </div>
           </div>
         </div>
@@ -372,7 +372,7 @@ export default function AgentLandingPage() {
                 <Video className="w-3 h-3 md:w-6 md:h-6 text-black" />
               </div>
               <div className="text-sm md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-0.5 md:mb-1">7 Min</div>
-              <div className="text-gray-300 text-[8px] md:text-xs font-semibold">Video Creation</div>
+              <div className="text-gray-300 text-[10px] md:text-xs font-semibold">Video Creation</div>
             </div>
           </div>
         </div>
@@ -385,7 +385,7 @@ export default function AgentLandingPage() {
                 <TrendingUp className="w-3 h-3 md:w-6 md:h-6 text-black" />
               </div>
               <div className="text-sm md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text mb-0.5 md:mb-1">100+</div>
-              <div className="text-gray-300 text-[8px] md:text-xs font-semibold">Monthly Leads</div>
+              <div className="text-gray-300 text-[10px] md:text-xs font-semibold">Monthly Leads</div>
             </div>
           </div>
         </div>
@@ -710,130 +710,89 @@ export default function AgentLandingPage() {
             </div>
           </Card>
 
-          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-10 mb-12 md:mb-16">
             {products.map((p, i) => (
-              <Card key={i}>
-                <div className="group relative bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl overflow-hidden border border-yellow-500/10 hover:border-yellow-500/30 transition-all duration-500">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  <div className="relative p-6 md:p-8">
-                    <div className="flex items-start justify-between mb-4 md:mb-6">
-                      <div className="flex-1">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full mb-3 md:mb-4">
-                          <Award className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-                          <span className="text-yellow-400 font-bold text-[10px] md:text-sm uppercase tracking-wider">Core Module {i + 1}</span>
-                        </div>
-                        <h3 className="text-xl md:text-3xl font-black text-white mb-2 md:mb-3 leading-tight">{p.title}</h3>
-                        <p className="text-gray-400 text-xs md:text-base leading-relaxed">{p.description}</p>
-                      </div>
-
-                      <div className="ml-4 md:ml-6 flex-shrink-0">
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                          <div className="relative px-4 py-2 md:px-6 md:py-3 bg-gradient-to-br from-yellow-400 via-amber-400 to-orange-500 rounded-2xl shadow-2xl">
-                            <div className="text-center">
-                              <div className="text-[8px] md:text-xs font-bold text-black/70 uppercase tracking-wider mb-0.5">Value</div>
-                              <div className="text-lg md:text-2xl font-black text-black">${p.value}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-yellow-500/20 shadow-2xl">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
-                      {p.image && (
-                        <Image
-                          src={p.image}
-                          alt={p.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                          priority={i < 2}
-                          loading={i < 2 ? undefined : "lazy"}
-                        />
-                      )}
-                      <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-20">
-                        <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                          <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-black" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 md:mt-6 grid grid-cols-3 gap-2">
-                      {[
-                        { label: 'Instant Access' },
-                        { label: 'Step by Step' },
-                        { label: 'Ready to Use' }
-                      ].map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 px-2 py-1.5 bg-yellow-500/5 border border-yellow-500/20 rounded-lg">
-                          <CheckCircle className="w-3 h-3 text-yellow-400 flex-shrink-0" />
-                          <span className="text-[10px] font-semibold text-gray-300 leading-tight">{feature.label}</span>
-                        </div>
-                      ))}
+              <div key={i} className="group bg-gray-900/40 backdrop-blur-sm border-2 border-gray-800 hover:border-yellow-400/40 rounded-2xl overflow-hidden transition-all duration-300">
+                <div className="relative w-full aspect-[16/10] overflow-hidden bg-gray-900">
+                  {p.image && (
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      priority={i < 2}
+                      loading={i < 2 ? undefined : "lazy"}
+                    />
+                  )}
+                  <div className="absolute top-4 left-4">
+                    <span className="inline-block px-3 py-1 md:px-4 md:py-1.5 bg-yellow-400 text-black text-xs md:text-sm font-black rounded-full">Module {i + 1}</span>
+                  </div>
+                  <div className="absolute top-4 right-4">
+                    <div className="px-3 py-1 md:px-4 md:py-2 bg-black/80 backdrop-blur-sm rounded-lg border border-yellow-400/30">
+                      <span className="text-yellow-400 font-black text-sm md:text-lg">${p.value}</span>
                     </div>
                   </div>
                 </div>
-              </Card>
+
+                <div className="p-6 md:p-8">
+                  <h3 className="text-xl md:text-2xl font-black text-white mb-3 leading-tight">{p.title}</h3>
+                  <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-4">{p.description}</p>
+                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span>Instant Access</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span>Step-by-Step</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
-          <Card>
-            <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl overflow-hidden border border-yellow-500/20 p-6 md:p-12">
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-transparent to-orange-500/5"></div>
-
-              <div className="relative text-center mb-8 md:mb-10">
-                <div className="inline-flex items-center gap-2 md:gap-3 px-4 py-2 md:px-8 md:py-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl mb-4 md:mb-6 shadow-2xl">
-                  <Sparkles className="w-5 h-5 md:w-7 md:h-7 text-black" />
-                  <span className="text-black font-black text-base md:text-xl uppercase tracking-wider">Exclusive Bonuses</span>
-                </div>
-                <h3 className="text-2xl md:text-4xl font-black text-white mb-2">3 Premium Add-Ons</h3>
-                <p className="text-gray-400 text-sm md:text-lg">Included at no extra cost</p>
+          <div className="bg-gray-900/40 backdrop-blur-sm border-2 border-gray-800 rounded-2xl p-8 md:p-12 mb-12 md:mb-16">
+            <div className="text-center mb-8 md:mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full mb-4">
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
+                <span className="text-yellow-400 font-black text-xs md:text-sm uppercase">Bonus Content</span>
               </div>
-
-              <div className="relative grid md:grid-cols-3 gap-4 md:gap-6">
-                {bonuses.map((b, i) => (
-                  <Card key={i}>
-                    <div className="group relative bg-gradient-to-br from-gray-800 to-black rounded-2xl overflow-hidden border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-500">
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl"></div>
-
-                      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-900 to-black">
-                        {b.image && (
-                          <Image
-                            src={b.image}
-                            alt={b.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 33vw"
-                            className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
-                            loading="lazy"
-                          />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                        <div className="absolute top-3 left-3 md:top-4 md:left-4">
-                          <div className="px-3 py-1 md:px-4 md:py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-xl">
-                            <span className="text-black font-black text-xs md:text-sm uppercase tracking-wide">Bonus {i + 1}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="relative p-4 md:p-6">
-                        <h4 className="text-base md:text-xl font-black text-white mb-3 md:mb-4 leading-tight">{b.title}</h4>
-                        <div className="flex items-center justify-between">
-                          <div className="inline-flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-                            <span className="text-yellow-400 font-black text-xl md:text-2xl">${b.value}</span>
-                            <span className="text-gray-400 text-[10px] md:text-xs font-semibold uppercase">Value</span>
-                          </div>
-                          <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center shadow-lg group-hover:scale-110 transition-transform">
-                            <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-black" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+              <h3 className="text-2xl md:text-4xl font-black text-white mb-2">3 Premium Add-Ons Included</h3>
+              <p className="text-gray-400 text-sm md:text-base">No extra cost • Instant access</p>
             </div>
-          </Card>
+
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              {bonuses.map((b, i) => (
+                <div key={i} className="group bg-gray-800/40 border-2 border-gray-700 hover:border-yellow-400/40 rounded-xl overflow-hidden transition-all duration-300">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gray-900">
+                    {b.image && (
+                      <Image
+                        src={b.image}
+                        alt={b.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="absolute top-3 left-3">
+                      <span className="inline-block px-3 py-1 bg-yellow-400 text-black text-xs font-black rounded-full">Bonus {i + 1}</span>
+                    </div>
+                  </div>
+
+                  <div className="p-5 md:p-6">
+                    <h4 className="text-base md:text-lg font-black text-white mb-3 leading-tight">{b.title}</h4>
+                    <div className="flex items-center justify-between">
+                      <span className="text-yellow-400 font-black text-lg md:text-xl">${b.value} Value</span>
+                      <CheckCircle className="w-5 h-5 text-green-400" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <Card>
             <div className="flex flex-col items-center gap-4 md:gap-6 px-4 mt-10 md:mt-12">
@@ -1163,7 +1122,7 @@ export default function AgentLandingPage() {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-10">
             {(showAllTestimonials ? testimonials : testimonials.slice(0, 6)).map((t, i) => (
               <Card key={i}>
-                <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 ${tilt} p-4 md:p-6`}>
+                <div className={`bg-white rounded-3xl overflow-hidden border-2 border-gray-200 shadow-xl hover:shadow-2xl hover:border-yellow-400/50 transition-all duration-300 ${tilt} p-5 md:p-7`}>
                   <div className="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
                     <div className="relative w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
                       <Image
