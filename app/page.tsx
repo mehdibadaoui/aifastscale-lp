@@ -31,6 +31,7 @@ export default function AgentLandingPage() {
   const [showSecurityPopup, setShowSecurityPopup] = useState(false);
   const [showAllTestimonials, setShowAllTestimonials] = useState(false);
   const [priceUnlocked, setPriceUnlocked] = useState(false);
+  const [fakeProgress, setFakeProgress] = useState(0);
 
   useEffect(() => {
     // Security: Light anti-inspect measures - NOTE: This only stops casual users, not developers
@@ -83,9 +84,24 @@ export default function AgentLandingPage() {
             id: 'skseake2i0',
             onReady: (video: any) => {
               video.bind('percentwatchedchanged', (percent: number) => {
+                // Unlock price at 80%
                 if (percent >= 0.8 && !priceUnlocked) {
                   setPriceUnlocked(true);
                 }
+
+                // Calculate fake progress
+                let fake = 0;
+                if (percent <= 0.5) {
+                  // 0-50% real = 0-50% fake (fast, 1:1 ratio)
+                  fake = percent;
+                } else if (percent <= 0.9) {
+                  // 50-90% real = 50-90% fake (slower, takes 40% real for 40% fake)
+                  fake = 0.5 + (percent - 0.5) * 1.0;
+                } else {
+                  // 90-100% real = 90-100% fake (very slow, takes 10% real for 10% fake)
+                  fake = 0.9 + (percent - 0.9) * 1.0;
+                }
+                setFakeProgress(Math.min(fake * 100, 100));
               });
             }
           });
@@ -625,7 +641,7 @@ export default function AgentLandingPage() {
                         <div className="wistia_responsive_padding" style={{ padding: '56.67% 0 0 0', position: 'relative' }}>
                           <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
                             <iframe
-                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true&preload=metadata&playbar=true&fullscreenButton=true&settingsControl=false&volumeControl=true&qualityControl=false&controlsVisibleOnLoad=false"
+                              src="https://fast.wistia.net/embed/iframe/skseake2i0?web_component=true&seo=true&videoFoam=true&preload=metadata&playbar=false&playButton=false&fullscreenButton=false&settingsControl=false&volumeControl=false&qualityControl=false&controlsVisibleOnLoad=false&time=false"
                               title="VSL"
                               allow="autoplay; fullscreen"
                               frameBorder="0"
@@ -635,6 +651,16 @@ export default function AgentLandingPage() {
                               height="100%"
                               loading="eager"
                             />
+                          </div>
+                        </div>
+
+                        {/* Custom Fake Progress Bar */}
+                        <div className="relative w-full h-1.5 md:h-2 bg-gray-800/80">
+                          <div
+                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-green-400 transition-all duration-300 ease-linear"
+                            style={{ width: `${fakeProgress}%` }}
+                          >
+                            <div className="absolute top-0 right-0 h-full w-2 bg-white/30 blur-sm"></div>
                           </div>
                         </div>
                       </div>
