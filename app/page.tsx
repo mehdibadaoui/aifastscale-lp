@@ -118,20 +118,20 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - INSANELY FAST first 50%, then slow down
+      // Calculate fake progress - ULTRA FAST first 50%, then crawl (1.9x speed!)
       let fake = 0;
       if (percent <= 0.5) {
-        // First 50% of video -> show 0-90% progress (1.8x speed - SUPER FAST!)
-        fake = percent * 1.8;
+        // First 50% of video -> show 0-95% progress (1.9x speed - FEELS ALMOST DONE!)
+        fake = percent * 1.9;
       } else if (percent <= 0.7) {
-        // Next 20% of video (50-70%) -> show 90-95% progress (medium)
-        fake = 0.9 + (percent - 0.5) * 0.25;
+        // Next 20% of video (50-70%) -> show 95-97% progress (slow crawl)
+        fake = 0.95 + (percent - 0.5) * 0.1;
       } else if (percent <= 0.85) {
-        // Next 15% of video (70-85%) -> show 95-98% progress (slow)
-        fake = 0.95 + (percent - 0.7) * 0.2;
+        // Next 15% of video (70-85%) -> show 97-99% progress (very slow)
+        fake = 0.97 + (percent - 0.7) * 0.133;
       } else {
-        // Last 15% of video (85-100%) -> show 98-100% progress (very slow - natural)
-        fake = 0.98 + (percent - 0.85) * 0.133;
+        // Last 15% of video (85-100%) -> show 99-100% progress (natural finish)
+        fake = 0.99 + (percent - 0.85) * 0.0667;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -942,6 +942,57 @@ export default function AgentLandingPage() {
               </div>
             </div>
           </Card>
+        </div>
+      </section>
+
+      {/* ERIC RIES QUOTE - HIGH BRANDING QUALITY */}
+      <section className="relative py-16 md:py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
+        {/* Animated background effects */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.05),transparent_50%)]"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
+
+        <div className="relative max-w-6xl mx-auto px-4">
+          <div className="backdrop-blur-sm bg-gradient-to-br from-white/5 to-white/10 border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              {/* Eric Ries Image */}
+              <div className="relative flex-shrink-0">
+                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-green-500 rounded-full opacity-75 blur-lg animate-pulse" style={{ animationDuration: '3s' }}></div>
+                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
+                    alt="Eric Ries"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Quote Content */}
+              <div className="flex-1 text-center md:text-left">
+                {/* Quote Icon */}
+                <div className="text-yellow-500/30 text-6xl md:text-7xl font-serif leading-none mb-4">"</div>
+
+                {/* Quote Text */}
+                <blockquote className="space-y-4">
+                  <p className="text-white text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-tight">
+                    The only way to win is to{' '}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-green-400">
+                      learn faster
+                    </span>
+                    {' '}than anyone else
+                  </p>
+
+                  {/* Attribution */}
+                  <footer className="flex items-center justify-center md:justify-start gap-3 pt-4 border-t border-white/10">
+                    <div className="text-left">
+                      <cite className="not-italic text-white font-bold text-lg md:text-xl block">Eric Ries</cite>
+                      <p className="text-gray-400 text-sm md:text-base">Author of "The Lean Startup"</p>
+                    </div>
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
