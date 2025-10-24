@@ -118,20 +118,20 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - SUPER FAST first 40%, then gradual slowdown
+      // Calculate fake progress - INSANELY FAST first 50%, then slow down
       let fake = 0;
-      if (percent <= 0.4) {
-        // First 40% of video -> show 0-85% progress (SUPER FAST!)
-        fake = percent * 2.125;
-      } else if (percent <= 0.6) {
-        // Next 20% of video (40-60%) -> show 85-92% progress (fast)
-        fake = 0.85 + (percent - 0.4) * 0.35;
-      } else if (percent <= 0.8) {
-        // Next 20% of video (60-80%) -> show 92-96% progress (medium)
-        fake = 0.92 + (percent - 0.6) * 0.2;
+      if (percent <= 0.5) {
+        // First 50% of video -> show 0-90% progress (1.8x speed - SUPER FAST!)
+        fake = percent * 1.8;
+      } else if (percent <= 0.7) {
+        // Next 20% of video (50-70%) -> show 90-95% progress (medium)
+        fake = 0.9 + (percent - 0.5) * 0.25;
+      } else if (percent <= 0.85) {
+        // Next 15% of video (70-85%) -> show 95-98% progress (slow)
+        fake = 0.95 + (percent - 0.7) * 0.2;
       } else {
-        // Last 20% of video (80-100%) -> show 96-100% progress (natural finish)
-        fake = 0.96 + (percent - 0.8) * 0.2;
+        // Last 15% of video (85-100%) -> show 98-100% progress (very slow - natural)
+        fake = 0.98 + (percent - 0.85) * 0.133;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -702,7 +702,7 @@ export default function AgentLandingPage() {
                             playsInline
                             preload="auto"
                             muted={videoMuted}
-                            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23000000'/%3E%3Cstop offset='100%25' style='stop-color:%231a1a1a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23g)'/%3E%3C/svg%3E"
+                            poster="/images/video-thumbnail.jpg"
                           >
                             <source src="/videos/Hero-VSL.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
