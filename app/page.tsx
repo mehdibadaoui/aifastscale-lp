@@ -32,6 +32,7 @@ export default function AgentLandingPage() {
   const [showSecurityPopup, setShowSecurityPopup] = useState(false);
   const [showAllTestimonials, setShowAllTestimonials] = useState(false);
   const [priceUnlocked, setPriceUnlocked] = useState(false);
+  const [isReturningVisitor, setIsReturningVisitor] = useState(false);
   const [fakeProgress, setFakeProgress] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [videoStarted, setVideoStarted] = useState(false); // Track if user clicked to start
@@ -76,6 +77,20 @@ export default function AgentLandingPage() {
     }
   }, []);
 
+  // Check if returning visitor and unlock price immediately
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hasVisited = localStorage.getItem('hasVisitedLP');
+      if (hasVisited === 'true') {
+        setIsReturningVisitor(true);
+        setPriceUnlocked(true);
+      } else {
+        // Mark as visited for future visits
+        localStorage.setItem('hasVisitedLP', 'true');
+      }
+    }
+  }, []);
+
   // HTML5 Video Setup - much simpler and faster than Wistia!
   useEffect(() => {
     const video = videoRef.current;
@@ -113,9 +128,10 @@ export default function AgentLandingPage() {
         localStorage.setItem('heroVideoTime', currentTime.toString());
       }
 
-      // Unlock price at 80%
-      if (percent >= 0.8 && !priceUnlocked) {
+      // Unlock price at 245s (92.4% of 265s video) - only for first-time visitors
+      if (percent >= 0.924 && !priceUnlocked && !isReturningVisitor) {
         setPriceUnlocked(true);
+        localStorage.setItem('priceUnlocked', 'true');
       }
 
       // Calculate fake progress - 4 PHASES based on 4:25min video (265s total)
@@ -908,17 +924,37 @@ export default function AgentLandingPage() {
                     <div className="space-y-3">
                       <div className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full backdrop-blur-sm">
                         <Eye className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 animate-pulse" />
-                        <span className="text-yellow-400 text-sm md:text-base font-bold">Watch 80% to unlock special price</span>
+                        <span className="text-yellow-400 text-sm md:text-base font-bold">Watch video to unlock special price</span>
                       </div>
                       <div className="text-gray-400 text-3xl md:text-5xl font-black tracking-tight blur-sm select-none">US$ ??</div>
                     </div>
                   ) : (
-                    <div className="price-reveal">
-                      <div className="flex items-center justify-center gap-2 flex-wrap px-2">
-                        <span className="text-red-400 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
-                        <span className="text-white text-lg md:text-xl font-black uppercase">FOR ONLY</span>
+                    <div className="price-reveal space-y-4 animate-bounce" style={{ animationDuration: '0.5s', animationIterationCount: '3' }}>
+                      {/* Price comparison with strikethrough */}
+                      <div className="relative inline-block">
+                        {/* Old price with animated cross-out */}
+                        <div className="relative px-6 py-3 bg-red-500/20 border-2 border-red-500/50 rounded-xl mb-2">
+                          <span className="text-red-400 text-2xl md:text-3xl font-black line-through decoration-4 decoration-red-500">$97</span>
+                          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">
+                            OLD
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-green-400 text-5xl md:text-6xl font-black tracking-tight mt-2">US$ 37</div>
+
+                      {/* Arrow pointing down */}
+                      <div className="text-yellow-400 text-4xl animate-bounce">↓</div>
+
+                      {/* New price with glow */}
+                      <div className="relative inline-block">
+                        <div className="absolute inset-0 bg-green-500/50 blur-2xl animate-pulse"></div>
+                        <div className="relative px-8 py-4 bg-gradient-to-r from-green-500 to-green-400 border-4 border-green-300 rounded-2xl shadow-2xl">
+                          <div className="text-white text-sm md:text-base font-bold uppercase mb-1">Today Only</div>
+                          <div className="text-white text-6xl md:text-7xl font-black">$37</div>
+                          <div className="absolute -top-3 -right-3 bg-yellow-400 text-black text-sm font-black px-3 py-1 rounded-full animate-pulse shadow-lg">
+                            62% OFF!
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
