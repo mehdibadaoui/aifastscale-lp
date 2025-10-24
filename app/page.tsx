@@ -936,7 +936,7 @@ export default function AgentLandingPage() {
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
                   <div className={`relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3 ${priceUnlocked ? 'pump-animation' : ''}`}>
                     <Zap className="w-5 h-5 md:w-7 md:h-7" />
-                    <span>{priceUnlocked ? 'Get instant access $37' : 'Watch video to unlock'}</span>
+                    <span>{priceUnlocked ? 'I want the AgentClone™ System' : 'Watch video to unlock'}</span>
                   </div>
                 </a>
 
@@ -1644,7 +1644,7 @@ export default function AgentLandingPage() {
                className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
               <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center">
-                <span>Get instant access $37</span>
+                <span>I want the AgentClone™ System</span>
               </div>
             </a>
           </div>
