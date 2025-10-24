@@ -702,7 +702,7 @@ export default function AgentLandingPage() {
                             playsInline
                             preload="auto"
                             muted={videoMuted}
-                            poster="/images/video-thumbnail.jpg"
+                            poster="/images/thumbnail-vsl.webp"
                           >
                             <source src="/videos/Hero-VSL.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
