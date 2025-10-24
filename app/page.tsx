@@ -118,19 +118,19 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - ULTRA AGGRESSIVE (14x → 8x → slower → very slow)
+      // Calculate fake progress - INSANELY AGGRESSIVE (hits 99% at 20% video!)
       let fake = 0;
-      if (percent <= 0.5) {
-        // 0-50% video → 14x speed: show 0-99% progress (INSANE FAST! 🚀)
-        fake = percent * 1.98;
-      } else if (percent <= 0.56) {
-        // 50-56% video → smooth transition: show 99-99.2% progress
-        fake = 0.99 + (percent - 0.5) * 0.0333;
+      if (percent <= 0.2) {
+        // 0-20% video → ROCKET SPEED: show 0-99% progress (INSANELY FAST!)
+        fake = percent * 4.95;
+      } else if (percent <= 0.5) {
+        // 20-50% video → maintain: show 99-99.2% progress
+        fake = 0.99 + (percent - 0.2) * 0.00667;
       } else if (percent <= 0.8) {
-        // 56-80% video → 8x speed: show 99.2-99.6% progress
-        fake = 0.992 + (percent - 0.56) * 0.0167;
+        // 50-80% video → crawl: show 99.2-99.6% progress
+        fake = 0.992 + (percent - 0.5) * 0.0133;
       } else if (percent <= 0.95) {
-        // 80-95% video → less speed: show 99.6-99.8% progress
+        // 80-95% video → slower: show 99.6-99.8% progress
         fake = 0.996 + (percent - 0.8) * 0.0133;
       } else {
         // 95-100% video → very slow: show 99.8-100% progress (natural finish)
