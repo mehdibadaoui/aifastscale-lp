@@ -118,23 +118,20 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - INSANELY AGGRESSIVE (hits 99% at 20% video!)
+      // Calculate fake progress - 4 PHASES (natural but fast first 50%)
       let fake = 0;
-      if (percent <= 0.2) {
-        // 0-20% video → ROCKET SPEED: show 0-99% progress (INSANELY FAST!)
-        fake = percent * 4.95;
+      if (percent <= 0.25) {
+        // Phase 1: 0-25% video → show 0-40% progress (fast)
+        fake = percent * 1.6;
       } else if (percent <= 0.5) {
-        // 20-50% video → maintain: show 99-99.2% progress
-        fake = 0.99 + (percent - 0.2) * 0.00667;
-      } else if (percent <= 0.8) {
-        // 50-80% video → crawl: show 99.2-99.6% progress
-        fake = 0.992 + (percent - 0.5) * 0.0133;
-      } else if (percent <= 0.95) {
-        // 80-95% video → slower: show 99.6-99.8% progress
-        fake = 0.996 + (percent - 0.8) * 0.0133;
+        // Phase 2: 25-50% video → show 40-80% progress (fast)
+        fake = 0.4 + (percent - 0.25) * 1.6;
+      } else if (percent <= 0.75) {
+        // Phase 3: 50-75% video → show 80-95% progress (slower)
+        fake = 0.8 + (percent - 0.5) * 0.6;
       } else {
-        // 95-100% video → very slow: show 99.8-100% progress (natural finish)
-        fake = 0.998 + (percent - 0.95) * 0.04;
+        // Phase 4: 75-100% video → show 95-100% progress (slow)
+        fake = 0.95 + (percent - 0.75) * 0.2;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
