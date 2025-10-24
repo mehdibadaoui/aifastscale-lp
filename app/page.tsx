@@ -118,23 +118,23 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - CUSTOM SPEED CURVE (4x → 2x → slower → very slow)
+      // Calculate fake progress - X10 SPEED (INSANELY FAST!)
       let fake = 0;
-      if (percent <= 0.5) {
-        // 0-50% video → 4x speed: show 0-97% progress (ROCKET FAST!)
-        fake = percent * 1.94;
-      } else if (percent <= 0.56) {
-        // 50-56% video → transition: show 97-97.5% progress
-        fake = 0.97 + (percent - 0.5) * 0.0833;
-      } else if (percent <= 0.8) {
-        // 56-80% video → 2x speed: show 97.5-99% progress (moderate crawl)
-        fake = 0.975 + (percent - 0.56) * 0.0625;
+      if (percent <= 0.1) {
+        // 0-10% video → x10 speed: show 0-95% progress (INSANE ROCKET!)
+        fake = percent * 9.5;
+      } else if (percent <= 0.3) {
+        // 10-30% video → show 95-98% progress (slow crawl)
+        fake = 0.95 + (percent - 0.1) * 0.15;
+      } else if (percent <= 0.7) {
+        // 30-70% video → show 98-99.5% progress (very slow)
+        fake = 0.98 + (percent - 0.3) * 0.0375;
       } else if (percent <= 0.95) {
-        // 81-95% video → less speed: show 99-99.7% progress (slow)
-        fake = 0.99 + (percent - 0.8) * 0.0467;
+        // 70-95% video → show 99.5-99.8% progress (ultra slow)
+        fake = 0.995 + (percent - 0.7) * 0.012;
       } else {
-        // 95-100% video → very slow: show 99.7-100% progress (natural finish)
-        fake = 0.997 + (percent - 0.95) * 0.06;
+        // 95-100% video → show 99.8-100% progress (natural finish)
+        fake = 0.998 + (percent - 0.95) * 0.04;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
