@@ -813,14 +813,6 @@ export default function AgentLandingPage() {
                                   </div>
                                 </div>
                               </div>
-
-                              {/* Top banner with sound instruction */}
-                              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
-                                <div className="bg-black/80 backdrop-blur-md rounded-full px-6 py-3 border border-white/20 flex items-center gap-3 animate-bounce" style={{ animationDuration: '2s' }}>
-                                  <Volume2 className="w-5 h-5 text-white" />
-                                  <span className="text-white font-bold text-sm md:text-base">Click to play with sound</span>
-                                </div>
-                              </div>
                             </div>
                           )}
 
