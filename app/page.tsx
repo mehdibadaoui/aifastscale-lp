@@ -118,23 +118,23 @@ export default function AgentLandingPage() {
         setPriceUnlocked(true);
       }
 
-      // Calculate fake progress - X10 SPEED (INSANELY FAST!)
+      // Calculate fake progress - SMOOTH SPEED CURVE (8x → 4x → slower → very slow)
       let fake = 0;
-      if (percent <= 0.1) {
-        // 0-10% video → x10 speed: show 0-95% progress (INSANE ROCKET!)
-        fake = percent * 9.5;
-      } else if (percent <= 0.3) {
-        // 10-30% video → show 95-98% progress (slow crawl)
-        fake = 0.95 + (percent - 0.1) * 0.15;
-      } else if (percent <= 0.7) {
-        // 30-70% video → show 98-99.5% progress (very slow)
-        fake = 0.98 + (percent - 0.3) * 0.0375;
+      if (percent <= 0.5) {
+        // 0-50% video → 8x speed: show 0-98% progress (SUPER FAST!)
+        fake = percent * 1.96;
+      } else if (percent <= 0.56) {
+        // 50-56% video → transition: show 98-98.5% progress (smooth bridge)
+        fake = 0.98 + (percent - 0.5) * 0.0833;
+      } else if (percent <= 0.8) {
+        // 56-80% video → 4x speed: show 98.5-99.3% progress (moderate)
+        fake = 0.985 + (percent - 0.56) * 0.0333;
       } else if (percent <= 0.95) {
-        // 70-95% video → show 99.5-99.8% progress (ultra slow)
-        fake = 0.995 + (percent - 0.7) * 0.012;
+        // 80-95% video → less speed: show 99.3-99.7% progress (slow)
+        fake = 0.993 + (percent - 0.8) * 0.0267;
       } else {
-        // 95-100% video → show 99.8-100% progress (natural finish)
-        fake = 0.998 + (percent - 0.95) * 0.04;
+        // 95-100% video → very slow: show 99.7-100% progress (natural finish)
+        fake = 0.997 + (percent - 0.95) * 0.06;
       }
 
       setFakeProgress(Math.min(fake * 100, 100));
@@ -890,12 +890,12 @@ export default function AgentLandingPage() {
 
                         {/* BIGGER, SUPER SMOOTH Progress Bar */}
                         <div className="relative w-full h-3 md:h-4 bg-gray-900">
-                          {/* Simple green progress bar - ULTRA SMOOTH with fast transitions */}
+                          {/* Simple green progress bar - BUTTERY SMOOTH with easing */}
                           <div
                             className="absolute top-0 left-0 h-full bg-green-500"
                             style={{
                               width: `${fakeProgress}%`,
-                              transition: 'width 0.1s linear'
+                              transition: 'width 0.3s ease-out'
                             }}
                           />
                         </div>
