@@ -945,51 +945,73 @@ export default function AgentLandingPage() {
         </div>
       </section>
 
-      {/* ERIC RIES QUOTE - HIGH BRANDING QUALITY */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
-        {/* Animated background effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.05),transparent_50%)]"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
+      {/* ERIC RIES QUOTE - REDESIGNED WITH BRAND COLORS & ANIMATIONS */}
+      <section className="relative py-20 md:py-32 bg-black overflow-hidden">
+        {/* Animated background glows */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-full blur-3xl"></div>
 
-        <div className="relative max-w-6xl mx-auto px-4">
-          <div className="backdrop-blur-sm bg-gradient-to-br from-white/5 to-white/10 border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              {/* Eric Ries Image */}
-              <div className="relative flex-shrink-0">
-                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-green-500 rounded-full opacity-75 blur-lg animate-pulse" style={{ animationDuration: '3s' }}></div>
-                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
-                    alt="Eric Ries"
-                    className="w-full h-full object-cover"
-                  />
+        <div className="relative max-w-7xl mx-auto px-4">
+          {/* Main quote card with animated border */}
+          <div className="relative group">
+            {/* Animated gradient border */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-3xl opacity-75 blur-xl group-hover:opacity-100 transition-all duration-500 animate-pulse" style={{ animationDuration: '3s' }}></div>
+
+            {/* Card content */}
+            <div className="relative bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-500/30 rounded-3xl p-8 md:p-16 shadow-2xl">
+              <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+
+                {/* Eric Ries Image with floating animation */}
+                <div className="relative flex-shrink-0 animate-bounce" style={{ animationDuration: '3s' }}>
+                  {/* Multiple rotating gradient rings */}
+                  <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-75 blur-lg animate-spin" style={{ animationDuration: '8s' }}></div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full opacity-50 blur-md animate-spin" style={{ animationDuration: '6s', animationDirection: 'reverse' }}></div>
+
+                  {/* Image */}
+                  <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-yellow-400 shadow-2xl">
+                    <img
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
+                      alt="Eric Ries"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Quote Content */}
-              <div className="flex-1 text-center md:text-left">
-                {/* Quote Icon */}
-                <div className="text-yellow-500/30 text-6xl md:text-7xl font-serif leading-none mb-4">"</div>
+                {/* Quote Content */}
+                <div className="flex-1 text-center md:text-left">
+                  {/* Animated quote icon */}
+                  <div className="text-yellow-400 text-7xl md:text-8xl font-serif leading-none mb-6 opacity-50 animate-pulse">"</div>
 
-                {/* Quote Text */}
-                <blockquote className="space-y-4">
-                  <p className="text-white text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-tight">
-                    The only way to win is to{' '}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-green-400">
-                      learn faster
-                    </span>
-                    {' '}than anyone else
-                  </p>
+                  {/* Quote Text */}
+                  <blockquote className="space-y-6">
+                    <p className="text-white text-3xl md:text-4xl lg:text-5xl font-black leading-tight">
+                      The only way to win is to{' '}
+                      <span className="relative inline-block">
+                        <span className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 blur-xl opacity-50 animate-pulse"></span>
+                        <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 animate-pulse" style={{ animationDuration: '2s' }}>
+                          learn faster
+                        </span>
+                      </span>
+                      {' '}than anyone else
+                    </p>
 
-                  {/* Attribution */}
-                  <footer className="flex items-center justify-center md:justify-start gap-3 pt-4 border-t border-white/10">
-                    <div className="text-left">
-                      <cite className="not-italic text-white font-bold text-lg md:text-xl block">Eric Ries</cite>
-                      <p className="text-gray-400 text-sm md:text-base">Author of "The Lean Startup"</p>
-                    </div>
-                  </footer>
-                </blockquote>
+                    {/* Attribution with gradient border */}
+                    <footer className="pt-6 mt-6 border-t-2 border-yellow-500/30">
+                      <div className="flex items-center justify-center md:justify-start gap-4">
+                        <div className="text-left">
+                          <cite className="not-italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black text-2xl md:text-3xl block">
+                            Eric Ries
+                          </cite>
+                          <p className="text-gray-400 text-base md:text-lg font-medium mt-1">
+                            Author of "The Lean Startup"
+                          </p>
+                        </div>
+                      </div>
+                    </footer>
+                  </blockquote>
+                </div>
+
               </div>
             </div>
           </div>
