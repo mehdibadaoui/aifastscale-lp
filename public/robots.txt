@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin or private pages (add if needed)
+# Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://aifastscale.com/sitemap.xml

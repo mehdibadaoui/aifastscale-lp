@@ -1659,14 +1659,16 @@ export default function AgentLandingPage() {
               <h3 className="text-xl md:text-2xl font-black text-transparent bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text mb-3 md:mb-4">AI FastScale</h3>
               <p className="text-gray-700 text-sm md:text-base mb-4 leading-relaxed">Turn a photo into a realistic talking AI video in 7 minutes, built for real estate agents who want more leads without expensive video production.</p>
               <div className="flex gap-3">
+                {/* TODO: Update these social media URLs with your actual accounts */}
                 {[
-                  { icon: Facebook, href: '#' },
-                  { icon: Instagram, href: '#' },
-                  { icon: Twitter, href: '#' },
-                  { icon: Youtube, href: '#' },
-                  { icon: Linkedin, href: '#' }
+                  { icon: Facebook, href: 'https://facebook.com/aifastscale', label: 'Facebook' },
+                  { icon: Instagram, href: 'https://instagram.com/aifastscale', label: 'Instagram' },
+                  { icon: Twitter, href: 'https://twitter.com/aifastscale', label: 'Twitter' },
+                  { icon: Youtube, href: 'https://youtube.com/@aifastscale', label: 'YouTube' },
+                  { icon: Linkedin, href: 'https://linkedin.com/company/aifastscale', label: 'LinkedIn' }
                 ].map((social, idx) => (
                   <a key={idx} href={social.href} target="_blank" rel="noopener noreferrer"
+                     aria-label={social.label}
                      className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full grid place-items-center hover:scale-110 transition-transform shadow-lg">
                     <social.icon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                   </a>
@@ -1693,7 +1695,8 @@ export default function AgentLandingPage() {
                 </li>
                 <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
                   <Phone className="w-4 h-4 md:w-5 md:h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-                  <span className="font-semibold">+1 (555) 123-4567</span>
+                  {/* TODO: Replace with your actual business phone number */}
+                  <span className="font-semibold">+1 (305) 555-0100</span>
                 </li>
                 <li className="flex items-start gap-2 text-gray-700 text-sm md:text-base">
                   <MapPin className="w-4 h-4 md:w-5 md:h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
