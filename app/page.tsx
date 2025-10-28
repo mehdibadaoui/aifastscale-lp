@@ -8,7 +8,7 @@ import {
   Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play, Pause,
   Volume2, VolumeX, Maximize
 } from 'lucide-react';
-import { trackCTAClick } from './utils/tracking';
+import { trackFullCTAClick } from './utils/tracking';
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -595,7 +595,7 @@ export default function AgentLandingPage() {
           </div>
           <div className="flex justify-center">
             <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-               onClick={() => trackCTAClick('hero_cta')}
+               onClick={() => trackFullCTAClick('hero_cta')}
                className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
               <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
@@ -660,7 +660,7 @@ export default function AgentLandingPage() {
             <span className="text-white font-bold text-xs md:text-base">7 Min AgentClone - $37</span>
           </div>
           <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-             onClick={() => trackCTAClick('sticky_cta')}
+             onClick={() => trackFullCTAClick('sticky_cta')}
              className="px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl font-black text-base md:text-xl uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap">
             Get Access Now
           </a>
@@ -935,7 +935,7 @@ export default function AgentLandingPage() {
                 </div>
 
                 <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-                   onClick={() => trackCTAClick('price_unlock_cta')}
+                   onClick={() => trackFullCTAClick('price_unlock_cta')}
                    className="group relative inline-block w-full max-w-3xl px-2">
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
                   <div className={`relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3 ${priceUnlocked ? 'pump-animation' : ''}`}>
@@ -1236,7 +1236,7 @@ export default function AgentLandingPage() {
               </div>
 
               <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-                 onClick={() => trackCTAClick('mid_page_cta')}
+                 onClick={() => trackFullCTAClick('mid_page_cta')}
                  className="group relative inline-block w-full max-w-3xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-xl transition duration-300"></div>
                 <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-[1.02] font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
@@ -1379,7 +1379,7 @@ export default function AgentLandingPage() {
           <Card>
             <div className="text-center mt-8 md:mt-12 px-4">
               <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-                 onClick={() => trackCTAClick('testimonial_cta')}
+                 onClick={() => trackFullCTAClick('testimonial_cta')}
                  className="group relative inline-block w-full max-w-3xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
                 <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
@@ -1647,7 +1647,7 @@ export default function AgentLandingPage() {
             <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6">Enrollment open now</h2>
             <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-10">Price jumps to $97 at midnight</p>
             <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
-               onClick={() => trackCTAClick('final_cta')}
+               onClick={() => trackFullCTAClick('final_cta')}
                className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
               <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center">
