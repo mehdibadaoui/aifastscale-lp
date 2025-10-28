@@ -159,22 +159,6 @@ export default function ThankYouPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-yellow-400" />
-                  Check Your Email (Receipt & Access)
-                </h3>
-                <p className="text-gray-300">
-                  You'll receive your purchase receipt and course access confirmation. Check your spam folder if you don't see it.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center font-black text-black text-xl">
-                3
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
                   <Play className="w-5 h-5 text-yellow-400" />
                   Create Your First Video (7 Minutes!)
                 </h3>
