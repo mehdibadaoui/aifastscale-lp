@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { CheckCircle, Mail, Download, Play, ArrowRight } from 'lucide-react';
+import { CheckCircle, Mail, Download, Play, ArrowRight, Sparkles } from 'lucide-react';
 import { trackPurchase, trackCompleteRegistration } from '../utils/tracking';
 
 export default function ThankYouPage() {
@@ -84,9 +84,54 @@ export default function ThankYouPage() {
           </div>
         </div>
 
+        {/* Lifetime Access Notice - PROMINENT */}
+        <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 border-2 border-purple-500/50 rounded-2xl p-8 mb-12 shadow-2xl">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+            <h2 className="text-3xl font-black text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              🎁 Lifetime Access + Free Updates!
+            </h2>
+            <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+          </div>
+          <p className="text-xl text-center text-gray-200 mb-4 font-semibold">
+            You now have <span className="text-purple-400 font-black">LIFETIME ACCESS</span> to all course materials!
+          </p>
+          <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-6 text-center">
+            <p className="text-lg text-gray-300 mb-2">
+              ✨ <span className="font-bold text-white">Free monthly updates</span> with new templates, prompts, and AI workflows
+            </p>
+            <p className="text-base text-purple-300 font-semibold">
+              📅 Check back every month for the latest updates - Always FREE!
+            </p>
+          </div>
+        </div>
+
+        {/* Download Button - BIG AND PROMINENT */}
+        <div className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 border-2 border-yellow-500/50 rounded-2xl p-8 mb-12 text-center">
+          <h2 className="text-3xl md:text-4xl font-black mb-6 text-yellow-400">
+            📥 Download Your Course Materials Now!
+          </h2>
+          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            All templates, system prompts, video workflows, and training materials are ready for instant download.
+          </p>
+          <a
+            href="https://drive.google.com/drive/folders/1YLkKPgtU_q1BV6PVISO4VEru1UkAldw1?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-12 py-6 rounded-2xl font-black text-2xl hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-green-500/50"
+          >
+            <Download className="w-8 h-8" />
+            DOWNLOAD ALL FILES
+            <ArrowRight className="w-8 h-8" />
+          </a>
+          <p className="text-gray-400 text-sm mt-4">
+            Opens in Google Drive • All files included
+          </p>
+        </div>
+
         {/* Next Steps */}
-        <div className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 border border-yellow-500/30 rounded-2xl p-8 mb-12">
-          <h2 className="text-3xl font-black text-center mb-8 text-yellow-400">
+        <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/30 rounded-2xl p-8 mb-12">
+          <h2 className="text-3xl font-black text-center mb-8 text-white">
             What Happens Next?
           </h2>
 
@@ -98,11 +143,11 @@ export default function ThankYouPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-yellow-400" />
-                  Check Your Email (Within 5 Minutes)
+                  <Download className="w-5 h-5 text-yellow-400" />
+                  Download All Course Materials
                 </h3>
                 <p className="text-gray-300">
-                  You'll receive an email with your course access link and login credentials. Check your spam folder if you don't see it.
+                  Click the big green button above to access your Google Drive folder with all templates, prompts, and training videos.
                 </p>
               </div>
             </div>
@@ -114,11 +159,11 @@ export default function ThankYouPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                  <Download className="w-5 h-5 text-yellow-400" />
-                  Access Your Training Materials
+                  <Mail className="w-5 h-5 text-yellow-400" />
+                  Check Your Email (Receipt & Access)
                 </h3>
                 <p className="text-gray-300">
-                  Download all templates, system prompts, and video workflows instantly. Everything you need is waiting for you.
+                  You'll receive your purchase receipt and course access confirmation. Check your spam folder if you don't see it.
                 </p>
               </div>
             </div>
