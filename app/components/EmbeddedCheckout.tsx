@@ -7,16 +7,17 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-function CheckoutForm({ email }: { email: string }) {
+function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const [email, setEmail] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!stripe || !elements) {
+    if (!stripe || !elements || !email) {
       return;
     }
 
@@ -43,9 +44,25 @@ function CheckoutForm({ email }: { email: string }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {/* Email Input - Stripe Style */}
+      <div>
+        <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="your@email.com"
+          className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition-all"
+        />
+      </div>
+
       {/* Stripe Payment Element */}
-      <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-4">
+      <div>
         <PaymentElement
           options={{
             layout: 'tabs',
@@ -56,75 +73,64 @@ function CheckoutForm({ email }: { email: string }) {
 
       {/* Error Message */}
       {errorMessage && (
-        <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4">
+        <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-3">
           <p className="text-red-400 text-sm">{errorMessage}</p>
         </div>
       )}
 
-      {/* Submit Button */}
+      {/* Submit Button - Stripe Style */}
       <button
         type="submit"
-        disabled={isProcessing || !stripe || !elements}
-        className="group relative w-full"
+        disabled={isProcessing || !stripe || !elements || !email}
+        className="w-full px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
-        <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-        <div className="relative px-8 py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 text-black rounded-2xl font-black text-xl uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
-          {isProcessing ? (
-            <>
-              <Loader className="w-6 h-6 animate-spin" />
-              <span>Processing Payment...</span>
-            </>
-          ) : (
-            <>
-              <CreditCard className="w-6 h-6" />
-              <span>Complete Purchase $37</span>
-            </>
-          )}
-        </div>
+        {isProcessing ? (
+          <>
+            <Loader className="w-5 h-5 animate-spin" />
+            <span>Processing...</span>
+          </>
+        ) : (
+          <span>Pay $37.00</span>
+        )}
       </button>
 
       {/* Security Badge */}
-      <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
-        <Lock className="w-4 h-4" />
-        <span>Secured by Stripe • 256-bit SSL Encryption</span>
+      <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-2">
+        <Lock className="w-3.5 h-3.5" />
+        <span>Powered by <span className="font-semibold">stripe</span></span>
       </div>
     </form>
   );
 }
 
 export default function EmbeddedCheckout() {
-  const [email, setEmail] = useState('');
   const [clientSecret, setClientSecret] = useState('');
-  const [isLoadingIntent, setIsLoadingIntent] = useState(false);
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoadingIntent(true);
+  useEffect(() => {
+    // Create PaymentIntent on component mount
+    const createPaymentIntent = async () => {
+      try {
+        const response = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: 'customer@example.com' }), // Placeholder
+        });
 
-    try {
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+        const data = await response.json();
 
-      const data = await response.json();
-
-      if (data.error) {
-        alert('Something went wrong. Please try again.');
-        setIsLoadingIntent(false);
-        return;
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        }
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Error creating payment intent:', err);
+        setIsLoading(false);
       }
+    };
 
-      setClientSecret(data.clientSecret);
-      setEmailSubmitted(true);
-      setIsLoadingIntent(false);
-    } catch (err) {
-      alert('Something went wrong. Please try again.');
-      setIsLoadingIntent(false);
-    }
-  };
+    createPaymentIntent();
+  }, []);
 
   return (
     <section id="checkout" className="relative py-16 md:py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900">
@@ -249,74 +255,34 @@ export default function EmbeddedCheckout() {
               </p>
             </div>
 
-            {!emailSubmitted ? (
-              /* Email Form */
-              <form onSubmit={handleEmailSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-bold text-white mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-3 bg-gray-900 border-2 border-gray-700 rounded-xl text-white placeholder-gray-500 focus:border-green-400 focus:outline-none transition-colors"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">We'll send your course access to this email</p>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isLoadingIntent || !email}
-                  className="group relative w-full"
-                >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-                  <div className="relative px-8 py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl font-black text-xl uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                    {isLoadingIntent ? (
-                      <>
-                        <Loader className="w-6 h-6 animate-spin" />
-                        <span>Loading...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Continue to Payment</span>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </form>
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader className="w-8 h-8 animate-spin text-blue-500 mb-4" />
+                <p className="text-gray-400 text-sm">Loading secure checkout...</p>
+              </div>
+            ) : clientSecret ? (
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  clientSecret,
+                  appearance: {
+                    theme: 'night',
+                    variables: {
+                      colorPrimary: '#2563eb',
+                      colorBackground: '#111827',
+                      colorText: '#ffffff',
+                      colorDanger: '#ef4444',
+                      fontFamily: 'system-ui, sans-serif',
+                      borderRadius: '8px',
+                    },
+                  },
+                }}
+              >
+                <CheckoutForm />
+              </Elements>
             ) : (
-              /* Stripe Payment Form */
-              <div>
-                <div className="mb-6 pb-4 border-b border-gray-700">
-                  <p className="text-sm text-gray-400">Email</p>
-                  <p className="text-white font-semibold">{email}</p>
-                </div>
-
-                {clientSecret && (
-                  <Elements
-                    stripe={stripePromise}
-                    options={{
-                      clientSecret,
-                      appearance: {
-                        theme: 'night',
-                        variables: {
-                          colorPrimary: '#10b981',
-                          colorBackground: '#111827',
-                          colorText: '#ffffff',
-                          colorDanger: '#ef4444',
-                          fontFamily: 'system-ui, sans-serif',
-                          borderRadius: '12px',
-                        },
-                      },
-                    }}
-                  >
-                    <CheckoutForm email={email} />
-                  </Elements>
-                )}
+              <div className="text-center text-red-400 py-12">
+                <p>Failed to load checkout. Please refresh the page.</p>
               </div>
             )}
 
