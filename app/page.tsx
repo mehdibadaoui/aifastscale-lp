@@ -9,7 +9,7 @@ import {
   Volume2, VolumeX, Maximize
 } from 'lucide-react';
 import { trackFullCTAClick } from './utils/tracking';
-import CheckoutSection from './components/CheckoutSection';
+import EmbeddedCheckout from './components/EmbeddedCheckout';
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -1843,7 +1843,7 @@ export default function AgentLandingPage() {
       </section>
 
       {/* CHECKOUT SECTION */}
-      <CheckoutSection />
+      <EmbeddedCheckout />
 
       {/* FINAL CTA - DARK */}
       <section className="relative py-10 md:py-20 bg-black">
