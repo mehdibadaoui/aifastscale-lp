@@ -1,7 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+
+if (!stripeSecretKey) {
+  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
+}
+
+const stripe = new Stripe(stripeSecretKey, {
+  apiVersion: '2025-09-30.clover',
+  typescript: true,
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,6 +20,8 @@ export async function POST(req: NextRequest) {
     if (!priceId) {
       throw new Error('Price ID not configured');
     }
+
+    console.log('Creating Stripe checkout session with price:', priceId);
 
     // Create Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -32,10 +43,25 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ sessionId: session.id, url: session.url });
   } catch (err: any) {
-    console.error('Stripe Error:', err);
+    console.error('Stripe Error Details:', {
+      message: err.message,
+      type: err.type,
+      code: err.code,
+      statusCode: err.statusCode,
+      raw: err.raw,
+      stack: err.stack
+    });
+
+    // Return detailed error for debugging
     return NextResponse.json(
-      { error: err.message },
-      { status: 500 }
+      {
+        error: err.message,
+        type: err.type,
+        code: err.code,
+        statusCode: err.statusCode,
+        details: err.raw?.message || 'No additional details'
+      },
+      { status: err.statusCode || 500 }
     );
   }
 }
