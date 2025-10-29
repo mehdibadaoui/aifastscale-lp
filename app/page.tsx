@@ -1526,6 +1526,152 @@ export default function AgentLandingPage() {
             </div>
           </Card>
 
+          {/* Meet Sara Section - Premium Personal Brand */}
+          <section className="relative py-16 md:py-24 overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50"></div>
+            <div className="absolute inset-0 opacity-30">
+              <div className="absolute w-96 h-96 bg-purple-400 rounded-full blur-3xl top-0 left-0 animate-pulse" style={{ animationDuration: '4s' }}></div>
+              <div className="absolute w-96 h-96 bg-blue-400 rounded-full blur-3xl bottom-0 right-0 animate-pulse" style={{ animationDuration: '6s' }}></div>
+            </div>
+
+            <div className="relative max-w-7xl mx-auto px-4">
+              {/* Badge */}
+              <div className="flex justify-center mb-8">
+                <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-100 to-blue-100 border-2 border-purple-300 rounded-full shadow-lg">
+                  <Shield className="w-5 h-5 text-purple-600" />
+                  <span className="text-purple-900 font-black text-sm uppercase tracking-wide">Meet Your AI Video Expert</span>
+                </div>
+              </div>
+
+              {/* Main Content Grid */}
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {/* Left: Image */}
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 rounded-3xl opacity-30 group-hover:opacity-50 blur-2xl transition duration-500"></div>
+                  <div className="relative bg-white rounded-3xl p-4 shadow-2xl">
+                    <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
+                      <Image
+                        src="/images/Sara.webp"
+                        alt="Sara - AI Video Specialist"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover"
+                        priority
+                      />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent"></div>
+
+                      {/* Verified Badge */}
+                      <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-xl">
+                        <CheckCircle className="w-8 h-8 text-blue-500" />
+                      </div>
+
+                      {/* Stats Badge */}
+                      <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div>
+                            <div className="text-2xl font-black bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">500+</div>
+                            <div className="text-xs text-gray-600 font-bold">Agents</div>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-black bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">3K+</div>
+                            <div className="text-xs text-gray-600 font-bold">Videos</div>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-black bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">4.9★</div>
+                            <div className="text-xs text-gray-600 font-bold">Rating</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Content */}
+                <div className="space-y-6">
+                  {/* Name and Title */}
+                  <div>
+                    <h2 className="text-4xl md:text-6xl font-black mb-3">
+                      <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                        Hi, I'm Sara
+                      </span>
+                    </h2>
+                    <p className="text-xl md:text-2xl font-bold text-gray-700">
+                      Your AI Video Specialist & Real Estate Tech Expert
+                    </p>
+                  </div>
+
+                  {/* Story */}
+                  <div className="space-y-4">
+                    <p className="text-gray-700 text-lg leading-relaxed">
+                      After helping <span className="font-black text-purple-600">500+ real estate agents</span> transform their marketing, I discovered the secret: authentic AI videos that connect with buyers emotionally.
+                    </p>
+                    <p className="text-gray-700 text-lg leading-relaxed">
+                      Most agents waste weeks learning complex video software. I created the <span className="font-black text-purple-600">7-Minute AgentClone™</span> to give you the same results in minutes, not months.
+                    </p>
+                  </div>
+
+                  {/* Credentials */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-2xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                          <Award className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="font-black text-2xl text-purple-600">5+</div>
+                      </div>
+                      <div className="text-sm text-gray-600 font-bold">Years in Real Estate Tech</div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-2xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                          <TrendingUp className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="font-black text-2xl text-blue-600">$10M+</div>
+                      </div>
+                      <div className="text-sm text-gray-600 font-bold">in Agent Sales Generated</div>
+                    </div>
+                  </div>
+
+                  {/* Promise */}
+                  <div className="bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 border-2 border-purple-300 rounded-2xl p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="font-black text-xl text-gray-900 mb-2">My Promise to You:</h3>
+                        <p className="text-gray-700 leading-relaxed">
+                          If you can take a photo, you can create professional AI videos. I've stripped away all the complexity and left only what works. <span className="font-black text-purple-600">No tech skills needed. Just results.</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Social Proof Bar */}
+                  <div className="flex items-center gap-4 pt-4">
+                    <div className="flex -space-x-3">
+                      {['/images/P1_result.webp', '/images/P2_result.webp', '/images/P3_result.webp', '/images/P4_result.webp'].map((img, i) => (
+                        <div key={i} className="relative w-12 h-12 rounded-full border-4 border-white shadow-lg overflow-hidden">
+                          <Image src={img} alt="Agent" fill sizes="48px" className="object-cover" />
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <p className="text-sm font-black text-gray-900">Join 500+ Successful Agents</p>
+                      <div className="flex items-center gap-1 text-yellow-500 text-sm">
+                        {'★'.repeat(5)}
+                        <span className="text-gray-600 ml-1 font-bold">(4.9/5)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <Card>
             <div className="text-center mt-12 md:mt-16 mb-8 md:mb-10">
               <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-400/30 rounded-full">
