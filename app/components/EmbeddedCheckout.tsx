@@ -133,76 +133,76 @@ export default function EmbeddedCheckout() {
   }, []);
 
   return (
-    <section id="checkout" className="relative py-16 md:py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <section id="checkout" className="relative py-12 md:py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Animated background effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-block px-4 py-2 bg-green-500/20 border border-green-500/50 rounded-full mb-4">
-            <span className="text-green-400 font-bold text-sm uppercase tracking-wide">🔒 Secure Checkout</span>
+        <div className="text-center mb-8 md:mb-12">
+          <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-green-500/20 border border-green-500/50 rounded-full mb-3 md:mb-4">
+            <span className="text-green-400 font-bold text-xs md:text-sm uppercase tracking-wide">🔒 Secure Checkout</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-2 md:mb-4 px-4">
             Complete Your Order
           </h2>
-          <p className="text-lg md:text-xl text-gray-300">
+          <p className="text-base md:text-lg lg:text-xl text-gray-300 px-4">
             Join 500+ agents already using AgentClone™ to generate leads
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
           {/* Left: Order Summary */}
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             {/* Product Card */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-yellow-500/30 rounded-2xl p-6 shadow-2xl">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center">
-                  <Star className="w-10 h-10 text-black" />
+            <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-yellow-500/30 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl">
+              <div className="flex items-start gap-3 md:gap-4 mb-4 md:mb-6">
+                <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-lg md:rounded-xl flex items-center justify-center">
+                  <Star className="w-8 h-8 md:w-10 md:h-10 text-black" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-black text-white mb-1">7-Minute AgentClone™ System</h3>
-                  <p className="text-sm text-gray-400">Complete AI Video Course + System Prompts</p>
+                  <h3 className="text-lg md:text-xl font-black text-white mb-1">7-Minute AgentClone™ System</h3>
+                  <p className="text-xs md:text-sm text-gray-400">Complete AI Video Course + System Prompts</p>
                 </div>
               </div>
 
               {/* What's Included */}
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+              <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
+                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-300">
+                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
                   <span>7-minute step-by-step video training</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-300">
+                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
                   <span>AI system prompts & workflows</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-300">
+                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
                   <span>Real estate scripts & templates</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-300">
+                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
                   <span>Lifetime access + free updates</span>
                 </div>
               </div>
 
               {/* Price */}
-              <div className="border-t border-gray-700 pt-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400">Regular Price</span>
-                  <span className="text-gray-500 line-through">$97.00</span>
+              <div className="border-t border-gray-700 pt-3 md:pt-4">
+                <div className="flex justify-between items-center mb-1.5 md:mb-2">
+                  <span className="text-sm md:text-base text-gray-400">Regular Price</span>
+                  <span className="text-sm md:text-base text-gray-500 line-through">$97.00</span>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400">Today's Discount</span>
-                  <span className="text-green-400 font-bold">-$60.00</span>
+                <div className="flex justify-between items-center mb-1.5 md:mb-2">
+                  <span className="text-sm md:text-base text-gray-400">Today's Discount</span>
+                  <span className="text-sm md:text-base text-green-400 font-bold">-$60.00</span>
                 </div>
-                <div className="border-t border-gray-700 mt-4 pt-4">
+                <div className="border-t border-gray-700 mt-3 md:mt-4 pt-3 md:pt-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold text-white">Total</span>
-                    <span className="text-3xl font-black text-yellow-400">$37.00</span>
+                    <span className="text-lg md:text-xl font-bold text-white">Total</span>
+                    <span className="text-2xl md:text-3xl font-black text-yellow-400">$37.00</span>
                   </div>
                   <p className="text-xs text-gray-500 text-right mt-1">One-time payment • USD</p>
                 </div>
@@ -210,47 +210,47 @@ export default function EmbeddedCheckout() {
             </div>
 
             {/* Trust Badges */}
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-green-400" />
-                  <span className="text-sm text-gray-300">SSL Secured</span>
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg md:rounded-xl p-4 md:p-6">
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <Shield className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-xs md:text-sm text-gray-300">SSL Secured</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Lock className="w-5 h-5 text-green-400" />
-                  <span className="text-sm text-gray-300">256-bit Encryption</span>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <Lock className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-xs md:text-sm text-gray-300">256-bit Encryption</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-sm text-gray-300">30-Day Guarantee</span>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-xs md:text-sm text-gray-300">30-Day Guarantee</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CreditCard className="w-5 h-5 text-green-400" />
-                  <span className="text-sm text-gray-300">Secure Payment</span>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-xs md:text-sm text-gray-300">Secure Payment</span>
                 </div>
               </div>
             </div>
 
             {/* Money-back guarantee */}
-            <div className="bg-gradient-to-r from-green-500/10 to-green-600/10 border border-green-500/30 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <Shield className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
+            <div className="bg-gradient-to-r from-green-500/10 to-green-600/10 border border-green-500/30 rounded-lg md:rounded-xl p-3 md:p-4">
+              <div className="flex items-start gap-2 md:gap-3">
+                <Shield className="w-5 h-5 md:w-6 md:h-6 text-green-400 flex-shrink-0 mt-0.5 md:mt-1" />
                 <div>
-                  <h4 className="font-bold text-white mb-1">30-Day Money-Back Guarantee</h4>
-                  <p className="text-sm text-gray-300">If you don't get 5-15 leads in your first week, we'll refund every penny. No questions asked.</p>
+                  <h4 className="text-sm md:text-base font-bold text-white mb-1">30-Day Money-Back Guarantee</h4>
+                  <p className="text-xs md:text-sm text-gray-300">If you don't get 5-15 leads in your first week, we'll refund every penny. No questions asked.</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right: Payment Form */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-green-500/50 rounded-2xl p-8 shadow-2xl">
-            <div className="mb-6">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <Lock className="w-5 h-5 text-green-400" />
-                <span className="text-green-400 font-bold text-sm uppercase tracking-wide">Secure Payment</span>
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-green-500/50 rounded-xl md:rounded-2xl p-5 md:p-8 shadow-2xl">
+            <div className="mb-5 md:mb-6">
+              <div className="flex items-center justify-center gap-2 mb-3 md:mb-4">
+                <Lock className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
+                <span className="text-green-400 font-bold text-xs md:text-sm uppercase tracking-wide">Secure Payment</span>
               </div>
-              <p className="text-center text-gray-400 text-sm">
+              <p className="text-center text-gray-400 text-xs md:text-sm">
                 Your payment information is encrypted and secure
               </p>
             </div>
@@ -287,16 +287,16 @@ export default function EmbeddedCheckout() {
             )}
 
             {/* Testimonial Snippet */}
-            <div className="mt-8 pt-6 border-t border-gray-700">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full"></div>
+            <div className="mt-6 md:mt-8 pt-5 md:pt-6 border-t border-gray-700">
+              <div className="flex items-center gap-2.5 md:gap-3">
+                <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full"></div>
                 <div>
-                  <div className="flex gap-1 mb-1">
+                  <div className="flex gap-0.5 md:gap-1 mb-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="w-3 h-3 md:w-4 md:h-4 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
-                  <p className="text-sm text-gray-300 italic">"Got 8 leads in my first 3 days!"</p>
+                  <p className="text-xs md:text-sm text-gray-300 italic">"Got 8 leads in my first 3 days!"</p>
                   <p className="text-xs text-gray-500">- Sarah M., Real Estate Agent</p>
                 </div>
               </div>
@@ -305,21 +305,21 @@ export default function EmbeddedCheckout() {
         </div>
 
         {/* Bottom Trust Bar */}
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center gap-6 px-8 py-4 bg-gray-800/50 border border-gray-700 rounded-full">
+        <div className="mt-8 md:mt-12 text-center px-4">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-6 px-5 md:px-8 py-3 md:py-4 bg-gray-800/50 border border-gray-700 rounded-2xl sm:rounded-full">
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-400" />
-              <span className="text-sm text-gray-300 font-semibold">500+ Happy Customers</span>
+              <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
+              <span className="text-xs md:text-sm text-gray-300 font-semibold">500+ Happy Customers</span>
             </div>
-            <div className="w-px h-6 bg-gray-700"></div>
+            <div className="hidden sm:block w-px h-6 bg-gray-700"></div>
             <div className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-green-400" />
-              <span className="text-sm text-gray-300 font-semibold">100% Secure Payment</span>
+              <Shield className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
+              <span className="text-xs md:text-sm text-gray-300 font-semibold">100% Secure Payment</span>
             </div>
-            <div className="w-px h-6 bg-gray-700"></div>
+            <div className="hidden sm:block w-px h-6 bg-gray-700"></div>
             <div className="flex items-center gap-2">
-              <Lock className="w-5 h-5 text-green-400" />
-              <span className="text-sm text-gray-300 font-semibold">256-bit Encryption</span>
+              <Lock className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
+              <span className="text-xs md:text-sm text-gray-300 font-semibold">256-bit Encryption</span>
             </div>
           </div>
         </div>

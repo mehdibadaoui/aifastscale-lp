@@ -272,24 +272,33 @@ export default function AgentLandingPage() {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   const tilt = 'transition-transform duration-500 will-change-transform hover:-translate-y-1';
 
-  // Scroll to checkout section - instant, smooth experience
-  const handleCheckout = (ctaLocation: string) => {
+  // Redirect to Stripe hosted checkout
+  const handleCheckout = async (ctaLocation: string) => {
     // Track button click
     trackFullCTAClick(ctaLocation);
 
-    // Smooth scroll to checkout section
-    const checkoutSection = document.getElementById('checkout');
-    if (checkoutSection) {
-      checkoutSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      });
+    // Show loading state
+    document.body.style.cursor = 'wait';
 
-      // Add pulse animation to checkout section
-      checkoutSection.classList.add('animate-pulse');
-      setTimeout(() => {
-        checkoutSection.classList.remove('animate-pulse');
-      }, 1000);
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const { url, error } = await response.json();
+
+      if (error) {
+        console.error('Checkout error:', error);
+        alert('Something went wrong. Please try again.');
+        document.body.style.cursor = 'default';
+        return;
+      }
+
+      if (url) window.location.href = url;
+    } catch (err) {
+      console.error('Checkout exception:', err);
+      alert('Something went wrong. Please try again.');
+      document.body.style.cursor = 'default';
     }
   };
 
