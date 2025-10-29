@@ -9,6 +9,7 @@ import {
   Volume2, VolumeX, Maximize
 } from 'lucide-react';
 import { trackFullCTAClick } from './utils/tracking';
+import CheckoutSection from './components/CheckoutSection';
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -40,7 +41,6 @@ export default function AgentLandingPage() {
   const [videoMuted, setVideoMuted] = useState(false); // Video starts unmuted (with sound)
   const [showContinueModal, setShowContinueModal] = useState(false);
   const [savedVideoTime, setSavedVideoTime] = useState(0);
-  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -272,37 +272,24 @@ export default function AgentLandingPage() {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   const tilt = 'transition-transform duration-500 will-change-transform hover:-translate-y-1';
 
-  // Optimized Stripe Checkout Handler - instant feedback
-  const handleCheckout = async (ctaLocation: string) => {
-    // Instant visual feedback
-    setIsCheckoutLoading(true);
-    document.body.style.cursor = 'wait';
-
-    // Track in background (non-blocking)
+  // Scroll to checkout section - instant, smooth experience
+  const handleCheckout = (ctaLocation: string) => {
+    // Track button click
     trackFullCTAClick(ctaLocation);
 
-    try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+    // Smooth scroll to checkout section
+    const checkoutSection = document.getElementById('checkout');
+    if (checkoutSection) {
+      checkoutSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
       });
-      const { url, error } = await response.json();
 
-      if (error) {
-        console.error('Checkout error:', error);
-        alert('Something went wrong. Please try again.');
-        setIsCheckoutLoading(false);
-        document.body.style.cursor = 'default';
-        return;
-      }
-
-      // Redirect immediately
-      if (url) window.location.href = url;
-    } catch (err) {
-      console.error('Checkout exception:', err);
-      alert('Something went wrong. Please try again.');
-      setIsCheckoutLoading(false);
-      document.body.style.cursor = 'default';
+      // Add pulse animation to checkout section
+      checkoutSection.classList.add('animate-pulse');
+      setTimeout(() => {
+        checkoutSection.classList.remove('animate-pulse');
+      }, 1000);
     }
   };
 
@@ -631,11 +618,10 @@ export default function AgentLandingPage() {
           <div className="flex justify-center">
             <button
                onClick={() => handleCheckout('hero_cta')}
-               disabled={isCheckoutLoading}
                className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-              <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                <span>{isCheckoutLoading ? 'Processing...' : 'Yes, I want the $37 AI Mastery Course'}</span>
+              <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
+                <span>Yes, I want the $37 AI Mastery Course</span>
                 <ArrowRight className="w-5 h-5 md:w-7 md:h-7" />
               </div>
             </button>
@@ -697,9 +683,8 @@ export default function AgentLandingPage() {
           </div>
           <button
              onClick={() => handleCheckout('sticky_cta')}
-             disabled={isCheckoutLoading}
-             className="px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl font-black text-base md:text-xl uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed">
-            {isCheckoutLoading ? 'Processing...' : 'Get Access Now'}
+             className="px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl font-black text-base md:text-xl uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap">
+            Get Access Now
           </button>
         </div>
       </div>
@@ -973,12 +958,12 @@ export default function AgentLandingPage() {
 
                 <button
                    onClick={() => handleCheckout('price_unlock_cta')}
-                   disabled={isCheckoutLoading || !priceUnlocked}
+                   disabled={!priceUnlocked}
                    className="group relative inline-block w-full max-w-3xl px-2">
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
                   <div className={`relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3 disabled:opacity-50 disabled:cursor-not-allowed ${priceUnlocked ? 'pump-animation' : ''}`}>
                     <Zap className="w-5 h-5 md:w-7 md:h-7" />
-                    <span>{isCheckoutLoading ? 'Processing...' : priceUnlocked ? 'I want the AgentClone™ System' : 'Watch video to unlock'}</span>
+                    <span>{priceUnlocked ? 'I want the AgentClone™ System' : 'Watch video to unlock'}</span>
                   </div>
                 </button>
 
@@ -1275,12 +1260,11 @@ export default function AgentLandingPage() {
 
               <button
                  onClick={() => handleCheckout('mid_page_cta')}
-                 disabled={isCheckoutLoading}
                  className="group relative inline-block w-full max-w-3xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-xl transition duration-300"></div>
-                <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-[1.02] font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+                <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-[1.02] font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
                   <Zap className="w-5 h-5 md:w-7 md:h-7" />
-                  <span>{isCheckoutLoading ? 'Processing...' : 'Get Complete System For $37'}</span>
+                  <span>Get Complete System For $37</span>
                   <ArrowRight className="w-5 h-5 md:w-7 md:h-7" />
                 </div>
               </button>
@@ -1419,12 +1403,11 @@ export default function AgentLandingPage() {
             <div className="text-center mt-8 md:mt-12 px-4">
               <button
                  onClick={() => handleCheckout('testimonial_cta')}
-                 disabled={isCheckoutLoading}
                  className="group relative inline-block w-full max-w-3xl">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-                <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+                <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center gap-2 md:gap-3">
                   <Video className="w-5 h-5 md:w-7 md:h-7" />
-                  <span>{isCheckoutLoading ? 'Processing...' : 'I Want Results Like Mr. Lucas'}</span>
+                  <span>I Want Results Like Mr. Lucas</span>
                 </div>
               </button>
             </div>
@@ -1859,6 +1842,9 @@ export default function AgentLandingPage() {
         </div>
       </section>
 
+      {/* CHECKOUT SECTION */}
+      <CheckoutSection />
+
       {/* FINAL CTA - DARK */}
       <section className="relative py-10 md:py-20 bg-black">
         <Card>
@@ -1867,11 +1853,10 @@ export default function AgentLandingPage() {
             <p className="text-lg md:text-xl text-gray-300 mb-6 md:mb-10">Price jumps to $97 at midnight</p>
             <button
                onClick={() => handleCheckout('final_cta')}
-               disabled={isCheckoutLoading}
                className="group relative inline-block w-full max-w-3xl">
               <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
-              <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                <span>{isCheckoutLoading ? 'Processing...' : 'I want the AgentClone™ System'}</span>
+              <div className="relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black rounded-2xl shadow-2xl transition-all duration-300 group-hover:scale-105 font-black text-base md:text-xl uppercase tracking-wider flex items-center justify-center">
+                <span>I want the AgentClone™ System</span>
               </div>
             </button>
           </div>
