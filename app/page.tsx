@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState, useRef, ReactNode, memo } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield, CheckCircle, ArrowRight, Zap, Clock, AlertCircle, Users, Video,
   Wand2, Upload, TrendingUp, X, Sparkles, DollarSign, MessageCircle, Eye, Award,
   Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, Youtube, Play, Pause,
-  Volume2, VolumeX, Maximize, Crown, Star
+  Volume2, VolumeX, Maximize
 } from 'lucide-react';
 import { trackFullCTAClick } from './utils/tracking';
 
@@ -188,20 +187,6 @@ export default function AgentLandingPage() {
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
-      /* Luxury Gold Shimmer Animation */
-      @keyframes goldShimmer {
-        0% { background-position: -1000px 0; }
-        100% { background-position: 1000px 0; }
-      }
-      .gold-shimmer {
-        background: linear-gradient(90deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%);
-        background-size: 1000px 100%;
-        animation: goldShimmer 3s linear infinite;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
       @keyframes scroll {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
@@ -628,191 +613,104 @@ export default function AgentLandingPage() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden select-none">
-      {/* Luxury Gold Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] z-50 shadow-lg shadow-[#d4af37]/30"
-        style={{ scaleX: scrollProgress / 100, transformOrigin: 'left' }}
-      />
+      {/* Progress bar */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-gray-900 z-50">
+        <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
+      </div>
 
-      {/* Luxury Security Popup */}
-      <AnimatePresence>
-        {showSecurityPopup && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] max-w-md w-[90%]"
-          >
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#d4af37] to-[#f4e5a1] rounded-2xl blur-lg opacity-75" />
-              <div className="relative bg-gradient-to-br from-gray-900 to-black border border-[#d4af37]/30 rounded-2xl p-6 shadow-2xl">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#d4af37] to-[#f4e5a1] rounded-full flex items-center justify-center shadow-lg shadow-[#d4af37]/20">
-                    <Shield className="w-6 h-6 text-black" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-black text-white mb-1">Content Protected</h3>
-                    <p className="text-gray-300 text-sm leading-relaxed">
-                      This content is protected. Please respect our intellectual property rights.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setShowSecurityPopup(false)}
-                    className="flex-shrink-0 w-8 h-8 bg-gray-800/50 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
-                  >
-                    <X className="w-4 h-4 text-gray-400" />
-                  </button>
+      {/* Security Popup */}
+      {showSecurityPopup && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] max-w-md w-[90%] animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 rounded-2xl blur-lg opacity-75 animate-pulse"></div>
+            <div className="relative bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-500/50 rounded-2xl p-6 shadow-2xl">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
                 </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-black text-white mb-1">Content Protected</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    This content is protected. Please respect our intellectual property rights.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowSecurityPopup(false)}
+                  className="flex-shrink-0 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
+                >
+                  <X className="w-4 h-4 text-gray-400" />
+                </button>
+              </div>
+              <div className="mt-4 flex items-center gap-2 text-xs text-gray-400">
+                <AlertCircle className="w-4 h-4" />
+                <span>For authorized use only</span>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
 
-      {/* Luxury Sticky CTA Bar */}
-      <AnimatePresence>
-        {showStickyCTA && (
-          <motion.div
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            exit={{ y: -100 }}
-            className="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-xl border-b border-[#d4af37]/20 shadow-2xl"
-          >
-            <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <Crown className="w-5 h-5 text-[#d4af37]" />
-                <span className="text-white font-bold text-sm md:text-base">7 Min AgentClone - $37</span>
-              </div>
-              <motion.a
-                href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackFullCTAClick('sticky_cta')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative group"
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#d4af37] to-[#f4e5a1] rounded-xl opacity-75 group-hover:opacity-100 blur transition duration-300" />
-                <div className="relative px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f4e5a1] text-black rounded-xl font-black text-sm md:text-base uppercase shadow-lg shadow-[#d4af37]/20">
-                  Get Access Now
-                </div>
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Luxury Top Banner */}
-      <div className="bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] border-b-2 border-[#d4af37] sticky top-0 z-30 shadow-xl">
-        <div className="max-w-7xl mx-auto px-3 py-2 md:py-3 text-center">
-          <p className="text-black font-black text-[10px] md:text-sm uppercase tracking-wide">Limited Time {today}</p>
-          <p className="text-black/80 text-[9px] md:text-xs font-semibold">Price jumps to $97 at midnight</p>
+      {/* Sticky CTA Bar - Optimized for mobile */}
+      <div
+        className={`fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-yellow-500/20 shadow-2xl transition-transform duration-300 ${showStickyCTA ? 'translate-y-0' : '-translate-y-full'}`}
+      >
+        <div className="max-w-7xl mx-auto px-3 py-2.5 md:py-3 flex items-center justify-between gap-2 md:gap-4">
+          <div className="flex items-center gap-2 md:gap-3">
+            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 flex-shrink-0" />
+            <span className="text-white font-bold text-xs md:text-base">7 Min AgentClone - $37</span>
+          </div>
+          <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+             onClick={() => trackFullCTAClick('sticky_cta')}
+             className="px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black rounded-2xl font-black text-base md:text-xl uppercase active:scale-95 transition-transform duration-200 whitespace-nowrap">
+            Get Access Now
+          </a>
         </div>
       </div>
 
-      {/* LUXURY HERO SECTION - BLACK + GOLD */}
+      {/* Top banner */}
+      <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 border-b-2 border-yellow-400 sticky top-0 z-30 shadow-xl">
+        <div className="max-w-7xl mx-auto px-3 py-2 md:py-3 text-center">
+          <p className="text-white font-black text-[10px] md:text-sm uppercase tracking-wide">Limited Time {today}</p>
+          <p className="text-white/90 text-[9px] md:text-xs font-semibold">Price jumps to $97 at midnight</p>
+        </div>
+      </div>
+
+      {/* HERO SECTION - DARK */}
       <section className="relative overflow-hidden py-6 md:py-12 bg-black">
-        {/* Animated Luxury Gold Background Blobs */}
+        {/* Static background gradient - removed animations for performance */}
         <div className="absolute inset-0 opacity-40 pointer-events-none">
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute w-[600px] h-[600px] bg-gradient-to-r from-[#d4af37]/30 to-[#f4e5a1]/30 rounded-full blur-[120px] -top-48 -left-48"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute w-[500px] h-[500px] bg-gradient-to-r from-[#f4e5a1]/20 to-[#d4af37]/20 rounded-full blur-[140px] top-1/4 right-0"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.15, 0.3, 0.15],
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute w-[700px] h-[700px] bg-gradient-to-r from-[#d4af37]/15 to-[#f4e5a1]/15 rounded-full blur-[160px] bottom-0 left-1/3"
-          />
+          <div className="absolute w-[600px] h-[600px] bg-gradient-to-r from-yellow-500/30 to-orange-500/30 rounded-full blur-[120px] -top-48 -left-48" />
+          <div className="absolute w-[500px] h-[500px] bg-gradient-to-r from-amber-500/20 to-yellow-500/20 rounded-full blur-[140px] top-1/4 right-0" />
+          <div className="absolute w-[700px] h-[700px] bg-gradient-to-r from-orange-500/15 to-yellow-400/15 rounded-full blur-[160px] bottom-0 left-1/3" />
         </div>
 
-        {/* Gold Dot Pattern */}
         <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.2) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(251, 191, 36, 0.15) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }} />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6">
           <Card>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center space-y-6 md:space-y-8"
-            >
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.2] tracking-tight uppercase px-2"
-              >
+            <div className="text-center space-y-6 md:space-y-8">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.2] tracking-tight uppercase px-2">
                 <span className="text-white">Get </span>
-                <motion.span
-                  animate={{
-                    backgroundPosition: ['0%', '100%', '0%'],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="inline-block bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] bg-[length:200%_100%] bg-clip-text text-transparent"
-                  style={{ fontWeight: 900 }}
-                >
-                  5-15 Leads
-                </motion.span>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse">5-15 Leads</span>
                 <span className="text-white"> This Week by turning your image to AI Video in </span>
-                <motion.span
-                  animate={{
-                    backgroundPosition: ['0%', '100%', '0%'],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.5 }}
-                  className="inline-block bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] bg-[length:200%_100%] bg-clip-text text-transparent"
-                  style={{ fontWeight: 900 }}
-                >
-                  7 Minutes
-                </motion.span>
-              </motion.h1>
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>7 Minutes</span>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed px-2"
-              >
-                Zero experience needed, start getting <span className="text-[#d4af37] font-bold">100+ Real Buyer Leads Monthly</span>
-              </motion.p>
+              <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+                Zero experience needed, start getting <span className="text-yellow-400 font-bold">100+ Real Buyer Leads Monthly</span>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="max-w-4xl mx-auto"
-              >
+              <div className="max-w-4xl mx-auto">
                 <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] rounded-3xl opacity-75 group-hover:opacity-100 blur-xl transition duration-500" />
+                  <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 rounded-3xl opacity-75 group-hover:opacity-100 blur-xl transition duration-500"></div>
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-[#d4af37]/20 to-[#f4e5a1]/20 backdrop-blur-sm border-2 border-[#d4af37]/40 rounded-2xl p-1 shadow-2xl">
-                      <motion.div
-                        animate={{ opacity: [0.7, 1, 0.7] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="bg-[#d4af37]/5 rounded-xl p-2 text-center"
-                      >
-                        <p className="text-[#f4e5a1] font-bold text-xs md:text-sm mb-2 uppercase tracking-wider flex items-center justify-center gap-2">
-                          <Volume2 className="w-4 h-4" />
-                          PLAY THIS WITH SOUND ON
-                        </p>
-                      </motion.div>
+                    <div className="bg-gradient-to-br from-yellow-400/20 to-orange-400/20 backdrop-blur-sm border-2 border-yellow-400/40 rounded-2xl p-1 shadow-2xl">
+                      <div className="bg-yellow-400/5 rounded-xl p-2 text-center">
+                        <p className="text-yellow-300 font-bold text-xs md:text-sm mb-2 uppercase tracking-wider">PLAY THIS WITH SOUND ON</p>
+                      </div>
                       {/* Professional Video Player */}
                       <div className="rounded-2xl overflow-hidden bg-black shadow-2xl border border-gray-800/50">
                         <div className="relative group" style={{ padding: '56.67% 0 0 0' }}>
@@ -1013,80 +911,48 @@ export default function AgentLandingPage() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               <div className="flex flex-col items-center gap-4 md:gap-6 pt-4 px-2">
                 <div className="text-center space-y-2 md:space-y-3">
                   {!priceUnlocked ? (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="space-y-3"
-                    >
-                      <div className="flex items-center justify-center gap-2 px-4 py-2 bg-[#d4af37]/10 border border-[#d4af37]/30 rounded-full backdrop-blur-sm">
-                        <Eye className="w-4 h-4 md:w-5 md:h-5 text-[#d4af37] animate-pulse" />
-                        <span className="text-[#f4e5a1] text-sm md:text-base font-bold">Watch video to unlock special price</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full backdrop-blur-sm">
+                        <Eye className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 animate-pulse" />
+                        <span className="text-yellow-400 text-sm md:text-base font-bold">Watch video to unlock special price</span>
                       </div>
                       <div className="text-gray-400 text-3xl md:text-5xl font-black tracking-tight blur-sm select-none">US$ ??</div>
-                    </motion.div>
+                    </div>
                   ) : (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5 }}
-                      className="price-reveal"
-                    >
+                    <div className="price-reveal">
                       <div className="flex items-center justify-center gap-2 flex-wrap px-2">
-                        <span className="text-gray-500 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
+                        <span className="text-red-400 text-lg md:text-xl font-black uppercase line-through decoration-2">FROM $97</span>
                         <span className="text-white text-lg md:text-xl font-black uppercase">FOR ONLY</span>
                       </div>
-                      <motion.div
-                        animate={{
-                          textShadow: [
-                            '0 0 20px rgba(212, 175, 55, 0.5)',
-                            '0 0 40px rgba(212, 175, 55, 0.8)',
-                            '0 0 20px rgba(212, 175, 55, 0.5)'
-                          ]
-                        }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="text-[#d4af37] text-5xl md:text-6xl font-black tracking-tight mt-2"
-                      >
-                        US$ 37
-                      </motion.div>
-                    </motion.div>
+                      <div className="text-green-400 text-5xl md:text-6xl font-black tracking-tight mt-2">US$ 37</div>
+                    </div>
                   )}
                 </div>
 
-                <motion.a
-                  href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackFullCTAClick('price_unlock_cta')}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group relative inline-block w-full max-w-3xl px-2"
-                >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300" />
-                  <div className={`relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-[#d4af37] via-[#f4e5a1] to-[#d4af37] rounded-2xl font-black text-base md:text-xl text-black uppercase tracking-wider transition-transform duration-300 shadow-2xl shadow-[#d4af37]/30 flex items-center justify-center gap-2 md:gap-3 ${priceUnlocked ? 'pump-animation' : ''}`}>
-                    <Crown className="w-5 h-5 md:w-7 md:h-7" />
+                <a href="https://buy.stripe.com/fZeaH65v24Ab1wc3ce" target="_blank" rel="noopener noreferrer"
+                   onClick={() => trackFullCTAClick('price_unlock_cta')}
+                   className="group relative inline-block w-full max-w-3xl px-2">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-lg transition duration-300"></div>
+                  <div className={`relative px-6 py-4 md:px-10 md:py-5 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-2xl font-black text-base md:text-xl text-white uppercase tracking-wider transition-transform duration-300 active:scale-95 shadow-2xl flex items-center justify-center gap-2 md:gap-3 ${priceUnlocked ? 'pump-animation' : ''}`}>
+                    <Zap className="w-5 h-5 md:w-7 md:h-7" />
                     <span>{priceUnlocked ? 'I want the AgentClone™ System' : 'Watch video to unlock'}</span>
                   </div>
-                </motion.a>
+                </a>
 
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8 }}
-                  className="flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-[#d4af37]/20 to-[#f4e5a1]/20 backdrop-blur-sm border border-[#d4af37]/50 rounded-full shadow-lg"
-                >
-                  <AlertCircle className="w-3 h-3 md:w-4 md:h-4 text-[#d4af37]" />
-                  <span className="text-white font-bold text-[10px] md:text-sm uppercase tracking-wide">Price jumps to <span className="text-[#f4e5a1]">$97</span> tonight</span>
-                  <Clock className="w-3 h-3 md:w-4 md:h-4 text-[#d4af37]" />
-                </motion.div>
+                <div className="flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-red-600/95 to-red-700/95 backdrop-blur-sm border border-red-500/50 rounded-full shadow-lg">
+                  <AlertCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                  <span className="text-white font-bold text-[10px] md:text-sm uppercase tracking-wide">Price jumps to <span className="text-yellow-300">$97</span> tonight</span>
+                  <Clock className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                </div>
 
                 <SecureCheckout />
               </div>
-            </motion.div>
+            </div>
           </Card>
         </div>
       </section>
