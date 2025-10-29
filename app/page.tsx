@@ -272,27 +272,37 @@ export default function AgentLandingPage() {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   const tilt = 'transition-transform duration-500 will-change-transform hover:-translate-y-1';
 
-  // Stripe Checkout Handler
+  // Optimized Stripe Checkout Handler - instant feedback
   const handleCheckout = async (ctaLocation: string) => {
+    // Instant visual feedback
     setIsCheckoutLoading(true);
+    document.body.style.cursor = 'wait';
+
+    // Track in background (non-blocking)
+    trackFullCTAClick(ctaLocation);
+
     try {
-      trackFullCTAClick(ctaLocation);
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
       const { url, error } = await response.json();
+
       if (error) {
         console.error('Checkout error:', error);
         alert('Something went wrong. Please try again.');
         setIsCheckoutLoading(false);
+        document.body.style.cursor = 'default';
         return;
       }
+
+      // Redirect immediately
       if (url) window.location.href = url;
     } catch (err) {
       console.error('Checkout exception:', err);
       alert('Something went wrong. Please try again.');
       setIsCheckoutLoading(false);
+      document.body.style.cursor = 'default';
     }
   };
 

@@ -83,7 +83,8 @@ export default function RootLayout({
         {/* Resource hints for performance */}
         <link rel="preconnect" href="https://fast.wistia.net" />
         <link rel="preconnect" href="https://embed-ssl.wistia.com" />
-        <link rel="dns-prefetch" href="https://buy.stripe.com" />
+        <link rel="preconnect" href="https://api.stripe.com" />
+        <link rel="dns-prefetch" href="https://checkout.stripe.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
