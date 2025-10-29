@@ -7,7 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
-    const { priceId } = await req.json();
+    // Use price ID from environment variable (server-side)
+    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
+
+    if (!priceId) {
+      throw new Error('Price ID not configured');
+    }
 
     // Create Checkout Session
     const session = await stripe.checkout.sessions.create({

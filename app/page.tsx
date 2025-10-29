@@ -280,18 +280,17 @@ export default function AgentLandingPage() {
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-        }),
       });
       const { url, error } = await response.json();
       if (error) {
+        console.error('Checkout error:', error);
         alert('Something went wrong. Please try again.');
         setIsCheckoutLoading(false);
         return;
       }
       if (url) window.location.href = url;
     } catch (err) {
+      console.error('Checkout exception:', err);
       alert('Something went wrong. Please try again.');
       setIsCheckoutLoading(false);
     }
