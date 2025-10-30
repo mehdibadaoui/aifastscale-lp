@@ -25,13 +25,11 @@ export async function POST(req: NextRequest) {
       success_url: `${req.headers.get('origin')}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}`,
       // Enable ALL payment methods for maximum conversion
-      automatic_payment_methods: {
-        enabled: true, // Enables Apple Pay, Google Pay, Link, etc.
-      },
+      payment_method_types: ['card', 'link'], // Card + Link (1-click payment)
+      // Apple Pay and Google Pay auto-enable based on device
       // Minimal fields for fastest checkout
       billing_address_collection: 'auto', // Only ask if needed
       phone_number_collection: { enabled: false }, // No phone number
-      submit_type: 'pay', // Clear "Pay" button
     });
 
     return NextResponse.json({ url: session.url });
