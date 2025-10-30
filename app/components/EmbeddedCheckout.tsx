@@ -61,12 +61,21 @@ function CheckoutForm() {
         />
       </div>
 
-      {/* Stripe Payment Element - MINIMAL for max conversion */}
+      {/* Stripe Payment Element - 10/10 CONVERSION with Express Checkout */}
       <div>
         <PaymentElement
           options={{
-            layout: 'tabs',
-            paymentMethodOrder: ['card', 'link'],
+            layout: {
+              type: 'tabs',
+              defaultCollapsed: false,
+              radios: false,
+              spacedAccordionItems: true,
+            },
+            wallets: {
+              applePay: 'auto', // Show Apple Pay if available
+              googlePay: 'auto', // Show Google Pay if available
+            },
+            paymentMethodOrder: ['apple_pay', 'google_pay', 'link', 'card'],
             fields: {
               billingDetails: {
                 address: 'auto', // Only show if needed
@@ -86,26 +95,35 @@ function CheckoutForm() {
         </div>
       )}
 
-      {/* Submit Button - Stripe Style */}
+      {/* Mini Guarantee Badge Above Button */}
+      <div className="flex items-center justify-center gap-2 py-3 px-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+        <Shield className="w-4 h-4 text-green-400 flex-shrink-0" />
+        <p className="text-xs text-green-400 font-semibold">Protected by 30-Day Money-Back Guarantee</p>
+      </div>
+
+      {/* Submit Button - 10/10 CONVERSION OPTIMIZED */}
       <button
         type="submit"
         disabled={isProcessing || !stripe || !elements || !email}
-        className="w-full px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black text-lg rounded-lg transition-all disabled:bg-gray-600 disabled:cursor-not-allowed shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
       >
         {isProcessing ? (
           <>
             <Loader className="w-5 h-5 animate-spin" />
-            <span>Processing...</span>
+            <span>Processing Securely...</span>
           </>
         ) : (
-          <span>Pay $37.00</span>
+          <>
+            <Lock className="w-5 h-5" />
+            <span>Get Instant Access - $37</span>
+          </>
         )}
       </button>
 
       {/* Security Badge */}
-      <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-2">
+      <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-1">
         <Lock className="w-3.5 h-3.5" />
-        <span>Powered by <span className="font-semibold">stripe</span></span>
+        <span>Powered by <span className="font-semibold">stripe</span> • Bank-level encryption</span>
       </div>
     </form>
   );
@@ -151,15 +169,21 @@ export default function EmbeddedCheckout() {
       <div className="relative max-w-7xl mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
-          <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-green-500/20 border border-green-500/50 rounded-full mb-3 md:mb-4">
-            <span className="text-green-400 font-bold text-xs md:text-sm uppercase tracking-wide">🔒 Secure Checkout</span>
+          {/* Urgency Badge */}
+          <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-red-500/20 border border-red-500/50 rounded-full mb-3 md:mb-4 animate-pulse">
+            <span className="text-red-400 font-bold text-xs md:text-sm uppercase tracking-wide">⚡ Limited Time: $60 OFF (Ends Soon)</span>
           </div>
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-2 md:mb-4 px-4">
             Complete Your Order
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-gray-300 px-4">
+          <p className="text-base md:text-lg lg:text-xl text-gray-300 px-4 mb-2">
             Join 500+ agents already using AgentClone™ to generate leads
           </p>
+          {/* Social Proof Counter */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-xs md:text-sm text-green-400 font-semibold">23 people purchased in the last 24 hours</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
