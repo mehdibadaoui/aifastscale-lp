@@ -75,7 +75,8 @@ function CheckoutForm() {
               applePay: 'auto', // Show Apple Pay if available
               googlePay: 'auto', // Show Google Pay if available
             },
-            paymentMethodOrder: ['apple_pay', 'google_pay', 'link', 'card'],
+            // CARD FIRST for familiarity, then wallet options
+            paymentMethodOrder: ['card', 'apple_pay', 'google_pay', 'link'],
             fields: {
               billingDetails: {
                 address: 'auto', // Only show if needed
