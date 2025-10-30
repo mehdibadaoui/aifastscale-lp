@@ -61,12 +61,20 @@ function CheckoutForm() {
         />
       </div>
 
-      {/* Stripe Payment Element */}
+      {/* Stripe Payment Element - MINIMAL for max conversion */}
       <div>
         <PaymentElement
           options={{
             layout: 'tabs',
-            paymentMethodOrder: ['card'],
+            paymentMethodOrder: ['card', 'link'],
+            fields: {
+              billingDetails: {
+                address: 'auto', // Only show if needed
+              },
+            },
+            terms: {
+              card: 'never', // Remove terms text for cleaner look
+            },
           }}
         />
       </div>

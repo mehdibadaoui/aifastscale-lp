@@ -16,10 +16,12 @@ export async function POST(req: NextRequest) {
     const { email } = await req.json();
 
     // Create a PaymentIntent with the order amount and currency
+    // MAXIMUM CONVERSION - all payment methods enabled!
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 3700, // $37.00 in cents
       currency: 'usd',
       receipt_email: email,
+      payment_method_types: ['card', 'link'], // Card + Link for 1-click
       metadata: {
         product: '7-Minute AgentClone AI Video System',
       },
