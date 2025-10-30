@@ -44,11 +44,12 @@ function CheckoutForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Email Input - Stripe Style */}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Step 1: Email - BIGGER labels for clarity */}
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
-          Email
+        <label htmlFor="email" className="block text-base md:text-lg font-bold text-white mb-3">
+          <span className="inline-block w-7 h-7 md:w-8 md:h-8 bg-blue-500 text-white rounded-full text-center leading-7 md:leading-8 mr-2 font-black">1</span>
+          Enter Your Email Address
         </label>
         <input
           type="email"
@@ -57,12 +58,16 @@ function CheckoutForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="your@email.com"
-          className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition-all"
+          className="w-full px-4 py-4 md:py-5 bg-gray-900 border-2 border-gray-600 rounded-lg text-white text-base md:text-lg placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
         />
       </div>
 
-      {/* Stripe Payment Element - 10/10 CONVERSION with Express Checkout */}
+      {/* Step 2: Payment Method - CLEAR label */}
       <div>
+        <label className="block text-base md:text-lg font-bold text-white mb-3">
+          <span className="inline-block w-7 h-7 md:w-8 md:h-8 bg-blue-500 text-white rounded-full text-center leading-7 md:leading-8 mr-2 font-black">2</span>
+          Choose Payment Method
+        </label>
         <PaymentElement
           options={{
             layout: {
@@ -96,35 +101,43 @@ function CheckoutForm() {
         </div>
       )}
 
-      {/* Mini Guarantee Badge Above Button */}
-      <div className="flex items-center justify-center gap-2 py-3 px-4 bg-green-500/10 border border-green-500/30 rounded-lg">
-        <Shield className="w-4 h-4 text-green-400 flex-shrink-0" />
-        <p className="text-xs text-green-400 font-semibold">Protected by 30-Day Money-Back Guarantee</p>
+      {/* Step 3: Complete Order */}
+      <div className="space-y-4">
+        <label className="block text-base md:text-lg font-bold text-white mb-3">
+          <span className="inline-block w-7 h-7 md:w-8 md:h-8 bg-blue-500 text-white rounded-full text-center leading-7 md:leading-8 mr-2 font-black">3</span>
+          Complete Your Order
+        </label>
+
+        {/* Guarantee Badge - BIGGER and clearer */}
+        <div className="flex items-center justify-center gap-3 py-4 px-5 bg-green-500/10 border-2 border-green-500/30 rounded-lg">
+          <Shield className="w-5 h-5 md:w-6 md:h-6 text-green-400 flex-shrink-0" />
+          <p className="text-sm md:text-base text-green-400 font-bold">Protected by 30-Day Money-Back Guarantee</p>
+        </div>
+
+        {/* Submit Button - BIGGER and clearer */}
+        <button
+          type="submit"
+          disabled={isProcessing || !stripe || !elements || !email}
+          className="w-full px-8 py-5 md:py-6 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black text-xl md:text-2xl rounded-xl transition-all disabled:bg-gray-600 disabled:cursor-not-allowed shadow-2xl hover:shadow-green-500/50 flex items-center justify-center gap-3"
+        >
+          {isProcessing ? (
+            <>
+              <Loader className="w-6 h-6 md:w-7 md:h-7 animate-spin" />
+              <span>Processing Securely...</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-6 h-6 md:w-7 md:h-7" />
+              <span>Complete Order - $37</span>
+            </>
+          )}
+        </button>
       </div>
 
-      {/* Submit Button - 10/10 CONVERSION OPTIMIZED */}
-      <button
-        type="submit"
-        disabled={isProcessing || !stripe || !elements || !email}
-        className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black text-lg rounded-lg transition-all disabled:bg-gray-600 disabled:cursor-not-allowed shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
-      >
-        {isProcessing ? (
-          <>
-            <Loader className="w-5 h-5 animate-spin" />
-            <span>Processing Securely...</span>
-          </>
-        ) : (
-          <>
-            <Lock className="w-5 h-5" />
-            <span>Get Instant Access - $37</span>
-          </>
-        )}
-      </button>
-
-      {/* Security Badge */}
-      <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-1">
-        <Lock className="w-3.5 h-3.5" />
-        <span>Powered by <span className="font-semibold">stripe</span> • Bank-level encryption</span>
+      {/* Security Badge - BIGGER for readability */}
+      <div className="flex items-center justify-center gap-2 text-sm md:text-base text-gray-400 pt-2">
+        <Lock className="w-4 h-4 md:w-5 md:h-5" />
+        <span>Powered by <span className="font-semibold">Stripe</span> • Bank-Level Encryption</span>
       </div>
     </form>
   );
@@ -168,23 +181,18 @@ export default function EmbeddedCheckout() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6">
-        {/* Header */}
+        {/* Header - SIMPLIFIED for clarity */}
         <div className="text-center mb-8 md:mb-12">
-          {/* Urgency Badge */}
-          <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-red-500/20 border border-red-500/50 rounded-full mb-3 md:mb-4 animate-pulse">
-            <span className="text-red-400 font-bold text-xs md:text-sm uppercase tracking-wide">⚡ Limited Time: $60 OFF (Ends Soon)</span>
+          {/* Simple Discount Badge - No pulsing animation */}
+          <div className="inline-block px-4 py-2 md:px-6 md:py-3 bg-green-500/20 border-2 border-green-500/50 rounded-lg mb-4 md:mb-6">
+            <span className="text-green-400 font-bold text-sm md:text-lg">✓ $60 OFF Applied – Today Only $37</span>
           </div>
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-2 md:mb-4 px-4">
-            Complete Your Order
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-3 md:mb-4 px-4">
+            Secure Checkout
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-gray-300 px-4 mb-2">
-            Join 500+ agents already using AgentClone™ to generate leads
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-300 px-4">
+            Complete your order in 3 simple steps
           </p>
-          {/* Social Proof Counter */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-xs md:text-sm text-green-400 font-semibold">23 people purchased in the last 24 hours</span>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
@@ -276,15 +284,15 @@ export default function EmbeddedCheckout() {
             </div>
           </div>
 
-          {/* Right: Payment Form */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-green-500/50 rounded-xl md:rounded-2xl p-5 md:p-8 shadow-2xl">
-            <div className="mb-5 md:mb-6">
-              <div className="flex items-center justify-center gap-2 mb-3 md:mb-4">
-                <Lock className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
-                <span className="text-green-400 font-bold text-xs md:text-sm uppercase tracking-wide">Secure Payment</span>
+          {/* Right: Payment Form - SIMPLIFIED */}
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-green-500/50 rounded-xl md:rounded-2xl p-6 md:p-10 shadow-2xl">
+            <div className="mb-6 md:mb-8">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Lock className="w-6 h-6 md:w-7 md:h-7 text-green-400" />
+                <span className="text-green-400 font-bold text-lg md:text-xl uppercase tracking-wide">Secure Payment</span>
               </div>
-              <p className="text-center text-gray-400 text-xs md:text-sm">
-                Your payment information is encrypted and secure
+              <p className="text-center text-gray-300 text-base md:text-lg font-semibold">
+                Safe & Encrypted Checkout
               </p>
             </div>
 
