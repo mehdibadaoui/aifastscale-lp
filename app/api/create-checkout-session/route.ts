@@ -24,9 +24,11 @@ export async function POST(req: NextRequest) {
       mode: 'payment',
       success_url: `${req.headers.get('origin')}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}`,
-      // Enable ALL payment methods for maximum conversion
-      payment_method_types: ['card', 'link'], // Card + Link (1-click payment)
-      // Apple Pay and Google Pay auto-enable based on device
+      // Enable ALL payment methods - Stripe auto-detects based on:
+      // - Browser/device capabilities
+      // - Payment methods enabled in Dashboard
+      // - Domain verification status
+      // Removing payment_method_types allows ALL methods (card, link, apple_pay, google_pay, etc.)
       // Minimal fields for fastest checkout
       billing_address_collection: 'auto', // Only ask if needed
       phone_number_collection: { enabled: false }, // No phone number

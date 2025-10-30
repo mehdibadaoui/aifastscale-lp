@@ -21,7 +21,11 @@ export async function POST(req: NextRequest) {
       amount: 3700, // $37.00 in cents
       currency: 'usd',
       receipt_email: email,
-      payment_method_types: ['card', 'link'], // Card + Link for 1-click
+      // Removing payment_method_types allows ALL methods
+      // Stripe auto-detects: card, link, apple_pay, google_pay, etc.
+      automatic_payment_methods: {
+        enabled: true,
+      },
       metadata: {
         product: '7-Minute AgentClone AI Video System',
       },
