@@ -113,7 +113,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
 
         {/* Google Merchant Center Verification */}
-        <meta name="google-site-verification" content="07UTX0YRgm3GIWT-mgHhLSkoB42DBkp4ke0E2NqJ2Sg" />
+        <meta name="google-site-verification" content="07UTX0YRgm3QIW1-mgHhLSko642Dbkp4ksQEZNq3z5g" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
