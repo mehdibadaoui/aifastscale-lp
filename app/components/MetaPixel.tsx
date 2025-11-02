@@ -1,38 +1,38 @@
-'use client';
+'use client'
 
-import Script from 'next/script';
-import { useEffect } from 'react';
+import Script from 'next/script'
+import { useEffect } from 'react'
 
 declare global {
   interface Window {
-    fbq: any;
-    _fbq: any;
+    fbq: any
+    _fbq: any
   }
 }
 
 export default function MetaPixel() {
-  const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '806502898408304';
+  const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '806502898408304'
 
   // Don't load pixel in development
   if (process.env.NODE_ENV === 'development') {
-    return null;
+    return null
   }
 
   useEffect(() => {
     // Track initial PageView
     if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'PageView');
+      window.fbq('track', 'PageView')
 
       // Track ViewContent with product details
       window.fbq('track', 'ViewContent', {
         content_name: '7 Minute AgentClone Course',
         content_category: 'AI Video Course',
         content_type: 'product',
-        value: 37.00,
-        currency: 'USD'
-      });
+        value: 37.0,
+        currency: 'USD',
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <>
@@ -63,5 +63,5 @@ export default function MetaPixel() {
         />
       </noscript>
     </>
-  );
+  )
 }

@@ -1,0 +1,73 @@
+{
+  // Auto-format on save
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+
+  // Use Prettier as default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Auto-fix ESLint errors on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // Tailwind CSS IntelliSense settings
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "tailwindCSS.emmetCompletions": true,
+
+  // File associations
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // Better TypeScript experience
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // Prettier config
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "es5",
+
+  // File explorer settings
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.next": true
+  },
+
+  // Better search settings
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // Error Lens settings (less intrusive)
+  "errorLens.fontSize": "12",
+  "errorLens.fontWeight": "normal",
+
+  // Console Ninja settings
+  "console-ninja.featureSet": "Community",
+
+  // Better editor experience
+  "editor.tabSize": 2,
+  "editor.suggestSelection": "first",
+  "editor.inlineSuggest.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+
+  // Git settings
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  // Claude Code - Give full permissions
+  "claudeCode.allowDangerouslySkipPermissions": true
+}

@@ -1,37 +1,38 @@
-'use client';
+'use client'
 
-import Script from 'next/script';
-import { useEffect } from 'react';
+import Script from 'next/script'
+import { useEffect } from 'react'
 
 declare global {
   interface Window {
-    ttq: any;
+    ttq: any
   }
 }
 
 export default function TikTokPixel() {
-  const PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || 'D3LRUDJC77U1N95DTTAG';
+  const PIXEL_ID =
+    process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || 'D3LRUDJC77U1N95DTTAG'
 
   // Don't load pixel in development
   if (process.env.NODE_ENV === 'development') {
-    return null;
+    return null
   }
 
   useEffect(() => {
     // Track initial PageView
     if (typeof window !== 'undefined' && window.ttq) {
-      window.ttq.track('Browse');
+      window.ttq.track('Browse')
 
       // Track ViewContent with product details
       window.ttq.track('ViewContent', {
         content_name: '7 Minute AgentClone Course',
         content_category: 'AI Video Course',
         content_type: 'product',
-        value: 37.00,
-        currency: 'USD'
-      });
+        value: 37.0,
+        currency: 'USD',
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <>
@@ -50,5 +51,5 @@ export default function TikTokPixel() {
         }}
       />
     </>
-  );
+  )
 }

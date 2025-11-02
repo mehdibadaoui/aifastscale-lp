@@ -5,9 +5,9 @@
 
 declare global {
   interface Window {
-    fbq: any;
-    gtag: any;
-    ttq: any;
+    fbq: any
+    gtag: any
+    ttq: any
   }
 }
 
@@ -23,10 +23,10 @@ export const trackButtonClick = (buttonLocation: string) => {
       content_name: '7 Minute AgentClone Course',
       content_category: 'AI Video Course',
       content_type: 'product',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      button_location: buttonLocation
-    });
+      button_location: buttonLocation,
+    })
   }
 
   // TikTok Pixel - ClickButton
@@ -35,36 +35,38 @@ export const trackButtonClick = (buttonLocation: string) => {
       content_name: '7 Minute AgentClone Course',
       content_category: 'AI Video Course',
       content_type: 'product',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      button_location: buttonLocation
-    });
+      button_location: buttonLocation,
+    })
   }
 
   // Google Analytics - add_to_cart event
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'add_to_cart', {
       currency: 'USD',
-      value: 37.00,
-      items: [{
-        item_id: 'agentclone_course',
-        item_name: '7 Minute AgentClone Course',
-        item_category: 'AI Video Course',
-        price: 37.00,
-        quantity: 1
-      }],
-      button_location: buttonLocation
-    });
+      value: 37.0,
+      items: [
+        {
+          item_id: 'agentclone_course',
+          item_name: '7 Minute AgentClone Course',
+          item_category: 'AI Video Course',
+          price: 37.0,
+          quantity: 1,
+        },
+      ],
+      button_location: buttonLocation,
+    })
   }
 
   if (process.env.NODE_ENV === 'development') {
     console.log('🛒 AddToCart/ClickButton Tracked:', {
       location: buttonLocation,
-      value: 37.00,
-      currency: 'USD'
-    });
+      value: 37.0,
+      currency: 'USD',
+    })
   }
-};
+}
 
 /**
  * Track checkout initiation (InitiateCheckout event)
@@ -78,10 +80,10 @@ export const trackCTAClick = (buttonLocation: string) => {
       content_name: '7 Minute AgentClone Course',
       content_category: 'AI Video Course',
       content_type: 'product',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      button_location: buttonLocation
-    });
+      button_location: buttonLocation,
+    })
   }
 
   // TikTok Pixel - InitiateCheckout
@@ -90,36 +92,38 @@ export const trackCTAClick = (buttonLocation: string) => {
       content_name: '7 Minute AgentClone Course',
       content_category: 'AI Video Course',
       content_type: 'product',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      button_location: buttonLocation
-    });
+      button_location: buttonLocation,
+    })
   }
 
   // Google Analytics - begin_checkout event
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'begin_checkout', {
       currency: 'USD',
-      value: 37.00,
-      items: [{
-        item_id: 'agentclone_course',
-        item_name: '7 Minute AgentClone Course',
-        item_category: 'AI Video Course',
-        price: 37.00,
-        quantity: 1
-      }],
-      button_location: buttonLocation
-    });
+      value: 37.0,
+      items: [
+        {
+          item_id: 'agentclone_course',
+          item_name: '7 Minute AgentClone Course',
+          item_category: 'AI Video Course',
+          price: 37.0,
+          quantity: 1,
+        },
+      ],
+      button_location: buttonLocation,
+    })
   }
 
   if (process.env.NODE_ENV === 'development') {
     console.log('🎯 InitiateCheckout Tracked:', {
       location: buttonLocation,
-      value: 37.00,
-      currency: 'USD'
-    });
+      value: 37.0,
+      currency: 'USD',
+    })
   }
-};
+}
 
 /**
  * Track video interactions
@@ -132,8 +136,8 @@ export const trackVideoInteraction = (action: string, percentage?: number) => {
     window.fbq('trackCustom', 'VideoInteraction', {
       action,
       percentage,
-      video_title: 'Hero VSL'
-    });
+      video_title: 'Hero VSL',
+    })
   }
 
   // Google Analytics
@@ -141,14 +145,14 @@ export const trackVideoInteraction = (action: string, percentage?: number) => {
     window.gtag('event', 'video_' + action, {
       event_category: 'video',
       event_label: 'Hero VSL',
-      value: percentage || 0
-    });
+      value: percentage || 0,
+    })
   }
 
   if (process.env.NODE_ENV === 'development') {
-    console.log('📹 Video Interaction:', action, percentage);
+    console.log('📹 Video Interaction:', action, percentage)
   }
-};
+}
 
 /**
  * Track successful purchase - THE MOST IMPORTANT EVENT!
@@ -156,7 +160,7 @@ export const trackVideoInteraction = (action: string, percentage?: number) => {
  * @param orderId - Order/transaction ID from Stripe
  * @param value - Purchase amount (default $37)
  */
-export const trackPurchase = (orderId: string, value: number = 37.00) => {
+export const trackPurchase = (orderId: string, value: number = 37.0) => {
   // Meta/Facebook Pixel - Purchase
   if (typeof window !== 'undefined' && window.fbq) {
     window.fbq('track', 'Purchase', {
@@ -165,8 +169,8 @@ export const trackPurchase = (orderId: string, value: number = 37.00) => {
       content_ids: ['agentclone_course'],
       value: value,
       currency: 'USD',
-      transaction_id: orderId
-    });
+      transaction_id: orderId,
+    })
   }
 
   // TikTok Pixel - CompletePayment
@@ -178,8 +182,8 @@ export const trackPurchase = (orderId: string, value: number = 37.00) => {
       value: value,
       currency: 'USD',
       quantity: 1,
-      order_id: orderId
-    });
+      order_id: orderId,
+    })
   }
 
   // Google Analytics - purchase event
@@ -188,28 +192,30 @@ export const trackPurchase = (orderId: string, value: number = 37.00) => {
       transaction_id: orderId,
       value: value,
       currency: 'USD',
-      items: [{
-        item_id: 'agentclone_course',
-        item_name: '7 Minute AgentClone Course',
-        item_category: 'AI Video Course',
-        price: value,
-        quantity: 1
-      }]
-    });
+      items: [
+        {
+          item_id: 'agentclone_course',
+          item_name: '7 Minute AgentClone Course',
+          item_category: 'AI Video Course',
+          price: value,
+          quantity: 1,
+        },
+      ],
+    })
 
     // Also send conversion event (for Google Ads)
     window.gtag('event', 'conversion', {
       send_to: 'AW-CONVERSION_ID/CONVERSION_LABEL', // Replace with your Google Ads conversion ID
       value: value,
       currency: 'USD',
-      transaction_id: orderId
-    });
+      transaction_id: orderId,
+    })
   }
 
   if (process.env.NODE_ENV === 'development') {
-    console.log('💰 Purchase Tracked:', orderId, value);
+    console.log('💰 Purchase Tracked:', orderId, value)
   }
-};
+}
 
 /**
  * Track CompleteRegistration - Signals user completed the purchase flow
@@ -222,36 +228,36 @@ export const trackCompleteRegistration = (orderId: string) => {
     window.fbq('track', 'CompleteRegistration', {
       content_name: '7 Minute AgentClone Course',
       status: 'completed',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      transaction_id: orderId
-    });
+      transaction_id: orderId,
+    })
   }
 
   // TikTok Pixel - Subscribe (alternative to CompleteRegistration)
   if (typeof window !== 'undefined' && window.ttq) {
     window.ttq.track('Subscribe', {
       content_name: '7 Minute AgentClone Course',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      order_id: orderId
-    });
+      order_id: orderId,
+    })
   }
 
   // Google Analytics - sign_up event
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'sign_up', {
       method: 'Stripe Checkout',
-      value: 37.00,
+      value: 37.0,
       currency: 'USD',
-      transaction_id: orderId
-    });
+      transaction_id: orderId,
+    })
   }
 
   if (process.env.NODE_ENV === 'development') {
-    console.log('✅ CompleteRegistration Tracked:', orderId);
+    console.log('✅ CompleteRegistration Tracked:', orderId)
   }
-};
+}
 
 /**
  * Combined tracking function for CTA clicks
@@ -261,15 +267,18 @@ export const trackCompleteRegistration = (orderId: string) => {
  */
 export const trackFullCTAClick = (buttonLocation: string) => {
   // First fire the AddToCart/ClickButton event (shows interest)
-  trackButtonClick(buttonLocation);
+  trackButtonClick(buttonLocation)
 
   // Then fire InitiateCheckout (shows strong buying intent)
-  trackCTAClick(buttonLocation);
+  trackCTAClick(buttonLocation)
 
   if (process.env.NODE_ENV === 'development') {
-    console.log('🚀 Full CTA Click Tracked (AddToCart + InitiateCheckout):', buttonLocation);
+    console.log(
+      '🚀 Full CTA Click Tracked (AddToCart + InitiateCheckout):',
+      buttonLocation
+    )
   }
-};
+}
 
 /**
  * Track page scrolling depth
@@ -279,8 +288,8 @@ export const trackScrollDepth = (depth: number) => {
   // Facebook Pixel
   if (typeof window !== 'undefined' && window.fbq) {
     window.fbq('trackCustom', 'ScrollDepth', {
-      depth: depth + '%'
-    });
+      depth: depth + '%',
+    })
   }
 
   // Google Analytics
@@ -288,7 +297,7 @@ export const trackScrollDepth = (depth: number) => {
     window.gtag('event', 'scroll_depth', {
       event_category: 'engagement',
       event_label: depth + '%',
-      value: depth
-    });
+      value: depth,
+    })
   }
-};
+}

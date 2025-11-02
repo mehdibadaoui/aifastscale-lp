@@ -1,19 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 
 if (!stripeSecretKey) {
-  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
+  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables')
 }
 
 const stripe = new Stripe(stripeSecretKey, {
   typescript: true,
-});
+})
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = await req.json();
+    const { email } = await req.json()
 
     // Create a PaymentIntent with the order amount and currency
     // MAXIMUM CONVERSION - all payment methods enabled!
@@ -29,16 +29,16 @@ export async function POST(req: NextRequest) {
       metadata: {
         product: '7-Minute AgentClone AI Video System',
       },
-    });
+    })
 
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
-    });
+    })
   } catch (err: any) {
-    console.error('PaymentIntent Error:', err.message);
+    console.error('PaymentIntent Error:', err.message)
     return NextResponse.json(
       { error: err.message || 'Payment setup failed' },
       { status: 500 }
-    );
+    )
   }
 }

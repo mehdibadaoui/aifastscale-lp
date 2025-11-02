@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 
 if (!stripeSecretKey) {
-  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
+  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables')
 }
 
 const stripe = new Stripe(stripeSecretKey, {
   typescript: true,
-});
+})
 
 export async function POST(req: NextRequest) {
   try {
-    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
+    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID
     if (!priceId) {
-      throw new Error('Price ID not configured');
+      throw new Error('Price ID not configured')
     }
 
     // MAXIMUM CONVERSION checkout - all payment methods enabled!
@@ -32,14 +32,14 @@ export async function POST(req: NextRequest) {
       // Minimal fields for fastest checkout
       billing_address_collection: 'auto', // Only ask if needed
       phone_number_collection: { enabled: false }, // No phone number
-    });
+    })
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: session.url })
   } catch (err: any) {
-    console.error('Stripe Error:', err.message);
+    console.error('Stripe Error:', err.message)
     return NextResponse.json(
       { error: err.message || 'Payment processing error' },
       { status: 500 }
-    );
+    )
   }
 }

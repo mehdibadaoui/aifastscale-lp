@@ -1,0 +1,48 @@
+[
+  {
+    "_id": "test_payment_intent",
+    "colId": "stripe_api_collection",
+    "containerId": "",
+    "name": "Test Payment Intent (Embedded Checkout)",
+    "url": "http://localhost:3000/api/create-payment-intent",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2025-11-01T11:00:00.000Z",
+    "modified": "2025-11-01T11:00:00.000Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"test@example.com\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "test_checkout_session",
+    "colId": "stripe_api_collection",
+    "containerId": "",
+    "name": "Test Checkout Session (Hosted Checkout)",
+    "url": "http://localhost:3000/api/create-checkout-session",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2025-11-01T11:00:00.000Z",
+    "modified": "2025-11-01T11:00:00.000Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{}",
+      "form": []
+    },
+    "tests": []
+  }
+]

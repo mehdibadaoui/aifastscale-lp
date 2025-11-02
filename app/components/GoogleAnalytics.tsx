@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import Script from 'next/script';
+import Script from 'next/script'
 
 export default function GoogleAnalytics() {
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
   // Don't load GA in development
   if (process.env.NODE_ENV === 'development') {
-    return null;
+    return null
   }
 
   return (
@@ -27,5 +27,5 @@ export default function GoogleAnalytics() {
         `}
       </Script>
     </>
-  );
+  )
 }
