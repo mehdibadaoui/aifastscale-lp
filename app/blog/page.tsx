@@ -13,6 +13,15 @@ export const metadata: Metadata = {
 export default function BlogIndex() {
   const posts = [
     {
+      slug: 'ai-video-real-estate-why-2025',
+      title: 'Why Real Estate Agents Who Don\'t Use AI Video Will Struggle in 2025',
+      description:
+        'Discover why UAE agents ignoring AI video marketing are losing listings, reach, and leads. Learn how to stay ahead and dominate 2025 with AI FastScale.',
+      date: '2025-01-09',
+      readTime: '11 min read',
+      category: 'Industry Trends',
+    },
+    {
       slug: 'ai-video-marketing-real-estate-guide-2025',
       title: 'AI Video Marketing for Real Estate: Complete Beginner\'s Guide 2025',
       description:

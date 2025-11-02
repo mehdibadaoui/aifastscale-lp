@@ -89,5 +89,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog/ai-video-real-estate-why-2025`,
+      lastModified: new Date('2025-01-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 }
