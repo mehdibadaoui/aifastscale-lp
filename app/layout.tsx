@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from './components/GoogleAnalytics'
+import GoogleAdsTag from './components/GoogleAdsTag'
 import MetaPixel from './components/MetaPixel'
 import TikTokPixel from './components/TikTokPixel'
 
@@ -153,6 +154,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black text-white antialiased`}
       >
         <GoogleAnalytics />
+        <GoogleAdsTag />
         <MetaPixel />
         <TikTokPixel />
         {children}
