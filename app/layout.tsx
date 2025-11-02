@@ -5,6 +5,7 @@ import GoogleAnalytics from './components/GoogleAnalytics'
 import GoogleAdsTag from './components/GoogleAdsTag'
 import MetaPixel from './components/MetaPixel'
 import TikTokPixel from './components/TikTokPixel'
+import MicrosoftClarity from './components/MicrosoftClarity'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -277,6 +278,7 @@ export default function RootLayout({
         <GoogleAdsTag />
         <MetaPixel />
         <TikTokPixel />
+        <MicrosoftClarity />
         {children}
       </body>
     </html>
