@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'payment',
-      success_url: `${req.headers.get('origin')}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.get('origin')}/oto`,
       cancel_url: `${req.headers.get('origin')}`,
       // Enable ALL payment methods - Stripe auto-detects based on:
       // - Browser/device capabilities
