@@ -13,6 +13,15 @@ export const metadata: Metadata = {
 export default function BlogIndex() {
   const posts = [
     {
+      slug: 'ai-video-marketing-real-estate-guide-2025',
+      title: 'AI Video Marketing for Real Estate: Complete Beginner\'s Guide 2025',
+      description:
+        'Learn how UAE real estate agents generate 100+ leads monthly using AI video marketing—without filming. Step-by-step beginner\'s guide with case studies.',
+      date: '2025-01-09',
+      readTime: '10 min read',
+      category: 'How-To Guide',
+    },
+    {
       slug: 'ai-videos-dubai-real-estate-leads-2025',
       title: 'How Dubai Real Estate Agents Get 100+ Leads with AI Videos in 2025',
       description:
