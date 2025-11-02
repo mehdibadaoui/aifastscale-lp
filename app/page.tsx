@@ -63,6 +63,7 @@ export default function AgentLandingPage() {
   const [videoMuted, setVideoMuted] = useState(false) // Video starts unmuted (with sound)
   const [showContinueModal, setShowContinueModal] = useState(false)
   const [savedVideoTime, setSavedVideoTime] = useState(0)
+  const [timeLeft, setTimeLeft] = useState('')
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -212,6 +213,27 @@ export default function AgentLandingPage() {
         setShowContinueModal(true)
       }
     }
+  }, [])
+
+  // Countdown timer to midnight
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date()
+      const midnight = new Date()
+      midnight.setHours(24, 0, 0, 0) // Next midnight
+
+      const diff = midnight.getTime() - now.getTime()
+      const hours = Math.floor(diff / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+      setTimeLeft(`${hours}h ${minutes}m ${seconds}s`)
+    }
+
+    updateCountdown() // Initial call
+    const interval = setInterval(updateCountdown, 1000) // Update every second
+
+    return () => clearInterval(interval)
   }, [])
 
   // Styles and scroll tracking
@@ -821,10 +843,16 @@ export default function AgentLandingPage() {
             >
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
               <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-xl transition-all duration-300 group-hover:scale-105 hover:shadow-2xl md:gap-3 md:px-10 md:py-5 md:text-xl">
-                <span>Yes, I want the $37 AI Mastery Course</span>
+                <span>Yes! Start Getting 100+ Leads This Week</span>
                 <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
               </div>
             </button>
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 md:text-sm">
+              <Shield className="h-4 w-4 text-green-400 md:h-5 md:w-5" />
+              <span className="font-semibold">
+                30-Day Money-Back Guarantee • Instant Access • Secure Checkout
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -893,7 +921,7 @@ export default function AgentLandingPage() {
             onClick={() => handleCheckout('sticky_cta')}
             className="rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-6 py-4 text-base font-black whitespace-nowrap text-black uppercase transition-transform duration-200 active:scale-95 md:px-10 md:py-5 md:text-xl"
           >
-            Get Access Now
+            Get 100+ Leads - $37
           </button>
         </div>
       </div>
@@ -905,7 +933,7 @@ export default function AgentLandingPage() {
             Limited Time {today}
           </p>
           <p className="text-[9px] font-semibold text-white/90 md:text-xs">
-            Price jumps to $97 at midnight
+            Price jumps to $97 in: <span className="font-black text-yellow-300">{timeLeft}</span>
           </p>
         </div>
       </div>
@@ -1684,7 +1712,7 @@ export default function AgentLandingPage() {
                 <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 opacity-75 blur-xl transition duration-300 group-hover:opacity-100"></div>
                 <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-[1.02] md:gap-3 md:px-10 md:py-5 md:text-xl">
                   <Zap className="h-5 w-5 md:h-7 md:w-7" />
-                  <span>Get Complete System For $37</span>
+                  <span>Start Generating 100+ Leads in 7 Minutes</span>
                   <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
                 </div>
               </button>
@@ -2606,7 +2634,7 @@ export default function AgentLandingPage() {
               Enrollment open now
             </h2>
             <p className="mb-6 text-lg text-gray-300 md:mb-10 md:text-xl">
-              Price jumps to $97 at midnight
+              Price jumps to $97 in: <span className="font-black text-yellow-400">{timeLeft}</span>
             </p>
             <button
               onClick={() => handleCheckout('final_cta')}
@@ -2614,9 +2642,15 @@ export default function AgentLandingPage() {
             >
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
               <div className="relative flex items-center justify-center rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:px-10 md:py-5 md:text-xl">
-                <span>I want the AgentClone™ System</span>
+                <span>Secure My $60 Discount Before Midnight</span>
               </div>
             </button>
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 md:text-sm">
+              <Shield className="h-4 w-4 text-green-400 md:h-5 md:w-5" />
+              <span className="font-semibold">
+                SSL Encrypted Payment • 30-Day Full Refund • 500+ Happy Agents
+              </span>
+            </div>
           </div>
         </Card>
       </section>
