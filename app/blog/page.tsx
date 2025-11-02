@@ -13,6 +13,15 @@ export const metadata: Metadata = {
 export default function BlogIndex() {
   const posts = [
     {
+      slug: 'viral-real-estate-content-uae-2025',
+      title: 'How to Create Viral Real Estate Content in 2025 (UAE Agent Playbook)',
+      description:
+        'Learn the exact viral content formula Dubai & UAE agents use to get 500K+ views. 10 proven content types, 15 hook formulas, and a 7-day viral challenge included.',
+      date: '2025-01-09',
+      readTime: '12 min read',
+      category: 'Content Strategy',
+    },
+    {
       slug: 'ai-video-real-estate-why-2025',
       title: 'Why Real Estate Agents Who Don\'t Use AI Video Will Struggle in 2025',
       description:

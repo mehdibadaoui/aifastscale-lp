@@ -95,5 +95,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog/viral-real-estate-content-uae-2025`,
+      lastModified: new Date('2025-01-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 }
