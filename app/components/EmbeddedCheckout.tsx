@@ -208,7 +208,7 @@ export default function EmbeddedCheckout() {
       {/* Animated background effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-500/10 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-green-500/10 blur-3xl delay-1000"></div>
+        <div className="absolute right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-600/10 blur-3xl delay-1000"></div>
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 md:px-6">

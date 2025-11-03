@@ -1370,7 +1370,7 @@ export default function AgentLandingPage() {
                           FOR ONLY
                         </span>
                       </div>
-                      <div className="mt-2 text-5xl font-black tracking-tight text-amber-400 md:text-6xl">
+                      <div className="mt-2 text-5xl font-black tracking-tight text-green-400 md:text-6xl">
                         US$ 37
                       </div>
                     </div>
@@ -1382,9 +1382,9 @@ export default function AgentLandingPage() {
                   disabled={!priceUnlocked}
                   className="group relative inline-block w-full max-w-3xl px-2"
                 >
-                  <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
+                  <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-green-500 via-green-400 to-green-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
                   <div
-                    className={`relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 px-4 py-3 text-sm font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:gap-3 md:px-10 md:py-5 md:text-xl ${priceUnlocked ? 'pump-animation' : ''}`}
+                    className={`relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 via-green-400 to-green-500 px-4 py-3 text-sm font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:gap-3 md:px-10 md:py-5 md:text-xl ${priceUnlocked ? 'pump-animation' : ''}`}
                   >
                     <Zap className="h-4 w-4 md:h-7 md:w-7" />
                     <span className="whitespace-nowrap">
