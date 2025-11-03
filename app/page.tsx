@@ -2571,7 +2571,7 @@ export default function AgentLandingPage() {
                         loading="lazy"
                       />
                       {t.verified && (
-                        <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg md:h-6 md:w-6">
+                        <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-green-500 to-green-600 shadow-lg md:h-6 md:w-6">
                           <CheckCircle className="h-3 w-3 text-white md:h-4 md:w-4" />
                         </div>
                       )}

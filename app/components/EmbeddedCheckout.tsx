@@ -59,13 +59,13 @@ function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Step 1: Email - BIGGER labels for clarity */}
+      {/* Step 1: Email - BRAND COLORS */}
       <div>
         <label
           htmlFor="email"
           className="mb-3 block text-base font-bold text-white md:text-lg"
         >
-          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-blue-500 text-center leading-7 font-black text-white md:h-8 md:w-8 md:leading-8">
+          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
             1
           </span>
           Enter Your Email Address
@@ -77,14 +77,14 @@ function CheckoutForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="your@email.com"
-          className="w-full rounded-lg border-2 border-gray-600 bg-gray-900 px-4 py-4 text-base text-white placeholder-gray-500 transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none md:py-5 md:text-lg"
+          className="w-full rounded-lg border-2 border-gray-600 bg-gray-900 px-4 py-4 text-base text-white placeholder-gray-500 transition-all focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 focus:outline-none md:py-5 md:text-lg"
         />
       </div>
 
-      {/* Step 2: Payment Method - CLEAR label */}
+      {/* Step 2: Payment Method - BRAND COLORS */}
       <div>
         <label className="mb-3 block text-base font-bold text-white md:text-lg">
-          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-blue-500 text-center leading-7 font-black text-white md:h-8 md:w-8 md:leading-8">
+          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
             2
           </span>
           Choose Payment Method
@@ -122,10 +122,10 @@ function CheckoutForm() {
         </div>
       )}
 
-      {/* Step 3: Complete Order */}
+      {/* Step 3: Complete Order - BRAND COLORS */}
       <div className="space-y-4">
         <label className="mb-3 block text-base font-bold text-white md:text-lg">
-          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-blue-500 text-center leading-7 font-black text-white md:h-8 md:w-8 md:leading-8">
+          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
             3
           </span>
           Complete Your Order
@@ -364,7 +364,7 @@ export default function EmbeddedCheckout() {
 
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-12">
-                <Loader className="mb-4 h-8 w-8 animate-spin text-blue-500" />
+                <Loader className="mb-4 h-8 w-8 animate-spin text-yellow-400" />
                 <p className="text-sm text-gray-400">
                   Loading secure checkout...
                 </p>
@@ -377,7 +377,7 @@ export default function EmbeddedCheckout() {
                   appearance: {
                     theme: 'night',
                     variables: {
-                      colorPrimary: '#2563eb',
+                      colorPrimary: '#f59e0b', // Brand yellow/amber color
                       colorBackground: '#111827',
                       colorText: '#ffffff',
                       colorDanger: '#ef4444',
