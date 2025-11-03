@@ -38,7 +38,6 @@ import { trackFullCTAClick } from './utils/tracking'
 import EmbeddedCheckout from './components/EmbeddedCheckout'
 import ExitIntentPopup from './components/ExitIntentPopup'
 import SocialProofNotifications from './components/SocialProofNotifications'
-import ScarcityIndicator from './components/ScarcityIndicator'
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -2789,10 +2788,9 @@ export default function AgentLandingPage() {
         </div>
       </footer>
 
-      {/* CRO Elements - Exit Intent, Social Proof, Scarcity */}
+      {/* CRO Elements - Exit Intent, Social Proof */}
       <ExitIntentPopup />
       <SocialProofNotifications />
-      <ScarcityIndicator />
     </div>
   )
 }

@@ -10,9 +10,248 @@ interface Notification {
   icon: React.ReactNode
 }
 
+interface LocationData {
+  country: string
+  city: string
+  countryCode: string
+}
+
+// Country-specific data for social proof
+const countryData: Record<
+  string,
+  { cities: string[]; names: string[]; flag: string }
+> = {
+  // UAE
+  AE: {
+    cities: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah'],
+    names: ['Ahmed', 'Mohammed', 'Fatima', 'Sara', 'Ali', 'Noura', 'Omar'],
+    flag: '🇦🇪',
+  },
+  // USA
+  US: {
+    cities: [
+      'New York',
+      'Los Angeles',
+      'Miami',
+      'Chicago',
+      'Houston',
+      'Dallas',
+      'San Francisco',
+    ],
+    names: ['John', 'Michael', 'Sarah', 'Jennifer', 'David', 'Emily', 'James'],
+    flag: '🇺🇸',
+  },
+  // Morocco
+  MA: {
+    cities: ['Casablanca', 'Rabat', 'Marrakech', 'Fes', 'Tangier', 'Agadir'],
+    names: ['Amine', 'Youssef', 'Fatima', 'Aicha', 'Hassan', 'Salma', 'Mehdi'],
+    flag: '🇲🇦',
+  },
+  // France
+  FR: {
+    cities: [
+      'Paris',
+      'Montpellier',
+      'Lyon',
+      'Marseille',
+      'Toulouse',
+      'Nice',
+      'Bordeaux',
+    ],
+    names: [
+      'Pierre',
+      'Jean',
+      'Marie',
+      'Sophie',
+      'Antoine',
+      'Camille',
+      'Lucas',
+    ],
+    flag: '🇫🇷',
+  },
+  // Saudi Arabia
+  SA: {
+    cities: ['Riyadh', 'Jeddah', 'Mecca', 'Medina', 'Dammam', 'Khobar'],
+    names: [
+      'Abdullah',
+      'Mohammed',
+      'Fatima',
+      'Nora',
+      'Sultan',
+      'Layan',
+      'Khalid',
+    ],
+    flag: '🇸🇦',
+  },
+  // UK
+  GB: {
+    cities: [
+      'London',
+      'Manchester',
+      'Birmingham',
+      'Liverpool',
+      'Edinburgh',
+      'Bristol',
+    ],
+    names: [
+      'James',
+      'Oliver',
+      'Emma',
+      'Sophie',
+      'Harry',
+      'Isabella',
+      'George',
+    ],
+    flag: '🇬🇧',
+  },
+  // Canada
+  CA: {
+    cities: [
+      'Toronto',
+      'Vancouver',
+      'Montreal',
+      'Calgary',
+      'Ottawa',
+      'Edmonton',
+    ],
+    names: ['Liam', 'Emma', 'Noah', 'Olivia', 'William', 'Ava', 'James'],
+    flag: '🇨🇦',
+  },
+  // India
+  IN: {
+    cities: ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune'],
+    names: ['Rahul', 'Priya', 'Amit', 'Neha', 'Rohan', 'Anjali', 'Vikram'],
+    flag: '🇮🇳',
+  },
+  // Australia
+  AU: {
+    cities: [
+      'Sydney',
+      'Melbourne',
+      'Brisbane',
+      'Perth',
+      'Adelaide',
+      'Gold Coast',
+    ],
+    names: ['Jack', 'Emily', 'Oliver', 'Charlotte', 'William', 'Mia', 'Noah'],
+    flag: '🇦🇺',
+  },
+  // Germany
+  DE: {
+    cities: ['Berlin', 'Munich', 'Hamburg', 'Frankfurt', 'Cologne', 'Stuttgart'],
+    names: [
+      'Lukas',
+      'Emma',
+      'Leon',
+      'Mia',
+      'Maximilian',
+      'Hannah',
+      'Felix',
+    ],
+    flag: '🇩🇪',
+  },
+}
+
 export default function SocialProofNotifications() {
-  const [currentNotification, setCurrentNotification] = useState<Notification | null>(null)
+  const [currentNotification, setCurrentNotification] =
+    useState<Notification | null>(null)
   const [viewerCount, setViewerCount] = useState(0)
+  const [userLocation, setUserLocation] = useState<LocationData | null>(null)
+  const [notifications, setNotifications] = useState<
+    Omit<Notification, 'id'>[]
+  >([])
+
+  // Fetch user location via IP
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        // Using ipapi.co free API (no API key needed, 30k req/month)
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json()
+
+        setUserLocation({
+          country: data.country_name || 'Unknown',
+          city: data.city || 'Unknown',
+          countryCode: data.country_code || 'US',
+        })
+      } catch (error) {
+        console.log('Location detection failed, using default (US)')
+        setUserLocation({
+          country: 'United States',
+          city: 'New York',
+          countryCode: 'US',
+        })
+      }
+    }
+
+    fetchLocation()
+  }, [])
+
+  // Generate notifications based on user location
+  useEffect(() => {
+    if (!userLocation) return
+
+    const getRandomItem = <T,>(arr: T[]): T =>
+      arr[Math.floor(Math.random() * arr.length)]
+    const getRandomTime = () => Math.floor(Math.random() * 15) + 2 // 2-16 min
+
+    const generateNotifications = () => {
+      const countryCode = userLocation.countryCode
+      const userCountryData = countryData[countryCode] || countryData['US']
+      const usaData = countryData['US']
+
+      const newNotifications: Omit<Notification, 'id'>[] = []
+
+      // Always start with viewer count
+      newNotifications.push({
+        type: 'viewing',
+        message: `${viewerCount} people viewing this page right now`,
+        icon: <Eye className="h-4 w-4" />,
+      })
+
+      // Generate 3-4 purchase notifications from user's country
+      for (let i = 0; i < 3; i++) {
+        const city = getRandomItem(userCountryData.cities)
+        const name = getRandomItem(userCountryData.names)
+        const time = getRandomTime()
+        newNotifications.push({
+          type: 'purchase',
+          message: `${name} from ${city} ${userCountryData.flag} just purchased (${time} min ago)`,
+          icon: <ShoppingCart className="h-4 w-4" />,
+        })
+      }
+
+      // ALWAYS add USA purchases (trusted/aspirational)
+      for (let i = 0; i < 3; i++) {
+        const city = getRandomItem(usaData.cities)
+        const name = getRandomItem(usaData.names)
+        const time = getRandomTime()
+        newNotifications.push({
+          type: 'purchase',
+          message: `${name} from ${city} ${usaData.flag} just purchased (${time} min ago)`,
+          icon: <ShoppingCart className="h-4 w-4" />,
+        })
+      }
+
+      // Add location viewing notifications
+      newNotifications.push({
+        type: 'location',
+        message: `Someone from ${getRandomItem(userCountryData.cities)} is viewing this page`,
+        icon: <MapPin className="h-4 w-4" />,
+      })
+
+      newNotifications.push({
+        type: 'location',
+        message: `Someone from ${getRandomItem(usaData.cities)} is viewing this page`,
+        icon: <MapPin className="h-4 w-4" />,
+      })
+
+      // Shuffle for variety
+      return newNotifications.sort(() => Math.random() - 0.5)
+    }
+
+    setNotifications(generateNotifications())
+  }, [userLocation, viewerCount])
 
   // Viewer count that fluctuates realistically
   useEffect(() => {
@@ -33,40 +272,9 @@ export default function SocialProofNotifications() {
     return () => clearInterval(interval)
   }, [])
 
-  // Social proof notifications
+  // Cycle through notifications
   useEffect(() => {
-    const notifications: Omit<Notification, 'id'>[] = [
-      {
-        type: 'viewing',
-        message: `${viewerCount} people viewing this page right now`,
-        icon: <Eye className="h-4 w-4" />,
-      },
-      {
-        type: 'purchase',
-        message: 'Ahmed from Dubai just purchased (2 min ago)',
-        icon: <ShoppingCart className="h-4 w-4" />,
-      },
-      {
-        type: 'purchase',
-        message: 'Sarah from Abu Dhabi just purchased (5 min ago)',
-        icon: <ShoppingCart className="h-4 w-4" />,
-      },
-      {
-        type: 'location',
-        message: 'Someone from Sharjah is viewing this page',
-        icon: <MapPin className="h-4 w-4" />,
-      },
-      {
-        type: 'purchase',
-        message: 'Mohammed from Dubai just purchased (8 min ago)',
-        icon: <ShoppingCart className="h-4 w-4" />,
-      },
-      {
-        type: 'location',
-        message: 'Someone from Dubai is viewing this page',
-        icon: <MapPin className="h-4 w-4" />,
-      },
-    ]
+    if (notifications.length === 0) return
 
     let currentIndex = 0
 
@@ -86,7 +294,7 @@ export default function SocialProofNotifications() {
       clearTimeout(initialTimeout)
       clearInterval(interval)
     }
-  }, [viewerCount])
+  }, [notifications])
 
   if (!currentNotification) return null
 
