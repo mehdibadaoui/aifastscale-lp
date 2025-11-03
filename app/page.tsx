@@ -68,7 +68,6 @@ export default function AgentLandingPage() {
   const [showClickFeedback, setShowClickFeedback] = useState(false) // Visual click feedback
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 }) // Click position for ripple
   const [videoProgress, setVideoProgress] = useState(0) // Video progress percentage (0-100)
-  const [liveViewerCount, setLiveViewerCount] = useState(0) // Live viewer count during video
   const [showMilestone, setShowMilestone] = useState(false) // Show progress milestone
   const [milestoneMessage, setMilestoneMessage] = useState('') // Milestone message
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -129,25 +128,6 @@ export default function AgentLandingPage() {
         localStorage.setItem('hasVisitedLP', 'true')
       }
     }
-  }, [])
-
-  // Live viewer count that fluctuates realistically during video playback
-  useEffect(() => {
-    // Initial count between 18-35
-    const initialCount = Math.floor(Math.random() * 17) + 18
-    setLiveViewerCount(initialCount)
-
-    // Update viewer count every 8-15 seconds with small changes
-    const interval = setInterval(() => {
-      setLiveViewerCount((prev) => {
-        const change = Math.floor(Math.random() * 7) - 3 // -3 to +3
-        const newCount = prev + change
-        // Keep between 15-45
-        return Math.max(15, Math.min(45, newCount))
-      })
-    }, Math.random() * 7000 + 8000) // 8-15 seconds
-
-    return () => clearInterval(interval)
   }, [])
 
   // HTML5 Video Setup - much simpler and faster than Wistia!
@@ -1301,31 +1281,6 @@ export default function AgentLandingPage() {
                                     ) : (
                                       <Pause className="h-16 w-16 fill-white text-white md:h-20 md:w-20" />
                                     )}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* Mobile Hint - "Tap to pause" */}
-                              {videoPlaying && (
-                                <div className="absolute top-4 left-1/2 -translate-x-1/2 md:hidden">
-                                  <div className="animate-in fade-in slide-in-from-top-2 rounded-full border border-white/30 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md duration-500">
-                                    Tap to pause
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* CONVERSION BOOST: Live Viewer Count Badge */}
-                              {videoPlaying && liveViewerCount > 0 && (
-                                <div className="absolute top-4 right-4 md:top-6 md:right-6">
-                                  <div className="animate-in fade-in slide-in-from-right-3 flex items-center gap-2 rounded-full border border-green-400/30 bg-black/80 px-3 py-2 backdrop-blur-md duration-500 md:px-4 md:py-2">
-                                    {/* Pulsing green dot */}
-                                    <div className="relative flex h-2 w-2">
-                                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                                      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-                                    </div>
-                                    <span className="text-xs font-bold text-white md:text-sm">
-                                      {liveViewerCount} watching now
-                                    </span>
                                   </div>
                                 </div>
                               )}
