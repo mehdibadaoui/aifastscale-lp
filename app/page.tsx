@@ -36,7 +36,6 @@ import {
 } from 'lucide-react'
 import { trackFullCTAClick } from './utils/tracking'
 import EmbeddedCheckout from './components/EmbeddedCheckout'
-import ExitIntentPopup from './components/ExitIntentPopup'
 import SocialProofNotifications from './components/SocialProofNotifications'
 
 // Simple Card component without animations for better performance
@@ -1943,6 +1942,9 @@ export default function AgentLandingPage() {
         </div>
       </section>
 
+      {/* CHECKOUT SECTION */}
+      <EmbeddedCheckout />
+
       {/* TESTIMONIALS - LIGHT */}
       <section className="relative overflow-hidden bg-white py-10 text-black md:py-20">
         <div className="pointer-events-none absolute inset-0 opacity-5">
@@ -2160,226 +2162,190 @@ export default function AgentLandingPage() {
             </div>
           </Card>
 
-          {/* Meet Sara Section - Premium Personal Brand with Brand Colors */}
-          <section className="relative overflow-hidden py-16 md:py-24">
-            {/* Animated Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-yellow-50 to-amber-50"></div>
+          {/* Meet Sara Section - Modern Circular Design with Glow */}
+          <section className="relative overflow-hidden bg-black py-20 md:py-32">
+            {/* Animated Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
 
-            {/* Floating Gradient Blobs */}
-            <div className="absolute inset-0 opacity-40">
+            {/* Floating Orbs */}
+            <div className="absolute inset-0 overflow-hidden opacity-30">
               <div
-                className="absolute -top-32 -left-32 h-[500px] w-[500px] animate-pulse rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 blur-[120px]"
+                className="absolute -left-1/4 top-1/4 h-96 w-96 animate-pulse rounded-full bg-yellow-500/20 blur-3xl"
                 style={{ animationDuration: '4s' }}
               ></div>
               <div
-                className="absolute top-1/3 -right-40 h-[600px] w-[600px] animate-pulse rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 blur-[140px]"
-                style={{ animationDuration: '6s' }}
-              ></div>
-              <div
-                className="absolute bottom-0 left-1/3 h-[400px] w-[400px] animate-pulse rounded-full bg-gradient-to-r from-orange-400 to-red-500 blur-[100px]"
-                style={{ animationDuration: '5s' }}
+                className="absolute -right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-orange-500/20 blur-3xl"
+                style={{ animationDuration: '6s', animationDelay: '1s' }}
               ></div>
             </div>
 
-            {/* Animated Dots Pattern */}
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage:
-                  'radial-gradient(circle, #f59e0b 1px, transparent 1px)',
-                backgroundSize: '50px 50px',
-              }}
-            ></div>
-
             <div className="relative mx-auto max-w-7xl px-4">
-              {/* Animated Badge */}
-              <div className="animate-in fade-in slide-in-from-top-4 mb-8 flex justify-center duration-700 md:mb-12">
+              {/* Badge */}
+              <div className="mb-12 flex justify-center">
                 <div className="group relative">
-                  <div className="absolute -inset-1 animate-pulse rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-                  <div className="relative inline-flex items-center gap-2 rounded-full border-2 border-yellow-400/50 bg-gradient-to-r from-yellow-100 to-orange-100 px-6 py-3 shadow-xl">
-                    <Shield className="h-5 w-5 animate-pulse text-orange-600" />
-                    <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-sm font-black tracking-wide text-transparent uppercase">
-                      Meet Your AI Video Expert
+                  <div className="absolute -inset-1 animate-pulse rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 opacity-75 blur-lg"></div>
+                  <div className="relative flex items-center gap-2 rounded-full border border-yellow-500/30 bg-black px-6 py-3">
+                    <Shield className="h-5 w-5 text-yellow-400" />
+                    <span className="text-sm font-black uppercase tracking-wider text-yellow-400">
+                      Your AI Video Expert
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Main Content Grid */}
-              <div className="grid items-center gap-8 md:grid-cols-2 md:gap-16">
-                {/* Left: Image with Floating Animation */}
-                <div className="group animate-in fade-in slide-in-from-left relative duration-1000">
-                  {/* Animated Glow Effect */}
-                  <div
-                    className="absolute -inset-4 animate-pulse rounded-3xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-40 blur-3xl transition-all duration-700 group-hover:opacity-60"
-                    style={{ animationDuration: '3s' }}
-                  ></div>
+              {/* Main Grid */}
+              <div className="grid items-center gap-16 md:grid-cols-2">
+                {/* Left: Circular Image with Glow */}
+                <div className="flex justify-center">
+                  <div className="group relative">
+                    {/* Outer Rotating Gradient Ring */}
+                    <div
+                      className="absolute -inset-8 rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 opacity-75 blur-2xl"
+                      style={{
+                        animation: 'spin 8s linear infinite, pulse 2s ease-in-out infinite'
+                      }}
+                    ></div>
 
-                  {/* Floating Container */}
-                  <div
-                    className="relative transform rounded-3xl bg-gradient-to-br from-white to-yellow-50 p-4 shadow-2xl transition-all duration-500 group-hover:scale-[1.02]"
-                    style={{ animation: 'float 6s ease-in-out infinite' }}
-                  >
-                    <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
-                      <Image
-                        src="/images/Sara.webp"
-                        alt="Sara - AI Video Specialist"
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover"
-                        priority
-                      />
-                      {/* Gradient Overlay with Brand Colors */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-orange-900/40 via-transparent to-yellow-400/10"></div>
+                    {/* Middle Glow */}
+                    <div className="absolute -inset-4 animate-pulse rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 opacity-60 blur-xl"></div>
 
-                      {/* Animated Verified Badge */}
-                      <div
-                        className="animate-in zoom-in absolute top-4 right-4 rounded-full bg-white p-2 shadow-xl delay-300 duration-500"
-                        style={{ animation: 'bounce 2s ease-in-out infinite' }}
-                      >
-                        <CheckCircle className="h-8 w-8 text-green-500" />
+                    {/* Circular Image Container */}
+                    <div className="relative h-80 w-80 md:h-96 md:w-96">
+                      {/* Image with border */}
+                      <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-yellow-500/50 shadow-2xl">
+                        <Image
+                          src="/images/Sara.webp"
+                          alt="Sara - AI Video Specialist"
+                          fill
+                          sizes="(max-width: 768px) 320px, 384px"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          priority
+                        />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-orange-900/40 via-transparent to-transparent"></div>
                       </div>
 
-                      {/* Animated Stats Badge */}
-                      <div className="animate-in slide-in-from-bottom absolute right-4 bottom-4 left-4 rounded-2xl border-2 border-yellow-400/30 bg-white/95 p-4 shadow-2xl backdrop-blur-sm delay-500 duration-700">
+                      {/* Verified Badge */}
+                      <div
+                        className="absolute -right-2 top-8 rounded-full border-4 border-black bg-green-500 p-3 shadow-2xl"
+                        style={{ animation: 'bounce 2s infinite' }}
+                      >
+                        <CheckCircle className="h-8 w-8 text-white" />
+                      </div>
+
+                      {/* Stats Badge */}
+                      <div className="absolute bottom-0 left-1/2 w-full max-w-xs -translate-x-1/2 translate-y-6 rounded-2xl border border-yellow-500/30 bg-black/90 p-4 backdrop-blur-md">
                         <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className="transform transition-transform duration-300 hover:scale-110">
-                            <div className="animate-pulse bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-2xl font-black text-transparent">
+                          <div>
+                            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-2xl font-black text-transparent">
                               500+
                             </div>
-                            <div className="text-xs font-bold text-gray-600">
-                              Agents
-                            </div>
+                            <div className="text-xs font-bold text-gray-400">Agents</div>
                           </div>
-                          <div className="transform transition-transform duration-300 hover:scale-110">
-                            <div
-                              className="animate-pulse bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-2xl font-black text-transparent"
-                              style={{ animationDelay: '0.2s' }}
-                            >
+                          <div>
+                            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-2xl font-black text-transparent">
                               3K+
                             </div>
-                            <div className="text-xs font-bold text-gray-600">
-                              Videos
-                            </div>
+                            <div className="text-xs font-bold text-gray-400">Videos</div>
                           </div>
-                          <div className="transform transition-transform duration-300 hover:scale-110">
-                            <div
-                              className="animate-pulse bg-gradient-to-r from-amber-500 to-yellow-600 bg-clip-text text-2xl font-black text-transparent"
-                              style={{ animationDelay: '0.4s' }}
-                            >
+                          <div>
+                            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-2xl font-black text-transparent">
                               4.9★
                             </div>
-                            <div className="text-xs font-bold text-gray-600">
-                              Rating
-                            </div>
+                            <div className="text-xs font-bold text-gray-400">Rating</div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Floating Sparkles */}
-                  <div
-                    className="absolute -top-4 -right-4 h-8 w-8 animate-bounce text-yellow-400"
-                    style={{ animationDuration: '2s' }}
-                  >
-                    <Sparkles className="h-8 w-8" />
-                  </div>
-                  <div
-                    className="absolute -bottom-4 -left-4 h-6 w-6 animate-bounce text-orange-400"
-                    style={{ animationDuration: '3s', animationDelay: '0.5s' }}
-                  >
-                    <Sparkles className="h-6 w-6" />
+                    {/* Floating Sparkles */}
+                    <Sparkles
+                      className="absolute -top-6 -right-6 h-10 w-10 animate-bounce text-yellow-400"
+                      style={{ animationDuration: '2s' }}
+                    />
+                    <Sparkles
+                      className="absolute -bottom-12 -left-6 h-8 w-8 animate-bounce text-orange-400"
+                      style={{ animationDuration: '3s', animationDelay: '0.5s' }}
+                    />
                   </div>
                 </div>
 
                 {/* Right: Content */}
-                <div className="animate-in fade-in slide-in-from-right space-y-6 duration-1000">
-                  {/* Name and Title */}
-                  <div className="animate-in fade-in slide-in-from-right delay-200 duration-700">
-                    <h2 className="animate-in zoom-in mb-3 text-4xl font-black duration-500 md:text-6xl">
-                      <span className="bg-gradient-to-r from-yellow-500 via-orange-500 to-red-600 bg-clip-text text-transparent">
+                <div className="space-y-8">
+                  {/* Name */}
+                  <div>
+                    <h2 className="mb-3 text-5xl font-black md:text-6xl">
+                      <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
                         Hi, I'm Sara
                       </span>
                     </h2>
-                    <p className="text-xl font-bold text-gray-800 md:text-2xl">
+                    <p className="text-xl font-bold text-gray-300 md:text-2xl">
                       Your AI Video Specialist & Real Estate Tech Expert
                     </p>
                   </div>
 
                   {/* Story */}
-                  <div className="animate-in fade-in space-y-4 delay-300 duration-700">
-                    <p className="text-lg leading-relaxed text-gray-700">
+                  <div className="space-y-4 text-lg text-gray-300">
+                    <p className="leading-relaxed">
                       After helping{' '}
-                      <span className="bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text font-black text-transparent">
-                        500+ real estate agents
-                      </span>{' '}
-                      transform their marketing, I discovered the secret:
-                      authentic AI videos that connect with buyers emotionally.
+                      <span className="font-black text-yellow-400">500+ real estate agents</span>{' '}
+                      transform their marketing, I discovered the secret: authentic AI videos that connect with buyers emotionally.
                     </p>
-                    <p className="text-lg leading-relaxed text-gray-700">
-                      Most agents waste weeks learning complex video software. I
-                      created the{' '}
-                      <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text font-black text-transparent">
-                        7-Minute AgentClone™
-                      </span>{' '}
+                    <p className="leading-relaxed">
+                      Most agents waste weeks learning complex video software. I created the{' '}
+                      <span className="font-black text-orange-400">7-Minute AgentClone™</span>{' '}
                       to give you the same results in minutes, not months.
                     </p>
                   </div>
 
-                  {/* Credentials with Hover Animations */}
-                  <div className="animate-in fade-in grid grid-cols-2 gap-4 delay-400 duration-700">
-                    <div className="group relative transform rounded-2xl border-2 border-yellow-300/50 bg-gradient-to-br from-yellow-50 to-orange-50 p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl">
-                      <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 blur transition duration-300 group-hover:opacity-30"></div>
-                      <div className="relative mb-2 flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-lg transition-all duration-300 group-hover:shadow-yellow-500/50">
-                          <Award className="h-5 w-5 text-white" />
+                  {/* Credentials */}
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="group relative overflow-hidden rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 transition-all hover:scale-105">
+                      <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 blur transition-opacity group-hover:opacity-20"></div>
+                      <div className="relative">
+                        <div className="mb-3 flex items-center gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500">
+                            <Award className="h-6 w-6 text-black" />
+                          </div>
+                          <div className="text-3xl font-black text-yellow-400">5+</div>
                         </div>
-                        <div className="bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-2xl font-black text-transparent">
-                          5+
+                        <div className="text-sm font-bold text-gray-300">
+                          Years in Real Estate Tech
                         </div>
-                      </div>
-                      <div className="relative text-sm font-bold text-gray-700">
-                        Years in Real Estate Tech
                       </div>
                     </div>
 
-                    <div className="group relative transform rounded-2xl border-2 border-orange-300/50 bg-gradient-to-br from-orange-50 to-red-50 p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl">
-                      <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-orange-400 to-red-500 opacity-0 blur transition duration-300 group-hover:opacity-30"></div>
-                      <div className="relative mb-2 flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 shadow-lg transition-all duration-300 group-hover:shadow-orange-500/50">
-                          <TrendingUp className="h-5 w-5 text-white" />
+                    <div className="group relative overflow-hidden rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10 p-6 transition-all hover:scale-105">
+                      <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-orange-400 to-red-500 opacity-0 blur transition-opacity group-hover:opacity-20"></div>
+                      <div className="relative">
+                        <div className="mb-3 flex items-center gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-red-500">
+                            <TrendingUp className="h-6 w-6 text-white" />
+                          </div>
+                          <div className="text-3xl font-black text-orange-400">$10M+</div>
                         </div>
-                        <div className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-2xl font-black text-transparent">
-                          $10M+
+                        <div className="text-sm font-bold text-gray-300">
+                          in Agent Sales Generated
                         </div>
-                      </div>
-                      <div className="relative text-sm font-bold text-gray-700">
-                        in Agent Sales Generated
                       </div>
                     </div>
                   </div>
 
-                  {/* Promise with Glow Effect */}
-                  <div className="group animate-in fade-in relative delay-500 duration-700">
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-30 blur-lg transition duration-500 group-hover:opacity-50"></div>
-                    <div className="relative rounded-2xl border-2 border-yellow-400/50 bg-gradient-to-r from-yellow-100 via-orange-100 to-amber-100 p-6 shadow-xl">
-                      <div className="flex items-start gap-3">
-                        <div
-                          className="flex h-12 w-12 flex-shrink-0 animate-pulse items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-lg"
-                          style={{ animationDuration: '2s' }}
-                        >
-                          <Sparkles className="h-6 w-6 text-white" />
+                  {/* Promise Box */}
+                  <div className="group relative">
+                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-30 blur-lg transition-opacity group-hover:opacity-50"></div>
+                    <div className="relative rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 p-6 backdrop-blur-sm">
+                      <div className="flex items-start gap-4">
+                        <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 animate-pulse">
+                          <Sparkles className="h-7 w-7 text-black" />
                         </div>
                         <div>
-                          <h3 className="mb-2 text-xl font-black text-gray-900">
+                          <h3 className="mb-2 text-xl font-black text-white">
                             My Promise to You:
                           </h3>
-                          <p className="leading-relaxed text-gray-700">
-                            If you can take a photo, you can create professional
-                            AI videos. I've stripped away all the complexity and
-                            left only what works.{' '}
-                            <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text font-black text-transparent">
+                          <p className="leading-relaxed text-gray-300">
+                            If you can take a photo, you can create professional AI videos. I've stripped away all the complexity and left only what works.{' '}
+                            <span className="font-black text-yellow-400">
                               No tech skills needed. Just results.
                             </span>
                           </p>
@@ -2388,8 +2354,8 @@ export default function AgentLandingPage() {
                     </div>
                   </div>
 
-                  {/* Social Proof Bar with Animations */}
-                  <div className="animate-in fade-in flex items-center gap-4 pt-4 delay-600 duration-700">
+                  {/* Social Proof */}
+                  <div className="flex items-center gap-4">
                     <div className="flex -space-x-3">
                       {[
                         '/images/P1_result.webp',
@@ -2399,31 +2365,25 @@ export default function AgentLandingPage() {
                       ].map((img, i) => (
                         <div
                           key={i}
-                          className="relative h-12 w-12 transform overflow-hidden rounded-full border-4 border-white shadow-lg transition-all duration-300 hover:z-10 hover:scale-110"
-                          style={{
-                            animation: `float ${3 + i}s ease-in-out infinite`,
-                            animationDelay: `${i * 0.2}s`,
-                          }}
+                          className="h-12 w-12 overflow-hidden rounded-full border-4 border-black shadow-lg transition-transform hover:z-10 hover:scale-110"
                         >
                           <Image
                             src={img}
                             alt="Agent"
-                            fill
-                            sizes="48px"
-                            className="object-cover"
+                            width={48}
+                            height={48}
+                            className="h-full w-full object-cover"
                           />
                         </div>
                       ))}
                     </div>
                     <div>
-                      <p className="text-sm font-black text-gray-900">
+                      <p className="text-sm font-black text-white">
                         Join 500+ Successful Agents
                       </p>
-                      <div className="flex items-center gap-1 text-sm text-yellow-500">
-                        {'★'.repeat(5)}
-                        <span className="ml-1 font-bold text-gray-600">
-                          (4.9/5)
-                        </span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-400">★★★★★</span>
+                        <span className="text-sm font-bold text-gray-400">(4.9/5)</span>
                       </div>
                     </div>
                   </div>
@@ -2431,15 +2391,14 @@ export default function AgentLandingPage() {
               </div>
             </div>
 
-            {/* Add Float Animation Keyframes via inline style - this is a workaround */}
+            {/* CSS for spin animation */}
             <style jsx>{`
-              @keyframes float {
-                0%,
-                100% {
-                  transform: translateY(0px);
+              @keyframes spin {
+                from {
+                  transform: rotate(0deg);
                 }
-                50% {
-                  transform: translateY(-20px);
+                to {
+                  transform: rotate(360deg);
                 }
               }
             `}</style>
@@ -2625,9 +2584,6 @@ export default function AgentLandingPage() {
         </div>
       </section>
 
-      {/* CHECKOUT SECTION */}
-      <EmbeddedCheckout />
-
       {/* FINAL CTA - DARK */}
       <section className="relative bg-black py-10 md:py-20">
         <Card>
@@ -2788,8 +2744,7 @@ export default function AgentLandingPage() {
         </div>
       </footer>
 
-      {/* CRO Elements - Exit Intent, Social Proof */}
-      <ExitIntentPopup />
+      {/* CRO Elements - Social Proof */}
       <SocialProofNotifications />
     </div>
   )
