@@ -33,17 +33,17 @@ export default function ScarcityIndicator() {
     }
     if (spotsRemaining <= 5) {
       return {
-        bg: 'bg-orange-500/20',
-        border: 'border-orange-400',
-        text: 'text-orange-400',
-        pulse: 'bg-orange-500',
+        bg: 'bg-amber-500/20',
+        border: 'border-amber-400',
+        text: 'text-amber-400',
+        pulse: 'bg-amber-500',
       }
     }
     return {
-      bg: 'bg-yellow-500/20',
-      border: 'border-yellow-400',
-      text: 'text-yellow-400',
-      pulse: 'bg-yellow-500',
+      bg: 'bg-amber-500/20',
+      border: 'border-amber-400',
+      text: 'text-amber-300',
+      pulse: 'bg-amber-400',
     }
   }
 

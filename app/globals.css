@@ -1,11 +1,51 @@
 @import 'tailwindcss';
 
+/* Luxury Black & Gold Theme Variables */
+@theme {
+  /* Gold Color Palette */
+  --color-gold: #E7B93E;
+  --color-gold-light: #F4D77E;
+  --color-gold-dark: #D4A62E;
+
+  /* Font Families */
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+
+  /* Custom Shadows for Luxury Glow */
+  --shadow-gold-glow: 0 0 20px rgba(231, 185, 62, 0.3), 0 0 40px rgba(231, 185, 62, 0.15);
+  --shadow-gold-glow-lg: 0 0 30px rgba(231, 185, 62, 0.4), 0 0 60px rgba(231, 185, 62, 0.2), 0 0 90px rgba(231, 185, 62, 0.1);
+}
+
 html,
 body {
   height: 100%;
 }
 
 body {
-  background: #0b0b0b;
+  background: #000000;
   color: #ffffff;
+  font-family: var(--font-sans);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for luxury aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #E7B93E 0%, #D4A62E 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #F4D77E 0%, #E7B93E 100%);
 }

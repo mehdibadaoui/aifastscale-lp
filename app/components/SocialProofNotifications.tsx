@@ -304,9 +304,9 @@ export default function SocialProofNotifications() {
         key={currentNotification.id}
         className="pointer-events-auto animate-in slide-in-from-left-5 fade-in duration-500"
       >
-        <div className="flex items-center gap-3 rounded-2xl border-2 border-green-400/30 bg-gradient-to-r from-green-500/10 via-green-400/5 to-transparent p-4 shadow-2xl backdrop-blur-md">
+        <div className="flex items-center gap-3 rounded-2xl border-2 border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-transparent p-4 shadow-2xl backdrop-blur-md">
           {/* Icon */}
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600">
             {currentNotification.icon}
           </div>
 
@@ -320,8 +320,8 @@ export default function SocialProofNotifications() {
           {/* Pulse indicator */}
           {currentNotification.type === 'viewing' && (
             <div className="relative flex h-3 w-3 flex-shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-amber-500"></span>
             </div>
           )}
         </div>

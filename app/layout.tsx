@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Poppins, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from './components/GoogleAnalytics'
 import GoogleAdsTag from './components/GoogleAdsTag'
@@ -7,15 +7,17 @@ import MetaPixel from './components/MetaPixel'
 import TikTokPixel from './components/TikTokPixel'
 import MicrosoftClarity from './components/MicrosoftClarity'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const poppins = Poppins({
+  variable: '--font-poppins',
   subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
   subsets: ['latin'],
+  weight: ['400', '700', '900'],
   display: 'swap',
 })
 
@@ -272,7 +274,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black text-white antialiased`}
+        className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
         <GoogleAnalytics />
         <GoogleAdsTag />
