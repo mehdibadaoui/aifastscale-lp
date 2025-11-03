@@ -65,6 +65,12 @@ export default function AgentLandingPage() {
   const [showContinueModal, setShowContinueModal] = useState(false)
   const [savedVideoTime, setSavedVideoTime] = useState(0)
   const [timeLeft, setTimeLeft] = useState('')
+  const [showClickFeedback, setShowClickFeedback] = useState(false) // Visual click feedback
+  const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 }) // Click position for ripple
+  const [videoProgress, setVideoProgress] = useState(0) // Video progress percentage (0-100)
+  const [liveViewerCount, setLiveViewerCount] = useState(0) // Live viewer count during video
+  const [showMilestone, setShowMilestone] = useState(false) // Show progress milestone
+  const [milestoneMessage, setMilestoneMessage] = useState('') // Milestone message
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -125,6 +131,25 @@ export default function AgentLandingPage() {
     }
   }, [])
 
+  // Live viewer count that fluctuates realistically during video playback
+  useEffect(() => {
+    // Initial count between 18-35
+    const initialCount = Math.floor(Math.random() * 17) + 18
+    setLiveViewerCount(initialCount)
+
+    // Update viewer count every 8-15 seconds with small changes
+    const interval = setInterval(() => {
+      setLiveViewerCount((prev) => {
+        const change = Math.floor(Math.random() * 7) - 3 // -3 to +3
+        const newCount = prev + change
+        // Keep between 15-45
+        return Math.max(15, Math.min(45, newCount))
+      })
+    }, Math.random() * 7000 + 8000) // 8-15 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
   // HTML5 Video Setup - much simpler and faster than Wistia!
   useEffect(() => {
     const video = videoRef.current
@@ -156,11 +181,36 @@ export default function AgentLandingPage() {
 
       const percent = video.currentTime / video.duration
       const currentTime = video.currentTime
+      const progressPercent = Math.floor(percent * 100)
+
+      // Update video progress percentage
+      setVideoProgress(progressPercent)
 
       // Save progress to localStorage every 2 seconds
       if (currentTime % 2 < 0.1) {
         localStorage.setItem('heroVideoTime', currentTime.toString())
       }
+
+      // Show progress milestones (only once per milestone)
+      const milestones = {
+        25: "You're 25% through! This is where it gets good...",
+        50: '🔥 Halfway there! The best part is coming up...',
+        75: '⚡ Almost done! The price unlocks in just 1 minute...',
+      }
+
+      Object.entries(milestones).forEach(([threshold, message]) => {
+        const milestoneKey = `milestone_${threshold}`
+        const alreadyShown = sessionStorage.getItem(milestoneKey)
+
+        if (progressPercent >= parseInt(threshold) && progressPercent < parseInt(threshold) + 2 && !alreadyShown) {
+          setMilestoneMessage(message)
+          setShowMilestone(true)
+          sessionStorage.setItem(milestoneKey, 'true')
+
+          // Hide after 3 seconds
+          setTimeout(() => setShowMilestone(false), 3000)
+        }
+      })
 
       // Unlock price at 245s (92.4% of 265s video) - only for first-time visitors
       if (percent >= 0.924 && !priceUnlocked && !isReturningVisitor) {
@@ -1183,11 +1233,22 @@ export default function AgentLandingPage() {
                             </div>
                           </div>
 
-                          {/* Click anywhere to TOGGLE play/pause */}
+                          {/* Click anywhere to TOGGLE play/pause - FIXED WITH HIGHER Z-INDEX */}
                           {videoStarted && !showContinueModal && (
                             <div
-                              className="absolute inset-0 z-20 cursor-pointer"
-                              onClick={() => {
+                              className="absolute inset-0 z-35 cursor-pointer"
+                              onClick={(e) => {
+                                // Get click position for ripple effect
+                                const rect = e.currentTarget.getBoundingClientRect()
+                                const x = e.clientX - rect.left
+                                const y = e.clientY - rect.top
+                                setClickPosition({ x, y })
+
+                                // Show feedback
+                                setShowClickFeedback(true)
+                                setTimeout(() => setShowClickFeedback(false), 600)
+
+                                // Toggle play/pause
                                 if (videoRef.current) {
                                   if (videoPlaying) {
                                     videoRef.current.pause()
@@ -1196,7 +1257,116 @@ export default function AgentLandingPage() {
                                   }
                                 }
                               }}
-                            />
+                              onTouchEnd={(e) => {
+                                // Better touch support for mobile
+                                e.preventDefault()
+                                const touch = e.changedTouches[0]
+                                const rect = e.currentTarget.getBoundingClientRect()
+                                const x = touch.clientX - rect.left
+                                const y = touch.clientY - rect.top
+                                setClickPosition({ x, y })
+
+                                setShowClickFeedback(true)
+                                setTimeout(() => setShowClickFeedback(false), 600)
+
+                                if (videoRef.current) {
+                                  if (videoPlaying) {
+                                    videoRef.current.pause()
+                                  } else {
+                                    videoRef.current.play()
+                                  }
+                                }
+                              }}
+                            >
+                              {/* Ripple Effect on Click */}
+                              {showClickFeedback && (
+                                <div
+                                  className="pointer-events-none absolute"
+                                  style={{
+                                    left: `${clickPosition.x}px`,
+                                    top: `${clickPosition.y}px`,
+                                    transform: 'translate(-50%, -50%)',
+                                  }}
+                                >
+                                  <div className="h-32 w-32 animate-ping rounded-full bg-white/30 md:h-40 md:w-40"></div>
+                                </div>
+                              )}
+
+                              {/* Play/Pause Icon Feedback - Shows briefly on click */}
+                              {showClickFeedback && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="animate-in zoom-in fade-in rounded-full bg-black/60 p-8 backdrop-blur-sm duration-200 md:p-10">
+                                    {videoPlaying ? (
+                                      <Play className="h-16 w-16 fill-white text-white md:h-20 md:w-20" />
+                                    ) : (
+                                      <Pause className="h-16 w-16 fill-white text-white md:h-20 md:w-20" />
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Mobile Hint - "Tap to pause" */}
+                              {videoPlaying && (
+                                <div className="absolute top-4 left-1/2 -translate-x-1/2 md:hidden">
+                                  <div className="animate-in fade-in slide-in-from-top-2 rounded-full border border-white/30 bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md duration-500">
+                                    Tap to pause
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* CONVERSION BOOST: Live Viewer Count Badge */}
+                              {videoPlaying && liveViewerCount > 0 && (
+                                <div className="absolute top-4 right-4 md:top-6 md:right-6">
+                                  <div className="animate-in fade-in slide-in-from-right-3 flex items-center gap-2 rounded-full border border-green-400/30 bg-black/80 px-3 py-2 backdrop-blur-md duration-500 md:px-4 md:py-2">
+                                    {/* Pulsing green dot */}
+                                    <div className="relative flex h-2 w-2">
+                                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                                      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                                    </div>
+                                    <span className="text-xs font-bold text-white md:text-sm">
+                                      {liveViewerCount} watching now
+                                    </span>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* CONVERSION BOOST: Progress Milestone Popup */}
+                              {showMilestone && milestoneMessage && (
+                                <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                  <div className="animate-in zoom-in fade-in max-w-sm rounded-2xl border-2 border-yellow-400/50 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-yellow-500/20 px-6 py-4 text-center backdrop-blur-xl duration-300 md:px-8 md:py-5">
+                                    <p className="text-base font-black text-white md:text-lg">
+                                      {milestoneMessage}
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* CONVERSION BOOST: Strategic CTA at 70% */}
+                              {videoPlaying && videoProgress >= 70 && videoProgress < 92 && (
+                                <div className="absolute bottom-20 left-1/2 -translate-x-1/2 md:bottom-24">
+                                  <div className="animate-in fade-in slide-in-from-bottom-3 duration-500">
+                                    <button
+                                      onClick={() => {
+                                        // Scroll to checkout section
+                                        document.getElementById('checkout-section')?.scrollIntoView({
+                                          behavior: 'smooth',
+                                          block: 'center'
+                                        })
+                                      }}
+                                      className="group relative"
+                                    >
+                                      <div className="absolute -inset-1 animate-pulse rounded-2xl bg-gradient-to-r from-green-400 via-green-500 to-green-400 opacity-75 blur-lg"></div>
+                                      <div className="relative flex items-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-600 px-6 py-3 transition-transform duration-200 hover:scale-105 active:scale-95 md:px-8 md:py-4">
+                                        <span className="text-sm font-black text-white md:text-base">
+                                          Ready? Unlock $37 Price Now
+                                        </span>
+                                        <ArrowRight className="h-5 w-5 text-white" />
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           )}
                         </div>
 
@@ -1943,7 +2113,9 @@ export default function AgentLandingPage() {
       </section>
 
       {/* CHECKOUT SECTION */}
-      <EmbeddedCheckout />
+      <section id="checkout-section">
+        <EmbeddedCheckout />
+      </section>
 
       {/* TESTIMONIALS - LIGHT */}
       <section className="relative overflow-hidden bg-white py-10 text-black md:py-20">
