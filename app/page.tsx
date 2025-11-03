@@ -37,7 +37,6 @@ import {
 import { trackFullCTAClick } from './utils/tracking'
 import EmbeddedCheckout from './components/EmbeddedCheckout'
 import SocialProofNotifications from './components/SocialProofNotifications'
-import GoldParticles from './components/animations/GoldParticles'
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -895,9 +894,6 @@ export default function AgentLandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-black text-white select-none">
-      {/* Gold Particles Background Effect - Optimized for performance */}
-      <GoldParticles count={15} />
-
       {/* Progress bar */}
       <div className="fixed top-0 left-0 z-50 h-1 w-full bg-gray-900">
         <div
