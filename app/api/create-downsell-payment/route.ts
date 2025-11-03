@@ -8,19 +8,25 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(req: NextRequest) {
   try {
     // Create Stripe Checkout Session for Downsell ($7)
-    // Using predefined Price ID for better tracking
+    // Using dynamic pricing for test/live mode compatibility
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
       line_items: [
         {
-          price: 'price_1SOyoSBCEDBlhdGKwmtAaIhY', // $10M Blueprint - Downsell ($7)
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: '$10M Personal Brand Blueprint',
+              description: '5-Week System to Build a $10M Personal Brand',
+            },
+            unit_amount: 700, // $7.00 in cents
+          },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/thank-you-confirmed?upsell=blueprint7`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/downsell`,
-      customer_email: undefined, // Will use email from form if needed
+      success_url: `${req.headers.get('origin')}/thank-you-confirmed?upsell=blueprint7`,
+      cancel_url: `${req.headers.get('origin')}/downsell`,
+      billing_address_collection: 'auto',
       metadata: {
         product: 'blueprint',
         price: 7,

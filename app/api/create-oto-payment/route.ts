@@ -8,19 +8,25 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(req: NextRequest) {
   try {
     // Create Stripe Checkout Session for OTO ($17)
-    // Using predefined Price ID for better tracking
+    // Using dynamic pricing for test/live mode compatibility
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
       line_items: [
         {
-          price: 'price_1SOyo2BCEDBlhdGKTGP34abr', // $10M Blueprint - OTO ($17)
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: '$10M Personal Brand Blueprint',
+              description: '5-Week System to Build a $10M Personal Brand',
+            },
+            unit_amount: 1700, // $17.00 in cents
+          },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/thank-you-confirmed?upsell=blueprint17`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/oto`,
-      customer_email: undefined, // Will use email from form if needed
+      success_url: `${req.headers.get('origin')}/thank-you-confirmed?upsell=blueprint17`,
+      cancel_url: `${req.headers.get('origin')}/oto`,
+      billing_address_collection: 'auto',
       metadata: {
         product: 'blueprint',
         price: 17,
