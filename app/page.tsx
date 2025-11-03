@@ -895,8 +895,8 @@ export default function AgentLandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-black text-white select-none">
-      {/* Gold Particles Background Effect */}
-      <GoldParticles count={40} />
+      {/* Gold Particles Background Effect - Optimized for performance */}
+      <GoldParticles count={15} />
 
       {/* Progress bar */}
       <div className="fixed top-0 left-0 z-50 h-1 w-full bg-gray-900">

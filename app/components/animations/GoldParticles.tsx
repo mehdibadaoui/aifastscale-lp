@@ -12,7 +12,7 @@ interface Particle {
   delay: number
 }
 
-export default function GoldParticles({ count = 30 }: { count?: number }) {
+export default function GoldParticles({ count = 15 }: { count?: number }) {
   const [particles, setParticles] = useState<Particle[]>([])
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function GoldParticles({ count = 30 }: { count?: number }) {
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 4 + 1,
-        duration: Math.random() * 10 + 15,
-        delay: Math.random() * 5,
+        size: Math.random() * 3 + 1, // Smaller particles
+        duration: Math.random() * 15 + 20, // Slower animation
+        delay: Math.random() * 3,
       })
     }
     setParticles(newParticles)
@@ -35,23 +35,23 @@ export default function GoldParticles({ count = 30 }: { count?: number }) {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-gold opacity-20 blur-[1px]"
+          className="absolute rounded-full bg-gold opacity-15 blur-[0.5px]"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             width: particle.size,
             height: particle.size,
+            willChange: 'transform, opacity',
           }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
-            opacity: [0.1, 0.3, 0.1],
+            y: [0, -20, 0],
+            opacity: [0.05, 0.15, 0.05],
           }}
           transition={{
             duration: particle.duration,
             delay: particle.delay,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'linear',
           }}
         />
       ))}
