@@ -893,9 +893,9 @@ export default function AgentLandingPage() {
               className="group relative inline-block w-full max-w-3xl"
             >
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-              <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-xl transition-all duration-300 group-hover:scale-105 hover:shadow-2xl md:gap-3 md:px-10 md:py-5 md:text-xl">
-                <span>Yes! Start Getting 100+ Leads This Week</span>
-                <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
+              <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-xl transition-all duration-300 group-hover:scale-105 hover:shadow-2xl md:gap-3 md:px-10 md:py-5 md:text-xl">
+                <span className="whitespace-nowrap">Get 100+ Leads - $37</span>
+                <ArrowRight className="h-4 w-4 md:h-7 md:w-7" />
               </div>
             </button>
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 md:text-sm">
@@ -970,7 +970,7 @@ export default function AgentLandingPage() {
           </div>
           <button
             onClick={() => handleCheckout('sticky_cta')}
-            className="rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-6 py-4 text-base font-black whitespace-nowrap text-black uppercase transition-transform duration-200 active:scale-95 md:px-10 md:py-5 md:text-xl"
+            className="rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-4 py-3 text-sm font-black whitespace-nowrap text-black uppercase transition-transform duration-200 active:scale-95 md:px-10 md:py-5 md:text-xl"
           >
             Get 100+ Leads - $37
           </button>
@@ -1425,13 +1425,13 @@ export default function AgentLandingPage() {
                 >
                   <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-green-500 via-green-400 to-green-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
                   <div
-                    className={`relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 via-green-400 to-green-500 px-6 py-4 text-base font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:gap-3 md:px-10 md:py-5 md:text-xl ${priceUnlocked ? 'pump-animation' : ''}`}
+                    className={`relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 via-green-400 to-green-500 px-4 py-3 text-sm font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:gap-3 md:px-10 md:py-5 md:text-xl ${priceUnlocked ? 'pump-animation' : ''}`}
                   >
-                    <Zap className="h-5 w-5 md:h-7 md:w-7" />
-                    <span>
+                    <Zap className="h-4 w-4 md:h-7 md:w-7" />
+                    <span className="whitespace-nowrap">
                       {priceUnlocked
-                        ? 'I want the AgentClone™ System'
-                        : 'Watch video to unlock'}
+                        ? 'Get AgentClone™ - $37'
+                        : 'Watch to unlock'}
                     </span>
                   </div>
                 </button>
@@ -1881,10 +1881,10 @@ export default function AgentLandingPage() {
                 className="group relative inline-block w-full max-w-3xl"
               >
                 <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 opacity-75 blur-xl transition duration-300 group-hover:opacity-100"></div>
-                <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-[1.02] md:gap-3 md:px-10 md:py-5 md:text-xl">
-                  <Zap className="h-5 w-5 md:h-7 md:w-7" />
-                  <span>Start Generating 100+ Leads in 7 Minutes</span>
-                  <ArrowRight className="h-5 w-5 md:h-7 md:w-7" />
+                <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-[1.02] md:gap-3 md:px-10 md:py-5 md:text-xl">
+                  <Zap className="h-4 w-4 md:h-7 md:w-7" />
+                  <span className="whitespace-nowrap">Get 100+ Leads - $37</span>
+                  <ArrowRight className="h-4 w-4 md:h-7 md:w-7" />
                 </div>
               </button>
 
@@ -2102,9 +2102,9 @@ export default function AgentLandingPage() {
                 className="group relative inline-block w-full max-w-3xl"
               >
                 <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-                <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:gap-3 md:px-10 md:py-5 md:text-xl">
-                  <Video className="h-5 w-5 md:h-7 md:w-7" />
-                  <span>I Want Results Like Mr. Lucas</span>
+                <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:gap-3 md:px-10 md:py-5 md:text-xl">
+                  <Video className="h-4 w-4 md:h-7 md:w-7" />
+                  <span className="whitespace-nowrap">Get 100+ Leads - $37</span>
                 </div>
               </button>
             </div>
@@ -2470,52 +2470,52 @@ export default function AgentLandingPage() {
                     </p>
                   </div>
 
-                  {/* Credentials */}
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="group relative overflow-hidden rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 transition-all hover:scale-105">
+                  {/* Credentials - MOBILE OPTIMIZED */}
+                  <div className="grid gap-3 md:grid-cols-2 md:gap-4">
+                    <div className="group relative overflow-hidden rounded-xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-3 transition-all hover:scale-105 md:rounded-2xl md:p-6">
                       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 blur transition-opacity group-hover:opacity-20"></div>
                       <div className="relative">
-                        <div className="mb-3 flex items-center gap-3">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500">
-                            <Award className="h-6 w-6 text-black" />
+                        <div className="mb-2 flex items-center gap-2 md:mb-3 md:gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 md:h-12 md:w-12">
+                            <Award className="h-5 w-5 text-black md:h-6 md:w-6" />
                           </div>
-                          <div className="text-3xl font-black text-yellow-400">5+</div>
+                          <div className="text-2xl font-black text-yellow-400 md:text-3xl">5+</div>
                         </div>
-                        <div className="text-sm font-bold text-gray-300">
+                        <div className="text-xs font-bold text-gray-300 md:text-sm">
                           Years in Real Estate Tech
                         </div>
                       </div>
                     </div>
 
-                    <div className="group relative overflow-hidden rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10 p-6 transition-all hover:scale-105">
+                    <div className="group relative overflow-hidden rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10 p-3 transition-all hover:scale-105 md:rounded-2xl md:p-6">
                       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-orange-400 to-red-500 opacity-0 blur transition-opacity group-hover:opacity-20"></div>
                       <div className="relative">
-                        <div className="mb-3 flex items-center gap-3">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-red-500">
-                            <TrendingUp className="h-6 w-6 text-white" />
+                        <div className="mb-2 flex items-center gap-2 md:mb-3 md:gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-red-500 md:h-12 md:w-12">
+                            <TrendingUp className="h-5 w-5 text-white md:h-6 md:w-6" />
                           </div>
-                          <div className="text-3xl font-black text-orange-400">$10M+</div>
+                          <div className="text-2xl font-black text-orange-400 md:text-3xl">$10M+</div>
                         </div>
-                        <div className="text-sm font-bold text-gray-300">
+                        <div className="text-xs font-bold text-gray-300 md:text-sm">
                           in Agent Sales Generated
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Promise Box */}
+                  {/* Promise Box - MOBILE OPTIMIZED */}
                   <div className="group relative">
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-30 blur-lg transition-opacity group-hover:opacity-50"></div>
-                    <div className="relative rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 p-6 backdrop-blur-sm">
-                      <div className="flex items-start gap-4">
-                        <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 animate-pulse">
-                          <Sparkles className="h-7 w-7 text-black" />
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-30 blur-lg transition-opacity group-hover:opacity-50 md:rounded-2xl"></div>
+                    <div className="relative rounded-xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 p-4 backdrop-blur-sm md:rounded-2xl md:p-6">
+                      <div className="flex items-start gap-3 md:gap-4">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 animate-pulse md:h-14 md:w-14">
+                          <Sparkles className="h-5 w-5 text-black md:h-7 md:w-7" />
                         </div>
                         <div>
-                          <h3 className="mb-2 text-xl font-black text-white">
+                          <h3 className="mb-1 text-base font-black text-white md:mb-2 md:text-xl">
                             My Promise to You:
                           </h3>
-                          <p className="leading-relaxed text-gray-300">
+                          <p className="text-sm leading-relaxed text-gray-300 md:text-base">
                             If you can take a photo, you can create professional AI videos. I've stripped away all the complexity and left only what works.{' '}
                             <span className="font-black text-yellow-400">
                               No tech skills needed. Just results.
@@ -2771,8 +2771,8 @@ export default function AgentLandingPage() {
               className="group relative inline-block w-full max-w-3xl"
             >
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-              <div className="relative flex items-center justify-center rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-6 py-4 text-base font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:px-10 md:py-5 md:text-xl">
-                <span>Secure My $60 Discount Before Midnight</span>
+              <div className="relative flex items-center justify-center rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:px-10 md:py-5 md:text-xl">
+                <span className="whitespace-nowrap">Get $60 Off - Ends Midnight</span>
               </div>
             </button>
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 md:text-sm">
