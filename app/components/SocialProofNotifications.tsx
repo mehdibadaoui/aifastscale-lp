@@ -161,30 +161,56 @@ export default function SocialProofNotifications() {
     Omit<Notification, 'id'>[]
   >([])
 
-  // Fetch user location via IP
+  // Fetch user location via IP - OPTIMIZED with localStorage cache
   useEffect(() => {
+    // Check localStorage cache first (cache for 24 hours)
+    const cachedLocation = localStorage.getItem('userLocation')
+    const cacheTimestamp = localStorage.getItem('userLocationTimestamp')
+    const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours
+
+    if (cachedLocation && cacheTimestamp) {
+      const age = Date.now() - parseInt(cacheTimestamp)
+      if (age < CACHE_DURATION) {
+        // Use cached location immediately - NO API CALL!
+        setUserLocation(JSON.parse(cachedLocation))
+        return
+      }
+    }
+
+    // Default to US immediately (non-blocking)
+    const defaultLocation = {
+      country: 'United States',
+      city: 'New York',
+      countryCode: 'US',
+    }
+    setUserLocation(defaultLocation)
+
+    // Fetch real location in background (non-blocking)
     const fetchLocation = async () => {
       try {
         // Using ipapi.co free API (no API key needed, 30k req/month)
         const response = await fetch('https://ipapi.co/json/')
         const data = await response.json()
 
-        setUserLocation({
+        const location = {
           country: data.country_name || 'Unknown',
           city: data.city || 'Unknown',
           countryCode: data.country_code || 'US',
-        })
+        }
+
+        // Cache in localStorage
+        localStorage.setItem('userLocation', JSON.stringify(location))
+        localStorage.setItem('userLocationTimestamp', Date.now().toString())
+
+        setUserLocation(location)
       } catch (error) {
         console.log('Location detection failed, using default (US)')
-        setUserLocation({
-          country: 'United States',
-          city: 'New York',
-          countryCode: 'US',
-        })
+        // Already set to default above
       }
     }
 
-    fetchLocation()
+    // Delay API call to not block initial render
+    setTimeout(fetchLocation, 2000)
   }, [])
 
   // Generate notifications based on user location

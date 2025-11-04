@@ -36,7 +36,6 @@ import {
   Maximize,
 } from 'lucide-react'
 import { trackFullCTAClick } from './utils/tracking'
-import SocialProofNotifications from './components/SocialProofNotifications'
 
 // Lazy load Stripe checkout - saves 1,013 KiB of unused JavaScript
 const EmbeddedCheckout = dynamic(() => import('./components/EmbeddedCheckout'), {
@@ -47,6 +46,14 @@ const EmbeddedCheckout = dynamic(() => import('./components/EmbeddedCheckout'), 
     </div>
   ),
 })
+
+// Lazy load SocialProofNotifications - prevents blocking API call on initial render
+const SocialProofNotifications = dynamic(
+  () => import('./components/SocialProofNotifications'),
+  {
+    ssr: false,
+  }
+)
 
 // Simple Card component without animations for better performance
 interface CardProps {
