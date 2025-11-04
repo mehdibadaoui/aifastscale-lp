@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { Poppins, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import GoogleAnalytics from './components/GoogleAnalytics'
-import GoogleAdsTag from './components/GoogleAdsTag'
-import MetaPixel from './components/MetaPixel'
-import TikTokPixel from './components/TikTokPixel'
-import MicrosoftClarity from './components/MicrosoftClarity'
+// TEMPORARILY DISABLED FOR PERFORMANCE TESTING
+// import GoogleAnalytics from './components/GoogleAnalytics'
+// import GoogleAdsTag from './components/GoogleAdsTag'
+// import MetaPixel from './components/MetaPixel'
+// import TikTokPixel from './components/TikTokPixel'
+// import MicrosoftClarity from './components/MicrosoftClarity'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -93,22 +94,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://fast.wistia.net" />
-        <link rel="preconnect" href="https://embed-ssl.wistia.com" />
-        <link rel="preconnect" href="https://api.stripe.com" />
-        <link rel="dns-prefetch" href="https://checkout.stripe.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
-
-        {/* Preload hero video for faster LCP */}
-        <link
-          rel="preload"
-          href="/videos/Hero-VSL.mp4"
-          as="video"
-          type="video/mp4"
-        />
+        {/* Resource hints for performance - Removed video preload (41MB!) */}
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
@@ -280,11 +266,12 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
-        <GoogleAnalytics />
-        <GoogleAdsTag />
-        <MetaPixel />
-        <TikTokPixel />
-        <MicrosoftClarity />
+        {/* TEMPORARILY DISABLED FOR PERFORMANCE TESTING - Will add back with proper lazy loading */}
+        {/* <GoogleAnalytics /> */}
+        {/* <GoogleAdsTag /> */}
+        {/* <MetaPixel /> */}
+        {/* <TikTokPixel /> */}
+        {/* <MicrosoftClarity /> */}
         {children}
       </body>
     </html>
