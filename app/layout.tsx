@@ -1,12 +1,7 @@
 import type { Metadata } from 'next'
 import { Poppins, Playfair_Display } from 'next/font/google'
 import './globals.css'
-// TEMPORARILY DISABLED FOR PERFORMANCE TESTING
-// import GoogleAnalytics from './components/GoogleAnalytics'
-// import GoogleAdsTag from './components/GoogleAdsTag'
-// import MetaPixel from './components/MetaPixel'
-// import TikTokPixel from './components/TikTokPixel'
-// import MicrosoftClarity from './components/MicrosoftClarity'
+import LazyTrackingPixels from './components/LazyTrackingPixels'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -266,12 +261,8 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
-        {/* TEMPORARILY DISABLED FOR PERFORMANCE TESTING - Will add back with proper lazy loading */}
-        {/* <GoogleAnalytics /> */}
-        {/* <GoogleAdsTag /> */}
-        {/* <MetaPixel /> */}
-        {/* <TikTokPixel /> */}
-        {/* <MicrosoftClarity /> */}
+        {/* Lazy load tracking pixels after 3 seconds for performance */}
+        <LazyTrackingPixels />
         {children}
       </body>
     </html>

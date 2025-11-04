@@ -87,7 +87,9 @@ export default function AgentLandingPage() {
   const [videoProgress, setVideoProgress] = useState(0) // Video progress percentage (0-100)
   const [showMilestone, setShowMilestone] = useState(false) // Show progress milestone
   const [milestoneMessage, setMilestoneMessage] = useState('') // Milestone message
+  const [showBelowFold, setShowBelowFold] = useState(false) // Lazy load below-the-fold content
   const videoRef = useRef<HTMLVideoElement>(null)
+  const belowFoldRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Security: Light anti-inspect measures - NOTE: This only stops casual users, not developers
@@ -368,6 +370,32 @@ export default function AgentLandingPage() {
       if (style.parentNode) {
         style.parentNode.removeChild(style)
       }
+    }
+  }, [])
+
+  // Lazy load below-the-fold content for performance
+  useEffect(() => {
+    // Load after 500ms OR when sentinel comes into view (whichever first)
+    const timer = setTimeout(() => {
+      setShowBelowFold(true)
+    }, 500)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShowBelowFold(true)
+        }
+      },
+      { rootMargin: '200px' } // Start loading 200px before visible
+    )
+
+    if (belowFoldRef.current) {
+      observer.observe(belowFoldRef.current)
+    }
+
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
     }
   }, [])
 
@@ -1423,8 +1451,14 @@ export default function AgentLandingPage() {
         </div>
       </section>
 
-      {/* ERIC RIES QUOTE - REDESIGNED WITH BRAND COLORS & ANIMATIONS */}
-      <section className="relative overflow-hidden bg-black py-20 md:py-32">
+      {/* Lazy load sentinel - triggers below-the-fold content */}
+      <div ref={belowFoldRef} className="h-px" />
+
+      {/* Below-the-fold content - lazy loaded for performance */}
+      {showBelowFold && (
+        <>
+          {/* ERIC RIES QUOTE - REDESIGNED WITH BRAND COLORS & ANIMATIONS */}
+          <section className="relative overflow-hidden bg-black py-20 md:py-32">
         {/* Animated background glows */}
         <div
           className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-500/20 blur-3xl"
@@ -2892,6 +2926,8 @@ export default function AgentLandingPage() {
 
       {/* CRO Elements - Social Proof */}
       <SocialProofNotifications />
+        </>
+      )}
     </div>
   )
 }
