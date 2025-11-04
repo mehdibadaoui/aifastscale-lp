@@ -1050,11 +1050,10 @@ export default function AgentLandingPage() {
                           {/* HTML5 Video - Fast, Reliable, Full Control */}
                           <video
                             ref={videoRef}
-                            className="absolute top-0 left-0 h-full w-full object-cover"
+                            className="absolute top-0 left-0 h-full w-full bg-black object-cover"
                             playsInline
                             preload="none"
                             muted={videoMuted}
-                            poster="/images/thumbnail-vsl.webp"
                           >
                             <source
                               src="/videos/Hero-VSL.mp4"
