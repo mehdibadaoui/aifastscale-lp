@@ -10,15 +10,19 @@ import MicrosoftClarity from './components/MicrosoftClarity'
 const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'], // Reduced from 6 weights to 3 critical weights only
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
-  weight: ['400', '700', '900'],
+  weight: ['700', '900'], // Reduced from 3 weights to 2 (removed 400 - not used much)
   display: 'swap',
+  preload: true,
+  fallback: ['Georgia', 'serif'],
 })
 
 export const metadata: Metadata = {

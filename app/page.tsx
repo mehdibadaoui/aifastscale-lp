@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, ReactNode, memo } from 'react'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import {
   Shield,
   CheckCircle,
@@ -35,8 +36,17 @@ import {
   Maximize,
 } from 'lucide-react'
 import { trackFullCTAClick } from './utils/tracking'
-import EmbeddedCheckout from './components/EmbeddedCheckout'
 import SocialProofNotifications from './components/SocialProofNotifications'
+
+// Lazy load Stripe checkout - saves 1,013 KiB of unused JavaScript
+const EmbeddedCheckout = dynamic(() => import('./components/EmbeddedCheckout'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center py-20">
+      <div className="text-amber-400">Loading checkout...</div>
+    </div>
+  ),
+})
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -1035,7 +1045,7 @@ export default function AgentLandingPage() {
                             ref={videoRef}
                             className="absolute top-0 left-0 h-full w-full object-cover"
                             playsInline
-                            preload="metadata"
+                            preload="none"
                             muted={videoMuted}
                             poster="/images/thumbnail-vsl.webp"
                           >
@@ -1452,10 +1462,13 @@ export default function AgentLandingPage() {
 
                   {/* Image */}
                   <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-amber-400 shadow-2xl md:h-48 md:w-48">
-                    <img
+                    <Image
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
                       alt="Eric Ries"
-                      className="h-full w-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 160px, 192px"
+                      className="object-cover"
+                      loading="lazy"
                     />
                   </div>
                 </div>
