@@ -1952,7 +1952,7 @@ export default function AgentLandingPage() {
                 <div className="overflow-hidden rounded-2xl bg-black/50">
                   <div className="relative" style={{ paddingBottom: '177.78%' }}>
                     <video
-                      className="absolute inset-0 h-full w-full object-cover"
+                      className="absolute inset-0 h-full w-full object-contain bg-black"
                       controls
                       playsInline
                       preload="metadata"
@@ -2165,7 +2165,7 @@ export default function AgentLandingPage() {
                     <div className="overflow-hidden rounded-2xl bg-black">
                       <div className="relative" style={{ paddingBottom: '177.78%' }}>
                         <video
-                          className="absolute inset-0 h-full w-full object-cover"
+                          className="absolute inset-0 h-full w-full object-contain bg-black"
                           controls
                           playsInline
                           preload="metadata"
