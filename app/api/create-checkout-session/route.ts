@@ -8,7 +8,7 @@ if (!stripeSecretKey) {
 }
 
 const stripe = new Stripe(stripeSecretKey, {
-  // Use default API version from Stripe SDK
+  typescript: true,
 })
 
 export async function POST(req: NextRequest) {

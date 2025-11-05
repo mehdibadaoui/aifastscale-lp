@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  // Use default API version from Stripe SDK
+  typescript: true,
 })
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
