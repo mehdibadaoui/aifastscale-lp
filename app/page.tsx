@@ -36,16 +36,10 @@ import {
   Maximize,
 } from 'lucide-react'
 import { trackFullCTAClick } from './utils/tracking'
+import EmbeddedCheckout from './components/EmbeddedCheckout'
 
-// Lazy load Stripe checkout - saves 1,013 KiB of unused JavaScript
-const EmbeddedCheckout = dynamic(() => import('./components/EmbeddedCheckout'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center py-20">
-      <div className="text-amber-400">Loading checkout...</div>
-    </div>
-  ),
-})
+// Stripe checkout now loaded immediately for instant CTA response
+// Trade-off: +1MB bundle size for MUCH better UX (instant checkout)
 
 // Lazy load SocialProofNotifications - prevents blocking API call on initial render
 const SocialProofNotifications = dynamic(

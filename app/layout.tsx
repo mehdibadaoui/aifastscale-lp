@@ -105,6 +105,14 @@ export default function RootLayout({
           fetchPriority="high"
         />
 
+        {/* CRITICAL: Preload Stripe.js for instant checkout */}
+        <link
+          rel="preload"
+          href="https://js.stripe.com/v3/"
+          as="script"
+          crossOrigin="anonymous"
+        />
+
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
         <link rel="alternate" hrefLang="ar" href="https://aifastscale.com/ar" />
