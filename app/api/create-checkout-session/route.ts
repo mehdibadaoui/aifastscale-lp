@@ -8,7 +8,7 @@ if (!stripeSecretKey) {
 }
 
 const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2025-09-30.clover',
+  // Use default API version from Stripe SDK
 })
 
 export async function POST(req: NextRequest) {
