@@ -1458,56 +1458,32 @@ export default function AgentLandingPage() {
       {/* Below-the-fold content - lazy loaded for performance */}
       {showBelowFold && (
         <>
-          {/* ERIC RIES QUOTE - REDESIGNED WITH BRAND COLORS & ANIMATIONS */}
-          <section className="relative overflow-hidden bg-black py-20 md:py-32">
-        {/* Animated background glows */}
-        <div
-          className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-500/20 blur-3xl"
-          style={{ animationDuration: '4s' }}
-        ></div>
-        <div
-          className="absolute right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-500/20 blur-3xl"
-          style={{ animationDuration: '5s', animationDelay: '1s' }}
-        ></div>
-        <div className="absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 blur-3xl"></div>
+          {/* ERIC RIES QUOTE - MOBILE OPTIMIZED */}
+          <section className="relative overflow-hidden bg-black py-8 md:py-20">
+        {/* Single background glow - simplified for mobile */}
+        <div className="absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 blur-3xl"></div>
 
         <div className="relative mx-auto max-w-7xl px-4">
-          {/* Main quote card with animated border */}
-          <div className="group relative">
-            {/* Animated gradient border */}
-            <div
-              className="absolute -inset-1 animate-pulse rounded-3xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 opacity-75 blur-xl transition-all duration-500 group-hover:opacity-100"
-              style={{ animationDuration: '3s' }}
-            ></div>
+          {/* Main quote card */}
+          <div className="relative">
+            {/* Subtle gradient border - less animation on mobile */}
+            <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-amber-400/50 to-amber-500/50 opacity-75 blur md:-inset-1 md:rounded-3xl"></div>
 
             {/* Card content */}
-            <div className="relative rounded-3xl border-2 border-amber-500/30 bg-gradient-to-br from-gray-900 to-black p-8 shadow-2xl md:p-16">
-              <div className="flex flex-col items-center gap-10 md:flex-row md:gap-16">
-                {/* Eric Ries Image with floating animation */}
-                <div
-                  className="relative flex-shrink-0 animate-bounce"
-                  style={{ animationDuration: '3s' }}
-                >
-                  {/* Multiple rotating gradient rings */}
-                  <div
-                    className="absolute -inset-2 animate-spin rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 opacity-75 blur-lg"
-                    style={{ animationDuration: '8s' }}
-                  ></div>
-                  <div
-                    className="absolute -inset-1 animate-spin rounded-full bg-gradient-to-r from-amber-500 to-amber-400 opacity-50 blur-md"
-                    style={{
-                      animationDuration: '6s',
-                      animationDirection: 'reverse',
-                    }}
-                  ></div>
+            <div className="relative rounded-2xl border border-amber-500/30 bg-gradient-to-br from-gray-900 to-black p-5 shadow-2xl md:rounded-3xl md:p-12">
+              <div className="flex flex-col items-center gap-5 md:flex-row md:gap-12">
+                {/* Eric Ries Image - smaller on mobile */}
+                <div className="relative flex-shrink-0">
+                  {/* Single gradient ring - simpler on mobile */}
+                  <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 opacity-60 blur-md"></div>
 
                   {/* Image */}
-                  <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-amber-400 shadow-2xl md:h-48 md:w-48">
+                  <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-amber-400 shadow-xl md:h-40 md:w-40 md:border-4">
                     <Image
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
                       alt="Eric Ries"
                       fill
-                      sizes="(max-width: 768px) 160px, 192px"
+                      sizes="(max-width: 768px) 96px, 160px"
                       className="object-cover"
                       loading="lazy"
                     />
@@ -1516,39 +1492,24 @@ export default function AgentLandingPage() {
 
                 {/* Quote Content */}
                 <div className="flex-1 text-center md:text-left">
-                  {/* Animated quote icon */}
-                  <div className="mb-6 animate-pulse font-serif text-7xl leading-none text-amber-400 opacity-50 md:text-8xl">
-                    "
-                  </div>
-
-                  {/* Quote Text */}
-                  <blockquote className="space-y-6">
-                    <p className="text-3xl leading-tight font-black text-white md:text-4xl lg:text-5xl">
+                  {/* Quote Text - compact on mobile */}
+                  <blockquote className="space-y-3 md:space-y-5">
+                    <p className="text-xl font-black leading-tight text-white md:text-4xl lg:text-5xl">
                       The only way to win is to{' '}
-                      <span className="relative inline-block">
-                        <span className="absolute inset-0 animate-pulse bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 opacity-50 blur-xl"></span>
-                        <span
-                          className="relative animate-pulse bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent"
-                          style={{ animationDuration: '2s' }}
-                        >
-                          learn faster
-                        </span>
+                      <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
+                        learn faster
                       </span>{' '}
                       than anyone else
                     </p>
 
-                    {/* Attribution with gradient border */}
-                    <footer className="mt-6 border-t-2 border-amber-500/30 pt-6">
-                      <div className="flex items-center justify-center gap-4 md:justify-start">
-                        <div className="text-left">
-                          <cite className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-2xl font-black text-transparent not-italic md:text-3xl">
-                            Eric Ries
-                          </cite>
-                          <p className="mt-1 text-base font-medium text-gray-400 md:text-lg">
-                            Author of "The Lean Startup"
-                          </p>
-                        </div>
-                      </div>
+                    {/* Attribution - compact on mobile */}
+                    <footer className="border-t border-amber-500/20 pt-3 md:pt-4">
+                      <cite className="block bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-lg font-black text-transparent not-italic md:text-2xl">
+                        Eric Ries
+                      </cite>
+                      <p className="mt-1 text-xs text-gray-400 md:text-base">
+                        Author of "The Lean Startup"
+                      </p>
                     </footer>
                   </blockquote>
                 </div>
