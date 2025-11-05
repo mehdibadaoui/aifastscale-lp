@@ -3,6 +3,42 @@
 import React, { useState, useEffect } from 'react'
 import { Mail, Sparkles, CheckCircle, Loader, Gift, X } from 'lucide-react'
 
+// Helper function to get country from timezone
+function getCountryFromTimezone(timezone: string): string {
+  // Map common timezones to countries
+  const timezoneMap: { [key: string]: string } = {
+    'Asia/Dubai': 'UAE',
+    'Asia/Riyadh': 'Saudi Arabia',
+    'Asia/Kuwait': 'Kuwait',
+    'Asia/Qatar': 'Qatar',
+    'Asia/Bahrain': 'Bahrain',
+    'Europe/London': 'UK',
+    'America/New_York': 'USA',
+    'America/Los_Angeles': 'USA',
+    'America/Chicago': 'USA',
+    'Europe/Paris': 'France',
+    'Europe/Berlin': 'Germany',
+    'Asia/Singapore': 'Singapore',
+    'Australia/Sydney': 'Australia',
+    'Asia/Tokyo': 'Japan',
+    'Asia/Shanghai': 'China',
+    'Asia/Hong_Kong': 'Hong Kong',
+    'Europe/Istanbul': 'Turkey',
+    'Africa/Cairo': 'Egypt',
+    'Asia/Karachi': 'Pakistan',
+    'Asia/Kolkata': 'India',
+  }
+
+  // Check if we have a direct match
+  if (timezoneMap[timezone]) {
+    return timezoneMap[timezone]
+  }
+
+  // Extract region from timezone (e.g., "Europe" from "Europe/Madrid")
+  const region = timezone.split('/')[0]
+  return region || 'Unknown'
+}
+
 interface EmailOptInModalProps {
   isOpen: boolean
   onClose: () => void
@@ -55,13 +91,34 @@ export default function EmailOptInModal({
         throw new Error('Webhook URL not configured')
       }
 
+      // Get upsell info from URL params (passed from thank-you page)
+      const urlParams = new URLSearchParams(window.location.search)
+      const upsell = urlParams.get('upsell')
+
+      // Determine product purchased and upsell info
+      let productPurchased = 'Course Only'
+      let upsellPurchased = 'None'
+
+      if (upsell === 'blueprint17') {
+        productPurchased = 'Course + $17 Blueprint'
+        upsellPurchased = '$17 Blueprint'
+      } else if (upsell === 'blueprint7') {
+        productPurchased = 'Course + $7 Blueprint'
+        upsellPurchased = '$7 Blueprint'
+      }
+
+      // Get country from browser (approximate via timezone)
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      const country = getCountryFromTimezone(timezone)
+
       // Prepare data to send
       const data = {
         email: email.trim().toLowerCase(),
         name: name.trim() || 'Not provided',
-        source: 'Thank You Page - VIP List Popup',
-        ip: '',
-        userAgent: navigator.userAgent,
+        country: country,
+        productPurchased: productPurchased,
+        upsellPurchased: upsellPurchased,
+        paymentMethod: 'Card', // Default to Card (Stripe doesn't expose this easily)
       }
 
       // Log for debugging
