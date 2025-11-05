@@ -16,6 +16,7 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js'
+import { premiumStripeAppearance } from '@/app/utils/stripeAppearance'
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -65,7 +66,7 @@ function CheckoutForm() {
           htmlFor="email"
           className="mb-3 block text-base font-bold text-white md:text-lg"
         >
-          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
+          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-[#E7B93E] via-[#F4D77E] to-[#D4A62E] text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
             1
           </span>
           Enter Your Email Address
@@ -77,14 +78,14 @@ function CheckoutForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="your@email.com"
-          className="w-full rounded-lg border-2 border-gray-600 bg-gray-900 px-4 py-4 text-base text-white placeholder-gray-500 transition-all focus:border-amber-400 focus:ring-2 focus:ring-amber-400 focus:outline-none md:py-5 md:text-lg"
+          className="w-full rounded-lg border-2 border-gray-600 bg-gray-900 px-4 py-4 text-base text-white placeholder-gray-500 transition-all focus:border-[#E7B93E] focus:ring-2 focus:ring-[#E7B93E] focus:outline-none md:py-5 md:text-lg"
         />
       </div>
 
       {/* Step 2: Payment Method - BRAND COLORS */}
       <div>
         <label className="mb-3 block text-base font-bold text-white md:text-lg">
-          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
+          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-[#E7B93E] via-[#F4D77E] to-[#D4A62E] text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
             2
           </span>
           Choose Payment Method
@@ -125,7 +126,7 @@ function CheckoutForm() {
       {/* Step 3: Complete Order - BRAND COLORS */}
       <div className="space-y-4">
         <label className="mb-3 block text-base font-bold text-white md:text-lg">
-          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
+          <span className="mr-2 inline-block h-7 w-7 rounded-full bg-gradient-to-r from-[#E7B93E] via-[#F4D77E] to-[#D4A62E] text-center leading-7 font-black text-black md:h-8 md:w-8 md:leading-8">
             3
           </span>
           Complete Your Order
@@ -207,8 +208,8 @@ export default function EmbeddedCheckout() {
     >
       {/* Animated background effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-500/10 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-amber-600/10 blur-3xl delay-1000"></div>
+        <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-[#E7B93E]/10 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-[#D4A62E]/10 blur-3xl delay-1000"></div>
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 md:px-6">
@@ -232,9 +233,9 @@ export default function EmbeddedCheckout() {
           {/* Left: Order Summary */}
           <div className="space-y-4 md:space-y-6">
             {/* Product Card */}
-            <div className="rounded-xl border-2 border-amber-500/30 bg-gradient-to-br from-gray-800 to-gray-900 p-4 shadow-2xl md:rounded-2xl md:p-6">
+            <div className="rounded-xl border-2 border-[#E7B93E]/30 bg-gradient-to-br from-gray-800 to-gray-900 p-4 shadow-2xl md:rounded-2xl md:p-6">
               <div className="mb-4 flex items-start gap-3 md:mb-6 md:gap-4">
-                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 md:h-20 md:w-20 md:rounded-xl">
+                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#E7B93E] via-[#F4D77E] to-[#D4A62E] md:h-20 md:w-20 md:rounded-xl">
                   <Star className="h-8 w-8 text-black md:h-10 md:w-10" />
                 </div>
                 <div>
@@ -290,7 +291,7 @@ export default function EmbeddedCheckout() {
                     <span className="text-lg font-bold text-white md:text-xl">
                       Total
                     </span>
-                    <span className="text-2xl font-black text-amber-400 md:text-3xl">
+                    <span className="text-2xl font-black text-[#E7B93E] md:text-3xl">
                       $37.00
                     </span>
                   </div>
@@ -364,7 +365,7 @@ export default function EmbeddedCheckout() {
 
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-12">
-                <Loader className="mb-4 h-8 w-8 animate-spin text-amber-400" />
+                <Loader className="mb-4 h-8 w-8 animate-spin text-[#E7B93E]" />
                 <p className="text-sm text-gray-400">
                   Loading secure checkout...
                 </p>
@@ -374,17 +375,7 @@ export default function EmbeddedCheckout() {
                 stripe={stripePromise}
                 options={{
                   clientSecret,
-                  appearance: {
-                    theme: 'night',
-                    variables: {
-                      colorPrimary: '#f59e0b', // Brand yellow/amber color
-                      colorBackground: '#111827',
-                      colorText: '#ffffff',
-                      colorDanger: '#ef4444',
-                      fontFamily: 'system-ui, sans-serif',
-                      borderRadius: '8px',
-                    },
-                  },
+                  appearance: premiumStripeAppearance, // 🎨 Premium luxury branding
                 }}
               >
                 <CheckoutForm />
@@ -398,13 +389,13 @@ export default function EmbeddedCheckout() {
             {/* Testimonial Snippet */}
             <div className="mt-6 border-t border-gray-700 pt-5 md:mt-8 md:pt-6">
               <div className="flex items-center gap-2.5 md:gap-3">
-                <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 md:h-12 md:w-12"></div>
+                <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-br from-[#E7B93E] via-[#F4D77E] to-[#D4A62E] md:h-12 md:w-12"></div>
                 <div>
                   <div className="mb-1 flex gap-0.5 md:gap-1">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className="h-3 w-3 fill-amber-400 text-amber-400 md:h-4 md:w-4"
+                        className="h-3 w-3 fill-[#E7B93E] text-[#E7B93E] md:h-4 md:w-4"
                       />
                     ))}
                   </div>

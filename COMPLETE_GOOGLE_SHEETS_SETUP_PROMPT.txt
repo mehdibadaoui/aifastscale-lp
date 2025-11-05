@@ -1,0 +1,134 @@
+===== COPY THIS ENTIRE MESSAGE TO CHATGPT =====
+
+I need you to help me update my Google Sheets email collection system. The website code is already done and deployed. I just need to update the Google Sheet and Google Apps Script.
+
+Here's what you need to guide me through (step by step, very clear instructions):
+
+---
+
+## TASK 1: Update Google Sheet Column Headers
+
+My current Google Sheet has these columns in Row 1:
+```
+Timestamp | Email | Name | Source | IP Address | User Agent
+```
+
+I need to change them to:
+```
+Timestamp | Email | Name | Country | Product Purchased | Upsell Purchased | Payment Method
+```
+
+Tell me EXACTLY how to do this:
+1. Which columns to delete (D, E, F)
+2. What new headers to add and where
+3. Make sure I don't lose any existing data
+
+---
+
+## TASK 2: Update Google Apps Script Code
+
+I need to update my Google Apps Script to accept the new data format.
+
+Current location: My Google Sheet → Extensions → Apps Script
+
+Here's the EXACT code I need to paste (replacing ALL existing code):
+
+```javascript
+function doPost(e) {
+  try {
+    // Get the active spreadsheet
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    // Parse the incoming data
+    const data = JSON.parse(e.postData.contents);
+
+    // Add new row with updated columns
+    sheet.appendRow([
+      new Date(),                           // Timestamp
+      data.email || '',                     // Email
+      data.name || '',                      // Name (optional)
+      data.country || 'Unknown',            // Country (NEW)
+      data.productPurchased || 'Course Only', // Product Purchased (NEW)
+      data.upsellPurchased || 'None',       // Upsell Purchased (NEW)
+      data.paymentMethod || 'Card'          // Payment Method (NEW)
+    ]);
+
+    // Return success response
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'success': true,
+        'message': 'Email added successfully'
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch(error) {
+    // Return error response
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'success': false,
+        'message': error.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Handle OPTIONS requests for CORS preflight
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({'status': 'ready'}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+Tell me EXACTLY:
+1. How to open Apps Script from my Google Sheet
+2. How to select and delete ALL existing code
+3. How to paste this new code
+4. How to save it
+5. How to deploy it (Deploy → Manage deployments → Edit → Deploy)
+6. Whether the webhook URL will change (it shouldn't if I'm editing existing deployment)
+
+---
+
+## TASK 3: Verify the Setup
+
+After I update everything, tell me how to test it:
+
+1. Go to: http://localhost:3000/thank-you-confirmed?upsell=blueprint17
+2. Fill in the email form with test data
+3. Submit
+4. Check Google Sheet to verify this data appears:
+   - Email: my test email
+   - Name: my test name
+   - Country: (should auto-detect from my timezone)
+   - Product Purchased: "Course + $17 Blueprint"
+   - Upsell Purchased: "$17 Blueprint"
+   - Payment Method: "Card"
+
+---
+
+## IMPORTANT NOTES FOR YOU (ChatGPT):
+
+1. **Be very specific** - I'm not technical, so explain every single click
+2. **Include screenshots descriptions** - Tell me exactly what I should see at each step
+3. **Don't skip steps** - Even obvious things like "Click Save"
+4. **Warn me about common mistakes** - Like forgetting to deploy after saving
+5. **Give me the exact text to type** - Don't say "add the columns", tell me exactly what to type in each cell
+
+---
+
+## WHAT THE FINAL GOOGLE SHEET SHOULD LOOK LIKE:
+
+Row 1 (Headers):
+| A: Timestamp | B: Email | C: Name | D: Country | E: Product Purchased | F: Upsell Purchased | G: Payment Method |
+
+Example Row 2 (Data):
+| 11/5/2025 20:30 | customer@email.com | John Doe | UAE | Course + $17 Blueprint | $17 Blueprint | Card |
+
+---
+
+## START THE INSTRUCTIONS NOW
+
+Please give me step-by-step instructions starting with "STEP 1: Update Google Sheet Columns". Make each step extremely clear and detailed.
+
+===== END OF PROMPT =====

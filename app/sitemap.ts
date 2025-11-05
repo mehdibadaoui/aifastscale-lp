@@ -101,5 +101,65 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog/dubai-real-estate-agent-income-2025`,
+      lastModified: new Date('2025-01-10'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/dubai-agents-10x-income-ai-videos-2025`,
+      lastModified: new Date('2025-01-10'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/ai-video-generator-real-estate-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/how-to-make-talking-videos-real-estate`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/best-ai-tools-real-estate-marketing-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/real-estate-video-marketing-course-dubai-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/ai-avatar-real-estate-agents-guide-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/instagram-reels-real-estate-content-ideas-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/tiktok-real-estate-marketing-uae-guide-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/ai-video-roi-real-estate-calculator-2025`,
+      lastModified: new Date('2025-01-12'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 }

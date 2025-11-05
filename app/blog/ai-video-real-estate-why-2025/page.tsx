@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowLeft, Calendar, Clock, Share2 } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: "Why Real Estate Agents Who Don't Use AI Video Will Struggle in 2025",
@@ -118,17 +119,63 @@ export default function Page() {
         }}
       />
 
-      <article className="prose prose-lg mx-auto max-w-4xl px-4 py-16">
-        {/* Author Byline */}
-        <p className="mb-4 text-sm text-gray-600">
-          Written by <strong>Mehdi Badaoui</strong> · Founder of{' '}
-          <Link href="https://aifastscale.com" className="font-semibold text-blue-600">
-            AI FastScale
-          </Link>{' '}
-          · January 9, 2025
-        </p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+        {/* Header */}
+        <header className="border-b bg-white shadow-sm">
+          <div className="mx-auto max-w-4xl px-4 py-6">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-black"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Blog
+            </Link>
+          </div>
+        </header>
 
-        <h1>Why Real Estate Agents Who Don't Use AI Video Will Struggle in 2025</h1>
+        {/* Article */}
+        <article className="mx-auto max-w-4xl px-4 py-12">
+          {/* Meta */}
+          <div className="mb-8 flex flex-wrap items-center gap-4 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <time dateTime="2025-01-09">January 9, 2025</time>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              <span>11 min read</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Share2 className="h-4 w-4" />
+              <span>Industry Trends</span>
+            </div>
+          </div>
+
+          {/* Title */}
+          <h1 className="mb-6 text-4xl font-black leading-tight text-gray-900 md:text-5xl">
+            Why Real Estate Agents Who Don't Use AI Video Will Struggle in 2025
+          </h1>
+
+          {/* Subtitle */}
+          <p className="mb-8 text-xl leading-relaxed text-gray-700">
+            Discover why UAE real estate agents who ignore AI video marketing are losing listings, reach, and leads. Learn how to stay ahead and dominate 2025 with AI FastScale.
+          </p>
+
+          {/* Featured stat */}
+          <div className="mb-12 rounded-2xl border-4 border-red-400 bg-gradient-to-br from-red-50 to-orange-50 p-8">
+            <p className="mb-2 text-center text-sm font-bold uppercase tracking-wider text-gray-600">
+              By Mehdi Badaoui · Founder of AI FastScale
+            </p>
+            <p className="text-center text-4xl font-black text-gray-900 md:text-5xl">
+              Don't Get Left Behind
+            </p>
+            <p className="mt-2 text-center text-lg text-gray-700">
+              Early adopters are dominating Instagram & TikTok
+            </p>
+          </div>
+
+          {/* Content */}
+          <div className="prose prose-lg max-w-none">
 
         <p>
           Let me tell you what I'm seeing across <strong>Dubai, Abu Dhabi, and Sharjah</strong> right now. The
@@ -653,7 +700,9 @@ export default function Page() {
             ← Back to Blog
           </Link>
         </p>
-      </article>
+          </div>
+        </article>
+      </div>
     </>
   )
 }

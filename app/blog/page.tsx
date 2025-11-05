@@ -13,6 +13,96 @@ export const metadata: Metadata = {
 export default function BlogIndex() {
   const posts = [
     {
+      slug: 'ai-video-roi-real-estate-calculator-2025',
+      title: 'AI Video ROI Calculator for Real Estate: Is It Worth It? (2025 Analysis)',
+      description:
+        'Complete ROI analysis of AI video marketing for real estate. Calculate expected returns, see real cost vs revenue data, and determine if AI videos are worth the investment.',
+      date: '2025-01-12',
+      readTime: '15 min read',
+      category: 'ROI Analysis',
+    },
+    {
+      slug: 'tiktok-real-estate-marketing-uae-guide-2025',
+      title: 'TikTok Real Estate Marketing: Complete UAE Agent Guide 2025',
+      description:
+        'Complete TikTok marketing guide for Dubai & UAE real estate agents. Learn content strategies, viral hooks, best posting times, and how agents generate 200+ monthly leads from TikTok.',
+      date: '2025-01-12',
+      readTime: '16 min read',
+      category: 'Marketing Strategy',
+    },
+    {
+      slug: 'instagram-reels-real-estate-content-ideas-2025',
+      title: '50 Instagram Reels Ideas for Real Estate Agents in 2025 (Dubai & UAE)',
+      description:
+        'Complete list of Instagram Reels content ideas for real estate agents. 50 proven video concepts that generate leads, plus templates, hooks, and posting strategies.',
+      date: '2025-01-12',
+      readTime: '18 min read',
+      category: 'Content Ideas',
+    },
+    {
+      slug: 'ai-avatar-real-estate-agents-guide-2025',
+      title: 'AI Avatar for Real Estate Agents: Complete 2025 Guide',
+      description:
+        'Should you use an AI avatar for real estate videos? Complete guide covering best AI avatars for agents, pricing, pros/cons, and which Dubai agents are using them to generate 100+ leads monthly.',
+      date: '2025-01-12',
+      readTime: '14 min read',
+      category: 'Technology Guide',
+    },
+    {
+      slug: 'real-estate-video-marketing-course-dubai-2025',
+      title: 'Real Estate Video Marketing Course Dubai 2025 - Learn AI Video Lead Generation',
+      description:
+        'Complete video marketing course for Dubai & UAE real estate agents. Learn AI video creation, lead generation strategies, and how to generate 100+ monthly leads.',
+      date: '2025-01-12',
+      readTime: '15 min read',
+      category: 'Training Course',
+    },
+    {
+      slug: 'best-ai-tools-real-estate-marketing-2025',
+      title: '15 Best AI Tools for Real Estate Marketing in 2025 (Complete Guide)',
+      description:
+        'Complete guide to the best AI tools for real estate marketing in 2025. Compare pricing, features, and real results from Dubai agents using AI for video, copywriting, and lead generation.',
+      date: '2025-01-12',
+      readTime: '14 min read',
+      category: 'Tools Comparison',
+    },
+    {
+      slug: 'how-to-make-talking-videos-real-estate',
+      title: 'How to Make Talking Videos for Real Estate (3 Methods Compared)',
+      description:
+        'Complete guide to creating talking videos for real estate. Compare AI avatars, self-filming, and hiring talent. Includes costs, pros/cons, and step-by-step tutorials for each method.',
+      date: '2025-01-12',
+      readTime: '13 min read',
+      category: 'Tutorial',
+    },
+    {
+      slug: 'ai-video-generator-real-estate-2025',
+      title: '7 Best AI Video Generators for Real Estate Agents in 2025 (Compared)',
+      description:
+        'Compare the best AI video generators for real estate agents. Detailed analysis of AI FastScale, Synthesia, HeyGen, D-ID, and more. Pricing, features, pros/cons, and real agent results.',
+      date: '2025-01-12',
+      readTime: '12 min read',
+      category: 'Software Review',
+    },
+    {
+      slug: 'dubai-agents-10x-income-ai-videos-2025',
+      title: "5 Dubai Real Estate Agents Who 10X'd Their Income Using AI Videos",
+      description:
+        'Real success stories from Dubai agents who went from AED 8K-18K/month to AED 45K-100K+/month using AI videos. Complete case studies with strategies and exact results.',
+      date: '2025-01-10',
+      readTime: '13 min read',
+      category: 'Case Studies',
+    },
+    {
+      slug: 'dubai-real-estate-agent-income-2025',
+      title: 'How Much Money Can Dubai Real Estate Agents Really Make in 2025?',
+      description:
+        'Complete income breakdown for Dubai agents. Learn average commissions, top earner salaries, and how AI videos are helping agents earn AED 50K+ monthly.',
+      date: '2025-01-10',
+      readTime: '11 min read',
+      category: 'Income Guide',
+    },
+    {
       slug: 'viral-real-estate-content-uae-2025',
       title: 'How to Create Viral Real Estate Content in 2025 (UAE Agent Playbook)',
       description:
