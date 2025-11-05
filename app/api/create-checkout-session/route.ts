@@ -24,9 +24,6 @@ export async function POST(req: NextRequest) {
       mode: 'payment',
       success_url: `${req.headers.get('origin')}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}`,
-      payment_intent_data: {
-        setup_future_usage: 'off_session', // Save payment method for 1-click upsells
-      },
       // Enable ALL payment methods - Stripe auto-detects based on:
       // - Browser/device capabilities
       // - Payment methods enabled in Dashboard
@@ -35,6 +32,11 @@ export async function POST(req: NextRequest) {
       // Minimal fields for fastest checkout
       billing_address_collection: 'auto', // Only ask if needed
       phone_number_collection: { enabled: false }, // No phone number
+      // Save payment method for 1-click upsells
+      payment_intent_data: {
+        setup_future_usage: 'off_session', // Save payment method for future charges
+      },
+      customer_creation: 'always', // Always create a customer to attach payment method
     })
 
     return NextResponse.json({ url: session.url })
