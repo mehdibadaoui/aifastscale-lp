@@ -97,7 +97,13 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://c.clarity.ms" />
         <link rel="dns-prefetch" href="https://js.stripe.com" />
 
-        {/* Resource hints for performance - Removed video preload (41MB!) */}
+        {/* CRITICAL: Preload hero section resources for instant display */}
+        <link
+          rel="preload"
+          href="/images/hero-video-poster.jpg"
+          as="image"
+          fetchPriority="high"
+        />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
