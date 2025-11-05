@@ -1950,30 +1950,18 @@ export default function AgentLandingPage() {
             >
               <div className="p-3 md:p-4">
                 <div className="overflow-hidden rounded-2xl bg-black/50">
-                  <div
-                    className="wistia_responsive_padding"
-                    style={{ padding: '177.78% 0 0 0', position: 'relative' }}
-                  >
-                    <div
-                      className="wistia_responsive_wrapper"
-                      style={{
-                        height: '100%',
-                        left: 0,
-                        position: 'absolute',
-                        top: 0,
-                        width: '100%',
-                      }}
+                  <div className="relative" style={{ paddingBottom: '177.78%' }}>
+                    <video
+                      className="absolute inset-0 h-full w-full object-cover"
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster="/images/mr-lucas-poster.jpg"
+                      loading="lazy"
                     >
-                      <iframe
-                        src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true&videoFoam=true"
-                        title="Mr Lucas Video"
-                        allow="autoplay; fullscreen"
-                        frameBorder="0"
-                        scrolling="no"
-                        width="100%"
-                        height="100%"
-                      />
-                    </div>
+                      <source src="/videos/Mr-Lucas.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 </div>
               </div>
@@ -2153,14 +2141,14 @@ export default function AgentLandingPage() {
           <div className="mx-auto mb-8 grid max-w-6xl gap-6 md:mb-10 md:grid-cols-2 md:gap-8">
             {[
               {
-                id: 'k1gfuxd7uw',
                 title: 'Agent Steven Video',
-                aspectRatio: '175.83%',
+                videoSrc: '/videos/Steven-c.mp4',
+                posterSrc: '/images/steven-poster.jpg',
               },
               {
-                id: 'eilfzivcqu',
                 title: 'Agent Gabriel Video',
-                aspectRatio: '177.22%',
+                videoSrc: '/videos/Gabriel-c.mp4',
+                posterSrc: '/images/gabriel-poster.jpg',
               },
             ].map((v, i) => (
               <Card key={i}>
@@ -2176,33 +2164,18 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="overflow-hidden rounded-2xl bg-black">
-                      <div
-                        className="wistia_responsive_padding"
-                        style={{
-                          padding: i === 0 ? '175.83% 0 0 0' : '177.22% 0 0 0',
-                          position: 'relative',
-                        }}
-                      >
-                        <div
-                          className="wistia_responsive_wrapper"
-                          style={{
-                            height: '100%',
-                            left: 0,
-                            position: 'absolute',
-                            top: 0,
-                            width: '100%',
-                          }}
+                      <div className="relative" style={{ paddingBottom: '100%' }}>
+                        <video
+                          className="absolute inset-0 h-full w-full object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                          poster={v.posterSrc}
+                          loading="lazy"
                         >
-                          <iframe
-                            src={`https://fast.wistia.net/embed/iframe/${v.id}?web_component=true&seo=true&videoFoam=true`}
-                            title={v.title}
-                            allow="autoplay; fullscreen"
-                            frameBorder="0"
-                            scrolling="no"
-                            width="100%"
-                            height="100%"
-                          />
-                        </div>
+                          <source src={v.videoSrc} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
                       </div>
                     </div>
                   </div>
