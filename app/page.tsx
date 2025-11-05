@@ -1957,7 +1957,6 @@ export default function AgentLandingPage() {
                       playsInline
                       preload="metadata"
                       poster="/images/mr-lucas-poster.jpg"
-                      loading="lazy"
                     >
                       <source src="/videos/Mr-Lucas.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
@@ -2171,7 +2170,6 @@ export default function AgentLandingPage() {
                           playsInline
                           preload="metadata"
                           poster={v.posterSrc}
-                          loading="lazy"
                         >
                           <source src={v.videoSrc} type="video/mp4" />
                           Your browser does not support the video tag.

@@ -16,11 +16,11 @@ export default function LazyTrackingPixels() {
   const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
-    // Wait 5 seconds after page is interactive before loading tracking pixels
-    // This ensures better FCP, LCP, and overall PageSpeed score
+    // Wait 1 second after page is interactive before loading tracking pixels
+    // Balanced approach: fast tracking + good PageSpeed score
     const timer = setTimeout(() => {
       setShouldLoad(true)
-    }, 5000)
+    }, 1000)
 
     return () => clearTimeout(timer)
   }, [])
