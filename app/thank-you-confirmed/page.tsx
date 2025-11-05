@@ -10,11 +10,12 @@ import {
   Shield,
 } from 'lucide-react'
 import { trackPurchase, trackCompleteRegistration } from '../utils/tracking'
-import EmailOptIn from '../components/EmailOptIn'
+import EmailOptInModal from '../components/EmailOptInModal'
 
 export default function ThankYouPage() {
   const [orderTracked, setOrderTracked] = useState(false)
   const [upsellPurchase, setUpsellPurchase] = useState<string | null>(null)
+  const [showEmailModal, setShowEmailModal] = useState(true)
 
   useEffect(() => {
     // Check if they purchased the upsell
@@ -208,11 +209,6 @@ export default function ThankYouPage() {
           </p>
         </div>
 
-        {/* Email Opt-In Section - VIP List */}
-        <div className="mb-8 md:mb-12">
-          <EmailOptIn />
-        </div>
-
         {/* Blueprint Download - Only if purchased */}
         {upsellPurchase && (
           <div className="mb-8 rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 p-6 text-center backdrop-blur-sm md:mb-12 md:p-8">
@@ -339,6 +335,12 @@ export default function ThankYouPage() {
           </a>
         </p>
       </div>
+
+      {/* Email Opt-In Modal - Shows on page load */}
+      <EmailOptInModal
+        isOpen={showEmailModal}
+        onClose={() => setShowEmailModal(false)}
+      />
     </div>
   )
 }
