@@ -7,9 +7,7 @@ if (!stripeSecretKey) {
   throw new Error('STRIPE_SECRET_KEY is not defined in environment variables')
 }
 
-const stripe = new Stripe(stripeSecretKey, {
-  typescript: true,
-})
+const stripe = new Stripe(stripeSecretKey)
 
 export async function POST(req: NextRequest) {
   try {
