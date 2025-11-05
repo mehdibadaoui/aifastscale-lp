@@ -1,0 +1,39 @@
+// COPY ALL OF THIS CODE (Lines 1-30)
+// Paste it into Google Apps Script
+
+function doPost(e) {
+  try {
+    // Get the active spreadsheet
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    // Parse the incoming data
+    const data = JSON.parse(e.postData.contents);
+
+    // Add new row with data
+    sheet.appendRow([
+      new Date(),                    // Timestamp
+      data.email || '',              // Email
+      data.name || '',               // Name (optional)
+      data.source || 'Thank You Page', // Source
+      data.ip || '',                 // IP Address
+      data.userAgent || ''           // User Agent
+    ]);
+
+    // Return success response
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'success': true,
+        'message': 'Email added successfully'
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch(error) {
+    // Return error response
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'success': false,
+        'message': error.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
