@@ -7,26 +7,103 @@ import { Mail, Sparkles, CheckCircle, Loader, Gift, X } from 'lucide-react'
 function getCountryFromTimezone(timezone: string): string {
   // Map common timezones to countries
   const timezoneMap: { [key: string]: string } = {
+    // Middle East / GCC
     'Asia/Dubai': 'UAE',
     'Asia/Riyadh': 'Saudi Arabia',
     'Asia/Kuwait': 'Kuwait',
     'Asia/Qatar': 'Qatar',
     'Asia/Bahrain': 'Bahrain',
-    'Europe/London': 'UK',
-    'America/New_York': 'USA',
-    'America/Los_Angeles': 'USA',
-    'America/Chicago': 'USA',
-    'Europe/Paris': 'France',
-    'Europe/Berlin': 'Germany',
+    'Asia/Muscat': 'Oman',
+    'Asia/Doha': 'Qatar',
+    'Asia/Baghdad': 'Iraq',
+    'Asia/Amman': 'Jordan',
+    'Asia/Beirut': 'Lebanon',
+    'Asia/Damascus': 'Syria',
+    'Asia/Jerusalem': 'Israel',
+
+    // Southeast Asia
+    'Asia/Bangkok': 'Thailand',
     'Asia/Singapore': 'Singapore',
-    'Australia/Sydney': 'Australia',
+    'Asia/Kuala_Lumpur': 'Malaysia',
+    'Asia/Jakarta': 'Indonesia',
+    'Asia/Manila': 'Philippines',
+    'Asia/Ho_Chi_Minh': 'Vietnam',
+    'Asia/Yangon': 'Myanmar',
+    'Asia/Phnom_Penh': 'Cambodia',
+    'Asia/Vientiane': 'Laos',
+
+    // East Asia
     'Asia/Tokyo': 'Japan',
     'Asia/Shanghai': 'China',
     'Asia/Hong_Kong': 'Hong Kong',
-    'Europe/Istanbul': 'Turkey',
-    'Africa/Cairo': 'Egypt',
-    'Asia/Karachi': 'Pakistan',
+    'Asia/Taipei': 'Taiwan',
+    'Asia/Seoul': 'South Korea',
+    'Asia/Macau': 'Macau',
+
+    // South Asia
     'Asia/Kolkata': 'India',
+    'Asia/Karachi': 'Pakistan',
+    'Asia/Dhaka': 'Bangladesh',
+    'Asia/Kathmandu': 'Nepal',
+    'Asia/Colombo': 'Sri Lanka',
+
+    // Europe
+    'Europe/London': 'UK',
+    'Europe/Paris': 'France',
+    'Europe/Berlin': 'Germany',
+    'Europe/Madrid': 'Spain',
+    'Europe/Rome': 'Italy',
+    'Europe/Amsterdam': 'Netherlands',
+    'Europe/Brussels': 'Belgium',
+    'Europe/Vienna': 'Austria',
+    'Europe/Zurich': 'Switzerland',
+    'Europe/Stockholm': 'Sweden',
+    'Europe/Oslo': 'Norway',
+    'Europe/Copenhagen': 'Denmark',
+    'Europe/Helsinki': 'Finland',
+    'Europe/Warsaw': 'Poland',
+    'Europe/Prague': 'Czech Republic',
+    'Europe/Athens': 'Greece',
+    'Europe/Lisbon': 'Portugal',
+    'Europe/Dublin': 'Ireland',
+    'Europe/Istanbul': 'Turkey',
+    'Europe/Moscow': 'Russia',
+
+    // Americas - USA
+    'America/New_York': 'USA',
+    'America/Los_Angeles': 'USA',
+    'America/Chicago': 'USA',
+    'America/Denver': 'USA',
+    'America/Phoenix': 'USA',
+    'America/Detroit': 'USA',
+    'America/Anchorage': 'USA',
+    'America/Honolulu': 'USA',
+    'Pacific/Honolulu': 'USA',
+
+    // Americas - Other
+    'America/Toronto': 'Canada',
+    'America/Vancouver': 'Canada',
+    'America/Mexico_City': 'Mexico',
+    'America/Sao_Paulo': 'Brazil',
+    'America/Buenos_Aires': 'Argentina',
+    'America/Bogota': 'Colombia',
+    'America/Lima': 'Peru',
+    'America/Santiago': 'Chile',
+
+    // Africa
+    'Africa/Cairo': 'Egypt',
+    'Africa/Johannesburg': 'South Africa',
+    'Africa/Lagos': 'Nigeria',
+    'Africa/Nairobi': 'Kenya',
+    'Africa/Casablanca': 'Morocco',
+    'Africa/Algiers': 'Algeria',
+
+    // Oceania
+    'Australia/Sydney': 'Australia',
+    'Australia/Melbourne': 'Australia',
+    'Australia/Brisbane': 'Australia',
+    'Australia/Perth': 'Australia',
+    'Pacific/Auckland': 'New Zealand',
   }
 
   // Check if we have a direct match

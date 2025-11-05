@@ -11,21 +11,38 @@ import {
 } from 'lucide-react'
 import { trackPurchase, trackCompleteRegistration } from '../utils/tracking'
 import EmailOptInModal from '../components/EmailOptInModal'
+import UpsellOffer from '../components/UpsellOffer'
 
 export default function ThankYouPage() {
   const [orderTracked, setOrderTracked] = useState(false)
   const [upsellPurchase, setUpsellPurchase] = useState<string | null>(null)
-  const [showEmailModal, setShowEmailModal] = useState(true)
+  const [showEmailModal, setShowEmailModal] = useState(false) // Start false, will show after upsell
+  const [sessionId, setSessionId] = useState<string | null>(null)
+  const [showUpsell, setShowUpsell] = useState(false)
 
   useEffect(() => {
     // Check if they purchased the upsell
     const urlParams = new URLSearchParams(window.location.search)
     const upsell = urlParams.get('upsell')
+    const session = urlParams.get('session_id')
+
     setUpsellPurchase(upsell)
+    setSessionId(session)
+
+    // Determine if we should show upsell offer
+    // Show upsell if: has session_id AND no upsell purchased yet
+    if (session && !upsell) {
+      setShowUpsell(true)
+      setShowEmailModal(false)
+    } else {
+      // If they already purchased upsell OR no session_id, show email modal
+      setShowUpsell(false)
+      setShowEmailModal(true)
+    }
 
     // Only track once per page load
     if (!orderTracked) {
-      const orderId = urlParams.get('session_id') || `order_${Date.now()}`
+      const orderId = session || `order_${Date.now()}`
 
       // Calculate total amount based on upsell purchase
       let totalAmount = 37.0
@@ -336,7 +353,23 @@ export default function ThankYouPage() {
         </p>
       </div>
 
-      {/* Email Opt-In Modal - Shows on page load */}
+      {/* Upsell Offer - Shows first if they just purchased course */}
+      {showUpsell && (
+        <UpsellOffer
+          sessionId={sessionId}
+          onUpsellPurchased={(upsellType) => {
+            console.log('Upsell purchased:', upsellType)
+            // Page will reload with ?upsell= parameter, so email modal will show automatically
+          }}
+          onDismiss={() => {
+            console.log('Upsell dismissed - showing email modal')
+            setShowUpsell(false)
+            setShowEmailModal(true)
+          }}
+        />
+      )}
+
+      {/* Email Opt-In Modal - Shows after upsell is dismissed or purchased */}
       <EmailOptInModal
         isOpen={showEmailModal}
         onClose={() => setShowEmailModal(false)}
