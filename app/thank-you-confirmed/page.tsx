@@ -10,6 +10,7 @@ import {
   Shield,
 } from 'lucide-react'
 import { trackPurchase, trackCompleteRegistration } from '../utils/tracking'
+import EmailOptIn from '../components/EmailOptIn'
 
 export default function ThankYouPage() {
   const [orderTracked, setOrderTracked] = useState(false)
@@ -40,7 +41,7 @@ export default function ThankYouPage() {
       // Fire Google Ads conversion event
       if (typeof window !== 'undefined' && (window as any).gtag) {
         ;(window as any).gtag('event', 'conversion', {
-          send_to: 'AW-17695777512/SvceCMjX-7cbEOjFgPZB',
+          send_to: 'AW-17695777512/4w-dCPm-0rkbEOjFgPZB',
           value: totalAmount,
           currency: 'USD',
           transaction_id: orderId,
@@ -205,6 +206,11 @@ export default function ThankYouPage() {
           <p className="mt-3 text-xs text-gray-400 md:mt-4 md:text-sm">
             Opens in Google Drive • All files included
           </p>
+        </div>
+
+        {/* Email Opt-In Section - VIP List */}
+        <div className="mb-8 md:mb-12">
+          <EmailOptIn />
         </div>
 
         {/* Blueprint Download - Only if purchased */}
