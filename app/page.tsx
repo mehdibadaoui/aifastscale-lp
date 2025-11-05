@@ -1075,12 +1075,13 @@ export default function AgentLandingPage() {
                           className="group relative"
                           style={{ padding: '56.67% 0 0 0' }}
                         >
-                          {/* HTML5 Video - Fast, Reliable, Full Control */}
+                          {/* HTML5 Video - Fast, Reliable, Full Control - OPTIMIZED: 79% smaller (8.5MB) */}
                           <video
                             ref={videoRef}
                             className="absolute top-0 left-0 h-full w-full bg-black object-cover"
                             playsInline
-                            preload="none"
+                            preload="metadata"
+                            poster="/images/hero-video-poster.jpg"
                             muted={videoMuted}
                           >
                             <source
