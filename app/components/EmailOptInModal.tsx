@@ -64,15 +64,24 @@ export default function EmailOptInModal({
         userAgent: navigator.userAgent,
       }
 
+      // Log for debugging
+      console.log('📧 Submitting email to webhook:', webhookUrl)
+      console.log('📊 Data:', data)
+
       // Submit to Google Sheets via webhook
+      // Note: Google Apps Script requires 'no-cors' mode
+      // This means we can't read the response, but the request will work
       await fetch(webhookUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
         },
         body: JSON.stringify(data),
         mode: 'no-cors', // Required for Google Apps Script
       })
+
+      console.log('✅ Email submitted successfully!')
+      console.log('📋 Check your Google Sheet to verify it was added')
 
       setIsSubscribed(true)
 
