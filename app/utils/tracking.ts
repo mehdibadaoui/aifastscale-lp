@@ -29,17 +29,17 @@ export const trackButtonClick = (buttonLocation: string) => {
     })
   }
 
-  // TikTok Pixel - ClickButton
-  if (typeof window !== 'undefined' && window.ttq) {
-    window.ttq.track('ClickButton', {
-      content_name: '7 Minute AgentClone Course',
-      content_category: 'AI Video Course',
-      content_type: 'product',
-      value: 37.0,
-      currency: 'USD',
-      button_location: buttonLocation,
-    })
-  }
+  // TikTok Pixel - ClickButton (TEMPORARILY DISABLED FOR PERFORMANCE)
+  // if (typeof window !== 'undefined' && window.ttq) {
+  //   window.ttq.track('ClickButton', {
+  //     content_name: '7 Minute AgentClone Course',
+  //     content_category: 'AI Video Course',
+  //     content_type: 'product',
+  //     value: 37.0,
+  //     currency: 'USD',
+  //     button_location: buttonLocation,
+  //   })
+  // }
 
   // Google Analytics - add_to_cart event
   if (typeof window !== 'undefined' && window.gtag) {
@@ -86,17 +86,17 @@ export const trackCTAClick = (buttonLocation: string) => {
     })
   }
 
-  // TikTok Pixel - InitiateCheckout
-  if (typeof window !== 'undefined' && window.ttq) {
-    window.ttq.track('InitiateCheckout', {
-      content_name: '7 Minute AgentClone Course',
-      content_category: 'AI Video Course',
-      content_type: 'product',
-      value: 37.0,
-      currency: 'USD',
-      button_location: buttonLocation,
-    })
-  }
+  // TikTok Pixel - InitiateCheckout (TEMPORARILY DISABLED FOR PERFORMANCE)
+  // if (typeof window !== 'undefined' && window.ttq) {
+  //   window.ttq.track('InitiateCheckout', {
+  //     content_name: '7 Minute AgentClone Course',
+  //     content_category: 'AI Video Course',
+  //     content_type: 'product',
+  //     value: 37.0,
+  //     currency: 'USD',
+  //     button_location: buttonLocation,
+  //   })
+  // }
 
   // Google Analytics - begin_checkout event
   if (typeof window !== 'undefined' && window.gtag) {
@@ -173,18 +173,18 @@ export const trackPurchase = (orderId: string, value: number = 37.0) => {
     })
   }
 
-  // TikTok Pixel - CompletePayment
-  if (typeof window !== 'undefined' && window.ttq) {
-    window.ttq.track('CompletePayment', {
-      content_name: '7 Minute AgentClone Course',
-      content_type: 'product',
-      content_id: 'agentclone_course',
-      value: value,
-      currency: 'USD',
-      quantity: 1,
-      order_id: orderId,
-    })
-  }
+  // TikTok Pixel - CompletePayment (TEMPORARILY DISABLED FOR PERFORMANCE)
+  // if (typeof window !== 'undefined' && window.ttq) {
+  //   window.ttq.track('CompletePayment', {
+  //     content_name: '7 Minute AgentClone Course',
+  //     content_type: 'product',
+  //     content_id: 'agentclone_course',
+  //     value: value,
+  //     currency: 'USD',
+  //     quantity: 1,
+  //     order_id: orderId,
+  //   })
+  // }
 
   // Google Analytics - purchase event
   if (typeof window !== 'undefined' && window.gtag) {
@@ -205,7 +205,7 @@ export const trackPurchase = (orderId: string, value: number = 37.0) => {
 
     // Also send conversion event (for Google Ads)
     window.gtag('event', 'conversion', {
-      send_to: 'AW-CONVERSION_ID/CONVERSION_LABEL', // Replace with your Google Ads conversion ID
+      send_to: 'AW-17695777512/4w-dCPm-0rkbEOjFgPZB',
       value: value,
       currency: 'USD',
       transaction_id: orderId,
@@ -234,15 +234,15 @@ export const trackCompleteRegistration = (orderId: string) => {
     })
   }
 
-  // TikTok Pixel - Subscribe (alternative to CompleteRegistration)
-  if (typeof window !== 'undefined' && window.ttq) {
-    window.ttq.track('Subscribe', {
-      content_name: '7 Minute AgentClone Course',
-      value: 37.0,
-      currency: 'USD',
-      order_id: orderId,
-    })
-  }
+  // TikTok Pixel - Subscribe (TEMPORARILY DISABLED FOR PERFORMANCE)
+  // if (typeof window !== 'undefined' && window.ttq) {
+  //   window.ttq.track('Subscribe', {
+  //     content_name: '7 Minute AgentClone Course',
+  //     value: 37.0,
+  //     currency: 'USD',
+  //     order_id: orderId,
+  //   })
+  // }
 
   // Google Analytics - sign_up event
   if (typeof window !== 'undefined' && window.gtag) {

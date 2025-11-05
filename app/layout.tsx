@@ -89,6 +89,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Performance Optimization: Preconnect to critical third-party domains */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
+        <link rel="dns-prefetch" href="https://c.clarity.ms" />
+        <link rel="dns-prefetch" href="https://js.stripe.com" />
+
         {/* Resource hints for performance - Removed video preload (41MB!) */}
 
         {/* Hreflang Tags for International SEO */}

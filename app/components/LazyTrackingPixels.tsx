@@ -3,21 +3,24 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 
-// Lazy load all tracking pixels with 3-second delay
+// Lazy load all tracking pixels with 5-second delay (was 3s)
 const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), { ssr: false })
-const GoogleAdsTag = dynamic(() => import('./GoogleAdsTag'), { ssr: false })
+// GoogleAdsTag is now merged into GoogleAnalytics (both use same gtag.js)
 const MetaPixel = dynamic(() => import('./MetaPixel'), { ssr: false })
-const TikTokPixel = dynamic(() => import('./TikTokPixel'), { ssr: false })
-const MicrosoftClarity = dynamic(() => import('./MicrosoftClarity'), { ssr: false })
+// TikTok Pixel temporarily disabled for performance optimization
+// const TikTokPixel = dynamic(() => import('./TikTokPixel'), { ssr: false })
+// Microsoft Clarity temporarily disabled for performance optimization
+// const MicrosoftClarity = dynamic(() => import('./MicrosoftClarity'), { ssr: false })
 
 export default function LazyTrackingPixels() {
   const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
-    // Wait 3 seconds after page is interactive before loading tracking pixels
+    // Wait 5 seconds after page is interactive before loading tracking pixels
+    // This ensures better FCP, LCP, and overall PageSpeed score
     const timer = setTimeout(() => {
       setShouldLoad(true)
-    }, 3000)
+    }, 5000)
 
     return () => clearTimeout(timer)
   }, [])
@@ -27,10 +30,11 @@ export default function LazyTrackingPixels() {
   return (
     <>
       <GoogleAnalytics />
-      <GoogleAdsTag />
       <MetaPixel />
-      <TikTokPixel />
-      <MicrosoftClarity />
+      {/* TikTok Pixel temporarily disabled for performance */}
+      {/* <TikTokPixel /> */}
+      {/* Microsoft Clarity temporarily disabled for performance */}
+      {/* <MicrosoftClarity /> */}
     </>
   )
 }
