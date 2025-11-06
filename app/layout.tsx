@@ -89,6 +89,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Ads Conversion Tracking - CRITICAL for campaign performance */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17695777512');
+            `,
+          }}
+        />
+
         {/* Performance Optimization: Preconnect to critical third-party domains */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
