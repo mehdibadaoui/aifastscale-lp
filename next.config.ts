@@ -63,8 +63,10 @@ const nextConfig: NextConfig = {
   // Experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    serverExternalPackages: ['stripe'],
   },
+
+  // External packages for serverless functions
+  serverExternalPackages: ['stripe'],
 };
 
 export default nextConfig;
