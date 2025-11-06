@@ -105,6 +105,14 @@ export default function RootLayout({
           fetchPriority="high"
         />
 
+        {/* CRITICAL: Preload hero VSL video for fast playback */}
+        <link
+          rel="preload"
+          href="/videos/Hero-VSL.mp4"
+          as="video"
+          type="video/mp4"
+        />
+
         {/* CRITICAL: Preload Stripe.js for instant checkout */}
         <link
           rel="preload"

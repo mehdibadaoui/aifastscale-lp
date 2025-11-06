@@ -25,11 +25,33 @@ body {
   background: #000000;
   color: #ffffff;
   font-family: var(--font-sans);
+  /* Performance optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Smooth scroll behavior */
+/* Smooth scroll behavior with performance optimization */
 html {
   scroll-behavior: smooth;
+  /* Hardware acceleration for smooth scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Performance boost: GPU acceleration for animated elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Optimize repaints for scroll animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Custom scrollbar for luxury aesthetic */

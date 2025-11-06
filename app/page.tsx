@@ -1093,7 +1093,7 @@ export default function AgentLandingPage() {
                             ref={videoRef}
                             className="absolute top-0 left-0 h-full w-full bg-black object-cover"
                             playsInline
-                            preload="none"
+                            preload="metadata"
                             poster="/images/hero-video-poster.jpg"
                             muted={videoMuted}
                           >
