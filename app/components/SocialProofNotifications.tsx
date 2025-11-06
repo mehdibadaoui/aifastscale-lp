@@ -150,6 +150,24 @@ const countryData: Record<
     ],
     flag: '🇩🇪',
   },
+  // Turkey
+  TR: {
+    cities: ['Istanbul', 'Ankara', 'Izmir', 'Bursa', 'Antalya', 'Adana'],
+    names: ['Ahmet', 'Mehmet', 'Ayşe', 'Fatma', 'Mustafa', 'Zeynep', 'Ali'],
+    flag: '🇹🇷',
+  },
+  // Spain
+  ES: {
+    cities: ['Madrid', 'Barcelona', 'Valencia', 'Seville', 'Malaga', 'Bilbao'],
+    names: ['Carlos', 'Maria', 'Antonio', 'Carmen', 'Jose', 'Ana', 'Manuel'],
+    flag: '🇪🇸',
+  },
+  // Italy
+  IT: {
+    cities: ['Rome', 'Milan', 'Naples', 'Turin', 'Florence', 'Venice'],
+    names: ['Marco', 'Giulia', 'Alessandro', 'Francesca', 'Matteo', 'Sofia', 'Lorenzo'],
+    flag: '🇮🇹',
+  },
 }
 
 export default function SocialProofNotifications() {
@@ -235,8 +253,9 @@ export default function SocialProofNotifications() {
         icon: <Eye className="h-4 w-4" />,
       })
 
-      // Generate 3-4 purchase notifications from user's country
-      for (let i = 0; i < 3; i++) {
+      // 1-2 purchases from USER'S country (if not US)
+      const userPurchaseCount = countryCode === 'US' ? 0 : 2
+      for (let i = 0; i < userPurchaseCount; i++) {
         const city = getRandomItem(userCountryData.cities)
         const name = getRandomItem(userCountryData.names)
         const time = getRandomTime()
@@ -247,8 +266,8 @@ export default function SocialProofNotifications() {
         })
       }
 
-      // ALWAYS add USA purchases (trusted/aspirational)
-      for (let i = 0; i < 3; i++) {
+      // ALWAYS add 1-2 USA purchases (people trust US buyers)
+      for (let i = 0; i < 2; i++) {
         const city = getRandomItem(usaData.cities)
         const name = getRandomItem(usaData.names)
         const time = getRandomTime()
@@ -258,6 +277,21 @@ export default function SocialProofNotifications() {
           icon: <ShoppingCart className="h-4 w-4" />,
         })
       }
+
+      // Add 1 purchase from FAMOUS countries (Dubai, UK, Germany, Turkey, etc.)
+      const famousCountries = ['AE', 'GB', 'DE', 'FR', 'CA', 'AU', 'TR', 'ES', 'IT']
+        .filter(code => code !== countryCode) // Don't repeat user's country
+      const randomFamousCountry = getRandomItem(famousCountries)
+      const famousCountryData = countryData[randomFamousCountry]
+
+      const city = getRandomItem(famousCountryData.cities)
+      const name = getRandomItem(famousCountryData.names)
+      const time = getRandomTime()
+      newNotifications.push({
+        type: 'purchase',
+        message: `${name} from ${city} ${famousCountryData.flag} just purchased (${time} min ago)`,
+        icon: <ShoppingCart className="h-4 w-4" />,
+      })
 
       // Add location viewing notifications
       newNotifications.push({
