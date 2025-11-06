@@ -2166,15 +2166,15 @@ export default function AgentLandingPage() {
               {
                 title: 'Agent Steven Video',
                 videoSrc: '/videos/Steven-c.mp4',
-                posterSrc: '/images/steven-poster.jpg',
+                posterSrc: '/images/steven-poster.jpg?v=2',
               },
               {
                 title: 'Agent Gabriel Video',
                 videoSrc: '/videos/Gabriel-c.mp4',
-                posterSrc: '/images/gabriel-poster.jpg',
+                posterSrc: '/images/gabriel-poster.jpg?v=2',
               },
             ].map((v, i) => (
-              <Card key={i}>
+              <Card key={`video-${i}-${v.title}`}>
                 <div
                   className={`overflow-hidden rounded-3xl border-2 border-gray-200 bg-white shadow-xl hover:border-amber-400/50 hover:shadow-2xl ${tilt}`}
                 >
@@ -2189,6 +2189,7 @@ export default function AgentLandingPage() {
                     <div className="overflow-hidden rounded-2xl bg-black">
                       <div className="relative" style={{ paddingBottom: '177.63%' }}>
                         <video
+                          key={v.posterSrc}
                           className="absolute inset-0 h-full w-full object-cover bg-black"
                           controls
                           playsInline
@@ -2196,6 +2197,7 @@ export default function AgentLandingPage() {
                           poster={v.posterSrc}
                           width="608"
                           height="1080"
+                          crossOrigin="anonymous"
                         >
                           <source src={v.videoSrc} type="video/mp4" />
                           Your browser does not support the video tag.
