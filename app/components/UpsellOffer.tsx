@@ -346,7 +346,7 @@ export default function UpsellOffer({
               disabled={isProcessing}
               className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-4 text-lg font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              No thanks, show me a smaller version (I want to save less money)
+              No thanks, just let me download my 7-Minute AgentClone
             </button>
 
             {/* Error Message */}
@@ -535,7 +535,7 @@ export default function UpsellOffer({
               disabled={isProcessing}
               className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-4 text-lg font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              No thanks, I don't want $290 in savings for $7
+              No thanks, take me to my AgentClone download
             </button>
 
             {/* Error Message */}
