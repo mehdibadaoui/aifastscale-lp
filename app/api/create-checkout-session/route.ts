@@ -7,7 +7,9 @@ if (!stripeSecretKey) {
   throw new Error('STRIPE_SECRET_KEY is not defined in environment variables')
 }
 
-const stripe = new Stripe(stripeSecretKey)
+const stripe = new Stripe(stripeSecretKey, {
+  apiVersion: '2024-11-20',
+})
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,7 +41,14 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: session.url })
   } catch (err: any) {
-    console.error('Stripe Error:', err.message)
+    console.error('Stripe Error - Full details:', {
+      message: err.message,
+      type: err.type,
+      code: err.code,
+      statusCode: err.statusCode,
+      raw: err.raw,
+      stack: err.stack,
+    })
     return NextResponse.json(
       { error: err.message || 'Payment processing error' },
       { status: 500 }
