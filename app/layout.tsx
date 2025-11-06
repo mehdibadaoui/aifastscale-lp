@@ -105,21 +105,11 @@ export default function RootLayout({
           fetchPriority="high"
         />
 
-        {/* CRITICAL: Preload hero VSL video for fast playback */}
-        <link
-          rel="preload"
-          href="/videos/Hero-VSL.mp4"
-          as="video"
-          type="video/mp4"
-        />
+        {/* DNS prefetch for video CDN - faster than preload, doesn't block */}
+        <link rel="dns-prefetch" href="https://aifastscale.com" />
 
-        {/* CRITICAL: Preload Stripe.js for instant checkout */}
-        <link
-          rel="preload"
-          href="https://js.stripe.com/v3/"
-          as="script"
-          crossOrigin="anonymous"
-        />
+        {/* Defer Stripe.js - load asynchronously */}
+        <link rel="dns-prefetch" href="https://js.stripe.com" />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
@@ -291,7 +281,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
-        {/* Lazy load tracking pixels after 3 seconds for performance */}
+        {/* Lazy load tracking pixels after 5 seconds + idle for maximum performance */}
         <LazyTrackingPixels />
         {children}
       </body>

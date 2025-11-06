@@ -16,11 +16,16 @@ export default function LazyTrackingPixels() {
   const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
-    // Wait 3 seconds after page is interactive before loading tracking pixels
-    // Prioritize PageSpeed score over instant tracking
+    // Wait 5 seconds + idle callback for maximum PageSpeed score
+    // Prioritize performance over instant tracking
     const timer = setTimeout(() => {
-      setShouldLoad(true)
-    }, 3000)
+      // Use requestIdleCallback if available, otherwise just load
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => setShouldLoad(true))
+      } else {
+        setShouldLoad(true)
+      }
+    }, 5000)
 
     return () => clearTimeout(timer)
   }, [])
