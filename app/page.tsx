@@ -2187,13 +2187,15 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="overflow-hidden rounded-2xl bg-black">
-                      <div className="relative" style={{ paddingBottom: '177.78%' }}>
+                      <div className="relative" style={{ paddingBottom: '177.63%' }}>
                         <video
-                          className="absolute inset-0 h-full w-full object-contain bg-black"
+                          className="absolute inset-0 h-full w-full object-cover bg-black"
                           controls
                           playsInline
                           preload="metadata"
                           poster={v.posterSrc}
+                          width="608"
+                          height="1080"
                         >
                           <source src={v.videoSrc} type="video/mp4" />
                           Your browser does not support the video tag.
