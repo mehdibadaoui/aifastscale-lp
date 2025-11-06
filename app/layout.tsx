@@ -97,6 +97,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://c.clarity.ms" />
         <link rel="dns-prefetch" href="https://js.stripe.com" />
 
+        {/* CRITICAL: Preconnect to Stripe API for instant checkout */}
+        <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
+
         {/* CRITICAL: Preload hero section resources for instant display */}
         <link
           rel="preload"

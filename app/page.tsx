@@ -402,13 +402,14 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Redirect to Stripe hosted checkout
+  // Redirect to Stripe hosted checkout - OPTIMIZED FOR SPEED
   const handleCheckout = async (ctaLocation: string) => {
     // Set loading state IMMEDIATELY for instant visual feedback
     setCheckoutLoading(ctaLocation)
 
-    // Track button click
-    trackFullCTAClick(ctaLocation)
+    // Fire tracking asynchronously WITHOUT blocking the redirect
+    // Use setTimeout to defer tracking to next event loop tick
+    setTimeout(() => trackFullCTAClick(ctaLocation), 0)
 
     try {
       const response = await fetch('/api/create-checkout-session', {
