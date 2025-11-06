@@ -364,15 +364,15 @@ export default function SocialProofNotifications() {
         key={currentNotification.id}
         className="pointer-events-auto animate-in slide-in-from-left-5 fade-in duration-500"
       >
-        <div className="flex items-center gap-3 rounded-2xl border-2 border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-transparent p-4 shadow-2xl backdrop-blur-md">
+        <div className="flex items-center gap-3 rounded-2xl border-2 border-amber-400/50 bg-white p-4 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-xl">
           {/* Icon */}
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600">
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-lg">
             {currentNotification.icon}
           </div>
 
           {/* Message */}
           <div className="flex-1">
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-semibold text-gray-900">
               {currentNotification.message}
             </p>
           </div>
