@@ -8,7 +8,7 @@ if (!stripeSecretKey) {
 }
 
 const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2024-11-20',
+  apiVersion: '2024-11-20' as any, // Type assertion needed due to incorrect Stripe SDK v19.1.0 types
 })
 
 export async function POST(req: NextRequest) {
