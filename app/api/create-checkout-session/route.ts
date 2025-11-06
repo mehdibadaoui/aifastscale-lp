@@ -7,9 +7,7 @@ if (!stripeSecretKey) {
   throw new Error('STRIPE_SECRET_KEY is not defined in environment variables')
 }
 
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2024-11-20' as any, // Type assertion needed due to incorrect Stripe SDK v19.1.0 types
-})
+const stripe = new Stripe(stripeSecretKey)
 
 export async function POST(req: NextRequest) {
   try {
