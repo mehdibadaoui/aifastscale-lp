@@ -201,7 +201,41 @@ export default function RefundPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                7. Prohibited Activities
+                7. Digital Product & Instant Access Notice
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Important for EU Customers:</strong> The 7 Minute AgentClone Course is a digital product with instant access. By purchasing and accessing the course, you expressly agree to immediate delivery and acknowledge that you waive your right to the statutory 14-day cooling-off period under EU Consumer Rights Directive 2011/83/EU.
+              </p>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Why?</strong> Digital products with instant access are exempt from the cooling-off period once you begin downloading or streaming content. Since you receive immediate access to all course materials, the statutory withdrawal right does not apply.
+              </p>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Our Guarantee is Better:</strong> Even though we're exempt from the EU cooling-off period, we voluntarily offer a superior 30-day money-back guarantee with no questions asked—giving you 2x more time than the statutory requirement.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                8. Stripe Refund Processing
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                All refunds are processed securely through Stripe, Inc., our PCI-DSS Level 1 certified payment processor. When you request a refund:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>We initiate the refund through Stripe's secure system</li>
+                <li>Stripe reverses the original charge to your payment method</li>
+                <li>Your bank/card issuer processes the refund (5-10 business days typically)</li>
+                <li>The refund appears as a credit on your statement (not a new transaction)</li>
+                <li>For questions about refund timing, contact your card issuer</li>
+              </ul>
+              <p className="leading-relaxed text-gray-700">
+                <strong>Note:</strong> We cannot expedite your bank's processing time, but we process all refunds on our end within 1-2 business days.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                9. Prohibited Activities
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 While we offer a generous refund policy, we do not tolerate
@@ -228,30 +262,37 @@ export default function RefundPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                8. Chargebacks
+                10. Chargebacks & Payment Disputes
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>
-                  Please contact us before initiating a chargeback.
+                  Please contact us at support@aifastscale.com before initiating a chargeback.
                 </strong>{' '}
                 Chargebacks are costly for small businesses and should be a last
                 resort.
               </p>
               <p className="mb-4 leading-relaxed text-gray-700">
-                If you have any issues with your purchase, our support team is
+                <strong>We resolve 95% of issues within 24 hours.</strong> If you have any concerns with your purchase, our support team is
                 here to help. We respond quickly and will resolve any legitimate
-                concerns immediately.
+                concerns immediately—often faster than a chargeback process.
               </p>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Chargeback Consequences:</strong> If a chargeback is initiated without first contacting us:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>Your account will be immediately suspended</li>
+                <li>We will dispute the chargeback with evidence of our refund policy</li>
+                <li>Repeated fraudulent chargebacks may be reported to payment fraud networks</li>
+                <li>You may be permanently banned from future purchases</li>
+              </ul>
               <p className="leading-relaxed text-gray-700">
-                If a chargeback is initiated without first contacting us, we
-                reserve the right to dispute the chargeback and provide evidence
-                of our refund policy to your bank.
+                <strong>Legitimate chargebacks</strong> (unauthorized card use, etc.) are always honored immediately.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                9. Questions or Concerns?
+                11. Questions or Concerns?
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We're here to help! If you have any questions about this refund
@@ -259,15 +300,13 @@ export default function RefundPolicy() {
                 hesitate to reach out.
               </p>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Our goal is your success. If something isn't working for you or
-                you're having trouble with the course, let us know—we may be
-                able to help before you decide to request a refund.
+                <strong>Contact us before requesting a refund—we may be able to help!</strong> Many issues can be resolved with a quick email. Our goal is your success, not keeping your $37.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                10. Contact Information
+                12. Contact Information
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 To request a refund or ask questions about this policy:

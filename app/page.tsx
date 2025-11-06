@@ -28,6 +28,12 @@ import {
   Instagram,
   Linkedin,
   Twitter,
+  Laptop,
+  Globe,
+  Camera,
+  RefreshCw,
+  Smartphone,
+  Headphones,
   Youtube,
   Play,
   Pause,
@@ -583,64 +589,54 @@ export default function AgentLandingPage() {
 
   const faqs = [
     {
-      q: 'Do I need any technical skills or video experience?',
-      a: 'Zero. If you can take a photo with your phone, you can do this. The system guides you step-by-step through everything. Most agents create their first professional video in under 10 minutes on their first try.',
+      q: 'Do I need technical skills or video editing experience?',
+      a: 'Absolutely not. The 7-Minute AgentClone is specifically designed for real estate professionals with zero technical background. If you can take a photo with your smartphone, you can create professional AI videos. Our step-by-step system guides you through each click—most agents create their first high-converting video in under 10 minutes on their very first attempt. No software downloads, no learning curve.',
+      icon: 'Laptop',
     },
     {
-      q: 'Will the AI video look fake or robotic?',
-      a: 'Not at all. Our AgentClone technology preserves your natural features, expressions, and speech patterns. Clients consistently tell our users they thought it was a real recording. The pacing is human, the lip-sync is flawless, and the voice sounds authentically you.',
+      q: 'How quickly can I start generating leads with this?',
+      a: 'You can create your first AI video within 7 minutes of accessing the course and start getting leads the same day. Many agents report receiving 5-15 qualified buyer/seller inquiries within their first week. The system is designed for immediate implementation—upload a photo, follow the blueprint, and your professional talking AI video is ready to post on social media and start attracting leads instantly.',
+      icon: 'Zap',
     },
     {
-      q: 'Do I need to film myself or record audio?',
-      a: 'No filming or recording required. Just upload one clear photo of yourself, and the AI handles everything - script generation, voice synthesis, and video creation. You never have to be on camera or use a microphone.',
+      q: 'Will this work for my specific real estate market?',
+      a: 'Yes. Whether you\'re in Dubai, Abu Dhabi, the USA, or anywhere globally, AI talking videos work universally. The psychology of trust and engagement is the same everywhere—people want to see and hear from real agents, and AI videos let you scale your personal presence 24/7. We have successful students across UAE, Saudi Arabia, USA, Canada, UK, and 50+ countries.',
+      icon: 'Globe',
     },
     {
-      q: 'Is this compliant with MLS rules and broker regulations?',
-      a: 'Yes, 100%. We include a comprehensive broker compliance overlay kit with all required disclosures, watermarks, and export templates that meet MLS and NAR guidelines. We worked with real estate attorneys to ensure full compliance.',
+      q: 'What if I\'m camera-shy or don\'t like being on video?',
+      a: 'That\'s exactly why this system exists. You don\'t film yourself—you simply upload ONE photo (even a professional headshot works), and the AI creates a natural, professional talking video of you. No awkward filming, no retakes, no expensive videographers. It\'s perfect for agents who want the power of video marketing without the discomfort of being on camera.',
+      icon: 'Camera',
     },
     {
-      q: 'How long does it actually take to create a video?',
-      a: 'The AI generation process takes 3-5 minutes. Adding your personal touches, captions, and exports takes another 2-5 minutes. Total time: 7-10 minutes from start to posting. Most agents batch-create multiple videos in one sitting.',
+      q: 'How is this different from expensive video marketing agencies?',
+      a: 'Traditional video marketing costs $500-$2,000 per video and requires scheduling, filming, editing, and weeks of back-and-forth. With the 7-Minute AgentClone, you create unlimited professional videos for a one-time $37 investment. No monthly fees, no per-video costs, no waiting. You control everything and can create a new video whenever you need one—whether that\'s daily, weekly, or for every new listing.',
+      icon: 'DollarSign',
     },
     {
-      q: "What if I'm not tech-savvy or hate learning new software?",
-      a: 'This was designed for agents who hate tech. The interface is simpler than Instagram. We provide video walkthroughs, templates, and done-for-you prompts. If you can order an Uber, you can master this system.',
+      q: 'Do I get updates if AI technology improves?',
+      a: 'Yes! You get lifetime access with free monthly updates. As AI video technology evolves and we discover new techniques, templates, and workflows, you\'ll automatically receive all updates at no additional cost. Your $37 investment today gives you access to future improvements forever.',
+      icon: 'RefreshCw',
     },
     {
-      q: 'Can I use this for luxury listings and high-end properties?',
-      a: 'Absolutely. Many of our top users specialize in luxury real estate. The professional quality makes it perfect for premium properties. You can customize everything - tone, background, branding - to match your luxury positioning.',
+      q: 'What if this doesn\'t work for me? Is there a guarantee?',
+      a: 'Absolutely. We offer an ironclad 30-day money-back guarantee. If you don\'t generate quality leads or see results within 30 days, simply email support@aifastscale.com and we\'ll refund every penny—no questions asked, no hassle. We\'re real estate tech specialists who use this system ourselves, and we\'re confident it will work for you.',
+      icon: 'Shield',
     },
     {
-      q: 'Will this work in my specific market or niche?',
-      a: "Yes. Whether you're in residential, commercial, luxury, new construction, or rentals - the system adapts. We have successful users in 47 countries selling everything from starter homes to $10M+ estates. The principles of attention and trust work everywhere.",
+      q: 'How much time will this take each week?',
+      a: '7 minutes per video. That\'s it. You can create a week\'s worth of content (5-7 videos) in under an hour on Sunday evening, schedule them out, and watch the leads roll in all week while you focus on showing properties and closing deals. This is about working smarter, not harder.',
+      icon: 'Clock',
     },
     {
-      q: "What if I don't get any leads or results?",
-      a: "30-day full money-back guarantee, no questions asked. You keep all the templates, training, and bonuses even if you refund. We're that confident you'll see results. Over 500+ agents are currently using this system profitably.",
+      q: 'Can I really use just my phone, or do I need special equipment?',
+      a: 'Your smartphone is all you need—iPhone or Android, doesn\'t matter. No ring lights, no microphones, no green screens, no fancy cameras. The entire process works from your phone or computer browser. We\'ve intentionally designed this to be accessible for every agent, regardless of technical resources.',
+      icon: 'Smartphone',
     },
     {
-      q: 'Do I need expensive equipment or subscriptions?',
-      a: 'No additional costs. Everything works on your phone or computer. No expensive cameras, lighting, microphones, or ongoing software subscriptions. Just the one-time $37 investment gets you lifetime access to everything.',
-    },
-    {
-      q: 'How is this different from hiring a video editor or production company?',
-      a: 'Video production companies charge $500-2000 per video and take days or weeks. With AgentClone, you create unlimited videos yourself in minutes for a one-time $37. You control the content, timing, and messaging. No waiting, no revisions, no ongoing costs.',
-    },
-    {
-      q: 'Can I create videos in multiple languages?',
-      a: 'Yes. The AI supports 25+ languages including Spanish, Mandarin, French, Arabic, and more. Perfect if you serve multilingual markets. Create once in English, export in Spanish - same professional quality in both languages.',
-    },
-    {
-      q: 'What kind of results are agents actually getting?',
-      a: 'Results vary, but the pattern is consistent: more engagement, more DMs, more qualified leads. Average users report 3-10x increase in inbound inquiries within the first 30 days. Some close deals directly from video leads within the first week.',
-    },
-    {
-      q: 'Is there a limit on how many videos I can create?',
-      a: 'Zero limits. Create unlimited videos forever. Daily, weekly, for every listing, for every market update - as many as you want. Your $37 investment never expires and never requires renewal.',
-    },
-    {
-      q: 'What if I need help or get stuck?',
-      a: "Full access to our private support community, video tutorials, and template library. Most questions are answered within 2 hours. Plus the training includes troubleshooting guides for every possible scenario. You're never left alone.",
+      q: 'What kind of support do I get after purchase?',
+      a: 'You get instant access to our comprehensive step-by-step video training, downloadable templates, copy-paste scripts, and email support at support@aifastscale.com. Most agents never need support because the system is so straightforward, but if you get stuck, we\'re here to help. Average response time is under 24 hours.',
+      icon: 'Headphones',
     },
   ]
 
@@ -731,35 +727,77 @@ export default function AgentLandingPage() {
     question: string
     answer: string
     index: number
+    icon: string
   }
 
   const FAQItem: React.FC<FAQItemProps> = memo(
-    ({ question, answer, index }) => {
+    ({ question, answer, index, icon }) => {
       const isOpen = openFAQ === index
+
+      // Icon mapping
+      const iconMap: Record<string, React.ReactNode> = {
+        Laptop: <Laptop className="h-5 w-5 md:h-6 md:w-6" />,
+        Zap: <Zap className="h-5 w-5 md:h-6 md:w-6" />,
+        Globe: <Globe className="h-5 w-5 md:h-6 md:w-6" />,
+        Camera: <Camera className="h-5 w-5 md:h-6 md:w-6" />,
+        DollarSign: <DollarSign className="h-5 w-5 md:h-6 md:w-6" />,
+        RefreshCw: <RefreshCw className="h-5 w-5 md:h-6 md:w-6" />,
+        Shield: <Shield className="h-5 w-5 md:h-6 md:w-6" />,
+        Clock: <Clock className="h-5 w-5 md:h-6 md:w-6" />,
+        Smartphone: <Smartphone className="h-5 w-5 md:h-6 md:w-6" />,
+        Headphones: <Headphones className="h-5 w-5 md:h-6 md:w-6" />,
+      }
+
       return (
         <div
-          className={`rounded-2xl border-2 border-gray-300 bg-white transition-all hover:border-amber-500/50 ${tilt}`}
+          className={`group rounded-2xl border-2 transition-all ${
+            isOpen
+              ? 'border-amber-500 bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg'
+              : 'border-gray-200 bg-white hover:border-amber-400/50 hover:shadow-md'
+          }`}
         >
           <button
             onClick={() => setOpenFAQ(isOpen ? null : index)}
-            className="flex w-full items-start justify-between gap-3 p-4 text-left md:p-6"
+            className="flex w-full items-center gap-4 p-5 text-left transition-all md:p-6"
           >
-            <h3 className="font-serif flex-1 text-sm leading-tight font-bold text-gray-900 md:text-xl">
+            {/* Icon with gradient background */}
+            <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-all md:h-12 md:w-12 ${
+              isOpen
+                ? 'bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-white shadow-lg'
+                : 'bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600 group-hover:from-amber-200 group-hover:to-orange-200'
+            }`}>
+              {iconMap[icon]}
+            </div>
+
+            {/* Question */}
+            <h3 className="font-serif flex-1 text-base font-bold leading-tight text-gray-900 md:text-xl">
               {question}
             </h3>
-            <div className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full border-2 border-amber-500 bg-amber-400/20 md:h-8 md:w-8">
-              <span className="text-lg font-black text-amber-600 md:text-xl">
+
+            {/* Expand/Collapse Icon */}
+            <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all md:h-9 md:w-9 ${
+              isOpen
+                ? 'bg-gradient-to-br from-amber-400 to-amber-600 text-white'
+                : 'bg-amber-100 text-amber-600 group-hover:bg-amber-200'
+            }`}>
+              <span className="text-xl font-black md:text-2xl">
                 {isOpen ? '−' : '+'}
               </span>
             </div>
           </button>
+
+          {/* Answer */}
           <div
-            className={`grid transition-all duration-300 ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-300 ease-in-out ${
+              isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+            }`}
           >
-            <div className="overflow-hidden px-4 pb-4 md:px-6 md:pb-6">
-              <p className="text-xs leading-relaxed text-gray-700 md:text-lg">
-                {answer}
-              </p>
+            <div className="overflow-hidden">
+              <div className="border-t border-amber-200/50 px-5 pb-5 pt-4 md:px-6 md:pb-6 md:pt-5">
+                <p className="text-sm leading-relaxed text-gray-700 md:text-base md:leading-relaxed">
+                  {answer}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -2705,18 +2743,24 @@ export default function AgentLandingPage() {
       </section>
 
       {/* FAQ - LIGHT */}
-      <section className="relative bg-white py-10 text-black md:py-20">
+      <section className="relative bg-gradient-to-b from-white via-amber-50/30 to-white py-12 text-black md:py-24">
         <div className="mx-auto max-w-5xl px-4 md:px-6">
-          <Card>
-            <h2 className="font-serif mb-8 text-center text-2xl font-black md:mb-10 md:text-5xl">
-              Common Questions
+          <div className="mb-12 text-center md:mb-16">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-2 text-sm font-bold text-amber-900 md:px-6 md:py-2.5 md:text-base">
+              <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
+              Got Questions? We've Got Answers
+            </div>
+            <h2 className="font-serif mb-4 bg-gradient-to-r from-gray-900 via-amber-900 to-gray-900 bg-clip-text text-3xl font-black text-transparent md:text-5xl lg:text-6xl">
+              Everything You Need to Know
             </h2>
-          </Card>
+            <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
+              Clear, honest answers to help you make the right decision for your
+              real estate business
+            </p>
+          </div>
           <div className="space-y-3 md:space-y-4">
             {faqs.map((f, i) => (
-              <Card key={i}>
-                <FAQItem question={f.q} answer={f.a} index={i} />
-              </Card>
+              <FAQItem key={i} question={f.q} answer={f.a} index={i} icon={f.icon} />
             ))}
           </div>
         </div>

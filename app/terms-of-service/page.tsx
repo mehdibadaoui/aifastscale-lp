@@ -80,22 +80,60 @@ export default function TermsOfService() {
               <h2 className="mb-4 text-2xl font-black text-gray-900">
                 3. Purchase and Payment
               </h2>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                One-Time Payment (No Recurring Charges)
+              </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Payment Processing:</strong> All payments are processed
-                securely through Stripe. By making a purchase, you agree to
-                provide current, complete, and accurate purchase and account
-                information.
+                <strong>IMPORTANT:</strong> This is a ONE-TIME PAYMENT ONLY. You will be charged only ONCE for $37 USD (or current pricing). There are NO recurring charges, NO monthly subscriptions, NO hidden fees. You pay once and get lifetime access forever.
               </p>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Payment Processing
+              </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Pricing:</strong> Prices are subject to change without
-                notice. The price applicable to your purchase is the price
-                displayed at the time of checkout.
+                All payments are processed securely through Stripe, Inc., a PCI-DSS Level 1 certified payment processor. By making a purchase, you agree to:
               </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>Provide current, complete, and accurate purchase and account information</li>
+                <li>Stripe's Terms of Service: <a href="https://stripe.com/legal/consumer" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">https://stripe.com/legal/consumer</a></li>
+                <li>Your payment card information is transmitted directly to Stripe (we NEVER see your full card details)</li>
+                <li>You authorize us to charge the amount displayed at checkout to your provided payment method</li>
+              </ul>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Instant Digital Delivery
+              </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Access:</strong> Upon successful payment, you will
-                receive immediate access to the course materials via email and
-                your account dashboard.
+                This is a DIGITAL PRODUCT with instant delivery. Upon successful payment confirmation:
               </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>You receive immediate access to all course materials (within 5 minutes)</li>
+                <li>Access link sent to your email address</li>
+                <li>Login credentials created automatically</li>
+                <li>No physical products will be shipped</li>
+                <li>No waiting period - start learning immediately</li>
+              </ul>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Pricing & Currency
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Current Price:</strong> $37 USD (limited time offer, may increase to $97 USD). All prices are in U.S. Dollars (USD). The price applicable to your purchase is the price displayed at the time of checkout completion. We reserve the right to change pricing at any time without prior notice (existing customers are grandfathered at their purchase price).
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Failed Payments & Declined Cards
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                If your payment fails or is declined:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>You will NOT be charged</li>
+                <li>You will NOT receive access to the course</li>
+                <li>Please contact your card issuer or try a different payment method</li>
+                <li>Contact support@aifastscale.com if you continue experiencing issues</li>
+              </ul>
             </section>
 
             <section className="mb-8">
@@ -266,7 +304,27 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                12. Termination
+                12. Third-Party Dependencies & AI Tools
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Important Notice:</strong> This course teaches you to use third-party AI platforms and tools (such as HeyGen, ElevenLabs, D-ID, Synthesia, or similar services). You acknowledge and agree that:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>These AI platforms are independent third-party services NOT owned or controlled by AI FastScale</li>
+                <li>You are responsible for complying with each AI platform's Terms of Service and pricing</li>
+                <li>AI platforms may change their features, pricing, or terms at any time</li>
+                <li>If an AI platform discontinues service, we will provide alternative solutions but cannot guarantee identical functionality</li>
+                <li>You may need separate subscriptions to AI platforms (which are not included in the $37 course price)</li>
+                <li>We are not responsible for any costs, changes, or issues with third-party AI platforms</li>
+              </ul>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Course Updates:</strong> If AI tools used in the course become unavailable, we will update training materials to reflect current best alternatives at no additional cost to you.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                13. Termination
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We may terminate or suspend your account immediately, without
@@ -277,16 +335,38 @@ export default function TermsOfService() {
                 <li>Fraudulent or illegal activity</li>
                 <li>Sharing course materials without permission</li>
                 <li>Abusive behavior toward staff or other users</li>
+                <li>Chargeback abuse or payment fraud</li>
               </ul>
               <p className="leading-relaxed text-gray-700">
                 Upon termination, your right to access course materials ceases
-                immediately.
+                immediately. Lifetime access is contingent on compliance with these Terms.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                13. Governing Law
+                14. Force Majeure
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                We shall not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, including but not limited to:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>Acts of God (natural disasters, pandemics, extreme weather)</li>
+                <li>War, terrorism, riots, or civil unrest</li>
+                <li>Government actions, regulations, or restrictions</li>
+                <li>Internet service provider failures or network outages</li>
+                <li>Third-party platform outages (Stripe, hosting providers, AI tools)</li>
+                <li>Cyberattacks, DDoS attacks, or hacking attempts</li>
+                <li>Power failures or telecommunications failures</li>
+              </ul>
+              <p className="leading-relaxed text-gray-700">
+                In such events, we will make reasonable efforts to restore service and notify affected users. Performance obligations will be suspended for the duration of the force majeure event.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                15. Governing Law
               </h2>
               <p className="leading-relaxed text-gray-700">
                 These Terms shall be governed by and construed in accordance
@@ -297,24 +377,42 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                14. Dispute Resolution
+                16. Dispute Resolution & Arbitration
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Any disputes arising from these Terms or your use of our service
-                shall be resolved through:
+                <strong>Informal Resolution First:</strong> Before filing any formal dispute, you agree to contact us at support@aifastscale.com and attempt to resolve the issue informally. We resolve 95% of disputes this way.
+              </p>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Binding Arbitration:</strong> If informal resolution fails, any disputes arising from these Terms or your use of our service shall be resolved through:
               </p>
               <ol className="mb-4 list-decimal space-y-2 pl-6 text-gray-700">
-                <li>Good faith negotiation between the parties</li>
-                <li>Mediation if negotiation fails</li>
-                <li>
-                  Binding arbitration in Miami, Florida if mediation fails
-                </li>
+                <li>Good faith negotiation between the parties (30-day period)</li>
+                <li>Mediation if negotiation fails (optional)</li>
+                <li>Binding arbitration in Miami-Dade County, Florida under the rules of the American Arbitration Association (AAA)</li>
               </ol>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>Class Action Waiver:</strong> You agree that disputes will be resolved on an individual basis only. You waive any right to participate in class action lawsuits or class-wide arbitration.
+              </p>
+              <p className="leading-relaxed text-gray-700">
+                <strong>Small Claims Court:</strong> Either party may pursue a claim in small claims court instead of arbitration if the claim qualifies.
+              </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                15. Contact Information
+                17. Severability & Entire Agreement
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                If any provision of these Terms is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary, and the remaining provisions will remain in full force and effect.
+              </p>
+              <p className="leading-relaxed text-gray-700">
+                These Terms, together with our Privacy Policy and Refund Policy, constitute the entire agreement between you and AI FastScale regarding the 7 Minute AgentClone Course and supersede all prior agreements.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                18. Contact Information
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 For questions about these Terms of Service, please contact us:
