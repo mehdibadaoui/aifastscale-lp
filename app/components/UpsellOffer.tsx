@@ -17,8 +17,17 @@ export default function UpsellOffer({
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState('')
   const [isDismissed, setIsDismissed] = useState(false)
+  const [showDownsell, setShowDownsell] = useState(false) // Track if showing downsell
 
   const handleDismiss = () => {
+    // If showing OTO ($17) and they dismiss, show downsell ($7)
+    if (!showDownsell) {
+      setShowDownsell(true)
+      setError('') // Clear any errors
+      return
+    }
+
+    // If showing downsell ($7) and they dismiss, close completely
     setIsDismissed(true)
     if (onDismiss) {
       onDismiss()
@@ -122,7 +131,7 @@ export default function UpsellOffer({
             <Sparkles className="h-8 w-8 animate-bounce text-yellow-400 md:h-10 md:w-10" />
           </div>
           <h2 className="mb-3 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-clip-text text-3xl font-black text-transparent md:mb-4 md:text-5xl">
-            WAIT! ONE-TIME OFFER
+            {showDownsell ? 'LAST CHANCE - FINAL OFFER!' : 'WAIT! ONE-TIME OFFER'}
           </h2>
           <p className="mx-auto max-w-3xl text-lg font-bold text-gray-200 md:text-2xl">
             Add The <span className="text-yellow-400">$10M Creator Blueprint</span> For Just ONE CLICK
@@ -132,10 +141,11 @@ export default function UpsellOffer({
           </p>
         </div>
 
-        {/* Offer Options */}
-        <div className="mb-6 grid gap-4 md:mb-8 md:grid-cols-2 md:gap-6">
-          {/* $17 Premium Offer */}
-          <div className="relative overflow-hidden rounded-xl border-2 border-yellow-500/50 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6">
+        {/* Single Offer (OTO or Downsell) */}
+        <div className="mb-6 flex justify-center md:mb-8">
+          {!showDownsell ? (
+            /* $17 Premium Offer (OTO) */
+            <div className="relative overflow-hidden rounded-xl border-2 border-yellow-500/50 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 max-w-md w-full">
             <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-yellow-500/20 blur-2xl"></div>
             <div className="relative">
               <div className="mb-3 flex items-center gap-2">
@@ -195,9 +205,9 @@ export default function UpsellOffer({
               </button>
             </div>
           </div>
-
-          {/* $7 Starter Offer */}
-          <div className="relative overflow-hidden rounded-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-500/10 to-purple-500/10 p-6">
+          ) : (
+            /* $7 Starter Offer (Downsell) */
+            <div className="relative overflow-hidden rounded-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-500/10 to-purple-500/10 p-6 max-w-md w-full">
             <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-blue-500/20 blur-2xl"></div>
             <div className="relative">
               <div className="mb-3 flex items-center gap-2">
@@ -257,6 +267,7 @@ export default function UpsellOffer({
               </button>
             </div>
           </div>
+          )}
         </div>
 
         {/* Error Message */}
@@ -276,9 +287,10 @@ export default function UpsellOffer({
         {/* Skip Button */}
         <button
           onClick={handleDismiss}
-          className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-3 text-base font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300"
+          disabled={isProcessing}
+          className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-3 text-base font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          No thanks, I'll stick with just the course
+          {showDownsell ? "No thanks, I don't want this final offer" : "No thanks, show me a lower price option"}
         </button>
       </div>
     </div>
