@@ -344,7 +344,7 @@ export default function UpsellOffer({
             <button
               onClick={handleDismiss}
               disabled={isProcessing}
-              className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-4 text-lg font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mx-auto block text-xs text-gray-600 underline hover:text-gray-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-3"
             >
               No thanks, just let me download my 7-Minute AgentClone
             </button>
@@ -533,7 +533,7 @@ export default function UpsellOffer({
             <button
               onClick={handleDismiss}
               disabled={isProcessing}
-              className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-4 text-lg font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mx-auto block text-xs text-gray-600 underline hover:text-gray-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-3"
             >
               No thanks, take me to my AgentClone download
             </button>
