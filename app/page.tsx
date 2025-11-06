@@ -36,7 +36,6 @@ import {
   Maximize,
 } from 'lucide-react'
 import { trackFullCTAClick } from './utils/tracking'
-import EmbeddedCheckout from './components/EmbeddedCheckout'
 
 // Stripe checkout now loaded immediately for instant CTA response
 // Trade-off: +1MB bundle size for MUCH better UX (instant checkout)
@@ -2097,11 +2096,6 @@ export default function AgentLandingPage() {
             </div>
           </Card>
         </div>
-      </section>
-
-      {/* CHECKOUT SECTION */}
-      <section id="checkout-section">
-        <EmbeddedCheckout />
       </section>
 
       {/* TESTIMONIALS - LIGHT */}
