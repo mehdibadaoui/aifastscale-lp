@@ -6,11 +6,15 @@ export async function GET() {
     const stripeKey = process.env.STRIPE_SECRET_KEY
     const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID
 
+    const nodeVersion = process.version
+    const platform = process.platform
+
     if (!stripeKey) {
-      return NextResponse.json({ error: 'No Stripe key' }, { status: 500 })
+      return NextResponse.json({ error: 'No Stripe key', nodeVersion, platform }, { status: 500 })
     }
 
-    const stripe = new Stripe(stripeKey)
+    // Try with explicit empty config object
+    const stripe = new Stripe(stripeKey, {})
 
     // Test 1: List prices to see if API connection works
     const prices = await stripe.prices.list({ limit: 3 })
