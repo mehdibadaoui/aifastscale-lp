@@ -246,29 +246,29 @@ export default function UpsellOffer({
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">50+ Winning Video Scripts</p>
-                        <p className="text-gray-400 text-sm">Proven formats that get 80%+ watch time ($197 value)</p>
+                        <p className="text-white font-bold">5-Week $10M Brand Masterclass</p>
+                        <p className="text-gray-400 text-sm">Complete system: Identity, Authority, Content, AI, Mindset ($197 value)</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">Viral Hook Formulas</p>
-                        <p className="text-gray-400 text-sm">Stop the scroll in 0.5 seconds ($97 value)</p>
+                        <p className="text-white font-bold">AI Prompt Library (Copy-Paste Ready)</p>
+                        <p className="text-gray-400 text-sm">Hook Generator, DM Scripts, Weekly Planner + more ($147 value)</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">Thumbnail Templates (PSD + Canva)</p>
-                        <p className="text-gray-400 text-sm">10M+ view thumbnails you can copy ($147 value)</p>
+                        <p className="text-white font-bold">Hook Psychology System</p>
+                        <p className="text-gray-400 text-sm">Expectation → Reality → Belief formula + templates ($97 value)</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">90-Day Content Calendar</p>
-                        <p className="text-gray-400 text-sm">Never run out of content ideas ($56 value)</p>
+                        <p className="text-white font-bold">Brand Score & Content Tracker</p>
+                        <p className="text-gray-400 text-sm">Worksheets to measure authority & track results ($56 value)</p>
                       </div>
                     </div>
                   </div>
@@ -440,22 +440,22 @@ export default function UpsellOffer({
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">20 Best-Performing Video Scripts</p>
-                        <p className="text-gray-400 text-sm">The scripts that made $100K+ ($147 value)</p>
+                        <p className="text-white font-bold">Weeks 1-3: Foundation Blueprint</p>
+                        <p className="text-gray-400 text-sm">Identity, Authority & Content systems ($147 value)</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">Hook Formula Collection</p>
-                        <p className="text-gray-400 text-sm">Stop the scroll instantly ($97 value)</p>
+                        <p className="text-white font-bold">Essential AI Prompts</p>
+                        <p className="text-gray-400 text-sm">Hook Generator + DM Scripts (ready to use) ($97 value)</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="h-6 w-6 flex-shrink-0 text-green-400 mt-1" />
                       <div>
-                        <p className="text-white font-bold">Quick-Start Implementation Guide</p>
-                        <p className="text-gray-400 text-sm">Get results in 24 hours ($53 value)</p>
+                        <p className="text-white font-bold">Quick-Start Brand Worksheets</p>
+                        <p className="text-gray-400 text-sm">Get your first content live in 24 hours ($53 value)</p>
                       </div>
                     </div>
                   </div>
