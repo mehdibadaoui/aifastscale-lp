@@ -1974,7 +1974,7 @@ export default function AgentLandingPage() {
                       controls
                       playsInline
                       preload="metadata"
-                      poster="/images/mr-lucas-poster.jpg"
+                      poster="/images/mr-lucas-poster.jpg?v=3"
                     >
                       <source src="/videos/Mr-Lucas.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
@@ -2166,12 +2166,12 @@ export default function AgentLandingPage() {
               {
                 title: 'Agent Steven Video',
                 videoSrc: '/videos/Steven-c.mp4',
-                posterSrc: '/images/steven-poster.jpg?v=2',
+                posterSrc: '/images/steven-poster.jpg?v=3',
               },
               {
                 title: 'Agent Gabriel Video',
                 videoSrc: '/videos/Gabriel-c.mp4',
-                posterSrc: '/images/gabriel-poster.jpg?v=2',
+                posterSrc: '/images/gabriel-poster.jpg?v=3',
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
