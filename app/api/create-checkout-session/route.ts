@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimit } from './middleware'
 
 export async function POST(req: NextRequest) {
+  // Anti-spam/bot protection - Rate limit checkout attempts
+  const rateLimitResponse = rateLimit(req)
+  if (rateLimitResponse) {
+    return rateLimitResponse // Return 429 error if rate limited
+  }
+
   try {
     const stripeSecretKey = process.env.STRIPE_SECRET_KEY
     const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID
