@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // Simple in-memory rate limiter (for production, use Redis or Upstash)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 
-const RATE_LIMIT = 5 // Max 5 checkout attempts
+const RATE_LIMIT = 3 // Max 3 checkout attempts (prevents spam/bots)
 const WINDOW_MS = 15 * 60 * 1000 // 15 minutes
 
 export function rateLimit(req: NextRequest): NextResponse | null {
