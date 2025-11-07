@@ -71,3 +71,70 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #F4D77E 0%, #E7B93E 100%);
 }
+
+/* ========================================
+   MOBILE TOUCH OPTIMIZATION - CRITICAL FOR CVR
+   ======================================== */
+
+/* Remove iOS tap delay and highlight */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation; /* Prevents double-tap zoom on buttons */
+  user-select: none;
+}
+
+/* Larger touch targets for mobile (Apple: 44px, Android: 48px) */
+@media (max-width: 768px) {
+  button {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 24px; /* Increased from default for easier tapping */
+  }
+
+  /* Make gradient overlays non-interactive (fixes accidental tap blocking) */
+  button .absolute {
+    pointer-events: none !important;
+  }
+
+  /* Ensure button inner content is fully tappable */
+  button > div {
+    pointer-events: none; /* Only button itself should handle clicks */
+  }
+}
+
+/* Active state feedback for better UX */
+button:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Prevent text selection on buttons (cleaner UX) */
+button * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ========================================
+   VIDEO PLAYER OPTIMIZATION
+   ======================================== */
+
+/* Ensure videos load smoothly */
+video {
+  background: #000;
+  object-fit: contain; /* Show full video without cropping */
+}
+
+/* Hardware acceleration for smooth video playback */
+video {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Mobile video controls - larger touch targets */
+@media (max-width: 768px) {
+  video::-webkit-media-controls {
+    /* Larger video controls for mobile */
+  }
+}

@@ -2009,7 +2009,7 @@ export default function AgentLandingPage() {
                       className="absolute inset-0 h-full w-full object-contain bg-black"
                       controls
                       playsInline
-                      preload="metadata"
+                      preload="auto"
                       poster="/images/mr-lucas-poster.jpg?v=4"
                     >
                       <source src="/videos/Mr-Lucas.mp4" type="video/mp4" />
@@ -2201,7 +2201,7 @@ export default function AgentLandingPage() {
             {[
               {
                 title: 'Agent Steven Video',
-                videoSrc: '/videos/Steven-c.mp4',
+                videoSrc: '/videos/Steven1mb.mp4',
                 posterSrc: '/images/steven-poster.jpg?v=4',
               },
               {
@@ -2226,10 +2226,10 @@ export default function AgentLandingPage() {
                       <div className="relative" style={{ paddingBottom: '177.63%' }}>
                         <video
                           key={v.posterSrc}
-                          className="absolute inset-0 h-full w-full object-cover bg-black"
+                          className="absolute inset-0 h-full w-full object-contain bg-black"
                           controls
                           playsInline
-                          preload="metadata"
+                          preload="auto"
                           poster={v.posterSrc}
                           width="608"
                           height="1080"
@@ -2239,8 +2239,7 @@ export default function AgentLandingPage() {
                           Your browser does not support the video tag.
                         </video>
                       </div>
-                    </div>
-                  </div>
+                    </div>                  </div>
                   <div className="bg-gradient-to-t from-gray-50 to-white p-4 md:p-6">
                     <div className="mb-2 flex items-center gap-3 md:mb-3">
                       <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 md:h-12 md:w-12">
