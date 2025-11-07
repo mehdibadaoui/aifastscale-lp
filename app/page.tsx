@@ -2010,9 +2010,9 @@ export default function AgentLandingPage() {
                       controls
                       playsInline
                       preload="auto"
-                      poster="/images/mr-lucas-poster.jpg?v=4"
+                      poster="/images/mr-lucas-poster-new.jpg"
                     >
-                      <source src="/videos/Mr-Lucas.mp4" type="video/mp4" />
+                      <source src="/videos/Mr-Lucas-compressed.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
@@ -2197,17 +2197,22 @@ export default function AgentLandingPage() {
             </Card>
           </div>
 
-          <div className="mx-auto mb-8 grid max-w-6xl gap-6 md:mb-10 md:grid-cols-2 md:gap-8">
+          <div className="mx-auto mb-8 grid max-w-6xl gap-6 md:mb-10 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             {[
               {
                 title: 'Agent Steven Video',
                 videoSrc: '/videos/Steven1mb.mp4',
-                posterSrc: '/images/steven-poster.jpg?v=4',
+                posterSrc: '/images/steven-poster-new.jpg',
               },
               {
                 title: 'Agent Gabriel Video',
                 videoSrc: '/videos/Gabriel-c.mp4',
                 posterSrc: '/images/gabriel-poster.jpg?v=4',
+              },
+              {
+                title: 'Agent Nigel Video',
+                videoSrc: '/videos/Mr-Nigel-compressed.mp4',
+                posterSrc: '/images/mr-nigel-poster.jpg',
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
