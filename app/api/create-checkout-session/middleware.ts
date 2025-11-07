@@ -7,7 +7,7 @@ const RATE_LIMIT = 5 // Max 5 checkout attempts
 const WINDOW_MS = 15 * 60 * 1000 // 15 minutes
 
 export function rateLimit(req: NextRequest): NextResponse | null {
-  const ip = req.ip || req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+  const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
   const now = Date.now()
 
   const userLimit = rateLimitMap.get(ip)
