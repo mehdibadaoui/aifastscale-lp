@@ -236,11 +236,42 @@ export default function AgentLandingPage() {
       setFakeProgress(Math.min(fake * 100, 100))
     }
 
+    // CRITICAL: Buffering events for smooth playback
+    const handleWaiting = () => {
+      // Video is buffering - could show loading spinner here if needed
+      console.log('Video buffering...')
+    }
+
+    const handleCanPlayThrough = () => {
+      // Video has buffered enough to play through without stopping
+      console.log('Video ready - can play through without buffering')
+    }
+
+    const handleLoadedData = () => {
+      // First frame is loaded - video is ready to play
+      console.log('Video loaded - ready to play')
+    }
+
+    const handleError = (e: Event) => {
+      // Video failed to load
+      console.error('Video error:', e)
+    }
+
+    const handleStalled = () => {
+      // Video download has stalled (network issue)
+      console.warn('Video download stalled')
+    }
+
     // Add event listeners
     video.addEventListener('play', handlePlay)
     video.addEventListener('pause', handlePause)
     video.addEventListener('ended', handleEnded)
     video.addEventListener('timeupdate', handleTimeUpdate)
+    video.addEventListener('waiting', handleWaiting)
+    video.addEventListener('canplaythrough', handleCanPlayThrough)
+    video.addEventListener('loadeddata', handleLoadedData)
+    video.addEventListener('error', handleError)
+    video.addEventListener('stalled', handleStalled)
 
     // Cleanup
     return () => {
@@ -248,6 +279,11 @@ export default function AgentLandingPage() {
       video.removeEventListener('pause', handlePause)
       video.removeEventListener('ended', handleEnded)
       video.removeEventListener('timeupdate', handleTimeUpdate)
+      video.removeEventListener('waiting', handleWaiting)
+      video.removeEventListener('canplaythrough', handleCanPlayThrough)
+      video.removeEventListener('loadeddata', handleLoadedData)
+      video.removeEventListener('error', handleError)
+      video.removeEventListener('stalled', handleStalled)
     }
   }, [priceUnlocked])
 
@@ -1132,7 +1168,7 @@ export default function AgentLandingPage() {
                             ref={videoRef}
                             className="absolute top-0 left-0 h-full w-full bg-black object-cover"
                             playsInline
-                            preload="metadata"
+                            preload="auto"
                             poster="/images/hero-video-poster.jpg"
                             muted={videoMuted}
                           >
