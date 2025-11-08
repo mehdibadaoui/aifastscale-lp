@@ -2004,17 +2004,21 @@ export default function AgentLandingPage() {
             >
               <div className="p-3 md:p-4">
                 <div className="overflow-hidden rounded-2xl bg-black/50">
-                  <div className="relative" style={{ paddingBottom: '177.78%' }}>
-                    <video
-                      className="absolute inset-0 h-full w-full object-contain bg-black"
-                      controls
-                      playsInline
-                      preload="auto"
-                      poster="/images/mr-lucas-poster-new.jpg"
-                    >
-                      <source src="/videos/Mr-Lucas-compressed.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                  <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                    <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                      <iframe
+                        src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true&videoFoam=true"
+                        title="Mr Lucas Video"
+                        allow="autoplay; fullscreen"
+                        allowTransparency={true}
+                        frameBorder="0"
+                        scrolling="no"
+                        className="wistia_embed"
+                        name="wistia_embed"
+                        width="100%"
+                        height="100%"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2201,15 +2205,13 @@ export default function AgentLandingPage() {
             {[
               {
                 title: 'Agent Steven Video',
-                videoSrc: '/videos/Steven1mb.mp4',
-                posterSrc: '/images/steven-poster-new.jpg',
-                aspectRatio: '177.78%', // 9:16 vertical
+                wistiaId: 'k1gfuxd7uw',
+                aspectRatio: '175.83%', // 9:16 vertical (Wistia exact ratio)
               },
               {
                 title: 'Agent Gabriel Video',
-                videoSrc: '/videos/Gabriel-compressed.mp4',
-                posterSrc: '/images/gabriel-poster.jpg',
-                aspectRatio: '177.78%', // 9:16 vertical (Gabriel is square but displayed in vertical container)
+                wistiaId: 'eilfzivcqu',
+                aspectRatio: '177.22%', // 9:16 vertical (Wistia exact ratio)
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
@@ -2225,19 +2227,21 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="overflow-hidden rounded-2xl bg-black">
-                      <div className="relative" style={{ paddingBottom: v.aspectRatio }}>
-                        <video
-                          key={v.posterSrc}
-                          className="absolute inset-0 h-full w-full object-contain bg-black"
-                          controls
-                          playsInline
-                          preload="auto"
-                          poster={v.posterSrc}
-                          crossOrigin="anonymous"
-                        >
-                          <source src={v.videoSrc} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
+                      <div className="wistia_responsive_padding" style={{ padding: `${v.aspectRatio} 0 0 0`, position: 'relative' }}>
+                        <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
+                          <iframe
+                            src={`https://fast.wistia.net/embed/iframe/${v.wistiaId}?web_component=true&seo=true&videoFoam=true`}
+                            title={v.title}
+                            allow="autoplay; fullscreen"
+                            allowTransparency={true}
+                            frameBorder="0"
+                            scrolling="no"
+                            className="wistia_embed"
+                            name="wistia_embed"
+                            width="100%"
+                            height="100%"
+                          />
+                        </div>
                       </div>
                     </div>                  </div>
                   <div className="bg-gradient-to-t from-gray-50 to-white p-4 md:p-6">

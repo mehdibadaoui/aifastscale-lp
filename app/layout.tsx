@@ -113,6 +113,10 @@ export default function RootLayout({
         {/* CRITICAL: Preconnect to Stripe API for instant checkout */}
         <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
 
+        {/* Wistia Video Player - Fast, compressed, adaptive streaming */}
+        <link rel="preconnect" href="https://fast.wistia.net" />
+        <script src="https://fast.wistia.net/player.js" async></script>
+
         {/* CRITICAL: Preload hero section resources for instant display */}
         <link
           rel="preload"
