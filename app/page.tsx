@@ -2197,7 +2197,7 @@ export default function AgentLandingPage() {
             </Card>
           </div>
 
-          <div className="mx-auto mb-8 grid max-w-6xl gap-6 md:mb-10 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          <div className="mx-auto mb-8 grid max-w-6xl gap-6 md:mb-10 md:grid-cols-2 md:gap-8">
             {[
               {
                 title: 'Agent Steven Video',
@@ -2206,16 +2206,10 @@ export default function AgentLandingPage() {
                 aspectRatio: '177.78%', // 9:16 vertical
               },
               {
-                title: 'Agent Nigel Video',
+                title: 'Agent Gabriel Video',
                 videoSrc: '/videos/Mr-Nigel-compressed.mp4',
                 posterSrc: '/images/mr-nigel-poster.jpg',
                 aspectRatio: '100%', // 1:1 square
-              },
-              {
-                title: 'Agent Lucas Video',
-                videoSrc: '/videos/Mr-Lucas-compressed.mp4',
-                posterSrc: '/images/mr-lucas-poster-new.jpg',
-                aspectRatio: '177.78%', // 9:16 vertical
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
