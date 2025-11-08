@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 interface Sale {
   id: string
@@ -17,6 +18,12 @@ interface Sale {
   paymentMethod: string
 }
 
+interface ChartDataPoint {
+  date: string
+  sales: number
+  revenue: number
+}
+
 interface DashboardData {
   totalSales: number
   totalRevenue: number
@@ -30,6 +37,7 @@ interface DashboardData {
     upsell: { sales: number; revenue: number }
     downsell: { sales: number; revenue: number }
   }
+  chartData: ChartDataPoint[]
   allSales: Sale[]
   loading: boolean
 }
@@ -48,6 +56,7 @@ export default function SalesDashboard() {
       upsell: { sales: 0, revenue: 0 },
       downsell: { sales: 0, revenue: 0 },
     },
+    chartData: [],
     allSales: [],
     loading: true,
   })
@@ -56,31 +65,65 @@ export default function SalesDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [filterProduct, setFilterProduct] = useState<string>('all')
-  const [timePeriod, setTimePeriod] = useState<'today' | 'week' | 'month'>('today')
+  const [timePeriod, setTimePeriod] = useState<'today' | 'yesterday' | 'week' | 'month' | 'custom'>('today')
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
+  const [customDateRange, setCustomDateRange] = useState({ start: '', end: '' })
+  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [revenueGoal, setRevenueGoal] = useState(500) // $500 default daily goal
 
   const handleLogin = () => {
     if (password === 'mysales2024') {
       setIsAuthenticated(true)
       fetchSales()
     } else {
-      alert('Wrong password!')
+      alert('❌ Wrong password!')
     }
   }
 
-  const fetchSales = async () => {
+  const fetchSales = useCallback(async (startDate?: string, endDate?: string) => {
     setData((prev) => ({ ...prev, loading: true }))
     try {
-      const response = await fetch('/api/get-sales')
+      let url = '/api/get-sales'
+      if (startDate && endDate) {
+        url += `?startDate=${startDate}&endDate=${endDate}`
+      }
+      const response = await fetch(url)
       const result = await response.json()
       setData({
         ...result,
         loading: false,
       })
+      setLastUpdated(new Date())
     } catch (error) {
       console.error('Error fetching sales:', error)
       setData((prev) => ({ ...prev, loading: false }))
     }
+  }, [])
+
+  const applyCustomDateRange = () => {
+    if (customDateRange.start && customDateRange.end) {
+      fetchSales(customDateRange.start, customDateRange.end)
+      setShowDatePicker(false)
+      setTimePeriod('custom')
+    } else {
+      alert('⚠️ Please select both start and end dates')
+    }
   }
+
+  // Auto-refresh every 5 minutes
+  useEffect(() => {
+    if (!isAuthenticated) return
+
+    const interval = setInterval(() => {
+      if (timePeriod === 'custom' && customDateRange.start && customDateRange.end) {
+        fetchSales(customDateRange.start, customDateRange.end)
+      } else {
+        fetchSales()
+      }
+    }, 5 * 60 * 1000) // 5 minutes
+
+    return () => clearInterval(interval)
+  }, [isAuthenticated, timePeriod, customDateRange, fetchSales])
 
   const exportToCSV = () => {
     const csv = [
@@ -116,11 +159,34 @@ export default function SalesDashboard() {
     return matchesSearch && matchesProduct
   })
 
-  // Calculate comparison
+  // Calculate comparison percentages
   const todayVsYesterday =
     data.yesterday.revenue > 0
       ? ((data.today.revenue - data.yesterday.revenue) / data.yesterday.revenue) * 100
-      : 0
+      : data.today.revenue > 0 ? 100 : 0
+
+  const weekVsLastWeek = 0 // You can add this calculation if you fetch last week's data too
+
+  // Time since last update
+  const getTimeSinceUpdate = () => {
+    const seconds = Math.floor((new Date().getTime() - lastUpdated.getTime()) / 1000)
+    if (seconds < 60) return `${seconds}s ago`
+    const minutes = Math.floor(seconds / 60)
+    if (minutes < 60) return `${minutes}m ago`
+    const hours = Math.floor(minutes / 60)
+    return `${hours}h ago`
+  }
+
+  // Product distribution for pie chart
+  const productDistribution = [
+    { name: 'Main Course', value: data.products.main.sales, revenue: data.products.main.revenue, color: '#3B82F6' },
+    { name: 'Upsell', value: data.products.upsell.sales, revenue: data.products.upsell.revenue, color: '#A855F7' },
+    { name: 'Downsell', value: data.products.downsell.sales, revenue: data.products.downsell.revenue, color: '#F97316' },
+  ].filter(p => p.value > 0)
+
+  // Revenue goal progress
+  const currentRevenue = data[timePeriod === 'custom' ? 'month' : timePeriod].revenue / 100
+  const goalProgress = (currentRevenue / revenueGoal) * 100
 
   if (!isAuthenticated) {
     return (
@@ -158,38 +224,47 @@ export default function SalesDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        {/* Header with last updated */}
+        <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Sales Dashboard</h1>
-            <p className="text-white/70">Real-time analytics for your AI Fast Scale products</p>
+            <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
+              📊 Sales Dashboard
+              <span className="text-sm font-normal text-white/40 ml-2">
+                Updated {getTimeSinceUpdate()}
+              </span>
+            </h1>
+            <p className="text-white/70">Real-time analytics for AI Fast Scale products</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <button
               onClick={exportToCSV}
               className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition shadow-lg flex items-center gap-2"
             >
-              <span>📥</span> Export CSV
+              📥 Export CSV
             </button>
             <button
-              onClick={fetchSales}
+              onClick={() => fetchSales(timePeriod === 'custom' ? customDateRange.start : undefined, timePeriod === 'custom' ? customDateRange.end : undefined)}
               className="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-medium transition backdrop-blur-lg border border-white/20 flex items-center gap-2"
             >
-              <span>🔄</span> Refresh
+              🔄 Refresh
             </button>
           </div>
         </div>
 
-        {/* Time Period Selector */}
-        <div className="mb-6 flex gap-3 overflow-x-auto pb-2">
+        {/* Time Period Selector with Custom Date */}
+        <div className="mb-6 flex gap-3 overflow-x-auto pb-2 flex-wrap">
           {[
             { key: 'today', label: 'Today', icon: '📅' },
+            { key: 'yesterday', label: 'Yesterday', icon: '📆' },
             { key: 'week', label: 'Last 7 Days', icon: '📊' },
             { key: 'month', label: 'Last 30 Days', icon: '📈' },
           ].map((period) => (
             <button
               key={period.key}
-              onClick={() => setTimePeriod(period.key as any)}
+              onClick={() => {
+                setTimePeriod(period.key as any)
+                fetchSales()
+              }}
               className={`px-6 py-3 rounded-xl font-medium transition whitespace-nowrap ${
                 timePeriod === period.key
                   ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
@@ -199,40 +274,113 @@ export default function SalesDashboard() {
               {period.icon} {period.label}
             </button>
           ))}
+          <button
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className={`px-6 py-3 rounded-xl font-medium transition whitespace-nowrap ${
+              timePeriod === 'custom'
+                ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
+                : 'bg-white/10 text-white/80 hover:bg-white/20 border border-white/20'
+            }`}
+          >
+            📅 Custom Range
+          </button>
         </div>
 
-        {/* Main Stats */}
+        {/* Custom Date Picker */}
+        {showDatePicker && (
+          <div className="mb-6 bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+            <h3 className="text-white font-semibold mb-4">📅 Select Custom Date Range</h3>
+            <div className="flex gap-4 flex-wrap items-end">
+              <div className="flex-1 min-w-[200px]">
+                <label className="text-white/70 text-sm mb-2 block">Start Date</label>
+                <input
+                  type="date"
+                  value={customDateRange.start}
+                  onChange={(e) => setCustomDateRange({ ...customDateRange, start: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div className="flex-1 min-w-[200px]">
+                <label className="text-white/70 text-sm mb-2 block">End Date</label>
+                <input
+                  type="date"
+                  value={customDateRange.end}
+                  onChange={(e) => setCustomDateRange({ ...customDateRange, end: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <button
+                onClick={applyCustomDateRange}
+                className="px-8 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:from-purple-700 hover:to-blue-700 transition shadow-lg"
+              >
+                ✓ Apply
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Revenue Goal */}
+        <div className="mb-6 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl rounded-2xl p-6 border border-yellow-500/30">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h3 className="text-white font-semibold text-lg">🎯 Revenue Goal ({timePeriod === 'today' || timePeriod === 'yesterday' ? 'Daily' : timePeriod === 'week' ? 'Weekly' : 'Monthly'})</h3>
+              <p className="text-white/60 text-sm mt-1">
+                ${currentRevenue.toFixed(2)} / ${revenueGoal.toFixed(2)}
+                {goalProgress >= 100 ? ' 🎉 Goal Achieved!' : ` (${Math.floor((revenueGoal - currentRevenue) / (data.avgOrderValue / 100))} more sales needed)`}
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-bold text-white">{Math.min(goalProgress, 100).toFixed(0)}%</div>
+              <input
+                type="number"
+                value={revenueGoal}
+                onChange={(e) => setRevenueGoal(Number(e.target.value))}
+                className="mt-2 px-3 py-1 rounded-lg bg-white/10 border border-white/20 text-white text-sm w-24 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                placeholder="Goal"
+              />
+            </div>
+          </div>
+          <div className="h-4 bg-white/10 rounded-full overflow-hidden">
+            <div
+              className={`h-full transition-all duration-500 ${
+                goalProgress >= 100 ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-gradient-to-r from-yellow-500 to-orange-500'
+              }`}
+              style={{ width: `${Math.min(goalProgress, 100)}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Main Stats with Comparisons */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {/* Today's Sales */}
+          {/* Sales */}
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 shadow-xl border border-white/20">
             <div className="flex items-center justify-between mb-2">
               <p className="text-blue-100 text-sm font-medium">
-                {timePeriod === 'today' ? "Today's Sales" : timePeriod === 'week' ? 'Week Sales' : 'Month Sales'}
+                {timePeriod === 'today' ? "Today's Sales" : timePeriod === 'yesterday' ? "Yesterday's Sales" : timePeriod === 'week' ? 'Week Sales' : timePeriod === 'month' ? 'Month Sales' : 'Custom Range Sales'}
               </p>
-              <span className="text-3xl">🛍️</span>
+              <span className="text-3xl">🛒</span>
             </div>
             <p className="text-4xl font-bold text-white mb-1">
-              {data[timePeriod].sales}
+              {data[timePeriod === 'custom' ? 'month' : timePeriod].sales}
             </p>
-            <p className="text-blue-100 text-sm">
-              {timePeriod === 'today' && todayVsYesterday !== 0 && (
-                <span className={todayVsYesterday > 0 ? 'text-green-300' : 'text-red-300'}>
-                  {todayVsYesterday > 0 ? '↗' : '↘'} {Math.abs(todayVsYesterday).toFixed(1)}% vs yesterday
-                </span>
-              )}
-            </p>
+            {timePeriod === 'today' && todayVsYesterday !== 0 && (
+              <div className={`flex items-center gap-1 text-sm ${todayVsYesterday > 0 ? 'text-green-300' : 'text-red-300'}`}>
+                <span>{todayVsYesterday > 0 ? '📈' : '📉'}</span>
+                <span>{todayVsYesterday > 0 ? '+' : ''}{todayVsYesterday.toFixed(1)}% vs yesterday</span>
+              </div>
+            )}
           </div>
 
-          {/* Today's Revenue */}
+          {/* Revenue */}
           <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 shadow-xl border border-white/20">
             <div className="flex items-center justify-between mb-2">
               <p className="text-green-100 text-sm font-medium">
-                {timePeriod === 'today' ? "Today's Revenue" : timePeriod === 'week' ? 'Week Revenue' : 'Month Revenue'}
+                {timePeriod === 'today' ? "Today's Revenue" : timePeriod === 'yesterday' ? "Yesterday's Revenue" : timePeriod === 'week' ? 'Week Revenue' : timePeriod === 'month' ? 'Month Revenue' : 'Custom Revenue'}
               </p>
               <span className="text-3xl">💰</span>
             </div>
             <p className="text-4xl font-bold text-white mb-1">
-              ${(data[timePeriod].revenue / 100).toFixed(2)}
+              ${(data[timePeriod === 'custom' ? 'month' : timePeriod].revenue / 100).toFixed(2)}
             </p>
             <p className="text-green-100 text-sm">Gross revenue</p>
           </div>
@@ -260,79 +408,162 @@ export default function SalesDashboard() {
           </div>
         </div>
 
-        {/* Product Breakdown */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Product Breakdown</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Main Product */}
-            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-2xl">
-                  🎯
-                </div>
-                <div>
-                  <p className="text-white/60 text-sm">Main Course ($37)</p>
-                  <p className="text-white font-bold text-xl">{data.products.main.sales} sales</p>
-                </div>
-              </div>
-              <div className="text-3xl font-bold text-white">
-                ${(data.products.main.revenue / 100).toFixed(2)}
-              </div>
-              <div className="mt-2 h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-blue-500"
-                  style={{
-                    width: `${data.totalRevenue > 0 ? (data.products.main.revenue / data.totalRevenue) * 100 : 0}%`,
-                  }}
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Revenue Chart */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              📈 Revenue Trend (Last 7 Days)
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={data.chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                <XAxis dataKey="date" stroke="#fff" fontSize={12} />
+                <YAxis stroke="#fff" fontSize={12} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
+                  labelStyle={{ color: '#fff' }}
                 />
-              </div>
-            </div>
+                <Legend />
+                <Line type="monotone" dataKey="revenue" stroke="#10B981" strokeWidth={3} name="Revenue ($)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
 
-            {/* Upsell */}
-            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-2xl">
-                  ⬆️
-                </div>
-                <div>
-                  <p className="text-white/60 text-sm">Upsell ($17)</p>
-                  <p className="text-white font-bold text-xl">{data.products.upsell.sales} sales</p>
-                </div>
-              </div>
-              <div className="text-3xl font-bold text-white">
-                ${(data.products.upsell.revenue / 100).toFixed(2)}
-              </div>
-              <div className="mt-2 h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-purple-500"
-                  style={{
-                    width: `${data.totalRevenue > 0 ? (data.products.upsell.revenue / data.totalRevenue) * 100 : 0}%`,
-                  }}
+          {/* Sales Chart */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              📊 Sales Count (Last 7 Days)
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={data.chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                <XAxis dataKey="date" stroke="#fff" fontSize={12} />
+                <YAxis stroke="#fff" fontSize={12} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
+                  labelStyle={{ color: '#fff' }}
                 />
-              </div>
-            </div>
+                <Legend />
+                <Bar dataKey="sales" fill="#3B82F6" name="Sales" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
 
-            {/* Downsell */}
-            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-2xl">
-                  ⬇️
-                </div>
-                <div>
-                  <p className="text-white/60 text-sm">Downsell ($7)</p>
-                  <p className="text-white font-bold text-xl">{data.products.downsell.sales} sales</p>
-                </div>
-              </div>
-              <div className="text-3xl font-bold text-white">
-                ${(data.products.downsell.revenue / 100).toFixed(2)}
-              </div>
-              <div className="mt-2 h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-orange-500"
-                  style={{
-                    width: `${data.totalRevenue > 0 ? (data.products.downsell.revenue / data.totalRevenue) * 100 : 0}%`,
-                  }}
+        {/* Product Breakdown with Pie Chart */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Pie Chart */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              🥧 Product Distribution
+            </h2>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={productDistribution}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={(entry) => `${entry.name}: ${entry.value}`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {productDistribution.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
                 />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Product Stats Cards */}
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-bold text-white mb-6">💼 Product Breakdown</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Main Product */}
+              <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-2xl">
+                    🎯
+                  </div>
+                  <div>
+                    <p className="text-white/60 text-sm">Main Course ($37)</p>
+                    <p className="text-white font-bold text-xl">{data.products.main.sales} sales</p>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">
+                  ${(data.products.main.revenue / 100).toFixed(2)}
+                </div>
+                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-blue-500 transition-all duration-500"
+                    style={{
+                      width: `${data.totalRevenue > 0 ? (data.products.main.revenue / data.totalRevenue) * 100 : 0}%`,
+                    }}
+                  />
+                </div>
+                <p className="text-white/50 text-xs mt-2">
+                  {data.totalRevenue > 0 ? ((data.products.main.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
+                </p>
+              </div>
+
+              {/* Upsell */}
+              <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-2xl">
+                    ⬆️
+                  </div>
+                  <div>
+                    <p className="text-white/60 text-sm">Upsell ($17)</p>
+                    <p className="text-white font-bold text-xl">{data.products.upsell.sales} sales</p>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">
+                  ${(data.products.upsell.revenue / 100).toFixed(2)}
+                </div>
+                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-purple-500 transition-all duration-500"
+                    style={{
+                      width: `${data.totalRevenue > 0 ? (data.products.upsell.revenue / data.totalRevenue) * 100 : 0}%`,
+                    }}
+                  />
+                </div>
+                <p className="text-white/50 text-xs mt-2">
+                  {data.totalRevenue > 0 ? ((data.products.upsell.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
+                </p>
+              </div>
+
+              {/* Downsell */}
+              <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-2xl">
+                    ⬇️
+                  </div>
+                  <div>
+                    <p className="text-white/60 text-sm">Downsell ($7)</p>
+                    <p className="text-white font-bold text-xl">{data.products.downsell.sales} sales</p>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">
+                  ${(data.products.downsell.revenue / 100).toFixed(2)}
+                </div>
+                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-orange-500 transition-all duration-500"
+                    style={{
+                      width: `${data.totalRevenue > 0 ? (data.products.downsell.revenue / data.totalRevenue) * 100 : 0}%`,
+                    }}
+                  />
+                </div>
+                <p className="text-white/50 text-xs mt-2">
+                  {data.totalRevenue > 0 ? ((data.products.downsell.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
+                </p>
               </div>
             </div>
           </div>
@@ -367,7 +598,9 @@ export default function SalesDashboard() {
         <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 overflow-hidden">
           <div className="p-6 border-b border-white/20 flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-white">All Sales</h2>
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                📋 All Sales
+              </h2>
               <p className="text-white/60 text-sm mt-1">
                 Showing {filteredSales.length} of {data.allSales.length} sales
               </p>
@@ -445,7 +678,7 @@ export default function SalesDashboard() {
 
         {/* Footer Stats */}
         <div className="mt-8 text-center text-white/40 text-sm">
-          <p>Last updated: {new Date().toLocaleString()}</p>
+          <p>Last updated: {lastUpdated.toLocaleString()} • Auto-refresh every 5 minutes</p>
         </div>
       </div>
     </div>

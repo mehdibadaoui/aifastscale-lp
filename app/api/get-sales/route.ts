@@ -24,13 +24,24 @@ const PRODUCT_TYPES: { [key: string]: string } = {
   [process.env.NEXT_PUBLIC_STRIPE_UPSELL_7_PRICE_ID!]: 'downsell',
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    // Fetch all checkout sessions from last 30 days
+    // Parse query parameters for custom date range
+    const { searchParams } = new URL(request.url)
+    const startDate = searchParams.get('startDate')
+    const endDate = searchParams.get('endDate')
+
+    // Default to last 30 days if no custom range
+    const defaultStart = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60
+    const customStart = startDate ? Math.floor(new Date(startDate).getTime() / 1000) : defaultStart
+    const customEnd = endDate ? Math.floor(new Date(endDate).getTime() / 1000) : Math.floor(Date.now() / 1000)
+
+    // Fetch all checkout sessions
     const sessions = await stripe.checkout.sessions.list({
       limit: 100,
       created: {
-        gte: Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60, // Last 30 days
+        gte: customStart,
+        lte: customEnd,
       },
       expand: ['data.line_items'],
     })
@@ -154,6 +165,34 @@ export async function GET() {
       })
       .sort((a, b) => b.timestamp - a.timestamp)
 
+    // Generate daily breakdown for charts (last 7 days)
+    const dailyData: { [key: string]: { sales: number; revenue: number } } = {}
+    const last7Days = []
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date()
+      date.setDate(date.getDate() - i)
+      date.setHours(0, 0, 0, 0)
+      const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      last7Days.push(dateStr)
+      dailyData[dateStr] = { sales: 0, revenue: 0 }
+    }
+
+    // Fill in actual sales data
+    yourSales.forEach((sale) => {
+      const saleDate = new Date(sale.created * 1000)
+      const dateStr = saleDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      if (dailyData[dateStr]) {
+        dailyData[dateStr].sales += 1
+        dailyData[dateStr].revenue += sale.amount
+      }
+    })
+
+    const chartData = last7Days.map((date) => ({
+      date,
+      sales: dailyData[date]?.sales || 0,
+      revenue: (dailyData[date]?.revenue || 0) / 100, // Convert to dollars
+    }))
+
     return NextResponse.json({
       // Overall stats
       totalSales: yourSales.length,
@@ -194,6 +233,9 @@ export async function GET() {
         },
       },
 
+      // Chart data
+      chartData: chartData,
+
       // All sales
       allSales: formattedSales,
     })
@@ -215,6 +257,7 @@ export async function GET() {
           upsell: { sales: 0, revenue: 0 },
           downsell: { sales: 0, revenue: 0 },
         },
+        chartData: [],
         allSales: [],
       },
       { status: 200 } // Return 200 so frontend doesn't break
