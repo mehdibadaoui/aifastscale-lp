@@ -6,19 +6,21 @@ import LazyTrackingPixels from './components/LazyTrackingPixels'
 const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
-  weight: ['400', '600', '700'], // Reduced from 6 weights to 3 critical weights only
+  weight: ['400', '700'], // PERFORMANCE: Only 2 weights - 400 (normal) and 700 (bold)
   display: 'swap',
   preload: true,
   fallback: ['system-ui', 'sans-serif'],
+  adjustFontFallback: true, // Reduces layout shift
 })
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
-  weight: ['700', '900'], // Reduced from 3 weights to 2 (removed 400 - not used much)
+  weight: ['700'], // PERFORMANCE: Only 1 weight - bold for headlines
   display: 'swap',
   preload: true,
   fallback: ['Georgia', 'serif'],
+  adjustFontFallback: true, // Reduces layout shift
 })
 
 export const metadata: Metadata = {
@@ -89,47 +91,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google Ads Conversion Tracking - CRITICAL for campaign performance */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-17695777512');
-            `,
-          }}
-        />
+        {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
 
-        {/* Performance Optimization: Preconnect to critical third-party domains */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-        <link rel="preconnect" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://www.clarity.ms" />
-        <link rel="dns-prefetch" href="https://c.clarity.ms" />
-        <link rel="dns-prefetch" href="https://js.stripe.com" />
-
-        {/* CRITICAL: Preconnect to Stripe API for instant checkout */}
+        {/* Only critical preconnects - DNS resolution happens early */}
         <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
-
-        {/* Wistia Video Player - Fast, compressed, adaptive streaming */}
-        <link rel="preconnect" href="https://fast.wistia.net" />
-        <script src="https://fast.wistia.net/player.js" async></script>
-
-        {/* CRITICAL: Preload hero section resources for instant display */}
-        <link
-          rel="preload"
-          href="/images/hero-video-poster.jpg"
-          as="image"
-          fetchPriority="high"
-        />
-
-        {/* DNS prefetch for video CDN - faster than preload, doesn't block */}
-        <link rel="dns-prefetch" href="https://aifastscale.com" />
-
-        {/* Defer Stripe.js - load asynchronously */}
-        <link rel="dns-prefetch" href="https://js.stripe.com" />
+        <link rel="dns-prefetch" href="https://fast.wistia.net" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
@@ -304,6 +271,21 @@ export default function RootLayout({
         {/* Lazy load tracking pixels after 5 seconds + idle for maximum performance */}
         <LazyTrackingPixels />
         {children}
+
+        {/* PERFORMANCE: Defer all third-party scripts to end of body - loads AFTER content */}
+        <script defer src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
+        <script
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17695777512');
+            `,
+          }}
+        />
+        <script defer src="https://fast.wistia.net/assets/external/E-v1.js"></script>
       </body>
     </html>
   )

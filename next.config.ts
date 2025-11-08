@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Performance optimizations
+  // CRITICAL PERFORMANCE OPTIMIZATIONS
   compress: true,
+  poweredByHeader: false, // Remove X-Powered-By header
+  reactStrictMode: true, // Better performance in production
 
   // Modern JavaScript only (removes legacy polyfills)
   compiler: {
@@ -11,12 +13,14 @@ const nextConfig: NextConfig = {
     } : false,
   },
 
-  // Image optimization
+  // Aggressive image optimization
   images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    formats: ['image/webp'], // WEBP only for speed (AVIF is slower)
+    deviceSizes: [640, 750, 828, 1080, 1200], // Reduced device sizes
+    imageSizes: [16, 32, 48, 64, 96, 128, 256], // Reduced sizes
+    minimumCacheTTL: 31536000, // 1 year cache
+    dangerouslyAllowSVG: false,
+    contentDispositionType: 'inline',
     remotePatterns: [
       {
         protocol: 'https',
