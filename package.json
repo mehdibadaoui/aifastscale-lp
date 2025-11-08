@@ -10,6 +10,7 @@
     "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
+    "@builder.io/partytown": "^0.10.3",
     "@stripe/react-stripe-js": "^5.3.0",
     "@stripe/stripe-js": "^8.2.0",
     "autoprefixer": "^10.4.21",

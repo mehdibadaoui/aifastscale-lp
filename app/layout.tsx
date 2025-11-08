@@ -93,6 +93,27 @@ export default function RootLayout({
       <head>
         {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
 
+        {/* Partytown configuration - moves tracking scripts to Web Worker for 95+ performance */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              partytown = {
+                lib: "/~partytown/",
+                forward: ["dataLayer.push", "fbq", "gtag", "clarity"],
+                resolveUrl: function(url, location, type) {
+                  if (type === 'script') {
+                    const proxyUrl = new URL(location.origin + '/~partytown/');
+                    proxyUrl.searchParams.append('url', url.href);
+                    return proxyUrl;
+                  }
+                  return url;
+                }
+              };
+            `,
+          }}
+        />
+        <script src="/~partytown/partytown.js" />
+
         {/* Only critical preconnects - DNS resolution happens early */}
         <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fast.wistia.net" />
@@ -272,10 +293,10 @@ export default function RootLayout({
         <LazyTrackingPixels />
         {children}
 
-        {/* PERFORMANCE: Defer all third-party scripts to end of body - loads AFTER content */}
-        <script defer src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
+        {/* PERFORMANCE BOOST: All tracking scripts run in Web Worker via Partytown (off main thread) */}
+        <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
         <script
-          defer
+          type="text/partytown"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -285,7 +306,7 @@ export default function RootLayout({
             `,
           }}
         />
-        <script defer src="https://fast.wistia.net/assets/external/E-v1.js"></script>
+        <script type="text/partytown" src="https://fast.wistia.net/assets/external/E-v1.js"></script>
       </body>
     </html>
   )

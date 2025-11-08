@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import { copyLibFiles } from '@builder.io/partytown/utils';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   // CRITICAL PERFORMANCE OPTIMIZATIONS
@@ -75,6 +77,16 @@ const nextConfig: NextConfig = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
+          },
+        ],
+      },
+      // Partytown proxy for tracking scripts (moves to Web Worker)
+      {
+        source: '/~partytown/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
           },
         ],
       },
