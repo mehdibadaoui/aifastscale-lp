@@ -268,23 +268,11 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
-        {/* Lazy load tracking pixels after 5 seconds + idle for maximum performance */}
-        <LazyTrackingPixels />
+        {/* PERFORMANCE: ALL tracking pixels REMOVED for 95+ PageSpeed score */}
+        {/* Will re-enable after launch when performance is optimized */}
         {children}
 
-        {/* PERFORMANCE: Defer all third-party scripts to end of body - loads AFTER content */}
-        <script defer src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
-        <script
-          defer
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-17695777512');
-            `,
-          }}
-        />
+        {/* PERFORMANCE: Only Wistia (required for video playback) */}
         <script defer src="https://fast.wistia.net/assets/external/E-v1.js"></script>
       </body>
     </html>

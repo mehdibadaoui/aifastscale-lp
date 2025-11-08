@@ -2439,7 +2439,9 @@ export default function AgentLandingPage() {
                           sizes="(max-width: 768px) 320px, 384px"
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                           priority
-                        />
+                        
+                      loading="lazy"
+                    />
                         {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-amber-900/40 via-transparent to-transparent"></div>
                       </div>
@@ -2592,7 +2594,9 @@ export default function AgentLandingPage() {
                             width={48}
                             height={48}
                             className="h-full w-full object-cover"
-                          />
+                          
+                      loading="lazy"
+                    />
                         </div>
                       ))}
                     </div>
