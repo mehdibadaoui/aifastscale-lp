@@ -7,10 +7,9 @@ import dynamic from 'next/dynamic'
 const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), { ssr: false })
 // GoogleAdsTag is now merged into GoogleAnalytics (both use same gtag.js)
 const MetaPixel = dynamic(() => import('./MetaPixel'), { ssr: false })
+const MicrosoftClarity = dynamic(() => import('./MicrosoftClarity'), { ssr: false })
 // TikTok Pixel temporarily disabled for performance optimization
 // const TikTokPixel = dynamic(() => import('./TikTokPixel'), { ssr: false })
-// Microsoft Clarity temporarily disabled for performance optimization
-// const MicrosoftClarity = dynamic(() => import('./MicrosoftClarity'), { ssr: false })
 
 export default function LazyTrackingPixels() {
   const [shouldLoad, setShouldLoad] = useState(false)
@@ -36,10 +35,9 @@ export default function LazyTrackingPixels() {
     <>
       <GoogleAnalytics />
       <MetaPixel />
+      <MicrosoftClarity />
       {/* TikTok Pixel temporarily disabled for performance */}
       {/* <TikTokPixel /> */}
-      {/* Microsoft Clarity temporarily disabled for performance */}
-      {/* <MicrosoftClarity /> */}
     </>
   )
 }
