@@ -585,11 +585,12 @@ export default function SalesDashboard() {
               value={filterProduct}
               onChange={(e) => setFilterProduct(e.target.value)}
               className="px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              style={{ colorScheme: 'dark' }}
             >
-              <option value="all">All Products</option>
-              <option value="main">Main Course Only</option>
-              <option value="upsell">Upsell Only</option>
-              <option value="downsell">Downsell Only</option>
+              <option value="all" style={{ backgroundColor: '#1e293b', color: '#fff' }}>All Products</option>
+              <option value="main" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Main Course Only</option>
+              <option value="upsell" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Upsell Only</option>
+              <option value="downsell" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Downsell Only</option>
             </select>
           </div>
         </div>
