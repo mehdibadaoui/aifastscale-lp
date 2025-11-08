@@ -2207,9 +2207,9 @@ export default function AgentLandingPage() {
               },
               {
                 title: 'Agent Gabriel Video',
-                videoSrc: '/videos/Mr-Nigel-compressed.mp4',
-                posterSrc: '/images/mr-nigel-poster.jpg',
-                aspectRatio: '100%', // 1:1 square
+                videoSrc: '/videos/Gabriel-compressed.mp4',
+                posterSrc: '/images/gabriel-poster.jpg',
+                aspectRatio: '177.78%', // 9:16 vertical (Gabriel is square but displayed in vertical container)
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
