@@ -139,49 +139,73 @@ video {
 }
 
 /* ========================================
-   WISTIA PLAYER CUSTOMIZATION
+   WISTIA PLAYER CUSTOMIZATION - AGGRESSIVE OVERRIDE
    ======================================== */
 
-/* Modern, professional play button - sleek and minimal */
-.wistia_embed .w-vulcan-v2-button {
-  width: 70px !important;
-  height: 70px !important;
-  opacity: 0.85 !important;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  backdrop-filter: blur(8px) !important;
+/* CRITICAL: Override Wistia's default large play button */
+.wistia_responsive_padding .wistia_embed .w-vulcan-v2-button,
+.wistia_embed .w-vulcan-v2-button,
+.w-vulcan-v2-button {
+  width: 64px !important;
+  height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
+  opacity: 0.9 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Hover effect - smooth scale and glow */
-.wistia_embed .w-vulcan-v2-button:hover {
-  transform: scale(1.15) !important;
+/* Hover - subtle scale up with glow */
+.wistia_responsive_padding .wistia_embed .w-vulcan-v2-button:hover,
+.wistia_embed .w-vulcan-v2-button:hover,
+.w-vulcan-v2-button:hover {
+  width: 64px !important;
+  height: 64px !important;
+  transform: scale(1.12) !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)) !important;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.25)) !important;
 }
 
-/* Play icon - crisp with elegant shadow */
-.wistia_embed .w-css-reset-tree svg {
-  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35)) !important;
+/* Override the SVG container size */
+.wistia_embed .w-vulcan-v2-button > div,
+.w-vulcan-v2-button > div {
+  width: 64px !important;
+  height: 64px !important;
 }
 
-/* Smooth transitions for all button elements */
-.wistia_embed .w-vulcan-v2-button * {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+/* Play icon shadow for depth */
+.wistia_embed .w-css-reset-tree svg,
+.w-css-reset-tree svg {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) !important;
 }
 
-/* Make the white circle slightly transparent for modern look */
-.wistia_embed .w-vulcan-v2-button .w-css-reset {
-  opacity: 0.95 !important;
+/* Smooth transitions */
+.wistia_embed .w-vulcan-v2-button *,
+.w-vulcan-v2-button * {
+  transition: all 0.3s ease !important;
 }
 
-/* Mobile - smaller but still easily tappable (minimum 44px) */
+/* Mobile - 56px (still meets 44px minimum tap target) */
 @media (max-width: 768px) {
-  .wistia_embed .w-vulcan-v2-button {
-    width: 60px !important;
-    height: 60px !important;
-    opacity: 0.9 !important;
+  .wistia_responsive_padding .wistia_embed .w-vulcan-v2-button,
+  .wistia_embed .w-vulcan-v2-button,
+  .w-vulcan-v2-button {
+    width: 56px !important;
+    height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
   }
 
-  .wistia_embed .w-vulcan-v2-button:hover {
-    transform: scale(1.1) !important;
+  .wistia_responsive_padding .wistia_embed .w-vulcan-v2-button:hover,
+  .wistia_embed .w-vulcan-v2-button:hover,
+  .w-vulcan-v2-button:hover {
+    width: 56px !important;
+    height: 56px !important;
+    transform: scale(1.08) !important;
+  }
+
+  .wistia_embed .w-vulcan-v2-button > div,
+  .w-vulcan-v2-button > div {
+    width: 56px !important;
+    height: 56px !important;
   }
 }
