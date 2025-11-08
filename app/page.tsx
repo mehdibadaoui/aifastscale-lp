@@ -2203,16 +2203,19 @@ export default function AgentLandingPage() {
                 title: 'Agent Steven Video',
                 videoSrc: '/videos/Steven1mb.mp4',
                 posterSrc: '/images/steven-poster-new.jpg',
-              },
-              {
-                title: 'Agent Gabriel Video',
-                videoSrc: '/videos/Gabriel-c.mp4',
-                posterSrc: '/images/gabriel-poster.jpg?v=4',
+                aspectRatio: '177.78%', // 9:16 vertical
               },
               {
                 title: 'Agent Nigel Video',
                 videoSrc: '/videos/Mr-Nigel-compressed.mp4',
                 posterSrc: '/images/mr-nigel-poster.jpg',
+                aspectRatio: '100%', // 1:1 square
+              },
+              {
+                title: 'Agent Lucas Video',
+                videoSrc: '/videos/Mr-Lucas-compressed.mp4',
+                posterSrc: '/images/mr-lucas-poster-new.jpg',
+                aspectRatio: '177.78%', // 9:16 vertical
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
@@ -2228,7 +2231,7 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="overflow-hidden rounded-2xl bg-black">
-                      <div className="relative" style={{ paddingBottom: '177.63%' }}>
+                      <div className="relative" style={{ paddingBottom: v.aspectRatio }}>
                         <video
                           key={v.posterSrc}
                           className="absolute inset-0 h-full w-full object-contain bg-black"
@@ -2236,8 +2239,6 @@ export default function AgentLandingPage() {
                           playsInline
                           preload="auto"
                           poster={v.posterSrc}
-                          width="608"
-                          height="1080"
                           crossOrigin="anonymous"
                         >
                           <source src={v.videoSrc} type="video/mp4" />

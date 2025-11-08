@@ -122,7 +122,6 @@ button * {
 /* Ensure videos load smoothly */
 video {
   background: #000;
-  object-fit: contain; /* Show full video without cropping */
 }
 
 /* Hardware acceleration for smooth video playback */
