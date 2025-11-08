@@ -137,3 +137,39 @@ video {
     /* Larger video controls for mobile */
   }
 }
+
+/* ========================================
+   WISTIA PLAYER CUSTOMIZATION
+   ======================================== */
+
+/* Smaller, modern play button */
+.wistia_embed .w-vulcan-v2-button {
+  width: 60px !important;
+  height: 60px !important;
+  transform: scale(0.7) !important;
+  opacity: 0.95 !important;
+  transition: all 0.3s ease !important;
+}
+
+.wistia_embed .w-vulcan-v2-button:hover {
+  transform: scale(0.75) !important;
+  opacity: 1 !important;
+}
+
+/* Modern play icon styling */
+.wistia_embed .w-css-reset-tree svg {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)) !important;
+}
+
+/* Mobile - even smaller play button */
+@media (max-width: 768px) {
+  .wistia_embed .w-vulcan-v2-button {
+    width: 50px !important;
+    height: 50px !important;
+    transform: scale(0.6) !important;
+  }
+
+  .wistia_embed .w-vulcan-v2-button:hover {
+    transform: scale(0.65) !important;
+  }
+}
