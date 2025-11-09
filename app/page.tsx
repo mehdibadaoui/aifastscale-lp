@@ -1,12 +1,8 @@
 'use client'
 
-// Force static generation for maximum performance
-export const dynamic = 'force-static'
-export const revalidate = false
-
 import React, { useEffect, useState, useRef, ReactNode, memo } from 'react'
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import {
   Shield,
   CheckCircle,
@@ -52,7 +48,7 @@ import { captureUTMParameters, storeUTMParameters } from './utils/utm-tracking'
 // Trade-off: +1MB bundle size for MUCH better UX (instant checkout)
 
 // Lazy load SocialProofNotifications - prevents blocking API call on initial render
-const SocialProofNotifications = dynamic(
+const SocialProofNotifications = dynamicImport(
   () => import('./components/SocialProofNotifications'),
   {
     ssr: false,
