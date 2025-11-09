@@ -954,7 +954,7 @@ export default function AgentLandingPage() {
               </p>
             </div>
           </div>
-          <div className="font-serif mb-4 text-center text-2xl leading-tight font-black text-gray-900 md:mb-6 md:text-5xl" role="heading" aria-level="2">
+          <div className="font-serif mb-4 text-center text-2xl leading-tight font-black text-gray-900 md:mb-6 md:text-5xl" role="heading" aria-level={2}>
             Zero Risk, All Reward
           </div>
           <div className="mx-auto mb-6 max-w-3xl space-y-4 text-sm leading-relaxed text-gray-700 md:mb-8 md:space-y-5 md:text-lg">

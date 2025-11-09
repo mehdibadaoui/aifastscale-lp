@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false, // Remove X-Powered-By header
   reactStrictMode: true, // Better performance in production
-  swcMinify: true, // Use SWC minifier (faster than Terser)
+  // swcMinify enabled by default in Next.js 16+
 
   // Modern JavaScript only (removes legacy polyfills)
   compiler: {
