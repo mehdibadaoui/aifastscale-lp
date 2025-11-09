@@ -143,6 +143,12 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="AI FastScale" />
         <link rel="manifest" href="/site.webmanifest" />
 
+        {/* PWA Meta Tags for Sales Dashboard */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="theme-color" content="#7c3aed" />
+
         {/* Google Merchant Center Verification */}
         <meta name="google-site-verification" content="07UTX0YRgm3QIW1-mgHhLSko642Dbkp4ksQEZNq3z5g" />
 

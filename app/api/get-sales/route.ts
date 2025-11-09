@@ -65,6 +65,9 @@ export async function GET(request: Request) {
           const productName = PRODUCT_NAMES[priceId] || 'Unknown Product'
           const productType = PRODUCT_TYPES[priceId] || 'unknown'
 
+          // Extract UTM parameters from metadata
+          const metadata = session.metadata || {}
+
           yourSales.push({
             id: session.id,
             sessionId: session.id,
@@ -78,6 +81,17 @@ export async function GET(request: Request) {
             timestamp: session.created,
             status: session.payment_status,
             paymentMethod: session.payment_method_types?.[0] || 'card',
+            // UTM tracking data
+            utm_source: metadata.utm_source || '',
+            utm_medium: metadata.utm_medium || '',
+            utm_campaign: metadata.utm_campaign || '',
+            utm_term: metadata.utm_term || '',
+            utm_content: metadata.utm_content || '',
+            fbclid: metadata.fbclid || '',
+            gclid: metadata.gclid || '',
+            traffic_source: metadata.traffic_source || 'Direct',
+            referrer: metadata.referrer || '',
+            landing_page: metadata.landing_page || '',
           })
         }
       }
@@ -99,6 +113,10 @@ export async function GET(request: Request) {
     weekStart.setDate(weekStart.getDate() - 7)
     const weekTimestamp = Math.floor(weekStart.getTime() / 1000)
 
+    const lastWeekStart = new Date(todayStart)
+    lastWeekStart.setDate(lastWeekStart.getDate() - 14)
+    const lastWeekTimestamp = Math.floor(lastWeekStart.getTime() / 1000)
+
     const monthStart = new Date(todayStart)
     monthStart.setDate(monthStart.getDate() - 30)
     const monthTimestamp = Math.floor(monthStart.getTime() / 1000)
@@ -109,12 +127,16 @@ export async function GET(request: Request) {
       (sale) => sale.created >= yesterdayTimestamp && sale.created < todayTimestamp
     )
     const weekSales = yourSales.filter((sale) => sale.created >= weekTimestamp)
+    const lastWeekSales = yourSales.filter(
+      (sale) => sale.created >= lastWeekTimestamp && sale.created < weekTimestamp
+    )
     const monthSales = yourSales
 
     // Calculate revenue
     const todayRevenue = todaySales.reduce((sum, sale) => sum + sale.amount, 0)
     const yesterdayRevenue = yesterdaySales.reduce((sum, sale) => sum + sale.amount, 0)
     const weekRevenue = weekSales.reduce((sum, sale) => sum + sale.amount, 0)
+    const lastWeekRevenue = lastWeekSales.reduce((sum, sale) => sum + sale.amount, 0)
     const monthRevenue = monthSales.reduce((sum, sale) => sum + sale.amount, 0)
 
     // Product breakdown
@@ -212,6 +234,10 @@ export async function GET(request: Request) {
         sales: weekSales.length,
         revenue: weekRevenue,
       },
+      lastWeek: {
+        sales: lastWeekSales.length,
+        revenue: lastWeekRevenue,
+      },
       month: {
         sales: monthSales.length,
         revenue: monthRevenue,
@@ -251,6 +277,7 @@ export async function GET(request: Request) {
         today: { sales: 0, revenue: 0 },
         yesterday: { sales: 0, revenue: 0 },
         week: { sales: 0, revenue: 0 },
+        lastWeek: { sales: 0, revenue: 0 },
         month: { sales: 0, revenue: 0 },
         products: {
           main: { sales: 0, revenue: 0 },

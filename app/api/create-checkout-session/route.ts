@@ -21,6 +21,10 @@ export async function POST(req: NextRequest) {
 
     const origin = req.headers.get('origin') || 'https://aifastscale.com'
 
+    // Get UTM parameters from request body
+    const body = await req.json().catch(() => ({}))
+    const utmParams = body.utmParams || {}
+
     // Create checkout session using direct Stripe API call (SDK doesn't work in serverless)
     const params = new URLSearchParams({
       'mode': 'payment',
@@ -33,6 +37,18 @@ export async function POST(req: NextRequest) {
       'payment_intent_data[setup_future_usage]': 'off_session',
       'customer_creation': 'always',
     })
+
+    // Add UTM parameters to metadata for tracking
+    if (utmParams.utm_source) params.append('metadata[utm_source]', utmParams.utm_source)
+    if (utmParams.utm_medium) params.append('metadata[utm_medium]', utmParams.utm_medium)
+    if (utmParams.utm_campaign) params.append('metadata[utm_campaign]', utmParams.utm_campaign)
+    if (utmParams.utm_term) params.append('metadata[utm_term]', utmParams.utm_term)
+    if (utmParams.utm_content) params.append('metadata[utm_content]', utmParams.utm_content)
+    if (utmParams.fbclid) params.append('metadata[fbclid]', utmParams.fbclid)
+    if (utmParams.gclid) params.append('metadata[gclid]', utmParams.gclid)
+    if (utmParams.referrer) params.append('metadata[referrer]', utmParams.referrer)
+    if (utmParams.landing_page) params.append('metadata[landing_page]', utmParams.landing_page)
+    if (utmParams.traffic_source) params.append('metadata[traffic_source]', utmParams.traffic_source)
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',

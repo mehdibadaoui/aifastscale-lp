@@ -42,6 +42,7 @@ import {
   Maximize,
 } from 'lucide-react'
 import { trackFullCTAClick } from './utils/tracking'
+import { captureUTMParameters, storeUTMParameters } from './utils/utm-tracking'
 
 // Stripe checkout now loaded immediately for instant CTA response
 // Trade-off: +1MB bundle size for MUCH better UX (instant checkout)
@@ -145,6 +146,17 @@ export default function AgentLandingPage() {
       } else {
         // Mark as visited for future visits
         localStorage.setItem('hasVisitedLP', 'true')
+      }
+    }
+  }, [])
+
+  // 📊 Capture UTM parameters for ad attribution tracking
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const utmParams = captureUTMParameters()
+      if (Object.keys(utmParams).length > 0) {
+        storeUTMParameters(utmParams)
+        console.log('📊 UTM parameters captured:', utmParams)
       }
     }
   }, [])
@@ -454,9 +466,15 @@ export default function AgentLandingPage() {
     setTimeout(() => trackFullCTAClick(ctaLocation), 0)
 
     try {
+      // Get UTM parameters for ad attribution
+      const { getAttributionData, formatUTMForMetadata } = await import('./utils/utm-tracking')
+      const utmParams = getAttributionData()
+      const metadata = formatUTMForMetadata(utmParams)
+
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ utmParams: metadata }),
       })
       const { url, error } = await response.json()
 
