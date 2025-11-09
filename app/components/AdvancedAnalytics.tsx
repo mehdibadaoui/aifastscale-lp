@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Calendar, TrendingUp, Users, Award, Bell, Flame, Target, Sparkles } from 'lucide-react'
 
 // Sales Heatmap Component
@@ -50,8 +50,8 @@ export function SalesHeatmap({ sales }: { sales: any[] }) {
             ))}
 
             {days.map((day, dayIndex) => (
-              <>
-                <div key={`label-${day}`} className="text-sm text-white/80 flex items-center">
+              <React.Fragment key={`day-${dayIndex}`}>
+                <div className="text-sm text-white/80 flex items-center">
                   {day}
                 </div>
                 {hours.map(hour => {
@@ -64,7 +64,7 @@ export function SalesHeatmap({ sales }: { sales: any[] }) {
                     />
                   )
                 })}
-              </>
+              </React.Fragment>
             ))}
           </div>
 
