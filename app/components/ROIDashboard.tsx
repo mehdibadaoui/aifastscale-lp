@@ -120,19 +120,34 @@ export default function ROIDashboard({ days = 30 }: { days?: number }) {
       </div>
 
       {/* Ad Spend Configuration Status */}
-      {(!data.adSpendConfigured.facebook || !data.adSpendConfigured.google) && (
+      {(!data.adSpendConfigured.facebook && !data.adSpendConfigured.google) ? (
         <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-semibold text-yellow-200">Ad Spend Not Configured</h4>
               <p className="text-yellow-200/80 text-sm mt-1">
-                {!data.adSpendConfigured.facebook && 'Facebook Ads API not set up. '}
-                {!data.adSpendConfigured.google && 'Google Ads API not set up. '}
-                ROI calculations will only include Stripe fees.
+                Facebook Ads and Google Ads APIs not set up. ROI calculations will only include Stripe fees.
               </p>
               <p className="text-yellow-200/60 text-xs mt-2">
                 See <span className="font-mono bg-yellow-500/20 px-1 rounded">AD_TRACKING_SETUP_GUIDE.md</span> for setup instructions.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (!data.adSpendConfigured.facebook || !data.adSpendConfigured.google) && (
+        <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-blue-200">
+                ✅ {data.adSpendConfigured.facebook && 'Facebook Ads Connected'}{data.adSpendConfigured.google && 'Google Ads Connected'}
+              </h4>
+              <p className="text-blue-200/80 text-sm mt-1">
+                {data.adSpendConfigured.facebook && '✓ Facebook Ads API active. '}
+                {data.adSpendConfigured.google && '✓ Google Ads API active. '}
+                {!data.adSpendConfigured.facebook && '• Facebook Ads not configured. '}
+                {!data.adSpendConfigured.google && '• Google Ads not configured. '}
               </p>
             </div>
           </div>
