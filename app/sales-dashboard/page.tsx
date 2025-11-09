@@ -3,6 +3,13 @@
 import { useEffect, useState, useCallback } from 'react'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
+// Import all new dashboard components
+import ROIDashboard from '../components/ROIDashboard'
+import ComparisonMode from '../components/ComparisonMode'
+import RealTimeUpdates from '../components/RealTimeUpdates'
+import { SalesHeatmap, CLVTracker, SmartAlerts, GamificationPanel } from '../components/AdvancedAnalytics'
+import { RevenueForecast, ConversionFunnel, GeographicInsights, QuickStatsTicker, RefundTracker, ThemeSwitcher } from '../components/FinalDashboardFeatures'
+
 interface Sale {
   id: string
   sessionId: string
@@ -966,6 +973,85 @@ export default function SalesDashboard() {
             </div>
           </div>
         </div>
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* NEW ADVANCED ANALYTICS FEATURES */}
+        {/* ═══════════════════════════════════════════ */}
+
+        {/* Real-Time Sale Notifications */}
+        <RealTimeUpdates onNewSale={() => fetchSales()} />
+
+        {/* Gamification Panel */}
+        <div className="mb-8">
+          <GamificationPanel
+            todayRevenue={data.today.revenue / 100}
+            goalRevenue={revenueGoal}
+          />
+        </div>
+
+        {/* Comparison Mode */}
+        <div className="mb-8">
+          <ComparisonMode
+            currentPeriod={timePeriod}
+            onPeriodChange={(period) => setTimePeriod(period as any)}
+          />
+        </div>
+
+        {/* ROI Dashboard */}
+        <div className="mb-8">
+          <ROIDashboard days={30} />
+        </div>
+
+        {/* Smart Alerts & Insights */}
+        <div className="mb-8">
+          <SmartAlerts
+            sales={data.allSales}
+            todaySales={data.today.sales}
+            yesterdaySales={data.yesterday.sales}
+          />
+        </div>
+
+        {/* Revenue Forecast */}
+        <div className="mb-8">
+          <RevenueForecast dailySales={data.chartData} />
+        </div>
+
+        {/* Conversion Funnel */}
+        <div className="mb-8">
+          <ConversionFunnel
+            data={{
+              landingPageViews: 1000, // TODO: Get from analytics
+              addToCart: 300,
+              checkoutStarted: 200,
+              mainSales: data.products.main.sales,
+              upsellsAccepted: data.products.upsell.sales + data.products.downsell.sales,
+            }}
+          />
+        </div>
+
+        {/* Sales Heatmap */}
+        <div className="mb-8">
+          <SalesHeatmap sales={data.allSales} />
+        </div>
+
+        {/* CLV Tracker */}
+        <div className="mb-8">
+          <CLVTracker sales={data.allSales} />
+        </div>
+
+        {/* Geographic Insights */}
+        <div className="mb-8">
+          <GeographicInsights sales={data.allSales} />
+        </div>
+
+        {/* Refund Tracker */}
+        <div className="mb-8">
+          <RefundTracker refunds={[]} /* TODO: Fetch refunds from Stripe */ />
+        </div>
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* END NEW FEATURES */}
+        {/* ═══════════════════════════════════════════ */}
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
