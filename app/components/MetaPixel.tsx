@@ -19,11 +19,10 @@ export default function MetaPixel() {
 
   return (
     <>
-      {/* PARTYTOWN: Load Meta Pixel in Web Worker (off main thread) */}
+      {/* Meta Pixel - Loaded normally for best tracking compatibility */}
       <Script
         id="meta-pixel-init"
         strategy="afterInteractive"
-        type="text/partytown"
       >
         {`
           !function(f,b,e,v,n,t,s)
