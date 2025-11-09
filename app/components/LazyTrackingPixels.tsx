@@ -3,50 +3,41 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 
-// Lazy load all tracking pixels with 5-second delay (was 3s)
-const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), { ssr: false })
-// GoogleAdsTag is now merged into GoogleAnalytics (both use same gtag.js)
+// Meta Pixel loads IMMEDIATELY for ad tracking (critical for Facebook ads!)
 const MetaPixel = dynamic(() => import('./MetaPixel'), { ssr: false })
+
+// Other pixels load with delay for performance
+const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), { ssr: false })
 const MicrosoftClarity = dynamic(() => import('./MicrosoftClarity'), { ssr: false })
-// TikTok Pixel temporarily disabled for performance optimization
-// const TikTokPixel = dynamic(() => import('./TikTokPixel'), { ssr: false })
 
 export default function LazyTrackingPixels() {
-  const [shouldLoad, setShouldLoad] = useState(false)
+  const [shouldLoadOthers, setShouldLoadOthers] = useState(false)
 
   useEffect(() => {
-    // Wait for window load + 10 seconds for maximum PageSpeed score
-    // This ensures tracking doesn't impact Core Web Vitals at all
-    const loadTracking = () => {
-      const timer = setTimeout(() => {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => setShouldLoad(true))
-        } else {
-          setShouldLoad(true)
-        }
-      }, 10000) // 10 seconds after page load
+    // Load non-critical pixels after 5 seconds
+    const timer = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => setShouldLoadOthers(true))
+      } else {
+        setShouldLoadOthers(true)
+      }
+    }, 5000) // 5 seconds for non-critical pixels
 
-      return () => clearTimeout(timer)
-    }
-
-    // Wait for window to fully load first
-    if (document.readyState === 'complete') {
-      return loadTracking()
-    } else {
-      window.addEventListener('load', loadTracking)
-      return () => window.removeEventListener('load', loadTracking)
-    }
+    return () => clearTimeout(timer)
   }, [])
-
-  if (!shouldLoad) return null
 
   return (
     <>
-      <GoogleAnalytics />
+      {/* Meta Pixel loads IMMEDIATELY - critical for ad tracking */}
       <MetaPixel />
-      <MicrosoftClarity />
-      {/* TikTok Pixel temporarily disabled for performance */}
-      {/* <TikTokPixel /> */}
+
+      {/* Other pixels load after delay */}
+      {shouldLoadOthers && (
+        <>
+          <GoogleAnalytics />
+          <MicrosoftClarity />
+        </>
+      )}
     </>
   )
 }
