@@ -114,9 +114,10 @@ export default function RootLayout({
         />
         <script src="/~partytown/partytown.js" />
 
-        {/* Only critical preconnects - DNS resolution happens early */}
+        {/* Critical preconnects for faster DNS resolution */}
         <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
