@@ -101,23 +101,23 @@ Keep crushing it! 🚀
         }
 
         await trackMetaPurchase({
-          email,
-          phone,
-          firstName,
-          lastName,
-          city,
-          state,
-          zip,
-          country,
+          email: email || undefined,
+          phone: phone || undefined,
+          firstName: firstName || undefined,
+          lastName: lastName || undefined,
+          city: city || undefined,
+          state: state || undefined,
+          zip: zip || undefined,
+          country: country || undefined,
           amount: session.amount_total || 0,
           currency: session.currency?.toUpperCase() || 'USD',
           orderId: session.id,
           productName,
-          clientIp,
-          userAgent,
-          fbp,
-          fbc,
-          eventSourceUrl,
+          clientIp: clientIp || undefined,
+          userAgent: userAgent || undefined,
+          fbp: fbp || undefined,
+          fbc: fbc || undefined,
+          eventSourceUrl: eventSourceUrl || undefined,
         })
       } catch (error) {
         console.error('Failed to send Meta Conversions API event:', error)
