@@ -1029,6 +1029,203 @@ export default function SalesDashboard() {
               currentPeriod={timePeriod}
               onPeriodChange={(period) => setTimePeriod(period as any)}
             />
+
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Revenue Chart */}
+              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                  📈 Revenue Trend (Last 7 Days)
+                </h2>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={data.chartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="date" stroke="#fff" fontSize={12} />
+                    <YAxis stroke="#fff" fontSize={12} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
+                      labelStyle={{ color: '#fff' }}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="revenue" stroke="#10B981" strokeWidth={3} name="Revenue ($)" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Sales Chart */}
+              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                  📊 Sales Count (Last 7 Days)
+                </h2>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={data.chartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="date" stroke="#fff" fontSize={12} />
+                    <YAxis stroke="#fff" fontSize={12} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
+                      labelStyle={{ color: '#fff' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="sales" fill="#3B82F6" name="Sales" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Product Breakdown */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Pie Chart */}
+              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                  🥧 Product Distribution
+                </h2>
+                <ResponsiveContainer width="100%" height={250}>
+                  <PieChart>
+                    <Pie
+                      data={productDistribution}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={(entry) => `${entry.name}: ${entry.value}`}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {productDistribution.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
+                      labelStyle={{ color: '#fff' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Product Stats Cards */}
+              <div className="lg:col-span-2">
+                <h2 className="text-2xl font-bold text-white mb-6">💼 Product Breakdown</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Main Product */}
+                  <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-2xl">
+                        🎯
+                      </div>
+                      <div>
+                        <p className="text-white/60 text-sm">Main Course ($37)</p>
+                        <p className="text-white font-bold text-xl">{data.products.main.sales} sales</p>
+                      </div>
+                    </div>
+                    <div className="text-3xl font-bold text-white mb-2">
+                      ${(data.products.main.revenue / 100).toFixed(2)}
+                    </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-blue-500 transition-all duration-500"
+                        style={{
+                          width: `${data.totalRevenue > 0 ? (data.products.main.revenue / data.totalRevenue) * 100 : 0}%`,
+                        }}
+                      />
+                    </div>
+                    <p className="text-white/50 text-xs mt-2">
+                      {data.totalRevenue > 0 ? ((data.products.main.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
+                    </p>
+                  </div>
+
+                  {/* Upsell */}
+                  <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-2xl">
+                        ⬆️
+                      </div>
+                      <div>
+                        <p className="text-white/60 text-sm">Upsell ($17)</p>
+                        <p className="text-white font-bold text-xl">{data.products.upsell.sales} sales</p>
+                      </div>
+                    </div>
+                    <div className="text-3xl font-bold text-white mb-2">
+                      ${(data.products.upsell.revenue / 100).toFixed(2)}
+                    </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-purple-500 transition-all duration-500"
+                        style={{
+                          width: `${data.totalRevenue > 0 ? (data.products.upsell.revenue / data.totalRevenue) * 100 : 0}%`,
+                        }}
+                      />
+                    </div>
+                    <p className="text-white/50 text-xs mt-2">
+                      {data.totalRevenue > 0 ? ((data.products.upsell.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
+                    </p>
+                  </div>
+
+                  {/* Downsell */}
+                  <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-2xl">
+                        ⬇️
+                      </div>
+                      <div>
+                        <p className="text-white/60 text-sm">Downsell ($7)</p>
+                        <p className="text-white font-bold text-xl">{data.products.downsell.sales} sales</p>
+                      </div>
+                    </div>
+                    <div className="text-3xl font-bold text-white mb-2">
+                      ${(data.products.downsell.revenue / 100).toFixed(2)}
+                    </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-orange-500 transition-all duration-500"
+                        style={{
+                          width: `${data.totalRevenue > 0 ? (data.products.downsell.revenue / data.totalRevenue) * 100 : 0}%`,
+                        }}
+                      />
+                    </div>
+                    <p className="text-white/50 text-xs mt-2">
+                      {data.totalRevenue > 0 ? ((data.products.downsell.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SALES TAB */}
+        {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'sales' && (
+          <div className="space-y-6">
+            {/* Filters */}
+            <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    placeholder="🔍 Search by email, name, or product..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+                <select
+                  value={filterProduct}
+                  onChange={(e) => setFilterProduct(e.target.value)}
+                  className="px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  style={{ colorScheme: 'dark' }}
+                >
+                  <option value="all" style={{ backgroundColor: '#1e293b', color: '#fff' }}>All Products</option>
+                  <option value="main" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Main Course Only</option>
+                  <option value="upsell" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Upsell Only</option>
+                  <option value="downsell" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Downsell Only</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Sales Table will be added here from below */}
           </div>
         )}
 
