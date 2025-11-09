@@ -461,9 +461,9 @@ export default function AgentLandingPage() {
     // Set loading state IMMEDIATELY for instant visual feedback
     setCheckoutLoading(ctaLocation)
 
-    // Fire tracking asynchronously WITHOUT blocking the redirect
-    // Use setTimeout to defer tracking to next event loop tick
-    setTimeout(() => trackFullCTAClick(ctaLocation), 0)
+    // Fire tracking IMMEDIATELY (fbq/gtag are already non-blocking, no setTimeout needed)
+    // This ensures events fire even if API call is slow or fails
+    trackFullCTAClick(ctaLocation)
 
     try {
       // Get UTM parameters, Facebook cookies, and tracking data for ad attribution
