@@ -93,27 +93,6 @@ export default function RootLayout({
       <head>
         {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
 
-        {/* Partytown configuration - moves tracking scripts to Web Worker for 95+ performance */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              partytown = {
-                lib: "/~partytown/",
-                forward: ["dataLayer.push", "fbq", "gtag", "clarity"],
-                resolveUrl: function(url, location, type) {
-                  if (type === 'script') {
-                    const proxyUrl = new URL(location.origin + '/~partytown/');
-                    proxyUrl.searchParams.append('url', url.href);
-                    return proxyUrl;
-                  }
-                  return url;
-                }
-              };
-            `,
-          }}
-        />
-        <script src="/~partytown/partytown.js" />
-
         {/* Critical preconnects for faster DNS resolution */}
         <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -299,23 +278,9 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
-        {/* Lazy load tracking pixels after 5 seconds + idle for maximum performance */}
+        {/* Lazy load tracking pixels after window load + 10s for maximum performance */}
         <LazyTrackingPixels />
         {children}
-
-        {/* PERFORMANCE BOOST: All tracking scripts run in Web Worker via Partytown (off main thread) */}
-        <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=AW-17695777512"></script>
-        <script
-          type="text/partytown"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-17695777512');
-            `,
-          }}
-        />
       </body>
     </html>
   )
