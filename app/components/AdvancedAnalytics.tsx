@@ -252,46 +252,140 @@ export function SmartAlerts({ sales, todaySales, yesterdaySales }: {
   )
 }
 
-// Gamification Component
-export function GamificationPanel({ todayRevenue, goalRevenue = 500 }: {
+// Gamification Component with Progressive Goals
+export function GamificationPanel({ todayRevenue, todaySales }: {
   todayRevenue: number
-  goalRevenue?: number
+  todaySales: number
 }) {
-  const progress = Math.min((todayRevenue / goalRevenue) * 100, 100)
-  const isGoalMet = todayRevenue >= goalRevenue
+  const [currentGoalIndex, setCurrentGoalIndex] = useState(0)
+  const [showCelebration, setShowCelebration] = useState(false)
 
+  // Progressive goals: 5 sales → $250 → $500
+  const goals = [
+    { type: 'sales', target: 5, label: '5 Sales', emoji: '🎯', color: 'from-blue-500 to-cyan-500' },
+    { type: 'revenue', target: 250, label: '$250 Revenue', emoji: '💰', color: 'from-yellow-500 to-orange-500' },
+    { type: 'revenue', target: 500, label: '$500 Revenue', emoji: '🚀', color: 'from-pink-500 to-purple-500' },
+  ]
+
+  useEffect(() => {
+    // Load saved goal level from localStorage
+    const savedGoalIndex = localStorage.getItem('currentGoalIndex')
+    if (savedGoalIndex) {
+      setCurrentGoalIndex(parseInt(savedGoalIndex))
+    }
+  }, [])
+
+  useEffect(() => {
+    // Check if current goal is achieved
+    const currentGoal = goals[currentGoalIndex]
+    const currentValue = currentGoal.type === 'sales' ? todaySales : todayRevenue
+
+    if (currentValue >= currentGoal.target && currentGoalIndex < goals.length - 1) {
+      // Show celebration
+      setShowCelebration(true)
+
+      // Move to next goal after 3 seconds
+      setTimeout(() => {
+        const nextIndex = currentGoalIndex + 1
+        setCurrentGoalIndex(nextIndex)
+        localStorage.setItem('currentGoalIndex', nextIndex.toString())
+        setShowCelebration(false)
+      }, 3000)
+    }
+  }, [todaySales, todayRevenue, currentGoalIndex])
+
+  const currentGoal = goals[currentGoalIndex]
+  const currentValue = currentGoal.type === 'sales' ? todaySales : todayRevenue
+  const progress = Math.min((currentValue / currentGoal.target) * 100, 100)
+  const isGoalMet = currentValue >= currentGoal.target
+
+  // All badges including achieved goals
   const badges = [
-    { name: 'First Sale', emoji: '🎉', unlocked: todayRevenue > 0 },
-    { name: '$100 Day', emoji: '💯', unlocked: todayRevenue >= 100 },
+    { name: 'First Sale', emoji: '🎉', unlocked: todaySales >= 1 },
+    { name: '5 Sales', emoji: '🎯', unlocked: todaySales >= 5 },
+    { name: '$250 Day', emoji: '💰', unlocked: todayRevenue >= 250 },
     { name: '$500 Day', emoji: '🚀', unlocked: todayRevenue >= 500 },
-    { name: '$1000 Day', emoji: '🏆', unlocked: todayRevenue >= 1000 },
   ]
 
   return (
-    <div className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 rounded-2xl p-6 border border-pink-500/20">
+    <div className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 rounded-2xl p-6 border border-pink-500/20 relative overflow-hidden">
+      {/* Celebration Animation */}
+      {showCelebration && (
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-pink-500/20 to-purple-500/20 animate-pulse z-10 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-6xl mb-4">🎉🎊🎉</div>
+            <div className="text-white font-bold text-2xl">Goal Achieved!</div>
+            <div className="text-white/80 text-lg">Moving to next goal...</div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center gap-3 mb-6">
         <Target className="w-6 h-6 text-pink-400" />
-        <h3 className="text-xl font-bold text-white">Daily Goal</h3>
+        <h3 className="text-xl font-bold text-white">Progressive Goals</h3>
       </div>
 
+      {/* Goal Progress Tracker */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-white font-medium">${todayRevenue.toFixed(2)} / ${goalRevenue}</span>
-          <span className="text-white/60 text-sm">{progress.toFixed(0)}%</span>
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">{currentGoal.emoji}</span>
+            <span className="text-white font-medium">{currentGoal.label}</span>
+          </div>
+          <span className="text-white/60 text-sm">Level {currentGoalIndex + 1}/3</span>
         </div>
-        <div className="h-4 bg-white/10 rounded-full overflow-hidden">
+
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-white font-bold text-xl">
+            {currentGoal.type === 'sales' ? `${todaySales} / ${currentGoal.target} sales` : `$${todayRevenue.toFixed(2)} / $${currentGoal.target}`}
+          </span>
+          <span className="text-white/80 text-lg">{progress.toFixed(0)}%</span>
+        </div>
+
+        <div className="h-6 bg-white/10 rounded-full overflow-hidden relative">
           <div
-            className={`h-full transition-all duration-500 ${
-              isGoalMet ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-gradient-to-r from-pink-500 to-purple-500'
-            }`}
+            className={`h-full transition-all duration-500 bg-gradient-to-r ${currentGoal.color}`}
             style={{ width: `${progress}%` }}
           />
+          {isGoalMet && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-white font-bold text-sm">✓ COMPLETE</span>
+            </div>
+          )}
         </div>
-        {isGoalMet && (
-          <div className="mt-3 text-center">
-            <span className="text-green-400 font-bold text-lg">🎉 Goal reached! Congratulations! 🎉</span>
-          </div>
-        )}
+      </div>
+
+      {/* Goals Roadmap */}
+      <div className="mb-6">
+        <h4 className="text-white font-semibold mb-3 text-sm">Goals Roadmap</h4>
+        <div className="space-y-2">
+          {goals.map((goal, index) => {
+            const isCompleted = index < currentGoalIndex || (index === currentGoalIndex && isGoalMet)
+            const isCurrent = index === currentGoalIndex
+
+            return (
+              <div
+                key={index}
+                className={`flex items-center gap-3 p-3 rounded-lg transition ${
+                  isCurrent
+                    ? 'bg-pink-500/20 border border-pink-500/50'
+                    : isCompleted
+                    ? 'bg-green-500/10 border border-green-500/30'
+                    : 'bg-white/5 border border-white/10'
+                }`}
+              >
+                <span className="text-2xl">{goal.emoji}</span>
+                <div className="flex-1">
+                  <div className={`font-medium ${isCompleted ? 'text-green-400' : 'text-white'}`}>
+                    {goal.label}
+                  </div>
+                </div>
+                {isCompleted && <span className="text-green-400 text-xl">✓</span>}
+                {isCurrent && !isCompleted && <span className="text-pink-400 text-sm">← Current</span>}
+              </div>
+            )
+          })}
+        </div>
       </div>
 
       <div>

@@ -81,6 +81,9 @@ export async function GET(request: Request) {
             timestamp: session.created,
             status: session.payment_status,
             paymentMethod: session.payment_method_types?.[0] || 'card',
+            // Customer demographics
+            country: session.customer_details?.address?.country || 'Unknown',
+            city: session.customer_details?.address?.city || '',
             // UTM tracking data
             utm_source: metadata.utm_source || '',
             utm_medium: metadata.utm_medium || '',

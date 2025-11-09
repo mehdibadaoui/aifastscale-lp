@@ -144,12 +144,11 @@ export function GeographicInsights({ sales }: { sales: any[] }) {
   const [geoData, setGeoData] = useState<Array<{ country: string; sales: number; revenue: number }>>([])
 
   useEffect(() => {
-    // Group by country (would come from Stripe customer data)
+    // Group by country from Stripe customer data
     const countryMap = new Map<string, { sales: number; revenue: number }>()
 
     sales.forEach(sale => {
-      // This would come from sale.customer_details.address.country in real Stripe data
-      const country = 'Unknown' // Placeholder
+      const country = sale.country || 'Unknown'
       if (!countryMap.has(country)) {
         countryMap.set(country, { sales: 0, revenue: 0 })
       }
@@ -166,13 +165,29 @@ export function GeographicInsights({ sales }: { sales: any[] }) {
     setGeoData(sorted)
   }, [sales])
 
+  // Country code to flag emoji mapping
   const countryFlags: Record<string, string> = {
-    'United States': '🇺🇸',
-    'United Kingdom': '🇬🇧',
-    'Canada': '🇨🇦',
-    'Australia': '🇦🇺',
-    'UAE': '🇦🇪',
-    'Unknown': '🌍',
+    'US': '🇺🇸', 'GB': '🇬🇧', 'CA': '🇨🇦', 'AU': '🇦🇺',
+    'AE': '🇦🇪', 'SA': '🇸🇦', 'IN': '🇮🇳', 'DE': '🇩🇪',
+    'FR': '🇫🇷', 'ES': '🇪🇸', 'IT': '🇮🇹', 'NL': '🇳🇱',
+    'SE': '🇸🇪', 'NO': '🇳🇴', 'DK': '🇩🇰', 'FI': '🇫🇮',
+    'SG': '🇸🇬', 'MY': '🇲🇾', 'TH': '🇹🇭', 'PH': '🇵🇭',
+    'ID': '🇮🇩', 'JP': '🇯🇵', 'KR': '🇰🇷', 'CN': '🇨🇳',
+    'BR': '🇧🇷', 'MX': '🇲🇽', 'AR': '🇦🇷', 'EG': '🇪🇬',
+    'ZA': '🇿🇦', 'NG': '🇳🇬', 'KE': '🇰🇪', 'Unknown': '🌍',
+  }
+
+  // Country code to name mapping
+  const countryNames: Record<string, string> = {
+    'US': 'United States', 'GB': 'United Kingdom', 'CA': 'Canada',
+    'AU': 'Australia', 'AE': 'United Arab Emirates', 'SA': 'Saudi Arabia',
+    'IN': 'India', 'DE': 'Germany', 'FR': 'France', 'ES': 'Spain',
+    'IT': 'Italy', 'NL': 'Netherlands', 'SE': 'Sweden', 'NO': 'Norway',
+    'DK': 'Denmark', 'FI': 'Finland', 'SG': 'Singapore', 'MY': 'Malaysia',
+    'TH': 'Thailand', 'PH': 'Philippines', 'ID': 'Indonesia', 'JP': 'Japan',
+    'KR': 'South Korea', 'CN': 'China', 'BR': 'Brazil', 'MX': 'Mexico',
+    'AR': 'Argentina', 'EG': 'Egypt', 'ZA': 'South Africa', 'NG': 'Nigeria',
+    'KE': 'Kenya', 'Unknown': 'Unknown',
   }
 
   return (
@@ -184,20 +199,26 @@ export function GeographicInsights({ sales }: { sales: any[] }) {
 
       <div className="space-y-3">
         {geoData.length > 0 ? (
-          geoData.map((country, index) => (
-            <div key={country.country} className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl">{countryFlags[country.country] || '🌍'}</span>
-                  <div>
-                    <div className="text-white font-medium">{country.country}</div>
-                    <div className="text-white/60 text-sm">{country.sales} sales</div>
+          geoData.map((item, index) => {
+            const countryCode = item.country
+            const countryName = countryNames[countryCode] || countryCode
+            const flagEmoji = countryFlags[countryCode] || '🌍'
+
+            return (
+              <div key={countryCode + index} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{flagEmoji}</span>
+                    <div>
+                      <div className="text-white font-medium">{countryName}</div>
+                      <div className="text-white/60 text-sm">{item.sales} sales</div>
+                    </div>
                   </div>
+                  <div className="text-green-400 font-bold text-lg">${item.revenue.toFixed(2)}</div>
                 </div>
-                <div className="text-green-400 font-bold text-lg">${country.revenue.toFixed(2)}</div>
               </div>
-            </div>
-          ))
+            )
+          })
         ) : (
           <div className="text-white/60 text-center py-8">
             Geographic data will appear here once you have sales

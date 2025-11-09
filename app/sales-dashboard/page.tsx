@@ -985,7 +985,7 @@ export default function SalesDashboard() {
         <div className="mb-8">
           <GamificationPanel
             todayRevenue={data.today.revenue / 100}
-            goalRevenue={revenueGoal}
+            todaySales={data.today.sales}
           />
         </div>
 
