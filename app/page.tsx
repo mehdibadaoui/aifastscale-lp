@@ -2024,7 +2024,7 @@ export default function AgentLandingPage() {
                 <div className="overflow-hidden rounded-2xl bg-black/50">
                   <div style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
                     <video
-                      className="absolute top-0 left-0 w-full h-full object-cover"
+                      className="absolute top-0 left-0 w-full h-full object-contain"
                       playsInline
                       controls
                       preload="metadata"
@@ -2245,7 +2245,7 @@ export default function AgentLandingPage() {
                     <div className="overflow-hidden rounded-2xl bg-black">
                       <div style={{ padding: `${v.aspectRatio} 0 0 0`, position: 'relative' }}>
                         <video
-                          className="absolute top-0 left-0 w-full h-full object-cover"
+                          className="absolute top-0 left-0 w-full h-full object-contain"
                           playsInline
                           controls
                           preload="metadata"
