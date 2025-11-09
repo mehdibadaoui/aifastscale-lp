@@ -50,6 +50,16 @@ export async function POST(req: NextRequest) {
     if (utmParams.landing_page) params.append('metadata[landing_page]', utmParams.landing_page)
     if (utmParams.traffic_source) params.append('metadata[traffic_source]', utmParams.traffic_source)
 
+    // Add Facebook tracking cookies for Meta Conversions API
+    if (utmParams.fbp) params.append('metadata[fbp]', utmParams.fbp) // _fbp cookie
+    if (utmParams.fbc) params.append('metadata[fbc]', utmParams.fbc) // _fbc cookie
+
+    // Add client info for better attribution
+    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip')
+    const userAgent = req.headers.get('user-agent')
+    if (clientIp) params.append('metadata[client_ip]', clientIp)
+    if (userAgent) params.append('metadata[user_agent]', userAgent.slice(0, 500)) // Limit length
+
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
       headers: {

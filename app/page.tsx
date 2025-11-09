@@ -41,7 +41,7 @@ import {
   VolumeX,
   Maximize,
 } from 'lucide-react'
-import { trackFullCTAClick } from './utils/tracking'
+import { trackFullCTAClick, collectTrackingParams } from './utils/tracking'
 import { captureUTMParameters, storeUTMParameters } from './utils/utm-tracking'
 
 // Stripe checkout now loaded immediately for instant CTA response
@@ -466,15 +466,13 @@ export default function AgentLandingPage() {
     setTimeout(() => trackFullCTAClick(ctaLocation), 0)
 
     try {
-      // Get UTM parameters for ad attribution
-      const { getAttributionData, formatUTMForMetadata } = await import('./utils/utm-tracking')
-      const utmParams = getAttributionData()
-      const metadata = formatUTMForMetadata(utmParams)
+      // Get UTM parameters, Facebook cookies, and tracking data for ad attribution
+      const trackingParams = collectTrackingParams()
 
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ utmParams: metadata }),
+        body: JSON.stringify({ utmParams: trackingParams }),
       })
       const { url, error } = await response.json()
 

@@ -301,3 +301,97 @@ export const trackScrollDepth = (depth: number) => {
     })
   }
 }
+
+/**
+ * Get cookie value by name
+ */
+function getCookie(name: string): string | undefined {
+  if (typeof document === 'undefined') return undefined
+
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+
+  if (parts.length === 2) {
+    return parts.pop()?.split(';').shift()
+  }
+
+  return undefined
+}
+
+/**
+ * Get Facebook Browser ID (_fbp cookie)
+ * This cookie is set automatically by Meta Pixel
+ */
+export function getFacebookBrowserId(): string | undefined {
+  return getCookie('_fbp')
+}
+
+/**
+ * Get Facebook Click ID (_fbc cookie)
+ * This cookie is set when user clicks a Facebook ad
+ */
+export function getFacebookClickId(): string | undefined {
+  return getCookie('_fbc')
+}
+
+/**
+ * Collect all UTM parameters and tracking data for checkout
+ * This includes UTM params, Facebook cookies, referrer, etc.
+ */
+export function collectTrackingParams(): Record<string, any> {
+  if (typeof window === 'undefined') return {}
+
+  const urlParams = new URLSearchParams(window.location.search)
+
+  // Determine traffic source based on UTM params or referrer
+  let trafficSource = 'Direct'
+  const utmSource = urlParams.get('utm_source')
+  const utmMedium = urlParams.get('utm_medium')
+  const referrer = document.referrer
+
+  if (urlParams.has('fbclid') || utmSource?.includes('facebook') || utmSource?.includes('fb')) {
+    trafficSource = 'Facebook Ads'
+  } else if (urlParams.has('gclid') || utmSource?.includes('google') || utmSource?.includes('adwords')) {
+    trafficSource = 'Google Ads'
+  } else if (utmSource?.includes('tiktok')) {
+    trafficSource = 'TikTok Ads'
+  } else if (utmSource?.includes('instagram') || utmSource?.includes('ig')) {
+    trafficSource = 'Instagram Ads'
+  } else if (utmSource) {
+    trafficSource = utmSource
+  } else if (referrer) {
+    if (referrer.includes('facebook.com') || referrer.includes('fb.com')) {
+      trafficSource = 'Facebook'
+    } else if (referrer.includes('google.com')) {
+      trafficSource = 'Google'
+    } else if (referrer.includes('tiktok.com')) {
+      trafficSource = 'TikTok'
+    } else if (referrer.includes('instagram.com')) {
+      trafficSource = 'Instagram'
+    } else if (referrer.includes('youtube.com')) {
+      trafficSource = 'YouTube'
+    }
+  }
+
+  return {
+    // UTM Parameters
+    utm_source: urlParams.get('utm_source') || '',
+    utm_medium: urlParams.get('utm_medium') || '',
+    utm_campaign: urlParams.get('utm_campaign') || '',
+    utm_term: urlParams.get('utm_term') || '',
+    utm_content: urlParams.get('utm_content') || '',
+
+    // Ad Click IDs
+    fbclid: urlParams.get('fbclid') || '',
+    gclid: urlParams.get('gclid') || '',
+
+    // Facebook Cookies for Conversions API
+    fbp: getFacebookBrowserId() || '',
+    fbc: getFacebookClickId() || '',
+
+    // Other tracking
+    referrer: referrer || '',
+    landing_page: window.location.href,
+    traffic_source: trafficSource,
+  }
+}

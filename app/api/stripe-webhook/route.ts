@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { trackMetaPurchase } from '@/app/utils/meta-conversions'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
@@ -66,11 +67,62 @@ Keep crushing it! 🚀
         // Don't fail the webhook if notification fails
       }
 
-      // Here you could also:
-      // - Send confirmation email
-      // - Update database
-      // - Grant access to product
-      // - Track in analytics
+      // Send Purchase event to Meta Conversions API (server-side tracking)
+      try {
+        // Extract customer data
+        const email = session.customer_details?.email
+        const phone = session.customer_details?.phone
+        const name = session.customer_details?.name || ''
+        const [firstName, ...lastNameParts] = name.split(' ')
+        const lastName = lastNameParts.join(' ')
+
+        const address = session.customer_details?.address
+        const city = address?.city
+        const state = address?.state
+        const zip = address?.postal_code
+        const country = address?.country
+
+        // Get metadata for tracking
+        const metadata = session.metadata || {}
+        const fbp = metadata.fbp // _fbp cookie
+        const fbc = metadata.fbc // _fbc cookie
+        const eventSourceUrl = metadata.landing_page || 'https://aifastscale.com'
+
+        // Get client IP and user agent from headers (stored in metadata)
+        const clientIp = metadata.client_ip || req.headers.get('x-forwarded-for')?.split(',')[0]
+        const userAgent = metadata.user_agent || req.headers.get('user-agent')
+
+        // Determine product name
+        let productName = 'AI Fast Scale Course'
+        if (metadata.product_type === 'upsell') {
+          productName = 'Upsell ($17)'
+        } else if (metadata.product_type === 'downsell') {
+          productName = 'Downsell ($7)'
+        }
+
+        await trackMetaPurchase({
+          email,
+          phone,
+          firstName,
+          lastName,
+          city,
+          state,
+          zip,
+          country,
+          amount: session.amount_total || 0,
+          currency: session.currency?.toUpperCase() || 'USD',
+          orderId: session.id,
+          productName,
+          clientIp,
+          userAgent,
+          fbp,
+          fbc,
+          eventSourceUrl,
+        })
+      } catch (error) {
+        console.error('Failed to send Meta Conversions API event:', error)
+        // Don't fail the webhook if Meta tracking fails
+      }
     }
 
     return NextResponse.json({ received: true })
