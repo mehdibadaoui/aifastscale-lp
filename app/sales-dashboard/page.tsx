@@ -94,6 +94,7 @@ export default function SalesDashboard() {
   })
   const [showColumnSettings, setShowColumnSettings] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [activeTab, setActiveTab] = useState<'overview' | 'sales' | 'analytics' | 'customers' | 'insights'>('overview')
   const [timezone, setTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
   const [notificationEmail, setNotificationEmail] = useState('')
   const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(false)
@@ -580,6 +581,41 @@ export default function SalesDashboard() {
           </div>
         </div>
 
+        {/* Tab Navigation */}
+        <div className="mb-6">
+          <div className="flex gap-2 overflow-x-auto pb-2 border-b border-white/10">
+            {[
+              { key: 'overview', label: 'Overview', icon: '📊', desc: 'Key metrics & goals' },
+              { key: 'sales', label: 'Sales', icon: '💰', desc: 'Detailed transactions' },
+              { key: 'analytics', label: 'Analytics', icon: '📈', desc: 'ROI & traffic' },
+              { key: 'customers', label: 'Customers', icon: '👥', desc: 'Demographics' },
+              { key: 'insights', label: 'Insights', icon: '💡', desc: 'Forecasts & tips' },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key as any)}
+                className={`px-6 py-3 rounded-t-xl font-medium transition flex-shrink-0 ${
+                  activeTab === tab.key
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
+                    : theme === 'dark'
+                    ? 'bg-white/5 hover:bg-white/10 text-white/70 hover:text-white'
+                    : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                }`}
+              >
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{tab.icon}</span>
+                    <span>{tab.label}</span>
+                  </div>
+                  {activeTab === tab.key && (
+                    <span className="text-xs text-white/80">{tab.desc}</span>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Time Period Selector and Timezone */}
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between mb-3">
@@ -974,84 +1010,84 @@ export default function SalesDashboard() {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════ */}
-        {/* NEW ADVANCED ANALYTICS FEATURES */}
-        {/* ═══════════════════════════════════════════ */}
-
-        {/* Real-Time Sale Notifications */}
+        {/* Real-Time Sale Notifications - Always visible */}
         <RealTimeUpdates onNewSale={() => fetchSales()} />
 
-        {/* Gamification Panel */}
-        <div className="mb-8">
-          <GamificationPanel
-            todayRevenue={data.today.revenue / 100}
-            todaySales={data.today.sales}
-          />
-        </div>
+        {/* ═══════════════════════════════════════════ */}
+        {/* OVERVIEW TAB */}
+        {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'overview' && (
+          <div className="space-y-8">
+            {/* Gamification Panel */}
+            <GamificationPanel
+              todayRevenue={data.today.revenue / 100}
+              todaySales={data.today.sales}
+            />
 
-        {/* Comparison Mode */}
-        <div className="mb-8">
-          <ComparisonMode
-            currentPeriod={timePeriod}
-            onPeriodChange={(period) => setTimePeriod(period as any)}
-          />
-        </div>
-
-        {/* ROI Dashboard */}
-        <div className="mb-8">
-          <ROIDashboard days={30} />
-        </div>
-
-        {/* Smart Alerts & Insights */}
-        <div className="mb-8">
-          <SmartAlerts
-            sales={data.allSales}
-            todaySales={data.today.sales}
-            yesterdaySales={data.yesterday.sales}
-          />
-        </div>
-
-        {/* Revenue Forecast */}
-        <div className="mb-8">
-          <RevenueForecast dailySales={data.chartData} />
-        </div>
-
-        {/* Conversion Funnel */}
-        <div className="mb-8">
-          <ConversionFunnel
-            data={{
-              landingPageViews: 1000, // TODO: Get from analytics
-              addToCart: 300,
-              checkoutStarted: 200,
-              mainSales: data.products.main.sales,
-              upsellsAccepted: data.products.upsell.sales + data.products.downsell.sales,
-            }}
-          />
-        </div>
-
-        {/* Sales Heatmap */}
-        <div className="mb-8">
-          <SalesHeatmap sales={data.allSales} />
-        </div>
-
-        {/* CLV Tracker */}
-        <div className="mb-8">
-          <CLVTracker sales={data.allSales} />
-        </div>
-
-        {/* Geographic Insights */}
-        <div className="mb-8">
-          <GeographicInsights sales={data.allSales} />
-        </div>
-
-        {/* Refund Tracker */}
-        <div className="mb-8">
-          <RefundTracker refunds={[]} /* TODO: Fetch refunds from Stripe */ />
-        </div>
+            {/* Comparison Mode */}
+            <ComparisonMode
+              currentPeriod={timePeriod}
+              onPeriodChange={(period) => setTimePeriod(period as any)}
+            />
+          </div>
+        )}
 
         {/* ═══════════════════════════════════════════ */}
-        {/* END NEW FEATURES */}
+        {/* ANALYTICS TAB */}
         {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'analytics' && (
+          <div className="space-y-8">
+            {/* ROI Dashboard */}
+            <ROIDashboard days={30} />
+
+            {/* Conversion Funnel */}
+            <ConversionFunnel
+              data={{
+                landingPageViews: 1000,
+                addToCart: 300,
+                checkoutStarted: 200,
+                mainSales: data.products.main.sales,
+                upsellsAccepted: data.products.upsell.sales + data.products.downsell.sales,
+              }}
+            />
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* CUSTOMERS TAB */}
+        {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'customers' && (
+          <div className="space-y-8">
+            {/* CLV Tracker */}
+            <CLVTracker sales={data.allSales} />
+
+            {/* Geographic Insights */}
+            <GeographicInsights sales={data.allSales} />
+
+            {/* Refund Tracker */}
+            <RefundTracker refunds={[]} />
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* INSIGHTS TAB */}
+        {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'insights' && (
+          <div className="space-y-8">
+            {/* Smart Alerts & Insights */}
+            <SmartAlerts
+              sales={data.allSales}
+              todaySales={data.today.sales}
+              yesterdaySales={data.yesterday.sales}
+            />
+
+            {/* Revenue Forecast */}
+            <RevenueForecast dailySales={data.chartData} />
+
+            {/* Sales Heatmap */}
+            <SalesHeatmap sales={data.allSales} />
+          </div>
+        )}
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
