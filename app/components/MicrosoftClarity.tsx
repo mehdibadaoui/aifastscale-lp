@@ -11,11 +11,10 @@ export default function MicrosoftClarity() {
 
   return (
     <>
-      {/* PARTYTOWN: Load Microsoft Clarity in Web Worker (off main thread) */}
+      {/* Load Microsoft Clarity - Already delayed by 5s in LazyTrackingPixels */}
       <Script
         id="microsoft-clarity-init"
         strategy="afterInteractive"
-        type="text/partytown"
       >
         {`
           (function(c,l,a,r,i,t,y){

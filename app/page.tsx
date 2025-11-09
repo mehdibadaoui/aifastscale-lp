@@ -954,9 +954,9 @@ export default function AgentLandingPage() {
               </p>
             </div>
           </div>
-          <h2 className="font-serif mb-4 text-center text-2xl leading-tight font-black text-gray-900 md:mb-6 md:text-5xl">
+          <div className="font-serif mb-4 text-center text-2xl leading-tight font-black text-gray-900 md:mb-6 md:text-5xl" role="heading" aria-level="2">
             Zero Risk, All Reward
-          </h2>
+          </div>
           <div className="mx-auto mb-6 max-w-3xl space-y-4 text-sm leading-relaxed text-gray-700 md:mb-8 md:space-y-5 md:text-lg">
             <p className="text-center">
               Try{' '}
@@ -1057,9 +1057,9 @@ export default function AgentLandingPage() {
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-serif mb-1 text-lg font-black text-white">
+                  <div className="font-serif mb-1 text-lg font-black text-white">
                     Content Protected
-                  </h3>
+                  </div>
                   <p className="text-sm leading-relaxed text-gray-300">
                     This content is protected. Please respect our intellectual
                     property rights.
@@ -1318,6 +1318,7 @@ export default function AgentLandingPage() {
                                       }
                                     }
                                   }}
+                                  aria-label={videoPlaying ? "Pause video" : "Play video"}
                                   className="transform rounded-full bg-white/20 p-2 backdrop-blur-md transition-all duration-200 hover:scale-110 hover:bg-white/30 active:scale-95 md:p-3"
                                 >
                                   {videoPlaying ? (
@@ -1336,6 +1337,7 @@ export default function AgentLandingPage() {
                                       videoRef.current.muted = newMuted
                                     }
                                   }}
+                                  aria-label={videoMuted ? "Unmute video" : "Mute video"}
                                   className="transform rounded-full bg-white/20 p-2 backdrop-blur-md transition-all duration-200 hover:scale-110 hover:bg-white/30 active:scale-95 md:p-3"
                                 >
                                   {videoMuted ? (
@@ -1354,6 +1356,7 @@ export default function AgentLandingPage() {
                                       }
                                     }
                                   }}
+                                  aria-label="Enter fullscreen mode"
                                   className="ml-auto transform rounded-full bg-white/20 p-2 backdrop-blur-md transition-all duration-200 hover:scale-110 hover:bg-white/30 active:scale-95 md:p-3"
                                 >
                                   <Maximize className="h-5 w-5 text-white md:h-6 md:w-6" />

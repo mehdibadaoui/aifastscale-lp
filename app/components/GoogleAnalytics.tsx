@@ -13,13 +13,12 @@ export default function GoogleAnalytics() {
 
   return (
     <>
-      {/* PARTYTOWN: Load gtag.js in Web Worker (off main thread) */}
+      {/* Load gtag.js - Already delayed by 5s in LazyTrackingPixels */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
-        type="text/partytown"
       />
-      <Script id="google-analytics" strategy="afterInteractive" type="text/partytown">
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

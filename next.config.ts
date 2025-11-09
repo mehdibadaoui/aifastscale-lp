@@ -1,12 +1,11 @@
 import type { NextConfig } from "next";
-import { copyLibFiles } from '@builder.io/partytown/utils';
-import path from 'path';
 
 const nextConfig: NextConfig = {
   // CRITICAL PERFORMANCE OPTIMIZATIONS
   compress: true,
   poweredByHeader: false, // Remove X-Powered-By header
   reactStrictMode: true, // Better performance in production
+  swcMinify: true, // Use SWC minifier (faster than Terser)
 
   // Modern JavaScript only (removes legacy polyfills)
   compiler: {
@@ -64,6 +63,15 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
         source: '/:path*',
         headers: [
           {
@@ -78,15 +86,13 @@ const nextConfig: NextConfig = {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
           },
-        ],
-      },
-      // Partytown proxy for tracking scripts (moves to Web Worker)
-      {
-        source: '/~partytown/:path*',
-        headers: [
           {
-            key: 'Access-Control-Allow-Origin',
-            value: '*',
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
           },
         ],
       },
@@ -95,7 +101,7 @@ const nextConfig: NextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'react', 'react-dom'],
   },
 
   // External packages for serverless functions
