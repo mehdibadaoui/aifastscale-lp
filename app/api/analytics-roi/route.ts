@@ -138,15 +138,19 @@ export async function GET(req: NextRequest) {
       }))
 
     // Calculate totals
-    const totals = {
-      sales: sortedChannels.reduce((sum, ch) => sum + ch.sales, 0),
-      revenue: sortedChannels.reduce((sum, ch) => sum + ch.revenue, 0),
-      spend: sortedChannels.reduce((sum, ch) => sum + ch.spend, 0),
-      profit: sortedChannels.reduce((sum, ch) => sum + ch.profit, 0),
-    }
+    const totalSales = sortedChannels.reduce((sum, ch) => sum + ch.sales, 0)
+    const totalRevenue = sortedChannels.reduce((sum, ch) => sum + ch.revenue, 0)
+    const totalSpend = sortedChannels.reduce((sum, ch) => sum + ch.spend, 0)
+    const totalProfit = sortedChannels.reduce((sum, ch) => sum + ch.profit, 0)
 
-    totals['roi'] = totals.spend > 0 ? ((totals.profit / totals.spend) * 100) : 0
-    totals['roas'] = totals.spend > 0 ? (totals.revenue / totals.spend) : 0
+    const totals = {
+      sales: totalSales,
+      revenue: totalRevenue,
+      spend: totalSpend,
+      profit: totalProfit,
+      roi: totalSpend > 0 ? ((totalProfit / totalSpend) * 100) : 0,
+      roas: totalSpend > 0 ? (totalRevenue / totalSpend) : 0,
+    }
 
     return NextResponse.json({
       success: true,
