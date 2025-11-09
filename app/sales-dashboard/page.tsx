@@ -944,7 +944,8 @@ export default function SalesDashboard() {
           </div>
         </div>
 
-        {/* Week vs Last Week Comparison */}
+        {/* Week vs Last Week Comparison - Only show on Overview tab */}
+        {activeTab === 'overview' && (
         <div className="mb-8 bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
             📊 Week vs Last Week Comparison
@@ -1009,6 +1010,7 @@ export default function SalesDashboard() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Real-Time Sale Notifications - Always visible */}
         <RealTimeUpdates onNewSale={() => fetchSales()} />

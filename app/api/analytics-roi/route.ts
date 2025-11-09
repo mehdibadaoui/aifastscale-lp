@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  maxNetworkRetries: 3, // Retry up to 3 times on network errors
+  timeout: 20000, // 20 second timeout
+})
 
 /**
  * Analytics ROI API
