@@ -116,7 +116,6 @@ export default function RootLayout({
 
         {/* Only critical preconnects - DNS resolution happens early */}
         <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fast.wistia.net" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
         {/* Hreflang Tags for International SEO */}
@@ -312,7 +311,6 @@ export default function RootLayout({
             `,
           }}
         />
-        <script type="text/partytown" src="https://fast.wistia.net/assets/external/E-v1.js"></script>
       </body>
     </html>
   )

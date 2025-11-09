@@ -1181,17 +1181,17 @@ export default function AgentLandingPage() {
                           className="group relative"
                           style={{ padding: '56.67% 0 0 0' }}
                         >
-                          {/* HTML5 Video - Fast, Reliable, Full Control - OPTIMIZED: 79% smaller (8.5MB) */}
+                          {/* HTML5 Video - ULTRA OPTIMIZED: 62MB→32MB (50% smaller), preload metadata only */}
                           <video
                             ref={videoRef}
                             className="absolute top-0 left-0 h-full w-full bg-black object-cover"
                             playsInline
-                            preload="auto"
-                            poster="/images/hero-video-poster.jpg"
+                            preload="metadata"
+                            poster="/videos/VSL-thumbnail.jpg"
                             muted={videoMuted}
                           >
                             <source
-                              src="/videos/Hero-VSL.mp4"
+                              src="/videos/VSL-optimized.mp4"
                               type="video/mp4"
                             />
                             Your browser does not support the video tag.
@@ -2022,21 +2022,17 @@ export default function AgentLandingPage() {
             >
               <div className="p-3 md:p-4">
                 <div className="overflow-hidden rounded-2xl bg-black/50">
-                  <div className="wistia_responsive_padding" style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
-                    <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                      <iframe
-                        src="https://fast.wistia.net/embed/iframe/4o934arsbs?web_component=true&seo=true&videoFoam=true"
-                        title="Mr Lucas Video"
-                        allow="autoplay; fullscreen"
-                        allowTransparency={true}
-                        frameBorder="0"
-                        scrolling="no"
-                        className="wistia_embed"
-                        name="wistia_embed"
-                        width="100%"
-                        height="100%"
-                      />
-                    </div>
+                  <div style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                    <video
+                      className="absolute top-0 left-0 w-full h-full object-cover"
+                      playsInline
+                      controls
+                      preload="metadata"
+                      poster="/videos/Mr-Lucas-thumbnail.jpg"
+                    >
+                      <source src="/videos/Mr-Lucas-optimized.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 </div>
               </div>
@@ -2223,13 +2219,15 @@ export default function AgentLandingPage() {
             {[
               {
                 title: 'Agent Steven Video',
-                wistiaId: 'k1gfuxd7uw',
-                aspectRatio: '175.83%', // 9:16 vertical (Wistia exact ratio)
+                videoSrc: '/videos/Steven-optimized.mp4',
+                posterSrc: '/videos/Steven-thumbnail.jpg',
+                aspectRatio: '177.78%', // 9:16 vertical
               },
               {
                 title: 'Agent Gabriel Video',
-                wistiaId: 'eilfzivcqu',
-                aspectRatio: '177.22%', // 9:16 vertical (Wistia exact ratio)
+                videoSrc: '/videos/Gabriel-optimized.mp4',
+                posterSrc: '/videos/Gabriel-thumbnail.jpg',
+                aspectRatio: '177.78%', // 9:16 vertical
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
@@ -2245,21 +2243,17 @@ export default function AgentLandingPage() {
                       </div>
                     </div>
                     <div className="overflow-hidden rounded-2xl bg-black">
-                      <div className="wistia_responsive_padding" style={{ padding: `${v.aspectRatio} 0 0 0`, position: 'relative' }}>
-                        <div className="wistia_responsive_wrapper" style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
-                          <iframe
-                            src={`https://fast.wistia.net/embed/iframe/${v.wistiaId}?web_component=true&seo=true&videoFoam=true`}
-                            title={v.title}
-                            allow="autoplay; fullscreen"
-                            allowTransparency={true}
-                            frameBorder="0"
-                            scrolling="no"
-                            className="wistia_embed"
-                            name="wistia_embed"
-                            width="100%"
-                            height="100%"
-                          />
-                        </div>
+                      <div style={{ padding: `${v.aspectRatio} 0 0 0`, position: 'relative' }}>
+                        <video
+                          className="absolute top-0 left-0 w-full h-full object-cover"
+                          playsInline
+                          controls
+                          preload="metadata"
+                          poster={v.posterSrc}
+                        >
+                          <source src={v.videoSrc} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
                       </div>
                     </div>                  </div>
                   <div className="bg-gradient-to-t from-gray-50 to-white p-4 md:p-6">
