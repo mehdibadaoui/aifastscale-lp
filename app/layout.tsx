@@ -119,6 +119,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
+        {/* HERO OPTIMIZATION: Preload critical hero assets for instant LCP */}
+        <link rel="preload" href="/videos/VSL-thumbnail.jpg" as="image" fetchPriority="high" />
+        <link rel="preload" href="/videos/VSL-optimized.mp4" as="video" type="video/mp4" />
+
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
         <link rel="alternate" hrefLang="ar" href="https://aifastscale.com/ar" />

@@ -1181,7 +1181,7 @@ export default function AgentLandingPage() {
                           className="group relative"
                           style={{ padding: '56.67% 0 0 0' }}
                         >
-                          {/* HTML5 Video - ULTRA OPTIMIZED: 62MB→32MB (50% smaller), preload metadata only */}
+                          {/* HTML5 Video - ULTRA OPTIMIZED: 62MB→32MB (50% smaller), HIGH PRIORITY for instant LCP */}
                           <video
                             ref={videoRef}
                             className="absolute top-0 left-0 h-full w-full bg-black object-cover"
