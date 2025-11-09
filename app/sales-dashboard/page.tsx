@@ -1225,7 +1225,126 @@ export default function SalesDashboard() {
               </div>
             </div>
 
-            {/* Sales Table will be added here from below */}
+            {/* Sales Table */}
+            <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 overflow-hidden">
+              <div className="p-6 border-b border-white/20 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                    📋 All Sales
+                  </h2>
+                  <p className="text-white/60 text-sm mt-1">
+                    Showing {filteredSales.length} of {data.allSales.length} sales
+                  </p>
+                </div>
+
+                {/* Column Settings */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowColumnSettings(!showColumnSettings)}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-medium transition backdrop-blur-lg border border-white/20 flex items-center gap-2"
+                  >
+                    ⚙️ Columns
+                  </button>
+
+                  {showColumnSettings && (
+                    <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-white/20 rounded-xl shadow-2xl p-4 z-10">
+                      <h3 className="text-white font-semibold mb-3 text-sm">Show/Hide Columns</h3>
+                      <div className="space-y-2">
+                        {Object.keys(visibleColumns).map((col) => (
+                          <label key={col} className="flex items-center gap-2 cursor-pointer hover:bg-white/5 p-2 rounded-lg transition">
+                            <input
+                              type="checkbox"
+                              checked={visibleColumns[col as keyof typeof visibleColumns]}
+                              onChange={(e) =>
+                                setVisibleColumns({ ...visibleColumns, [col]: e.target.checked })
+                              }
+                              className="w-4 h-4 rounded accent-purple-600"
+                            />
+                            <span className="text-white/80 text-sm capitalize">{col === 'date' ? 'Date & Time' : col}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {data.loading ? (
+                <div className="p-12 text-center text-white/50">
+                  <div className="animate-spin text-5xl mb-4">⏳</div>
+                  <p className="text-lg">Loading sales data...</p>
+                </div>
+              ) : filteredSales.length === 0 ? (
+                <div className="p-12 text-center text-white/50">
+                  <div className="text-5xl mb-4">📭</div>
+                  <p className="text-lg">
+                    {searchTerm || filterProduct !== 'all'
+                      ? 'No sales match your filters'
+                      : 'No sales yet. Sales will appear here automatically!'}
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-white/5">
+                      <tr>
+                        {visibleColumns.date && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Date & Time</th>}
+                        {visibleColumns.customer && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Customer</th>}
+                        {visibleColumns.email && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Email</th>}
+                        {visibleColumns.product && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Product</th>}
+                        {visibleColumns.amount && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Amount</th>}
+                        {visibleColumns.payment && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Payment</th>}
+                        {visibleColumns.status && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Status</th>}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/10">
+                      {filteredSales.map((sale) => (
+                        <tr key={sale.id} className="hover:bg-white/5 transition">
+                          {visibleColumns.date && (
+                            <td className="px-6 py-4 text-white/90">
+                              <div className="text-sm">
+                                <div className="font-medium">{sale.date}</div>
+                                <div className="text-white/60">{sale.time}</div>
+                              </div>
+                            </td>
+                          )}
+                          {visibleColumns.customer && <td className="px-6 py-4 text-white/90 font-medium">{sale.customerName}</td>}
+                          {visibleColumns.email && <td className="px-6 py-4 text-white/70 text-sm">{sale.email}</td>}
+                          {visibleColumns.product && (
+                            <td className="px-6 py-4">
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                  sale.productType === 'main'
+                                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                                    : sale.productType === 'upsell'
+                                    ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                                    : 'bg-orange-500/20 text-orange-300 border border-orange-500/30'
+                                }`}
+                              >
+                                {sale.product}
+                              </span>
+                            </td>
+                          )}
+                          {visibleColumns.amount && (
+                            <td className="px-6 py-4 text-white/90 font-bold text-lg">
+                              ${(sale.amount / 100).toFixed(2)}
+                            </td>
+                          )}
+                          {visibleColumns.payment && <td className="px-6 py-4 text-white/70 text-sm capitalize">{sale.paymentMethod}</td>}
+                          {visibleColumns.status && (
+                            <td className="px-6 py-4">
+                              <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/30">
+                                ✓ Paid
+                              </span>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -1285,386 +1404,6 @@ export default function SalesDashboard() {
             <SalesHeatmap sales={data.allSales} />
           </div>
         )}
-
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Revenue Chart */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              📈 Revenue Trend (Last 7 Days)
-            </h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={data.chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis dataKey="date" stroke="#fff" fontSize={12} />
-                <YAxis stroke="#fff" fontSize={12} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Legend />
-                <Line type="monotone" dataKey="revenue" stroke="#10B981" strokeWidth={3} name="Revenue ($)" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Sales Chart */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              📊 Sales Count (Last 7 Days)
-            </h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={data.chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis dataKey="date" stroke="#fff" fontSize={12} />
-                <YAxis stroke="#fff" fontSize={12} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Legend />
-                <Bar dataKey="sales" fill="#3B82F6" name="Sales" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Product Breakdown with Pie Chart */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Pie Chart */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              🥧 Product Distribution
-            </h2>
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={productDistribution}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={(entry) => `${entry.name}: ${entry.value}`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {productDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Product Stats Cards */}
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-white mb-6">💼 Product Breakdown</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Main Product */}
-              <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-2xl">
-                    🎯
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Main Course ($37)</p>
-                    <p className="text-white font-bold text-xl">{data.products.main.sales} sales</p>
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">
-                  ${(data.products.main.revenue / 100).toFixed(2)}
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-blue-500 transition-all duration-500"
-                    style={{
-                      width: `${data.totalRevenue > 0 ? (data.products.main.revenue / data.totalRevenue) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-                <p className="text-white/50 text-xs mt-2">
-                  {data.totalRevenue > 0 ? ((data.products.main.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
-                </p>
-              </div>
-
-              {/* Upsell */}
-              <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-2xl">
-                    ⬆️
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Upsell ($17)</p>
-                    <p className="text-white font-bold text-xl">{data.products.upsell.sales} sales</p>
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">
-                  ${(data.products.upsell.revenue / 100).toFixed(2)}
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-purple-500 transition-all duration-500"
-                    style={{
-                      width: `${data.totalRevenue > 0 ? (data.products.upsell.revenue / data.totalRevenue) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-                <p className="text-white/50 text-xs mt-2">
-                  {data.totalRevenue > 0 ? ((data.products.upsell.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
-                </p>
-              </div>
-
-              {/* Downsell */}
-              <div className="bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 transition">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-2xl">
-                    ⬇️
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Downsell ($7)</p>
-                    <p className="text-white font-bold text-xl">{data.products.downsell.sales} sales</p>
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">
-                  ${(data.products.downsell.revenue / 100).toFixed(2)}
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-orange-500 transition-all duration-500"
-                    style={{
-                      width: `${data.totalRevenue > 0 ? (data.products.downsell.revenue / data.totalRevenue) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-                <p className="text-white/50 text-xs mt-2">
-                  {data.totalRevenue > 0 ? ((data.products.downsell.revenue / data.totalRevenue) * 100).toFixed(0) : 0}% of total revenue
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Customer Insights */}
-        <div className="mb-8 bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-          <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-            👥 Customer Insights
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            {/* Total Unique Customers */}
-            <div className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl p-5 border border-blue-500/30">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-white/70 text-sm">Unique Customers</p>
-                <span className="text-2xl">👤</span>
-              </div>
-              <p className="text-4xl font-bold text-white">{insights.totalUniqueCustomers}</p>
-              <p className="text-white/50 text-xs mt-2">Total unique buyers</p>
-            </div>
-
-            {/* Repeat Customers */}
-            <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl p-5 border border-purple-500/30">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-white/70 text-sm">Repeat Customers</p>
-                <span className="text-2xl">🔄</span>
-              </div>
-              <p className="text-4xl font-bold text-white">{insights.repeatCustomers}</p>
-              <p className="text-white/50 text-xs mt-2">
-                {insights.totalUniqueCustomers > 0 ? ((insights.repeatCustomers / insights.totalUniqueCustomers) * 100).toFixed(1) : 0}% return rate
-              </p>
-            </div>
-
-            {/* Average Sales Per Customer */}
-            <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-5 border border-green-500/30">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-white/70 text-sm">Avg Sales/Customer</p>
-                <span className="text-2xl">📊</span>
-              </div>
-              <p className="text-4xl font-bold text-white">
-                {insights.totalUniqueCustomers > 0 ? (data.totalSales / insights.totalUniqueCustomers).toFixed(1) : '0'}
-              </p>
-              <p className="text-white/50 text-xs mt-2">Sales per unique customer</p>
-            </div>
-          </div>
-
-          {/* Top Customers */}
-          {insights.topCustomers.length > 0 && (
-            <div>
-              <h3 className="text-white font-semibold mb-4">🏆 Top 5 Customers by Revenue</h3>
-              <div className="space-y-3">
-                {insights.topCustomers.map((customer, index) => (
-                  <div
-                    key={customer.email}
-                    className="bg-white/5 rounded-xl p-4 flex items-center justify-between hover:bg-white/10 transition"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center font-bold text-white">
-                        #{index + 1}
-                      </div>
-                      <div>
-                        <p className="text-white font-medium">{customer.email}</p>
-                        <p className="text-white/60 text-sm">{customer.sales} purchase{customer.sales > 1 ? 's' : ''}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-white">${(customer.revenue / 100).toFixed(2)}</p>
-                      <p className="text-white/50 text-xs">Total revenue</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Filters */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 mb-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="🔍 Search by email, name, or product..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-            <select
-              value={filterProduct}
-              onChange={(e) => setFilterProduct(e.target.value)}
-              className="px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-              style={{ colorScheme: 'dark' }}
-            >
-              <option value="all" style={{ backgroundColor: '#1e293b', color: '#fff' }}>All Products</option>
-              <option value="main" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Main Course Only</option>
-              <option value="upsell" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Upsell Only</option>
-              <option value="downsell" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Downsell Only</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Sales Table */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 overflow-hidden">
-          <div className="p-6 border-b border-white/20 flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                📋 All Sales
-              </h2>
-              <p className="text-white/60 text-sm mt-1">
-                Showing {filteredSales.length} of {data.allSales.length} sales
-              </p>
-            </div>
-
-            {/* Column Settings */}
-            <div className="relative">
-              <button
-                onClick={() => setShowColumnSettings(!showColumnSettings)}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-medium transition backdrop-blur-lg border border-white/20 flex items-center gap-2"
-              >
-                ⚙️ Columns
-              </button>
-
-              {showColumnSettings && (
-                <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-white/20 rounded-xl shadow-2xl p-4 z-10">
-                  <h3 className="text-white font-semibold mb-3 text-sm">Show/Hide Columns</h3>
-                  <div className="space-y-2">
-                    {Object.keys(visibleColumns).map((col) => (
-                      <label key={col} className="flex items-center gap-2 cursor-pointer hover:bg-white/5 p-2 rounded-lg transition">
-                        <input
-                          type="checkbox"
-                          checked={visibleColumns[col as keyof typeof visibleColumns]}
-                          onChange={(e) =>
-                            setVisibleColumns({ ...visibleColumns, [col]: e.target.checked })
-                          }
-                          className="w-4 h-4 rounded accent-purple-600"
-                        />
-                        <span className="text-white/80 text-sm capitalize">{col === 'date' ? 'Date & Time' : col}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {data.loading ? (
-            <div className="p-12 text-center text-white/50">
-              <div className="animate-spin text-5xl mb-4">⏳</div>
-              <p className="text-lg">Loading sales data...</p>
-            </div>
-          ) : filteredSales.length === 0 ? (
-            <div className="p-12 text-center text-white/50">
-              <div className="text-5xl mb-4">📭</div>
-              <p className="text-lg">
-                {searchTerm || filterProduct !== 'all'
-                  ? 'No sales match your filters'
-                  : 'No sales yet. Sales will appear here automatically!'}
-              </p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-white/5">
-                  <tr>
-                    {visibleColumns.date && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Date & Time</th>}
-                    {visibleColumns.customer && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Customer</th>}
-                    {visibleColumns.email && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Email</th>}
-                    {visibleColumns.product && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Product</th>}
-                    {visibleColumns.amount && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Amount</th>}
-                    {visibleColumns.payment && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Payment</th>}
-                    {visibleColumns.status && <th className="px-6 py-4 text-left text-sm font-semibold text-white/80">Status</th>}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10">
-                  {filteredSales.map((sale) => (
-                    <tr key={sale.id} className="hover:bg-white/5 transition">
-                      {visibleColumns.date && (
-                        <td className="px-6 py-4 text-white/90">
-                          <div className="text-sm">
-                            <div className="font-medium">{sale.date}</div>
-                            <div className="text-white/60">{sale.time}</div>
-                          </div>
-                        </td>
-                      )}
-                      {visibleColumns.customer && <td className="px-6 py-4 text-white/90 font-medium">{sale.customerName}</td>}
-                      {visibleColumns.email && <td className="px-6 py-4 text-white/70 text-sm">{sale.email}</td>}
-                      {visibleColumns.product && (
-                        <td className="px-6 py-4">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              sale.productType === 'main'
-                                ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                                : sale.productType === 'upsell'
-                                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                                : 'bg-orange-500/20 text-orange-300 border border-orange-500/30'
-                            }`}
-                          >
-                            {sale.product}
-                          </span>
-                        </td>
-                      )}
-                      {visibleColumns.amount && (
-                        <td className="px-6 py-4 text-white/90 font-bold text-lg">
-                          ${(sale.amount / 100).toFixed(2)}
-                        </td>
-                      )}
-                      {visibleColumns.payment && <td className="px-6 py-4 text-white/70 text-sm capitalize">{sale.paymentMethod}</td>}
-                      {visibleColumns.status && (
-                        <td className="px-6 py-4">
-                          <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/30">
-                            ✓ Paid
-                          </span>
-                        </td>
-                      )}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
 
         {/* Footer Stats */}
         <div className="mt-8 text-center text-white/40 text-sm">
