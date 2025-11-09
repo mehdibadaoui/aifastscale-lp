@@ -139,6 +139,39 @@ export async function POST(req: NextRequest) {
       paymentIntentId: upsellPayment.id,
     })
 
+    // Send Telegram notification for upsell
+    try {
+      const telegramEnabled = process.env.TELEGRAM_NOTIFICATIONS_ENABLED === 'true'
+      const botToken = process.env.TELEGRAM_BOT_TOKEN
+      const chatId = process.env.TELEGRAM_CHAT_ID
+
+      if (telegramEnabled && botToken && chatId) {
+        const upsellAmount = (amount / 100).toFixed(2)
+        const customerEmail = session.customer_details?.email || session.customer_email || 'No email'
+        const customerName = session.customer_details?.name || 'N/A'
+
+        const message = `
+💎 <b>UPSELL PURCHASED!</b> 💎
+
+💰 Amount: $${upsellAmount}
+📦 Product: ${description}
+👤 Customer: ${customerName}
+📧 Email: ${customerEmail}
+
+You're on fire! 🔥
+        `.trim()
+
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/send-telegram`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ botToken, chatId, message }),
+        })
+      }
+    } catch (error) {
+      console.error('Failed to send Telegram notification for upsell:', error)
+      // Don't fail the upsell if notification fails
+    }
+
     return NextResponse.json({
       success: true,
       paymentIntentId: upsellPayment.id,
