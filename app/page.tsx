@@ -2022,7 +2022,7 @@ export default function AgentLandingPage() {
             >
               <div className="p-3 md:p-4">
                 <div className="overflow-hidden rounded-2xl bg-black/50">
-                  <div style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                  <div style={{ padding: '133.33% 0 0 0', position: 'relative' }}>
                     <video
                       className="absolute top-0 left-0 w-full h-full object-cover"
                       playsInline
@@ -2221,13 +2221,13 @@ export default function AgentLandingPage() {
                 title: 'Agent Steven Video',
                 videoSrc: '/videos/Steven-optimized.mp4',
                 posterSrc: '/videos/Steven-thumbnail.jpg',
-                aspectRatio: '177.78%', // 9:16 vertical
+                aspectRatio: '133.33%', // 4:3 vertical - matches video better
               },
               {
                 title: 'Agent Gabriel Video',
                 videoSrc: '/videos/Gabriel-optimized.mp4',
                 posterSrc: '/videos/Gabriel-thumbnail.jpg',
-                aspectRatio: '177.78%', // 9:16 vertical
+                aspectRatio: '133.33%', // 4:3 vertical - matches video better
               },
             ].map((v, i) => (
               <Card key={`video-${i}-${v.title}`}>
