@@ -164,14 +164,6 @@ export default function UpsellOffer({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm overflow-y-auto">
       <div className="relative w-full max-w-5xl max-h-[95vh] overflow-y-auto rounded-3xl border-4 border-yellow-500 bg-gradient-to-br from-gray-900 via-black to-gray-900 shadow-2xl">
-        {/* Close Button */}
-        <button
-          onClick={handleDismiss}
-          className="absolute top-4 right-4 z-10 rounded-full bg-gray-800 p-2 text-gray-400 transition-colors hover:bg-gray-700 hover:text-white"
-          aria-label="Close"
-        >
-          <X className="h-6 w-6" />
-        </button>
 
         {!showDownsell ? (
           /* ========== OTO $17 OFFER ========== */
@@ -355,9 +347,9 @@ export default function UpsellOffer({
             <button
               onClick={handleDismiss}
               disabled={isProcessing}
-              className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-4 text-lg font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-4 text-xs text-gray-500 hover:text-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
-              No thanks, show me a smaller version (I want to save less money)
+              No thanks, show me a smaller version
             </button>
 
             {/* Error Message */}
@@ -544,9 +536,9 @@ export default function UpsellOffer({
             <button
               onClick={handleDismiss}
               disabled={isProcessing}
-              className="w-full rounded-lg border-2 border-gray-600 bg-transparent px-6 py-4 text-lg font-semibold text-gray-400 transition-all hover:border-gray-500 hover:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-4 text-xs text-gray-500 hover:text-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
-              No thanks, I don't want $290 in savings for $7
+              No thanks, I'll pass on this offer
             </button>
 
             {/* Error Message */}

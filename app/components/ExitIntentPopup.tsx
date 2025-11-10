@@ -60,14 +60,6 @@ export default function ExitIntentPopup() {
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="relative mx-4 max-w-lg animate-in fade-in zoom-in-95 duration-200">
-        {/* Close button - Clean & Subtle */}
-        <button
-          onClick={handleClose}
-          className="absolute -right-3 -top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-all hover:bg-gray-100 hover:scale-110"
-          aria-label="Close"
-        >
-          <X className="h-5 w-5" />
-        </button>
 
         {/* Popup content - Clean White Card */}
         <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-2xl md:p-10">
@@ -121,10 +113,10 @@ export default function ExitIntentPopup() {
               </div>
             </button>
 
-            {/* No thanks - Subtle */}
+            {/* No thanks - Tiny */}
             <button
               onClick={handleClose}
-              className="text-sm text-gray-400 underline transition-colors hover:text-gray-600"
+              className="text-xs text-gray-400 underline transition-colors hover:text-gray-600"
             >
               Continue browsing
             </button>
