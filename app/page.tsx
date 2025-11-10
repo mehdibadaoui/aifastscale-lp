@@ -1494,6 +1494,25 @@ export default function AgentLandingPage() {
               </div>
 
               <div className="flex flex-col items-center gap-4 px-2 pt-4 md:gap-6">
+                {/* Try Free Demo Button */}
+                <a
+                  href="/try-demo"
+                  className="group relative inline-block w-full max-w-3xl"
+                >
+                  <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 opacity-50 blur-lg transition duration-300 group-hover:opacity-75"></div>
+                  <div className="relative flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 px-4 py-3 text-sm font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 group-hover:scale-105 md:gap-3 md:px-10 md:py-4 md:text-lg">
+                    <Sparkles className="h-4 w-4 md:h-6 md:w-6" />
+                    <span className="whitespace-nowrap">
+                      Try Free Demo - See It Work
+                    </span>
+                    <ArrowRight className="h-4 w-4 md:h-6 md:w-6" />
+                  </div>
+                </a>
+
+                <div className="text-center text-sm text-gray-400 md:text-base">
+                  <span className="font-semibold">OR</span>
+                </div>
+
                 <div className="space-y-2 text-center md:space-y-3">
                   <div className="price-reveal">
                     <div className="flex flex-wrap items-center justify-center gap-2 px-2">
