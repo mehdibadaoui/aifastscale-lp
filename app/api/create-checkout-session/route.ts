@@ -44,7 +44,6 @@ export async function POST(req: NextRequest) {
       'payment_method_types[0]': 'card',
       // BRANDING: Show logo and brand colors for trust
       'custom_text[submit][message]': '🔒 Secure payment • 30-day money-back guarantee',
-      'custom_text[shipping_address][message]': '✨ Instant access after purchase',
       'submit_type': 'pay', // Shows "Pay $37" instead of generic "Subscribe"
       // CVR OPTIMIZATION: Allow promo codes for urgency/scarcity
       'allow_promotion_codes': 'true', // Customers can use discount codes
