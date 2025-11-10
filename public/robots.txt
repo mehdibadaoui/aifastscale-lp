@@ -2,8 +2,8 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private pages (add if needed)
-# Disallow: /admin/
+# Disallow demo page (internal testing only)
+Disallow: /try-demo
 
 # Sitemap location
 Sitemap: https://aifastscale.com/sitemap.xml
