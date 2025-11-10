@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-
-// Meta Pixel loads IMMEDIATELY for ad tracking (critical for Facebook ads!)
-const MetaPixel = dynamic(() => import('./MetaPixel'), { ssr: false })
+import MetaPixel from './MetaPixel' // Direct import - NO dynamic loading!
 
 // Other pixels load with delay for performance
 const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), { ssr: false })
@@ -28,7 +26,7 @@ export default function LazyTrackingPixels() {
 
   return (
     <>
-      {/* Meta Pixel loads IMMEDIATELY - critical for ad tracking */}
+      {/* Meta Pixel loads IMMEDIATELY - NO dynamic import! */}
       <MetaPixel />
 
       {/* Other pixels load after delay */}
