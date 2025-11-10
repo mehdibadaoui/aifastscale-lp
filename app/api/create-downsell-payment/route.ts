@@ -6,18 +6,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 export async function POST(req: NextRequest) {
   try {
     // Create Stripe Checkout Session for Downsell ($7)
-    // Using dynamic pricing for test/live mode compatibility
+    // IMPORTANT: Using permanent price ID for dashboard tracking
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: '$10M Personal Brand Blueprint',
-              description: '5-Week System to Build a $10M Personal Brand',
-            },
-            unit_amount: 700, // $7.00 in cents
-          },
+          price: process.env.NEXT_PUBLIC_STRIPE_UPSELL_7_PRICE_ID!,
           quantity: 1,
         },
       ],
@@ -28,6 +21,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         product: 'blueprint',
         price: 7,
+        product_type: 'downsell', // CRITICAL: Must match webhook expectation
         type: 'downsell',
       },
     })

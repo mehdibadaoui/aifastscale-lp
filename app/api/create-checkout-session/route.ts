@@ -27,16 +27,13 @@ export async function POST(req: NextRequest) {
 
     // Create checkout session using direct Stripe API call (SDK doesn't work in serverless)
     // CONVERSION OPTIMIZED: Removed setup_future_usage to reduce 3D Secure friction
+    // TRACKING FIX: Use permanent price ID (not price_data) for dashboard tracking
     const params = new URLSearchParams({
       'mode': 'payment',
       'success_url': `${origin}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       'cancel_url': origin,
-      // Use price_data to show product with compelling description and image
-      'line_items[0][price_data][currency]': 'usd',
-      'line_items[0][price_data][product_data][name]': '7 Minute AgentClone™ Complete System',
-      'line_items[0][price_data][product_data][description]': '✅ Complete 7-Min AgentClone Course ($547 value)\n✅ Real Estate System Prompts - High-converting scripts ($297 value)\n✅ Photo-to-Talking Video Technology ($217 value)\n✅ 10-Min Phone Edit Templates - Captions, logos, CTAs ($376 value)\n✅ BONUS: 17 Unskippable Real Estate Hooks ($107 value)\n✅ BONUS: Realtor Canva Pack - 100 Templates ($147 value)\n✅ Lifetime Access + Future Updates\n✅ 30-Day Money-Back Guarantee\n\n💎 Total Value: $1,691 | Regular Price: $97 | Today: $37',
-      'line_items[0][price_data][product_data][images][0]': `${origin}/images/P1_result.webp`,
-      'line_items[0][price_data][unit_amount]': '9700', // $97 regular price (will be discounted to $37)
+      // IMPORTANT: Use permanent price ID for dashboard tracking
+      'line_items[0][price]': priceId,
       'line_items[0][quantity]': '1',
       // Collect billing info only when Stripe deems necessary (fraud prevention)
       'billing_address_collection': 'auto',
@@ -47,14 +44,15 @@ export async function POST(req: NextRequest) {
       'customer_creation': 'always',
       // PAYMENT METHODS: Enable cards, Apple Pay, Google Pay (NO Cash App Pay - causes timeouts)
       'payment_method_types[0]': 'card',
-      // Auto-apply discount to show price anchoring: $1,691 → $37
-      'discounts[0][coupon]': 'LAUNCH97',
       // BRANDING: Show logo and brand colors for trust
       'custom_text[submit][message]': '🔒 Secure payment • 30-day money-back guarantee',
       'submit_type': 'pay', // Shows "Pay $37" instead of generic "Subscribe"
       // Prevent quantity changes
       'line_items[0][adjustable_quantity][enabled]': 'false',
     })
+
+    // Add product_type metadata for webhook tracking
+    params.append('metadata[product_type]', 'main')
 
     // Add UTM parameters to metadata for tracking
     if (utmParams.utm_source) params.append('metadata[utm_source]', utmParams.utm_source)
