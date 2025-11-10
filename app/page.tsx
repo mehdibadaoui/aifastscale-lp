@@ -1494,8 +1494,8 @@ export default function AgentLandingPage() {
               </div>
 
               <div className="flex flex-col items-center gap-4 px-2 pt-4 md:gap-6">
-                {/* Try Free Demo Button */}
-                <a
+                {/* Try Free Demo Button - HIDDEN until optimized */}
+                {/* <a
                   href="/try-demo"
                   className="group relative inline-block w-full max-w-3xl"
                 >
@@ -1511,7 +1511,7 @@ export default function AgentLandingPage() {
 
                 <div className="text-center text-sm text-gray-400 md:text-base">
                   <span className="font-semibold">OR</span>
-                </div>
+                </div> */}
 
                 <div className="space-y-2 text-center md:space-y-3">
                   <div className="price-reveal">
