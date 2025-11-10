@@ -58,102 +58,75 @@ export default function ExitIntentPopup() {
   if (!showPopup) return null
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="relative mx-4 max-w-2xl animate-in fade-in zoom-in duration-300">
-        {/* Close button */}
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      <div className="relative mx-4 max-w-lg animate-in fade-in zoom-in-95 duration-200">
+        {/* Close button - Clean & Subtle */}
         <button
           onClick={handleClose}
-          className="absolute -right-4 -top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-white transition-colors hover:bg-gray-700"
-          aria-label="Close popup"
+          className="absolute -right-3 -top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-all hover:bg-gray-100 hover:scale-110"
+          aria-label="Close"
         >
-          <X className="h-6 w-6" />
+          <X className="h-5 w-5" />
         </button>
 
-        {/* Popup content */}
-        <div className="relative overflow-hidden rounded-3xl border-4 border-yellow-400 bg-gradient-to-br from-gray-900 via-black to-gray-900 p-8 shadow-2xl md:p-12">
-          {/* Glow effect */}
-          <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-yellow-400/20 blur-3xl"></div>
-          <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-purple-400/20 blur-3xl"></div>
-
+        {/* Popup content - Clean White Card */}
+        <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-2xl md:p-10">
           {/* Content */}
-          <div className="relative text-center">
-            {/* Icon */}
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500">
-              <Zap className="h-10 w-10 text-black" />
+          <div className="text-center">
+            {/* Icon - Simple Blue Circle */}
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900">
+              <Zap className="h-8 w-8 text-white" />
             </div>
 
-            {/* Headline */}
-            <h2 className="mb-4 text-3xl font-black text-white md:text-5xl">
-              WAIT! Don't Miss This...
+            {/* Headline - Professional */}
+            <h2 className="mb-3 text-2xl font-bold text-gray-900 md:text-3xl">
+              Before You Go...
             </h2>
 
-            {/* Subheadline */}
-            <p className="mb-6 text-lg text-gray-300 md:text-xl">
-              You're <span className="font-black text-yellow-400">one step away</span> from generating{' '}
-              <span className="font-black text-green-400">100+ leads this month</span>
+            {/* Subheadline - Clear Value */}
+            <p className="mb-8 text-base text-gray-600 md:text-lg">
+              Join 500+ agents creating AI videos that generate qualified leads on autopilot
             </p>
 
-            {/* Offer box */}
-            <div className="mb-8 rounded-2xl border-2 border-yellow-400/30 bg-yellow-400/10 p-6">
-              <div className="mb-3 flex items-center justify-center gap-2 text-yellow-400">
-                <Clock className="h-5 w-5" />
-                <span className="text-sm font-bold uppercase tracking-wider">
-                  Special One-Time Offer
-                </span>
-              </div>
-              <p className="mb-2 text-2xl font-black text-white md:text-3xl">
-                Get Started for Just $37
-              </p>
-              <p className="text-sm text-gray-400">
-                + 30-Day Money-Back Guarantee
-              </p>
-            </div>
-
-            {/* Bullet points */}
+            {/* Simple 3 Benefits */}
             <div className="mb-8 space-y-3 text-left">
-              <div className="flex items-start gap-3">
-                <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
-                  <span className="text-xs font-black text-white">✓</span>
+              <div className="flex items-center gap-3">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="text-xs font-bold text-white">✓</span>
                 </div>
-                <p className="text-base text-gray-300">
-                  Create unlimited AI talking videos in 7 minutes
-                </p>
+                <p className="text-sm text-gray-700">7-minute setup, lifetime access</p>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
-                  <span className="text-xs font-black text-white">✓</span>
+              <div className="flex items-center gap-3">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="text-xs font-bold text-white">✓</span>
                 </div>
-                <p className="text-base text-gray-300">
-                  500+ real estate agents already using this system
-                </p>
+                <p className="text-sm text-gray-700">30-day money-back guarantee</p>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
-                  <span className="text-xs font-black text-white">✓</span>
+              <div className="flex items-center gap-3">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="text-xs font-bold text-white">✓</span>
                 </div>
-                <p className="text-base text-gray-300">
-                  Lifetime access + free monthly updates
-                </p>
+                <p className="text-sm text-gray-700">Instant download after purchase</p>
               </div>
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - Clean Blue */}
             <button
               onClick={handleCTA}
-              className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-8 py-5 text-xl font-black uppercase text-black shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-yellow-400/50"
+              className="group mb-4 w-full rounded-lg bg-blue-900 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-blue-800 hover:shadow-xl"
             >
-              <div className="flex items-center justify-center gap-3">
-                <span>Yes! I Want 100+ Leads</span>
-                <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-2" />
+              <div className="flex items-center justify-center gap-2">
+                <span>Get Instant Access — $37</span>
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </div>
             </button>
 
-            {/* No thanks */}
+            {/* No thanks - Subtle */}
             <button
               onClick={handleClose}
-              className="mt-4 text-sm text-gray-500 underline transition-colors hover:text-gray-400"
+              className="text-sm text-gray-400 underline transition-colors hover:text-gray-600"
             >
-              No thanks, I don't want more leads
+              Continue browsing
             </button>
           </div>
         </div>

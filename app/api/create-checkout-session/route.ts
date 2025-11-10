@@ -40,11 +40,8 @@ export async function POST(req: NextRequest) {
       // That parameter was causing stricter 3D Secure checks and 90%+ abandonment
       // We only save payment method during upsell flow (after trust is established)
       'customer_creation': 'always',
-      // PAYMENT METHODS: Only allow card payments (disable Cash App Pay which causes expirations)
-      // Apple Pay and Google Pay are automatically enabled for cards
+      // PAYMENT METHODS: Enable cards, Apple Pay, Google Pay (NO Cash App Pay - causes timeouts)
       'payment_method_types[0]': 'card',
-      // Enable automatic payment methods (Apple Pay, Google Pay) for better conversion
-      'automatic_payment_methods[enabled]': 'false',
     })
 
     // Add UTM parameters to metadata for tracking
