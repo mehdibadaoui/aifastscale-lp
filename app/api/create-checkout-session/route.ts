@@ -45,10 +45,8 @@ export async function POST(req: NextRequest) {
       // BRANDING: Show logo and brand colors for trust
       'custom_text[submit][message]': '🔒 Secure payment • 30-day money-back guarantee',
       'submit_type': 'pay', // Shows "Pay $37" instead of generic "Subscribe"
-      // CVR OPTIMIZATION: Allow promo codes for urgency/scarcity
-      'allow_promotion_codes': 'true', // Customers can use discount codes
-      // Add urgency in line item description
-      'line_items[0][adjustable_quantity][enabled]': 'false', // Prevent quantity changes
+      // Prevent quantity changes
+      'line_items[0][adjustable_quantity][enabled]': 'false',
     })
 
     // Add UTM parameters to metadata for tracking
