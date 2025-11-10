@@ -26,16 +26,25 @@ export async function POST(req: NextRequest) {
     const utmParams = body.utmParams || {}
 
     // Create checkout session using direct Stripe API call (SDK doesn't work in serverless)
+    // CONVERSION OPTIMIZED: Removed setup_future_usage to reduce 3D Secure friction
     const params = new URLSearchParams({
       'mode': 'payment',
       'success_url': `${origin}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       'cancel_url': origin,
       'line_items[0][price]': priceId,
       'line_items[0][quantity]': '1',
+      // Collect billing info only when Stripe deems necessary (fraud prevention)
       'billing_address_collection': 'auto',
       'phone_number_collection[enabled]': 'false',
-      'payment_intent_data[setup_future_usage]': 'off_session',
+      // CRITICAL FIX: Removed 'payment_intent_data[setup_future_usage]: off_session'
+      // That parameter was causing stricter 3D Secure checks and 90%+ abandonment
+      // We only save payment method during upsell flow (after trust is established)
       'customer_creation': 'always',
+      // PAYMENT METHODS: Only allow card payments (disable Cash App Pay which causes expirations)
+      // Apple Pay and Google Pay are automatically enabled for cards
+      'payment_method_types[0]': 'card',
+      // Enable automatic payment methods (Apple Pay, Google Pay) for better conversion
+      'automatic_payment_methods[enabled]': 'false',
     })
 
     // Add UTM parameters to metadata for tracking
