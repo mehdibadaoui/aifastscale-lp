@@ -6,7 +6,6 @@ import {
   Download,
   Play,
   ArrowRight,
-  Sparkles,
   Shield,
 } from 'lucide-react'
 import { trackPurchase, trackCompleteRegistration } from '../utils/tracking'
@@ -16,12 +15,11 @@ import UpsellOffer from '../components/UpsellOffer'
 export default function ThankYouPage() {
   const [orderTracked, setOrderTracked] = useState(false)
   const [upsellPurchase, setUpsellPurchase] = useState<string | null>(null)
-  const [showEmailModal, setShowEmailModal] = useState(false) // Start false, will show after upsell
+  const [showEmailModal, setShowEmailModal] = useState(false)
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [showUpsell, setShowUpsell] = useState(false)
 
   useEffect(() => {
-    // Check if they purchased the upsell
     const urlParams = new URLSearchParams(window.location.search)
     const upsell = urlParams.get('upsell')
     const session = urlParams.get('session_id')
@@ -29,34 +27,27 @@ export default function ThankYouPage() {
     setUpsellPurchase(upsell)
     setSessionId(session)
 
-    // Determine if we should show upsell offer
-    // Show upsell if: has session_id AND no upsell purchased yet
     if (session && !upsell) {
       setShowUpsell(true)
       setShowEmailModal(false)
     } else {
-      // If they already purchased upsell OR no session_id, show email modal
       setShowUpsell(false)
       setShowEmailModal(true)
     }
 
-    // Only track once per page load
     if (!orderTracked) {
       const orderId = session || `order_${Date.now()}`
 
-      // Calculate total amount based on upsell purchase
       let totalAmount = 37.0
       if (upsell === 'blueprint17') {
-        totalAmount = 37.0 + 17.0 // $54 total
+        totalAmount = 37.0 + 17.0
       } else if (upsell === 'blueprint7') {
-        totalAmount = 37.0 + 7.0 // $44 total
+        totalAmount = 37.0 + 7.0
       }
 
-      // Fire both Purchase and CompleteRegistration events
       trackPurchase(orderId, totalAmount)
       trackCompleteRegistration(orderId)
 
-      // Fire Google Ads conversion event
       if (typeof window !== 'undefined' && (window as any).gtag) {
         ;(window as any).gtag('event', 'conversion', {
           send_to: 'AW-17695777512/4w-dCPm-0rkbEOjFgPZB',
@@ -68,84 +59,69 @@ export default function ThankYouPage() {
       }
 
       setOrderTracked(true)
-
-      // Log for debugging
       console.log('✅ Purchase tracking fired:', orderId, 'Total:', totalAmount)
     }
   }, [orderTracked])
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Celebration background */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute left-1/4 top-1/4 h-96 w-96 animate-pulse rounded-full bg-yellow-500/10 blur-3xl" />
-        <div className="delay-500 absolute right-1/4 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-orange-500/10 blur-3xl" />
-      </div>
-
-      <div className="relative mx-auto max-w-4xl px-4 py-8 md:py-16">
-        {/* Success Icon */}
-        <div className="mb-6 flex justify-center md:mb-8">
-          <div className="relative">
-            <div className="flex h-24 w-24 animate-bounce items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 shadow-2xl md:h-32 md:w-32">
-              <CheckCircle className="h-12 w-12 text-black md:h-16 md:w-16" />
-            </div>
-            <div className="absolute inset-0 animate-pulse rounded-full bg-yellow-400 opacity-50 blur-xl" />
+    <div className="min-h-screen bg-white">
+      <div className="mx-auto max-w-4xl px-4 py-12 md:py-20">
+        {/* Success Icon - Gold & Black Branding */}
+        <div className="mb-8 flex justify-center md:mb-10">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 shadow-lg md:h-24 md:w-24">
+            <CheckCircle className="h-10 w-10 text-black md:h-12 md:w-12" />
           </div>
         </div>
 
-        {/* Main Heading */}
-        <h1 className="mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-center text-4xl font-black text-transparent md:mb-6 md:text-6xl">
-          Welcome to AI FastScale!
+        {/* Main Heading - Professional */}
+        <h1 className="mb-4 text-center text-3xl font-bold text-gray-900 md:mb-5 md:text-5xl">
+          Your Order is Confirmed
         </h1>
 
-        <p className="mx-auto mb-8 max-w-2xl text-center text-lg font-semibold text-gray-300 md:mb-12 md:text-xl">
-          Your payment was successful! Get ready to create your first{' '}
-          <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text font-black text-transparent">
-            7-Minute AgentClone™
-          </span>{' '}
-          video.
+        <p className="mx-auto mb-10 max-w-2xl text-center text-lg text-gray-600 md:mb-12 md:text-xl">
+          Thank you for your purchase. Your course materials are ready for immediate access.
         </p>
 
-        {/* Order Confirmation */}
-        <div className="mb-8 rounded-2xl border border-yellow-500/20 bg-gradient-to-br from-gray-900 to-black p-6 shadow-2xl backdrop-blur-sm md:mb-12 md:p-8">
+        {/* Order Confirmation - Clean White Card */}
+        <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm md:mb-10 md:p-8">
           <div className="mb-6 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 md:h-12 md:w-12">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 md:h-12 md:w-12">
               <CheckCircle className="h-5 w-5 text-black md:h-6 md:w-6" />
             </div>
             <div>
-              <h2 className="text-xl font-black text-white md:text-2xl">
+              <h2 className="text-lg font-bold text-gray-900 md:text-xl">
                 Order Confirmed
               </h2>
-              <p className="text-sm text-gray-400 md:text-base">
+              <p className="text-sm text-gray-500 md:text-base">
                 Receipt sent to your email
               </p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-sm text-gray-400 md:text-base">
+            <div className="flex justify-between border-b border-gray-200 pb-3">
+              <span className="text-sm text-gray-600 md:text-base">
                 Product
               </span>
               <div className="text-right">
-                <p className="text-sm font-bold text-white md:text-base">
+                <p className="text-sm font-semibold text-gray-900 md:text-base">
                   7 Minute AgentClone™ Course
                 </p>
                 {upsellPurchase && (
-                  <p className="mt-1 text-sm font-bold text-yellow-400 md:text-base">
+                  <p className="mt-1 text-sm font-semibold text-orange-600 md:text-base">
                     + $10M Personal Brand Blueprint
                   </p>
                 )}
               </div>
             </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-sm text-gray-400 md:text-base">
+            <div className="flex justify-between border-b border-gray-200 pb-3">
+              <span className="text-sm text-gray-600 md:text-base">
                 Amount Paid
               </span>
               <div className="text-right">
                 {upsellPurchase ? (
                   <>
-                    <p className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-lg font-black text-transparent md:text-xl">
+                    <p className="text-lg font-bold text-gray-900 md:text-xl">
                       $
                       {upsellPurchase === 'blueprint17'
                         ? '54.00'
@@ -154,175 +130,154 @@ export default function ThankYouPage() {
                           : '37.00'}{' '}
                       USD
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-500">
                       ($37 + ${upsellPurchase === 'blueprint17' ? '17' : '7'})
                     </p>
                   </>
                 ) : (
-                  <p className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-lg font-black text-transparent md:text-xl">
+                  <p className="text-lg font-bold text-gray-900 md:text-xl">
                     $37.00 USD
                   </p>
                 )}
               </div>
             </div>
             <div className="flex justify-between pt-3">
-              <span className="text-sm text-gray-400 md:text-base">Status</span>
-              <span className="flex items-center gap-2 text-sm font-bold text-green-400 md:text-base">
+              <span className="text-sm text-gray-600 md:text-base">Status</span>
+              <span className="flex items-center gap-2 text-sm font-semibold text-green-600 md:text-base">
                 <CheckCircle className="h-4 w-4" /> Completed
               </span>
             </div>
           </div>
         </div>
 
-        {/* Lifetime Access Notice */}
-        <div className="mb-8 rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 text-center backdrop-blur-sm md:mb-12 md:p-8">
-          <div className="mb-3 flex items-center justify-center gap-2 md:mb-4">
-            <Sparkles className="h-6 w-6 animate-pulse text-yellow-400 md:h-8 md:w-8" />
-            <h2 className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-2xl font-black text-transparent md:text-3xl">
-              Lifetime Access + Free Updates!
-            </h2>
-            <Sparkles className="h-6 w-6 animate-pulse text-yellow-400 md:h-8 md:w-8" />
-          </div>
-          <p className="mb-4 text-base font-semibold text-gray-200 md:text-lg">
-            You now have{' '}
-            <span className="font-black text-yellow-400">LIFETIME ACCESS</span>{' '}
-            to all course materials!
+        {/* Lifetime Access Notice - Subtle Professional */}
+        <div className="mb-8 rounded-lg border border-orange-200 bg-orange-50 p-6 text-center md:mb-10 md:p-8">
+          <h2 className="mb-3 text-2xl font-bold text-gray-900 md:mb-4 md:text-3xl">
+            Lifetime Access Included
+          </h2>
+          <p className="mb-4 text-base text-gray-700 md:text-lg">
+            You now have permanent access to all course materials, including future updates.
           </p>
-          <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-4 backdrop-blur-sm md:p-5">
-            <p className="mb-2 text-sm text-gray-300 md:text-base">
-              <span className="font-bold text-white">Free monthly updates</span>{' '}
-              with new templates, prompts, and AI workflows
+          <div className="rounded-lg border border-orange-300 bg-white p-4 md:p-5">
+            <p className="mb-2 text-sm text-gray-700 md:text-base">
+              <span className="font-semibold text-gray-900">Complimentary monthly updates</span> with new templates, prompts, and workflows
             </p>
-            <p className="text-sm font-semibold text-yellow-400">
-              Check back every month - Always FREE!
+            <p className="text-sm font-semibold text-orange-600">
+              No additional fees — ever.
             </p>
           </div>
         </div>
 
-        {/* Download Button */}
-        <div className="mb-8 rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 p-6 text-center backdrop-blur-sm md:mb-12 md:p-8">
-          <h2 className="mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-2xl font-black text-transparent md:mb-6 md:text-3xl">
-            Download Your Course Materials Now!
+        {/* Download Button - Professional Navy */}
+        <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm md:mb-10 md:p-8">
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 md:mb-5 md:text-3xl">
+            Access Your Course Materials
           </h2>
-          <p className="mx-auto mb-6 max-w-2xl text-sm text-gray-300 md:mb-8 md:text-base">
-            All templates, system prompts, video workflows, and training
-            materials are ready for instant download.
+          <p className="mx-auto mb-6 max-w-2xl text-sm text-gray-600 md:mb-8 md:text-base">
+            All templates, system prompts, video workflows, and training materials are ready for instant access.
           </p>
           <a
             href="https://drive.google.com/drive/folders/1YLkKPgtU_q1BV6PVISO4VEru1UkAldw1?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl p-0.5 transition-all hover:scale-105 md:gap-4"
+            className="group inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-4 text-lg font-bold text-black shadow-lg transition-all hover:from-yellow-400 hover:to-orange-400 hover:shadow-xl md:gap-4 md:px-10 md:py-5 md:text-xl"
           >
-            <div className="absolute -inset-1 animate-pulse rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-75 blur transition group-hover:opacity-100"></div>
-            <div className="relative flex items-center gap-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-4 text-lg font-black text-black md:gap-4 md:px-10 md:py-5 md:text-xl">
-              <Download className="h-6 w-6 md:h-7 md:w-7" />
-              DOWNLOAD AGENTCLONE COURSE
-              <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1 md:h-7 md:w-7" />
-            </div>
+            <Download className="h-6 w-6 md:h-7 md:w-7" />
+            Download Course Materials
+            <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1 md:h-7 md:w-7" />
           </a>
-          <p className="mt-3 text-xs text-gray-400 md:mt-4 md:text-sm">
+          <p className="mt-4 text-xs text-gray-500 md:text-sm">
             Opens in Google Drive • All files included
           </p>
         </div>
 
         {/* Blueprint Download - Only if purchased */}
         {upsellPurchase && (
-          <div className="mb-8 rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 p-6 text-center backdrop-blur-sm md:mb-12 md:p-8">
-            <div className="mb-4 flex items-center justify-center gap-2 md:mb-5">
-              <Sparkles className="h-6 w-6 animate-pulse text-yellow-400 md:h-7 md:w-7" />
-              <h2 className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-2xl font-black text-transparent md:text-3xl">
-                BONUS: Your $10M Blueprint!
-              </h2>
-              <Sparkles className="h-6 w-6 animate-pulse text-yellow-400 md:h-7 md:w-7" />
-            </div>
-            <p className="mx-auto mb-6 max-w-2xl text-sm text-gray-300 md:mb-8 md:text-base">
+          <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm md:mb-10 md:p-8">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900 md:mb-5 md:text-3xl">
+              Bonus: $10M Personal Brand Blueprint
+            </h2>
+            <p className="mx-auto mb-6 max-w-2xl text-sm text-gray-600 md:mb-8 md:text-base">
               You also purchased the complete{' '}
-              <span className="font-black text-yellow-400">
+              <span className="font-semibold text-orange-600">
                 $10M Personal Brand Blueprint (2026 Edition)
               </span>
-              . Download it now and start building your authority brand!
+              . Download it now and start building your authority brand.
             </p>
             <a
               href="/downloads/10m-personal-brand-blueprint-2026.pdf"
               download="10M-Personal-Brand-Blueprint-2026.pdf"
-              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl p-0.5 transition-all hover:scale-105 md:gap-4"
+              className="group inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-4 text-lg font-bold text-black shadow-lg transition-all hover:from-yellow-400 hover:to-orange-400 hover:shadow-xl md:gap-4 md:px-10 md:py-5 md:text-xl"
             >
-              <div className="absolute -inset-1 animate-pulse rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-75 blur transition group-hover:opacity-100"></div>
-              <div className="relative flex items-center gap-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-4 text-lg font-black text-black md:gap-4 md:px-10 md:py-5 md:text-xl">
-                <Download className="h-6 w-6 md:h-7 md:w-7" />
-                DOWNLOAD $10M BLUEPRINT PDF
-                <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1 md:h-7 md:w-7" />
-              </div>
+              <Download className="h-6 w-6 md:h-7 md:w-7" />
+              Download Blueprint PDF
+              <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1 md:h-7 md:w-7" />
             </a>
-            <p className="mt-3 text-xs text-gray-400 md:mt-4 md:text-sm">
+            <p className="mt-4 text-xs text-gray-500 md:text-sm">
               Instant PDF Download • 641KB
             </p>
-            <div className="mt-5 rounded-xl border border-yellow-500/20 bg-yellow-500/10 p-3 backdrop-blur-sm md:mt-6 md:p-4">
-              <p className="text-sm font-semibold text-yellow-400 md:text-base">
-                You saved {upsellPurchase === 'blueprint17' ? '$180' : '$190'}{' '}
-                today! ({upsellPurchase === 'blueprint17' ? '91%' : '96%'} OFF)
+            <div className="mt-5 rounded-lg border border-orange-200 bg-orange-50 p-3 md:mt-6 md:p-4">
+              <p className="text-sm font-semibold text-orange-600 md:text-base">
+                You saved {upsellPurchase === 'blueprint17' ? '$180' : '$190'} today ({upsellPurchase === 'blueprint17' ? '91%' : '96%'} off)
               </p>
             </div>
           </div>
         )}
 
-        {/* Next Steps */}
-        <div className="mb-8 rounded-2xl border border-yellow-500/20 bg-gradient-to-br from-gray-900 to-black p-6 backdrop-blur-sm md:mb-12 md:p-8">
-          <h2 className="mb-6 text-center text-2xl font-black text-white md:mb-8 md:text-3xl">
-            What Happens Next?
+        {/* Next Steps - Clean Professional */}
+        <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm md:mb-10 md:p-8">
+          <h2 className="mb-6 text-center text-2xl font-bold text-gray-900 md:mb-8 md:text-3xl">
+            Getting Started
           </h2>
 
           <div className="space-y-5 md:space-y-6">
             {/* Step 1 */}
             <div className="flex gap-3 md:gap-4">
-              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-lg font-black text-black md:h-12 md:w-12 md:text-xl">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 text-lg font-bold text-black md:h-12 md:w-12 md:text-xl">
                 1
               </div>
               <div>
-                <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-white md:text-xl">
-                  <Download className="h-5 w-5 text-yellow-400" />
-                  Download All Course Materials
+                <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-900 md:text-xl">
+                  <Download className="h-5 w-5 text-orange-600" />
+                  Download Course Materials
                 </h3>
-                <p className="text-sm text-gray-300 md:text-base">
-                  Click the big button above to access your Google Drive folder
-                  with all templates, prompts, and training videos.
+                <p className="text-sm text-gray-600 md:text-base">
+                  Access your Google Drive folder with all templates, prompts, and training videos using the download button above.
                 </p>
               </div>
             </div>
 
             {/* Step 2 */}
             <div className="flex gap-3 md:gap-4">
-              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-lg font-black text-black md:h-12 md:w-12 md:text-xl">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 text-lg font-bold text-black md:h-12 md:w-12 md:text-xl">
                 2
               </div>
               <div>
-                <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-white md:text-xl">
-                  <Play className="h-5 w-5 text-yellow-400" />
-                  Create Your First Video (7 Minutes!)
+                <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-900 md:text-xl">
+                  <Play className="h-5 w-5 text-orange-600" />
+                  Create Your First Video
                 </h3>
-                <p className="text-sm text-gray-300 md:text-base">
-                  Follow the step-by-step blueprint to turn a photo into your
-                  first talking AI video. Takes only 7 minutes!
+                <p className="text-sm text-gray-600 md:text-base">
+                  Follow the step-by-step blueprint to create your first AI-powered video in approximately 7 minutes.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Guarantee */}
-        <div className="mb-8 rounded-2xl border border-green-500/30 bg-green-500/10 p-6 text-center backdrop-blur-sm md:mb-12 md:p-8">
+        {/* Guarantee - Professional */}
+        <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 text-center md:mb-10 md:p-8">
           <div className="mb-3 flex items-center justify-center gap-2 md:mb-4">
-            <Shield className="h-6 w-6 text-green-400 md:h-7 md:w-7" />
-            <h3 className="text-xl font-black text-green-400 md:text-2xl">
+            <Shield className="h-6 w-6 text-orange-600 md:h-7 md:w-7" />
+            <h3 className="text-xl font-bold text-gray-900 md:text-2xl">
               30-Day Money-Back Guarantee
             </h3>
           </div>
-          <p className="mx-auto max-w-2xl text-sm text-gray-300 md:text-base">
-            If you don't generate quality leads within 30 days, email us at{' '}
+          <p className="mx-auto max-w-2xl text-sm text-gray-600 md:text-base">
+            If you don't achieve your desired results within 30 days, contact us at{' '}
             <a
               href="mailto:support@aifastscale.com"
-              className="font-bold text-yellow-400 hover:text-yellow-300"
+              className="font-semibold text-orange-600 hover:text-orange-700"
             >
               support@aifastscale.com
             </a>{' '}
@@ -334,7 +289,7 @@ export default function ThankYouPage() {
         <div className="text-center">
           <a
             href="mailto:support@aifastscale.com?subject=Course%20Access"
-            className="inline-flex items-center gap-3 rounded-xl border border-yellow-500/30 bg-yellow-500/10 px-6 py-3 text-base font-bold text-yellow-400 backdrop-blur-sm transition-all hover:scale-105 hover:border-yellow-500/50 hover:bg-yellow-500/20 md:px-8 md:py-4 md:text-lg"
+            className="inline-flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-700 shadow-sm transition-all hover:border-gray-400 hover:bg-gray-50 md:px-8 md:py-4 md:text-lg"
           >
             Need Help? Contact Support
             <ArrowRight className="h-5 w-5 md:h-6 md:w-6" />
@@ -346,7 +301,7 @@ export default function ThankYouPage() {
           Questions? Email{' '}
           <a
             href="mailto:support@aifastscale.com"
-            className="text-yellow-400 hover:text-yellow-300"
+            className="text-orange-600 hover:text-orange-700"
           >
             support@aifastscale.com
           </a>
