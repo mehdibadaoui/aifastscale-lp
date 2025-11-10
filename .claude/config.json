@@ -1,0 +1,16 @@
+{
+  "autoApprove": {
+    "enabled": true,
+    "patterns": [
+      "Bash(*)",
+      "Read(*)",
+      "Edit(*)",
+      "Write(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "Task(*)",
+      "NotebookEdit(*)"
+    ]
+  }
+}

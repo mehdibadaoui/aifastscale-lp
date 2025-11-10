@@ -1,41 +1,41 @@
-const report = require('./lighthouse-final.json');
+const fs = require('fs');
 
-console.log('=== TOP PERFORMANCE OPPORTUNITIES ===\n');
+try {
+  const data = JSON.parse(fs.readFileSync('/tmp/lighthouse-report.json', 'utf-8'));
 
-const opportunities = Object.entries(report.audits)
-  .filter(([key, audit]) =>
-    audit.details?.type === 'opportunity' &&
-    audit.score !== null &&
-    audit.score < 1
-  )
-  .map(([key, audit]) => ({
-    title: audit.title,
-    savings: audit.details.overallSavingsMs || 0,
-    score: Math.round(audit.score * 100)
-  }))
-  .sort((a,b) => b.savings - a.savings)
-  .slice(0, 8);
+  console.log('=== LIGHTHOUSE SCORES ===');
+  console.log('Performance:', Math.round(data.categories.performance.score * 100));
+  console.log('Accessibility:', Math.round(data.categories.accessibility.score * 100));
+  console.log('Best Practices:', Math.round(data.categories['best-practices'].score * 100));
+  console.log('SEO:', Math.round(data.categories.seo.score * 100));
 
-opportunities.forEach((opp, i) => {
-  console.log(`${i+1}. ${opp.title}`);
-  console.log(`   Savings: ${Math.round(opp.savings)}ms`);
-  console.log(`   Score: ${opp.score}/100\n`);
-});
+  console.log('\n=== CORE WEB VITALS ===');
+  const audits = data.audits;
+  console.log('LCP (Largest Contentful Paint):', audits['largest-contentful-paint'].displayValue);
+  console.log('TBT (Total Blocking Time):', audits['total-blocking-time'].displayValue);
+  console.log('CLS (Cumulative Layout Shift):', audits['cumulative-layout-shift'].displayValue);
+  console.log('FCP (First Contentful Paint):', audits['first-contentful-paint'].displayValue);
+  console.log('Speed Index:', audits['speed-index'].displayValue);
 
-// Check for redirects
-console.log('\n=== REDIRECT CHECK ===');
-const redirects = report.audits['redirects'];
-if (redirects) {
-  console.log('Redirects:', redirects.displayValue || 'None');
-  if (redirects.details?.items) {
-    redirects.details.items.forEach(item => {
-      console.log(`  ${item.url} → ${item.wastedMs}ms wasted`);
-    });
-  }
+  console.log('\n=== OPPORTUNITIES (Biggest Wins) ===');
+  const opportunities = Object.values(audits)
+    .filter(a => a.details && a.details.type === 'opportunity' && a.numericValue > 0)
+    .sort((a, b) => b.numericValue - a.numericValue)
+    .slice(0, 5);
+
+  opportunities.forEach(opp => {
+    console.log(\`- \${opp.title}: \${Math.round(opp.numericValue / 1000 * 10) / 10}s savings\`);
+  });
+
+  console.log('\n=== FAILING AUDITS ===');
+  const failing = Object.values(audits)
+    .filter(a => a.score !== null && a.score < 0.9 && a.scoreDisplayMode !== 'notApplicable')
+    .slice(0, 10);
+
+  failing.forEach(f => {
+    console.log(\`- \${f.title} (score: \${Math.round(f.score * 100)}%)\`);
+  });
+
+} catch (err) {
+  console.error('Error:', err.message);
 }
-
-// Check server response time
-console.log('\n=== SERVER RESPONSE ===');
-const serverResponse = report.audits['server-response-time'];
-console.log('Server response time:', serverResponse.displayValue);
-console.log('Score:', Math.round(serverResponse.score * 100) + '/100');

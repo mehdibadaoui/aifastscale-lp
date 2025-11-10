@@ -47,9 +47,9 @@ import { captureUTMParameters, storeUTMParameters } from './utils/utm-tracking'
 // Stripe checkout now loaded immediately for instant CTA response
 // Trade-off: +1MB bundle size for MUCH better UX (instant checkout)
 
-// Lazy load SocialProofPopup - prevents blocking API call on initial render
-const SocialProofPopup = dynamicImport(
-  () => import('./components/SocialProofPopup'),
+// Lazy load SocialProofNotifications - prevents blocking API call on initial render
+const SocialProofNotifications = dynamicImport(
+  () => import('./components/SocialProofNotifications'),
   {
     ssr: false,
   }
@@ -2994,7 +2994,7 @@ export default function AgentLandingPage() {
       </footer>
 
       {/* CRO Elements - Social Proof */}
-      <SocialProofPopup />
+      <SocialProofNotifications />
         </>
       )}
     </div>
