@@ -58,62 +58,62 @@ export default function ExitIntentPopup() {
   if (!showPopup) return null
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="relative mx-4 max-w-lg animate-in fade-in zoom-in-95 duration-200">
         {/* Close button - Clean & Subtle */}
         <button
           onClick={handleClose}
-          className="absolute -right-3 -top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-gray-800 text-gray-400 shadow-lg transition-all hover:bg-gray-700 hover:text-white hover:scale-110"
+          className="absolute -right-3 -top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-lg transition-all hover:bg-gray-100 hover:scale-110"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
         </button>
 
-        {/* Popup content - Black & Gold Card */}
-        <div className="relative overflow-hidden rounded-2xl bg-black border border-yellow-500/20 p-8 shadow-2xl md:p-10">
+        {/* Popup content - Clean White Card */}
+        <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-2xl md:p-10">
           {/* Content */}
           <div className="text-center">
-            {/* Icon - Gold Gradient Circle */}
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500">
-              <Zap className="h-8 w-8 text-black" />
+            {/* Icon - Simple Blue Circle */}
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900">
+              <Zap className="h-8 w-8 text-white" />
             </div>
 
             {/* Headline - Professional */}
-            <h2 className="mb-3 text-2xl font-black text-white md:text-3xl">
+            <h2 className="mb-3 text-2xl font-bold text-gray-900 md:text-3xl">
               Before You Go...
             </h2>
 
             {/* Subheadline - Clear Value */}
-            <p className="mb-8 text-base text-gray-300 md:text-lg">
+            <p className="mb-8 text-base text-gray-600 md:text-lg">
               Join 500+ agents creating AI videos that generate qualified leads on autopilot
             </p>
 
             {/* Simple 3 Benefits */}
             <div className="mb-8 space-y-3 text-left">
               <div className="flex items-center gap-3">
-                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500">
-                  <span className="text-xs font-bold text-black">✓</span>
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="text-xs font-bold text-white">✓</span>
                 </div>
-                <p className="text-sm text-gray-300">7-minute setup, lifetime access</p>
+                <p className="text-sm text-gray-700">7-minute setup, lifetime access</p>
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500">
-                  <span className="text-xs font-bold text-black">✓</span>
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="text-xs font-bold text-white">✓</span>
                 </div>
-                <p className="text-sm text-gray-300">30-day money-back guarantee</p>
+                <p className="text-sm text-gray-700">30-day money-back guarantee</p>
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500">
-                  <span className="text-xs font-bold text-black">✓</span>
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="text-xs font-bold text-white">✓</span>
                 </div>
-                <p className="text-sm text-gray-300">Instant download after purchase</p>
+                <p className="text-sm text-gray-700">Instant download after purchase</p>
               </div>
             </div>
 
-            {/* CTA Button - Gold Gradient */}
+            {/* CTA Button - Clean Blue */}
             <button
               onClick={handleCTA}
-              className="group mb-4 w-full rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-4 text-lg font-bold text-black shadow-lg transition-all hover:from-yellow-400 hover:to-orange-400 hover:shadow-xl"
+              className="group mb-4 w-full rounded-lg bg-blue-900 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-blue-800 hover:shadow-xl"
             >
               <div className="flex items-center justify-center gap-2">
                 <span>Get Instant Access — $37</span>
@@ -124,7 +124,7 @@ export default function ExitIntentPopup() {
             {/* No thanks - Subtle */}
             <button
               onClick={handleClose}
-              className="text-sm text-gray-500 underline transition-colors hover:text-gray-400"
+              className="text-sm text-gray-400 underline transition-colors hover:text-gray-600"
             >
               Continue browsing
             </button>
