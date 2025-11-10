@@ -31,7 +31,11 @@ export async function POST(req: NextRequest) {
       'mode': 'payment',
       'success_url': `${origin}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       'cancel_url': origin,
-      'line_items[0][price]': priceId,
+      // Use price_data instead of price ID to add compelling product description
+      'line_items[0][price_data][currency]': 'usd',
+      'line_items[0][price_data][product_data][name]': '7 Minute AgentClone™ Complete System',
+      'line_items[0][price_data][product_data][description]': '✅ Complete 7-Min AgentClone Course ($547 value)\n✅ Real Estate System Prompts - High-converting scripts ($297 value)\n✅ Photo-to-Talking Video Technology ($217 value)\n✅ 10-Min Phone Edit Templates - Captions, logos, CTAs ($376 value)\n✅ BONUS: 17 Unskippable Real Estate Hooks ($107 value)\n✅ BONUS: Realtor Canva Pack - 100 Templates ($147 value)\n✅ Lifetime Access + Future Updates\n✅ 30-Day Money-Back Guarantee',
+      'line_items[0][price_data][unit_amount]': '3700', // $37.00 in cents
       'line_items[0][quantity]': '1',
       // Collect billing info only when Stripe deems necessary (fraud prevention)
       'billing_address_collection': 'auto',
