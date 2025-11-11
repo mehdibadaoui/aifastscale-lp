@@ -31,12 +31,27 @@ export async function GET(req: NextRequest) {
     const endDate = Math.floor(Date.now() / 1000)
     const startDate = endDate - (daysBack * 24 * 60 * 60)
 
-    // Fetch sales data from Stripe
-    const sessions = await stripe.checkout.sessions.list({
-      limit: 100,
-      created: { gte: startDate, lte: endDate },
-      expand: ['data.line_items'],
-    })
+    // Fetch ALL sales data from Stripe with pagination
+    let allSessions: any[] = []
+    let hasMore = true
+    let startingAfter: string | undefined = undefined
+
+    while (hasMore) {
+      const params: any = {
+        limit: 100,
+        created: { gte: startDate, lte: endDate },
+        expand: ['data.line_items'],
+      }
+      if (startingAfter) params.starting_after = startingAfter
+
+      const sessions = await stripe.checkout.sessions.list(params)
+      allSessions = allSessions.concat(sessions.data)
+
+      hasMore = sessions.has_more
+      if (hasMore) {
+        startingAfter = sessions.data[sessions.data.length - 1].id
+      }
+    }
 
     // Price IDs
     const YOUR_PRICE_IDS = [
@@ -48,7 +63,7 @@ export async function GET(req: NextRequest) {
     // Group sales by traffic source
     const channelData: Record<string, ChannelMetrics> = {}
 
-    for (const session of sessions.data) {
+    for (const session of allSessions) {
       if (session.payment_status !== 'paid') continue
 
       const lineItems = session.line_items?.data || []

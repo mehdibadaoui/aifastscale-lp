@@ -40,34 +40,64 @@ export async function GET(request: Request) {
     const customStart = startDate ? Math.floor(new Date(startDate).getTime() / 1000) : defaultStart
     const customEnd = endDate ? Math.floor(new Date(endDate).getTime() / 1000) : Math.floor(Date.now() / 1000)
 
-    // Fetch all checkout sessions (increased limit to capture all sales since Nov 1st)
-    const sessions = await stripe.checkout.sessions.list({
-      limit: 1000,
-      created: {
-        gte: customStart,
-        lte: customEnd,
-      },
-      expand: ['data.line_items'],
-    })
+    // Fetch ALL checkout sessions with pagination
+    let allSessions: any[] = []
+    let hasMoreSessions = true
+    let startingAfter: string | undefined = undefined
 
-    console.log('Fetched sessions:', sessions.data.length)
+    while (hasMoreSessions) {
+      const params: any = {
+        limit: 100,
+        created: {
+          gte: customStart,
+          lte: customEnd,
+        },
+        expand: ['data.line_items'],
+      }
+      if (startingAfter) params.starting_after = startingAfter
 
-    // ALSO fetch Payment Intents (for 1-click upsells/downsells)
-    const paymentIntents = await stripe.paymentIntents.list({
-      limit: 1000,
-      created: {
-        gte: customStart,
-        lte: customEnd,
-      },
-    })
+      const sessions = await stripe.checkout.sessions.list(params)
+      allSessions = allSessions.concat(sessions.data)
 
-    console.log('Fetched payment intents:', paymentIntents.data.length)
+      hasMoreSessions = sessions.has_more
+      if (hasMoreSessions) {
+        startingAfter = sessions.data[sessions.data.length - 1].id
+      }
+    }
+
+    console.log('Fetched sessions with pagination:', allSessions.length)
+
+    // Fetch ALL Payment Intents with pagination (for 1-click upsells/downsells)
+    let allPaymentIntents: any[] = []
+    let hasMorePI = true
+    let startingAfterPI: string | undefined = undefined
+
+    while (hasMorePI) {
+      const params: any = {
+        limit: 100,
+        created: {
+          gte: customStart,
+          lte: customEnd,
+        },
+      }
+      if (startingAfterPI) params.starting_after = startingAfterPI
+
+      const paymentIntents = await stripe.paymentIntents.list(params)
+      allPaymentIntents = allPaymentIntents.concat(paymentIntents.data)
+
+      hasMorePI = paymentIntents.has_more
+      if (hasMorePI) {
+        startingAfterPI = paymentIntents.data[paymentIntents.data.length - 1].id
+      }
+    }
+
+    console.log('Fetched payment intents with pagination:', allPaymentIntents.length)
 
     // Filter and process sales
     const yourSales: any[] = []
 
     // Process ONLY AI Fast Scale Checkout Sessions (filter by price IDs)
-    for (const session of sessions.data) {
+    for (const session of allSessions) {
       if (session.payment_status !== 'paid') continue
 
       // Get line items to find the product
@@ -117,7 +147,7 @@ export async function GET(request: Request) {
     }
 
     // Process ONLY AI Fast Scale Payment Intents (1-click upsells/downsells)
-    for (const pi of paymentIntents.data) {
+    for (const pi of allPaymentIntents) {
       // Only include succeeded payments
       if (pi.status !== 'succeeded') continue
 
@@ -142,7 +172,7 @@ export async function GET(request: Request) {
 
       if (pi.metadata.original_session) {
         try {
-          const originalSession = sessions.data.find(s => s.id === pi.metadata.original_session)
+          const originalSession = allSessions.find(s => s.id === pi.metadata.original_session)
           if (originalSession) {
             customerEmail = originalSession.customer_details?.email || 'No email'
             customerName = originalSession.customer_details?.name || 'N/A'
