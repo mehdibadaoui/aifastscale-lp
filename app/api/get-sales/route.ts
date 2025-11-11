@@ -273,7 +273,7 @@ export async function GET(request: Request) {
           sessionId: sale.sessionId,
           email: sale.email,
           customerName: sale.customerName,
-          amount: sale.amount,
+          amount: sale.amount / 100, // Convert cents to dollars
           product: sale.product,
           productType: sale.productType,
           priceId: sale.priceId,
@@ -331,44 +331,44 @@ export async function GET(request: Request) {
     return NextResponse.json({
       // Overall stats
       totalSales: yourSales.length,
-      totalRevenue: monthRevenue,
-      avgOrderValue: avgOrderValue,
+      totalRevenue: monthRevenue / 100, // Convert cents to dollars
+      avgOrderValue: avgOrderValue / 100, // Convert cents to dollars
 
       // Time-based stats
       today: {
         sales: todaySales.length,
-        revenue: todayRevenue,
+        revenue: todayRevenue / 100, // Convert cents to dollars
       },
       yesterday: {
         sales: yesterdaySales.length,
-        revenue: yesterdayRevenue,
+        revenue: yesterdayRevenue / 100, // Convert cents to dollars
       },
       week: {
         sales: weekSales.length,
-        revenue: weekRevenue,
+        revenue: weekRevenue / 100, // Convert cents to dollars
       },
       lastWeek: {
         sales: lastWeekSales.length,
-        revenue: lastWeekRevenue,
+        revenue: lastWeekRevenue / 100, // Convert cents to dollars
       },
       month: {
         sales: monthSales.length,
-        revenue: monthRevenue,
+        revenue: monthRevenue / 100, // Convert cents to dollars
       },
 
       // Product breakdown
       products: {
         main: {
           sales: mainProductSales.length,
-          revenue: mainRevenue,
+          revenue: mainRevenue / 100, // Convert cents to dollars
         },
         upsell: {
           sales: upsellSales.length,
-          revenue: upsellRevenue,
+          revenue: upsellRevenue / 100, // Convert cents to dollars
         },
         downsell: {
           sales: downsellSales.length,
-          revenue: downsellRevenue,
+          revenue: downsellRevenue / 100, // Convert cents to dollars
         },
       },
 
