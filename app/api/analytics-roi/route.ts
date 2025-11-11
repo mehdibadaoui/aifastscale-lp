@@ -99,6 +99,68 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // ALSO process Payment Intents (1-click upsells/downsells)
+    // Fetch ALL Payment Intents with pagination
+    let allPaymentIntents: any[] = []
+    let hasMorePI = true
+    let startingAfterPI: string | undefined = undefined
+
+    while (hasMorePI) {
+      const params: any = {
+        limit: 100,
+        created: { gte: startDate, lte: endDate },
+      }
+      if (startingAfterPI) params.starting_after = startingAfterPI
+
+      const paymentIntents = await stripe.paymentIntents.list(params)
+      allPaymentIntents = allPaymentIntents.concat(paymentIntents.data)
+
+      hasMorePI = paymentIntents.has_more
+      if (hasMorePI) {
+        startingAfterPI = paymentIntents.data[paymentIntents.data.length - 1].id
+      }
+    }
+
+    // Process Payment Intents (1-click upsells/downsells)
+    for (const pi of allPaymentIntents) {
+      if (pi.status !== 'succeeded') continue
+      if (!pi.metadata || !pi.metadata.upsell_type) continue
+
+      // Get traffic source from original session
+      let trafficSource = '1-Click Upsell'
+      let customerEmail = 'unknown'
+
+      if (pi.metadata.original_session) {
+        const originalSession = allSessions.find(s => s.id === pi.metadata.original_session)
+        if (originalSession) {
+          const metadata = originalSession.metadata || {}
+          trafficSource = metadata.traffic_source || 'Direct'
+          customerEmail = originalSession.customer_details?.email || 'unknown'
+        }
+      }
+
+      // Initialize channel if not exists
+      if (!channelData[trafficSource]) {
+        channelData[trafficSource] = {
+          sales: 0,
+          revenue: 0,
+          spend: 0,
+          profit: 0,
+          roi: 0,
+          roas: 0,
+          cpa: 0,
+          customers: [],
+        }
+      }
+
+      // Add to channel metrics
+      channelData[trafficSource].sales += 1
+      channelData[trafficSource].revenue += (pi.amount || 0) / 100
+      if (!channelData[trafficSource].customers.includes(customerEmail)) {
+        channelData[trafficSource].customers.push(customerEmail)
+      }
+    }
+
     // Fetch ad spend data (if configured)
     const adSpend: Record<string, number> = {}
 
@@ -135,12 +197,24 @@ export async function GET(req: NextRequest) {
           const totalSpend = fbData.data.reduce((sum: number, day: any) => sum + parseFloat(day.spend || '0'), 0)
           adSpend['Facebook Ads'] = totalSpend
           console.log(`✅ Facebook Ads spend: $${totalSpend.toFixed(2)}`)
+        } else {
+          // Log error details for debugging
+          console.error('❌ Facebook Ads API error:')
+          console.error('Status:', fbResponse.status)
+          console.error('Response:', JSON.stringify(fbData, null, 2))
+
+          // Common errors:
+          if (fbData.error?.code === 190) {
+            console.error('Token expired or invalid - regenerate access token')
+          } else if (fbData.error?.code === 100) {
+            console.error('Invalid Ad Account ID')
+          }
         }
       } else {
         console.log('⚠️ Facebook Ads not configured (missing access token or account ID)')
       }
-    } catch (error) {
-      console.log('Facebook Ads API error:', error)
+    } catch (error: any) {
+      console.error('❌ Facebook Ads API exception:', error.message)
     }
 
     // Try to fetch Google Ads spend directly
