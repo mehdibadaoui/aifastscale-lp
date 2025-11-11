@@ -34,8 +34,9 @@ export async function GET(request: Request) {
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
 
-    // Default to ALL TIME (no date restriction) - show every sale ever
-    const defaultStart = 0 // Unix epoch (1970) = fetch all sales ever
+    // Default to November 1st, 2025 - AI Fast Scale launch date
+    const nov1st2025 = new Date('2025-11-01T00:00:00Z')
+    const defaultStart = Math.floor(nov1st2025.getTime() / 1000)
     const customStart = startDate ? Math.floor(new Date(startDate).getTime() / 1000) : defaultStart
     const customEnd = endDate ? Math.floor(new Date(endDate).getTime() / 1000) : Math.floor(Date.now() / 1000)
 
@@ -65,7 +66,7 @@ export async function GET(request: Request) {
     // Filter and process sales
     const yourSales: any[] = []
 
-    // Process ALL Checkout Sessions (show ALL paid transactions)
+    // Process ONLY AI Fast Scale Checkout Sessions (filter by price IDs)
     for (const session of sessions.data) {
       if (session.payment_status !== 'paid') continue
 
@@ -74,8 +75,12 @@ export async function GET(request: Request) {
 
       for (const item of lineItems) {
         const priceId = item.price?.id || ''
-        const productName = PRODUCT_NAMES[priceId] || item.description || 'Other Product'
-        const productType = PRODUCT_TYPES[priceId] || 'other'
+
+        // ONLY include AI Fast Scale products (filter out mavazie and others)
+        if (!YOUR_PRICE_IDS.includes(priceId)) continue
+
+        const productName = PRODUCT_NAMES[priceId] || 'Unknown Product'
+        const productType = PRODUCT_TYPES[priceId] || 'unknown'
 
         // Extract UTM parameters from metadata
         const metadata = session.metadata || {}
@@ -104,45 +109,38 @@ export async function GET(request: Request) {
           utm_content: metadata.utm_content || '',
           fbclid: metadata.fbclid || '',
           gclid: metadata.gclid || '',
-          traffic_source: metadata.traffic_source || metadata.shop_name || 'Direct',
+          traffic_source: metadata.traffic_source || 'Direct',
           referrer: metadata.referrer || '',
           landing_page: metadata.landing_page || '',
         })
       }
     }
 
-    // Process ALL Payment Intents (show ALL succeeded payments)
+    // Process ONLY AI Fast Scale Payment Intents (1-click upsells/downsells)
     for (const pi of paymentIntents.data) {
       // Only include succeeded payments
       if (pi.status !== 'succeeded') continue
 
-      // Determine product type and name
-      let productType = 'other'
-      let productName = pi.description || 'Payment Intent'
-      let trafficSource = 'Payment Intent'
+      // ONLY include AI Fast Scale upsells/downsells (ignore mavazie and duplicates)
+      if (!pi.metadata || !pi.metadata.upsell_type) continue
 
-      // Check if it's an AI Fast Scale upsell/downsell
-      if (pi.metadata && pi.metadata.upsell_type) {
-        if (pi.metadata.upsell_type === 'blueprint17') {
-          productType = 'upsell'
-          productName = 'Upsell ($17)'
-        } else if (pi.metadata.upsell_type === 'blueprint7') {
-          productType = 'downsell'
-          productName = 'Downsell ($7)'
-        }
-        trafficSource = '1-Click Upsell'
-      } else if (pi.metadata && pi.metadata.shop_name) {
-        // Other shop sale (like mavazie)
-        trafficSource = pi.metadata.shop_name
+      // Determine product type and name
+      let productType = 'unknown'
+      let productName = 'Unknown Product'
+
+      if (pi.metadata.upsell_type === 'blueprint17') {
+        productType = 'upsell'
+        productName = 'Upsell ($17)'
+      } else if (pi.metadata.upsell_type === 'blueprint7') {
+        productType = 'downsell'
+        productName = 'Downsell ($7)'
       }
 
-      // Get customer email
+      // Get customer email from original session
       let customerEmail = 'No email'
       let customerName = 'N/A'
 
-      if (pi.metadata && pi.metadata.email) {
-        customerEmail = pi.metadata.email
-      } else if (pi.metadata && pi.metadata.original_session) {
+      if (pi.metadata.original_session) {
         try {
           const originalSession = sessions.data.find(s => s.id === pi.metadata.original_session)
           if (originalSession) {
@@ -156,7 +154,7 @@ export async function GET(request: Request) {
 
       yourSales.push({
         id: pi.id,
-        sessionId: pi.metadata?.original_session || pi.id,
+        sessionId: pi.metadata.original_session || pi.id,
         email: customerEmail,
         customerName: customerName,
         amount: pi.amount,
@@ -176,7 +174,7 @@ export async function GET(request: Request) {
         utm_content: '',
         fbclid: '',
         gclid: '',
-        traffic_source: trafficSource,
+        traffic_source: '1-Click Upsell',
         referrer: '',
         landing_page: '',
       })

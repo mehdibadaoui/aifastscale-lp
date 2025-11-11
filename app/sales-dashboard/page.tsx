@@ -940,7 +940,7 @@ export default function SalesDashboard() {
               <span className="text-3xl">🏆</span>
             </div>
             <p className="text-4xl font-bold text-white mb-1">{data.totalSales}</p>
-            <p className="text-orange-100 text-sm">All Time</p>
+            <p className="text-orange-100 text-sm">Since Nov 1, 2025</p>
           </div>
         </div>
 
