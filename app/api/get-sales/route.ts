@@ -34,14 +34,15 @@ export async function GET(request: Request) {
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
 
-    // Default to last 30 days if no custom range
-    const defaultStart = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60
+    // Default to November 1st, 2024 (start of launch) if no custom range
+    const nov1st2024 = new Date('2024-11-01T00:00:00Z')
+    const defaultStart = Math.floor(nov1st2024.getTime() / 1000)
     const customStart = startDate ? Math.floor(new Date(startDate).getTime() / 1000) : defaultStart
     const customEnd = endDate ? Math.floor(new Date(endDate).getTime() / 1000) : Math.floor(Date.now() / 1000)
 
-    // Fetch all checkout sessions
+    // Fetch all checkout sessions (increased limit to capture all sales since Nov 1st)
     const sessions = await stripe.checkout.sessions.list({
-      limit: 100,
+      limit: 1000,
       created: {
         gte: customStart,
         lte: customEnd,
