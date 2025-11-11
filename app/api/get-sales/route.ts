@@ -34,9 +34,8 @@ export async function GET(request: Request) {
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
 
-    // Default to November 1st, 2024 (start of launch) if no custom range
-    const nov1st2024 = new Date('2024-11-01T00:00:00Z')
-    const defaultStart = Math.floor(nov1st2024.getTime() / 1000)
+    // Default to ALL TIME (no date restriction) - show every sale ever
+    const defaultStart = 0 // Unix epoch (1970) = fetch all sales ever
     const customStart = startDate ? Math.floor(new Date(startDate).getTime() / 1000) : defaultStart
     const customEnd = endDate ? Math.floor(new Date(endDate).getTime() / 1000) : Math.floor(Date.now() / 1000)
 
