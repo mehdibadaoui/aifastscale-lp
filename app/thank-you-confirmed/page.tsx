@@ -27,9 +27,11 @@ export default function ThankYouPage() {
     setUpsellPurchase(upsell)
     setSessionId(session)
 
+    // TEMPORARY: Disable upsell while using Whop (no 1-click upsells available)
+    // To restore Stripe upsell/downsell: See /BACKUP-ORIGINAL-STRIPE-SETUP.md
     if (session && !upsell) {
-      setShowUpsell(true)
-      setShowEmailModal(false)
+      setShowUpsell(false) // CHANGED: was true, now false to hide upsell
+      setShowEmailModal(true) // CHANGED: was false, now true to show email modal instead
     } else {
       setShowUpsell(false)
       setShowEmailModal(true)

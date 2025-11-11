@@ -456,7 +456,7 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Redirect to Stripe hosted checkout - OPTIMIZED FOR SPEED
+  // Redirect to Whop checkout (TEMPORARY - using Whop instead of Stripe)
   const handleCheckout = async (ctaLocation: string) => {
     // Set loading state IMMEDIATELY for instant visual feedback
     setCheckoutLoading(ctaLocation)
@@ -465,33 +465,9 @@ export default function AgentLandingPage() {
     // This ensures events fire even if API call is slow or fails
     trackFullCTAClick(ctaLocation)
 
-    try {
-      // Get UTM parameters, Facebook cookies, and tracking data for ad attribution
-      const trackingParams = collectTrackingParams()
-
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ utmParams: trackingParams }),
-      })
-      const { url, error } = await response.json()
-
-      if (error) {
-        console.error('Checkout error:', error)
-        alert('Something went wrong. Please try again.')
-        setCheckoutLoading(null)
-        return
-      }
-
-      if (url) {
-        // Redirect immediately - don't reset loading state, let the page transition handle it
-        window.location.href = url
-      }
-    } catch (err) {
-      console.error('Checkout exception:', err)
-      alert('Something went wrong. Please try again.')
-      setCheckoutLoading(null)
-    }
+    // TEMPORARY: Direct redirect to Whop checkout link
+    // To restore Stripe with upsell/downsell: See /BACKUP-ORIGINAL-STRIPE-SETUP.md
+    window.location.href = 'https://whop.com/checkout/plan_9GL57Y3FK0VZ4?d2c=true'
   }
 
   const products = [
