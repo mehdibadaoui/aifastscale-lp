@@ -933,14 +933,43 @@ export default function SalesDashboard() {
             <p className="text-purple-100 text-sm">Per transaction</p>
           </div>
 
-          {/* Total Sales (30 days) */}
+          {/* Lifetime Sales */}
           <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-6 shadow-xl border border-white/20">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-orange-100 text-sm font-medium">Total Sales (30d)</p>
-              <span className="text-3xl">📦</span>
+              <p className="text-orange-100 text-sm font-medium">Lifetime Sales</p>
+              <span className="text-3xl">🏆</span>
             </div>
             <p className="text-4xl font-bold text-white mb-1">{data.totalSales}</p>
-            <p className="text-orange-100 text-sm">Last 30 days</p>
+            <p className="text-orange-100 text-sm">Since Nov 1, 2024</p>
+          </div>
+        </div>
+
+        {/* Lifetime Stats Banner */}
+        <div className="mb-8 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-orange-600/20 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="text-4xl">🏆</span>
+            <h2 className="text-2xl font-black text-white">ALL-TIME TOTALS</h2>
+            <span className="text-4xl">🏆</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white/5 rounded-xl p-4 text-center">
+              <p className="text-white/60 text-sm mb-1">Total Sales</p>
+              <p className="text-3xl font-black text-white">{data.totalSales}</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-4 text-center">
+              <p className="text-white/60 text-sm mb-1">Total Revenue</p>
+              <p className="text-3xl font-black text-white">${(data.totalRevenue / 100).toFixed(2)}</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-4 text-center">
+              <p className="text-white/60 text-sm mb-1">Avg Order Value</p>
+              <p className="text-3xl font-black text-white">${(data.avgOrderValue / 100).toFixed(2)}</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-4 text-center">
+              <p className="text-white/60 text-sm mb-1">Main + Upsells</p>
+              <p className="text-xl font-black text-white">
+                {data.products.main.sales} + {data.products.upsell.sales + data.products.downsell.sales}
+              </p>
+            </div>
           </div>
         </div>
 
