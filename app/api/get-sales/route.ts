@@ -65,7 +65,7 @@ export async function GET(request: Request) {
     // Filter and process sales
     const yourSales: any[] = []
 
-    // Process Checkout Sessions (main course purchases)
+    // Process ALL Checkout Sessions (show ALL paid transactions)
     for (const session of sessions.data) {
       if (session.payment_status !== 'paid') continue
 
@@ -74,71 +74,75 @@ export async function GET(request: Request) {
 
       for (const item of lineItems) {
         const priceId = item.price?.id || ''
+        const productName = PRODUCT_NAMES[priceId] || item.description || 'Other Product'
+        const productType = PRODUCT_TYPES[priceId] || 'other'
 
-        // Check if this is one of YOUR products
-        if (YOUR_PRICE_IDS.includes(priceId)) {
-          const productName = PRODUCT_NAMES[priceId] || 'Unknown Product'
-          const productType = PRODUCT_TYPES[priceId] || 'unknown'
+        // Extract UTM parameters from metadata
+        const metadata = session.metadata || {}
 
-          // Extract UTM parameters from metadata
-          const metadata = session.metadata || {}
-
-          yourSales.push({
-            id: session.id,
-            sessionId: session.id,
-            email: session.customer_details?.email || session.customer_email || 'No email',
-            customerName: session.customer_details?.name || 'N/A',
-            amount: session.amount_total || 0,
-            product: productName,
-            productType: productType,
-            priceId: priceId,
-            created: session.created,
-            timestamp: session.created,
-            status: session.payment_status,
-            paymentMethod: session.payment_method_types?.[0] || 'card',
-            // Customer demographics
-            country: session.customer_details?.address?.country || 'Unknown',
-            city: session.customer_details?.address?.city || '',
-            // UTM tracking data
-            utm_source: metadata.utm_source || '',
-            utm_medium: metadata.utm_medium || '',
-            utm_campaign: metadata.utm_campaign || '',
-            utm_term: metadata.utm_term || '',
-            utm_content: metadata.utm_content || '',
-            fbclid: metadata.fbclid || '',
-            gclid: metadata.gclid || '',
-            traffic_source: metadata.traffic_source || 'Direct',
-            referrer: metadata.referrer || '',
-            landing_page: metadata.landing_page || '',
-          })
-        }
+        yourSales.push({
+          id: session.id,
+          sessionId: session.id,
+          email: session.customer_details?.email || session.customer_email || 'No email',
+          customerName: session.customer_details?.name || 'N/A',
+          amount: session.amount_total || 0,
+          product: productName,
+          productType: productType,
+          priceId: priceId,
+          created: session.created,
+          timestamp: session.created,
+          status: session.payment_status,
+          paymentMethod: session.payment_method_types?.[0] || 'card',
+          // Customer demographics
+          country: session.customer_details?.address?.country || 'Unknown',
+          city: session.customer_details?.address?.city || '',
+          // UTM tracking data
+          utm_source: metadata.utm_source || '',
+          utm_medium: metadata.utm_medium || '',
+          utm_campaign: metadata.utm_campaign || '',
+          utm_term: metadata.utm_term || '',
+          utm_content: metadata.utm_content || '',
+          fbclid: metadata.fbclid || '',
+          gclid: metadata.gclid || '',
+          traffic_source: metadata.traffic_source || metadata.shop_name || 'Direct',
+          referrer: metadata.referrer || '',
+          landing_page: metadata.landing_page || '',
+        })
       }
     }
 
-    // Process Payment Intents (1-click upsells/downsells via /api/upsell-purchase)
+    // Process ALL Payment Intents (show ALL succeeded payments)
     for (const pi of paymentIntents.data) {
       // Only include succeeded payments
       if (pi.status !== 'succeeded') continue
 
-      // Only include upsells/downsells (they have metadata.upsell_type)
-      if (!pi.metadata || !pi.metadata.upsell_type) continue
+      // Determine product type and name
+      let productType = 'other'
+      let productName = pi.description || 'Payment Intent'
+      let trafficSource = 'Payment Intent'
 
-      // Determine product type from upsell_type
-      let productType = 'unknown'
-      let productName = 'Unknown Product'
-
-      if (pi.metadata.upsell_type === 'blueprint17') {
-        productType = 'upsell'
-        productName = 'Upsell ($17)'
-      } else if (pi.metadata.upsell_type === 'blueprint7') {
-        productType = 'downsell'
-        productName = 'Downsell ($7)'
+      // Check if it's an AI Fast Scale upsell/downsell
+      if (pi.metadata && pi.metadata.upsell_type) {
+        if (pi.metadata.upsell_type === 'blueprint17') {
+          productType = 'upsell'
+          productName = 'Upsell ($17)'
+        } else if (pi.metadata.upsell_type === 'blueprint7') {
+          productType = 'downsell'
+          productName = 'Downsell ($7)'
+        }
+        trafficSource = '1-Click Upsell'
+      } else if (pi.metadata && pi.metadata.shop_name) {
+        // Other shop sale (like mavazie)
+        trafficSource = pi.metadata.shop_name
       }
 
-      // Get customer email from original session if available
+      // Get customer email
       let customerEmail = 'No email'
       let customerName = 'N/A'
-      if (pi.metadata.original_session) {
+
+      if (pi.metadata && pi.metadata.email) {
+        customerEmail = pi.metadata.email
+      } else if (pi.metadata && pi.metadata.original_session) {
         try {
           const originalSession = sessions.data.find(s => s.id === pi.metadata.original_session)
           if (originalSession) {
@@ -152,7 +156,7 @@ export async function GET(request: Request) {
 
       yourSales.push({
         id: pi.id,
-        sessionId: pi.metadata.original_session || pi.id,
+        sessionId: pi.metadata?.original_session || pi.id,
         email: customerEmail,
         customerName: customerName,
         amount: pi.amount,
@@ -172,7 +176,7 @@ export async function GET(request: Request) {
         utm_content: '',
         fbclid: '',
         gclid: '',
-        traffic_source: '1-Click Upsell',
+        traffic_source: trafficSource,
         referrer: '',
         landing_page: '',
       })
