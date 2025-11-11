@@ -42,8 +42,9 @@ export async function POST(req: NextRequest) {
       // That parameter was causing stricter 3D Secure checks and 90%+ abandonment
       // We only save payment method during upsell flow (after trust is established)
       'customer_creation': 'always',
-      // PAYMENT METHODS: Enable cards, Apple Pay, Google Pay (NO Cash App Pay - causes timeouts)
+      // PAYMENT METHODS: Enable card payments (Apple Pay/Google Pay show automatically on mobile)
       'payment_method_types[0]': 'card',
+      // Enable Link by Stripe for one-click autofill
       'payment_method_types[1]': 'link',
       // BRANDING: Show logo and brand colors for trust
       'custom_text[submit][message]': '🔒 Secure payment • 30-day money-back guarantee',
