@@ -52,9 +52,21 @@ export async function GET(request: Request) {
 
     console.log('Fetched sessions:', sessions.data.length)
 
+    // ALSO fetch Payment Intents (for 1-click upsells/downsells)
+    const paymentIntents = await stripe.paymentIntents.list({
+      limit: 1000,
+      created: {
+        gte: customStart,
+        lte: customEnd,
+      },
+    })
+
+    console.log('Fetched payment intents:', paymentIntents.data.length)
+
     // Filter and process sales
     const yourSales: any[] = []
 
+    // Process Checkout Sessions (main course purchases)
     for (const session of sessions.data) {
       if (session.payment_status !== 'paid') continue
 
@@ -102,6 +114,69 @@ export async function GET(request: Request) {
           })
         }
       }
+    }
+
+    // Process Payment Intents (1-click upsells/downsells via /api/upsell-purchase)
+    for (const pi of paymentIntents.data) {
+      // Only include succeeded payments
+      if (pi.status !== 'succeeded') continue
+
+      // Only include upsells/downsells (they have metadata.upsell_type)
+      if (!pi.metadata || !pi.metadata.upsell_type) continue
+
+      // Determine product type from upsell_type
+      let productType = 'unknown'
+      let productName = 'Unknown Product'
+
+      if (pi.metadata.upsell_type === 'blueprint17') {
+        productType = 'upsell'
+        productName = 'Upsell ($17)'
+      } else if (pi.metadata.upsell_type === 'blueprint7') {
+        productType = 'downsell'
+        productName = 'Downsell ($7)'
+      }
+
+      // Get customer email from original session if available
+      let customerEmail = 'No email'
+      let customerName = 'N/A'
+      if (pi.metadata.original_session) {
+        try {
+          const originalSession = sessions.data.find(s => s.id === pi.metadata.original_session)
+          if (originalSession) {
+            customerEmail = originalSession.customer_details?.email || 'No email'
+            customerName = originalSession.customer_details?.name || 'N/A'
+          }
+        } catch (e) {
+          // Ignore errors
+        }
+      }
+
+      yourSales.push({
+        id: pi.id,
+        sessionId: pi.metadata.original_session || pi.id,
+        email: customerEmail,
+        customerName: customerName,
+        amount: pi.amount,
+        product: productName,
+        productType: productType,
+        priceId: 'payment_intent',
+        created: pi.created,
+        timestamp: pi.created,
+        status: 'paid',
+        paymentMethod: 'card',
+        country: 'Unknown',
+        city: '',
+        utm_source: '',
+        utm_medium: '',
+        utm_campaign: '',
+        utm_term: '',
+        utm_content: '',
+        fbclid: '',
+        gclid: '',
+        traffic_source: '1-Click Upsell',
+        referrer: '',
+        landing_page: '',
+      })
     }
 
     console.log('Your sales found:', yourSales.length)
