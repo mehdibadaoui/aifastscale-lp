@@ -44,6 +44,7 @@ export async function POST(req: NextRequest) {
       'customer_creation': 'always',
       // PAYMENT METHODS: Enable cards, Apple Pay, Google Pay (NO Cash App Pay - causes timeouts)
       'payment_method_types[0]': 'card',
+      'payment_method_types[1]': 'link',
       // BRANDING: Show logo and brand colors for trust
       'custom_text[submit][message]': '🔒 Secure payment • 30-day money-back guarantee',
       'submit_type': 'pay', // Shows "Pay $37" instead of generic "Subscribe"
