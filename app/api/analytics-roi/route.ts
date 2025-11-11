@@ -87,26 +87,59 @@ export async function GET(req: NextRequest) {
     // Fetch ad spend data (if configured)
     const adSpend: Record<string, number> = {}
 
-    // Try to fetch Facebook Ads spend
+    // Try to fetch Facebook Ads spend directly
     try {
-      const fbResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/facebook-ads?days=${daysBack}`)
-      const fbData = await fbResponse.json()
-      if (fbData.success) {
-        adSpend['Facebook Ads'] = parseFloat(fbData.summary.totalSpend)
+      const accessToken = process.env.FACEBOOK_ACCESS_TOKEN
+      const adAccountId = process.env.FACEBOOK_AD_ACCOUNT_ID
+
+      if (accessToken && adAccountId) {
+        // Calculate date range for Facebook API
+        const endDateObj = new Date()
+        const startDateObj = new Date()
+        startDateObj.setDate(startDateObj.getDate() - daysBack)
+
+        const startDateStr = startDateObj.toISOString().split('T')[0]
+        const endDateStr = endDateObj.toISOString().split('T')[0]
+
+        // Fetch from Facebook Marketing API
+        const apiUrl = `https://graph.facebook.com/v18.0/${adAccountId}/insights`
+        const params = new URLSearchParams({
+          access_token: accessToken,
+          time_range: JSON.stringify({
+            since: startDateStr,
+            until: endDateStr,
+          }),
+          level: 'account',
+          fields: 'spend',
+        })
+
+        const fbResponse = await fetch(`${apiUrl}?${params.toString()}`)
+        const fbData = await fbResponse.json()
+
+        if (fbResponse.ok && fbData.data) {
+          const totalSpend = fbData.data.reduce((sum: number, day: any) => sum + parseFloat(day.spend || '0'), 0)
+          adSpend['Facebook Ads'] = totalSpend
+          console.log(`✅ Facebook Ads spend: $${totalSpend.toFixed(2)}`)
+        }
+      } else {
+        console.log('⚠️ Facebook Ads not configured (missing access token or account ID)')
       }
     } catch (error) {
-      console.log('Facebook Ads API not configured or error:', error)
+      console.log('Facebook Ads API error:', error)
     }
 
-    // Try to fetch Google Ads spend
+    // Try to fetch Google Ads spend directly
     try {
-      const googleResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/google-ads?days=${daysBack}`)
-      const googleData = await googleResponse.json()
-      if (googleData.success) {
-        adSpend['Google Ads'] = parseFloat(googleData.summary.totalSpend)
+      const googleAccessToken = process.env.GOOGLE_ADS_ACCESS_TOKEN
+      const googleCustomerId = process.env.GOOGLE_ADS_CUSTOMER_ID
+
+      if (googleAccessToken && googleCustomerId) {
+        // Google Ads API integration would go here
+        // For now, skip if not configured
+        console.log('⚠️ Google Ads API not implemented yet')
       }
     } catch (error) {
-      console.log('Google Ads API not configured or error:', error)
+      console.log('Google Ads API error:', error)
     }
 
     // Calculate profit and ROI for each channel
