@@ -2007,14 +2007,14 @@ export default function AgentLandingPage() {
                 Real Success Story
               </span>
             </div>
-            <h2 className="font-serif mb-4 px-4 text-2xl leading-tight font-black md:text-5xl lg:text-6xl">
-              <span>How Mr. Lucas Sold a </span>
-              <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
+            <h2 className="mb-4 px-4 text-2xl leading-tight font-black md:text-5xl lg:text-6xl">
+              <span className="text-white">How Mr. Lucas Sold a </span>
+              <span className="text-amber-400">
                 Palm Jumeirah Villa
               </span>
               <br />
-              <span>with a </span>
-              <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
+              <span className="text-white">with a </span>
+              <span className="text-amber-400">
                 $1 Video
               </span>
             </h2>
@@ -2831,10 +2831,10 @@ export default function AgentLandingPage() {
       <section className="relative bg-black py-10 md:py-20">
         <Card>
           <div className="mx-auto max-w-5xl px-4 text-center md:px-6">
-            <h2 className="font-serif mb-4 text-2xl font-black md:mb-6 md:text-5xl">
+            <h2 className="mb-4 text-3xl font-black text-white md:mb-6 md:text-5xl">
               Enrollment open now
             </h2>
-            <p className="mb-6 text-lg text-gray-300 md:mb-10 md:text-xl">
+            <p className="mb-6 text-xl font-bold text-gray-300 md:mb-10 md:text-2xl">
               Price jumps to $97 in: <span className="font-black text-amber-400">{timeLeft}</span>
             </p>
             <button
