@@ -12,14 +12,14 @@ export default function LazyTrackingPixels() {
   const [shouldLoadOthers, setShouldLoadOthers] = useState(false)
 
   useEffect(() => {
-    // Load non-critical pixels after 5 seconds
+    // Load non-critical pixels after 10 seconds + requestIdleCallback for max performance
     const timer = setTimeout(() => {
       if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => setShouldLoadOthers(true))
+        requestIdleCallback(() => setShouldLoadOthers(true), { timeout: 2000 })
       } else {
         setShouldLoadOthers(true)
       }
-    }, 5000) // 5 seconds for non-critical pixels
+    }, 10000) // 10 seconds for non-critical pixels (GA, Clarity)
 
     return () => clearTimeout(timer)
   }, [])

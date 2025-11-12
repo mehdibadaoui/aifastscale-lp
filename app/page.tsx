@@ -456,17 +456,14 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Redirect to YOUR Stripe payment link
+  // INSTANT redirect to Stripe - tracking happens in background
   const handleCheckout = async (ctaLocation: string) => {
-    // Set loading state IMMEDIATELY for instant visual feedback
-    setCheckoutLoading(ctaLocation)
+    // Fire tracking in background (non-blocking, fire-and-forget)
+    // Using setTimeout 0 ensures redirect happens immediately
+    setTimeout(() => trackFullCTAClick(ctaLocation), 0)
 
-    // Fire tracking IMMEDIATELY (fbq/gtag are already non-blocking, no setTimeout needed)
-    // This ensures events fire even if API call is slow or fails
-    trackFullCTAClick(ctaLocation)
-
-    // Redirect to YOUR Stripe payment link
-    // Simple, clean, direct - perfect for warming up new Stripe account
+    // INSTANT redirect - no delays, no waiting for tracking
+    // This gives users instant feedback (under 100ms)
     window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
   }
 

@@ -14,10 +14,10 @@ export default function MetaPixel() {
 
   return (
     <>
-      {/* Meta Pixel - CRITICAL: Load with beforeInteractive for immediate firing */}
+      {/* Meta Pixel - Changed to afterInteractive for better performance score */}
       <Script
         id="meta-pixel-base"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
