@@ -7,7 +7,7 @@ const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
   weight: ['400', '700'], // PERFORMANCE: Only 2 weights - 400 (normal) and 700 (bold)
-  display: 'swap',
+  display: 'optional', // PERFORMANCE: Use fallback immediately, swap when ready
   preload: true,
   fallback: ['system-ui', 'sans-serif'],
   adjustFontFallback: true, // Reduces layout shift
@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
   weight: ['700'], // PERFORMANCE: Only 1 weight - bold for headlines
-  display: 'swap',
+  display: 'optional', // PERFORMANCE: Use fallback immediately, swap when ready
   preload: true,
   fallback: ['Georgia', 'serif'],
   adjustFontFallback: true, // Reduces layout shift
@@ -98,9 +98,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* HERO OPTIMIZATION: Preload critical hero assets for instant LCP */}
+        {/* HERO OPTIMIZATION: Only preload poster image for instant LCP (video loads on-demand) */}
         <link rel="preload" href="/videos/VSL-thumbnail.jpg" as="image" fetchPriority="high" />
-        <link rel="preload" href="/videos/VSL-optimized.mp4" as="video" type="video/mp4" />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
