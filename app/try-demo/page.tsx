@@ -1,18 +1,20 @@
 'use client'
 
 import React, { useState, useRef } from 'react'
-import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Play, Download, AlertCircle } from 'lucide-react'
+import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Play, Download, AlertCircle, X } from 'lucide-react'
 import Image from 'next/image'
-import PasswordGate from './PasswordGate'
+import DemoEmailCaptureModal from './DemoEmailCaptureModal'
 
 export default function TryDemoPage() {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null)
+  const [uploadedImages, setUploadedImages] = useState<string[]>([])
   const [selectedScript, setSelectedScript] = useState('listing')
   const [customScript, setCustomScript] = useState('')
   const [scriptMode, setScriptMode] = useState<'preset' | 'custom'>('preset')
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9'>('9:16')
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null)
+  const [showEmailModal, setShowEmailModal] = useState(false)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [progress, setProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -37,42 +39,69 @@ export default function TryDemoPage() {
   const maxWords = 25
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    // Validate minimum 2 images
+    if (files.length < 2) {
+      setError('📸 Please upload at least 2 images (helps AI avoid celebrity detection)')
+      return
+    }
+
+    // Validate maximum 3 images
+    if (files.length > 3) {
+      setError('📸 Maximum 3 images allowed')
+      return
+    }
+
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+    const newImages: string[] = []
+    let processedCount = 0
+
+    Array.from(files).forEach((file) => {
       // Validate file size
       if (file.size > 10 * 1024 * 1024) {
-        setError('📦 Image is too large. Please use a photo under 10MB.')
+        setError(`📦 "${file.name}" is too large. Please use photos under 10MB.`)
         return
       }
 
       // Validate file type
-      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
       if (!validTypes.includes(file.type)) {
-        setError('📷 Please upload a valid image file (JPEG, PNG, or WebP)')
+        setError(`📷 "${file.name}" is not a valid image file (JPEG, PNG, or WebP)`)
         return
       }
 
-      // Validate minimum size (avoid too small images)
+      // Validate minimum size
       if (file.size < 10 * 1024) {
-        setError('📏 Image is too small. Please use a higher quality photo (at least 10KB).')
+        setError(`📏 "${file.name}" is too small. Please use higher quality photos (at least 10KB).`)
         return
       }
 
       const reader = new FileReader()
       reader.onloadend = () => {
-        setUploadedImage(reader.result as string)
-        setError('')
+        newImages.push(reader.result as string)
+        processedCount++
+
+        if (processedCount === files.length) {
+          setUploadedImages(newImages)
+          setError('')
+        }
       }
       reader.onerror = () => {
-        setError('❌ Failed to read image file. Please try a different photo.')
+        setError(`❌ Failed to read "${file.name}". Please try a different photo.`)
       }
       reader.readAsDataURL(file)
-    }
+    })
   }
 
   const handleGenerate = async () => {
-    if (!uploadedImage) {
-      setError('Please upload an image first')
+    if (uploadedImages.length === 0) {
+      setError('Please upload at least 2 images first')
+      return
+    }
+
+    if (uploadedImages.length < 2) {
+      setError('Please upload at least 2 images (helps AI avoid celebrity detection)')
       return
     }
 
@@ -115,7 +144,7 @@ export default function TryDemoPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          image: uploadedImage,
+          images: uploadedImages, // Send all images - API will select best one
           script: scriptText,
           aspectRatio: aspectRatio,
         }),
@@ -131,6 +160,8 @@ export default function TryDemoPage() {
       }
 
       setGeneratedVideo(data.videoUrl)
+      // Show email modal instead of video immediately
+      setShowEmailModal(true)
     } catch (err: any) {
       // Provide helpful error messages based on error type
       let errorMessage = err.message || 'Something went wrong. Please try again.'
@@ -152,9 +183,16 @@ export default function TryDemoPage() {
     }
   }
 
+  const handleEmailSubmit = (email: string) => {
+    setUserEmail(email)
+    setShowEmailModal(false)
+    // Video is now visible
+  }
+
   const handleReset = () => {
-    setUploadedImage(null)
+    setUploadedImages([])
     setGeneratedVideo(null)
+    setUserEmail(null)
     setError('')
     setProgress(0)
     if (fileInputRef.current) {
@@ -163,8 +201,7 @@ export default function TryDemoPage() {
   }
 
   return (
-    <PasswordGate>
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
       {/* Header */}
       <header className="border-b border-gray-800 bg-black/50 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 py-4">
@@ -219,45 +256,59 @@ export default function TryDemoPage() {
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
+                  multiple
                   onChange={handleImageUpload}
                   className="hidden"
                   id="image-upload"
                 />
 
-                {!uploadedImage ? (
+                {uploadedImages.length === 0 ? (
                   <label
                     htmlFor="image-upload"
                     className="group flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-700 bg-gray-800/50 p-12 transition-all hover:border-yellow-500 hover:bg-gray-800"
                   >
                     <Upload className="mb-4 h-12 w-12 text-gray-500 transition-colors group-hover:text-yellow-400" />
-                    <p className="mb-2 text-lg font-semibold text-gray-300">Click to upload your photo</p>
-                    <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
+                    <p className="mb-2 text-lg font-semibold text-gray-300">Click to upload 2-3 photos</p>
+                    <p className="text-sm text-gray-500">PNG, JPG up to 10MB each • Select 2-3 images</p>
                   </label>
                 ) : (
-                  <div className="relative">
-                    <div className="overflow-hidden rounded-xl border border-yellow-500/30">
-                      <Image
-                        src={uploadedImage}
-                        alt="Uploaded"
-                        width={500}
-                        height={500}
-                        className="h-auto w-full object-cover"
-                      />
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-3 gap-2">
+                      {uploadedImages.map((image, index) => (
+                        <div key={index} className="relative overflow-hidden rounded-lg border border-yellow-500/30">
+                          <Image
+                            src={image}
+                            alt={`Uploaded ${index + 1}`}
+                            width={200}
+                            height={200}
+                            className="h-32 w-full object-cover"
+                          />
+                          {index === 0 && (
+                            <div className="absolute bottom-1 left-1 rounded bg-yellow-500 px-2 py-0.5 text-xs font-bold text-black">
+                              Primary
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
+                    <p className="text-center text-sm text-green-400">
+                      ✅ {uploadedImages.length} images uploaded • AI will select the best one
+                    </p>
                     <button
                       onClick={handleReset}
-                      className="mt-3 w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:bg-gray-700"
+                      className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:bg-gray-700"
                     >
-                      Change Photo
+                      Change Photos
                     </button>
                   </div>
                 )}
 
                 {/* Photo Tips */}
-                {!uploadedImage && (
+                {uploadedImages.length === 0 && (
                   <div className="mt-4 rounded-lg border border-green-500/30 bg-green-500/10 p-3">
                     <p className="mb-2 text-xs font-bold text-green-300">✨ BEST RESULTS:</p>
                     <ul className="space-y-1 text-xs text-green-300">
+                      <li>✅ Upload 2-3 different angles of same person</li>
                       <li>✅ Use casual, natural photos (not professional headshots)</li>
                       <li>✅ Clear face, good lighting, relaxed expression</li>
                       <li>✅ Smartphone photos work great!</li>
@@ -388,7 +439,7 @@ export default function TryDemoPage() {
               {/* Generate Button */}
               <button
                 onClick={handleGenerate}
-                disabled={!uploadedImage || isGenerating}
+                disabled={uploadedImages.length < 2 || isGenerating}
                 className="group relative w-full overflow-hidden rounded-xl p-[2px] transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 opacity-75 blur transition-opacity group-hover:opacity-100"></div>
@@ -466,8 +517,8 @@ export default function TryDemoPage() {
               </div>
             </div>
           </div>
-        ) : (
-          /* Success View */
+        ) : userEmail ? (
+          /* Success View - Only shown after email submitted */
           <div className="space-y-8">
             {/* Generated Video */}
             <div className="rounded-2xl border border-yellow-500/30 bg-gray-900/50 p-6">
@@ -514,41 +565,148 @@ export default function TryDemoPage() {
               </div>
             </div>
 
-            {/* CTA Section */}
-            <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-8 text-center">
-              <h3 className="mb-4 text-3xl font-black">
-                Want to Create Unlimited Videos Like This?
-              </h3>
-              <p className="mx-auto mb-6 max-w-2xl text-lg text-gray-300">
-                Learn the complete system to create AI talking videos in just 7 minutes. Get instant access to all templates, scripts, and training.
-              </p>
-              <div className="mb-6 grid gap-4 md:grid-cols-3">
-                <div className="rounded-xl border border-yellow-500/30 bg-gray-900/50 p-4">
-                  <p className="mb-1 text-3xl font-black text-yellow-400">$1,691</p>
-                  <p className="text-sm text-gray-400">Total Value</p>
+            {/* HIGH-CONVERTING CTA SECTION */}
+            <div className="space-y-6">
+              {/* Social Proof Counter */}
+              <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4 text-center">
+                <p className="text-lg font-bold text-green-400">
+                  🎉 <span className="text-white">247 agents</span> created videos this week • Join them!
+                </p>
+              </div>
+
+              {/* Main CTA Card */}
+              <div className="rounded-2xl border-2 border-yellow-500/50 bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-yellow-500/10 p-8 text-center shadow-2xl">
+                {/* Urgency Badge */}
+                <div className="mb-4 flex justify-center">
+                  <div className="rounded-full border border-red-500/50 bg-red-500/10 px-4 py-2">
+                    <p className="text-sm font-bold text-red-400">
+                      ⚠️ Price increases to $197 in 48 hours
+                    </p>
+                  </div>
                 </div>
-                <div className="rounded-xl border border-yellow-500/30 bg-gray-900/50 p-4">
-                  <p className="mb-1 text-3xl font-black text-green-400">$37</p>
-                  <p className="text-sm text-gray-400">Today's Price</p>
+
+                <h3 className="mb-3 text-4xl font-black">
+                  Loved the Demo?
+                  <br />
+                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                    Get Unlimited Access
+                  </span>
+                </h3>
+                <p className="mx-auto mb-6 max-w-2xl text-lg text-gray-300">
+                  Stop wasting time and money on video production. Create unlimited professional AI videos in 7 minutes each.
+                </p>
+
+                {/* Value Props */}
+                <div className="mb-6 grid gap-3 text-left md:grid-cols-2">
+                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
+                    <div>
+                      <p className="font-bold text-white">Unlimited Videos</p>
+                      <p className="text-sm text-gray-400">No monthly limits, create as many as you need</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
+                    <div>
+                      <p className="font-bold text-white">20+ Templates</p>
+                      <p className="text-sm text-gray-400">Listing, market updates, tips & more</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
+                    <div>
+                      <p className="font-bold text-white">Step-by-Step Training</p>
+                      <p className="text-sm text-gray-400">Complete video walkthroughs</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
+                    <div>
+                      <p className="font-bold text-white">Lifetime Updates</p>
+                      <p className="text-sm text-gray-400">New templates added monthly, free forever</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="rounded-xl border border-yellow-500/30 bg-gray-900/50 p-4">
-                  <p className="mb-1 text-3xl font-black text-yellow-400">98%</p>
-                  <p className="text-sm text-gray-400">Discount</p>
+
+                {/* Pricing Comparison */}
+                <div className="mb-6 grid gap-4 md:grid-cols-3">
+                  <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-4">
+                    <p className="mb-1 text-sm text-gray-500 line-through">Regular Price</p>
+                    <p className="mb-1 text-2xl font-black text-gray-500">$1,691</p>
+                  </div>
+                  <div className="relative rounded-xl border-2 border-green-500 bg-gradient-to-br from-green-500/20 to-green-500/10 p-4">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-green-500 px-3 py-1">
+                      <p className="text-xs font-bold text-black">98% OFF</p>
+                    </div>
+                    <p className="mb-1 text-sm text-green-400">Today Only</p>
+                    <p className="mb-1 text-4xl font-black text-green-400">$37</p>
+                  </div>
+                  <div className="rounded-xl border border-red-500/50 bg-red-500/10 p-4">
+                    <p className="mb-1 text-sm text-red-400">In 48 Hours</p>
+                    <p className="mb-1 text-2xl font-black text-red-400">$197</p>
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <a
+                  href="/#pricing"
+                  className="group relative mb-4 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl p-[3px] transition-all hover:scale-105 md:w-auto"
+                >
+                  <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 opacity-75 blur"></div>
+                  <div className="relative flex items-center gap-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-12 py-6 text-2xl font-black text-black shadow-2xl">
+                    <Sparkles className="h-7 w-7" />
+                    Get Full Access - $37
+                    <ArrowRight className="h-7 w-7 transition-transform group-hover:translate-x-2" />
+                  </div>
+                </a>
+
+                {/* Trust Badges */}
+                <div className="flex flex-col items-center gap-2 text-sm text-gray-400">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400" />
+                    <span>30-Day Money-Back Guarantee</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400" />
+                    <span>Instant Access • No Monthly Fees</span>
+                  </div>
                 </div>
               </div>
-              <a
-                href="/#pricing"
-                className="group inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-10 py-5 text-xl font-black text-black shadow-2xl transition-all hover:scale-105"
-              >
-                <Sparkles className="h-6 w-6" />
-                Get Full Access - $37
-                <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
-              </a>
+
+              {/* Testimonial Snippet */}
+              <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-6">
+                <div className="mb-3 flex items-center gap-2">
+                  <div className="text-yellow-400">⭐⭐⭐⭐⭐</div>
+                  <span className="text-sm font-semibold text-gray-400">5.0/5 from 247 agents</span>
+                </div>
+                <p className="mb-3 text-gray-300">
+                  "I was skeptical at first but this is a game-changer. Created 15 videos in my first week and got 3 new leads already!"
+                </p>
+                <p className="text-sm font-semibold text-gray-400">— Sarah M., Real Estate Agent</p>
+              </div>
             </div>
+          </div>
+        ) : (
+          /* Video generated but waiting for email - Show placeholder */
+          <div className="flex flex-col items-center justify-center py-20">
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 animate-pulse">
+              <CheckCircle className="h-10 w-10 text-black" />
+            </div>
+            <h2 className="mb-3 text-3xl font-bold text-white">
+              Video Generated Successfully! 🎉
+            </h2>
+            <p className="text-lg text-gray-400">
+              Please enter your email to watch your video...
+            </p>
           </div>
         )}
       </main>
+
+      {/* Email Capture Modal */}
+      <DemoEmailCaptureModal
+        isOpen={showEmailModal}
+        onEmailSubmit={handleEmailSubmit}
+      />
     </div>
-    </PasswordGate>
   )
 }

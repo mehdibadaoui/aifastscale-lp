@@ -976,7 +976,8 @@ export default function AgentLandingPage() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center gap-4">
+            {/* Main CTA Button */}
             <button
               onClick={() => handleCheckout('hero_cta')}
               disabled={checkoutLoading !== null}
@@ -998,7 +999,18 @@ export default function AgentLandingPage() {
                 )}
               </div>
             </button>
-            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 md:text-sm">
+
+            {/* Try Free Demo Button */}
+            <a
+              href="/try-demo"
+              className="group relative inline-flex w-full max-w-3xl items-center justify-center gap-2 rounded-2xl border-2 border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-sm font-bold text-white uppercase transition-all duration-300 hover:scale-105 hover:border-amber-400/50 hover:bg-white/20 md:gap-3 md:px-10 md:py-4 md:text-lg"
+            >
+              <Play className="h-4 w-4 md:h-6 md:w-6" />
+              <span className="whitespace-nowrap">Try Free Demo - See It In Action</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 md:h-6 md:w-6" />
+            </a>
+
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-400 md:text-sm">
               <Shield className="h-4 w-4 text-amber-400 md:h-5 md:w-5" />
               <span className="font-semibold">
                 30-Day Money-Back Guarantee • Instant Access • Secure Checkout

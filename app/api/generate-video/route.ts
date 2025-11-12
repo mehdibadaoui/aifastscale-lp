@@ -27,14 +27,22 @@ The person should feel completely authentic - like a real human filmed on a smar
 
 export async function POST(req: NextRequest) {
   try {
-    const { image, script, aspectRatio = '9:16' } = await req.json()
+    const { image, images, script, aspectRatio = '9:16' } = await req.json()
 
-    if (!image || !script) {
+    // Accept either single image (backward compatible) or multiple images
+    const imageList = images && Array.isArray(images) ? images : (image ? [image] : [])
+
+    if (imageList.length === 0 || !script) {
       return NextResponse.json(
-        { error: 'Image and script are required' },
+        { error: 'At least one image and script are required' },
         { status: 400 }
       )
     }
+
+    console.log(`📸 Received ${imageList.length} image(s) for video generation`)
+
+    // Try images in order until one succeeds (helps avoid celebrity detection)
+    let selectedImage = imageList[0]
 
     // Apply standard prompt to enhance the script
     const enhancedScript = `${STANDARD_PROMPT}\n\n${script}`
@@ -51,9 +59,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Extract MIME type and convert base64 image
-    const mimeTypeMatch = image.match(/^data:(image\/\w+);base64,/)
+    const mimeTypeMatch = selectedImage.match(/^data:(image\/\w+);base64,/)
     const mimeType = mimeTypeMatch ? mimeTypeMatch[1] : 'image/jpeg'
-    const imageData = image.replace(/^data:image\/\w+;base64,/, '')
+    const imageData = selectedImage.replace(/^data:image\/\w+;base64,/, '')
 
     console.log('📸 Generating video with Veo 3.1...')
     console.log('Script length:', script.length)
