@@ -456,7 +456,7 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Redirect to Whop checkout (TEMPORARY - using Whop instead of Stripe)
+  // Redirect to YOUR Stripe payment link
   const handleCheckout = async (ctaLocation: string) => {
     // Set loading state IMMEDIATELY for instant visual feedback
     setCheckoutLoading(ctaLocation)
@@ -465,9 +465,9 @@ export default function AgentLandingPage() {
     // This ensures events fire even if API call is slow or fails
     trackFullCTAClick(ctaLocation)
 
-    // TEMPORARY: Direct redirect to Whop checkout link
-    // To restore Stripe with upsell/downsell: See /BACKUP-ORIGINAL-STRIPE-SETUP.md
-    window.location.href = 'https://whop.com/checkout/plan_9GL57Y3FK0VZ4?d2c=true'
+    // Redirect to YOUR Stripe payment link
+    // Simple, clean, direct - perfect for warming up new Stripe account
+    window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
   }
 
   const products = [
