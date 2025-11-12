@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
-import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Play, Download, AlertCircle, X } from 'lucide-react'
+import React, { useState, useRef, useEffect } from 'react'
+import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Play, Download, AlertCircle, X, Share2 } from 'lucide-react'
 import Image from 'next/image'
 import DemoEmailCaptureModal from './DemoEmailCaptureModal'
 
@@ -17,7 +17,33 @@ export default function TryDemoPage() {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [progress, setProgress] = useState(0)
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [showExitIntent, setShowExitIntent] = useState(false)
+  const [socialProofCount, setSocialProofCount] = useState(247)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Dynamic social proof counter
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSocialProofCount(prev => prev + Math.floor(Math.random() * 3))
+    }, 45000) // Increment every 45 seconds
+    return () => clearInterval(interval)
+  }, [])
+
+  // Exit intent detection
+  useEffect(() => {
+    let hasShownExitIntent = false
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0 && !hasShownExitIntent && userEmail && !showExitIntent) {
+        hasShownExitIntent = true
+        setShowExitIntent(true)
+      }
+    }
+
+    document.addEventListener('mouseleave', handleMouseLeave)
+    return () => document.removeEventListener('mouseleave', handleMouseLeave)
+  }, [userEmail, showExitIntent])
 
   const scripts = {
     listing: {
@@ -187,6 +213,29 @@ export default function TryDemoPage() {
     setUserEmail(email)
     setShowEmailModal(false)
     // Video is now visible
+  }
+
+  const handleShare = (platform: string) => {
+    const url = 'https://aifastscale.com/try-demo'
+    const text = 'Check out this amazing AI video tool! Create professional talking videos in 7 minutes 🚀'
+
+    const shareUrls: Record<string, string> = {
+      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      copy: url
+    }
+
+    if (platform === 'copy') {
+      navigator.clipboard.writeText(url)
+      alert('✅ Link copied! Share it to unlock 50% off ($18.50 instead of $37)')
+    } else {
+      window.open(shareUrls[platform], '_blank', 'width=600,height=400')
+      setTimeout(() => {
+        alert('🎉 Thanks for sharing! Use code SHARE50 at checkout for 50% off!')
+      }, 2000)
+    }
+    setShowShareModal(false)
   }
 
   const handleReset = () => {
@@ -535,7 +584,8 @@ export default function TryDemoPage() {
                 </button>
               </div>
 
-              <div className="overflow-hidden rounded-xl">
+              {/* Video with Watermark Overlay */}
+              <div className="relative overflow-hidden rounded-xl">
                 <video
                   src={generatedVideo}
                   controls
@@ -544,33 +594,45 @@ export default function TryDemoPage() {
                 >
                   Your browser does not support video playback.
                 </video>
+                {/* Watermark Overlay */}
+                <div className="pointer-events-none absolute bottom-4 right-4 rounded-lg bg-black/70 px-3 py-2 backdrop-blur-sm">
+                  <p className="text-xs font-bold text-white">Made with AgentClone.com</p>
+                </div>
               </div>
 
-              <div className="mt-4 flex gap-3">
+              {/* Action Buttons */}
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
                 <a
                   href={generatedVideo}
                   download
-                  className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-6 py-3 font-semibold transition-colors hover:bg-gray-700"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-6 py-3 font-semibold transition-colors hover:bg-gray-700"
                 >
                   <Download className="h-5 w-5" />
-                  Download Video
+                  Download
                 </a>
                 <button
-                  className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-3 font-bold text-black transition-all hover:scale-105"
+                  onClick={() => setShowShareModal(true)}
+                  className="flex items-center justify-center gap-2 rounded-lg border-2 border-green-500 bg-green-500/10 px-6 py-3 font-bold text-green-400 transition-all hover:bg-green-500/20"
+                >
+                  <Share2 className="h-5 w-5" />
+                  Share for 50% Off
+                </button>
+                <button
+                  className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-3 font-bold text-black transition-all hover:scale-105"
                   onClick={() => window.location.href = '/#pricing'}
                 >
                   <Sparkles className="h-5 w-5" />
-                  Get Full Course - $37
+                  Get Course - $37
                 </button>
               </div>
             </div>
 
             {/* HIGH-CONVERTING CTA SECTION */}
             <div className="space-y-6">
-              {/* Social Proof Counter */}
+              {/* Dynamic Social Proof Counter */}
               <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4 text-center">
                 <p className="text-lg font-bold text-green-400">
-                  🎉 <span className="text-white">247 agents</span> created videos this week • Join them!
+                  🎉 <span className="text-white">{socialProofCount} agents</span> created videos this week • Join them!
                 </p>
               </div>
 
@@ -707,6 +769,139 @@ export default function TryDemoPage() {
         isOpen={showEmailModal}
         onEmailSubmit={handleEmailSubmit}
       />
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-md rounded-2xl border border-green-500/30 bg-gradient-to-br from-gray-900 to-black p-8 shadow-2xl">
+            <button
+              onClick={() => setShowShareModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-emerald-500">
+                <Share2 className="h-8 w-8 text-black" />
+              </div>
+            </div>
+
+            <h2 className="mb-3 text-center text-3xl font-black text-white">
+              Share & Get 50% OFF! 🎉
+            </h2>
+            <p className="mb-6 text-center text-lg text-gray-300">
+              Share this demo with your network and unlock an exclusive discount code
+            </p>
+
+            <div className="mb-6 rounded-lg border border-green-500/30 bg-green-500/10 p-4">
+              <p className="text-center text-2xl font-black text-green-400">
+                Save $18.50
+              </p>
+              <p className="text-center text-sm text-gray-400">
+                Get the course for just $18.50 instead of $37
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={() => handleShare('twitter')}
+                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#1DA1F2] px-6 py-3 font-bold text-white transition-all hover:scale-105"
+              >
+                <span>Share on Twitter</span>
+                <ArrowRight className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() => handleShare('facebook')}
+                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#4267B2] px-6 py-3 font-bold text-white transition-all hover:scale-105"
+              >
+                <span>Share on Facebook</span>
+                <ArrowRight className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() => handleShare('linkedin')}
+                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#0077B5] px-6 py-3 font-bold text-white transition-all hover:scale-105"
+              >
+                <span>Share on LinkedIn</span>
+                <ArrowRight className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() => handleShare('copy')}
+                className="flex w-full items-center justify-center gap-3 rounded-lg border-2 border-green-500 bg-green-500/10 px-6 py-3 font-bold text-green-400 transition-all hover:bg-green-500/20"
+              >
+                <span>Copy Link</span>
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Exit Intent Modal */}
+      {showExitIntent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-2xl rounded-2xl border-2 border-red-500/50 bg-gradient-to-br from-gray-900 to-black p-8 shadow-2xl">
+            <button
+              onClick={() => setShowExitIntent(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            <div className="mb-6 text-center">
+              <p className="mb-2 text-5xl">⚠️</p>
+              <h2 className="mb-3 text-4xl font-black text-white">
+                Wait! Don't Leave Yet...
+              </h2>
+              <p className="text-xl text-gray-300">
+                You're about to miss out on an exclusive one-time offer
+              </p>
+            </div>
+
+            <div className="mb-6 rounded-xl border-2 border-red-500 bg-red-500/10 p-6 text-center">
+              <p className="mb-2 text-sm font-bold text-red-400">SPECIAL EXIT OFFER</p>
+              <p className="mb-2 text-5xl font-black text-white">$27</p>
+              <p className="mb-1 text-sm text-gray-400 line-through">Regular: $37</p>
+              <p className="text-lg font-bold text-red-400">Save $10 • Today Only</p>
+            </div>
+
+            <div className="mb-6 space-y-3">
+              <div className="flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-400" />
+                <p className="text-white">Lifetime access to all course materials</p>
+              </div>
+              <div className="flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-400" />
+                <p className="text-white">20+ video templates & scripts</p>
+              </div>
+              <div className="flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
+                <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-400" />
+                <p className="text-white">30-day money-back guarantee</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <a
+                href="/#pricing"
+                className="group relative block w-full overflow-hidden rounded-xl p-[2px]"
+              >
+                <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-red-500 via-orange-500 to-red-500 opacity-75 blur"></div>
+                <div className="relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-8 py-5 text-xl font-black text-white">
+                  <Sparkles className="h-6 w-6" />
+                  Claim $27 Offer Now
+                  <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
+                </div>
+              </a>
+              <button
+                onClick={() => setShowExitIntent(false)}
+                className="w-full py-3 text-sm text-gray-500 hover:text-gray-300"
+              >
+                No thanks, I'll pay full price later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
