@@ -482,6 +482,12 @@ export default function AgentLandingPage() {
       image: '/images/P2_result.webp',
     },
     {
+      title: 'ChatGPT Specialist for Real Estate',
+      value: '197',
+      description: 'Your Personal AI Real Estate Expert',
+      image: '/images/P8-c.webp',
+    },
+    {
       title: 'Photo to Talking Video',
       value: '217',
       description: 'Turn photos into natural talking videos in minutes',
