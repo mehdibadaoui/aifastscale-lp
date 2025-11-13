@@ -24,10 +24,9 @@ export async function POST(req: NextRequest) {
     const clientIp = forwardedFor ? forwardedFor.split(',')[0] : req.headers.get('x-real-ip') || 'unknown'
     const userAgent = req.headers.get('user-agent') || 'unknown'
 
-    // Create Checkout Session with FULL metadata
+    // Create Checkout Session - EXACTLY like your Stripe payment link, just with metadata
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      payment_method_types: ['card', 'cashapp', 'affirm', 'afterpay_clearpay'],
       line_items: [
         {
           price: priceId || process.env.NEXT_PUBLIC_STRIPE_PRICE_ID!,
@@ -37,7 +36,7 @@ export async function POST(req: NextRequest) {
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://aifastscale.com'}/thank-you-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://aifastscale.com'}`,
 
-      // CRITICAL: Pass ALL metadata to Stripe for proper tracking
+      // ONLY metadata - no extra fields
       metadata: {
         fbp: fbp || 'unknown',
         fbc: fbc || 'unknown',
@@ -54,19 +53,7 @@ export async function POST(req: NextRequest) {
         product: '7 Minute AgentClone Course',
       },
 
-      // Customer information for Stripe's fraud detection
-      customer_creation: 'always',
-      billing_address_collection: 'required',
-      phone_number_collection: {
-        enabled: true,
-      },
-
-      // Shipping address (optional but helps with fraud detection)
-      shipping_address_collection: {
-        allowed_countries: ['US', 'CA', 'GB', 'AU', 'AE', 'SA', 'EG', 'MA'],
-      },
-
-      // Additional fraud prevention
+      // Pass metadata to payment intent too
       payment_intent_data: {
         metadata: {
           fbp: fbp || 'unknown',
