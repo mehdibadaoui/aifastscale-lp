@@ -56,7 +56,7 @@ export default function FAQPage() {
         },
         {
           q: 'What payment methods do you accept?',
-          a: 'We accept all major credit cards (Visa, MasterCard, American Express) via Stripe. Payments are secure and processed instantly.',
+          a: 'We accept all major credit cards (Visa, MasterCard, American Express) via our secure payment processor. Payments are secure and processed instantly.',
         },
         {
           q: 'Can I cancel anytime?',

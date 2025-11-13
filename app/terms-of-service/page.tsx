@@ -92,12 +92,12 @@ export default function TermsOfService() {
                 Payment Processing
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                All payments are processed securely through Stripe, Inc., a PCI-DSS Level 1 certified payment processor. By making a purchase, you agree to:
+                All payments are processed securely through our PCI-DSS Level 1 certified payment processor. By making a purchase, you agree to:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Provide current, complete, and accurate purchase and account information</li>
-                <li>Stripe's Terms of Service: <a href="https://stripe.com/legal/consumer" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">https://stripe.com/legal/consumer</a></li>
-                <li>Your payment card information is transmitted directly to Stripe (we NEVER see your full card details)</li>
+                <li>Comply with our payment processor's terms of service</li>
+                <li>Your payment card information is transmitted directly to our payment processor (we NEVER see your full card details)</li>
                 <li>You authorize us to charge the amount displayed at checkout to your provided payment method</li>
               </ul>
 
@@ -355,7 +355,7 @@ export default function TermsOfService() {
                 <li>War, terrorism, riots, or civil unrest</li>
                 <li>Government actions, regulations, or restrictions</li>
                 <li>Internet service provider failures or network outages</li>
-                <li>Third-party platform outages (Stripe, hosting providers, AI tools)</li>
+                <li>Third-party platform outages (payment processors, hosting providers, AI tools)</li>
                 <li>Cyberattacks, DDoS attacks, or hacking attempts</li>
                 <li>Power failures or telecommunications failures</li>
               </ul>

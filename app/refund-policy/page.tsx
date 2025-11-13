@@ -171,7 +171,7 @@ export default function RefundPolicy() {
                   card
                 </li>
                 <li>
-                  All refunds are processed securely through Stripe, our payment
+                  All refunds are processed securely through our payment
                   processor
                 </li>
               </ul>
@@ -216,14 +216,14 @@ export default function RefundPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                8. Stripe Refund Processing
+                8. Secure Refund Processing
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                All refunds are processed securely through Stripe, Inc., our PCI-DSS Level 1 certified payment processor. When you request a refund:
+                All refunds are processed securely through our PCI-DSS Level 1 certified payment processor. When you request a refund:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>We initiate the refund through Stripe's secure system</li>
-                <li>Stripe reverses the original charge to your payment method</li>
+                <li>We initiate the refund through our payment processor's secure system</li>
+                <li>The payment processor reverses the original charge to your payment method</li>
                 <li>Your bank/card issuer processes the refund (5-10 business days typically)</li>
                 <li>The refund appears as a credit on your statement (not a new transaction)</li>
                 <li>For questions about refund timing, contact your card issuer</li>

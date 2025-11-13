@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
 import LazyTrackingPixels from './components/LazyTrackingPixels'
-import { SITE_CONFIG, STRIPE } from './config/constants'
+import { SITE_CONFIG } from './config/constants'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -85,7 +85,6 @@ export default function RootLayout({
         {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
 
         {/* Critical preconnects for faster DNS resolution */}
-        <link rel="preconnect" href={STRIPE.apiUrl} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 

@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
                 </li>
                 <li>
                   Billing and payment information (processed securely through
-                  Stripe)
+                  our payment processor)
                 </li>
                 <li>Account credentials (username, password)</li>
                 <li>
@@ -132,24 +132,18 @@ export default function PrivacyPolicy() {
                 <strong>Important:</strong> We do NOT store, process, or have access to your full credit card information. All payment processing is handled by our PCI-DSS Level 1 certified payment processor.
               </p>
               <h3 className="mb-3 text-xl font-bold text-gray-900">
-                Stripe Payment Processing
+                Secure Payment Processing
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                All payments are processed through Stripe, Inc., a PCI-DSS Level 1 Service Provider. When you make a purchase:
+                All payments are processed through our PCI-DSS Level 1 certified payment processor. When you make a purchase:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>Your payment card information is transmitted directly to Stripe using industry-standard TLS encryption</li>
+                <li>Your payment card information is transmitted directly to our payment processor using industry-standard TLS encryption</li>
                 <li>We NEVER receive or store your full credit card number, CVV, or card expiration date</li>
-                <li>Stripe stores your payment information securely in compliance with PCI-DSS standards</li>
+                <li>Our payment processor stores your payment information securely in compliance with PCI-DSS standards</li>
                 <li>We only receive limited information such as: cardholder name, last 4 digits of card, card brand (Visa, Mastercard, etc.)</li>
-                <li>All transactions are protected by Stripe's advanced fraud detection systems</li>
+                <li>All transactions are protected by advanced fraud detection systems</li>
               </ul>
-              <p className="mb-4 leading-relaxed text-gray-700">
-                For more information about how Stripe protects your payment data, please visit:{' '}
-                <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="font-bold text-yellow-600 hover:text-yellow-700 underline">
-                  https://stripe.com/privacy
-                </a>
-              </p>
 
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
                 Chargeback & Dispute Process
@@ -158,7 +152,7 @@ export default function PrivacyPolicy() {
                 If you dispute a charge or initiate a chargeback:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>Your payment processor (Stripe) will handle the dispute investigation</li>
+                <li>Your payment processor will handle the dispute investigation</li>
                 <li>We may share transaction details and communication records to resolve the dispute</li>
                 <li>Fraudulent chargebacks may result in permanent account termination and reporting to fraud prevention networks</li>
                 <li>For legitimate issues, please contact support@aifastscale.com first - we resolve 95% of issues without chargebacks</li>
@@ -175,7 +169,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
-                  <strong>Payment Processors:</strong> Stripe, Inc. for payment processing (see Section 4 for details)
+                  <strong>Payment Processors:</strong> Our certified payment processor for secure payment processing (see Section 4 for details)
                 </li>
                 <li>
                   <strong>Email Service Providers:</strong> To send course materials, updates, and transactional emails
@@ -271,7 +265,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>SSL/TLS encryption for all data transmission</li>
-                <li>PCI-DSS compliant payment processing (Stripe)</li>
+                <li>PCI-DSS compliant payment processing</li>
                 <li>Regular security audits and vulnerability assessments</li>
                 <li>Access controls and authentication requirements</li>
                 <li>Secure backup and disaster recovery procedures</li>
@@ -379,7 +373,7 @@ export default function PrivacyPolicy() {
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>We process data in the United States and other countries</li>
                 <li>We implement appropriate safeguards including Standard Contractual Clauses (SCCs) where required</li>
-                <li>Our payment processor Stripe complies with international data transfer regulations</li>
+                <li>Our payment processor complies with international data transfer regulations</li>
                 <li>By using our service, you consent to this transfer and processing</li>
               </ul>
             </section>

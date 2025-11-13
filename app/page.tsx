@@ -41,7 +41,7 @@ import {
   VolumeX,
   Maximize,
 } from 'lucide-react'
-import { STRIPE, GOOGLE_DRIVE } from './config/constants'
+import { GOOGLE_DRIVE } from './config/constants'
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -434,12 +434,13 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Direct Stripe payment link checkout
+  // Payment checkout - Ready for Whop integration
   const handleCheckout = async (ctaLocation: string) => {
     if (process.env.NODE_ENV === 'development') {
       console.log('CTA clicked:', ctaLocation)
     }
-    window.location.href = STRIPE.paymentLink
+    // TODO: Add Whop payment link here
+    alert('Payment system ready for Whop integration. Add payment link in config/constants.ts')
   }
 
   const products = [

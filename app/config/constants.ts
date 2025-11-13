@@ -29,13 +29,13 @@ export const PRICING = {
 } as const
 
 // ============================================================================
-// STRIPE CONFIGURATION
+// PAYMENT CONFIGURATION (Ready for Whop integration)
 // ============================================================================
 
-export const STRIPE = {
-  paymentLink: 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01',
-  apiUrl: 'https://api.stripe.com',
-  checkoutUrl: 'https://buy.stripe.com',
+export const PAYMENT = {
+  // Payment link will be added here (Whop checkout URL)
+  checkoutUrl: '', // TODO: Add Whop payment link
+  provider: 'whop', // Payment provider identifier
 } as const
 
 // ============================================================================

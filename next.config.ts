@@ -103,9 +103,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'react', 'react-dom'],
   },
-
-  // External packages for serverless functions
-  serverExternalPackages: ['stripe'],
 };
 
 export default nextConfig;
