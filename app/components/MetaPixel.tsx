@@ -14,10 +14,10 @@ export default function MetaPixel() {
 
   return (
     <>
-      {/* Meta Pixel - Changed to afterInteractive for better performance score */}
+      {/* Meta Pixel - Changed to lazyOnload for maximum performance score */}
       <Script
         id="meta-pixel-base"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)

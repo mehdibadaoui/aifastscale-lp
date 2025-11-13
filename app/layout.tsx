@@ -8,8 +8,8 @@ const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
   weight: ['700'], // CRITICAL PERFORMANCE: Only 1 weight - reduce to 1 font file
-  display: 'optional', // PERFORMANCE: Use fallback immediately, swap when ready
-  preload: false, // CRITICAL: Don't preload fonts - let them load async
+  display: 'swap', // PERFORMANCE FIX: Use swap for better CLS
+  preload: true, // PERFORMANCE FIX: Preload for faster font display
   fallback: ['system-ui', 'sans-serif'],
   adjustFontFallback: true, // Reduces layout shift
 })
