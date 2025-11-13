@@ -456,63 +456,10 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // PROPER Checkout Session with full metadata
+  // Simple direct Stripe payment link
   const handleCheckout = async (ctaLocation: string) => {
-    // Fire tracking in background
     setTimeout(() => trackFullCTAClick(ctaLocation), 0)
-
-    try {
-      // Get Facebook Pixel cookies for tracking
-      const getCookie = (name: string) => {
-        const value = `; ${document.cookie}`
-        const parts = value.split(`; ${name}=`)
-        if (parts.length === 2) return parts.pop()?.split(';').shift()
-        return undefined
-      }
-
-      const fbp = getCookie('_fbp')
-      const fbc = getCookie('_fbc')
-
-      // Get UTM parameters from URL
-      const urlParams = new URLSearchParams(window.location.search)
-      const utmSource = urlParams.get('utm_source')
-      const utmMedium = urlParams.get('utm_medium')
-      const utmCampaign = urlParams.get('utm_campaign')
-      const utmContent = urlParams.get('utm_content')
-      const utmTerm = urlParams.get('utm_term')
-
-      // Create Checkout Session with FULL metadata
-      const response = await fetch('/api/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-          fbp,
-          fbc,
-          utmSource,
-          utmMedium,
-          utmCampaign,
-          utmContent,
-          utmTerm,
-          landingPage: window.location.href,
-          referrer: document.referrer || 'direct',
-        }),
-      })
-
-      const { url, error } = await response.json()
-
-      if (error) {
-        console.error('Checkout error:', error)
-        alert('Payment system error. Please try again or contact support.')
-        return
-      }
-
-      // Redirect to Stripe Checkout with full customer context
-      window.location.href = url
-    } catch (error) {
-      console.error('Checkout failed:', error)
-      alert('Payment system error. Please try again or contact support.')
-    }
+    window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
   }
 
   const products = [
