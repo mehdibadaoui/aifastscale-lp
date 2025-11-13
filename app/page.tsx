@@ -434,11 +434,10 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Payment checkout handler - to be implemented
+  // Direct Stripe payment link checkout
   const handleCheckout = async (ctaLocation: string) => {
     console.log('CTA clicked:', ctaLocation)
-    alert('Payment system will be implemented soon!')
-    // TODO: Implement Stripe checkout following STRIPE_IMPLEMENTATION_PLAN.md
+    window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
   }
 
   const products = [
