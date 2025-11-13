@@ -456,8 +456,9 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Simple direct Stripe payment link
+  // Simple direct Stripe payment link with loading indicator
   const handleCheckout = async (ctaLocation: string) => {
+    setCheckoutLoading(ctaLocation) // Show blue loading indicator
     setTimeout(() => trackFullCTAClick(ctaLocation), 0)
     window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
   }
