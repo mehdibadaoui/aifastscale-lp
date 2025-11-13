@@ -41,19 +41,7 @@ import {
   VolumeX,
   Maximize,
 } from 'lucide-react'
-import { trackFullCTAClick, collectTrackingParams } from './utils/tracking'
-import { captureUTMParameters, storeUTMParameters } from './utils/utm-tracking'
-
-// Stripe checkout now loaded immediately for instant CTA response
-// Trade-off: +1MB bundle size for MUCH better UX (instant checkout)
-
-// Lazy load SocialProofPopup - prevents blocking API call on initial render
-const SocialProofPopup = dynamicImport(
-  () => import('./components/SocialProofPopup'),
-  {
-    ssr: false,
-  }
-)
+// Payment integration removed - ready for fresh implementation
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -88,7 +76,6 @@ export default function AgentLandingPage() {
   const [showMilestone, setShowMilestone] = useState(false) // Show progress milestone
   const [milestoneMessage, setMilestoneMessage] = useState('') // Milestone message
   const [showBelowFold, setShowBelowFold] = useState(false) // Lazy load below-the-fold content
-  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null) // Track which button is loading
   const videoRef = useRef<HTMLVideoElement>(null)
   const belowFoldRef = useRef<HTMLDivElement>(null)
 
@@ -150,16 +137,7 @@ export default function AgentLandingPage() {
     }
   }, [])
 
-  // 📊 Capture UTM parameters for ad attribution tracking
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const utmParams = captureUTMParameters()
-      if (Object.keys(utmParams).length > 0) {
-        storeUTMParameters(utmParams)
-        console.log('📊 UTM parameters captured:', utmParams)
-      }
-    }
-  }, [])
+  // UTM tracking removed - will be reimplemented with new payment system
 
   // HTML5 Video Setup - much simpler and faster than Wistia!
   useEffect(() => {
@@ -456,11 +434,11 @@ export default function AgentLandingPage() {
   const tilt =
     'transition-transform duration-500 will-change-transform hover:-translate-y-1'
 
-  // Simple direct Stripe payment link with loading indicator
+  // Payment checkout handler - to be implemented
   const handleCheckout = async (ctaLocation: string) => {
-    setCheckoutLoading(ctaLocation) // Show blue loading indicator
-    setTimeout(() => trackFullCTAClick(ctaLocation), 0)
-    window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
+    console.log('CTA clicked:', ctaLocation)
+    alert('Payment system will be implemented soon!')
+    // TODO: Implement Stripe checkout following STRIPE_IMPLEMENTATION_PLAN.md
   }
 
   const products = [
@@ -979,23 +957,12 @@ export default function AgentLandingPage() {
             {/* Main CTA Button */}
             <button
               onClick={() => handleCheckout('hero_cta')}
-              disabled={checkoutLoading !== null}
-              className="group relative inline-block w-full max-w-3xl disabled:cursor-wait disabled:opacity-75"
+              className="group relative inline-block w-full max-w-3xl"
             >
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-              <div className={`relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-xl transition-all duration-300 group-hover:scale-105 hover:shadow-2xl md:gap-3 md:px-10 md:py-5 md:text-xl ${
-                checkoutLoading === 'hero_cta'
-                  ? 'bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600'
-                  : 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600'
-              }`}>
-                <span className="whitespace-nowrap">
-                  {checkoutLoading === 'hero_cta' ? 'Processing...' : 'Get 100+ Leads - $37'}
-                </span>
-                {checkoutLoading === 'hero_cta' ? (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent md:h-7 md:w-7" />
-                ) : (
-                  <ArrowRight className="h-4 w-4 md:h-7 md:w-7" />
-                )}
+              <div className="relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-xl transition-all duration-300 group-hover:scale-105 hover:shadow-2xl md:gap-3 md:px-10 md:py-5 md:text-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">
+                <span className="whitespace-nowrap">Get 100+ Leads - $37</span>
+                <ArrowRight className="h-4 w-4 md:h-7 md:w-7" />
               </div>
             </button>
 
@@ -1080,14 +1047,9 @@ export default function AgentLandingPage() {
           </div>
           <button
             onClick={() => handleCheckout('sticky_cta')}
-            disabled={checkoutLoading !== null}
-            className={`rounded-2xl px-4 py-3 text-sm font-black whitespace-nowrap text-black uppercase transition-transform duration-200 active:scale-95 disabled:cursor-wait disabled:opacity-75 md:px-10 md:py-5 md:text-xl ${
-              checkoutLoading === 'sticky_cta'
-                ? 'bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600'
-                : 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600'
-            }`}
+            className="rounded-2xl px-4 py-3 text-sm font-black whitespace-nowrap text-black uppercase transition-transform duration-200 active:scale-95 md:px-10 md:py-5 md:text-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600"
           >
-            {checkoutLoading === 'sticky_cta' ? 'Processing...' : 'Get 100+ Leads - $37'}
+            Get 100+ Leads - $37
           </button>
         </div>
       </div>
@@ -1518,27 +1480,12 @@ export default function AgentLandingPage() {
 
                 <button
                   onClick={() => handleCheckout('price_unlock_cta')}
-                  disabled={checkoutLoading !== null}
-                  className="group relative inline-block w-full max-w-3xl px-2 disabled:cursor-wait disabled:opacity-75"
+                  className="group relative inline-block w-full max-w-3xl px-2"
                 >
                   <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-green-500 via-green-400 to-green-500 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-                  <div
-                    className={`relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 active:scale-95 md:gap-3 md:px-10 md:py-5 md:text-xl pump-animation ${
-                      checkoutLoading === 'price_unlock_cta'
-                        ? 'bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500'
-                        : 'bg-gradient-to-r from-green-500 via-green-400 to-green-500'
-                    }`}
-                  >
-                    {checkoutLoading === 'price_unlock_cta' ? (
-                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent md:h-7 md:w-7" />
-                    ) : (
-                      <Zap className="h-4 w-4 md:h-7 md:w-7" />
-                    )}
-                    <span className="whitespace-nowrap">
-                      {checkoutLoading === 'price_unlock_cta'
-                        ? 'Processing...'
-                        : 'Get AgentClone™ - $37'}
-                    </span>
+                  <div className="relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-white uppercase shadow-2xl transition-transform duration-300 active:scale-95 md:gap-3 md:px-10 md:py-5 md:text-xl pump-animation bg-gradient-to-r from-green-500 via-green-400 to-green-500">
+                    <Zap className="h-4 w-4 md:h-7 md:w-7" />
+                    <span className="whitespace-nowrap">Get AgentClone™ - $37</span>
                   </div>
                 </button>
 
@@ -1954,24 +1901,13 @@ export default function AgentLandingPage() {
 
               <button
                 onClick={() => handleCheckout('mid_page_cta')}
-                disabled={checkoutLoading !== null}
-                className="group relative inline-block w-full max-w-3xl disabled:cursor-wait disabled:opacity-75"
+                className="group relative inline-block w-full max-w-3xl"
               >
                 <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 opacity-75 blur-xl transition duration-300 group-hover:opacity-100"></div>
-                <div className={`relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-[1.02] md:gap-3 md:px-10 md:py-5 md:text-xl ${
-                  checkoutLoading === 'mid_page_cta'
-                    ? 'bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600'
-                    : 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600'
-                }`}>
-                  {checkoutLoading === 'mid_page_cta' ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent md:h-7 md:w-7" />
-                  ) : (
-                    <Zap className="h-4 w-4 md:h-7 md:w-7" />
-                  )}
-                  <span className="whitespace-nowrap">
-                    {checkoutLoading === 'mid_page_cta' ? 'Processing...' : 'Get 100+ Leads - $37'}
-                  </span>
-                  {checkoutLoading !== 'mid_page_cta' && <ArrowRight className="h-4 w-4 md:h-7 md:w-7" />}
+                <div className="relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-[1.02] md:gap-3 md:px-10 md:py-5 md:text-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">
+                  <Zap className="h-4 w-4 md:h-7 md:w-7" />
+                  <span className="whitespace-nowrap">Get 100+ Leads - $37</span>
+                  <ArrowRight className="h-4 w-4 md:h-7 md:w-7" />
                 </div>
               </button>
 
@@ -2173,23 +2109,12 @@ export default function AgentLandingPage() {
             <div className="mt-8 px-4 text-center md:mt-12">
               <button
                 onClick={() => handleCheckout('testimonial_cta')}
-                disabled={checkoutLoading !== null}
-                className="group relative inline-block w-full max-w-3xl disabled:cursor-wait disabled:opacity-75"
+                className="group relative inline-block w-full max-w-3xl"
               >
                 <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-                <div className={`relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:gap-3 md:px-10 md:py-5 md:text-xl ${
-                  checkoutLoading === 'testimonial_cta'
-                    ? 'bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600'
-                    : 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600'
-                }`}>
-                  {checkoutLoading === 'testimonial_cta' ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent md:h-7 md:w-7" />
-                  ) : (
-                    <Video className="h-4 w-4 md:h-7 md:w-7" />
-                  )}
-                  <span className="whitespace-nowrap">
-                    {checkoutLoading === 'testimonial_cta' ? 'Processing...' : 'Get 100+ Leads - $37'}
-                  </span>
+                <div className="relative flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:gap-3 md:px-10 md:py-5 md:text-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">
+                  <Video className="h-4 w-4 md:h-7 md:w-7" />
+                  <span className="whitespace-nowrap">Get 100+ Leads - $37</span>
                 </div>
               </button>
             </div>
@@ -2841,20 +2766,12 @@ export default function AgentLandingPage() {
             </p>
             <button
               onClick={() => handleCheckout('final_cta')}
-              disabled={checkoutLoading !== null}
-              className="group relative inline-block w-full max-w-3xl disabled:cursor-wait disabled:opacity-75"
+              className="group relative inline-block w-full max-w-3xl"
             >
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 opacity-75 blur-lg transition duration-300 group-hover:opacity-100"></div>
-              <div className={`relative flex items-center justify-center rounded-2xl px-4 py-3 text-sm font-black tracking-wider text-black uppercase shadow-2xl transition-all duration-300 group-hover:scale-105 md:px-10 md:py-5 md:text-xl ${
-                checkoutLoading === 'final_cta'
-                  ? 'bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600'
-                  : 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600'
-              }`}>
-                {checkoutLoading === 'final_cta' && (
-                  <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-black border-t-transparent md:h-7 md:w-7" />
-                )}
+              <div className="relative flex items-center justify-center rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 px-4 py-3 text-sm font-black uppercase tracking-wider text-black shadow-2xl transition-all duration-300 group-hover:scale-105 md:px-10 md:py-5 md:text-xl">
                 <span className="whitespace-nowrap">
-                  {checkoutLoading === 'final_cta' ? 'Processing...' : 'Get $60 Off - Ends Midnight'}
+                  Get $60 Off - Ends Midnight
                 </span>
               </div>
             </button>
@@ -2998,9 +2915,6 @@ export default function AgentLandingPage() {
           </div>
         </div>
       </footer>
-
-      {/* CRO Elements - Social Proof */}
-      <SocialProofPopup />
         </>
       )}
     </div>
