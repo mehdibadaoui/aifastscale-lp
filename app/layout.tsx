@@ -1,25 +1,15 @@
 import type { Metadata } from 'next'
-import { Poppins, Playfair_Display } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import LazyTrackingPixels from './components/LazyTrackingPixels'
 
 const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
-  weight: ['400', '700'], // PERFORMANCE: Only 2 weights - 400 (normal) and 700 (bold)
+  weight: ['700'], // CRITICAL PERFORMANCE: Only 1 weight - reduce to 1 font file
   display: 'optional', // PERFORMANCE: Use fallback immediately, swap when ready
-  preload: true,
+  preload: false, // CRITICAL: Don't preload fonts - let them load async
   fallback: ['system-ui', 'sans-serif'],
-  adjustFontFallback: true, // Reduces layout shift
-})
-
-const playfair = Playfair_Display({
-  variable: '--font-playfair',
-  subsets: ['latin'],
-  weight: ['700'], // PERFORMANCE: Only 1 weight - bold for headlines
-  display: 'optional', // PERFORMANCE: Use fallback immediately, swap when ready
-  preload: true,
-  fallback: ['Georgia', 'serif'],
   adjustFontFallback: true, // Reduces layout shift
 })
 
@@ -275,7 +265,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${poppins.variable} ${playfair.variable} min-h-screen bg-black text-white antialiased font-sans`}
+        className={`${poppins.variable} min-h-screen bg-black text-white antialiased font-sans`}
       >
         {/* Lazy load tracking pixels after window load + 10s for maximum performance */}
         <LazyTrackingPixels />

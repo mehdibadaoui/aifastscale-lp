@@ -795,7 +795,7 @@ export default function AgentLandingPage() {
             </div>
 
             {/* Question */}
-            <h3 className="font-serif flex-1 text-base font-bold leading-tight text-gray-900 md:text-xl">
+            <h3 className="font-sans flex-1 text-base font-bold leading-tight text-gray-900 md:text-xl">
               {question}
             </h3>
 
@@ -927,7 +927,7 @@ export default function AgentLandingPage() {
               </p>
             </div>
           </div>
-          <div className="font-serif mb-4 text-center text-2xl leading-tight font-black text-gray-900 md:mb-6 md:text-5xl" role="heading" aria-level={2}>
+          <div className="font-sans mb-4 text-center text-2xl leading-tight font-black text-gray-900 md:mb-6 md:text-5xl" role="heading" aria-level={2}>
             Zero Risk, All Reward
           </div>
           <div className="mx-auto mb-6 max-w-3xl space-y-4 text-sm leading-relaxed text-gray-700 md:mb-8 md:space-y-5 md:text-lg">
@@ -1041,7 +1041,7 @@ export default function AgentLandingPage() {
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <div className="font-serif mb-1 text-lg font-bold text-gray-900">
+                  <div className="font-sans mb-1 text-lg font-bold text-gray-900">
                     Content Protected
                   </div>
                   <p className="text-sm leading-relaxed text-gray-600">
@@ -1123,7 +1123,7 @@ export default function AgentLandingPage() {
         <div className="relative z-10 mx-auto max-w-5xl px-4 md:px-6">
           <Card>
             <div className="space-y-6 text-center md:space-y-8">
-              <h1 className="font-serif px-2 text-3xl leading-[1.2] font-black tracking-tight uppercase sm:text-4xl md:text-5xl lg:text-6xl">
+              <h1 className="font-sans px-2 text-3xl leading-[1.2] font-black tracking-tight uppercase sm:text-4xl md:text-5xl lg:text-6xl">
                 <span className="text-white">Get </span>
                 <span className="inline-block animate-pulse bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">
                   5-15 Leads
@@ -1186,7 +1186,7 @@ export default function AgentLandingPage() {
                                 {/* Green bar at top */}
                                 <div className="mb-8 h-2 bg-amber-500"></div>
 
-                                <h2 className="font-serif mb-8 text-3xl font-bold text-white md:text-4xl">
+                                <h2 className="font-sans mb-8 text-3xl font-bold text-white md:text-4xl">
                                   You have already started watching this video
                                 </h2>
 
@@ -1636,7 +1636,7 @@ export default function AgentLandingPage() {
               </div>
             </div>
             <div className="mb-8 px-4 text-center md:mb-10">
-              <h3 className="font-serif mb-3 text-2xl font-black md:mb-4 md:text-5xl">
+              <h3 className="font-sans mb-3 text-2xl font-black md:mb-4 md:text-5xl">
                 From Image to Realistic Talking Video{' '}
                 <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">
                   4 Simple Steps
@@ -1766,7 +1766,7 @@ export default function AgentLandingPage() {
         <div className="relative mx-auto max-w-7xl px-4 md:px-6">
           <Card>
             <div className="mb-12 text-center md:mb-16">
-              <h2 className="font-serif mb-6 px-4 text-3xl leading-[1.1] font-black md:mb-8 md:text-6xl lg:text-7xl">
+              <h2 className="font-sans mb-6 px-4 text-3xl leading-[1.1] font-black md:mb-8 md:text-6xl lg:text-7xl">
                 <span className="mb-2 block text-white">
                   You Don't Need More Information.
                 </span>
@@ -1832,7 +1832,7 @@ export default function AgentLandingPage() {
                 </div>
 
                 <div className="p-6 md:p-8">
-                  <h3 className="font-serif mb-3 text-xl leading-tight font-black text-white md:text-2xl">
+                  <h3 className="font-sans mb-3 text-xl leading-tight font-black text-white md:text-2xl">
                     {p.title}
                   </h3>
                   <p className="mb-4 text-sm leading-relaxed text-gray-400 md:text-base">
@@ -1861,7 +1861,7 @@ export default function AgentLandingPage() {
                   Bonus Content
                 </span>
               </div>
-              <h3 className="font-serif mb-2 text-2xl font-black text-white md:text-4xl">
+              <h3 className="font-sans mb-2 text-2xl font-black text-white md:text-4xl">
                 3 Premium Add-Ons Included
               </h3>
               <p className="text-sm text-gray-400 md:text-base">
@@ -2043,7 +2043,7 @@ export default function AgentLandingPage() {
               <div className="px-4 pb-4 md:px-6 md:pb-6">
                 <div className="mb-2 flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-amber-400 md:h-6 md:w-6" />
-                  <h3 className="font-serif text-lg font-black text-white md:text-xl">
+                  <h3 className="font-sans text-lg font-black text-white md:text-xl">
                     Mr. Lucas Actual Video
                   </h3>
                 </div>
@@ -2205,7 +2205,7 @@ export default function AgentLandingPage() {
         <div className="relative mx-auto max-w-7xl px-4 md:px-6">
           <div className="mb-8 text-center md:mb-10">
             <Card>
-              <h2 className="font-serif mb-3 text-2xl font-black md:mb-4 md:text-5xl">
+              <h2 className="font-sans mb-3 text-2xl font-black md:mb-4 md:text-5xl">
                 See More{' '}
                 <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">
                   AI Videos
@@ -2266,7 +2266,7 @@ export default function AgentLandingPage() {
                         <CheckCircle className="h-5 w-5 text-white md:h-7 md:w-7" />
                       </div>
                       <div>
-                        <h3 className="font-serif text-base font-black text-gray-900 md:text-xl">
+                        <h3 className="font-sans text-base font-black text-gray-900 md:text-xl">
                           {v.title.replace(' Video', '')}
                         </h3>
                         <p className="text-xs font-semibold text-gray-600 md:text-sm">
@@ -2509,7 +2509,7 @@ export default function AgentLandingPage() {
                 <div className="space-y-8">
                   {/* Name */}
                   <div>
-                    <h2 className="font-serif mb-3 text-5xl font-black md:text-6xl">
+                    <h2 className="font-sans mb-3 text-5xl font-black md:text-6xl">
                       <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">
                         Hi, I'm Sara
                       </span>
@@ -2575,7 +2575,7 @@ export default function AgentLandingPage() {
                           <Sparkles className="h-5 w-5 text-black md:h-7 md:w-7" />
                         </div>
                         <div>
-                          <h3 className="font-serif mb-1 text-base font-black text-white md:mb-2 md:text-xl">
+                          <h3 className="font-sans mb-1 text-base font-black text-white md:mb-2 md:text-xl">
                             My Promise to You:
                           </h3>
                           <p className="text-sm leading-relaxed text-gray-300 md:text-base">
@@ -2649,7 +2649,7 @@ export default function AgentLandingPage() {
                   Agent Success Stories
                 </span>
               </div>
-              <h2 className="font-serif mb-3 text-2xl font-black md:mb-4 md:text-5xl">
+              <h2 className="font-sans mb-3 text-2xl font-black md:mb-4 md:text-5xl">
                 Real Agents,{' '}
                 <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">
                   Real Results
@@ -2753,7 +2753,7 @@ export default function AgentLandingPage() {
                 Your Protection
               </span>
             </div>
-            <h2 className="font-serif mb-3 text-2xl font-black text-white md:mb-4 md:text-5xl">
+            <h2 className="font-sans mb-3 text-2xl font-black text-white md:mb-4 md:text-5xl">
               Complete Peace of Mind
             </h2>
             <p className="mx-auto max-w-2xl text-sm text-gray-400 md:text-lg">
@@ -2790,7 +2790,7 @@ export default function AgentLandingPage() {
                   >
                     <it.icon className="h-7 w-7 text-black md:h-8 md:w-8" />
                   </div>
-                  <h3 className="font-serif mb-3 text-lg font-black text-white md:mb-4 md:text-xl">
+                  <h3 className="font-sans mb-3 text-lg font-black text-white md:mb-4 md:text-xl">
                     {it.title}
                   </h3>
                   <p className="text-xs leading-relaxed text-gray-300 md:text-sm">
@@ -2811,7 +2811,7 @@ export default function AgentLandingPage() {
               <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
               Got Questions? We've Got Answers
             </div>
-            <h2 className="font-serif mb-4 bg-gradient-to-r from-gray-900 via-amber-900 to-gray-900 bg-clip-text text-3xl font-black text-transparent md:text-5xl lg:text-6xl">
+            <h2 className="font-sans mb-4 bg-gradient-to-r from-gray-900 via-amber-900 to-gray-900 bg-clip-text text-3xl font-black text-transparent md:text-5xl lg:text-6xl">
               Everything You Need to Know
             </h2>
             <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
@@ -2871,7 +2871,7 @@ export default function AgentLandingPage() {
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="mb-8 grid grid-cols-1 gap-6 md:mb-12 md:grid-cols-4 md:gap-8">
             <div className="md:col-span-2">
-              <h3 className="font-serif mb-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-xl font-black text-transparent md:mb-4 md:text-2xl">
+              <h3 className="font-sans mb-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-xl font-black text-transparent md:mb-4 md:text-2xl">
                 AI FastScale
               </h3>
               <p className="mb-4 text-sm leading-relaxed text-gray-700 md:text-base">
