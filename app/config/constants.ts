@@ -29,13 +29,12 @@ export const PRICING = {
 } as const
 
 // ============================================================================
-// PAYMENT CONFIGURATION (Ready for Whop integration)
+// PAYMENT CONFIGURATION
 // ============================================================================
 
 export const PAYMENT = {
-  // Payment link will be added here (Whop checkout URL)
-  checkoutUrl: '', // TODO: Add Whop payment link
-  provider: 'whop', // Payment provider identifier
+  checkoutUrl: 'https://whop.com/checkout/plan_VWtKmY3OZxKFe',
+  provider: 'whop',
 } as const
 
 // ============================================================================
