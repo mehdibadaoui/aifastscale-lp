@@ -723,7 +723,7 @@ export default function AgentLandingPage() {
     },
     { img: '/images/IMG_3424_result.webp', name: 'Raj Sharma', loc: 'Mumbai' },
     {
-      img: '/images/IMG_3425_result.webp',
+      img: '/images/IMG_3364_result.webp',
       name: 'Oliver Harris',
       loc: 'London',
     },
