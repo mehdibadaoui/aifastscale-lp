@@ -45,3 +45,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scripts (analytics, testing, development)
+/scripts/
+
+# lighthouse reports
+lighthouse-*.json
+lighthouse-*.html

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
 import LazyTrackingPixels from './components/LazyTrackingPixels'
+import { SITE_CONFIG, STRIPE } from './config/constants'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://aifastscale.com'),
+  metadataBase: new URL(SITE_CONFIG.url),
   alternates: {
     canonical: '/',
   },
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
       'AI FastScale – 7-Minute AgentClone™ | Turn Photos Into Talking AI Videos',
     description:
       'Turn a photo into a realistic talking AI video in 7 minutes. Get 5-15 leads this week, 100+ real buyer leads monthly. Built for real estate agents.',
-    url: 'https://aifastscale.com',
+    url: SITE_CONFIG.url,
     siteName: 'AI FastScale',
     images: [
       {
@@ -84,7 +85,7 @@ export default function RootLayout({
         {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
 
         {/* Critical preconnects for faster DNS resolution */}
-        <link rel="preconnect" href="https://api.stripe.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href={STRIPE.apiUrl} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 

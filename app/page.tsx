@@ -41,7 +41,7 @@ import {
   VolumeX,
   Maximize,
 } from 'lucide-react'
-// Payment integration removed - ready for fresh implementation
+import { STRIPE, GOOGLE_DRIVE } from './config/constants'
 
 // Simple Card component without animations for better performance
 interface CardProps {
@@ -436,8 +436,10 @@ export default function AgentLandingPage() {
 
   // Direct Stripe payment link checkout
   const handleCheckout = async (ctaLocation: string) => {
-    console.log('CTA clicked:', ctaLocation)
-    window.location.href = 'https://buy.stripe.com/dRm3cvfiM8Ms4cA4IK2go01'
+    if (process.env.NODE_ENV === 'development') {
+      console.log('CTA clicked:', ctaLocation)
+    }
+    window.location.href = STRIPE.paymentLink
   }
 
   const products = [

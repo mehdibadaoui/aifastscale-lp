@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Play, Download, AlertCircle, X, Share2 } from 'lucide-react'
 import Image from 'next/image'
 import DemoEmailCaptureModal from './DemoEmailCaptureModal'
+import { SITE_CONFIG, ROUTES } from '../config/constants'
 
 export default function TryDemoPage() {
   const [uploadedImages, setUploadedImages] = useState<string[]>([])
@@ -216,7 +217,7 @@ export default function TryDemoPage() {
   }
 
   const handleShare = (platform: string) => {
-    const url = 'https://aifastscale.com/try-demo'
+    const url = `${SITE_CONFIG.url}${ROUTES.tryDemo}`
     const text = 'Check out this amazing AI video tool! Create professional talking videos in 7 minutes 🚀'
 
     const shareUrls: Record<string, string> = {

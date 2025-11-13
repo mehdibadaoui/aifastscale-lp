@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Development logger - only logs in development mode
+const devLog = (...args: any[]) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(...args)
+  }
+}
+
 // Google Veo 3.1 API integration via Gemini API
 // Standard prompt that gets applied to all generations for better realistic results
 const STANDARD_PROMPT = `A professional real estate agent speaking directly to camera in natural indoor lighting. The person maintains the exact same appearance as the reference image with no filters, effects, or color changes. Natural lighting and human features are preserved perfectly.
@@ -39,7 +46,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    console.log(`📸 Received ${imageList.length} image(s) for video generation`)
+    devLog(`📸 Received ${imageList.length} image(s) for video generation`)
 
     // Try images in order until one succeeds (helps avoid celebrity detection)
     let selectedImage = imageList[0]
@@ -63,11 +70,11 @@ export async function POST(req: NextRequest) {
     const mimeType = mimeTypeMatch ? mimeTypeMatch[1] : 'image/jpeg'
     const imageData = selectedImage.replace(/^data:image\/\w+;base64,/, '')
 
-    console.log('📸 Generating video with Veo 3.1...')
-    console.log('Script length:', script.length)
-    console.log('Image data length:', imageData.length, 'characters')
-    console.log('MIME type:', mimeType)
-    console.log('Aspect ratio:', aspectRatio)
+    devLog('📸 Generating video with Veo 3.1...')
+    devLog('Script length:', script.length)
+    devLog('Image data length:', imageData.length, 'characters')
+    devLog('MIME type:', mimeType)
+    devLog('Aspect ratio:', aspectRatio)
 
     // Call Gemini API for Veo 3.1 video generation
     // Using long-running operation endpoint
@@ -131,7 +138,7 @@ export async function POST(req: NextRequest) {
     }
 
     const operationData = await response.json()
-    console.log('🔄 Video generation started, operation:', operationData.name)
+    devLog('🔄 Video generation started, operation:', operationData.name)
 
     // Poll the operation until it's done
     // Get operation name from response
@@ -174,7 +181,7 @@ export async function POST(req: NextRequest) {
 
         if (pollData.done) {
           videoData = pollData.response
-          console.log(`✅ Video ready after ${attempts + 1} polling attempts (${(attempts + 1) * 5} seconds)`)
+          devLog(`✅ Video ready after ${attempts + 1} polling attempts (${(attempts + 1) * 5} seconds)`)
           break
         }
 
@@ -187,7 +194,7 @@ export async function POST(req: NextRequest) {
         }
 
         attempts++
-        console.log(`⏳ Polling attempt ${attempts}/${maxAttempts} (~${attempts * 5}s elapsed)`)
+        devLog(`⏳ Polling attempt ${attempts}/${maxAttempts} (~${attempts * 5}s elapsed)`)
       } catch (error) {
         console.error('Polling request failed:', error)
         attempts++
@@ -202,8 +209,8 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    console.log('✅ Video generated successfully')
-    console.log('Full response:', JSON.stringify(videoData, null, 2))
+    devLog('✅ Video generated successfully')
+    devLog('Full response:', JSON.stringify(videoData, null, 2))
 
     // Check for content filtering
     if (videoData.generateVideoResponse?.raiMediaFilteredCount > 0) {
@@ -233,7 +240,7 @@ The AI sometimes mistakes professional-looking photos for celebrities. A more ca
 
     // Extract video URI from response
     const generatedSamples = videoData.generateVideoResponse?.generatedSamples
-    console.log('Generated samples:', JSON.stringify(generatedSamples, null, 2))
+    devLog('Generated samples:', JSON.stringify(generatedSamples, null, 2))
 
     const videoUri = generatedSamples?.[0]?.video?.uri
 
@@ -245,10 +252,10 @@ The AI sometimes mistakes professional-looking photos for celebrities. A more ca
       )
     }
 
-    console.log('✅ Video URI extracted:', videoUri)
+    devLog('✅ Video URI extracted:', videoUri)
 
     // Download the video from Google's servers with retry logic
-    console.log('📥 Downloading video from URI...')
+    devLog('📥 Downloading video from URI...')
     let videoBuffer: ArrayBuffer | null = null
     let downloadAttempts = 0
     const maxDownloadAttempts = 3
@@ -266,7 +273,7 @@ The AI sometimes mistakes professional-looking photos for celebrities. A more ca
         }
 
         videoBuffer = await videoDownloadResponse.arrayBuffer()
-        console.log('✅ Video downloaded successfully')
+        devLog('✅ Video downloaded successfully')
       } catch (error) {
         downloadAttempts++
         console.error(`Download attempt ${downloadAttempts}/${maxDownloadAttempts} failed:`, error)
@@ -288,7 +295,7 @@ The AI sometimes mistakes professional-looking photos for celebrities. A more ca
 
     // Convert to base64
     const videoBase64 = Buffer.from(videoBuffer).toString('base64')
-    console.log('✅ Video converted to base64, size:', videoBase64.length, 'characters')
+    devLog('✅ Video converted to base64, size:', videoBase64.length, 'characters')
 
     // Return video as base64 data URL
     const finalVideoUrl = `data:video/mp4;base64,${videoBase64}`

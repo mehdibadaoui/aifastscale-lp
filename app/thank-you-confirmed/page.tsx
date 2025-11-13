@@ -1,5 +1,6 @@
 import { CheckCircle, Mail, Download, Video } from 'lucide-react'
 import Link from 'next/link'
+import { GOOGLE_DRIVE, SITE_CONFIG } from '../config/constants'
 
 export default function ThankYouConfirmed() {
   return (
@@ -42,7 +43,7 @@ export default function ThankYouConfirmed() {
           {/* Download Button */}
           <div className="mb-8 text-center">
             <a
-              href="https://drive.google.com/drive/folders/1YLkKPgtU_q1BV6PVISO4VEru1UkAldw1?usp=sharing"
+              href={GOOGLE_DRIVE.courseMaterialsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-block"
@@ -117,10 +118,10 @@ export default function ThankYouConfirmed() {
               <div className="flex items-center gap-2 text-amber-400">
                 <Mail className="h-5 w-5" />
                 <a
-                  href="mailto:support@aifastscale.com"
+                  href={`mailto:${SITE_CONFIG.supportEmail}`}
                   className="text-lg font-semibold hover:underline"
                 >
-                  support@aifastscale.com
+                  {SITE_CONFIG.supportEmail}
                 </a>
               </div>
               <p className="text-sm text-gray-400">
