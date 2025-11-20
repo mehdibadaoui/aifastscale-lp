@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Script from 'next/script'
+import dynamic from 'next/dynamic'
 import {
   Gift,
   Shield,
@@ -28,7 +29,13 @@ import {
   Copy,
   AlertTriangle,
 } from 'lucide-react'
-import SpinWheel from './components/SpinWheel'
+
+// PERFORMANCE: Dynamic import SpinWheel - only load when user clicks
+const SpinWheel = dynamic(() => import('./components/SpinWheel'), {
+  ssr: false,
+  loading: () => null,
+})
+
 import CountdownTimer from './components/CountdownTimer'
 
 // Black Friday end date - December 2, 2025 at midnight
