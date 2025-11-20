@@ -29,12 +29,29 @@ export const PRICING = {
 } as const
 
 // ============================================================================
-// PAYMENT CONFIGURATION
+// WHOP PAYMENT CONFIGURATION - LIVE MODE
 // ============================================================================
 
-export const PAYMENT = {
-  checkoutUrl: 'https://whop.com/checkout/plan_VWtKmY3OZxKFe',
-  provider: 'whop',
+export const WHOP = {
+  // Plan IDs for different products - LIVE MODE
+  plans: {
+    main: process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN || 'plan_7x5Kz1cflmrYH', // $37 - Main product
+    oto: process.env.NEXT_PUBLIC_WHOP_PLAN_OTO || 'plan_WsTHXLDJ3nJRo', // $63 - Done-For-You Video
+    downsell: process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL || 'plan_3NOeRkpEhZVaV', // $39 - Downsell DFY
+  },
+  // Pricing
+  prices: {
+    main: 37,
+    oto: 63,
+    downsell: 39,
+  },
+  // Redirect URLs (for post-purchase flow)
+  redirects: {
+    afterMainCheckout: '/oto', // After $37 purchase → OTO page
+    afterOTO: '/thank-you-confirmed', // After OTO purchase → Thank you
+    afterDownsell: '/thank-you-confirmed', // After downsell → Thank you
+    afterOTODecline: '/downsell', // If decline OTO → Downsell
+  },
 } as const
 
 // ============================================================================
@@ -90,7 +107,6 @@ export const TRACKING = {
 // ============================================================================
 
 export const API_ROUTES = {
-  generateVideo: '/api/generate-video',
   googleSheetsWebhook: process.env.NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL || '',
 } as const
 
@@ -101,14 +117,8 @@ export const API_ROUTES = {
 export const ROUTES = {
   home: '/',
   thankYou: '/thank-you-confirmed',
-  tryDemo: '/try-demo',
-  blog: '/blog',
   faq: '/faq',
-
-  // Regional pages
-  dubai: '/dubai',
-  abuDhabi: '/abu-dhabi',
-  sharjah: '/sharjah',
+  tryDemo: '/try-demo',
 
   // Legal pages
   privacy: '/privacy-policy',
