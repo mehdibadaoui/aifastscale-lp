@@ -102,11 +102,7 @@ const nextConfig: NextConfig = {
   // Experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react', 'react', 'react-dom'],
-    optimizeCss: true, // Enable CSS optimization
   },
-
-  // Production optimizations
-  productionBrowserSourceMaps: false, // Disable source maps in production for smaller bundle
 };
 
 export default nextConfig;

@@ -774,7 +774,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
       style={{ pointerEvents: 'auto' }}
     >
       <div
-        className="bg-gradient-to-br from-navy-deep via-navy-rich to-black rounded-2xl shadow-2xl max-w-2xl w-full relative border-2 border-gold-premium my-20 md:my-16"
+        className="bg-gradient-to-br from-navy-deep via-navy-rich to-black rounded-2xl shadow-2xl w-full max-w-full md:max-w-3xl relative border-2 border-gold-premium my-4 md:my-16 mx-2 md:mx-auto"
         style={{ pointerEvents: 'auto' }}
       >
         {/* Close button - only show after result */}
@@ -828,7 +828,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
             <div className="flex flex-col items-center">
               {/* Color Guide Legend */}
               {!isSpinning && !hasSpun && (
-                <div className="w-full max-w-md mb-6 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl p-4">
+                <div className="w-full mb-6 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl p-4">
                   <p className="text-white/80 text-xs uppercase tracking-wide font-bold mb-3 text-center">Prize Tiers</p>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -873,7 +873,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                 </div>
 
                 {/* Wheel Canvas */}
-                <div className="relative w-full max-w-[450px] min-h-[300px] md:min-h-[450px]">
+                <div className="relative w-full max-w-full md:max-w-[450px] min-h-[300px] md:min-h-[450px]">
                   <canvas
                     ref={canvasRef}
                     width={450}
@@ -927,7 +927,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
           ) : !showBundleBuilder && !showProductExplanation ? (
             // 🏆 PREMIUM WIN SCREEN - MODERN & SOPHISTICATED
             <div className="relative">
-              <div className="relative z-10 px-6 md:px-8 py-6 md:py-8 space-y-6 max-h-[85vh] overflow-y-auto">
+              <div className="relative z-10 px-3 md:px-8 py-4 md:py-8 space-y-4 md:space-y-6 max-h-[85vh] overflow-y-auto">
 
                 {/* 🎉 ELEGANT VICTORY HEADER */}
                 <div className="text-center space-y-4">
@@ -1084,7 +1084,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
           ) : showBundleBuilder && !showProductExplanation ? (
             // 💼 BUNDLE BUILDER - MODERN & REFINED
             <div className="relative">
-              <div className="relative z-10 px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4 max-h-[85vh] overflow-y-auto">
+              <div className="relative z-10 px-2 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4 max-h-[90vh] overflow-y-auto">
                 {/* ⏰ REFINED COUNTDOWN - STICKY */}
                 <div className="sticky top-0 bg-gradient-to-b from-navy-deep via-navy-deep to-transparent pb-2 z-30">
                   <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-xl p-3 shadow-lg border border-white/20 mb-2">

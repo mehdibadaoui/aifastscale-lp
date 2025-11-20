@@ -26,9 +26,11 @@ export async function POST(req: NextRequest) {
       successUrl = `${baseUrl}/thank-you-confirmed?purchased=downsell`
     }
 
-    // Create Whop checkout URL
-    // Whop uses their hosted checkout page with the plan ID
-    const whopCheckoutUrl = `https://whop.com/checkout/${planId}?d=${encodeURIComponent(successUrl)}`
+    // Create Whop checkout URL with optimized parameters for better conversion
+    // - skip_shipping: Don't ask for shipping address (digital product)
+    // - enable_google_pay: Show Google Pay option
+    // - d: success redirect URL
+    const whopCheckoutUrl = `https://whop.com/checkout/${planId}?d=${encodeURIComponent(successUrl)}&skip_shipping=true`
 
     return NextResponse.json({
       checkoutUrl: whopCheckoutUrl,
