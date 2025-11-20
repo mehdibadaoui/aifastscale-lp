@@ -92,19 +92,6 @@ Thanks!`
 
   return (
     <main className="min-h-screen bg-white">
-      {/* ================================================================
-          DEV TOOL: Reset Spin Button
-          ================================================================ */}
-      <button
-        onClick={() => {
-          localStorage.removeItem('blackFridayGift')
-          window.location.reload()
-        }}
-        className="fixed bottom-4 left-4 z-50 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-lg font-semibold text-sm shadow-xl hover:scale-105 transition-transform border border-white/30"
-        title="Reset spin wheel for testing"
-      >
-        🔄 Reset Spin
-      </button>
 
       {/* ================================================================
           STICKY HEADER - Minimal & Professional
