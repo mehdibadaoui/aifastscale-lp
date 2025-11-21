@@ -1,15 +1,54 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Check, X, Clock, Crown, Zap, Shield, Star, MessageCircle, PlayCircle } from 'lucide-react'
 import { WHOP } from '../config/constants'
+import WhopCheckoutModal from '../components/WhopCheckoutModal'
 
 export default function DownsellPage() {
   const [timeLeft, setTimeLeft] = useState(5 * 60) // 5 minutes in seconds
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false)
+  const [isPrefetched, setIsPrefetched] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const checkoutButtonRef = useRef<HTMLButtonElement>(null)
+
+  // PERFORMANCE: Prefetch Whop checkout resources (on hover or when button visible)
+  const prefetchCheckout = useCallback(() => {
+    if (isPrefetched) return
+    setIsPrefetched(true)
+
+    // Prefetch Whop resources
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.as = 'script'
+    link.href = 'https://whop.com/checkout.js'
+    document.head.appendChild(link)
+
+    console.log('🚀 Prefetching Whop checkout resources...')
+  }, [isPrefetched])
+
+  // PERFORMANCE: Intersection Observer - prefetch when button scrolls into view
+  useEffect(() => {
+    const button = checkoutButtonRef.current
+    if (!button) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isPrefetched) {
+            prefetchCheckout()
+          }
+        })
+      },
+      { rootMargin: '50px' } // Start prefetching 50px before button is visible
+    )
+
+    observer.observe(button)
+    return () => observer.disconnect()
+  }, [prefetchCheckout, isPrefetched])
 
   // Page transition animation - fade in on load
   useEffect(() => {
@@ -41,39 +80,9 @@ export default function DownsellPage() {
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
-  const handleAccept = async () => {
-    setIsLoading(true)
-
-    try {
-      // Create Whop checkout for Downsell
-      const response = await fetch('/api/checkout/whop', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          planId: WHOP.plans.downsell,
-          metadata: {
-            type: 'downsell',
-          },
-        }),
-      })
-
-      const data = await response.json()
-
-      if (data.success && data.checkoutUrl) {
-        // Redirect to Whop checkout
-        window.location.href = data.checkoutUrl
-      } else {
-        console.error('Checkout error:', data.error)
-        alert('Something went wrong. Please try again or contact support.')
-        setIsLoading(false)
-      }
-    } catch (error) {
-      console.error('Checkout error:', error)
-      alert('Something went wrong. Please try again or contact support.')
-      setIsLoading(false)
-    }
+  const handleAccept = () => {
+    // Open embedded checkout modal - fast and stays on your site!
+    setShowCheckoutModal(true)
   }
 
   const handleDecline = () => {
@@ -365,14 +374,15 @@ export default function DownsellPage() {
         <div className="space-y-4 mb-6">
           {/* REFINED ACCEPT BUTTON */}
           <button
+            ref={checkoutButtonRef}
             onClick={handleAccept}
-            disabled={isLoading}
-            className="group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-6 rounded-xl font-black text-xl md:text-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 relative overflow-hidden border border-emerald-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            onMouseEnter={prefetchCheckout}
+            className="group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-6 rounded-xl font-black text-xl md:text-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 relative overflow-hidden border border-emerald-400/20"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
             <span className="relative flex items-center justify-center gap-3">
               <Check className="w-7 h-7" />
-              <span>{isLoading ? 'Processing...' : "Yes! I Want Results Like Mr. Lucas - $39"}</span>
+              <span>Yes! I Want Results Like Mr. Lucas - $39</span>
               <Check className="w-7 h-7" />
             </span>
           </button>
@@ -417,6 +427,35 @@ export default function DownsellPage() {
           </span>
         </div>
       </div>
+
+      {/* WHOP EMBEDDED CHECKOUT MODAL - FAST & STAYS ON YOUR SITE! */}
+      <WhopCheckoutModal
+        planId={WHOP.plans.downsell}
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        onComplete={async () => {
+          // Track Downsell purchase after successful payment
+          try {
+            await fetch('/api/track-purchase', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                selectedBonuses: [], // Downsell has no bonus selection
+                spinGift: null,
+                timestamp: new Date().toISOString(),
+                sessionId: typeof window !== 'undefined' ? localStorage.getItem('visitorFingerprint') : null,
+                productType: 'downsell',
+              }),
+            })
+            console.log('✅ Downsell purchase tracked!')
+          } catch (error) {
+            console.log('⚠️ Downsell purchase tracking failed (non-critical):', error)
+          }
+
+          // Redirect to thank you page
+          window.location.href = '/thank-you-confirmed?purchased=downsell'
+        }}
+      />
     </div>
   )
 }

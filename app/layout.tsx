@@ -88,6 +88,12 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
+        {/* Whop Checkout Performance Optimization - Preconnect for faster checkout loading */}
+        <link rel="preconnect" href="https://whop.com" />
+        <link rel="preconnect" href="https://api.whop.com" />
+        <link rel="dns-prefetch" href="https://whop.com" />
+        <link rel="dns-prefetch" href="https://api.whop.com" />
+
         {/* HERO OPTIMIZATION: Only preload poster image for instant LCP (video loads on-demand) */}
         <link rel="preload" href="/videos/VSL-thumbnail.jpg" as="image" fetchPriority="high" />
 

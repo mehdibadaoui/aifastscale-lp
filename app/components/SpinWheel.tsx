@@ -229,6 +229,42 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
   const animationRef = useRef<number | null>(null) // Prevent multiple animations
   const hasSpunRef = useRef<boolean>(false) // Ultimate guard - never reset!
   const productExplanationRef = useRef<HTMLDivElement>(null) // Ref for product explanation scroll container
+  const checkoutButtonRef = useRef<HTMLButtonElement>(null) // PERFORMANCE: Ref for checkout button
+  const [isPrefetched, setIsPrefetched] = useState(false) // PERFORMANCE: Track if we've prefetched
+
+  // PERFORMANCE: Prefetch Whop checkout resources (on hover or when button visible)
+  const prefetchCheckout = useCallback(() => {
+    if (isPrefetched) return
+    setIsPrefetched(true)
+
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.as = 'script'
+    link.href = 'https://whop.com/checkout.js'
+    document.head.appendChild(link)
+
+    console.log('🚀 Prefetching Whop checkout resources...')
+  }, [isPrefetched])
+
+  // PERFORMANCE: Intersection Observer - prefetch when button scrolls into view
+  useEffect(() => {
+    const button = checkoutButtonRef.current
+    if (!button) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isPrefetched) {
+            prefetchCheckout()
+          }
+        })
+      },
+      { rootMargin: '50px' }
+    )
+
+    observer.observe(button)
+    return () => observer.disconnect()
+  }, [prefetchCheckout, isPrefetched])
 
   // Check if user has already spun
   useEffect(() => {
@@ -1867,7 +1903,25 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
         planId={WHOP.plans.main}
         isOpen={showCheckoutModal}
         onClose={() => setShowCheckoutModal(false)}
-        onComplete={() => {
+        onComplete={async () => {
+          // Track bonus selections to analytics - ONLY AFTER SUCCESSFUL PAYMENT!
+          try {
+            await fetch('/api/track-purchase', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                selectedBonuses: selectedBonuses.map(id => ({ id, title: id })),
+                spinGift: selectedGift,
+                timestamp: new Date().toISOString(),
+                sessionId: typeof window !== 'undefined' ? localStorage.getItem('visitorFingerprint') : null,
+                productType: 'main',
+              }),
+            })
+            console.log('✅ Purchase tracked with bonus selections!')
+          } catch (error) {
+            console.log('⚠️ Purchase tracking failed (non-critical):', error)
+          }
+
           // Redirect to thank you page after successful purchase
           window.location.href = '/thank-you-confirmed?purchased=main'
         }}
