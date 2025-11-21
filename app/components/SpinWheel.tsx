@@ -226,6 +226,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
   const tickAudioRef = useRef<HTMLAudioElement | null>(null)
   const animationRef = useRef<number | null>(null) // Prevent multiple animations
   const hasSpunRef = useRef<boolean>(false) // Ultimate guard - never reset!
+  const productExplanationRef = useRef<HTMLDivElement>(null) // Ref for product explanation scroll container
 
   // Check if user has already spun
   useEffect(() => {
@@ -1277,6 +1278,14 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                         // Go to Product Explanation screen
                         setShowBundleBuilder(false)
                         setShowProductExplanation(true)
+
+                        // Smooth scroll to top of the next screen
+                        setTimeout(() => {
+                          productExplanationRef.current?.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                          })
+                        }, 100)
                       }}
                       className="group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-5 md:py-6 rounded-xl font-black text-xl md:text-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 relative overflow-hidden border border-emerald-400/30"
                     >
@@ -1304,7 +1313,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
           ) : (
             // 🎯 PRODUCT EXPLANATION SCREEN - ELEGANT & REFINED
             <div className="relative">
-              <div className="relative z-10 px-4 md:px-6 py-4 md:py-6 space-y-4 md:space-y-5 max-h-[85vh] overflow-y-auto">
+              <div ref={productExplanationRef} className="relative z-10 px-4 md:px-6 py-4 md:py-6 space-y-4 md:space-y-5 max-h-[85vh] overflow-y-auto">
 
                 {/* REFINED TIMER BANNER */}
                 <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-lg rounded-xl p-3 shadow-lg border border-white/20">
