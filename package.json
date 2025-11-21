@@ -13,6 +13,7 @@
     "@whop-apps/sdk": "^0.0.1-canary.117",
     "canvas-confetti": "^1.9.4",
     "date-fns": "^4.1.0",
+    "facebook-nodejs-business-sdk": "^24.0.0",
     "google-auth-library": "^10.5.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.3",

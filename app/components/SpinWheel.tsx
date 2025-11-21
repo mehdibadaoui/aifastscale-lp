@@ -1718,6 +1718,17 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                   onClick={async () => {
                     if (isCheckoutLoading) return // Prevent double-clicks
 
+                    // Facebook Pixel - InitiateCheckout event
+                    if (typeof window !== 'undefined' && window.fbq) {
+                      window.fbq('track', 'InitiateCheckout', {
+                        content_name: 'AI Video Mastery Course',
+                        content_category: 'Main Product',
+                        value: 37.0,
+                        currency: 'USD',
+                        num_items: selectedBonuses.length + 1,
+                      })
+                    }
+
                     setIsCheckoutLoading(true) // Show loading state immediately
                     try {
                       // Create Whop checkout

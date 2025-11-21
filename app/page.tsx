@@ -354,7 +354,16 @@ Thanks!`
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <button
-              onClick={() => setShowSpinWheel(true)}
+              onClick={() => {
+                // Facebook Pixel - Lead event (user shows interest)
+                if (typeof window !== 'undefined' && window.fbq) {
+                  window.fbq('track', 'Lead', {
+                    content_name: 'Spin to Win',
+                    content_category: 'Engagement',
+                  })
+                }
+                setShowSpinWheel(true)
+              }}
               className="inline-block bg-gradient-to-r from-gold-premium to-gold-dark text-white px-8 md:px-10 py-4 md:py-5 rounded-xl font-bold text-lg md:text-xl hover:scale-105 transition-transform shadow-2xl w-full md:w-auto"
             >
               <Gift className="w-5 h-5 md:w-6 md:h-6 inline mr-2" />

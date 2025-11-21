@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
+import { sendFacebookEvent } from '../../../utils/facebook-conversions-api'
 
 // Whop Webhook Handler
 // This endpoint receives webhook events from Whop when payments are processed
@@ -97,6 +98,41 @@ async function handleSuccessfulPayment(event: any) {
   console.log('Product type:', productType)
   console.log('Customer:', customer_email, customer_name)
   console.log('Amount:', amount)
+
+  // 🔥 FACEBOOK CONVERSION API - Send Purchase event
+  try {
+    const purchaseValue = productType === 'main' ? 37 : productType === 'oto' ? 63 : 39
+    const productName =
+      productType === 'main'
+        ? 'AI Video Mastery Course'
+        : productType === 'oto'
+        ? 'Done-For-You Video Package'
+        : 'DFY Video Downsell'
+
+    await sendFacebookEvent({
+      eventName: 'Purchase',
+      eventTime: Math.floor(Date.now() / 1000),
+      eventSourceUrl: 'https://aifastscale.com/thank-you-confirmed',
+      userData: {
+        email: customer_email,
+        firstName: customer_name?.split(' ')[0],
+        lastName: customer_name?.split(' ').slice(1).join(' '),
+      },
+      customData: {
+        currency: 'USD',
+        value: purchaseValue,
+        content_name: productName,
+        content_category: productType,
+        content_ids: [product_id],
+        num_items: 1,
+      },
+    })
+
+    console.log('✅ Facebook Conversion API Purchase event sent')
+  } catch (fbError) {
+    console.error('❌ Facebook Conversion API error:', fbError)
+    // Don't fail the webhook if Facebook tracking fails
+  }
 
   // TODO: Implement actual business logic:
   // 1. Grant course access in your database/membership platform
