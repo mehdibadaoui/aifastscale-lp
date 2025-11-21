@@ -12,6 +12,7 @@ import confetti from 'canvas-confetti'
 import { markUserAsSpun } from '../utils/fingerprint'
 import { WHOP } from '../config/constants'
 import { BONUS_PRODUCTS, BonusProduct } from '../config/bonus-products'
+import WhopCheckoutModal from './WhopCheckoutModal'
 
 // Icon mapping for dynamic rendering
 const iconMap: Record<string, any> = {
@@ -218,6 +219,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
   // selectedAddons state removed - simplified to $37 base price only
   const [timeLeft, setTimeLeft] = useState(19 * 60) // 19 minutes in seconds
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false) // Loading state for checkout button
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false) // Embedded checkout modal state
   const [totalSpinsToday] = useState(Math.floor(Math.random() * 50) + 130) // 130-180 spins today
   const [totalSaved, setTotalSaved] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -1715,9 +1717,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
 
                 {/* MEGA CTA BUTTON - OPTIMIZED FOR FAST CHECKOUT */}
                 <button
-                  onClick={async () => {
-                    if (isCheckoutLoading) return // Prevent double-clicks
-
+                  onClick={() => {
                     // Facebook Pixel - InitiateCheckout event
                     if (typeof window !== 'undefined' && window.fbq) {
                       window.fbq('track', 'InitiateCheckout', {
@@ -1729,67 +1729,22 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                       })
                     }
 
-                    setIsCheckoutLoading(true) // Show loading state immediately
-                    try {
-                      // Create Whop checkout
-                      const response = await fetch('/api/checkout/whop', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          planId: WHOP.plans.main,
-                          metadata: {
-                            type: 'main',
-                            selectedBonuses: selectedBonuses,
-                            tier: selectedGift?.tier || 'PLATINUM',
-                          },
-                        }),
-                      })
-
-                      const data = await response.json()
-
-                      if (data.success && data.checkoutUrl) {
-                        // Redirect to Whop checkout - keep loading state during redirect
-                        window.location.href = data.checkoutUrl
-                      } else {
-                        console.error('Checkout error:', data.error)
-                        alert('Something went wrong. Please try again or contact support.')
-                        setIsCheckoutLoading(false) // Reset on error
-                      }
-                    } catch (error) {
-                      console.error('Checkout error:', error)
-                      alert('Something went wrong. Please try again or contact support.')
-                      setIsCheckoutLoading(false) // Reset on error
-                    }
+                    // Open embedded checkout modal (keeps user on-site!)
+                    setShowCheckoutModal(true)
                   }}
-                  disabled={isCheckoutLoading}
-                  className={`group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-7 rounded-xl font-black text-xl md:text-2xl transition-all duration-300 shadow-2xl shadow-emerald-500/40 relative overflow-hidden border-2 border-emerald-400/30 ${
-                    isCheckoutLoading
-                      ? 'opacity-90 cursor-wait'
-                      : 'hover:scale-[1.03] active:scale-[0.98] cursor-pointer'
-                  }`}
+                  disabled={false}
+                  className="group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-7 rounded-xl font-black text-xl md:text-2xl transition-all duration-300 shadow-2xl shadow-emerald-500/40 relative overflow-hidden border-2 border-emerald-400/30 hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                   <span className="relative flex flex-col items-center justify-center gap-2">
-                    {isCheckoutLoading ? (
-                      <span className="flex items-center gap-3">
-                        <Loader className="w-7 h-7 animate-spin" />
-                        <span>Redirecting to Secure Checkout...</span>
-                        <Loader className="w-7 h-7 animate-spin" />
-                      </span>
-                    ) : (
-                      <>
-                        <span className="flex items-center gap-3">
-                          <Zap className="w-7 h-7" />
-                          <span>YES! Give Me Instant Access</span>
-                          <Zap className="w-7 h-7" />
-                        </span>
-                        <span className="text-sm font-bold text-emerald-200">
-                          Only $37 Today • Save $447 (92% Off)
-                        </span>
-                      </>
-                    )}
+                    <span className="flex items-center gap-3">
+                      <Zap className="w-7 h-7" />
+                      <span>YES! Give Me Instant Access</span>
+                      <Zap className="w-7 h-7" />
+                    </span>
+                    <span className="text-sm font-bold text-emerald-200">
+                      Only $37 Today • Save $447 (92% Off)
+                    </span>
                   </span>
                 </button>
 
@@ -1859,6 +1814,17 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
           )}
         </div>
       </div>
+
+      {/* EMBEDDED CHECKOUT MODAL - Keeps users on-site! */}
+      <WhopCheckoutModal
+        planId={WHOP.plans.main}
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        onComplete={() => {
+          // Redirect to thank you page after successful purchase
+          window.location.href = '/thank-you-confirmed?purchased=main'
+        }}
+      />
     </div>
   )
 }

@@ -43,8 +43,19 @@ export default function Home() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Check for saved gift on mount
+  // Check for saved gift on mount & handle reset parameter
   useEffect(() => {
+    // Check if URL has ?reset=true parameter
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('reset') === 'true') {
+      // Clear localStorage and reset state
+      localStorage.removeItem('blackFridayGift')
+      setSelectedGift(null)
+      // Remove the reset parameter from URL
+      window.history.replaceState({}, '', window.location.pathname)
+      return
+    }
+
     const savedGift = localStorage.getItem('blackFridayGift')
     if (savedGift) {
       // Set selected gift from storage
@@ -354,16 +365,7 @@ Thanks!`
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <button
-              onClick={() => {
-                // Facebook Pixel - Lead event (user shows interest)
-                if (typeof window !== 'undefined' && window.fbq) {
-                  window.fbq('track', 'Lead', {
-                    content_name: 'Spin to Win',
-                    content_category: 'Engagement',
-                  })
-                }
-                setShowSpinWheel(true)
-              }}
+              onClick={() => setShowSpinWheel(true)}
               className="inline-block bg-gradient-to-r from-gold-premium to-gold-dark text-white px-8 md:px-10 py-4 md:py-5 rounded-xl font-bold text-lg md:text-xl hover:scale-105 transition-transform shadow-2xl w-full md:w-auto"
             >
               <Gift className="w-5 h-5 md:w-6 md:h-6 inline mr-2" />
