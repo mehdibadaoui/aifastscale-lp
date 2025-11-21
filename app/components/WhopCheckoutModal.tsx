@@ -1,13 +1,7 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
-import dynamic from 'next/dynamic'
-
-// Dynamically import Whop checkout to avoid SSR issues
-const WhopCheckoutEmbed = dynamic(
-  () => import('@whop/checkout/react').then((mod) => mod.WhopCheckoutEmbed),
-  { ssr: false }
-)
 
 interface WhopCheckoutModalProps {
   planId: string
@@ -22,14 +16,57 @@ export default function WhopCheckoutModal({
   onClose,
   onComplete,
 }: WhopCheckoutModalProps) {
-  if (!isOpen) return null
+  const containerRef = useRef<HTMLDivElement>(null)
+  const scriptLoadedRef = useRef(false)
 
-  const handleComplete = () => {
-    console.log('✅ Whop checkout completed!')
-    if (onComplete) {
-      onComplete()
+  useEffect(() => {
+    if (!isOpen) return
+
+    // Load Whop script if not already loaded
+    if (!scriptLoadedRef.current && !document.querySelector('script[src*="whop.com/static/checkout/loader.js"]')) {
+      const script = document.createElement('script')
+      script.src = 'https://js.whop.com/static/checkout/loader.js'
+      script.async = true
+      script.defer = true
+
+      script.onload = () => {
+        console.log('✅ Whop checkout script loaded')
+        scriptLoadedRef.current = true
+      }
+
+      script.onerror = () => {
+        console.error('❌ Failed to load Whop checkout script')
+      }
+
+      document.head.appendChild(script)
     }
-  }
+
+    // Cleanup function
+    return () => {
+      // Don't remove script as it might be needed for subsequent checkouts
+    }
+  }, [isOpen])
+
+  // Handle checkout completion event
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleCheckoutComplete = (event: Event) => {
+      console.log('✅ Whop checkout completed!', event)
+      if (onComplete) {
+        onComplete()
+      }
+    }
+
+    // Listen for custom Whop completion event
+    window.addEventListener('whop-checkout-complete', handleCheckoutComplete)
+
+    return () => {
+      window.removeEventListener('whop-checkout-complete', handleCheckoutComplete)
+    }
+  }, [isOpen, onComplete])
+
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 overflow-y-auto">
@@ -45,11 +82,11 @@ export default function WhopCheckoutModal({
 
         {/* Checkout container */}
         <div className="p-6 max-h-[80vh] overflow-y-auto">
-          <WhopCheckoutEmbed
-            planId={planId}
-            theme="light"
-            skipRedirect={true}
-            onComplete={handleComplete}
+          <div
+            ref={containerRef}
+            data-whop-checkout-plan-id={planId}
+            data-whop-checkout-theme="light"
+            data-whop-checkout-skip-redirect="true"
           />
         </div>
       </div>
