@@ -1844,8 +1844,8 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                   </span>
                 </div>
 
-                {/* TESTING RESET BUTTON - Only visible after spinning */}
-                {showResult && (
+                {/* TESTING RESET BUTTON - Only visible in development mode */}
+                {showResult && process.env.NODE_ENV === 'development' && (
                   <div className="pt-4 border-t border-white/10">
                     <button
                       onClick={handleReset}
