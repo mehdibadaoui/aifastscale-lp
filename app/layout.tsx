@@ -124,13 +124,6 @@ export default function RootLayout({
         {/* Google Merchant Center Verification */}
         <meta name="google-site-verification" content="07UTX0YRgm3QIW1-mgHhLSko642Dbkp4ksQEZNq3z5g" />
 
-        {/* Whop Checkout Script - Load globally for embedded checkouts */}
-        <script
-          async
-          defer
-          src="https://js.whop.com/static/checkout/loader.js"
-        />
-
         {/* Complete Schema.org Markup - Product + FAQ + Organization + LocalBusiness + Video */}
         <script
           type="application/ld+json"

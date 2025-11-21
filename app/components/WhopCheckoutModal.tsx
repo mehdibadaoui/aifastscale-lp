@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
 import { X } from 'lucide-react'
+import { WhopCheckoutEmbed } from '@whop/checkout/react'
 
 interface WhopCheckoutModalProps {
   planId: string
@@ -16,30 +16,19 @@ export default function WhopCheckoutModal({
   onClose,
   onComplete,
 }: WhopCheckoutModalProps) {
-  // Handle checkout completion
-  useEffect(() => {
-    if (!isOpen) return
-
-    const handleComplete = () => {
-      console.log('✅ Whop checkout completed!')
-      if (onComplete) {
-        onComplete()
-      }
-    }
-
-    // Listen for Whop completion event
-    window.addEventListener('whop-checkout-on-complete', handleComplete as EventListener)
-
-    return () => {
-      window.removeEventListener('whop-checkout-on-complete', handleComplete as EventListener)
-    }
-  }, [isOpen, onComplete])
-
   if (!isOpen) return null
 
+  // Handle checkout completion
+  const handleComplete = (data: { planId: string; receiptId: string }) => {
+    console.log('✅ Checkout completed!', data)
+    if (onComplete) {
+      onComplete()
+    }
+  }
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden my-8">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -49,12 +38,18 @@ export default function WhopCheckoutModal({
           <X className="w-5 h-5 text-gray-700" />
         </button>
 
-        {/* Checkout container */}
-        <div className="p-6 max-h-[80vh] overflow-y-auto">
-          <div
-            data-whop-checkout-plan-id={planId}
-            data-whop-checkout-theme="light"
-            data-whop-checkout-skip-redirect="true"
+        {/* Whop Official Embedded Checkout - Stays on your site! */}
+        <div className="w-full h-[80vh] overflow-auto">
+          <WhopCheckoutEmbed
+            planId={planId}
+            skipRedirect={true}
+            onComplete={handleComplete}
+            theme="light"
+            fallback={
+              <div className="flex items-center justify-center h-full">
+                <div className="text-gray-600">Loading checkout...</div>
+              </div>
+            }
           />
         </div>
       </div>
