@@ -769,6 +769,40 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
     animationRef.current = requestAnimationFrame(animate)
   }, [isSpinning, hasSpun, rotation])
 
+  // RESET FUNCTION FOR TESTING - Clears all spin state
+  const handleReset = useCallback(() => {
+    console.log('🔄 Resetting spin wheel for testing...')
+
+    // Clear localStorage
+    localStorage.removeItem('blackFridayGift')
+    localStorage.removeItem('spinTimestamp')
+    localStorage.removeItem('visitorFingerprint')
+
+    // Reset all state variables
+    setIsSpinning(false)
+    setRotation(0)
+    setSelectedGift(null)
+    setHasSpun(false)
+    setShowResult(false)
+    setShowProductExplanation(false)
+    setShowBundleBuilder(false)
+    setSelectedBonuses([])
+    setTimeLeft(19 * 60)
+    setIsCheckoutLoading(false)
+    setShowCheckoutModal(false)
+
+    // Reset the ref guard
+    hasSpunRef.current = false
+
+    // Cancel any animations
+    if (animationRef.current !== null) {
+      cancelAnimationFrame(animationRef.current)
+      animationRef.current = null
+    }
+
+    console.log('✅ Reset complete - ready to spin again!')
+  }, [])
+
   if (!isOpen) return null
 
   return (
@@ -1809,6 +1843,19 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                     <span>24/7 Support</span>
                   </span>
                 </div>
+
+                {/* TESTING RESET BUTTON - Only visible after spinning */}
+                {showResult && (
+                  <div className="pt-4 border-t border-white/10">
+                    <button
+                      onClick={handleReset}
+                      className="w-full bg-gray-700/50 hover:bg-gray-600/50 text-white/80 px-4 py-3 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      <span>Reset Spin (Testing Only)</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}
