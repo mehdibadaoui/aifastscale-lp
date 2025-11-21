@@ -19,8 +19,8 @@ export default function WhopCheckoutModal({
   if (!isOpen) return null
 
   // Handle checkout completion
-  const handleComplete = (data: { planId: string; receiptId: string }) => {
-    console.log('✅ Checkout completed!', data)
+  const handleComplete = (planId: string, receiptId?: string) => {
+    console.log('✅ Checkout completed!', { planId, receiptId })
     if (onComplete) {
       onComplete()
     }
