@@ -1006,181 +1006,12 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                 </div>
               )}
             </div>
-          ) : !showBundleBuilder && !showProductExplanation ? (
-            // 🏆 PREMIUM WIN SCREEN - MODERN & SOPHISTICATED
+          ) : !showProductExplanation ? (
+            // 🏆 CLEAN & COMPACT WIN SCREEN
             <div ref={resultScreenRef} className="relative">
-              <div className="relative z-10 px-3 md:px-8 py-4 md:py-8 space-y-4 md:space-y-6 max-h-[85vh] overflow-y-auto">
+              <div className="relative z-10 px-2 md:px-4 py-3 md:py-4 space-y-3 max-h-[90vh] overflow-y-auto">
 
-                {/* 🎉 ELEGANT VICTORY HEADER */}
-                <div className="text-center space-y-4">
-                  {/* Subtle Badge */}
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-premium/10 via-gold-premium/5 to-gold-premium/10 backdrop-blur-sm border border-gold-premium/30 rounded-full px-6 py-2">
-                    <Crown className="w-4 h-4 text-gold-premium" />
-                    <span className="text-gold-premium font-bold text-sm uppercase tracking-widest">Platinum Winner</span>
-                    <Crown className="w-4 h-4 text-gold-premium" />
-                  </div>
-
-                  {/* Modern Title */}
-                  <div className="space-y-2">
-                    <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
-                      Congratulations!
-                    </h2>
-                    <p className="text-lg md:text-xl text-gray-300 font-medium">
-                      You've Unlocked the <span className="text-gold-premium font-bold">Elite Bundle</span>
-                    </p>
-                  </div>
-
-                  {/* Refined Stats */}
-                  <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-6 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-white/80 text-sm">Top</span>
-                      <span className="text-emerald-400 font-black text-lg">3%</span>
-                    </div>
-                    <div className="w-px h-6 bg-white/20" />
-                    <div className="text-white/60 text-sm">
-                      <span className="text-gold-premium font-bold">#{selectedGift?.winnerCount || 23}</span> of {totalSpinsToday} today
-                    </div>
-                  </div>
-                </div>
-
-                {/* 💎 PREMIUM PRODUCT CARD */}
-                <div className="relative">
-                  {/* Elegant Image Container */}
-                  <div className="relative flex items-center justify-center mb-6">
-                    <div className="relative w-40 md:w-56">
-                      {/* Subtle Glow Effect */}
-                      <div className="absolute inset-0 bg-gold-premium/20 rounded-2xl blur-2xl" />
-                      {selectedGift?.image ? (
-                        <Image
-                          src={selectedGift.image}
-                          alt={selectedGift.name}
-                          width={400}
-                          height={400}
-                          className="relative z-10 w-full h-auto rounded-2xl shadow-2xl border border-white/10"
-                          priority
-                          quality={90}
-                        />
-                      ) : (
-                        <div className="relative z-10 text-7xl md:text-9xl text-center">
-                          {selectedGift?.emoji}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Refined Prize Card */}
-                  <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl border border-white/20 rounded-2xl p-6 md:p-8 shadow-2xl">
-                    <div className="space-y-5">
-                      {/* Title Section */}
-                      <div className="text-center space-y-3 pb-5 border-b border-white/10">
-                        <div className="flex items-center justify-center gap-2 text-gold-premium/80 text-xs font-semibold uppercase tracking-wider">
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>VIP Exclusive</span>
-                          <Sparkles className="w-3.5 h-3.5" />
-                        </div>
-
-                        {/* BIG CLEAR TITLE */}
-                        <div className="space-y-2">
-                          <h3 className="text-3xl md:text-4xl font-black leading-tight">
-                            <span className="text-emerald-400">🎁 Choose Your 5 FREE</span>
-                            <br />
-                            <span className="text-white">Bonus Gifts!</span>
-                          </h3>
-
-                          <p className="text-lg md:text-xl font-bold text-gold-premium">
-                            Pick Any 5 Premium Tools + Mystery VIP Box
-                          </p>
-                        </div>
-
-                        <p className="text-gray-300 text-sm font-medium">
-                          Million-Dollar Agent Arsenal (Worth $3,671)
-                        </p>
-                      </div>
-
-                      {/* Benefits List */}
-                      <div className="space-y-3">
-                        <p className="text-gold-premium/80 text-sm font-bold uppercase tracking-wide text-center">
-                          What Top 1% Agents Use To:
-                        </p>
-                        <div className="grid gap-2">
-                          {[
-                            'Create viral Instagram & TikTok content in minutes',
-                            'Close 73% of seller appointments (vs 31% industry avg)',
-                            'Get qualified leads from Instagram DMs daily',
-                            'Plan your path to $1M+ with proven frameworks',
-                            'Build a luxury brand that attracts high-end clients'
-                          ].map((benefit, idx) => (
-                            <div key={idx} className="flex items-start gap-3 bg-white/5 rounded-lg p-3 border border-white/5">
-                              <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-200 text-sm font-medium leading-snug">{benefit}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Value Display */}
-                      <div className="flex items-center justify-center gap-6 pt-5 border-t border-white/10">
-                        <div className="text-center">
-                          <p className="text-white/50 text-xs font-semibold uppercase tracking-wide mb-1">Valued At</p>
-                          <p className="text-3xl md:text-4xl font-black text-white/40 line-through">
-                            {selectedGift?.value}
-                          </p>
-                        </div>
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gold-premium/10 border border-gold-premium/30">
-                          <Zap className="w-6 h-6 text-gold-premium" />
-                        </div>
-                        <div className="text-center">
-                          <p className="text-emerald-400 text-xs font-bold uppercase tracking-wide mb-1">Your Price</p>
-                          <p className="text-3xl md:text-4xl font-black text-emerald-400">
-                            FREE
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 🎯 REFINED CTA BUTTON */}
-                <div className="space-y-4">
-                  <button
-                    onClick={() => {
-                      setShowBundleBuilder(true)
-                      // SMOOTH SCROLL TO TOP of bundle builder
-                      setTimeout(() => {
-                        bundleBuilderRef.current?.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start'
-                        })
-                      }, 50)
-                    }}
-                    className="group relative w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-5 md:py-6 rounded-xl font-black text-lg md:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 border border-emerald-400/20 overflow-hidden"
-                  >
-                    {/* Shimmer Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-
-                    <span className="relative flex items-center justify-center gap-3">
-                      <Crown className="w-6 h-6" />
-                      <span>Build My Custom Bundle</span>
-                      <Crown className="w-6 h-6" />
-                    </span>
-                  </button>
-
-                  {/* Elegant Timer */}
-                  <div className="flex items-center justify-center gap-3 text-white/60 text-sm">
-                    <Clock className="w-4 h-4" />
-                    <span className="font-medium">
-                      Offer expires in <span className="text-gold-premium font-bold tabular-nums">{formatTime(timeLeft)}</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : showBundleBuilder && !showProductExplanation ? (
-            // 💼 BUNDLE BUILDER - MODERN & REFINED
-            <div ref={bundleBuilderRef} className="relative">
-              <div className="relative z-10 px-2 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4 max-h-[90vh] overflow-y-auto">
-                {/* ⏰ REFINED COUNTDOWN - STICKY */}
+                {/* ⏰ COUNTDOWN TIMER - STICKY TOP */}
                 <div className="sticky top-0 bg-gradient-to-b from-navy-deep via-navy-deep to-transparent pb-2 z-30">
                   <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-xl p-3 shadow-lg border border-white/20 mb-2">
                     <div className="flex items-center justify-center gap-2">
@@ -1190,39 +1021,39 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                       </p>
                     </div>
                   </div>
-
-                  {/* Header - ELEGANT */}
-                  <div className="text-center space-y-1.5">
-                    <div className="inline-flex items-center gap-2 bg-gold-premium/10 backdrop-blur-sm border border-gold-premium/30 rounded-full px-4 py-1.5">
-                      <Crown className="w-3.5 h-3.5 text-gold-premium" />
-                      <span className="text-gold-premium font-bold text-[10px] uppercase tracking-widest">Platinum Member</span>
-                    </div>
-                    <h2 className="text-lg md:text-2xl font-black text-white">
-                      Build Your Custom Bundle
-                    </h2>
-
-                    {/* Savings - REFINED */}
-                    {selectedBonuses.length > 0 && (
-                      <div className="bg-emerald-500/10 border border-emerald-400/30 rounded-lg p-2 backdrop-blur-sm">
-                        <p className="text-emerald-400 text-sm md:text-base font-bold">
-                          You're Saving ${BONUS_PRODUCTS.filter(b => selectedBonuses.includes(b.id)).reduce((sum, b) => sum + b.value, 0)}
-                        </p>
-                      </div>
-                    )}
-
-                    <p className="text-white/70 font-medium text-sm md:text-base">
-                      <span className="text-gold-premium font-black">{selectedBonuses.length}</span>/5 Tools Selected
-                    </p>
-                  </div>
                 </div>
 
-                {/* FREE Bonuses */}
-                <div className="space-y-2">
-                  <h3 className="text-base md:text-lg font-black text-white text-center">
-                    Choose 5 FREE Bonuses
-                  </h3>
+                {/* 🎉 SIMPLE CONGRATULATIONS HEADER */}
+                <div className="text-center space-y-3 mb-4">
+                  <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 rounded-full px-4 py-1.5">
+                    <Crown className="w-3.5 h-3.5 text-gold-premium" />
+                    <span className="text-gold-premium font-bold text-xs uppercase tracking-widest">Platinum Winner</span>
+                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <h2 className="text-2xl md:text-3xl font-black text-white">
+                    🎁 Choose Your 5 FREE Bonuses!
+                  </h2>
+
+                  <p className="text-sm md:text-base text-purple-200">
+                    Pick Any 5 Premium Tools Worth <span className="text-gold-premium font-bold">$3,671</span>
+                  </p>
+                </div>
+
+                {/* SELECTION PROGRESS */}
+                <div className="text-center space-y-2 mb-4">
+                  <p className="text-white/70 font-medium text-sm md:text-base">
+                    <span className="text-gold-premium font-black text-xl">{selectedBonuses.length}</span>/5 Tools Selected
+                  </p>
+
+                  {selectedBonuses.length > 0 && (
+                    <p className="text-emerald-400 text-sm font-bold">
+                      Saving ${BONUS_PRODUCTS.filter(b => selectedBonuses.includes(b.id)).reduce((sum, b) => sum + b.value, 0)}!
+                    </p>
+                  )}
+                </div>
+
+                {/* BONUS SELECTION GRID */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {BONUS_PRODUCTS.map((bonus, index) => {
                       const isSelected = selectedBonuses.includes(bonus.id)
                       const isDisabled = selectedBonuses.length >= 5 && !isSelected
@@ -1339,9 +1170,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                         </button>
                       )
                     })}
-                  </div>
                 </div>
-
 
                 {/* REFINED BOTTOM CTA */}
                 {selectedBonuses.length === 5 && (
