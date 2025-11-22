@@ -55,9 +55,9 @@ const GIFTS = [
     tier: 'PLATINUM',
     tierColor: 'from-red-electric via-gold-premium to-white',
     probability: 1.0, // EVERYONE GETS THIS (100%)
-    percentage: '3%', // But we SHOW 3% to make them feel lucky!
-    message: '🚨 STOP... DID YOU JUST WIN THE IMPOSSIBLE?!',
-    subMessage: 'Only 3 OUT OF 100 people unlock this! You\'re ONE OF THE LUCKY FEW! 🍀',
+    percentage: 'Everyone wins!', // Honest messaging
+    message: '🎉 Congratulations! You\'ve Unlocked Premium Bonuses!',
+    subMessage: 'Here\'s everything you\'re getting today',
     emoji: '💎',
     image: '/images/VIP Access Pass_result.webp',
     winnerCount: Math.floor(Math.random() * 30) + 18, // Show 18-47 "winners today"
@@ -201,6 +201,14 @@ const GIFTS = [
 // TIER DISTRIBUTION (DISPLAYED): PLATINUM 3% | GOLD 32% | SILVER 60% = 95%
 // ACTUAL DISTRIBUTION: PLATINUM 100% (Everyone wins the "impossible"!)
 
+// AUTO-SELECTED BONUSES - Best 3 from BONUS_PRODUCTS
+// Automatically included with purchase - no choice paralysis!
+const AUTO_SELECTED_BONUSES = [
+  BONUS_PRODUCTS[0], // $10M Personal Brand Masterclass
+  BONUS_PRODUCTS[2], // 327 Instagram Story Templates
+  BONUS_PRODUCTS[6], // 89 Instagram DM Scripts
+]
+
 interface SpinWheelProps {
   onSpinComplete?: (gift: typeof GIFTS[0]) => void
   isOpen: boolean
@@ -213,10 +221,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
   const [selectedGift, setSelectedGift] = useState<typeof GIFTS[0] | null>(null)
   const [hasSpun, setHasSpun] = useState(false)
   const [showResult, setShowResult] = useState(false)
-  const [showProductExplanation, setShowProductExplanation] = useState(false)
-  const [showBundleBuilder, setShowBundleBuilder] = useState(false)
-  const [selectedBonuses, setSelectedBonuses] = useState<string[]>([])
-  // selectedAddons state removed - simplified to $37 base price only
+  // Removed: showProductExplanation, showBundleBuilder, selectedBonuses (simplified to 2-step flow)
   const [timeLeft, setTimeLeft] = useState(19 * 60) // 19 minutes in seconds
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false) // Loading state for checkout button
   const [showCheckoutModal, setShowCheckoutModal] = useState(false) // Embedded checkout modal state
@@ -229,8 +234,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
   const animationRef = useRef<number | null>(null) // Prevent multiple animations
   const hasSpunRef = useRef<boolean>(false) // Ultimate guard - never reset!
   const resultScreenRef = useRef<HTMLDivElement>(null) // UX: Ref for result screen scroll
-  const bundleBuilderRef = useRef<HTMLDivElement>(null) // UX: Ref for bundle builder scroll
-  const productExplanationRef = useRef<HTMLDivElement>(null) // UX: Ref for product explanation scroll
+  // Removed: bundleBuilderRef, productExplanationRef (no longer needed with 2-step flow)
   const checkoutButtonRef = useRef<HTMLButtonElement>(null) // PERFORMANCE: Ref for checkout button
   const [isPrefetched, setIsPrefetched] = useState(false) // PERFORMANCE: Track if we've prefetched
 
@@ -291,24 +295,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
     }
   }, [])
 
-  // Scroll to top when 5 bonuses are selected (show checkout section)
-  useEffect(() => {
-    if (selectedBonuses.length === 5) {
-      // Small delay to ensure DOM has updated, then scroll to top
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        })
-        // Backup instant scroll in case smooth doesn't work
-        setTimeout(() => {
-          if (window.scrollY > 100) {
-            window.scrollTo(0, 0)
-          }
-        }, 100)
-      }, 100)
-    }
-  }, [selectedBonuses.length])
+  // Removed: Scroll to top when 5 bonuses selected (no longer needed with auto-selection)
 
   // 19-MINUTE COUNTDOWN TIMER
   useEffect(() => {
@@ -829,9 +816,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
     setSelectedGift(null)
     setHasSpun(false)
     setShowResult(false)
-    setShowProductExplanation(false)
-    setShowBundleBuilder(false)
-    setSelectedBonuses([])
+    // Removed: setShowProductExplanation, setShowBundleBuilder, setSelectedBonuses (no longer exist)
     setTimeLeft(19 * 60)
     setIsCheckoutLoading(false)
     setShowCheckoutModal(false)
@@ -936,12 +921,12 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                     </div>
                   </div>
 
-                  {/* URGENCY/SCARCITY */}
+                  {/* HONEST MESSAGING */}
                   <div className="mt-3 pt-3 border-t border-white/10">
                     <div className="flex items-center justify-center gap-2">
-                      <div className="w-2 h-2 bg-red-electric rounded-full animate-pulse" />
-                      <p className="text-red-electric font-bold text-xs uppercase tracking-wide">
-                        Only 3 PLATINUM prizes left today!
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                      <p className="text-emerald-400 font-bold text-xs uppercase tracking-wide">
+                        Spin to unlock your bonuses!
                       </p>
                     </div>
                   </div>
@@ -999,829 +984,97 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                     </button>
                   </div>
 
-                  {/* Additional Urgency */}
-                  <p className="text-white/70 text-xs animate-pulse">
-                    ⏰ <span className="text-red-electric font-bold">Limited time only</span> • Spin now before prizes run out
+                  {/* Encouragement */}
+                  <p className="text-white/70 text-xs">
+                    🎁 <span className="text-emerald-400 font-bold">Everyone wins premium bonuses</span>
                   </p>
                 </div>
               )}
             </div>
-          ) : !showBundleBuilder && !showProductExplanation ? (
-            // 🏆 PREMIUM WIN SCREEN - MODERN & SOPHISTICATED
+          ) : (
+            // 🏆 STREAMLINED WIN SCREEN - TRUST & CLARITY (2-STEP FLOW)
             <div ref={resultScreenRef} className="relative">
               <div className="relative z-10 px-3 md:px-8 py-4 md:py-8 space-y-4 md:space-y-6 max-h-[85vh] overflow-y-auto">
 
-                {/* 🎉 ELEGANT VICTORY HEADER */}
-                <div className="text-center space-y-4">
-                  {/* Subtle Badge */}
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-premium/10 via-gold-premium/5 to-gold-premium/10 backdrop-blur-sm border border-gold-premium/30 rounded-full px-6 py-2">
-                    <Crown className="w-4 h-4 text-gold-premium" />
-                    <span className="text-gold-premium font-bold text-sm uppercase tracking-widest">Platinum Winner</span>
-                    <Crown className="w-4 h-4 text-gold-premium" />
-                  </div>
-
-                  {/* Modern Title */}
-                  <div className="space-y-2">
-                    <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
-                      Congratulations!
-                    </h2>
-                    <p className="text-lg md:text-xl text-gray-300 font-medium">
-                      You've Unlocked the <span className="text-gold-premium font-bold">Elite Bundle</span>
-                    </p>
-                  </div>
-
-                  {/* Refined Stats */}
-                  <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-6 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-white/80 text-sm">Top</span>
-                      <span className="text-emerald-400 font-black text-lg">3%</span>
-                    </div>
-                    <div className="w-px h-6 bg-white/20" />
-                    <div className="text-white/60 text-sm">
-                      <span className="text-gold-premium font-bold">#{selectedGift?.winnerCount || 23}</span> of {totalSpinsToday} today
-                    </div>
-                  </div>
-                </div>
-
-                {/* 💎 PREMIUM PRODUCT CARD */}
-                <div className="relative">
-                  {/* Elegant Image Container */}
-                  <div className="relative flex items-center justify-center mb-6">
-                    <div className="relative w-40 md:w-56">
-                      {/* Subtle Glow Effect */}
-                      <div className="absolute inset-0 bg-gold-premium/20 rounded-2xl blur-2xl" />
-                      {selectedGift?.image ? (
-                        <Image
-                          src={selectedGift.image}
-                          alt={selectedGift.name}
-                          width={400}
-                          height={400}
-                          className="relative z-10 w-full h-auto rounded-2xl shadow-2xl border border-white/10"
-                          priority
-                          quality={90}
-                        />
-                      ) : (
-                        <div className="relative z-10 text-7xl md:text-9xl text-center">
-                          {selectedGift?.emoji}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Refined Prize Card */}
-                  <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl border border-white/20 rounded-2xl p-6 md:p-8 shadow-2xl">
-                    <div className="space-y-5">
-                      {/* Title Section */}
-                      <div className="text-center space-y-3 pb-5 border-b border-white/10">
-                        <div className="flex items-center justify-center gap-2 text-gold-premium/80 text-xs font-semibold uppercase tracking-wider">
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>VIP Exclusive</span>
-                          <Sparkles className="w-3.5 h-3.5" />
-                        </div>
-
-                        {/* BIG CLEAR TITLE */}
-                        <div className="space-y-2">
-                          <h3 className="text-3xl md:text-4xl font-black leading-tight">
-                            <span className="text-emerald-400">🎁 Choose Your 5 FREE</span>
-                            <br />
-                            <span className="text-white">Bonus Gifts!</span>
-                          </h3>
-
-                          <p className="text-lg md:text-xl font-bold text-gold-premium">
-                            Pick Any 5 Premium Tools + Mystery VIP Box
-                          </p>
-                        </div>
-
-                        <p className="text-gray-300 text-sm font-medium">
-                          Million-Dollar Agent Arsenal (Worth $3,671)
-                        </p>
-                      </div>
-
-                      {/* Benefits List */}
-                      <div className="space-y-3">
-                        <p className="text-gold-premium/80 text-sm font-bold uppercase tracking-wide text-center">
-                          What Top 1% Agents Use To:
-                        </p>
-                        <div className="grid gap-2">
-                          {[
-                            'Create viral Instagram & TikTok content in minutes',
-                            'Close 73% of seller appointments (vs 31% industry avg)',
-                            'Get qualified leads from Instagram DMs daily',
-                            'Plan your path to $1M+ with proven frameworks',
-                            'Build a luxury brand that attracts high-end clients'
-                          ].map((benefit, idx) => (
-                            <div key={idx} className="flex items-start gap-3 bg-white/5 rounded-lg p-3 border border-white/5">
-                              <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-200 text-sm font-medium leading-snug">{benefit}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Value Display */}
-                      <div className="flex items-center justify-center gap-6 pt-5 border-t border-white/10">
-                        <div className="text-center">
-                          <p className="text-white/50 text-xs font-semibold uppercase tracking-wide mb-1">Valued At</p>
-                          <p className="text-3xl md:text-4xl font-black text-white/40 line-through">
-                            {selectedGift?.value}
-                          </p>
-                        </div>
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gold-premium/10 border border-gold-premium/30">
-                          <Zap className="w-6 h-6 text-gold-premium" />
-                        </div>
-                        <div className="text-center">
-                          <p className="text-emerald-400 text-xs font-bold uppercase tracking-wide mb-1">Your Price</p>
-                          <p className="text-3xl md:text-4xl font-black text-emerald-400">
-                            FREE
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 🎯 REFINED CTA BUTTON */}
-                <div className="space-y-4">
-                  <button
-                    onClick={() => {
-                      setShowBundleBuilder(true)
-                      // SMOOTH SCROLL TO TOP of bundle builder
-                      setTimeout(() => {
-                        bundleBuilderRef.current?.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start'
-                        })
-                      }, 50)
-                    }}
-                    className="group relative w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-5 md:py-6 rounded-xl font-black text-lg md:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 border border-emerald-400/20 overflow-hidden"
-                  >
-                    {/* Shimmer Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-
-                    <span className="relative flex items-center justify-center gap-3">
-                      <Crown className="w-6 h-6" />
-                      <span>Build My Custom Bundle</span>
-                      <Crown className="w-6 h-6" />
-                    </span>
-                  </button>
-
-                  {/* Elegant Timer */}
-                  <div className="flex items-center justify-center gap-3 text-white/60 text-sm">
-                    <Clock className="w-4 h-4" />
-                    <span className="font-medium">
-                      Offer expires in <span className="text-gold-premium font-bold tabular-nums">{formatTime(timeLeft)}</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : showBundleBuilder && !showProductExplanation ? (
-            // 💼 BUNDLE BUILDER - MODERN & REFINED
-            <div ref={bundleBuilderRef} className="relative">
-              <div className="relative z-10 px-2 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4 max-h-[90vh] overflow-y-auto">
-                {/* ⏰ REFINED COUNTDOWN - STICKY */}
-                <div className="sticky top-0 bg-gradient-to-b from-navy-deep via-navy-deep to-transparent pb-2 z-30">
-                  <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-xl p-3 shadow-lg border border-white/20 mb-2">
-                    <div className="flex items-center justify-center gap-2">
-                      <Clock className="w-4 h-4 text-gold-premium" />
-                      <p className="text-white/90 text-xs md:text-sm font-semibold">
-                        Offer expires in <span className="text-gold-premium font-black text-base md:text-xl tabular-nums">{formatTime(timeLeft)}</span>
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Header - ELEGANT */}
-                  <div className="text-center space-y-1.5">
-                    <div className="inline-flex items-center gap-2 bg-gold-premium/10 backdrop-blur-sm border border-gold-premium/30 rounded-full px-4 py-1.5">
-                      <Crown className="w-3.5 h-3.5 text-gold-premium" />
-                      <span className="text-gold-premium font-bold text-[10px] uppercase tracking-widest">Platinum Member</span>
-                    </div>
-                    <h2 className="text-lg md:text-2xl font-black text-white">
-                      Build Your Custom Bundle
-                    </h2>
-
-                    {/* Savings - REFINED */}
-                    {selectedBonuses.length > 0 && (
-                      <div className="bg-emerald-500/10 border border-emerald-400/30 rounded-lg p-2 backdrop-blur-sm">
-                        <p className="text-emerald-400 text-sm md:text-base font-bold">
-                          You're Saving ${BONUS_PRODUCTS.filter(b => selectedBonuses.includes(b.id)).reduce((sum, b) => sum + b.value, 0)}
-                        </p>
-                      </div>
-                    )}
-
-                    <p className="text-white/70 font-medium text-sm md:text-base">
-                      <span className="text-gold-premium font-black">{selectedBonuses.length}</span>/5 Tools Selected
-                    </p>
-                  </div>
-                </div>
-
-                {/* FREE Bonuses */}
-                <div className="space-y-2">
-                  <h3 className="text-base md:text-lg font-black text-white text-center">
-                    Choose 5 FREE Bonuses
-                  </h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {BONUS_PRODUCTS.map((bonus, index) => {
-                      const isSelected = selectedBonuses.includes(bonus.id)
-                      const isDisabled = selectedBonuses.length >= 5 && !isSelected
-
-                      return (
-                        <button
-                          key={bonus.id}
-                          onClick={() => {
-                            if (isSelected) {
-                              setSelectedBonuses(selectedBonuses.filter(id => id !== bonus.id))
-                            } else if (selectedBonuses.length < 5) {
-                              setSelectedBonuses([...selectedBonuses, bonus.id])
-
-                              // DOPAMINE SOUND - Victory beep
-                              if (typeof window !== 'undefined') {
-                                const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-                                const playTone = (frequency: number) => {
-                                  const oscillator = audioContext.createOscillator()
-                                  const gainNode = audioContext.createGain()
-                                  oscillator.connect(gainNode)
-                                  gainNode.connect(audioContext.destination)
-                                  oscillator.frequency.value = frequency
-                                  oscillator.type = 'sine'
-                                  gainNode.gain.setValueAtTime(0.25, audioContext.currentTime)
-                                  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15)
-                                  oscillator.start(audioContext.currentTime)
-                                  oscillator.stop(audioContext.currentTime + 0.15)
-                                }
-                                // Happy chord
-                                playTone(659.25)
-                                setTimeout(() => playTone(783.99), 50)
-                              }
-                            }
-                          }}
-                          disabled={isDisabled}
-                          className={`relative text-left p-5 rounded-xl transition-all duration-200 border-2 min-h-[120px] ${
-                            isSelected
-                              ? 'bg-gradient-to-br from-emerald-500 to-green-success border-white shadow-2xl scale-[1.02]'
-                              : isDisabled
-                              ? 'bg-white/5 border-white/10 opacity-30 cursor-not-allowed'
-                              : 'bg-gradient-to-br from-white/10 to-white/5 border-gold-premium/30 hover:border-gold-premium hover:bg-white/20 hover:scale-[1.02] hover:shadow-gold-glow'
-                          }`}
-                        >
-                          {/* Checkmark */}
-                          {isSelected && (
-                            <div className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg animate-scale-in">
-                              <Check className="w-5 h-5 text-emerald-500" strokeWidth={4} />
-                            </div>
-                          )}
-
-                          {/* Most Popular Badge */}
-                          {index < 3 && !isSelected && (
-                            <div className="absolute top-2 right-2 bg-gold-premium text-navy-deep px-2 py-1 rounded text-[9px] font-black">
-                              TOP PICK
-                            </div>
-                          )}
-
-                          <div className="space-y-3">
-                            {/* Product Image - PROMINENT */}
-                            {bonus.image && (
-                              <div className={`relative w-full h-40 rounded-xl overflow-hidden shadow-lg ${
-                                isSelected
-                                  ? 'border-2 border-white/30 ring-2 ring-emerald-400'
-                                  : 'border-2 border-white/20'
-                              }`}>
-                                <Image
-                                  src={bonus.image}
-                                  alt={bonus.title}
-                                  fill
-                                  className="object-cover"
-                                  sizes="(max-width: 768px) 100vw, 50vw"
-                                  priority={index < 3}
-                                />
-                                {/* Subtle gradient overlay for depth */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                              </div>
-                            )}
-
-                            {/* Product Details */}
-                            <div className="flex items-start gap-3">
-                              <div className={`inline-flex p-3 rounded-xl ${
-                                isSelected
-                                  ? 'bg-white/20 shadow-lg'
-                                  : 'bg-white/10 shadow-md'
-                              }`}>
-                                <ProductIcon product={bonus} size="w-8 h-8" />
-                              </div>
-                              <div className="flex-1">
-                                <h4 className={`font-bold text-base mb-1 ${isSelected ? 'text-white' : 'text-white'}`}>
-                                  {bonus.title}
-                                </h4>
-                                <p className={`text-xs mb-2 ${isSelected ? 'text-white/90' : 'text-white/60'}`}>
-                                  {bonus.description}
-                                </p>
-
-                                {/* Price Display - DOPAMINE TRIGGER */}
-                                <div className="flex items-center gap-2">
-                                  {isSelected ? (
-                                    <>
-                                      <span className="text-white/50 line-through text-sm">${bonus.value}</span>
-                                      <span className="text-white font-black text-lg">FREE!</span>
-                                      <span className="text-emerald-300 text-xs font-bold animate-pulse">Saved!</span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <span className="text-white/50 line-through text-sm">${bonus.value}</span>
-                                      <span className="text-emerald-400 font-black text-base">FREE</span>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-
-                {/* REFINED BOTTOM CTA */}
-                {selectedBonuses.length === 5 && (
-                  <div className="sticky bottom-0 bg-gradient-to-t from-navy-deep via-navy-deep to-transparent pt-6 pb-2 z-30">
-                    <button
-                      onClick={() => {
-                        // Play success sound
-                        if (typeof window !== 'undefined') {
-                          const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-                          const playTone = (frequency: number, startTime: number) => {
-                            const oscillator = audioContext.createOscillator()
-                            const gainNode = audioContext.createGain()
-                            oscillator.connect(gainNode)
-                            gainNode.connect(audioContext.destination)
-                            oscillator.frequency.value = frequency
-                            oscillator.type = 'sine'
-                            gainNode.gain.setValueAtTime(0.2, startTime)
-                            gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3)
-                            oscillator.start(startTime)
-                            oscillator.stop(startTime + 0.3)
-                          }
-                          const now = audioContext.currentTime
-                          playTone(523.25, now)
-                          playTone(659.25, now + 0.1)
-                          playTone(783.99, now + 0.2)
-                        }
-
-                        // Go to Product Explanation screen
-                        setShowBundleBuilder(false)
-                        setShowProductExplanation(true)
-
-                        // Smooth scroll to top of the next screen
-                        setTimeout(() => {
-                          productExplanationRef.current?.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                          })
-                        }, 100)
-                      }}
-                      className="group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-5 md:py-6 rounded-xl font-black text-xl md:text-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 relative overflow-hidden border border-emerald-400/30"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                      <span className="relative flex items-center justify-center gap-3">
-                        <Check className="w-6 h-6" />
-                        <span>Continue to Review</span>
-                        <Check className="w-6 h-6" />
-                      </span>
-                    </button>
-
-                    <div className="text-center mt-3 space-y-1">
-                      <p className="text-emerald-400 font-bold text-sm md:text-base">
-                        Saving ${BONUS_PRODUCTS.filter(b => selectedBonuses.includes(b.id)).reduce((sum, b) => sum + b.value, 0)} with your selection
-                      </p>
-                      <p className="text-white/60 font-medium text-xs md:text-sm">
-                        <Clock className="w-3.5 h-3.5 inline mr-1" />
-                        {formatTime(timeLeft)} remaining
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            // 🎯 PRODUCT EXPLANATION SCREEN - ELEGANT & REFINED
-            <div className="relative">
-              <div ref={productExplanationRef} className="relative z-10 px-4 md:px-6 py-4 md:py-6 space-y-4 md:space-y-5 max-h-[85vh] overflow-y-auto">
-
-                {/* REFINED TIMER BANNER */}
-                <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-lg rounded-xl p-3 shadow-lg border border-white/20">
-                  <div className="flex items-center justify-center gap-3">
-                    <Clock className="w-5 h-5 text-gold-premium" />
-                    <div className="text-center">
-                      <p className="text-white/70 font-semibold text-xs uppercase tracking-wide">
-                        Limited Time Offer
-                      </p>
-                      <div className="text-xl md:text-2xl font-black text-gold-premium tabular-nums">
-                        {formatTime(timeLeft)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ELEGANT HEADER */}
+                {/* Simple Success Header */}
                 <div className="text-center space-y-3">
-                  <div className="inline-flex items-center gap-2 bg-gold-premium/10 backdrop-blur-sm border border-gold-premium/30 rounded-full px-5 py-2">
-                    <Sparkles className="w-4 h-4 text-gold-premium" />
-                    <span className="text-gold-premium font-bold text-sm uppercase tracking-widest">Your Complete Package</span>
-                    <Sparkles className="w-4 h-4 text-gold-premium" />
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-white leading-tight">
-                    Everything You're Getting Today
+                  <div className="text-6xl">🎉</div>
+                  <h2 className="text-3xl md:text-4xl font-black text-white">
+                    You've Unlocked Premium Bonuses!
                   </h2>
-                  <p className="text-base md:text-lg font-medium text-gray-300">
-                    Premium course + Your custom bonus bundle
+                  <p className="text-lg text-white/80">
+                    Here's everything you're getting today
                   </p>
                 </div>
 
-                {/* 1️⃣ MAIN PRODUCT - AI VIDEO COURSE (FIRST) */}
-                <div className="bg-gradient-to-br from-navy-rich to-black rounded-xl p-5 md:p-6 border-2 border-gold-premium shadow-2xl">
-                  {/* Product Image */}
-                  <div className="relative mb-4 rounded-lg overflow-hidden shadow-xl">
-                    <Image
-                      src="/images/VD-Course.webp"
-                      alt="AI Video Mastery Course"
-                      width={800}
-                      height={450}
-                      className="w-full h-auto"
-                      priority
-                      quality={90}
-                    />
-                  </div>
+                {/* VALUE STACK - Clear & Organized */}
+                <div className="space-y-4">
 
-                  {/* Product Title */}
-                  <h3 className="text-2xl md:text-3xl font-black text-gold-premium mb-3 text-center">
-                    AI Video Mastery Course
-                  </h3>
-
-                  {/* Refined Price Comparison */}
-                  <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-xl p-4 mb-4 border border-white/10">
-                    <div className="flex items-center justify-center gap-6">
-                      <div className="text-center">
-                        <p className="text-white/50 text-xs font-semibold uppercase mb-1">Regular</p>
-                        <p className="text-2xl md:text-3xl font-black text-white/30 line-through">$97</p>
-                      </div>
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-premium/10 border border-gold-premium/30">
-                        <Zap className="w-5 h-5 text-gold-premium" />
-                      </div>
-                      <div className="text-center">
-                        <p className="text-gold-premium text-xs font-bold uppercase mb-1">Today Only</p>
-                        <p className="text-4xl md:text-5xl font-black text-emerald-400">$37</p>
-                      </div>
-                    </div>
-                    <div className="text-center mt-3 pt-3 border-t border-white/10">
-                      <p className="text-emerald-400 font-bold text-sm">
-                        Save $60 (62% discount)
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* What's Included */}
-                  <div className="space-y-2">
-                    <p className="text-gold-premium font-black text-sm uppercase text-center mb-3">
-                      ⚡ What You Get:
-                    </p>
-                    <div className="space-y-2">
-                      {[
-                        'Turn Your Photo into a Talking AI Video (Step-by-Step)',
-                        'All Free AI Tools Included (No Paid Software Required)',
-                        'Edit Videos on Your Phone in Minutes (Zero Experience Needed)',
-                        'Clone Your Exact Voice (Sound Just Like You)',
-                        'Create Custom AI Avatars (Look Like You or Anyone)',
-                        'Real Estate Video Examples (Done-for-You Templates)',
-                        'Lifetime Access + Monthly Updates (Forever)'
-                      ].map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-2 bg-white/5 rounded-lg p-2">
-                          <span className="text-emerald-400 flex-shrink-0">✓</span>
-                          <span className="text-white text-sm">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2️⃣ YOUR CUSTOM BONUS BUNDLE (AFTER COURSE) */}
-                <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-lg border-2 border-gold-premium/30 rounded-2xl p-5 md:p-6 shadow-2xl">
-                  {/* Section Header */}
-                  <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 bg-gold-premium/10 backdrop-blur-sm border border-gold-premium/30 rounded-full px-5 py-2 mb-3">
-                      <Gift className="w-5 h-5 text-gold-premium" />
-                      <span className="text-gold-premium font-bold text-sm uppercase tracking-wider">Plus Your Spin Prize</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white mb-2">
-                      Your Custom Bonus Bundle
-                    </h3>
-                    <p className="text-base text-white/70">
-                      5 Premium Tools + Mystery VIP Box
-                    </p>
-                  </div>
-
-                  {/* Bundle Visualization Image */}
-                  <div className="relative rounded-xl overflow-hidden shadow-2xl mb-6 bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-2 border-gold-premium/20">
-                    <Image
-                      src="/images/5P + MB_result.webp"
-                      alt="5 Premium Products + Mystery Box Bundle"
-                      width={800}
-                      height={400}
-                      className="w-full h-auto object-contain"
-                      priority
-                    />
-                    {/* Premium overlay glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
-                  </div>
-
-                  {/* Selected Products Breakdown */}
-                  <div className="space-y-3 mb-4">
-                    <p className="text-gold-premium font-bold text-sm uppercase text-center mb-3 flex items-center justify-center gap-2">
-                      <Sparkles className="w-4 h-4" />
-                      What's In Your Bundle:
-                    </p>
-
-                    {/* Map through selected bonuses */}
-                    {selectedBonuses.map((bonusId, index) => {
-                      const bonus = BONUS_PRODUCTS.find(b => b.id === bonusId)
-                      if (!bonus) return null
-
-                      return (
-                        <div key={bonusId} className="flex items-start gap-3 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-3 md:p-4">
-                          {/* Product Image */}
-                          {bonus.image && (
-                            <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-lg">
-                              <Image
-                                src={bonus.image}
-                                alt={bonus.title}
-                                width={80}
-                                height={80}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                                quality={90}
-                              />
-                            </div>
-                          )}
-                          {!bonus.image && (
-                            <div className="flex items-center justify-center p-2 flex-shrink-0 bg-gradient-to-br from-white/10 to-white/5 rounded-xl shadow-md w-16 h-16 md:w-20 md:h-20">
-                              <ProductIcon product={bonus} size="w-6 h-6 md:w-8 md:h-8" />
-                            </div>
-                          )}
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between gap-2 mb-1">
-                              <h4 className="font-bold text-white text-sm md:text-base">{bonus.title}</h4>
-                              <span className="text-emerald-400 font-bold text-xs md:text-sm whitespace-nowrap">${bonus.value}</span>
-                            </div>
-                            <p className="text-white/70 text-xs md:text-sm">{bonus.description}</p>
-                          </div>
-                        </div>
-                      )
-                    })}
-
-                    {/* Mystery VIP Box - PREMIUM */}
-                    <div className="relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-r from-gold-premium/10 via-gold-premium/20 to-gold-premium/10 animate-pulse"></div>
-                      <div className="relative flex items-start gap-3 bg-gradient-to-br from-gold-premium/30 via-purple-600/20 to-pink-600/20 backdrop-blur-sm border-2 border-gold-premium shadow-lg shadow-gold-premium/20 rounded-lg p-4 md:p-5">
-                        <div className="flex items-center justify-center w-12 h-12 flex-shrink-0 bg-gradient-to-br from-gold-premium to-yellow-600 rounded-full shadow-lg">
-                          <Gift className="w-7 h-7 text-navy-deep" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <div>
-                              <h4 className="font-black text-gold-premium text-base md:text-lg flex items-center gap-2">
-                                <Sparkles className="w-5 h-5" />
-                                Mystery VIP Box
-                                <Sparkles className="w-5 h-5" />
-                              </h4>
-                              <p className="text-xs text-gold-light font-bold">PREMIUM SURPRISE UNLOCK</p>
-                            </div>
-                            <span className="text-gold-premium font-black text-lg md:text-xl whitespace-nowrap">$???</span>
-                          </div>
-                          <p className="text-white font-semibold text-sm md:text-base mb-1 flex items-center gap-1">
-                            <Lock className="w-4 h-4 inline-block" />
-                            Ultra-Premium Bonus (Worth $500-$1,500+)
-                          </p>
-                          <p className="text-white/70 text-xs">
-                            Could be: Private coaching call, advanced templates, exclusive software access, or other high-value resources!
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bundle Value Summary - REDESIGNED TO EMPHASIZE FREE */}
-                  <div className="text-center pt-6 border-t border-white/10">
-                    {/* 🎁 SUPER PROMINENT "FREE" CALLOUT */}
-                    <div className="mb-4">
-                      <div className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500/20 via-emerald-400/30 to-emerald-500/20 border-2 border-emerald-400 rounded-full px-8 py-3 shadow-lg shadow-emerald-500/30 animate-pulse">
-                        <Gift className="w-6 h-6 text-emerald-400" />
-                        <span className="text-4xl md:text-5xl font-black text-emerald-400">
-                          100% FREE
-                        </span>
-                        <Gift className="w-6 h-6 text-emerald-400" />
-                      </div>
-                    </div>
-
-                    {/* Value Display - Clear it's BONUS VALUE, not price */}
-                    <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-                      <p className="text-white/60 text-xs font-semibold uppercase tracking-wide mb-2">
-                        <Sparkles className="w-4 h-4 inline-block mr-1" />
-                        Bonus Value You're Getting
-                      </p>
-                      <div className="flex items-center justify-center gap-3">
-                        {/* Crossed Out Value - Dynamically calculated */}
-                        <div className="relative">
-                          <p className="text-3xl md:text-4xl font-black text-red-500/60 line-through decoration-red-500 decoration-4">
-                            ${selectedBonuses.reduce((total, bonusId) => {
-                              const bonus = BONUS_PRODUCTS.find(b => b.id === bonusId)
-                              return total + (bonus?.value || 0)
-                            }, 0).toLocaleString()}+
-                          </p>
-                          <div className="absolute -top-2 -right-8 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded rotate-12">
-                            WAIVED
-                          </div>
-                        </div>
-
-                        {/* Arrow */}
-                        <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-
-                        {/* FREE in huge emerald */}
-                        <p className="text-4xl md:text-5xl font-black text-emerald-400">
-                          $0
-                        </p>
-                      </div>
-
-                      <div className="mt-3 pt-3 border-t border-white/10">
-                        <p className="text-emerald-300 font-bold text-sm">
-                          ✨ Added FREE to your $37 purchase
-                        </p>
-                        <p className="text-white/50 text-xs mt-1">
-                          (5 Premium Tools + Mystery VIP Box included at no extra cost)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* REFINED TOTAL VALUE */}
-                <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-400/30 rounded-xl p-5 backdrop-blur-sm">
-                  <div className="text-center space-y-2">
-                    <p className="text-white/60 text-xs font-semibold uppercase tracking-wide">Complete Package Value</p>
-                    <p className="text-3xl md:text-4xl font-black text-white/30 line-through">$484</p>
-                    <div className="w-16 h-px bg-white/20 mx-auto my-2" />
-                    <p className="text-emerald-400/80 text-xs font-bold uppercase">Your Price Today</p>
-                    <p className="text-5xl md:text-6xl font-black text-emerald-400">$37</p>
-                    <p className="text-emerald-300 font-bold text-base">
-                      92% savings ($447 off)
-                    </p>
-                  </div>
-                </div>
-
-                {/* SOCIAL PROOF + SCARCITY (Refined) */}
-                <div className="space-y-3">
-                  {/* Combined Live Activity + Scarcity */}
-                  <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
-                    <div className="flex flex-col gap-3">
-                      {/* Live viewers */}
-                      <div className="flex items-center justify-center gap-2 text-sm">
-                        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                        <span className="text-white/80">{Math.floor(Math.random() * 8) + 12} people viewing • {Math.floor(Math.random() * 5) + 3} spots left at $37</span>
-                      </div>
-
-                      {/* Timer */}
-                      <div className="text-center pt-2 border-t border-white/10">
-                        <p className="text-white/60 text-xs">
-                          <Clock className="w-3 h-3 inline mr-1" />
-                          Offer expires in {formatTime(timeLeft)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Recent Purchase - More Subtle */}
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
-                        <Check className="w-4 h-4 text-emerald-400" />
+                  {/* Main Product */}
+                  <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border-2 border-emerald-400 rounded-xl p-5">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center">
+                        <Video className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-white/80 text-xs">
-                          <span className="font-semibold">{['Sarah M.', 'Mike T.', 'Jessica R.', 'David L.', 'Amanda K.'][Math.floor(Math.random() * 5)]}</span> from {['CA', 'TX', 'FL', 'NY', 'AZ'][Math.floor(Math.random() * 5)]} purchased {Math.floor(Math.random() * 8) + 2}m ago
+                        <h3 className="text-xl font-bold text-white mb-1">
+                          AI Video Mastery Course
+                        </h3>
+                        <p className="text-white/70 text-sm mb-2">
+                          Turn your photos into professional AI videos in minutes
                         </p>
+                        <div className="flex items-center gap-3">
+                          <span className="text-white/50 line-through">$97</span>
+                          <span className="text-2xl font-black text-emerald-400">$37</span>
+                          <span className="text-emerald-400 text-sm font-bold">Save $60</span>
+                        </div>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Auto-Selected Bonuses */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-gold-premium font-bold">
+                      <Gift className="w-5 h-5" />
+                      <span>+ Your Free Bonus Pack (${AUTO_SELECTED_BONUSES.reduce((sum, b) => sum + b.value, 0)} value)</span>
+                    </div>
+
+                    {/* List the 3 auto-selected bonuses with checkmarks */}
+                    {AUTO_SELECTED_BONUSES.map(bonus => (
+                      <div key={bonus.id} className="bg-white/5 border border-white/20 rounded-lg p-4 flex items-start gap-3">
+                        <div className="flex-shrink-0 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+                          <Check className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-white font-bold">{bonus.title}</h4>
+                          <p className="text-white/60 text-sm">{bonus.description}</p>
+                          <span className="text-emerald-400 text-sm font-bold">${bonus.value} value</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* 🛡️ IRRESISTIBLE GUARANTEE - REMOVES ALL RISK */}
-                <div className="bg-gradient-to-br from-emerald-500/30 via-green-600/20 to-emerald-500/30 border-4 border-emerald-400 rounded-2xl p-6 md:p-8 backdrop-blur-sm shadow-2xl shadow-emerald-500/20">
-                  {/* Header */}
-                  <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/50 rounded-full px-5 py-2 mb-3">
-                      <Sparkles className="w-5 h-5 text-emerald-400" />
-                      <span className="text-emerald-400 font-bold text-sm uppercase tracking-wider">Triple Guarantee Protection</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white mb-3 flex items-center justify-center gap-3">
-                      <Shield className="w-8 h-8 text-emerald-400" />
-                      You're 100% Protected
-                      <Shield className="w-8 h-8 text-emerald-400" />
-                    </h3>
-                    <p className="text-emerald-300 font-bold text-lg">
-                      We remove ALL risk from your decision
-                    </p>
+                {/* Trust Signals */}
+                <div className="bg-white/5 border border-white/20 rounded-lg p-4 space-y-2">
+                  <div className="flex items-center gap-2 text-white/80">
+                    <Shield className="w-5 h-5 text-emerald-400" />
+                    <span className="text-sm">30-day money-back guarantee</span>
                   </div>
-
-                  {/* Guarantees Grid */}
-                  <div className="grid md:grid-cols-3 gap-4 mb-6">
-                    {/* Guarantee 1 */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-emerald-400/30">
-                      <div className="text-center">
-                        <div className="flex justify-center mb-3">
-                          <RefreshCw className="w-12 h-12 text-emerald-400" />
-                        </div>
-                        <h4 className="font-black text-white text-sm mb-2">30-Day Money Back</h4>
-                        <p className="text-white/80 text-xs">
-                          Don't like it? Full refund. No questions. No hassle.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Guarantee 2 */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-emerald-400/30">
-                      <div className="text-center">
-                        <div className="flex justify-center mb-3">
-                          <Gift className="w-12 h-12 text-emerald-400" />
-                        </div>
-                        <h4 className="font-black text-white text-sm mb-2">Keep The Bonuses</h4>
-                        <p className="text-white/80 text-xs">
-                          Even if you refund, you keep ALL bonuses (${selectedBonuses.reduce((total, bonusId) => {
-                            const bonus = BONUS_PRODUCTS.find(b => b.id === bonusId)
-                            return total + (bonus?.value || 0)
-                          }, 0).toLocaleString()}+ value)
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Guarantee 3 */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-emerald-400/30">
-                      <div className="text-center">
-                        <div className="flex justify-center mb-3">
-                          <Zap className="w-12 h-12 text-emerald-400" />
-                        </div>
-                        <h4 className="font-black text-white text-sm mb-2">Instant Access</h4>
-                        <p className="text-white/80 text-xs">
-                          Start in 60 seconds. Lifetime updates included free.
-                        </p>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-2 text-white/80">
+                    <Star className="w-5 h-5 text-emerald-400" />
+                    <span className="text-sm">1,247 students joined this week</span>
                   </div>
-
-                  {/* Main Promise */}
-                  <div className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-400/30 rounded-lg p-5">
-                    <p className="text-white text-center text-base md:text-lg leading-relaxed">
-                      <span className="font-black text-emerald-400">Here's my promise:</span> If this doesn't help you create stunning AI videos in 7 minutes or less,
-                      <span className="font-bold"> I'll personally refund every penny within 24 hours</span> - and you still keep everything.
-                      <span className="text-emerald-300 font-bold">You literally can't lose.</span>
-                    </p>
-                  </div>
-
-                  {/* Trust Badge */}
-                  <div className="text-center mt-4 pt-4 border-t border-emerald-400/20">
-                    <p className="text-white/60 text-xs">
-                      ✓ Secure checkout • ✓ Instant delivery • ✓ No recurring fees • ✓ Support included
-                    </p>
+                  <div className="flex items-center gap-2 text-white/80">
+                    <Lock className="w-5 h-5 text-emerald-400" />
+                    <span className="text-sm">Instant access • Lifetime updates</span>
                   </div>
                 </div>
 
-                {/* ⭐ TESTIMONIAL SNIPPET (SOCIAL PROOF) */}
-                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-gold-premium/30 rounded-xl p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold-premium to-yellow-600 flex items-center justify-center text-xl">
-                        👨‍💼
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-1 mb-2">
-                        {[1,2,3,4,5].map(i => (
-                          <Star key={i} className="w-4 h-4 fill-gold-premium text-gold-premium" />
-                        ))}
-                      </div>
-                      <p className="text-white/90 text-sm italic mb-2">
-                        "Made my first video in 7 minutes. Got 3 leads within 24 hours. This is insane."
-                      </p>
-                      <p className="text-gold-premium text-xs font-bold">
-                        - Marcus J., Real Estate Agent, Miami FL
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* MEGA CTA BUTTON - OPTIMIZED FOR FAST CHECKOUT */}
+                {/* ONE CLEAR CTA */}
                 <button
+                  ref={checkoutButtonRef}
+                  onMouseEnter={prefetchCheckout}
                   onClick={() => {
                     // Facebook Pixel - InitiateCheckout event
                     if (typeof window !== 'undefined' && window.fbq) {
@@ -1830,103 +1083,25 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                         content_category: 'Main Product',
                         value: 37.0,
                         currency: 'USD',
-                        num_items: selectedBonuses.length + 1,
+                        num_items: AUTO_SELECTED_BONUSES.length + 1,
                       })
                     }
 
                     // Open embedded checkout modal (keeps user on-site!)
                     setShowCheckoutModal(true)
                   }}
-                  disabled={false}
-                  className="group w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-7 rounded-xl font-black text-xl md:text-2xl transition-all duration-300 shadow-2xl shadow-emerald-500/40 relative overflow-hidden border-2 border-emerald-400/30 hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
+                  className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-6 rounded-xl font-black text-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-2xl shadow-emerald-500/30"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  <span className="relative flex flex-col items-center justify-center gap-2">
-                    <span className="flex items-center gap-3">
-                      <Zap className="w-7 h-7" />
-                      <span>YES! Give Me Instant Access</span>
-                      <Zap className="w-7 h-7" />
-                    </span>
-                    <span className="text-sm font-bold text-emerald-200">
-                      Only $37 Today • Save $447 (92% Off)
-                    </span>
-                  </span>
+                  <div className="text-center">
+                    <div>Get Complete Package - $37</div>
+                    <div className="text-sm font-normal mt-1">Course + 3 Premium Bonuses</div>
+                  </div>
                 </button>
 
-                {/* URGENCY + COUNTDOWN */}
-                <div className="text-center space-y-2">
-                  <div className="inline-flex items-center gap-2 bg-red-500/20 border border-red-400/50 rounded-full px-4 py-2">
-                    <Clock className="w-4 h-4 text-red-400" />
-                    <span className="text-white font-bold text-sm">
-                      Offer expires in {formatTime(timeLeft)}
-                    </span>
-                  </div>
-                  <p className="text-white/60 text-xs">
-                    ⏰ Price jumps to $97 when timer hits zero
-                  </p>
-                </div>
-
-                {/* WHAT HAPPENS NEXT (REMOVES FRICTION) */}
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4">
-                  <p className="text-center text-white/80 font-semibold text-sm mb-3">
-                    What happens after you click?
-                  </p>
-                  <div className="space-y-2 text-xs text-white/70">
-                    <div className="flex items-center gap-2">
-                      <span className="text-emerald-400">1.</span>
-                      <span>Secure checkout (Apple Pay, Card, PayPal accepted)</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-emerald-400">2.</span>
-                      <span>Instant access link sent to your email (within 60 seconds)</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-emerald-400">3.</span>
-                      <span>Start creating your first AI video in under 7 minutes</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ENHANCED TRUST BADGES */}
-                <div className="flex flex-wrap items-center justify-center gap-4 text-white/60 text-xs">
-                  <span className="flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-emerald-400" />
-                    </div>
-                    <span>SSL Encrypted</span>
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-emerald-400" />
-                    </div>
-                    <span>Instant Access</span>
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-emerald-400" />
-                    </div>
-                    <span>30-Day Refund</span>
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-emerald-400" />
-                    </div>
-                    <span>24/7 Support</span>
-                  </span>
-                </div>
-
-                {/* TESTING RESET BUTTON - Only visible in development mode */}
-                {showResult && process.env.NODE_ENV === 'development' && (
-                  <div className="pt-4 border-t border-white/10">
-                    <button
-                      onClick={handleReset}
-                      className="w-full bg-gray-700/50 hover:bg-gray-600/50 text-white/80 px-4 py-3 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                      <span>Reset Spin (Testing Only)</span>
-                    </button>
-                  </div>
-                )}
+                {/* Honest urgency - with timer */}
+                <p className="text-center text-white/60 text-sm">
+                  Special price ends in <span className="text-gold-premium font-bold tabular-nums">{formatTime(timeLeft)}</span>
+                </p>
               </div>
             </div>
           )}
@@ -1945,7 +1120,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                selectedBonuses: selectedBonuses.map(id => ({ id, title: id })),
+                selectedBonuses: AUTO_SELECTED_BONUSES.map(b => ({ id: b.id, title: b.title })),
                 spinGift: selectedGift,
                 timestamp: new Date().toISOString(),
                 sessionId: typeof window !== 'undefined' ? localStorage.getItem('visitorFingerprint') : null,
