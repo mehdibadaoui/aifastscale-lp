@@ -1496,12 +1496,17 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                   </div>
 
                   {/* Bundle Visualization Image */}
-                  <div className="relative rounded-xl overflow-hidden shadow-xl mb-6">
-                    <img
+                  <div className="relative rounded-xl overflow-hidden shadow-2xl mb-6 bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-2 border-gold-premium/20">
+                    <Image
                       src="/images/5P + MB_result.webp"
                       alt="5 Premium Products + Mystery Box Bundle"
-                      className="w-full h-auto"
+                      width={800}
+                      height={400}
+                      className="w-full h-auto object-contain"
+                      priority
                     />
+                    {/* Premium overlay glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
                   </div>
 
                   {/* Selected Products Breakdown */}
