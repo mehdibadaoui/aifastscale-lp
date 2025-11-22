@@ -1273,7 +1273,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                   {/* Product Image */}
                   <div className="relative mb-4 rounded-lg overflow-hidden shadow-xl">
                     <Image
-                      src="/images/VD-Course.webp"
+                      src="/images/VD-Course-demo.webp"
                       alt="AI Video Mastery Course"
                       width={800}
                       height={450}
