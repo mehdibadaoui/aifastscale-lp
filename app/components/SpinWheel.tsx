@@ -228,7 +228,9 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
   const tickAudioRef = useRef<HTMLAudioElement | null>(null)
   const animationRef = useRef<number | null>(null) // Prevent multiple animations
   const hasSpunRef = useRef<boolean>(false) // Ultimate guard - never reset!
-  const productExplanationRef = useRef<HTMLDivElement>(null) // Ref for product explanation scroll container
+  const resultScreenRef = useRef<HTMLDivElement>(null) // UX: Ref for result screen scroll
+  const bundleBuilderRef = useRef<HTMLDivElement>(null) // UX: Ref for bundle builder scroll
+  const productExplanationRef = useRef<HTMLDivElement>(null) // UX: Ref for product explanation scroll
   const checkoutButtonRef = useRef<HTMLButtonElement>(null) // PERFORMANCE: Ref for checkout button
   const [isPrefetched, setIsPrefetched] = useState(false) // PERFORMANCE: Track if we've prefetched
 
@@ -797,6 +799,13 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
         // Quick celebration - optimized for faster checkout (was 2500ms)
         setTimeout(() => {
           setShowResult(true)
+          // SMOOTH SCROLL TO TOP of result screen
+          setTimeout(() => {
+            resultScreenRef.current?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            })
+          }, 50)
         }, 800)
       }
     }
@@ -999,7 +1008,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
             </div>
           ) : !showBundleBuilder && !showProductExplanation ? (
             // 🏆 PREMIUM WIN SCREEN - MODERN & SOPHISTICATED
-            <div className="relative">
+            <div ref={resultScreenRef} className="relative">
               <div className="relative z-10 px-3 md:px-8 py-4 md:py-8 space-y-4 md:space-y-6 max-h-[85vh] overflow-y-auto">
 
                 {/* 🎉 ELEGANT VICTORY HEADER */}
@@ -1043,10 +1052,14 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                       {/* Subtle Glow Effect */}
                       <div className="absolute inset-0 bg-gold-premium/20 rounded-2xl blur-2xl" />
                       {selectedGift?.image ? (
-                        <img
+                        <Image
                           src={selectedGift.image}
                           alt={selectedGift.name}
+                          width={400}
+                          height={400}
                           className="relative z-10 w-full h-auto rounded-2xl shadow-2xl border border-white/10"
+                          priority
+                          quality={90}
                         />
                       ) : (
                         <div className="relative z-10 text-7xl md:text-9xl text-center">
@@ -1131,7 +1144,16 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                 {/* 🎯 REFINED CTA BUTTON */}
                 <div className="space-y-4">
                   <button
-                    onClick={() => setShowBundleBuilder(true)}
+                    onClick={() => {
+                      setShowBundleBuilder(true)
+                      // SMOOTH SCROLL TO TOP of bundle builder
+                      setTimeout(() => {
+                        bundleBuilderRef.current?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start'
+                        })
+                      }, 50)
+                    }}
                     className="group relative w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 text-white px-8 py-5 md:py-6 rounded-xl font-black text-lg md:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-xl shadow-emerald-500/25 border border-emerald-400/20 overflow-hidden"
                   >
                     {/* Shimmer Effect */}
@@ -1156,7 +1178,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
             </div>
           ) : showBundleBuilder && !showProductExplanation ? (
             // 💼 BUNDLE BUILDER - MODERN & REFINED
-            <div className="relative">
+            <div ref={bundleBuilderRef} className="relative">
               <div className="relative z-10 px-2 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4 max-h-[90vh] overflow-y-auto">
                 {/* ⏰ REFINED COUNTDOWN - STICKY */}
                 <div className="sticky top-0 bg-gradient-to-b from-navy-deep via-navy-deep to-transparent pb-2 z-30">
@@ -1421,10 +1443,14 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                 <div className="bg-gradient-to-br from-navy-rich to-black rounded-xl p-5 md:p-6 border-2 border-gold-premium shadow-2xl">
                   {/* Product Image */}
                   <div className="relative mb-4 rounded-lg overflow-hidden shadow-xl">
-                    <img
+                    <Image
                       src="/images/VD-Course.webp"
                       alt="AI Video Mastery Course"
+                      width={800}
+                      height={450}
                       className="w-full h-auto"
+                      priority
+                      quality={90}
                     />
                   </div>
 
@@ -1526,10 +1552,14 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
                           {/* Product Image */}
                           {bonus.image && (
                             <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-lg">
-                              <img
+                              <Image
                                 src={bonus.image}
                                 alt={bonus.title}
+                                width={80}
+                                height={80}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
+                                quality={90}
                               />
                             </div>
                           )}
