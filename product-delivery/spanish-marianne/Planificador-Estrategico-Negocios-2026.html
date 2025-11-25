@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificador de Negocios 2026 - Mapa al Millón</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary-red: #da2b35; --luxury-gold: #d4af37; --deep-black: #0a0a0a; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.7; color: #1a1a1a; background: linear-gradient(135deg, #f8f6f3 0%, #ffffff 100%); }
+        .page { width: 8.5in; min-height: 11in; padding: 0.85in; margin: 0 auto 40px; background: white; box-shadow: 0 20px 60px rgba(0,0,0,0.12); page-break-after: always; position: relative; }
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 10in; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%); color: white; position: relative; overflow: hidden; }
+        .luxury-border { position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px; border: 2px solid rgba(212,175,55,0.3); border-radius: 4px; z-index: 1; }
+        .badge { background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%); color: var(--deep-black); padding: 14px 40px; border-radius: 50px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 50px; z-index: 2; }
+        .cover h1 { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; line-height: 1.1; margin-bottom: 32px; z-index: 2; }
+        .highlight { display: inline-block; background: linear-gradient(135deg, var(--primary-red) 0%, #ff4757 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 96px; font-weight: 900; }
+        .subtitle { font-size: 22px; color: #d1d1d1; margin-bottom: 70px; z-index: 2; max-width: 650px; }
+        .value-box { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 2px solid rgba(212,175,55,0.4); border-radius: 20px; padding: 40px 60px; z-index: 2; }
+        .value { font-size: 13px; color: var(--luxury-gold); margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
+        .price { font-family: 'Playfair Display', serif; font-size: 68px; font-weight: 900; background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 42px; color: var(--deep-black); margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid var(--primary-red); font-weight: 800; }
+        .section-box { background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%); border-left: 6px solid var(--primary-red); padding: 28px 32px; margin-bottom: 28px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .section-number { background: linear-gradient(135deg, var(--primary-red) 0%, #b01e2a 100%); color: white; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 14px; font-size: 18px; font-weight: 900; }
+        .section-title { font-size: 22px; font-weight: 800; color: var(--deep-black); margin-bottom: 16px; display: flex; align-items: center; }
+        .section-description { font-size: 16px; line-height: 1.8; color: #2d2d2d; }
+        .file-list { background: white; padding: 20px; border-radius: 10px; margin-top: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .file-item { padding: 12px; margin-bottom: 8px; background: #f8f8f8; border-radius: 6px; display: flex; align-items: center; }
+        .file-item::before { content: "📄"; margin-right: 10px; font-size: 20px; }
+        .intro-text { font-size: 17px; line-height: 1.9; color: #2d2d2d; margin-bottom: 28px; }
+        .intro-text strong { font-weight: 700; color: var(--deep-black); }
+        .pro-tip { background: linear-gradient(135deg, #fffdf7 0%, #fff9e6 100%); border: 2px solid var(--luxury-gold); border-left: 6px solid var(--luxury-gold); padding: 28px 32px; margin: 40px 0; border-radius: 12px; }
+        .pro-tip-title { font-weight: 800; font-size: 16px; margin-bottom: 12px; color: var(--deep-black); text-transform: uppercase; letter-spacing: 1px; }
+        .pro-tip p { line-height: 1.8; color: #2d2d2d; font-size: 15px; }
+        .watermark { position: absolute; bottom: 30px; right: 40px; font-size: 10px; color: rgba(0,0,0,0.15); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .final-message { text-align: center; margin-top: 100px; padding: 50px 40px; background: linear-gradient(135deg, var(--deep-black) 0%, #1a1a1a 100%); border-radius: 20px; color: white; }
+        .final-message h2 { color: white; border: none; font-size: 48px; }
+        .final-message p { font-size: 19px; margin-bottom: 28px; }
+    </style>
+</head>
+<body>
+    <div class="page cover">
+        <div class="luxury-border"></div>
+        <div class="badge">SISTEMA DE PLANIFICACIÓN PREMIUM • VALOR DE $297</div>
+        <h1>
+            Planificador de<br>
+            Negocios <span class="highlight">2026</span><br>
+            "Mapa al Millón"
+        </h1>
+        <p class="subtitle">
+            El sistema completo de planificación estratégica para agentes inmobiliarios<br>
+            que quieren convertir 2026 en su año más rentable hasta ahora
+        </p>
+        <div class="value-box">
+            <p class="value">VALOR COMPLETO DEL SISTEMA</p>
+            <p class="price">$297</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>Por Qué Necesitas un Planificador Específico para Inmobiliarias</h2>
+        <p class="intro-text">
+            Los planificadores genéricos no funcionan para agentes inmobiliarios. Necesitas un sistema diseñado para <strong>el flujo de trabajo único del sector inmobiliario</strong> – gestión de pipeline, seguimiento de leads, planificación de listados, gestión de relaciones con clientes y el ritmo estacional del mercado inmobiliario.
+        </p>
+        <p class="intro-text">
+            Este no es solo un calendario bonito. Es un <strong>sistema estratégico completo</strong> que los agentes de 7 cifras usan para planificar su año, rastrear su progreso y ajustar su estrategia en tiempo real. Si no tienes un plan, estás planeando fallar.
+        </p>
+
+        <div class="pro-tip">
+            <div class="pro-tip-title">💡 Cómo Usar Este Sistema</div>
+            <p>Imprime el planificador completo y mantenlo en un archivador de 3 anillos. Cada domingo, dedica 30 minutos a planificar tu semana. Cada fin de mes, revisa tus números y ajusta la estrategia. Este ritual te pondrá en el top 1% de agentes organizados.</p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <h2>El Sistema Completo de Planificación (5 PDFs)</h2>
+
+        <div class="section-box">
+            <div class="section-title"><span class="section-number">1</span> Planificador 2026 - Plantilla de Plan Estratégico</div>
+            <div class="section-description">
+                Tu mapa maestro para todo el año. Establece tus grandes objetivos, desglósalos en objetivos trimestrales, luego en pasos de acción mensuales. Incluye rastreador de visión anual, análisis SWOT, objetivos financieros y planificación de marketing estratégico.
+            </div>
+            <div class="file-list">
+                <div class="file-item">1. Planner 2026.pdf - Tu documento fundacional de estrategia</div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title"><span class="section-number">2</span> Cuadro de Objetivos 2026</div>
+            <div class="section-description">
+                Visualiza tu éxito con este rastreador de objetivos diseñado bellamente. Rastrea volumen de transacciones, ingresos por comisión, generación de leads, tasas de conversión y crecimiento de la base de datos. Los números no mienten – esta herramienta mantiene la responsabilidad.
+            </div>
+            <div class="file-list">
+                <div class="file-item">2. GoalChart2026.pdf - Rastreo visual de KPIs</div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title"><span class="section-number">3</span> Páginas Extra para Imprimir Según Necesidad</div>
+            <div class="section-description">
+                Plantillas adicionales para notas de reuniones, rastreo de listados, seguimiento de leads, gestión de transacciones, ideas de contenido y más. Imprime copias según necesidad durante el año.
+            </div>
+            <div class="file-list">
+                <div class="file-item">3. Extra_Pages_to_Print_as_Needed.pdf - Páginas de expansión</div>
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <div class="section-box">
+            <div class="section-title"><span class="section-number">4</span> Etiquetas de Pestañas (Avery 16280)</div>
+            <div class="section-description">
+                Mantén tu archivador organizado con estas hermosas etiquetas de pestañas. Imprime en hojas de etiquetas Avery 16280 para un resultado profesional. Incluye etiquetas para todos los 12 meses más secciones como "Objetivos", "Finanzas", "Leads", "Marketing".
+            </div>
+            <div class="file-list">
+                <div class="file-item">4. TabLabels-Avery16280.pdf - Sistema de organización profesional</div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title"><span class="section-number">5</span> Planificador de 12 Meses 2026</div>
+            <div class="section-description">
+                El corazón del sistema. Páginas de planificación mensual y semanal detalladas con secciones para: Pipeline de listados, Calendario de cierres, Seguimiento de leads, Contenido de redes sociales, Objetivos de networking, Revisión financiera, Victoria de la semana y más.
+            </div>
+            <div class="file-list">
+                <div class="file-item">5. 2026Planner.pdf - Tu compañero diario de planificación</div>
+            </div>
+        </div>
+
+        <div class="pro-tip" style="margin-top: 60px;">
+            <div class="pro-tip-title">🎯 CONSEJO DE IMPRESIÓN</div>
+            <p style="font-size: 16px; line-height: 1.9;">
+                <strong>Recomendamos imprimir en:</strong><br>
+                • Papel de 32 lb (más grueso = más premium)<br>
+                • Impresión a doble cara para ahorrar papel<br>
+                • Archivador de 3 anillos de cuero (se siente de $1M)<br>
+                • Separadores de pestañas de plástico duraderos<br><br>
+                Inversión total de impresión: ~$50. Valor para tu negocio: Invaluable.
+            </p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <h2>Qué Rastrear Semanalmente</h2>
+
+        <div class="intro-text">
+            <strong>El Tablero de Control de Agente de 7 Cifras rastrea estos 8 KPIs cada semana:</strong>
+        </div>
+
+        <div class="section-box">
+            <div class="section-description">
+                <strong>1. Nuevos Leads:</strong> Cuántas personas nuevas entraron en tu base de datos esta semana<br><br>
+                <strong>2. Citas Agendadas:</strong> Consultas de comprador/vendedor agendadas<br><br>
+                <strong>3. Propiedades Mostradas:</strong> Tours de casas realizados<br><br>
+                <strong>4. Contratos Firmados:</strong> Nuevos listados tomados + compradores bajo contrato<br><br>
+                <strong>5. Pendientes de Cierre:</strong> Transacciones moviéndose hacia cierre<br><br>
+                <strong>6. Cerradas:</strong> Cheques de comisión ganados esta semana<br><br>
+                <strong>7. Seguimientos:</strong> Llamadas a base de datos pasada, correos, mensajes<br><br>
+                <strong>8. Actividad de Marketing:</strong> Publicaciones en redes sociales, piezas de correo directo, eventos
+            </div>
+        </div>
+
+        <div class="pro-tip">
+            <div class="pro-tip-title">💡 LA REGLA DE ORO</div>
+            <p>
+                <strong>"Lo que se mide, se maneja."</strong><br><br>
+                Los agentes que rastrean sus números semanalmente ganan 3.7x más que los que no lo hacen (NAR Study 2024). ¿Por qué? Porque ves exactamente qué está funcionando, qué no lo está y dónde enfocar tu energía.
+            </p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <div class="final-message">
+            <h2>Tu Año Más Exitoso Comienza Aquí 📈</h2>
+            <p>2026 puede ser tu año de avance. Pero solo si tienes un plan.</p>
+            <p style="font-size: 16px; margin-top: 30px;">Descarga. Imprime. Planifica. Ejecuta. Revisa. Ajusta. Repite.</p>
+            <p style="font-size: 15px; color: var(--luxury-gold); margin-top: 40px;">Los agentes promedio desean éxito. Los mejores agentes lo planifican.</p>
+            <p style="font-size: 14px; margin-top: 30px;">¿En qué lado de la línea estarás?</p>
+        </div>
+        <div class="watermark">EDICIÓN PREMIUM • VALOR $297</div>
+    </div>
+</body>
+</html>

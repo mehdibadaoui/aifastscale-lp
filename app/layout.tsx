@@ -74,6 +74,16 @@ export const metadata: Metadata = {
   // },
 }
 
+// Next.js 14+ viewport configuration (separate from metadata)
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover', // Support iPhone X+ notch
+  themeColor: '#0a1128',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -88,11 +98,17 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Whop Checkout Performance Optimization - Preconnect for faster checkout loading */}
-        <link rel="preconnect" href="https://whop.com" />
-        <link rel="preconnect" href="https://api.whop.com" />
+        {/* ADVANCED Whop Checkout Performance - Instant Loading */}
+        <link rel="preconnect" href="https://whop.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.whop.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.whop.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://checkout.whop.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://whop.com" />
         <link rel="dns-prefetch" href="https://api.whop.com" />
+        <link rel="dns-prefetch" href="https://cdn.whop.com" />
+        <link rel="dns-prefetch" href="https://checkout.whop.com" />
+        <link rel="dns-prefetch" href="https://js.stripe.com" />
+        <link rel="preconnect" href="https://js.stripe.com" crossOrigin="anonymous" />
 
         {/* HERO OPTIMIZATION: Only preload poster image for instant LCP (video loads on-demand) */}
         <link rel="preload" href="/videos/VSL-thumbnail.jpg" as="image" fetchPriority="high" />

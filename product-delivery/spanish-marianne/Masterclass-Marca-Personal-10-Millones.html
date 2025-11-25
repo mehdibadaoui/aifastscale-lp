@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass de Marca Personal de $10M</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary-red: #da2b35; --luxury-gold: #d4af37; --deep-black: #0a0a0a; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.7; color: #1a1a1a; background: linear-gradient(135deg, #f8f6f3 0%, #ffffff 100%); }
+        .page { width: 8.5in; min-height: 11in; padding: 0.85in; margin: 0 auto 40px; background: white; box-shadow: 0 20px 60px rgba(0,0,0,0.12); page-break-after: always; position: relative; }
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 10in; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%); color: white; position: relative; overflow: hidden; }
+        .luxury-border { position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px; border: 2px solid rgba(212,175,55,0.3); border-radius: 4px; z-index: 1; }
+        .badge { background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%); color: var(--deep-black); padding: 14px 40px; border-radius: 50px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 50px; z-index: 2; }
+        .cover h1 { font-family: 'Playfair Display', serif; font-size: 68px; font-weight: 900; line-height: 1.1; margin-bottom: 32px; z-index: 2; }
+        .highlight { display: inline-block; background: linear-gradient(135deg, var(--primary-red) 0%, #ff4757 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 96px; font-weight: 900; }
+        .subtitle { font-size: 22px; color: #d1d1d1; margin-bottom: 70px; z-index: 2; max-width: 700px; }
+        .value-box { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 2px solid rgba(212,175,55,0.4); border-radius: 20px; padding: 40px 60px; z-index: 2; }
+        .value { font-size: 13px; color: var(--luxury-gold); margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
+        .price { font-family: 'Playfair Display', serif; font-size: 68px; font-weight: 900; background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 42px; color: var(--deep-black); margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid var(--primary-red); font-weight: 800; }
+        .module-box { background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%); border-left: 6px solid var(--primary-red); padding: 28px 32px; margin-bottom: 28px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .module-number { background: linear-gradient(135deg, var(--primary-red) 0%, #b01e2a 100%); color: white; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 14px; font-size: 18px; font-weight: 900; }
+        .module-title { font-size: 22px; font-weight: 800; color: var(--deep-black); margin-bottom: 16px; display: flex; align-items: center; }
+        .module-description { font-size: 16px; line-height: 1.8; color: #2d2d2d; margin-bottom: 16px; }
+        .module-lessons { background: white; padding: 20px; border-radius: 10px; margin-top: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .module-lessons ul { padding-left: 20px; }
+        .module-lessons li { margin-bottom: 10px; color: #555; }
+        .intro-text { font-size: 17px; line-height: 1.9; color: #2d2d2d; margin-bottom: 28px; }
+        .intro-text strong { font-weight: 700; color: var(--deep-black); }
+        .pro-tip { background: linear-gradient(135deg, #fffdf7 0%, #fff9e6 100%); border: 2px solid var(--luxury-gold); border-left: 6px solid var(--luxury-gold); padding: 28px 32px; margin: 40px 0; border-radius: 12px; }
+        .pro-tip-title { font-weight: 800; font-size: 16px; margin-bottom: 12px; color: var(--deep-black); text-transform: uppercase; letter-spacing: 1px; }
+        .pro-tip p { line-height: 1.8; color: #2d2d2d; font-size: 15px; }
+        .watermark { position: absolute; bottom: 30px; right: 40px; font-size: 10px; color: rgba(0,0,0,0.15); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .final-message { text-align: center; margin-top: 100px; padding: 50px 40px; background: linear-gradient(135deg, var(--deep-black) 0%, #1a1a1a 100%); border-radius: 20px; color: white; }
+        .final-message h2 { color: white; border: none; font-size: 48px; }
+        .final-message p { font-size: 19px; margin-bottom: 28px; }
+    </style>
+</head>
+<body>
+    <div class="page cover">
+        <div class="luxury-border"></div>
+        <div class="badge">MASTERCLASS PREMIUM • VALOR DE $997</div>
+        <h1>
+            Masterclass de<br>
+            Marca Personal<br>
+            de <span class="highlight">$10M</span>
+        </h1>
+        <p class="subtitle">
+            Cómo construir una marca personal magnética que atrae clientes de alto valor,<br>
+            diferenciándote de cada otro agente en tu mercado
+        </p>
+        <div class="value-box">
+            <p class="value">VALOR DE ESTA MASTERCLASS</p>
+            <p class="price">$997</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>Por Qué Tu Marca Personal Es Tu Activo Más Valioso</h2>
+        <p class="intro-text">
+            En bienes raíces, <strong>no vendes casas – vendes TÚ</strong>. Tu marca personal es lo que te diferencia de los otros 2 millones de agentes inmobiliarios. Es por qué los clientes te eligen a ti sobre todos los demás, incluso cuando tu competencia cobra menos.
+        </p>
+        <p class="intro-text">
+            Esta masterclass revela las <strong>estrategias exactas</strong> que los agentes de 7 cifras usan para construir marcas personales tan poderosas que los clientes los persiguen – no al revés. Aprenderás cómo posicionarte como la única opción obvia en tu mercado.
+        </p>
+
+        <div class="pro-tip">
+            <div class="pro-tip-title">💡 Lo Que Aprenderás</div>
+            <p>Esta no es teoría de libros de texto. Estos son sistemas probados, marcos accionables y estrategias step-by-step que puedes implementar inmediatamente para elevar tu marca, atraer mejores clientes y cobrar tarifas premium.</p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <h2>Los 7 Pilares de una Marca de $10M</h2>
+
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">1</span> Claridad de Posicionamiento</div>
+            <div class="module-description">
+                Descubre tu propuesta de valor única y cómo comunicarla en una oración que hace que los clientes digan "TE NECESITO". La mayoría de los agentes son genéricos. Aprende a ser inolvidable.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>La Fórmula de Nicho de $1M: Cómo elegir un mercado objetivo que te hace experto instantáneo</li>
+                    <li>Ingeniería de Declaración de Posicionamiento: Crea tu "etiqueta" en 10 palabras o menos</li>
+                    <li>Análisis de Competencia: Encuentra huecos en tu mercado que nadie más está llenando</li>
+                    <li>Ejercicio de Mapa de Percepción: Visualiza dónde te encuentras vs. competidores</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">2</span> Identidad Visual y Marca</div>
+            <div class="module-description">
+                Tu apariencia cuenta. Aprende cómo crear una identidad de marca cohesiva que grita "premium" incluso antes de que hables. Desde esquemas de colores hasta sesiones de fotos.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>Psicología del Color en Bienes Raíces: Qué colores construyen confianza vs. urgencia</li>
+                    <li>La Guía de Fotos Profesionales: Qué ponerse, dónde tomarlas, cómo posar</li>
+                    <li>Estrategia de Logo y Marca: Hazlo memorable sin ser cursi</li>
+                    <li>Pautas de Marca: Crea consistencia en cada punto de contacto</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">3</span> Estrategia de Contenido que Construye Autoridad</div>
+            <div class="module-description">
+                Deja de publicar contenido aleatorio. Aprende el sistema de contenido de 3 pilares que te establece como EL experto en tu mercado y atrae clientes en piloto automático.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>Los 3 Pilares de Contenido: Educar, Entretener, Inspirar (y cuándo usar cada uno)</li>
+                    <li>El Calendario de Contenido Interminable: Nunca te quedes sin ideas de nuevo</li>
+                    <li>Estrategia de Contenido de Autoridad: Posiciónate como el experto del mercado</li>
+                    <li>Sistema de Reutilización: Crea una vez, publica en todas partes (ahorra 10 horas/semana)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">4</span> Dominio de Redes Sociales</div>
+            <div class="module-description">
+                Instagram, Facebook, TikTok, YouTube – cada plataforma tiene su propia estrategia. Aprende qué publicar dónde, cuándo y cómo convertir seguidores en clientes pagadores.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>Estrategia Específica por Plataforma: Instagram vs. TikTok vs. Facebook</li>
+                    <li>El Algoritmo Decodificado: Cómo hacer que tus publicaciones se vuelvan virales</li>
+                    <li>De Seguidor a Cliente: El proceso de 7 pasos que convierte audiencia en ingresos</li>
+                    <li>Estrategia de Compromiso: Cómo construir una tribu leal, no solo seguidores</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">5</span> Relaciones Públicas y Medios</div>
+            <div class="module-description">
+                Aparece en noticias locales, podcasts y blogs de la industria. Aprende cómo conseguir cobertura de prensa gratuita que construye credibilidad instantánea y trae leads inbound.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>Cómo Presentarte a Medios Locales (plantillas de email incluidas)</li>
+                    <li>Tu Kit de Prensa de Una Página: Lo que periodistas necesitan de ti</li>
+                    <li>Estrategia de Invitado en Podcast: Consigue en 10+ podcasts en 90 días</li>
+                    <li>Amplificación de Noticias: Convierte una mención en medios en meses de contenido</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">6</span> Construcción de Comunidad</div>
+            <div class="module-description">
+                Los mejores agentes no solo tienen clientes – tienen comunidades. Aprende cómo construir una tribu de fans leales que refieren a todos los que conocen.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>La Estrategia de Grupo de Facebook: Construye una comunidad de 1,000+ miembros comprometidos</li>
+                    <li>Eventos Comunitarios que Convierten: De eventos virtuales a meetups en persona</li>
+                    <li>Motor de Referencias: Haz que cada cliente traiga 3+ más</li>
+                    <li>Experiencia VIP del Cliente: Haz que cada transacción sea inolvidable</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <div class="module-box">
+            <div class="module-title"><span class="module-number">7</span> Escalando Tu Influencia</div>
+            <div class="module-description">
+                Una vez que construiste tu marca personal, es hora de escalar. Aprende cómo convertir tu marca en múltiples flujos de ingresos más allá de solo comisiones inmobiliarias.
+            </div>
+            <div class="module-lessons">
+                <strong>Lecciones Clave:</strong>
+                <ul>
+                    <li>Monetización de Marca: Coaching, cursos, patrocinios, afiliados</li>
+                    <li>Construyendo Tu Equipo: Cuándo contratar y a quién contratar primero</li>
+                    <li>La Marca Personal al Negocio: Transición de solista a CEO</li>
+                    <li>Estrategia de Salida: Construye una marca que puedas vender eventualmente</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pro-tip" style="margin-top: 60px;">
+            <div class="pro-tip-title">🎯 IMPLEMENTACIÓN ES TODO</div>
+            <p style="font-size: 16px; line-height: 1.9;">
+                Esta masterclass no vale nada sin acción. Cada módulo incluye <strong>pasos de acción específicos</strong> que puedes implementar hoy. No consumas contenido pasivamente – toma notas, completa los ejercicios y IMPLEMENTA inmediatamente. Tu marca personal es la inversión más rentable que jamás harás en tu negocio.
+            </p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <div class="page">
+        <div class="final-message">
+            <h2>Construye Tu Marca de $10M 🚀</h2>
+            <p>Tienes el conocimiento. Tienes los sistemas. Ahora es momento de ejecutar.</p>
+            <p style="font-size: 16px; margin-top: 30px;">Tu marca personal es lo único que ningún competidor puede copiar.</p>
+            <p style="font-size: 15px; color: var(--luxury-gold); margin-top: 40px;">Comienza con el Módulo 1 hoy. Tu futuro tú te lo agradecerá.</p>
+        </div>
+        <div class="watermark">EDICIÓN PREMIUM • VALOR $997</div>
+    </div>
+</body>
+</html>

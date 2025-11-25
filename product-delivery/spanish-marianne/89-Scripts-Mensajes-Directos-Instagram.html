@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>89 Scripts de DM de Instagram Que Convierten - Edición Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #da2b35;
+            --dark-red: #b01e2a;
+            --luxury-gold: #d4af37;
+            --deep-black: #0a0a0a;
+            --charcoal: #1a1a1a;
+            --soft-white: #fafafa;
+            --cream: #f8f6f3;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #f8f6f3 0%, #ffffff 100%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 0.85in;
+            margin: 0 auto 40px;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 1px rgba(0,0,0,0.1);
+            page-break-after: always;
+            position: relative;
+        }
+
+        /* PREMIUM COVER PAGE */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 10in;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 0.85in;
+        }
+
+        .cover::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(218,43,53,0.15) 0%, transparent 50%);
+            animation: subtlePulse 15s ease-in-out infinite;
+        }
+
+        .cover::after {
+            content: "";
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 50%, rgba(212,175,55,0.08) 0%, transparent 50%);
+            animation: subtlePulse 20s ease-in-out infinite reverse;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.7; transform: scale(1.05) rotate(5deg); }
+        }
+
+        .luxury-border {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border: 2px solid rgba(212,175,55,0.3);
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .luxury-border::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%);
+            color: var(--deep-black);
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 50px;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(212,175,55,0.4), 0 0 1px rgba(255,255,255,0.5);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            z-index: 2;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            letter-spacing: -1px;
+        }
+
+        .highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #ff4757 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 96px;
+            font-weight: 900;
+            text-shadow: none;
+            filter: drop-shadow(0 4px 20px rgba(218,43,53,0.5));
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: #d1d1d1;
+            margin-bottom: 70px;
+            z-index: 2;
+            font-weight: 400;
+            max-width: 650px;
+            letter-spacing: 0.3px;
+            line-height: 1.6;
+        }
+
+        .value-box {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(212,175,55,0.4);
+            border-radius: 20px;
+            padding: 40px 60px;
+            z-index: 2;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .value {
+            font-size: 13px;
+            color: var(--luxury-gold);
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .price {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 68px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        /* PREMIUM TYPOGRAPHY */
+        h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 42px;
+            color: var(--deep-black);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary-red);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--luxury-gold) 0%, transparent 100%);
+        }
+
+        .category {
+            background: linear-gradient(135deg, var(--deep-black) 0%, var(--charcoal) 100%);
+            color: white;
+            padding: 20px 32px;
+            margin: 50px 0 32px 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            border-left: 5px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(218,43,53,0.1) 100%);
+        }
+
+        /* PREMIUM SCRIPT BOXES */
+        .script-box {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            border-left: 6px solid var(--primary-red);
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .script-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(218,43,53,0.02) 100%);
+            pointer-events: none;
+        }
+
+        .script-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--deep-black);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .script-number {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            font-size: 16px;
+            font-weight: 900;
+            box-shadow: 0 4px 12px rgba(218,43,53,0.3);
+            flex-shrink: 0;
+        }
+
+        .script-text {
+            background: white;
+            padding: 22px 24px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #2d2d2d;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(0,0,0,0.05);
+            font-weight: 500;
+        }
+
+        .script-note {
+            font-size: 13px;
+            color: #555;
+            font-style: italic;
+            padding: 16px 20px;
+            background: rgba(218,43,53,0.04);
+            border-radius: 8px;
+            margin-top: 14px;
+            border-left: 3px solid rgba(218,43,53,0.3);
+            line-height: 1.6;
+        }
+
+        .script-note strong {
+            color: var(--primary-red);
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* INTRO PAGE */
+        .intro-text {
+            font-size: 17px;
+            line-height: 1.9;
+            color: #2d2d2d;
+            margin-bottom: 28px;
+            font-weight: 400;
+        }
+
+        .intro-text strong {
+            font-weight: 700;
+            color: var(--deep-black);
+        }
+
+        /* PREMIUM PRO TIP */
+        .pro-tip {
+            background: linear-gradient(135deg, #fffdf7 0%, #fff9e6 100%);
+            border: 2px solid var(--luxury-gold);
+            border-left: 6px solid var(--luxury-gold);
+            padding: 28px 32px;
+            margin: 40px 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(212,175,55,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+            position: relative;
+        }
+
+        .pro-tip::before {
+            content: "💎";
+            position: absolute;
+            top: -18px;
+            left: 30px;
+            background: white;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .pro-tip-title {
+            font-weight: 800;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--deep-black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pro-tip p {
+            line-height: 1.8;
+            color: #2d2d2d;
+            font-size: 15px;
+        }
+
+        /* SECTION OVERVIEW BOXES */
+        .overview-box {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-left: 6px solid var(--primary-red);
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .overview-box:hover {
+            border-color: var(--primary-red);
+            box-shadow: 0 8px 24px rgba(218,43,53,0.12);
+        }
+
+        .overview-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--deep-black);
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .overview-description {
+            padding: 0;
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* WATERMARK */
+        .watermark {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 10px;
+            color: rgba(0,0,0,0.15);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* FINAL PAGE */
+        .final-message {
+            text-align: center;
+            margin-top: 100px;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, var(--deep-black) 0%, var(--charcoal) 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-message::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(218,43,53,0.1) 0%, transparent 70%);
+        }
+
+        .final-message h2 {
+            color: white;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .final-message h2::after {
+            display: none;
+        }
+
+        .final-message p {
+            font-size: 19px;
+            margin-bottom: 28px;
+            position: relative;
+            font-weight: 400;
+        }
+
+        .final-message .cta-text {
+            font-size: 15px;
+            color: var(--luxury-gold);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+
+            .script-box,
+            .overview-box,
+            .pro-tip {
+                page-break-inside: avoid;
+            }
+
+            @page {
+                margin: 0;
+                size: letter;
+            }
+        }
+
+        /* DECORATIVE ELEMENTS */
+        .section-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary-red) 50%, transparent 100%);
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .section-divider::after {
+            content: "◆";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: var(--primary-red);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- COVER PAGE -->
+    <div class="page cover">
+        <div class="luxury-border"></div>
+        <div class="badge">CONTENIDO PREMIUM • VALOR DE $197</div>
+        <h1>
+            <span class="highlight">89</span><br>
+            Scripts de DM<br>
+            de Instagram Que Convierten
+        </h1>
+        <p class="subtitle">
+            Mensajes probados en batalla, de copiar y pegar, utilizados por agentes que ganan 6-7 cifras<br>
+            para agendar citas y cerrar ventas a través de mensajes directos de Instagram
+        </p>
+        <div class="value-box">
+            <p class="value">VALOR TOTAL</p>
+            <p class="price">$197</p>
+        </div>
+    </div>
+
+    <!-- INTRODUCTION PAGE -->
+    <div class="page">
+        <h2>Bienvenido a Tu Arsenal de Mensajes</h2>
+
+        <p class="intro-text">
+            No estás obteniendo plantillas genéricas escritas por alguien que nunca ha cerrado un trato en su vida. Estos son <strong>iniciadores de conversación probados en batalla</strong> utilizados por agentes y emprendedores de alto rendimiento que cierran 6-7 cifras anualmente a través de DMs de Instagram.
+        </p>
+
+        <p class="intro-text">
+            <strong>Esto es lo que los hace diferentes:</strong> No suenan como si un robot los hubiera escrito. Son conversacionales, humanos y están enfocados en construir relaciones genuinas, no solo en vender productos o servicios.
+        </p>
+
+        <div class="pro-tip">
+            <div class="pro-tip-title">💡 La Regla de Oro</div>
+            <p>La personalización lo es TODO. Reemplaza [NOMBRE], [UBICACIÓN] y [DETALLE] con información real de su perfil. Los 3 minutos que inviertes personalizando cada mensaje multiplicarán por 10 tu tasa de respuesta. Los mensajes genéricos se ignoran. Los mensajes personales inician conversaciones.</p>
+        </div>
+
+        <h2 style="margin-top: 60px;">Qué Hay Dentro de Esta Guía:</h2>
+
+        <div class="overview-box">
+            <div class="overview-title">📱 Sección 1: Contacto en Frío (Scripts 1-20)</div>
+            <p class="overview-description">Rompe el hielo con completos extraños que se ajustan a tu perfil de cliente ideal. Estos iniciadores obtienen respuestas sin sonar vendedores o desesperados.</p>
+        </div>
+
+        <div class="overview-box">
+            <div class="overview-title">🔥 Sección 2: Prospectos Calientes (Scripts 21-40)</div>
+            <p class="overview-description">Haz seguimiento con personas que ya interactuaron con tu contenido. Convierte likes, comentarios y vistas de historias en conversaciones reales.</p>
+        </div>
+
+        <div class="overview-box">
+            <div class="overview-title">💬 Sección 3: Manejo de Objeciones (Scripts 41-60)</div>
+            <p class="overview-description">Convierte "ahora no es el momento" en "hablemos". Maneja cada objeción con gracia y avanza la conversación.</p>
+        </div>
+
+        <div class="overview-box">
+            <div class="overview-title">📅 Sección 4: Agendar Citas (Scripts 61-75)</div>
+            <p class="overview-description">Haz que agenden una cita contigo sin ser insistente. Haz que programar se sienta natural y sin fricción.</p>
+        </div>
+
+        <div class="overview-box">
+            <div class="overview-title">🎯 Sección 5: Mensajes de Cierre (Scripts 76-89)</div>
+            <p class="overview-description">Sella el trato y obtén compromisos. Pasa de la conversación a la conversión con confianza.</p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- SECTION 1: COLD OUTREACH -->
+    <div class="page">
+        <div class="category">📱 SECCIÓN 1: CONTACTO EN FRÍO (1-20)</div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">1</span> El Abridor con Cumplido</div>
+            <div class="script-text">
+                ¡Hola [NOMBRE]! Acabo de encontrar tu perfil y tuve que contactarte – me encanta lo que estás haciendo con [DETALLE ESPECÍFICO]. ¿Estás en [UBICACIÓN]? Siempre busco conectar con gente interesante de la zona 🏡
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Cumplido específico + conexión local = rapport instantáneo. No es nada vendedor.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">2</span> La Conexión Local</div>
+            <div class="script-text">
+                ¡Hola! Vi que estás en [UBICACIÓN] – ¡yo también! ¿Cuánto tiempo llevas en la zona? Siempre tengo curiosidad por saber qué trae a la gente a nuestro vecindario 😊
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> La proximidad geográfica crea terreno común instantáneo. A la gente le encanta hablar sobre su vecindario.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">3</span> El Reactor de Contenido</div>
+            <div class="script-text">
+                Acabo de ver tu publicación sobre [TEMA] – ¡esto es TAN cierto! Pregunta rápida: ¿has estado viviendo en [ÁREA] mucho tiempo? Tu contenido me da vibras muy locales 🙌
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Demuestra que realmente miraste su contenido, no estás enviando mensajes masivos. Primero interacción, luego pregunta.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">4</span> El Interés Mutuo</div>
+            <div class="script-text">
+                ¡Hola [NOMBRE]! Vi que te gusta [HOBBY/INTERÉS] – ¡a mí también! ¿Actualmente alquilas o eres propietario en [UBICACIÓN]? Siempre me encanta conectar con otros fanáticos de [HOBBY] en la zona 🏠
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Primero el interés compartido, el estatus de vivienda tejido naturalmente. No se siente como un interrogatorio.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">5</span> El Experto del Vecindario</div>
+            <div class="script-text">
+                ¡Hola! Ayudo a personas en [VECINDARIO] a encontrar sus hogares de ensueño. Vi que eres local – ¿te encanta el área o estás pensando en un cambio? ¡Sin presión, solo genuina curiosidad! 😊
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Directo pero amigable. "Sin presión" desarma la resistencia e invita respuestas honestas.
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- MORE COLD OUTREACH SCRIPTS -->
+    <div class="page">
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">6</span> La Reacción a Historia</div>
+            <div class="script-text">
+                ¡Me encantó tu historia sobre [TEMA]! Pregunta aleatoria – ¿eres originalmente de [CIUDAD] o te mudaste aquí? Siempre estoy fascinado por las historias de las personas sobre cómo terminaron donde están 🗺️
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> A la gente le encanta hablar de sí misma. Abre la puerta a conversaciones más profundas naturalmente.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">7</span> El Abridor de Reubicación</div>
+            <div class="script-text">
+                ¡Hola [NOMBRE]! Noté que podrías ser nuevo en [ÁREA] (o tal vez estoy equivocado 😅). Si lo eres, ¿cómo te está gustando hasta ahora? Soy local y feliz de compartir mis lugares favoritos si quieres recomendaciones!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Útil, no vendedor. Construye confianza antes de cualquier oferta. Te posiciona como un recurso local.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">8</span> El Profesional Directo</div>
+            <div class="script-text">
+                Hola [NOMBRE], soy agente inmobiliario en [ÁREA] y me encanta conectar con locales. No te estoy ofreciendo nada – solo quería decir que si alguna vez tienes preguntas sobre el mercado o necesitas consejo, ¡estoy aquí! 🏡
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> La transparencia construye confianza. "No te estoy ofreciendo" baja las defensas y te hace accesible.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">9</span> El Ángulo de Actualización del Mercado</div>
+            <div class="script-text">
+                ¡Hola! Acabo de ver que los valores de las casas en [VECINDARIO] subieron un 12% este trimestre 📈 ¿Eres propietario en la zona? ¡Tengo curiosidad si has notado que el mercado se está calentando!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Primero datos, luego pregunta personal. Demuestra experiencia mientras inicia la conversación.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">10</span> La Conexión con Mascota</div>
+            <div class="script-text">
+                ¡OMG tu [PERRO/GATO] es adorable! 😍 ¿Estás en [ÁREA]? Me especializo en ayudar a dueños de mascotas a encontrar casas con patios/amenidades para mascotas geniales. ¡Tu [NOMBRE MASCOTA] merece lo mejor!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> A la gente de mascotas LE ENCANTA hablar de sus mascotas. Crea calidez instantánea y conexión emocional.
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- SECTION 2: WARM LEADS SAMPLE -->
+    <div class="page">
+        <div class="section-divider"></div>
+        <div class="category">🔥 SECCIÓN 2: PROSPECTOS CALIENTES (21-40)</div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">21</span> El Interactor de Contenido</div>
+            <div class="script-text">
+                ¡Gracias por interactuar con mi publicación! 🙏 Pregunta rápida – ¿actualmente estás buscando un lugar o solo manteniendo un ojo en el mercado? De cualquier manera, comparto actualizaciones del mercado semanalmente si quieres mantenerte informado!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Primero reconoce la interacción, califica el interés sin presión, ofrece valor.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">22</span> El Reactor de Listado</div>
+            <div class="script-text">
+                ¡Vi que te gustó mi listado en [DIRECCIÓN]! ¿Estás buscando en esa área? De hecho tengo 3 propiedades más viniendo esta semana que aún no están publicadas. ¿Quieres un vistazo previo? 👀
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Exclusividad + urgencia. Ellos interactuaron primero, así que no estás contactando en frío.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">23</span> El Deslizador de Historia</div>
+            <div class="script-text">
+                ¡Gracias por la respuesta a la historia! ¿Estás buscando activamente o más en la fase de "navegación casual"? Sin juicios de ninguna manera – puedo ayudar con ambas 😊 ¿Qué tipo de lugar te interesa más?
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Califica su intención mientras mantiene la puerta abierta. Hace que ambas opciones se sientan válidas.
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- SECTION 3: OBJECTION HANDLING SAMPLE -->
+    <div class="page">
+        <div class="section-divider"></div>
+        <div class="category">💬 SECCIÓN 3: MANEJO DE OBJECIONES (41-60)</div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">41</span> "Ahora No"</div>
+            <div class="script-text">
+                ¡Totalmente lo entiendo! ¿Cuándo crees que podrías estar listo? Te contactaré entonces. Y oye – incluso si los planes cambian, estoy aquí. Cero presión, solo quiero ser útil cuando el momento SEA el correcto 👍
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Respeta el timing, mantiene la puerta abierta, establece expectativa de seguimiento sin ser insistente.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">42</span> "Ya Tengo un Agente"</div>
+            <div class="script-text">
+                ¡Me encanta eso! Los buenos agentes lo son todo. Pregunta rápida – ¿son locales de [ÁREA]? A veces tener alguien que REALMENTE conoce el vecindario por dentro y por fuera hace una gran diferencia. ¡Solo algo para pensar!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Planta semilla de duda respetuosamente, ofrece perspectiva alternativa sin criticar a la competencia.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">43</span> "No Puedo Pagar Ahora"</div>
+            <div class="script-text">
+                ¡Te escucho! Aquí está la cosa – la mayoría de la gente piensa que no puede pagar más de lo que realmente puede. ¿Estarías abierto a una charla rápida con mi prestamista? Cero obligación, pero podrías sorprenderte. ¿Vale 15 minutos?
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Desafía la suposición suavemente, ofrece solución, enfatiza bajo compromiso de tiempo.
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- SECTION 4: BOOKING APPOINTMENTS SAMPLE -->
+    <div class="page">
+        <div class="section-divider"></div>
+        <div class="category">📅 SECCIÓN 4: AGENDAR CITAS (61-75)</div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">61</span> El Enlace de Calendario</div>
+            <div class="script-text">
+                Hagamos una llamada rápida de 15 minutos para repasar lo que estás buscando. Más fácil que escribir de ida y vuelta 😅 Aquí está mi calendario: [ENLACE]. ¡Elige cualquier hora que te funcione!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Hace que agendar sea sin fricción, respeta su tiempo, enfatiza brevedad (15 min).
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">62</span> La Reunión de Café</div>
+            <div class="script-text">
+                ¿Quieres tomar un café esta semana? Encuentro que es mucho más fácil entender lo que buscas cara a cara (además, buena excusa para cafeína ☕). ¿[CAFETERÍA] martes a las 10am o miércoles a las 2pm?
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> El ambiente casual reduce presión, da opciones específicas (más fácil decir sí), el café es bajo compromiso.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">63</span> La Oferta de Tour Virtual</div>
+            <div class="script-text">
+                ¿No puedes ir en persona? Puedo hacerte FaceTime durante una visita. Seré tus ojos – tú me dices qué mirar. Es como estar ahí sin salir de tu sofá. ¿Mañana a las [HORA] funciona?
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Elimina barrera de presencia física, muestra flexibilidad, demuestra enfoque moderno.
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- SECTION 5: CLOSING MESSAGES SAMPLE -->
+    <div class="page">
+        <div class="section-divider"></div>
+        <div class="category">🎯 SECCIÓN 5: MENSAJES DE CIERRE (76-89)</div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">76</span> El Empujón de Oferta</div>
+            <div class="script-text">
+                Te encanta. A mí me encanta. Escribamos una oferta. ¿Cuál es tu máximo que irías? Redactaré todo esta noche y podemos enviar a primera hora mañana. ¡Es hora de hacerlo tuyo! 🎉
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Asume la venta, crea momentum, da pasos claros siguientes, construye emoción.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">77</span> La Estrategia de Contraoferta</div>
+            <div class="script-text">
+                El vendedor contraofertó en [PRECIO]. Está por encima de tu presupuesto, pero honestamente? Creo que podemos encontrarnos a mitad de camino. ¿Quieres contraofertar en [PRECIO]? He visto este baile funcionar 100 veces. Confía en mí en esta 🤝
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Muestra experiencia en negociación, construye confianza, demuestra experiencia.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">78</span> La Advertencia de Múltiples Ofertas</div>
+            <div class="script-text">
+                Para tu información – hay 3 otras ofertas en esta propiedad. Si la quieres, necesitamos ir FUERTE. Estoy hablando de oferta limpia, cierre rápido, tal vez por encima del precio pedido. ¿Estás dentro o deberíamos retirarnos?
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Urgencia + presión competitiva + elección binaria fuerza decisión.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-title"><span class="script-number">89</span> El Mensaje de Aniversario</div>
+            <div class="script-text">
+                ¡Feliz aniversario de 1 año como propietario! 🎉 ¿Puedes creer que ha sido un año? Espero que estés amando [DIRECCIÓN]. Gracias de nuevo por confiar en mí con una decisión tan grande. ¡Si alguna vez necesitas algo, estoy a solo un mensaje de distancia!
+            </div>
+            <div class="script-note">
+                <strong>Por qué funciona:</strong> Toque personal, mantiene relación caliente para futuras referencias, muestra que te importa a largo plazo.
+            </div>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM</div>
+    </div>
+
+    <!-- FINAL PAGE -->
+    <div class="page">
+        <div class="pro-tip" style="margin-top: 100px;">
+            <div class="pro-tip-title">🎯 EL SECRETO DEFINITIVO</div>
+            <p style="font-size: 16px; line-height: 1.9;">
+                El mejor DM es el que suena como <strong>TÚ</strong>. Estos scripts son tu fundación – pero necesitas personalizarlos con tu personalidad, tu conocimiento del mercado y tu genuino interés por los clientes. Eso es lo que realmente convierte. No las palabras perfectas, sino la conexión humana real detrás de ellas. La gente puede oler lo falso a kilómetros de distancia. Sé auténtico, sé útil y sé consistente.
+            </p>
+        </div>
+
+        <div class="final-message">
+            <h2>¡Tú Puedes Hacer Esto! 💪</h2>
+            <p>Ahora sal y empieza a construir relaciones reales que se conviertan en ingresos reales.</p>
+            <p style="font-size: 16px; margin-top: 30px; margin-bottom: 0;">Recuerda: Cada "no" es solo práctica para el próximo "sí"</p>
+            <p class="cta-text" style="margin-top: 40px;">¿Preguntas? Conéctate con nosotros en Instagram</p>
+        </div>
+
+        <div class="watermark">EDICIÓN PREMIUM • VALOR $197</div>
+    </div>
+
+</body>
+</html>

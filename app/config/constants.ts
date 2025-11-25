@@ -36,21 +36,39 @@ export const WHOP = {
   // Plan IDs for different products - LIVE MODE
   plans: {
     main: process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN || 'plan_7x5Kz1cflmrYH', // $37 - Main product
-    oto: process.env.NEXT_PUBLIC_WHOP_PLAN_OTO || 'plan_WsTHXLDJ3nJRo', // $63 - Done-For-You Video
-    downsell: process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL || 'plan_3NOeRkpEhZVaV', // $39 - Downsell DFY
+    upsell: process.env.NEXT_PUBLIC_WHOP_PLAN_UPSELL || 'plan_R3FywBSQynds0', // $9.95 - 5 Bonus Products ($1.99 each)
+    downsell: process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL || 'plan_plZSk0NMKNZJj', // $4.95 - 5 Bonus Products ($0.99 each)
+    // OLD/ARCHIVED - Done-For-You offers (not active in production)
+    oto_archived: 'plan_WsTHXLDJ3nJRo', // $63 - Done-For-You Video (archived)
+    downsell_archived: 'plan_3NOeRkpEhZVaV', // $39 - Downsell DFY (archived)
   },
   // Pricing
   prices: {
     main: 37,
-    oto: 63,
-    downsell: 39,
+    upsell: 9.95,
+    downsell: 4.95,
+    // Archived pricing
+    oto_archived: 63,
+    downsell_archived: 39,
+  },
+  // Product values (for comparison messaging)
+  values: {
+    upsell: 122, // 5 products worth $122+ total
+    downsell: 122, // Same products, different price
   },
   // Redirect URLs (for post-purchase flow)
   redirects: {
-    afterMainCheckout: '/oto', // After $37 purchase → OTO page
-    afterOTO: '/thank-you-confirmed', // After OTO purchase → Thank you
-    afterDownsell: '/thank-you-confirmed', // After downsell → Thank you
-    afterOTODecline: '/downsell', // If decline OTO → Downsell
+    afterMainCheckout: '/upsell', // After $37 purchase → NEW Upsell page
+    afterUpsellAccept: '/thank-you-confirmed?purchased=upsell', // After $9.95 upsell → Thank you
+    afterUpsellDecline: '/downsell-final', // If decline upsell → Downsell page
+    afterDownsellAccept: '/thank-you-confirmed?purchased=downsell', // After $4.95 downsell → Thank you
+    afterDownsellDecline: '/thank-you-confirmed?purchased=main', // If decline both → Thank you
+  },
+  // Whop Checkout URLs
+  checkoutUrls: {
+    main: `https://whop.com/checkout/${process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN || 'plan_7x5Kz1cflmrYH'}`,
+    upsell: `https://whop.com/checkout/${process.env.NEXT_PUBLIC_WHOP_PLAN_UPSELL || 'plan_R3FywBSQynds0'}`,
+    downsell: `https://whop.com/checkout/${process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL || 'plan_plZSk0NMKNZJj'}`,
   },
 } as const
 

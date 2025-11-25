@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tus Bonos Premium - Marianne</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary-red: #da2b35; --luxury-gold: #d4af37; --deep-black: #0a0a0a; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f8f6f3 0%, #ffffff 100%); padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; padding: 60px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+        .header { text-align: center; margin-bottom: 60px; padding-bottom: 40px; border-bottom: 3px solid var(--primary-red); }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 56px; color: var(--deep-black); margin-bottom: 20px; }
+        .header .personalized { color: var(--primary-red); font-size: 32px; font-weight: 700; margin-bottom: 20px; }
+        .header p { font-size: 20px; color: #666; line-height: 1.8; }
+        .total-value { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 50px; }
+        .total-value .label { font-size: 14px; color: var(--luxury-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .total-value .amount { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; background: linear-gradient(135deg, var(--luxury-gold) 0%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bonus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .bonus-card { background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%); border-left: 5px solid var(--primary-red); padding: 30px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: all 0.3s ease; }
+        .bonus-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(218,43,53,0.12); }
+        .bonus-number { background: linear-gradient(135deg, var(--primary-red) 0%, #b01e2a 100%); color: white; width: 50px; height: 50px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; margin-bottom: 20px; }
+        .bonus-title { font-size: 22px; font-weight: 800; color: var(--deep-black); margin-bottom: 12px; line-height: 1.3; }
+        .bonus-value { color: var(--luxury-gold); font-weight: 700; font-size: 18px; margin-bottom: 15px; }
+        .bonus-description { color: #666; font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
+        .bonus-file { color: #999; font-size: 13px; font-style: italic; display: flex; align-items: center; gap: 8px; }
+        .bonus-file::before { content: "📄"; }
+        .category-header { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--deep-black); margin: 60px 0 30px 0; padding-bottom: 15px; border-bottom: 2px solid var(--primary-red); }
+        .footer { margin-top: 60px; text-align: center; padding: 40px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); border-radius: 15px; color: white; }
+        .footer h2 { font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 20px; }
+        .footer p { font-size: 18px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎁 Tu Paquete Completo de Bonos Premium</h1>
+            <div class="personalized">Especialmente Para: MARIANNE</div>
+            <p>Has recibido acceso completo a nuestra colección premium de recursos digitales valorados en miles de dólares. Todo diseñado para acelerar tu éxito en bienes raíces.</p>
+        </div>
+
+        <div class="total-value">
+            <div class="label">Valor Total de Tu Paquete</div>
+            <div class="amount">$3,429</div>
+        </div>
+
+        <div class="category-header">📱 Contenido y Plantillas de Redes Sociales</div>
+        <div class="bonus-grid">
+            <div class="bonus-card">
+                <div class="bonus-number">1</div>
+                <div class="bonus-title">89 Scripts de DM de Instagram Que Convierten</div>
+                <div class="bonus-value">Valor: $197</div>
+                <div class="bonus-description">Mensajes probados de copiar y pegar para agendar citas y cerrar ventas a través de mensajes directos de Instagram. Organizados por categoría: contacto en frío, prospectos calientes, manejo de objeciones, agendar citas y cierre.</div>
+                <div class="bonus-file">89-scripts-dm-instagram.html</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">2</div>
+                <div class="bonus-title">17 Ganchos Imposibles de Ignorar</div>
+                <div class="bonus-value">Valor: $247</div>
+                <div class="bonus-description">Los ganchos de video más poderosos para detener el scroll y hacer que las personas vean tu contenido completo. Incluye fórmulas probadas y ejemplos específicos del sector inmobiliario.</div>
+                <div class="bonus-file">17-ganchos-imposibles-de-ignorar.html</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">3</div>
+                <div class="bonus-title">30 Publicaciones Graciosas Inmobiliarias</div>
+                <div class="bonus-value">Valor: $127</div>
+                <div class="bonus-description">Contenido de redes sociales que hace que tu audiencia se ría, comparta y recuerde tu nombre. El humor es la manera más rápida de construir confianza y simpatía.</div>
+                <div class="bonus-file">30-publicaciones-graciosas-inmobiliarias.html</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">4</div>
+                <div class="bonus-title">327 Plantillas de Historias de Instagram</div>
+                <div class="bonus-value">Valor: $247</div>
+                <div class="bonus-description">Plantillas profesionales listas para usar para tus historias de Instagram. Descarga el PDF desde la carpeta de bonos y edítalas con tu información.</div>
+                <div class="bonus-file">../bonuses/Stories & Posts Templates.pdf</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">5</div>
+                <div class="bonus-title">25 Plantillas de Reels</div>
+                <div class="bonus-value">Valor: $197</div>
+                <div class="bonus-description">Plantillas de Reels diseñadas profesionalmente para maximizar vistas y compromiso. Formatos probados para contenido inmobiliario viral.</div>
+                <div class="bonus-file">../bonuses/Reels Templates.pdf</div>
+            </div>
+        </div>
+
+        <div class="category-header">📚 Capacitación y Masterclasses</div>
+        <div class="bonus-grid">
+            <div class="bonus-card">
+                <div class="bonus-number">6</div>
+                <div class="bonus-title">Masterclass de Marca Personal de $10M</div>
+                <div class="bonus-value">Valor: $997</div>
+                <div class="bonus-description">Capacitación completa sobre cómo construir una marca personal que atrae clientes de alto valor. Estrategias usadas por agentes que ganan 7 cifras anualmente.</div>
+                <div class="bonus-file">../bonuses/$10M Personal Brand Masterclass.pdf</div>
+            </div>
+        </div>
+
+        <div class="category-header">🛠️ Herramientas y Recursos</div>
+        <div class="bonus-grid">
+            <div class="bonus-card">
+                <div class="bonus-number">7</div>
+                <div class="bonus-title">Planificador de Negocios 2026 "Mapa al Millón"</div>
+                <div class="bonus-value">Valor: $297</div>
+                <div class="bonus-description">Sistema completo de planificación con 5 PDFs: Plan Estratégico, Cuadro de Objetivos, Páginas Extra, Etiquetas de Pestañas y Planificador de 12 Meses. Todo lo que necesitas para planificar tu año más rentable.</div>
+                <div class="bonus-file">../bonuses/1. Planner 2026.pdf (+ 4 PDFs más)</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">8</div>
+                <div class="bonus-title">Plantillas de Firma de Email Profesional</div>
+                <div class="bonus-value">Valor: $97</div>
+                <div class="bonus-description">Firmas de email elegantes y profesionales que proyectan autoridad y hacen que sea fácil para los clientes contactarte. Múltiples diseños incluidos.</div>
+                <div class="bonus-file">../bonuses/Realtor - Professional Signature.pdf</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">9</div>
+                <div class="bonus-title">Mentor IA ChatGPT Personalizado</div>
+                <div class="bonus-value">Valor: $497</div>
+                <div class="bonus-description">Instrucciones especializadas para convertir ChatGPT en tu coach inmobiliario personal. Obtén asesoramiento instantáneo sobre negociación, marketing, scripts de llamadas y más.</div>
+                <div class="bonus-file">Contacta para acceso</div>
+            </div>
+
+            <div class="bonus-card">
+                <div class="bonus-number">10</div>
+                <div class="bonus-title">Kit de Marca del Agente de Lujo</div>
+                <div class="bonus-value">Valor: $597</div>
+                <div class="bonus-description">Activos de marca premium para elevar tu presencia profesional. Incluye logos, esquemas de colores, fuentes y pautas de marca.</div>
+                <div class="bonus-file">Contacta para acceso</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h2>🎉 ¡Felicidades, Marianne!</h2>
+            <p>Tienes todo lo que necesitas para dominar las redes sociales, atraer más leads y cerrar más ventas en 2026.</p>
+            <p style="margin-top: 20px; font-size: 16px; color: var(--luxury-gold);">El éxito viene de la IMPLEMENTACIÓN. Elige un recurso hoy y ponlo en acción.</p>
+            <p style="margin-top: 30px; font-size: 14px;">¿Preguntas? Contáctanos en Instagram o email</p>
+        </div>
+    </div>
+</body>
+</html>

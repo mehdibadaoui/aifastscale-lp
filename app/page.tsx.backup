@@ -1,0 +1,1127 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import {
+  Gift,
+  Users,
+  Star,
+  Clock,
+  TrendingUp,
+  Zap,
+  Sparkles,
+  ArrowRight,
+  CheckCircle,
+  Play,
+  Shield,
+  Video,
+  ChevronDown,
+  X,
+  Award,
+  Target,
+  Rocket,
+  TrendingDown,
+  AlertCircle,
+} from 'lucide-react'
+import Image from 'next/image'
+
+// Bonus products data
+const BONUSES = [
+  {
+    id: 'personal-brand',
+    title: 'The $10M Personal Brand Masterclass',
+    description: 'Build a 7-Figure Brand Using AI in 90 Days',
+    value: 997,
+    category: 'TRAINING',
+    image: '/images/products/personal-brand.webp',
+    popular: true,
+  },
+  {
+    id: 'business-planner',
+    title: '2026 Business Planner "Million Dollar Roadmap"',
+    description: 'The 12-Month Blueprint Top 1% Agents Use',
+    value: 297,
+    category: 'TOOLS',
+    image: '/images/products/business-planner.webp',
+    popular: false,
+  },
+  {
+    id: 'instagram-stories',
+    title: '327 Instagram Story Templates',
+    description: 'Pre-Designed Stories That Drive DMs & Listing Inquiries',
+    value: 247,
+    category: 'CONTENT',
+    image: '/images/products/instagram-stories.webp',
+    popular: true,
+  },
+  {
+    id: 'fall-reels',
+    title: '25 Fall Reels Template Pack',
+    description: 'Seasonal Content That Converts During Peak Buying Season',
+    value: 197,
+    category: 'CONTENT',
+    image: '/images/products/viral-reels.webp',
+    popular: false,
+  },
+  {
+    id: 'funny-posts',
+    title: '30 Funny Real Estate Social Media Posts',
+    description: 'Humor That Humanizes & Drives 3X More Engagement',
+    value: 127,
+    category: 'CONTENT',
+    image: '/images/products/funny-posts.webp',
+    popular: false,
+  },
+  {
+    id: 'hooks',
+    title: '45 Real Estate Hooks Impossible to Skip',
+    description: 'Scroll-Stopping First 3 Seconds for Real Estate',
+    value: 247,
+    category: 'CONTENT',
+    image: '/images/products/hooks-impossible-to-skip.webp',
+    popular: true,
+  },
+  {
+    id: 'dm-scripts',
+    title: '89 Instagram DM Scripts That Convert',
+    description: 'Copy-Paste Messages That Book Appointments',
+    value: 197,
+    category: 'CONTENT',
+    image: '/images/products/instagram-dm-scripts.webp',
+    popular: true,
+  },
+  {
+    id: 'chatgpt-mentor',
+    title: 'Custom ChatGPT AI Mentor',
+    description: 'Your 50-Year Veteran Coach Available 24/7 (Lifetime Access)',
+    value: 497,
+    category: 'TOOLS',
+    image: '/images/products/chatgpt-mentor.webp',
+    popular: true,
+  },
+  {
+    id: 'brand-kit',
+    title: "The Luxury Agent's Brand Kit",
+    description: 'Premium Design Assets Worth $1,200+',
+    value: 597,
+    category: 'TOOLS',
+    image: '/images/products/brand-kit.webp',
+    popular: false,
+  },
+  {
+    id: 'email-signature',
+    title: 'Professional Realtor Email Signature Templates',
+    description: 'Make Every Email a Marketing Opportunity',
+    value: 97,
+    category: 'TOOLS',
+    image: '/images/products/email-signature-professional.webp',
+    popular: false,
+  },
+]
+
+// Expert picks (top 3 popular items)
+const EXPERT_PICKS = BONUSES.filter((b) => b.popular).slice(0, 3).map((b) => b.id)
+
+export default function Home() {
+  const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 45, seconds: 10 })
+  const [selectedMode, setSelectedMode] = useState<'expert' | 'custom' | null>(null)
+  const [selectedBonuses, setSelectedBonuses] = useState<string[]>([])
+  const [showVideo, setShowVideo] = useState(false)
+  const [spotsLeft] = useState(13)
+  const bonusGridRef = useRef<HTMLDivElement>(null)
+
+  // Countdown timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 }
+        } else if (prev.minutes > 0) {
+          return { hours: prev.hours, minutes: prev.minutes - 1, seconds: 59 }
+        } else if (prev.hours > 0) {
+          return { hours: prev.hours - 1, minutes: 59, seconds: 59 }
+        }
+        return prev
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Handle mode selection
+  const handleModeSelect = (mode: 'expert' | 'custom') => {
+    setSelectedMode(mode)
+    if (mode === 'expert') {
+      setSelectedBonuses(EXPERT_PICKS)
+    } else {
+      setSelectedBonuses([])
+    }
+    // Scroll to bonus grid
+    setTimeout(() => {
+      bonusGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 300)
+  }
+
+  // Toggle bonus selection
+  const toggleBonus = (id: string) => {
+    if (selectedMode === 'expert' && EXPERT_PICKS.includes(id)) {
+      // Can't deselect expert picks
+      return
+    }
+    if (selectedBonuses.includes(id)) {
+      setSelectedBonuses(selectedBonuses.filter((b) => b !== id))
+    } else if (selectedBonuses.length < 5) {
+      setSelectedBonuses([...selectedBonuses, id])
+    }
+  }
+
+  // Calculate total value
+  const totalValue = selectedBonuses.reduce((sum, id) => {
+    const bonus = BONUSES.find((b) => b.id === id)
+    return sum + (bonus?.value || 0)
+  }, 0)
+
+  // Handle checkout
+  const handleCheckout = () => {
+    // Save selections and redirect to checkout
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedBonuses', JSON.stringify(selectedBonuses))
+      window.location.href = '/checkout'
+    }
+  }
+
+  return (
+    <main className="min-h-screen bg-black text-white">
+      {/* ===== STICKY HEADER ===== */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-red-900/20">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            {/* Urgency Banner */}
+            <div className="flex items-center gap-2 text-xs md:text-sm">
+              <Zap className="w-4 h-4 text-red-500 flex-shrink-0" />
+              <span className="text-red-500 font-bold">
+                🔥 BLACK FRIDAY: Price Jumps to $97 at Midnight • Only {spotsLeft} Spots Left
+              </span>
+            </div>
+
+            {/* CTA Button */}
+            <a
+              href="#choose-path"
+              className="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 md:px-6 py-2.5 rounded-lg font-bold text-sm hover:scale-105 transition-transform shadow-lg flex items-center gap-2"
+            >
+              <Gift className="w-4 h-4" />
+              <span className="hidden sm:inline">Choose Your Bonuses</span>
+              <span className="sm:hidden">Get Started</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Spacer for fixed header */}
+      <div className="h-16" />
+
+      {/* ===== HERO SECTION ===== */}
+      <section className="relative py-12 md:py-20 bg-gradient-to-b from-black via-gray-900/50 to-black">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.15) 1px, transparent 0)',
+              backgroundSize: '40px 40px',
+            }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            {/* Social Proof Badges */}
+            <div className="flex items-center justify-center gap-3 md:gap-4 mb-8 flex-wrap">
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full border border-white/10">
+                <Users className="w-4 h-4 text-emerald-400" />
+                <span className="text-white/90 text-xs md:text-sm font-semibold">847 Agents Transformed</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full border border-white/10">
+                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                <span className="text-white/90 text-xs md:text-sm font-semibold">4.9/5 Rating</span>
+              </div>
+              <div className="flex items-center gap-2 bg-red-600/20 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full border border-red-500/50">
+                <TrendingUp className="w-4 h-4 text-red-400" />
+                <span className="text-red-400 text-xs md:text-sm font-bold">92% OFF Today Only</span>
+              </div>
+            </div>
+
+            {/* Main Headline */}
+            <div className="text-center mb-12">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
+                Turn 1 Photo Into{' '}
+                <span className="text-red-500 relative inline-block">
+                  50 Personalized Videos
+                  <div className="absolute -bottom-2 left-0 right-0 h-1 bg-red-500/30 blur-sm"></div>
+                </span>
+                <br />
+                In Just{' '}
+                <span className="text-red-500 relative inline-block">
+                  7 Minutes
+                  <div className="absolute -bottom-2 left-0 right-0 h-1 bg-red-500/30 blur-sm"></div>
+                </span>
+              </h1>
+
+              {/* Subheadline */}
+              <p className="text-lg md:text-2xl text-gray-300 mb-3">
+                No camera. No editing. No tech skills.
+              </p>
+              <p className="text-xl md:text-2xl text-white font-bold">
+                Real estate agents are using AI to get{' '}
+                <span className="text-red-500">3x more luxury listings</span>
+              </p>
+
+              {/* Value Prop Bullets */}
+              <div className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 text-sm md:text-base">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <span className="text-gray-300">Works in 7 minutes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <span className="text-gray-300">No filming required</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <span className="text-gray-300">$1,865 in bonuses FREE</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Preview (Optional) */}
+            <div className="relative max-w-3xl mx-auto mb-8">
+              <div className="aspect-video bg-gray-900 rounded-xl overflow-hidden border-2 border-gray-800 relative group cursor-pointer">
+                <Image
+                  src="/videos/VSL-thumbnail.jpg"
+                  alt="Video Preview"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                  <button className="w-20 h-20 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center transition-all hover:scale-110">
+                    <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                  </button>
+                </div>
+              </div>
+              <p className="text-center text-gray-400 text-sm mt-3">
+                Watch how Sara turned 1 photo into 50 videos and closed 12 luxury listings in 30 days
+              </p>
+            </div>
+
+            {/* Primary CTA */}
+            <div className="text-center">
+              <a
+                href="#choose-path"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-red-500 text-white px-8 md:px-12 py-5 md:py-6 rounded-xl font-black text-lg md:text-2xl hover:scale-105 transition-transform shadow-2xl shadow-red-500/30 group"
+              >
+                <span>Get Started Now - Only ${spotsLeft} Left!</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <p className="text-gray-400 text-sm mt-4">
+                <Shield className="w-4 h-4 inline mr-1 text-emerald-400" />
+                30-Day Money-Back Guarantee • Instant Access
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PROBLEM AGITATION SECTION ===== */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-black to-gray-900/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-black mb-4">
+                Are You <span className="text-red-500">Losing Listings</span> To Agents With Better Marketing?
+              </h2>
+              <p className="text-xl text-gray-300">
+                While you're stuck posting the same boring photos...
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-red-900/10 border border-red-900/30 rounded-xl p-6 text-center">
+                <TrendingDown className="w-12 h-12 text-red-500 mx-auto mb-4" />
+                <h3 className="text-lg font-bold mb-2 text-red-400">Ignored on Social Media</h3>
+                <p className="text-gray-400 text-sm">
+                  Your posts get 10 likes while competitors get 1000s of views with AI videos
+                </p>
+              </div>
+              <div className="bg-red-900/10 border border-red-900/30 rounded-xl p-6 text-center">
+                <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+                <h3 className="text-lg font-bold mb-2 text-red-400">No Time To Create Content</h3>
+                <p className="text-gray-400 text-sm">
+                  Spending hours filming and editing videos instead of closing deals
+                </p>
+              </div>
+              <div className="bg-red-900/10 border border-red-900/30 rounded-xl p-6 text-center">
+                <Target className="w-12 h-12 text-red-500 mx-auto mb-4" />
+                <h3 className="text-lg font-bold mb-2 text-red-400">Missing Out On Leads</h3>
+                <p className="text-gray-400 text-sm">
+                  Luxury buyers expect professional video content - static photos don't cut it anymore
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-emerald-900/20 to-emerald-800/20 border-2 border-emerald-600/30 rounded-xl p-8 text-center">
+              <Rocket className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
+              <h3 className="text-2xl md:text-3xl font-black mb-4">
+                What If You Could Create{' '}
+                <span className="text-emerald-400">50 Professional Videos</span> In 7 Minutes?
+              </h3>
+              <p className="text-xl text-gray-300">
+                No camera. No editing. No expensive videographer. Just 1 photo → 50 personalized videos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== HOW IT WORKS ===== */}
+      <section className="py-16 md:py-24 bg-black">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-block bg-red-600/20 border border-red-500 px-4 py-2 rounded-full mb-4">
+                <span className="text-red-500 font-bold text-sm">SIMPLE 3-STEP PROCESS</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-black mb-4">
+                How It Works
+              </h2>
+              <p className="text-xl text-gray-400">
+                From photo to 50 videos in just 7 minutes
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Step 1 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-gray-800 rounded-2xl p-8 h-full">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-2xl font-black">
+                    1
+                  </div>
+                  <div className="mb-6 mt-4">
+                    <div className="w-16 h-16 bg-red-600/20 rounded-lg flex items-center justify-center">
+                      <Image
+                        src="/images/step-1-icon.svg"
+                        alt="Upload Photo"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8"
+                      />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">Upload 1 Photo</h3>
+                  <p className="text-gray-400">
+                    Just upload a single professional headshot. The AI does the rest.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-gray-800 rounded-2xl p-8 h-full">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-2xl font-black">
+                    2
+                  </div>
+                  <div className="mb-6 mt-4">
+                    <div className="w-16 h-16 bg-red-600/20 rounded-lg flex items-center justify-center">
+                      <Sparkles className="w-8 h-8 text-red-500" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">AI Creates Videos</h3>
+                  <p className="text-gray-400">
+                    Our AI generates 50 talking videos with you presenting different listings.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-gray-800 rounded-2xl p-8 h-full">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-2xl font-black">
+                    3
+                  </div>
+                  <div className="mb-6 mt-4">
+                    <div className="w-16 h-16 bg-red-600/20 rounded-lg flex items-center justify-center">
+                      <Rocket className="w-8 h-8 text-red-500" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">Post & Get Leads</h3>
+                  <p className="text-gray-400">
+                    Download and post to social media. Start getting 3x more engagement and leads.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 text-center">
+              <div className="inline-flex items-center gap-2 bg-emerald-600/20 border border-emerald-500 px-6 py-3 rounded-lg">
+                <Clock className="w-5 h-5 text-emerald-400" />
+                <span className="text-emerald-400 font-bold">Total Time: 7 Minutes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SOCIAL PROOF / TESTIMONIALS ===== */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-black to-gray-900/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-black mb-4">
+                Real Agents. <span className="text-red-500">Real Results.</span>
+              </h2>
+              <p className="text-xl text-gray-400">
+                Join 847+ agents who transformed their business with AI videos
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Testimonial 1 */}
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4 italic">
+                  "I closed 12 luxury listings in 30 days using these AI videos. My social media exploded from 200 views to 50,000+ views per video!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gray-700 rounded-full"></div>
+                  <div>
+                    <p className="font-bold">Sara Johnson</p>
+                    <p className="text-sm text-gray-400">Dubai Marina</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 2 */}
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4 italic">
+                  "This is a game-changer. I went from spending 4 hours editing videos to creating 50 videos in 7 minutes. My leads tripled!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gray-700 rounded-full"></div>
+                  <div>
+                    <p className="font-bold">Ahmed Al-Rashid</p>
+                    <p className="text-sm text-gray-400">Abu Dhabi</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 3 */}
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-300 mb-4 italic">
+                  "I was skeptical at first, but after seeing my videos get 10x more engagement than photos, I'm hooked. Worth every penny!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gray-700 rounded-full"></div>
+                  <div>
+                    <p className="font-bold">Lisa Chen</p>
+                    <p className="text-sm text-gray-400">Sharjah</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 bg-gradient-to-r from-red-900/20 to-red-800/20 border border-red-600/30 rounded-xl p-8 text-center">
+              <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+                <div>
+                  <div className="text-4xl md:text-5xl font-black text-red-500 mb-2">847+</div>
+                  <div className="text-gray-400">Agents Transformed</div>
+                </div>
+                <div>
+                  <div className="text-4xl md:text-5xl font-black text-red-500 mb-2">10,000+</div>
+                  <div className="text-gray-400">Videos Created</div>
+                </div>
+                <div>
+                  <div className="text-4xl md:text-5xl font-black text-red-500 mb-2">3x</div>
+                  <div className="text-gray-400">More Leads</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== BLACK FRIDAY OFFER SECTION ===== */}
+      <section id="choose-path" className="py-16 md:py-24 bg-black">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Limited Time Badge */}
+            <div className="inline-flex items-center gap-2 bg-red-600/20 border border-red-500 px-4 py-2 rounded-full mb-6 animate-pulse">
+              <Sparkles className="w-4 h-4 text-red-500" />
+              <span className="text-red-500 font-bold text-sm">🔥 BLACK FRIDAY EXCLUSIVE - 92% OFF</span>
+            </div>
+
+            {/* Heading */}
+            <h2 className="text-3xl md:text-5xl font-black mb-4">
+              Build Your Premium
+              <br />
+              <span className="text-red-500">Bonus Bundle</span>
+            </h2>
+
+            {/* Description */}
+            <p className="text-gray-400 text-lg md:text-xl mb-8">
+              Select 5 high-value bonuses worth <span className="text-white font-bold">$1,865+</span> —{' '}
+              included <span className="text-red-500 font-bold">FREE</span> with your purchase
+            </p>
+
+            {/* Countdown Timer */}
+            <div className="inline-flex items-center gap-4 bg-gray-900/50 border-2 border-red-900/50 rounded-xl px-6 md:px-8 py-6 mb-8">
+              <Clock className="w-6 h-6 text-red-500" />
+              <div className="flex gap-3 md:gap-4">
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-black text-white">{String(timeLeft.hours).padStart(2, '0')}</div>
+                  <div className="text-xs text-gray-500 uppercase">Hours</div>
+                </div>
+                <div className="text-2xl md:text-3xl font-black text-white self-center">:</div>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-black text-white">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                  <div className="text-xs text-gray-500 uppercase">Mins</div>
+                </div>
+                <div className="text-2xl md:text-3xl font-black text-white self-center">:</div>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-black text-white">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                  <div className="text-xs text-gray-500 uppercase">Secs</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Proof Stats */}
+            <div className="flex items-center justify-center gap-6 text-sm mb-8">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-emerald-400" />
+                <span className="text-gray-400">1,247 claimed today</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-red-500" />
+                <span className="text-red-400 font-bold">Only {spotsLeft} spots left!</span>
+              </div>
+            </div>
+
+            {/* Price Increase Warning */}
+            <div className="bg-red-900/20 border border-red-600 rounded-lg p-4 mb-12">
+              <p className="text-red-400 font-bold">
+                ⚠️ Price increases from $37 to $97 when timer hits zero
+              </p>
+            </div>
+          </div>
+
+          {/* Choose Your Path */}
+          {!selectedMode && (
+            <div className="max-w-5xl mx-auto">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-12">Choose Your Path</h3>
+
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                {/* Expert Selection Card */}
+                <button
+                  onClick={() => handleModeSelect('expert')}
+                  className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 md:p-8 text-left transition-all duration-300 hover:scale-105 border-2 border-red-500 group"
+                >
+                  {/* Recommended Badge */}
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase">
+                    Recommended
+                  </div>
+
+                  {/* Icon */}
+                  <div className="mb-6">
+                    <div className="w-12 h-12 bg-red-600/20 rounded-lg flex items-center justify-center">
+                      <Gift className="w-6 h-6 text-red-500" />
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h4 className="text-xl md:text-2xl font-bold mb-2">Expert Selection</h4>
+                  <p className="text-gray-400 text-sm mb-6">Our top 3 picks + 2 of your choice</p>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-red-500 mt-0.5">✓</span>
+                      <span>The $10M Personal Brand Masterclass</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-red-500 mt-0.5">✓</span>
+                      <span>327 Instagram Story Templates</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-red-500 mt-0.5">✓</span>
+                      <span>45 Real Estate Hooks Impossible to Skip</span>
+                    </li>
+                  </ul>
+
+                  {/* Value */}
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-800">
+                    <span className="text-xs text-gray-500 uppercase">Value</span>
+                    <span className="text-3xl font-black text-red-500">$1491</span>
+                  </div>
+
+                  {/* Continue Link */}
+                  <div className="mt-4 text-gray-400 text-sm flex items-center gap-2 group-hover:text-red-500 transition-colors">
+                    <span>Continue</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </button>
+
+                {/* Full Control Card */}
+                <button
+                  onClick={() => handleModeSelect('custom')}
+                  className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 md:p-8 text-left transition-all duration-300 hover:scale-105 border-2 border-gray-700 hover:border-gray-600 group"
+                >
+                  {/* Icon */}
+                  <div className="mb-6">
+                    <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-gray-400" />
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h4 className="text-xl md:text-2xl font-bold mb-2">Full Control</h4>
+                  <p className="text-gray-400 text-sm mb-6">Handpick all 5 bonuses yourself</p>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-gray-500 mt-0.5">✓</span>
+                      <span>Browse 10 premium options</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-gray-500 mt-0.5">✓</span>
+                      <span>Mix multiple categories</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-gray-500 mt-0.5">✓</span>
+                      <span>Tailored to your goals</span>
+                    </li>
+                  </ul>
+
+                  {/* Selection */}
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-800">
+                    <span className="text-xs text-gray-500 uppercase">Selection</span>
+                    <span className="text-3xl font-black text-white">5 Items</span>
+                  </div>
+
+                  {/* Continue Link */}
+                  <div className="mt-4 text-gray-400 text-sm flex items-center gap-2 group-hover:text-white transition-colors">
+                    <span>Continue</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Bonus Selection Grid (appears after mode selection) */}
+          {selectedMode && (
+            <div ref={bonusGridRef} className="max-w-6xl mx-auto mt-12">
+              {/* Selection Counter */}
+              <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-4 mb-8">
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-gray-400">Selected:</span>
+                    <div className="flex gap-2">
+                      {[...Array(5)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`w-10 h-10 rounded-lg border-2 flex items-center justify-center ${
+                            i < selectedBonuses.length
+                              ? 'bg-red-600 border-red-500'
+                              : 'bg-gray-800 border-gray-700'
+                          }`}
+                        >
+                          {i < selectedBonuses.length && <CheckCircle className="w-5 h-5 text-white" />}
+                        </div>
+                      ))}
+                    </div>
+                    <span className="text-white font-bold">{selectedBonuses.length}/5</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedMode(null)
+                      setSelectedBonuses([])
+                    }}
+                    className="text-gray-400 hover:text-white text-sm flex items-center gap-2"
+                  >
+                    <X className="w-4 h-4" />
+                    Change Selection Mode
+                  </button>
+                </div>
+              </div>
+
+              {/* Bonus Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {BONUSES.map((bonus) => {
+                  const isSelected = selectedBonuses.includes(bonus.id)
+                  const isExpertPick = selectedMode === 'expert' && EXPERT_PICKS.includes(bonus.id)
+                  const isDisabled = !isSelected && selectedBonuses.length >= 5
+
+                  return (
+                    <button
+                      key={bonus.id}
+                      onClick={() => toggleBonus(bonus.id)}
+                      disabled={isDisabled && !isSelected}
+                      className={`relative bg-gradient-to-br from-gray-900 to-black rounded-xl p-4 text-left transition-all duration-200 border-2 ${
+                        isSelected
+                          ? 'border-red-500 scale-105'
+                          : isDisabled
+                          ? 'border-gray-800 opacity-50 cursor-not-allowed'
+                          : 'border-gray-800 hover:border-gray-700 hover:scale-105'
+                      }`}
+                    >
+                      {/* Popular Badge */}
+                      {bonus.popular && (
+                        <div className="absolute -top-2 -right-2 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                          POPULAR
+                        </div>
+                      )}
+
+                      {/* Selected/Expert Pick Badge */}
+                      {isSelected && (
+                        <div className="absolute top-3 left-3 w-8 h-8 bg-red-600 rounded-full flex items-center justify-center z-10">
+                          {isExpertPick ? (
+                            <Award className="w-5 h-5 text-white" />
+                          ) : (
+                            <CheckCircle className="w-5 h-5 text-white" />
+                          )}
+                        </div>
+                      )}
+
+                      {/* Image */}
+                      <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden relative">
+                        <Image
+                          src={bonus.image}
+                          alt={bonus.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+
+                      {/* Content */}
+                      <div>
+                        <div className="text-xs text-gray-500 uppercase mb-1">{bonus.category}</div>
+                        <h5 className="font-bold text-sm mb-2 line-clamp-2">{bonus.title}</h5>
+                        <p className="text-gray-400 text-xs mb-3 line-clamp-2">{bonus.description}</p>
+                        <div className="text-red-500 font-black text-lg">${bonus.value}</div>
+                      </div>
+
+                      {/* Expert Pick Label */}
+                      {isExpertPick && (
+                        <div className="mt-3 bg-red-600/20 border border-red-500 rounded px-2 py-1 text-xs text-red-400 font-bold text-center">
+                          Expert Pick - Pre-selected
+                        </div>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+
+              {/* Checkout CTA */}
+              {selectedBonuses.length === 5 && (
+                <div className="sticky bottom-0 bg-gradient-to-t from-black via-black to-transparent pt-8 pb-4">
+                  <div className="bg-gradient-to-r from-gray-900 to-black border-2 border-red-500 rounded-xl p-6">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                      <div>
+                        <p className="text-gray-400 text-sm mb-1">Your Bundle Value</p>
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-3xl md:text-4xl font-black text-red-500">${totalValue}</span>
+                          <span className="text-gray-500 line-through text-lg">$1,865</span>
+                        </div>
+                        <p className="text-emerald-400 text-sm font-bold mt-1">
+                          Included FREE with your $37 purchase
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleCheckout}
+                        className="w-full md:w-auto bg-gradient-to-r from-red-600 to-red-500 text-white px-8 py-4 rounded-xl font-black text-xl hover:scale-105 transition-transform shadow-xl shadow-red-500/30 flex items-center justify-center gap-2"
+                      >
+                        <span>Claim My Bundle - $37</span>
+                        <ArrowRight className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ===== VALUE STACK SECTION ===== */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-black to-gray-900/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-black mb-4">
+                Everything You Get <span className="text-red-500">Today</span>
+              </h2>
+              <p className="text-xl text-gray-400">Total Value: $2,556 → You Pay: $37</p>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              {/* Main Product */}
+              <div className="bg-gradient-to-r from-gray-900 to-black border-2 border-red-500 rounded-xl p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">7-Minute AgentClone™ Course</h4>
+                    <p className="text-gray-400 text-sm">Complete system to create 50 AI videos from 1 photo</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-red-500">$691</div>
+                    <div className="text-xs text-gray-500">Value</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bonuses */}
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">5 Premium Bonuses (Your Choice)</h4>
+                    <p className="text-gray-400 text-sm">Select from 10 high-value digital products</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-red-500">$1,865</div>
+                    <div className="text-xs text-gray-500">Value</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total */}
+              <div className="bg-gradient-to-r from-red-900/20 to-red-800/20 border-2 border-red-600 rounded-xl p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-2xl font-black mb-1">Total Value</h4>
+                    <p className="text-gray-400 text-sm">Everything above combined</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-4xl font-black text-white line-through opacity-50">$2,556</div>
+                    <div className="text-5xl font-black text-red-500 mt-2">$37</div>
+                    <div className="text-emerald-400 text-sm font-bold">98% OFF Today</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <a
+                href="#choose-path"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-red-500 text-white px-12 py-6 rounded-xl font-black text-2xl hover:scale-105 transition-transform shadow-2xl shadow-red-500/30"
+              >
+                <span>Claim This Deal - $37</span>
+                <ArrowRight className="w-6 h-6" />
+              </a>
+              <p className="text-gray-400 text-sm mt-4">
+                <Shield className="w-4 h-4 inline mr-1 text-emerald-400" />
+                30-Day Money-Back Guarantee
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FAQ SECTION ===== */}
+      <section className="py-16 md:py-24 bg-black">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-black mb-4">
+                Frequently Asked <span className="text-red-500">Questions</span>
+              </h2>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  q: 'How long does it take to create videos?',
+                  a: 'Just 7 minutes! Upload 1 photo, our AI generates 50 talking videos instantly. No editing required.',
+                },
+                {
+                  q: 'Do I need to be on camera?',
+                  a: 'No! Just upload one professional headshot. The AI creates realistic talking videos - you never need to film yourself.',
+                },
+                {
+                  q: 'Will this work for UAE real estate agents?',
+                  a: 'Absolutely! 847+ UAE agents are already using this. Works perfectly for Dubai, Abu Dhabi, and Sharjah markets.',
+                },
+                {
+                  q: 'What if I\'m not tech-savvy?',
+                  a: 'Perfect! This is designed for non-technical agents. If you can upload a photo, you can do this. Step-by-step training included.',
+                },
+                {
+                  q: 'Is there a money-back guarantee?',
+                  a: '100% yes. 30-day money-back guarantee. If you\'re not satisfied for any reason, just email us for a full refund.',
+                },
+                {
+                  q: 'When do I get access?',
+                  a: 'Instantly! After purchase, you get immediate access to the full course + all 5 bonuses. Start creating videos in 7 minutes.',
+                },
+              ].map((faq, i) => (
+                <details
+                  key={i}
+                  className="group bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-900/70 transition-colors">
+                    <h4 className="font-bold text-lg pr-4">{faq.q}</h4>
+                    <ChevronDown className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0" />
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-400">{faq.a}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FINAL CTA SECTION ===== */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-black to-red-900/10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-red-900/30 via-black to-black border-2 border-red-600 rounded-2xl p-8 md:p-12 text-center">
+              <div className="inline-block bg-red-600/20 border border-red-500 px-4 py-2 rounded-full mb-6 animate-pulse">
+                <span className="text-red-500 font-bold text-sm">⏰ FINAL WARNING: {spotsLeft} SPOTS LEFT</span>
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-black mb-6">
+                Don't Miss This <span className="text-red-500">Black Friday Deal</span>
+              </h2>
+
+              <p className="text-xl text-gray-300 mb-8">
+                In {timeLeft.hours}h {timeLeft.minutes}m, the price jumps from $37 to $97.
+                <br />
+                Don't let your competitors get ahead while you wait.
+              </p>
+
+              <div className="mb-8">
+                <div className="inline-flex items-center gap-4 bg-black/50 border border-red-900 rounded-lg px-6 py-4">
+                  <Clock className="w-6 h-6 text-red-500" />
+                  <div className="flex gap-3">
+                    <div className="text-center">
+                      <div className="text-3xl font-black text-white">{String(timeLeft.hours).padStart(2, '0')}</div>
+                      <div className="text-xs text-gray-500">HRS</div>
+                    </div>
+                    <div className="text-2xl font-black text-white">:</div>
+                    <div className="text-center">
+                      <div className="text-3xl font-black text-white">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                      <div className="text-xs text-gray-500">MIN</div>
+                    </div>
+                    <div className="text-2xl font-black text-white">:</div>
+                    <div className="text-center">
+                      <div className="text-3xl font-black text-white">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                      <div className="text-xs text-gray-500">SEC</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="#choose-path"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-red-500 text-white px-12 py-6 rounded-xl font-black text-2xl hover:scale-105 transition-transform shadow-2xl shadow-red-500/30 mb-6"
+              >
+                <span>Claim Your Spot Now - $37</span>
+                <ArrowRight className="w-6 h-6" />
+              </a>
+
+              <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400 mt-6">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-emerald-400" />
+                  <span>30-Day Guarantee</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  <span>Instant Access</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4 text-blue-400" />
+                  <span>847+ Happy Agents</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FOOTER ===== */}
+      <footer className="py-12 bg-black border-t border-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-8 mb-8">
+              {/* Brand */}
+              <div className="md:col-span-2">
+                <h3 className="text-2xl font-black mb-3 text-red-500">AIFastScale</h3>
+                <p className="text-gray-400 text-sm mb-4">
+                  The #1 AI video platform for real estate agents. Turn 1 photo into 50 personalized videos in 7 minutes.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <Shield className="w-4 h-4" />
+                  <span>SSL Secure Checkout</span>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <h4 className="font-bold mb-3">Quick Links</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>
+                    <a href="#" className="hover:text-white transition-colors">
+                      Privacy Policy
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="hover:text-white transition-colors">
+                      Terms of Service
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="hover:text-white transition-colors">
+                      Refund Policy
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Support */}
+              <div>
+                <h4 className="font-bold mb-3">Support</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>
+                    <a href="mailto:support@aifastscale.com" className="hover:text-white transition-colors">
+                      support@aifastscale.com
+                    </a>
+                  </li>
+                  <li className="text-gray-500">Response time: &lt;24 hours</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-900 pt-8 text-center text-sm text-gray-500">
+              <p>© 2025 AIFastScale. All rights reserved.</p>
+              <p className="mt-2">
+                Results may vary. Your success depends on your effort and implementation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  )
+}
