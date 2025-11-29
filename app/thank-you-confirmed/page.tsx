@@ -3,7 +3,14 @@
 import { CheckCircle, Copy, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
+
+// Declare fbq for TypeScript
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void
+  }
+}
 
 function ThankYouContent() {
   const searchParams = useSearchParams()
@@ -11,6 +18,34 @@ function ThankYouContent() {
   const [copied, setCopied] = useState(false)
 
   const password = "im the best agent in the world"
+
+  // Fire Facebook Pixel Purchase event
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      // Determine purchase value based on what was purchased
+      let value = 37.00
+      let contentName = '7 Minute AgentClone - Main Product'
+
+      if (purchased === 'upsell') {
+        value = 9.95
+        contentName = '5 Premium Tools Upsell'
+      } else if (purchased === 'downsell') {
+        value = 4.97
+        contentName = '5 Premium Tools Downsell'
+      }
+
+      // Fire the Purchase event
+      window.fbq('track', 'Purchase', {
+        value: value,
+        currency: 'USD',
+        content_name: contentName,
+        content_type: 'product',
+        content_category: 'AI Video Course'
+      })
+
+      console.log('Facebook Pixel Purchase event fired:', { value, contentName })
+    }
+  }, [purchased])
 
   const copyPassword = () => {
     navigator.clipboard.writeText(password)
