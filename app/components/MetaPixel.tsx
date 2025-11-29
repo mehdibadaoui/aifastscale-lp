@@ -4,8 +4,8 @@ import Script from 'next/script'
 
 declare global {
   interface Window {
-    fbq: any
-    _fbq: any
+    fbq?: (...args: any[]) => void
+    _fbq?: any
   }
 }
 
