@@ -98,17 +98,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* ADVANCED Whop Checkout Performance - Instant Loading */}
-        <link rel="preconnect" href="https://whop.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://api.whop.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://cdn.whop.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://checkout.whop.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://whop.com" />
-        <link rel="dns-prefetch" href="https://api.whop.com" />
-        <link rel="dns-prefetch" href="https://cdn.whop.com" />
-        <link rel="dns-prefetch" href="https://checkout.whop.com" />
-        <link rel="dns-prefetch" href="https://js.stripe.com" />
-        <link rel="preconnect" href="https://js.stripe.com" crossOrigin="anonymous" />
+        {/* Payment gateway preconnects will be added here when new system is integrated */}
 
         {/* HERO OPTIMIZATION: Only preload poster image for instant LCP (video loads on-demand) */}
         <link rel="preload" href="/videos/VSL-thumbnail.jpg" as="image" fetchPriority="high" />
@@ -287,10 +277,10 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${poppins.variable} min-h-screen bg-black text-white antialiased font-sans`}
+        className={`${poppins.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
         {/* Lazy load tracking pixels after window load + 10s for maximum performance */}
-        <LazyTrackingPixels />
+        {/* <LazyTrackingPixels /> */}
         {children}
       </body>
     </html>

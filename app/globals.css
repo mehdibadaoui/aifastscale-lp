@@ -25,6 +25,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -webkit-overflow-scrolling: touch;
+  /* Entrepedia-style performance optimizations */
+  font-display: swap;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html,
@@ -672,4 +676,579 @@ video {
   * {
     max-width: 100%;
   }
+}
+
+/* ============================================================================
+   ENTREPEDIA-STYLE 60FPS ANIMATIONS - WILL-CHANGE OPTIMIZATION
+   ============================================================================ */
+
+/* Smooth transforms for animations */
+.smooth-transform {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Smooth opacity transitions */
+.smooth-opacity {
+  will-change: opacity;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Combined smooth transitions */
+.smooth-all {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ultra-smooth scroll container */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+/* Modern easing functions - Entrepedia style */
+.ease-out-expo {
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.ease-out-back {
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ease-out-quad {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hardware-accelerated animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale3d(0.95, 0.95, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply smooth animations */
+.animate-slide-up {
+  animation: slideInUp 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.animate-slide-down {
+  animation: slideInDown 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.5s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.animate-fade-smooth {
+  animation: fadeInSmooth 0.4s ease-out both;
+}
+
+/* Stagger delays for list animations */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* ============================================================================
+   MOBILE PERFORMANCE - GPU ACCELERATION
+   ============================================================================ */
+
+/* Force GPU acceleration on interactive elements */
+button,
+a,
+[role="button"],
+.interactive {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize images for performance */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Video performance optimization */
+video {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ============================================================================
+   MOBILE VISUAL ENHANCEMENTS - ENTREPEDIA STYLE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  /* Smoother mobile animations */
+  * {
+    -webkit-tap-highlight-color: rgba(218, 43, 53, 0.1);
+  }
+
+  /* Better mobile button hover states */
+  button:active,
+  [role="button"]:active {
+    transform: scale3d(0.97, 0.97, 1);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Optimize mobile scrolling */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
+
+  /* Prevent layout shift on mobile */
+  img,
+  video,
+  iframe {
+    content-visibility: auto;
+  }
+
+  /* Better mobile typography */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+  }
+}
+
+/* ============================================================================
+   INTERSECTION OBSERVER ANIMATIONS (JS-TRIGGERED)
+   ============================================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-scale.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ============================================================================
+   MOBILE-FIRST RESPONSIVE UTILITIES
+   ============================================================================ */
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Show only on mobile */
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* Mobile-optimized spacing */
+@media (max-width: 768px) {
+  .mobile-px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .mobile-py-8 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .mobile-gap-4 {
+    gap: 1rem !important;
+  }
+}
+
+/* ============================================================================
+   LUXURY DESIGN SYSTEM - GOLD + BLACK PREMIUM
+   ============================================================================ */
+
+/* Gold shimmer effect for premium elements */
+@keyframes goldShimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.luxury-shimmer {
+  background: linear-gradient(
+    90deg,
+    #D4AF37 0%,
+    #F4E5C2 50%,
+    #D4AF37 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 3s linear infinite;
+}
+
+/* Luxury card hover effect */
+.luxury-card {
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+              box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.luxury-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+}
+
+/* Premium button states */
+.luxury-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.luxury-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.luxury-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Elegant fade-in animations */
+@keyframes luxuryFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.luxury-fade-in {
+  animation: luxuryFadeIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* Gold border glow */
+.luxury-border-glow {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3),
+              inset 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+/* Premium glass morphism */
+.luxury-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar but keep functionality */
+.luxury-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.luxury-scroll::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+
+.luxury-scroll::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 2px;
+}
+
+/* Text gradient luxury */
+.luxury-text-gradient {
+  background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium shadow depths */
+.luxury-shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.luxury-shadow-md {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.luxury-shadow-lg {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.luxury-shadow-gold {
+  box-shadow: 0 4px 24px rgba(212, 175, 55, 0.25);
+}
+
+/* Premium spacing scale */
+.luxury-space {
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+/* Elegant transitions */
+.luxury-transition {
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ENHANCED MICRO-INTERACTIONS - ENTREPEDIA LEVEL */
+
+/* Premium button hover with scale and glow */
+.luxury-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+}
+
+.luxury-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Enhanced card hover with double glow */
+.luxury-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3),
+              0 0 60px rgba(212, 175, 55, 0.1);
+}
+
+/* Pulse animation for urgency elements */
+@keyframes luxuryPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.luxury-pulse {
+  animation: luxuryPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Stagger animation for lists */
+@keyframes luxuryStagger {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.luxury-stagger-1 { animation: luxuryStagger 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards; opacity: 0; }
+.luxury-stagger-2 { animation: luxuryStagger 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.2s forwards; opacity: 0; }
+.luxury-stagger-3 { animation: luxuryStagger 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards; opacity: 0; }
+.luxury-stagger-4 { animation: luxuryStagger 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.4s forwards; opacity: 0; }
+.luxury-stagger-5 { animation: luxuryStagger 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards; opacity: 0; }
+
+/* Floating animation for special elements */
+@keyframes luxuryFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.luxury-float {
+  animation: luxuryFloat 3s ease-in-out infinite;
+}
+
+/* Smooth link hover */
+a.luxury-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+a.luxury-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #D4AF37;
+  transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+a.luxury-link:hover::after {
+  width: 100%;
+}
+
+/* Enhanced countdown timer */
+.luxury-countdown {
+  position: relative;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.luxury-countdown:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+}
+
+/* Button ripple effect on click */
+@keyframes luxuryRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.luxury-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.luxury-button:active::after {
+  animation: luxuryRipple 0.6s ease-out;
+}
+
+/* Badge hover effect */
+.luxury-badge {
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.luxury-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Image hover zoom */
+.luxury-image-zoom {
+  overflow: hidden;
+}
+
+.luxury-image-zoom img {
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.luxury-image-zoom:hover img {
+  transform: scale(1.1);
+}
+
+/* Testimonial card premium hover */
+.luxury-testimonial {
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.luxury-testimonial:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.2);
+}
+
+/* Smooth page transitions */
+@keyframes luxuryPageEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.luxury-page-enter {
+  animation: luxuryPageEnter 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }

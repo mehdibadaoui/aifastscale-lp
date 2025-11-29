@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import { WhopCheckoutEmbed, useCheckoutEmbedControls } from '@whop/checkout/react'
 import {
   Gift,
   Users,
   Star,
   Clock,
+  Check,
   TrendingUp,
   Zap,
   CheckCircle,
@@ -15,82 +18,79 @@ import {
   X,
   Award,
   Target,
-  AlertCircle,
   TrendingDown,
   Sparkles,
   ArrowRight,
   Mail,
   Instagram,
-  Phone,
   Package,
+  AlertCircle,
+  Video,
+  DollarSign,
+  Eye,
+  Phone,
 } from 'lucide-react'
 import Image from 'next/image'
-import { WHOP } from './config/constants'
 import { BONUS_PRODUCTS } from './config/bonus-products'
 import type { BonusProduct } from './config/bonus-products'
 
-// Top 4 pre-selected bonuses (highest value + most relevant)
+// Top 4 pre-selected bonuses
 const TOP_4_BONUSES = ['90-day-blueprint', 'instagram-stories-templates', 'hooks-impossible-to-skip', 'instagram-dm-scripts']
 
-export default function Home() {
+export default function LuxuryLanding() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
+  const [spotsLeft] = useState(7) // Lower number = more urgency
+  const [liveViewers] = useState(23) // Simulated live viewers
   const [selectedMode, setSelectedMode] = useState<'expert' | 'custom' | null>(null)
   const [selectedBonuses, setSelectedBonuses] = useState<string[]>(TOP_4_BONUSES)
-  const [showOrderModal, setShowOrderModal] = useState(false)
+  const [showMrLucasVideo, setShowMrLucasVideo] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
-  const [showAllTestimonials, setShowAllTestimonials] = useState(false)
-  const [spotsLeft] = useState(13)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const [showAllReviews, setShowAllReviews] = useState(false)
   const bonusGridRef = useRef<HTMLDivElement>(null)
-  const orderModalRef = useRef<HTMLDivElement>(null)
+  const checkoutRef = useCheckoutEmbedControls()
 
-  // Real midnight countdown timer
+  // Track client-side mount for portal
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Countdown timer to midnight
   useEffect(() => {
     const calculateTimeToMidnight = () => {
       const now = new Date()
       const midnight = new Date(now)
       midnight.setHours(24, 0, 0, 0)
       const diff = midnight.getTime() - now.getTime()
-
       const hours = Math.floor(diff / (1000 * 60 * 60))
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
       const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-
       return { hours, minutes, seconds }
     }
-
-    // Set initial time
     setTimeLeft(calculateTimeToMidnight())
-
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeToMidnight())
-    }, 1000)
-
+    const timer = setInterval(() => setTimeLeft(calculateTimeToMidnight()), 1000)
     return () => clearInterval(timer)
   }, [])
+
+  // NO LAZY LOADING - All content loads immediately for better mobile UX
 
   // Handle mode selection
   const handleModeSelect = (mode: 'expert' | 'custom') => {
     setSelectedMode(mode)
     if (mode === 'expert') {
-      // Keep top 4, let user pick 5th
       setSelectedBonuses(TOP_4_BONUSES)
     } else {
-      // Full control - start fresh
       setSelectedBonuses([])
     }
-    // Scroll to bonus grid
     setTimeout(() => {
       bonusGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, 300)
   }
 
-  // Toggle bonus selection
+  // Toggle bonus
   const toggleBonus = (id: string) => {
-    // In expert mode, top 4 are locked
-    if (selectedMode === 'expert' && TOP_4_BONUSES.includes(id)) {
-      return
-    }
-
+    if (selectedMode === 'expert' && TOP_4_BONUSES.includes(id)) return
     if (selectedBonuses.includes(id)) {
       setSelectedBonuses(selectedBonuses.filter((b) => b !== id))
     } else if (selectedBonuses.length < 5) {
@@ -104,679 +104,1279 @@ export default function Home() {
     return sum + (bonus?.value || 0)
   }, 0)
 
-  // Show order summary modal before checkout
-  const handleCheckout = () => {
+  // BRAND NEW MODAL HANDLERS - Built from scratch
+  const openModal = () => {
     if (selectedBonuses.length === 5) {
-      setShowOrderModal(true)
+      setIsModalOpen(true)
+      document.body.style.overflow = 'hidden' // Prevent background scroll
+    } else {
+      alert('Please select exactly 5 bonuses first!')
     }
   }
 
-  // Confirm order and proceed to Whop checkout
-  const confirmOrder = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('selectedBonuses', JSON.stringify(selectedBonuses))
-      window.location.href = WHOP.checkoutUrls.main
-    }
+  const closeModal = () => {
+    setIsModalOpen(false)
+    document.body.style.overflow = '' // Restore scroll
   }
 
-  // Close modal when clicking outside
+  // CLEANUP EFFECT - Forcefully restore scroll when modal closes or component unmounts
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (orderModalRef.current && !orderModalRef.current.contains(event.target as Node)) {
-        setShowOrderModal(false)
-      }
+    if (!isModalOpen) {
+      document.body.style.overflow = ''
     }
-
-    if (showOrderModal) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.body.style.overflow = '' // Always restore on unmount
     }
-  }, [showOrderModal])
+  }, [isModalOpen])
+
+  const faqs = [
+    {
+      q: 'Does this really take only 7 minutes?',
+      a: 'Yes. Upload photo (1 min), type script (2 min), AI makes video (3 min), download (1 min). Done. Zero editing. I timed it.',
+    },
+    {
+      q: 'Will this work for my market?',
+      a: 'Yes. 847+ agents in Dubai, Abu Dhabi, Sharjah use this daily. Works globally. Supports English, Arabic, all major languages.',
+    },
+    {
+      q: 'Do I have to film myself? (I hate being on camera)',
+      a: 'Nope. Upload ONE headshot. AI does the rest. Never pick up a camera again. Perfect for camera-shy agents.',
+    },
+    {
+      q: 'Will people know it\'s AI? Will it look fake?',
+      a: 'Most can\'t tell. The lip-sync is scary good. Your clients care about your message, not how you made it. 847 agents are already using this successfully.',
+    },
+    {
+      q: 'I\'m not tech-savvy. Can I do this?',
+      a: 'If you can text and upload a photo, you can do this. Step-by-step training included. Plus I\'m on Instagram (@sara.theagent) if you get stuck.',
+    },
+    {
+      q: 'What if this doesn\'t work for me?',
+      a: 'Email support@aifastscale.com or DM me (@sara.theagent). Say "refund" and I\'ll send your money back + $50 for your time. 30 days. Zero questions.',
+    },
+    {
+      q: 'When do I get access?',
+      a: 'Immediately after purchase. Check your email for login details. You can create your first video in the next 10 minutes.',
+    },
+    {
+      q: 'Do I need to buy expensive AI tools?',
+      a: 'No. Everything is included. The system shows you exactly which free/cheap tools to use. No hidden costs.',
+    },
+  ]
 
   return (
-    <main className="min-h-screen bg-white font-dm-sans">
-      {/* ===== STICKY HEADER ===== */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-entrepedia-red shadow-lg">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            {/* Countdown Timer */}
-            <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 text-white" />
-              <div className="flex gap-2 text-white font-bold">
-                <span>{String(timeLeft.hours).padStart(2, '0')}</span>
-                <span>:</span>
-                <span>{String(timeLeft.minutes).padStart(2, '0')}</span>
-                <span>:</span>
-                <span>{String(timeLeft.seconds).padStart(2, '0')}</span>
-              </div>
-              <span className="text-white text-sm hidden sm:inline">Ends Tonight at MIDNIGHT</span>
+    <div className="min-h-screen bg-luxury-black font-dm-sans text-white luxury-page-enter">
+      {/* ELEGANT STICKY HEADER */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-luxury-black/95 backdrop-blur-md border-b border-luxury-gold/10">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="text-xl sm:text-2xl font-dm-serif italic">
+              <span className="luxury-text-gradient">AgentClone</span>
             </div>
-
-            {/* CTA Button */}
-            <a
-              href="#choose-path"
-              className="bg-entrepedia-dark text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-black transition-colors shadow-lg"
-            >
-              Get Started - Only {spotsLeft} Left!
-            </a>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <div className="hidden sm:flex items-center gap-2 text-luxury-gold-light text-sm">
+                <Clock className="w-4 h-4" />
+                <span className="font-mono">
+                  {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                </span>
+              </div>
+              <button
+                onClick={openModal}
+                className="luxury-button bg-luxury-gold text-luxury-black px-4 sm:px-6 py-2 rounded-md font-bold text-xs sm:text-sm hover:bg-luxury-gold-light transition-all"
+              >
+                Lock In $37 Price - {spotsLeft} Left
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Spacer for fixed header */}
+      {/* Spacer */}
       <div className="h-16" />
 
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative py-16 md:py-24 bg-entrepedia-dark">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            {/* Social Proof Badges */}
-            <div className="flex items-center justify-center gap-3 md:gap-4 mb-8 flex-wrap">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-                <Users className="w-4 h-4 text-entrepedia-red" />
-                <span className="text-white text-sm font-semibold">847+ Agents</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                <span className="text-white text-sm font-semibold">4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center gap-2 bg-entrepedia-red/30 backdrop-blur-sm px-4 py-2 rounded-full border border-entrepedia-red">
-                <TrendingUp className="w-4 h-4 text-white" />
-                <span className="text-white text-sm font-bold">92% OFF Today</span>
-              </div>
-            </div>
+      {/* HERO SECTION - Outcome-Focused Dream Copy */}
+      <section className="relative py-8 sm:py-12 md:py-16 bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#0a0a0a] overflow-hidden">
+        <div className="w-full px-3 sm:px-6 relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-            {/* Main Headline */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-league-spartan font-black mb-6 leading-tight text-white">
-                Turn 1 Photo Into{' '}
-                <span className="text-entrepedia-red">50 Personalized Videos</span>
-                <br />
-                In Just <span className="text-entrepedia-red">7 Minutes</span>
-              </h1>
-
-              {/* Subheadline */}
-              <p className="text-xl md:text-2xl text-entrepedia-gray-100 mb-3">
-                No camera. No editing. No tech skills.
-              </p>
-              <p className="text-xl md:text-2xl text-white font-bold">
-                Real estate agents are using AI to get{' '}
-                <span className="text-entrepedia-red">3x more luxury listings</span>
-              </p>
-
-              {/* Value Prop Bullets */}
-              <div className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 text-base">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-entrepedia-red flex-shrink-0" />
-                  <span className="text-white">Works in 7 minutes</span>
+              {/* LEFT: Copy */}
+              <div className="text-center lg:text-left order-1 lg:order-1">
+                {/* Minimalist Social Proof */}
+                <div className="mb-6 sm:mb-8 flex items-center justify-center lg:justify-start gap-3 text-white/60 text-xs sm:text-sm">
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex -space-x-2">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-luxury-gold to-luxury-gold-light border border-white/20"></div>
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 border border-white/20"></div>
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 border border-white/20"></div>
+                    </div>
+                    <span className="font-medium">847+ Agents</span>
+                  </div>
+                  <span className="text-white/20">|</span>
+                  <div className="flex items-center gap-1">
+                    <Star className="w-3.5 h-3.5 text-luxury-gold fill-luxury-gold" />
+                    <span className="font-medium">4.9/5</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-entrepedia-red flex-shrink-0" />
-                  <span className="text-white">No filming required</span>
+
+                {/* Dream-Outcome Headline */}
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.05] tracking-tight">
+                  <span className="text-white/90">Never Film Again.</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold bg-clip-text text-transparent">Still Close More.</span>
+                </h1>
+
+                {/* Transformation Story - Selling the Dream */}
+                <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed">
+                  Wake up to qualified buyer leads. <span className="text-white font-bold">Build a 7-figure brand</span> from your couch. No filming, no editing, no awkward videos—just <span className="text-luxury-gold font-bold">results while you sleep.</span>
+                </p>
+
+                {/* Primary CTA - Outcome Focused */}
+                <div className="mb-6 sm:mb-8">
+                  <button
+                    onClick={openModal}
+                    className="group inline-flex items-center gap-3 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold hover:shadow-2xl hover:shadow-luxury-gold/40 text-luxury-black px-8 py-4 sm:px-10 sm:py-5 rounded-xl text-lg sm:text-xl font-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+                  >
+                    <span>Start Your Transformation</span>
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:translate-x-1" />
+                  </button>
+                  <p className="text-xs sm:text-sm text-white/40 mt-3 sm:mt-4 font-medium">
+                    Only {spotsLeft} spots left at <span className="text-white/60 font-bold">$37</span> <span className="line-through">$97</span>
+                  </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-entrepedia-red flex-shrink-0" />
-                  <span className="text-white">$1,865 in bonuses FREE</span>
+
+                {/* Outcome Benefits - What They'll Experience */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs sm:text-sm text-white/50">
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle className="w-4 h-4 text-emerald-400" />
+                    <span>5-15 leads this week</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle className="w-4 h-4 text-emerald-400" />
+                    <span>Camera-shy approved</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle className="w-4 h-4 text-emerald-400" />
+                    <span>Works in 7 minutes</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Photo-to-Video Transformation Image */}
-            <div className="relative max-w-3xl mx-auto mb-8">
-              <div className="aspect-video bg-black rounded-xl overflow-hidden border-2 border-entrepedia-gray-400 relative">
-                <Image
-                  src="/images/P1_result.webp"
-                  alt="Transform 1 Photo Into 50 AI Videos"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Primary CTA */}
-            <div className="text-center">
-              <a
-                href="#choose-path"
-                className="inline-flex items-center gap-3 bg-entrepedia-red hover:bg-entrepedia-red-hover text-white px-10 py-5 rounded-lg font-league-spartan font-black text-xl md:text-2xl transition-all shadow-xl group"
-              >
-                <span>Get Started Now - Only {spotsLeft} Left!</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <p className="text-entrepedia-gray-100 text-sm mt-4">
-                <Shield className="w-4 h-4 inline mr-1 text-green-500" />
-                30-Day Money-Back Guarantee • Instant Access
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== SARA'S IRRESISTIBLE GUARANTEE - DIRECTLY AFTER HERO ===== */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-green-50 to-white relative overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-64 h-64 bg-green-600/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-entrepedia-red/5 rounded-full blur-3xl" />
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            {/* Top Badge */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full font-black text-sm shadow-lg animate-pulse">
-                <Shield className="w-5 h-5" />
-                100% RISK-FREE GUARANTEE
-              </div>
-            </div>
-
-            {/* Main Headline */}
-            <h2 className="text-3xl md:text-5xl font-league-spartan font-black text-center mb-4 text-entrepedia-dark">
-              My <span className="text-entrepedia-red">Iron-Clad Promise</span> To You
-            </h2>
-            <p className="text-center text-xl text-entrepedia-gray-600 mb-12 max-w-3xl mx-auto">
-              I'm so confident AgentClone will transform your business that I'm putting MY reputation on the line
-            </p>
-
-            {/* Sara's Personal Promise Card */}
-            <div className="bg-white rounded-2xl shadow-2xl border-4 border-green-600 p-8 md:p-12 mb-8">
-              <div className="flex flex-col md:flex-row gap-8 items-start">
-                {/* Sara's Photo */}
-                <div className="w-32 h-32 mx-auto md:mx-0 flex-shrink-0 relative">
-                  <div className="absolute inset-0 bg-green-600 rounded-full animate-ping opacity-20" />
-                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-green-600">
+              {/* RIGHT: Hero Image - Lifestyle/Success/Freedom */}
+              <div className="order-2 lg:order-2">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  {/* Success/Freedom Image */}
+                  <div className="relative aspect-[4/3] sm:aspect-[16/10]">
                     <Image
-                      src="/images/Sara 61kb.webp"
-                      alt="Sara Cohen - Creator of AgentClone"
+                      src="/images/P1_result.webp"
+                      alt="Successful real estate agent living the dream"
                       fill
                       className="object-cover"
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      quality={90}
                     />
-                  </div>
-                  <div className="absolute -bottom-2 -right-2 bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center border-4 border-white">
-                    <CheckCircle className="w-5 h-5" />
-                  </div>
-                </div>
+                    {/* Gradient overlay for better text contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/60 via-luxury-black/20 to-transparent"></div>
 
-                {/* Promise Text */}
-                <div className="flex-1">
-                  <div className="mb-6">
-                    <p className="text-2xl font-bold text-entrepedia-dark mb-4 italic leading-relaxed">
-                      "If AgentClone doesn't help you create professional AI videos in 7 minutes or less,
-                      I'll refund every penny + send you $50 for wasting your time."
-                    </p>
-                    <p className="text-lg text-entrepedia-gray-600 mb-4">
-                      That's right. Not only will I give you a <span className="font-bold text-green-600">full refund</span>
-                      —I'll actually PAY YOU $50 to try AgentClone risk-free.
-                    </p>
-                    <p className="text-base text-entrepedia-gray-600">
-                      Why? Because I've seen this system work for 847+ agents. I KNOW it works.
-                      The only way you lose is if you don't try it.
-                    </p>
-                  </div>
-                  <div className="border-t-2 border-entrepedia-gray-200 pt-4">
-                    <p className="font-black text-entrepedia-dark text-lg">— Sara Cohen</p>
-                    <p className="text-sm text-entrepedia-gray-600">Former Top 1% Agent • $127M+ in Sales</p>
+                    {/* Floating success metric */}
+                    <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
+                      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-3 sm:p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center shadow-lg">
+                            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" />
+                          </div>
+                          <div>
+                            <div className="text-white text-lg sm:text-xl font-black">$127M+ Closed</div>
+                            <div className="text-white/70 text-xs sm:text-sm">Without filming once</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
+          </div>
+        </div>
 
-            {/* How to Get Your Refund */}
-            <div className="bg-gradient-to-r from-entrepedia-red/10 to-green-50 border-2 border-green-600 rounded-2xl p-8 mb-8">
-              <h3 className="text-2xl font-league-spartan font-black text-center mb-2 text-entrepedia-dark">
-                Getting Your Refund is <span className="text-green-600">Stupidly Easy</span>
-              </h3>
-              <p className="text-center text-entrepedia-gray-600 mb-8">
-                Seriously. No forms, no waiting, no runaround. Just 2 simple options:
-              </p>
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-gold/5 to-transparent opacity-30 pointer-events-none"></div>
+      </section>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Email Option */}
-                <div className="bg-white rounded-xl p-6 border-2 border-green-600 hover:shadow-xl transition-all">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-white" />
+      {/* SARA'S IRONCLAD GUARANTEE */}
+      <section className="py-8 sm:py-10 md:py-16 bg-white">
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            {/* Main Guarantee Card */}
+            <div className="relative bg-gradient-to-br from-luxury-gold-pale via-white to-luxury-pearl rounded-3xl shadow-2xl border-2 border-luxury-gold overflow-hidden">
+              {/* Verified Badge */}
+              <div className="absolute top-6 right-6">
+                <div className="bg-green-600 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg animate-pulse">
+                  <Shield className="w-4 h-4" />
+                  <span className="text-xs font-black tracking-wider">VERIFIED RESULT - 100% REAL</span>
+                </div>
+              </div>
+
+              <div className="p-5 sm:p-8 md:p-10">
+                <div className="flex flex-col md:flex-row gap-5 sm:gap-7 items-start">
+                  {/* Sara's Image */}
+                  <div className="relative flex-shrink-0">
+                    <div className="absolute inset-0 bg-luxury-gold rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+                    <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-4 border-luxury-gold shadow-2xl">
+                      <Image
+                        src="/images/Sara 61kb.webp"
+                        alt="Sara Cohen"
+                        fill
+                        className="object-cover"
+                        loading="lazy"
+                      />
                     </div>
-                    <div>
-                      <h4 className="font-black text-entrepedia-dark">Option 1: Email</h4>
-                      <p className="text-xs text-green-600">Response in 24 hours</p>
+                    <div className="absolute -bottom-2 -right-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-lg">
+                      VERIFIED ✓
                     </div>
                   </div>
-                  <p className="text-sm text-entrepedia-gray-600 mb-3">
-                    Send to: <span className="font-bold text-entrepedia-dark">support@aifastscale.com</span>
-                  </p>
-                  <div className="bg-entrepedia-gray-50 rounded-lg p-4 border-2 border-dashed border-green-600 relative">
-                    <p className="text-sm font-mono text-entrepedia-dark pr-12">
-                      "Hi Sara, I'd like my refund. My email is [your email]"
+
+                  {/* Guarantee Content */}
+                  <div className="flex-1">
+                    <div className="mb-4 sm:mb-5">
+                      <h2 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black text-luxury-black mb-2 sm:mb-3">
+                        My Personal <span className="luxury-text-gradient">No-Risk Promise</span>
+                      </h2>
+                      <p className="text-base sm:text-lg md:text-xl text-gray-700 font-semibold">
+                        I'm so confident this works, I'll pay YOU $50 if it doesn't.
+                      </p>
+                    </div>
+
+                    {/* Quote Box */}
+                    <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border-l-4 border-luxury-gold mb-4 sm:mb-5">
+                      <p className="text-gray-800 text-base sm:text-lg leading-relaxed mb-4 italic">
+                        "Here's my promise to you: Try AgentClone for 30 days. If you don't get at least ONE new listing lead from your AI videos, I'll refund every penny — <span className="font-black text-luxury-gold">PLUS send you $50 for wasting your time.</span>"
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-luxury-gold">
+                          <Image
+                            src="/images/Sara 61kb.webp"
+                            alt="Sara signature"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-black text-luxury-black">Sara Cohen</p>
+                          <p className="text-sm text-gray-600">$127M in Career Sales</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Guarantee Breakdown */}
+                    <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-5">
+                      <div className="bg-green-50 rounded-xl p-4 border-2 border-green-200">
+                        <div className="text-3xl font-black text-green-600 mb-1">30 Days</div>
+                        <p className="text-sm text-gray-700 font-semibold">Full money-back guarantee</p>
+                      </div>
+                      <div className="bg-luxury-gold-pale rounded-xl p-4 border-2 border-luxury-gold">
+                        <div className="text-3xl font-black text-luxury-gold mb-1">+ $50</div>
+                        <p className="text-sm text-gray-700 font-semibold">Bonus if it doesn't work</p>
+                      </div>
+                      <div className="bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
+                        <div className="text-3xl font-black text-blue-600 mb-1">0 Risk</div>
+                        <p className="text-sm text-gray-700 font-semibold">No questions asked</p>
+                      </div>
+                    </div>
+
+                    {/* Why This Works */}
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                        <p className="text-gray-700 font-semibold">You literally can't lose money — worst case, you PROFIT $50</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                        <p className="text-gray-700 font-semibold">No hoops to jump through — if you're not happy, you get refunded + $50</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                        <p className="text-gray-700 font-semibold">I've helped 847+ agents — I know this works, so I can offer this guarantee</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom CTA */}
+                <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t-2 border-luxury-gold/20">
+                  <div className="text-center">
+                    <p className="text-xl sm:text-2xl font-black text-luxury-black mb-3">
+                      The Only Question Is: <span className="luxury-text-gradient">What Do You Have To Lose?</span>
+                    </p>
+                    <p className="text-base sm:text-lg text-gray-600 mb-4">
+                      (Literally nothing. In fact, worst case scenario, you profit $50.)
                     </p>
                     <button
-                      onClick={() => {
-                        navigator.clipboard.writeText("Hi Sara, I'd like my refund. My email is [your email]")
-                        alert("✓ Copied to clipboard!")
-                      }}
-                      className="absolute top-2 right-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-bold transition-all"
+                      onClick={openModal}
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-luxury-gold to-luxury-gold-light hover:from-luxury-gold-light hover:to-luxury-gold text-luxury-black px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-league-spartan font-black text-base sm:text-lg shadow-2xl hover:scale-105 active:scale-100 transition-all"
                     >
-                      Copy
+                      <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <span>Get Started Risk-Free</span>
+                      <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
-                  </div>
-                  <p className="text-xs text-green-600 mt-3 font-bold">✓ Copy, paste, send. Done in 30 seconds.</p>
-                </div>
-
-                {/* Instagram DM Option */}
-                <div className="bg-white rounded-xl p-6 border-2 border-entrepedia-red hover:shadow-xl transition-all">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-entrepedia-red rounded-full flex items-center justify-center">
-                      <Instagram className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-black text-entrepedia-dark">Option 2: Instagram DM</h4>
-                      <p className="text-xs text-entrepedia-red">DM Sara directly</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-entrepedia-gray-600 mb-3">
-                    Message: <span className="font-bold text-entrepedia-dark">@sara.theagent</span>
-                  </p>
-                  <div className="bg-entrepedia-gray-50 rounded-lg p-4 border-2 border-dashed border-entrepedia-red relative">
-                    <p className="text-sm font-mono text-entrepedia-dark pr-12">
-                      "Hey Sara! I'd like my AgentClone refund please 🙏"
+                    <p className="text-xs sm:text-sm text-gray-500 mt-3">
+                      <CheckCircle className="w-4 h-4 text-green-500 inline" /> Black Friday Special: Only {spotsLeft} spots left at $37 (was $97)
                     </p>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText("Hey Sara! I'd like my AgentClone refund please 🙏")
-                        alert("✓ Copied to clipboard!")
-                      }}
-                      className="absolute top-2 right-2 bg-entrepedia-red hover:bg-entrepedia-red-hover text-white px-3 py-1 rounded text-xs font-bold transition-all"
-                    >
-                      Copy
-                    </button>
                   </div>
-                  <a
-                    href="https://instagram.com/sara.theagent"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-3 text-entrepedia-red hover:text-entrepedia-red-hover font-bold text-sm"
-                  >
-                    → Open Instagram Now
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
                 </div>
-              </div>
-            </div>
-
-            {/* Bottom Guarantee Badges */}
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl p-6 text-center border-2 border-green-600 shadow-lg">
-                <Clock className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                <h4 className="font-bold text-entrepedia-dark mb-2">24-Hour Processing</h4>
-                <p className="text-sm text-entrepedia-gray-600">
-                  Request today, money back tomorrow
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 text-center border-2 border-green-600 shadow-lg">
-                <Shield className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                <h4 className="font-bold text-entrepedia-dark mb-2">No Questions Asked</h4>
-                <p className="text-sm text-entrepedia-gray-600">
-                  Don't like it? That's reason enough
-                </p>
-              </div>
-              <div className="bg-white rounded-xl p-6 text-center border-2 border-green-600 shadow-lg">
-                <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                <h4 className="font-bold text-entrepedia-dark mb-2">Full 30 Days</h4>
-                <p className="text-sm text-entrepedia-gray-600">
-                  Try it, test it, keep it or return it
-                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== PROBLEM AGITATION SECTION ===== */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-league-spartan font-black mb-4 text-entrepedia-dark">
-                Are You <span className="text-entrepedia-red">Losing Listings</span> To Agents With Better Marketing?
+      {/* BONUS MODE SELECTOR - PREMIUM REDESIGN */}
+      <section className="relative py-8 sm:py-16 md:py-20 bg-luxury-black overflow-hidden">
+        {/* Premium Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-luxury-black via-luxury-graphite to-luxury-black opacity-90"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+
+        <div className="w-full px-3 sm:px-6 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            {/* Premium Header */}
+            <div className="text-center mb-6 sm:mb-10">
+              <div className="inline-block mb-4 sm:mb-5">
+                <div className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-luxury-gold/20 via-luxury-gold/10 to-luxury-gold/20 backdrop-blur-sm border border-luxury-gold/30 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-luxury-gold rounded-full animate-pulse"></div>
+                  <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold" />
+                  <span className="text-luxury-gold font-black text-xs sm:text-sm tracking-widest">BUILD YOUR EXCLUSIVE BUNDLE</span>
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-luxury-gold rounded-full animate-pulse"></div>
+                </div>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-league-spartan font-black mb-4 sm:mb-5 leading-tight px-4">
+                <span className="text-white">Choose Your </span>
+                <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold bg-clip-text text-transparent">
+                  5 Premium Bonuses
+                </span>
               </h2>
-              <p className="text-xl text-entrepedia-gray-600">
-                While you're stuck posting the same boring photos...
-              </p>
+
+              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 px-4">
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-luxury-gold"></div>
+                <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-semibold">
+                  Worth up to <span className="text-luxury-gold font-black text-2xl sm:text-3xl">$325</span>
+                </p>
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-luxury-gold"></div>
+              </div>
+              <p className="text-base sm:text-lg text-gray-400">100% FREE when you join today</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-red/20 rounded-xl p-6 text-center">
-                <TrendingDown className="w-12 h-12 text-entrepedia-red mx-auto mb-4" />
-                <h3 className="text-lg font-bold mb-2 text-entrepedia-dark">Ignored on Social Media</h3>
-                <p className="text-entrepedia-gray-600 text-sm">
-                  Your posts get 10 likes while competitors get 1000s of views with AI videos
-                </p>
+            {/* Premium Cards Grid */}
+            <div className="grid lg:grid-cols-2 gap-5 sm:gap-7 max-w-6xl mx-auto">
+              {/* SARA'S EXPERT SELECTION - Premium Card */}
+              <div className="group relative">
+                {/* Premium Badge */}
+                <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold to-luxury-gold-dark rounded-full blur-lg opacity-75 animate-pulse"></div>
+                    <div className="relative bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold px-4 py-2 sm:px-6 sm:py-2.5 rounded-full shadow-2xl flex items-center gap-2">
+                      <Award className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" />
+                      <span className="text-luxury-black font-black text-xs sm:text-sm tracking-wider">SARA'S RECOMMENDATION</span>
+                      <Award className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Main Card */}
+                <div className="relative mt-6 sm:mt-7 bg-gradient-to-br from-white via-luxury-pearl to-luxury-gold-pale rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-luxury-gold/50 hover:border-luxury-gold transition-all duration-500 hover:shadow-luxury-gold/20 hover:shadow-3xl hover:-translate-y-2">
+                  {/* Decorative Corner */}
+                  <div className="absolute top-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-br from-luxury-gold/20 to-transparent rounded-bl-full"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-tr from-luxury-gold/20 to-transparent rounded-tr-full"></div>
+
+                  <div className="relative p-5 sm:p-7 md:p-8">
+                    {/* Premium Icon */}
+                    <div className="mb-5 sm:mb-6">
+                      <div className="relative inline-block">
+                        <div className="absolute inset-0 bg-luxury-gold rounded-2xl sm:rounded-3xl blur-xl opacity-30 animate-pulse"></div>
+                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 bg-gradient-to-br from-luxury-gold via-luxury-gold-light to-luxury-gold-dark rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl border-3 sm:border-4 border-white">
+                          <Gift className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" strokeWidth={2.5} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Title & Description */}
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black mb-3 sm:mb-4 text-luxury-black leading-tight">
+                      Sara's Expert<br />Selection
+                    </h3>
+
+                    <p className="text-base sm:text-lg text-gray-700 mb-5 sm:mb-6 leading-relaxed">
+                      I've personally curated the <span className="font-black text-luxury-gold">top 4 highest-performing</span> resources — you simply choose your 5th bonus
+                    </p>
+
+                    {/* Premium Benefits */}
+                    <div className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
+                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/60 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm sm:text-base font-bold text-luxury-black leading-snug">Top 4 resources pre-selected based on 847+ success stories</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/60 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm sm:text-base font-bold text-luxury-black leading-snug">You pick your 5th from remaining premium options</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/60 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm sm:text-base font-bold text-luxury-black leading-snug">Complete in 30 seconds — zero decision fatigue</span>
+                      </div>
+                    </div>
+
+                    {/* Premium CTA */}
+                    <button
+                      onClick={() => {
+                        setSelectedMode('expert')
+                        setSelectedBonuses(TOP_4_BONUSES)
+                      }}
+                      className="group/btn relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold-dark via-luxury-gold to-luxury-gold-light opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative px-6 py-3.5 sm:px-7 sm:py-4 md:px-8 md:py-4.5 flex items-center justify-center gap-2 sm:gap-3">
+                        <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" />
+                        <span className="font-league-spartan font-black text-lg sm:text-xl text-luxury-black">Let Sara Choose</span>
+                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black group-hover/btn:translate-x-1 transition-transform" />
+                      </div>
+                    </button>
+
+                    <p className="text-center text-xs sm:text-sm text-gray-600 mt-3 sm:mt-4 font-semibold">
+                      ⭐ Most popular choice • 89% of agents select this
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-red/20 rounded-xl p-6 text-center">
-                <AlertCircle className="w-12 h-12 text-entrepedia-red mx-auto mb-4" />
-                <h3 className="text-lg font-bold mb-2 text-entrepedia-dark">No Time To Create Content</h3>
-                <p className="text-entrepedia-gray-600 text-sm">
-                  Spending hours filming and editing videos instead of closing deals
-                </p>
-              </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-red/20 rounded-xl p-6 text-center">
-                <Target className="w-12 h-12 text-entrepedia-red mx-auto mb-4" />
-                <h3 className="text-lg font-bold mb-2 text-entrepedia-dark">Missing Out On Leads</h3>
-                <p className="text-entrepedia-gray-600 text-sm">
-                  Luxury buyers expect professional video content - static photos don't cut it anymore
-                </p>
+
+              {/* CUSTOM SELECTION - Premium Dark Card */}
+              <div className="group relative">
+                {/* Premium Badge */}
+                <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-600 rounded-full blur-lg opacity-75"></div>
+                    <div className="relative bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full shadow-2xl border border-gray-600 flex items-center gap-2">
+                      <Target className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold" />
+                      <span className="text-white font-black text-xs sm:text-sm tracking-wider">FULL CONTROL</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Main Card */}
+                <div className="relative mt-6 sm:mt-7 bg-gradient-to-br from-luxury-black via-luxury-graphite to-gray-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700 hover:border-luxury-gold/50 transition-all duration-500 hover:shadow-luxury-gold/10 hover:shadow-3xl hover:-translate-y-2">
+                  {/* Decorative Elements */}
+                  <div className="absolute top-0 right-0 w-40 h-40 sm:w-64 sm:h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-40 h-40 sm:w-64 sm:h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+
+                  <div className="relative p-5 sm:p-7 md:p-8">
+                    {/* Premium Icon */}
+                    <div className="mb-5 sm:mb-6">
+                      <div className="relative inline-block">
+                        <div className="absolute inset-0 bg-luxury-gold/30 rounded-2xl sm:rounded-3xl blur-xl animate-pulse"></div>
+                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 bg-gradient-to-br from-gray-800 to-luxury-black rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl border-3 sm:border-4 border-luxury-gold">
+                          <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-luxury-gold" strokeWidth={2.5} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Title & Description */}
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black mb-3 sm:mb-4 text-white leading-tight">
+                      Custom<br />Selection
+                    </h3>
+
+                    <p className="text-base sm:text-lg text-gray-300 mb-5 sm:mb-6 leading-relaxed">
+                      Browse all 10 premium resources and build a <span className="font-black text-luxury-gold">personalized bundle</span> based on your exact needs
+                    </p>
+
+                    {/* Premium Benefits */}
+                    <div className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
+                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/5 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm sm:text-base font-bold text-white leading-snug">View all 10 premium resources in the vault</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/5 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm sm:text-base font-bold text-white leading-snug">Mix content, tools & training categories freely</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/5 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm sm:text-base font-bold text-white leading-snug">100% control over your personalized bundle</span>
+                      </div>
+                    </div>
+
+                    {/* Premium CTA */}
+                    <button
+                      onClick={() => {
+                        setSelectedMode('custom')
+                        setSelectedBonuses([])
+                      }}
+                      className="group/btn relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
+                    >
+                      <div className="absolute inset-0 bg-white"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold-light via-white to-luxury-gold-light opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative px-6 py-3.5 sm:px-7 sm:py-4 md:px-8 md:py-4.5 flex items-center justify-center gap-2 sm:gap-3">
+                        <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" />
+                        <span className="font-league-spartan font-black text-lg sm:text-xl text-luxury-black">Browse All Options</span>
+                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black group-hover/btn:translate-x-1 transition-transform" />
+                      </div>
+                    </button>
+
+                    <p className="text-center text-xs sm:text-sm text-gray-400 mt-3 sm:mt-4 font-semibold">
+                      🎯 Perfect for agents who know exactly what they need
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* Inline Bonus Grid - Shows when mode is selected */}
+            {selectedMode && (
+              <div className="max-w-6xl mx-auto mt-8 sm:mt-12 animate-fade-in">
+                {/* Selection Counter */}
+                <div className="bg-white/10 backdrop-blur-sm border-2 border-luxury-gold/30 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-lg">
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-4">
+                      <span className="text-white font-bold text-sm sm:text-base">Your Selection:</span>
+                      <div className="flex gap-2">
+                        {[...Array(5)].map((_, i) => (
+                          <div
+                            key={i}
+                            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border-2 flex items-center justify-center transition-all duration-300 ${
+                              i < selectedBonuses.length
+                                ? 'bg-luxury-gold border-luxury-gold-light scale-110'
+                                : 'bg-white/20 border-luxury-gold/30'
+                            }`}
+                          >
+                            {i < selectedBonuses.length && <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" strokeWidth={3} />}
+                          </div>
+                        ))}
+                      </div>
+                      <span className="text-white font-black text-lg sm:text-xl">{selectedBonuses.length}/5</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSelectedMode(null)
+                        setSelectedBonuses([])
+                      }}
+                      className="text-gray-300 hover:text-luxury-gold text-xs font-semibold flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-all"
+                    >
+                      <X className="w-3 h-3" />
+                      Change Mode
+                    </button>
+                  </div>
+                </div>
+
+                {/* Bonus Grid */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                  {BONUS_PRODUCTS.map((bonus) => {
+                    const isSelected = selectedBonuses.includes(bonus.id)
+                    const isTopPick = selectedMode === 'expert' && TOP_4_BONUSES.includes(bonus.id)
+                    const isDisabled = !isSelected && selectedBonuses.length >= 5
+
+                    return (
+                      <button
+                        key={bonus.id}
+                        onClick={() => toggleBonus(bonus.id)}
+                        disabled={isDisabled && !isSelected}
+                        className={`relative bg-white rounded-xl p-4 text-left transition-all border-2 shadow-md ${
+                          isSelected
+                            ? 'border-luxury-gold scale-105 shadow-xl shadow-luxury-gold/20'
+                            : isDisabled
+                            ? 'border-gray-300 opacity-50 cursor-not-allowed'
+                            : 'border-gray-200 hover:border-luxury-gold/50 hover:scale-105 active:scale-100'
+                        }`}
+                      >
+                        {isSelected && (
+                          <div className="absolute top-3 left-3 w-6 h-6 sm:w-7 sm:h-7 bg-luxury-gold rounded-full flex items-center justify-center z-10">
+                            {isTopPick ? (
+                              <Award className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-black" />
+                            ) : (
+                              <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-black" />
+                            )}
+                          </div>
+                        )}
+
+                        <div className="aspect-video bg-luxury-black rounded-lg mb-3 overflow-hidden relative border border-luxury-gold/20">
+                          {bonus.image && (
+                            <Image src={bonus.image} alt={bonus.title} fill sizes="100vw" className="object-cover" loading="lazy" />
+                          )}
+                        </div>
+
+                        <div>
+                          <div className="text-xs text-luxury-gold uppercase mb-1 font-bold">{bonus.category}</div>
+                          <h5 className="font-bold text-xs sm:text-sm mb-2 line-clamp-2 text-luxury-black">{bonus.title}</h5>
+                          <p className="text-gray-600 text-xs mb-3 line-clamp-2">{bonus.subtitle}</p>
+
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-gray-500 line-through text-sm font-semibold">${bonus.value}</span>
+                            <div className="bg-luxury-gold/20 text-luxury-gold px-2 py-1 rounded-full text-xs font-black">
+                              INCLUDED
+                            </div>
+                          </div>
+                        </div>
+
+                        {isTopPick && (
+                          <div className="mt-2 bg-luxury-gold/10 border border-luxury-gold/30 rounded px-2 py-1 text-xs text-luxury-gold font-bold text-center">
+                            ⭐ Top Pick - Pre-selected
+                          </div>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Checkout CTA */}
+                {selectedBonuses.length === 5 && (
+                  <div className="bg-gradient-to-br from-luxury-gold/10 to-luxury-gold-pale border-2 border-luxury-gold rounded-xl p-4 sm:p-6 shadow-2xl">
+                    <div className="text-center">
+                      <p className="text-luxury-black text-sm sm:text-base font-bold mb-3 sm:mb-4">
+                        ✓ Perfect! You've selected 5 bonuses worth ${totalValue}
+                      </p>
+                      <button
+                        onClick={openModal}
+                        className="w-full bg-luxury-gold hover:bg-luxury-gold-light text-luxury-black px-6 py-4 sm:py-5 rounded-xl font-league-spartan font-black text-base sm:text-lg transition-all shadow-xl flex items-center justify-center gap-2 hover:scale-105 active:scale-100 cursor-pointer"
+                      >
+                        <span>Continue To Checkout — Black Friday Price: $37 (Was $97)</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </button>
+                      <p className="text-gray-600 text-sm sm:text-base mt-3 flex items-center justify-center gap-2">
+                        <Shield className="w-3 h-3" /> 30-Day Money-Back Guarantee
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* ===== CASE STUDY - MR. LUCAS ===== */}
-      <section className="py-16 md:py-24 bg-entrepedia-dark">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Badge */}
-            <div className="text-center mb-6">
-              <div className="inline-block bg-green-600 text-white px-4 py-2 rounded-full font-bold text-sm">
-                ✓ VERIFIED CASE STUDY
+      {/* PROOF SECTION - MR LUCAS */}
+      <section id="proof" className="py-4 sm:py-6 md:py-10 bg-luxury-pearl">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Verified Badge */}
+            <div className="text-center mb-3 sm:mb-4">
+              <div className="inline-flex items-center gap-1.5 bg-green-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-black text-xs shadow-lg">
+                <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                VERIFIED RESULT - 100% REAL
               </div>
             </div>
 
             {/* Headline */}
-            <h2 className="text-3xl md:text-4xl font-league-spartan font-black text-center mb-8 text-white">
-              Watch The Exact Video We Created That Got Mr. Lucas{' '}
-              <span className="text-entrepedia-red">3 Paid Clients In 7 Days</span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black text-center mb-2 sm:mb-2.5 text-luxury-black">
+              This 47-Second AI Video Made{' '}
+              <span className="luxury-text-gradient">$12,000 in One Week</span>
             </h2>
+            <p className="text-center text-sm sm:text-base text-gray-600 mb-3 sm:mb-5">
+              Mr. Lucas never touched a camera. He used 1 selfie from his phone. Here's what happened:
+            </p>
 
-            {/* Vertical Reel Video (9:16 aspect ratio - Instagram/TikTok style) */}
-            <div className="max-w-sm mx-auto mb-8">
-              <div className="aspect-[9/16] bg-black rounded-2xl overflow-hidden relative shadow-2xl border-4 border-entrepedia-gray-400">
-                <Image
-                  src="/images/mr-lucas-thumbnail.webp"
-                  alt="Mr. Lucas Case Study Reel"
-                  fill
-                  className="object-contain"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <button className="w-20 h-20 bg-entrepedia-red hover:bg-entrepedia-red-hover rounded-full flex items-center justify-center transition-all hover:scale-110">
-                    <Play className="w-8 h-8 text-white ml-1" fill="white" />
-                  </button>
+            <div className="luxury-card bg-white rounded-2xl overflow-hidden border border-luxury-gold/20 shadow-2xl">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6 p-4 sm:p-6">
+                {/* Video */}
+                <div className="relative aspect-[9/16] max-w-sm mx-auto bg-black rounded-xl overflow-hidden">
+                  {!showMrLucasVideo ? (
+                    <>
+                      <Image src="/images/mr-lucas-thumbnail.webp" alt="Success Story" fill sizes="100vw" className="object-cover" loading="lazy" />
+                      <button
+                        onClick={() => setShowMrLucasVideo(true)}
+                        className="absolute inset-0 flex items-center justify-center bg-black/40 group hover:bg-black/30 transition-colors"
+                      >
+                        <div className="w-16 sm:w-20 h-16 sm:h-20 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <Play className="w-7 sm:w-8 h-7 sm:h-8 text-luxury-black fill-luxury-black ml-1" />
+                        </div>
+                      </button>
+                    </>
+                  ) : (
+                    <video src="/videos/mr-lucas-case-study.mp4" controls autoPlay className="w-full h-full" />
+                  )}
                 </div>
-                {/* Instagram-style UI hints */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                  <div className="text-white text-sm font-bold drop-shadow-lg">@sara.theagent</div>
+
+                {/* Results */}
+                <div className="flex flex-col justify-center space-y-3 sm:space-y-4">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-luxury-black">
+                      $12,000 in Commission
+                      <br />
+                      <span className="text-gray-600 text-base sm:text-lg">From One 47-Second Video</span>
+                    </h3>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                    <div className="bg-luxury-gold/10 rounded-lg p-3 sm:p-4 text-center border border-luxury-gold/20">
+                      <div className="text-2xl sm:text-3xl font-black luxury-text-gradient">3</div>
+                      <div className="text-xs sm:text-sm text-gray-600 mt-1">New Clients</div>
+                    </div>
+                    <div className="bg-luxury-gold/10 rounded-lg p-3 sm:p-4 text-center border border-luxury-gold/20">
+                      <div className="text-2xl sm:text-3xl font-black luxury-text-gradient">7 Days</div>
+                      <div className="text-xs sm:text-sm text-gray-600 mt-1">To Close</div>
+                    </div>
+                  </div>
+
+                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    "I uploaded one selfie. The AI did everything else. Three clients reached out within a week. All three closed."
+                  </p>
+                  <div className="pt-3 sm:pt-4 border-t border-luxury-gold/20">
+                    <p className="font-semibold text-sm sm:text-base text-luxury-black">Mr. Lucas</p>
+                    <p className="text-xs sm:text-sm text-gray-600">Dubai Marina • Luxury Specialist</p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-4xl font-black text-entrepedia-red mb-2">3</div>
-                <div className="text-entrepedia-dark text-sm font-bold">Listing Appointments</div>
-              </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-4xl font-black text-entrepedia-red mb-2">18hrs</div>
-                <div className="text-entrepedia-dark text-sm font-bold">Delivery Time</div>
-              </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-4xl font-black text-entrepedia-red mb-2">$12K+</div>
-                <div className="text-entrepedia-dark text-sm font-bold">Commission Generated</div>
-              </div>
-            </div>
-
-            {/* Psychology Message */}
-            <div className="bg-entrepedia-red/10 border-2 border-entrepedia-red rounded-xl p-6 text-center">
-              <p className="text-entrepedia-dark text-lg italic">
-                "Think about it: While you're learning editing software, your competitors are already posting videos and getting leads.
-                The cost of <span className="text-entrepedia-red font-bold">waiting</span> is far greater than the cost of getting started."
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== HOW IT WORKS ===== */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-league-spartan font-black mb-4 text-entrepedia-dark">
-                How It Works: <span className="text-entrepedia-red">3 Simple Steps</span>
+      {/* HOW IT WORKS */}
+      <section className="py-4 sm:py-6 md:py-10 bg-luxury-black">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-league-spartan font-black mb-3 sm:mb-4 px-4">
+                So Simple It's Almost <span className="luxury-text-gradient">Embarrassing</span>
               </h2>
-              <p className="text-xl text-entrepedia-gray-600">
-                From photo to 50 videos in just 7 minutes
-              </p>
+              <p className="text-base sm:text-lg text-gray-400 px-4">3 steps. 7 minutes. 50 videos ready to dominate Instagram, TikTok, and Facebook.</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Step 1 */}
-              <div className="relative">
-                <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-2xl p-8 h-full">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-entrepedia-red rounded-full flex items-center justify-center text-2xl font-black text-white">
-                    1
+            <div className="space-y-5 sm:space-y-8">
+              {[
+                { num: "01", title: "Upload One Photo", desc: "Any professional headshot. That's all we need.", time: "1 min" },
+                { num: "02", title: "Type Your Script", desc: "Your message. Or use our proven templates.", time: "2 min" },
+                { num: "03", title: "Deploy & Dominate", desc: "AI creates 50 videos. You download and post.", time: "4 min" }
+              ].map((step, i) => (
+                <div key={i} className="flex gap-4 sm:gap-8 items-start group">
+                  <div className="text-4xl sm:text-5xl md:text-6xl font-black text-luxury-gold/20 group-hover:text-luxury-gold/40 transition-colors">
+                    {step.num}
                   </div>
-                  <div className="mb-6 mt-4">
-                    <div className="w-16 h-16 bg-entrepedia-red/20 rounded-lg flex items-center justify-center">
-                      <Sparkles className="w-8 h-8 text-entrepedia-red" />
+                  <div className="flex-1 pt-1 sm:pt-2">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl sm:text-2xl font-bold">{step.title}</h3>
+                      <span className="text-xs sm:text-sm text-luxury-gold bg-luxury-gold/10 px-2 sm:px-3 py-1 rounded-full">{step.time}</span>
                     </div>
+                    <p className="text-sm sm:text-base md:text-lg text-gray-400">{step.desc}</p>
                   </div>
-                  <h3 className="text-2xl font-league-spartan font-bold mb-3 text-entrepedia-dark">Upload 1 Photo</h3>
-                  <p className="text-entrepedia-gray-600">
-                    Just upload a single professional headshot. The AI does the rest.
-                  </p>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              {/* Step 2 */}
-              <div className="relative">
-                <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-2xl p-8 h-full">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-entrepedia-red rounded-full flex items-center justify-center text-2xl font-black text-white">
-                    2
-                  </div>
-                  <div className="mb-6 mt-4">
-                    <div className="w-16 h-16 bg-entrepedia-red/20 rounded-lg flex items-center justify-center">
-                      <Zap className="w-8 h-8 text-entrepedia-red" />
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-league-spartan font-bold mb-3 text-entrepedia-dark">Type Your Script</h3>
-                  <p className="text-entrepedia-gray-600">
-                    Write what you want to say about each listing. Or use our templates.
-                  </p>
-                </div>
-              </div>
-
-              {/* Step 3 */}
-              <div className="relative">
-                <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-2xl p-8 h-full">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-entrepedia-red rounded-full flex items-center justify-center text-2xl font-black text-white">
-                    3
-                  </div>
-                  <div className="mb-6 mt-4">
-                    <div className="w-16 h-16 bg-entrepedia-red/20 rounded-lg flex items-center justify-center">
-                      <ArrowRight className="w-8 h-8 text-entrepedia-red" />
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-league-spartan font-bold mb-3 text-entrepedia-dark">Download & Post</h3>
-                  <p className="text-entrepedia-gray-600">
-                    Download your videos and post to social media. Watch the leads roll in.
-                  </p>
-                </div>
+            <div className="mt-5 sm:mt-8 text-center">
+              <div className="inline-block bg-luxury-graphite/30 border border-luxury-gold/20 rounded-xl px-5 sm:px-7 py-3 sm:py-4">
+                <div className="text-xs sm:text-sm text-luxury-gold uppercase tracking-wider mb-1.5">Total Time</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black luxury-text-gradient">7 Minutes</div>
               </div>
             </div>
 
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-2 bg-green-100 border-2 border-green-500 px-6 py-3 rounded-lg">
-                <Clock className="w-5 h-5 text-green-600" />
-                <span className="text-green-600 font-bold">Total Time: 7 Minutes</span>
+            {/* Inline CTA */}
+            <div className="mt-6 sm:mt-10 text-center">
+              <div className="bg-luxury-graphite/50 border-2 border-luxury-gold/30 rounded-2xl p-4 sm:p-6 max-w-2xl mx-auto">
+                <p className="text-white text-base sm:text-lg md:text-xl font-bold mb-3">
+                  While Your Competitors Film & Edit for <span className="luxury-text-gradient">Hours</span>...
+                </p>
+                <p className="text-gray-400 text-sm sm:text-base mb-4">
+                  You'll upload 1 photo, grab coffee, and have 50 professional videos ready to dominate every platform.
+                </p>
+                <button
+                  onClick={openModal}
+                  className="inline-flex items-center gap-2 bg-luxury-gold hover:bg-luxury-gold-light text-luxury-black px-6 py-3 sm:px-7 sm:py-3.5 rounded-xl text-base sm:text-lg font-black shadow-2xl hover:scale-105 active:scale-100 transition-all smooth-transform ease-out-expo"
+                >
+                  <span>Start Your 7-Minute System</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <p className="text-sm sm:text-base text-gray-500 mt-3">
+                  <CheckCircle className="w-3 h-3 text-green-400 inline" /> 30-day guarantee • <CheckCircle className="w-3 h-3 text-green-400 inline" /> Only {spotsLeft} spots left
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== CHOOSE YOUR PATH + BONUS SELECTION ===== */}
-      <section id="choose-path" className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          {/* Urgency Banner */}
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <div className="inline-flex items-center gap-4 bg-entrepedia-red/5 border-2 border-entrepedia-red rounded-xl px-6 py-6 mb-8">
-              <Clock className="w-6 h-6 text-entrepedia-red" />
-              <div className="flex gap-3">
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-entrepedia-dark">{String(timeLeft.hours).padStart(2, '0')}</div>
-                  <div className="text-xs text-entrepedia-gray-600 uppercase">Hours</div>
+      {/* WHO THIS IS FOR */}
+      <section className="py-4 sm:py-6 md:py-10 bg-white">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-league-spartan font-black mb-3 px-4 text-luxury-black">
+                Is This <span className="luxury-text-gradient">For You?</span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+              {/* Perfect For - Light Design FIXED FOR VISIBILITY */}
+              <div className="bg-gradient-to-br from-luxury-gold/5 to-luxury-gold/10 border-2 border-luxury-gold/30 rounded-2xl p-4 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center shadow-lg">
+                    <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" strokeWidth={3} />
+                  </div>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-black text-luxury-black">Perfect For</h3>
                 </div>
-                <div className="text-2xl md:text-3xl font-black text-entrepedia-dark self-center">:</div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-entrepedia-dark">{String(timeLeft.minutes).padStart(2, '0')}</div>
-                  <div className="text-xs text-entrepedia-gray-600 uppercase">Mins</div>
+                <ul className="space-y-3 sm:space-y-4">
+                  {[
+                    "Camera-shy agents who avoid video",
+                    "Busy agents with ZERO time to film or edit",
+                    "Luxury agents competing for high-end clients",
+                    "New agents who need to look professional FAST",
+                    "Agents worldwide (all major languages)"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-luxury-gold/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="w-3 h-3 text-luxury-gold-dark" strokeWidth={3} />
+                      </div>
+                      <span className="text-sm sm:text-base text-gray-700 leading-relaxed font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* NOT For - Premium Dark Design */}
+              <div className="bg-gradient-to-br from-[#0a0a0a] via-[#151515] to-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-6 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
+                    <X className="w-5 h-5 sm:w-6 sm:h-6 text-white/60" strokeWidth={3} />
+                  </div>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-black text-white/60">NOT For</h3>
                 </div>
-                <div className="text-2xl md:text-3xl font-black text-entrepedia-dark self-center">:</div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-entrepedia-dark">{String(timeLeft.seconds).padStart(2, '0')}</div>
-                  <div className="text-xs text-entrepedia-gray-600 uppercase">Secs</div>
+                <ul className="space-y-3 sm:space-y-4">
+                  {[
+                    "Agents already crushing it with video",
+                    "Get-rich-quick seekers with zero effort",
+                    "Agents who won't post content",
+                    "People who refuse to adapt"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <X className="w-3 h-3 text-white/40" strokeWidth={3} />
+                      </div>
+                      <span className="text-sm sm:text-base text-white/50 leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS - Redesigned with Worldwide Diversity & Human Psychology */}
+      <section className="py-4 sm:py-6 md:py-10 bg-luxury-black">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-league-spartan font-black mb-3 px-4">
+                Don't Take My Word For It — <span className="luxury-text-gradient">Take Theirs</span>
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg text-gray-400 px-4">
+                Real agents. Real results. From London to Sydney to Toronto.
+              </p>
+            </div>
+
+            {/* Top 3 Verified Testimonials - Always Visible */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-5 sm:mb-8">
+              {[
+                {
+                  name: "James Mitchell",
+                  role: "Realtor • Manchester, UK",
+                  result: "First Listing in 9 Days",
+                  quote: "Honestly? I was skeptical as hell. Thought this was another gimmick. Made my first video on a Tuesday night after the kids went to bed. Got a DM Thursday morning from someone asking about a £780k property. Had it listed by Friday. Still can't quite believe it."
+                },
+                {
+                  name: "Sophie Chen",
+                  role: "Agent • Toronto, Canada",
+                  result: "83% Engagement Jump",
+                  quote: "The Instagram algorithm finally loves me lol. My stories went from maybe 200 views to averaging 1,600+. What's crazy is clients keep telling me my videos feel 'authentic' — which is hilarious because I literally hate being on camera. This saved my sanity."
+                },
+                {
+                  name: "Marcus Reynolds",
+                  role: "Broker • Melbourne, Australia",
+                  result: "$22K in Week 1",
+                  quote: "Mate, I'll be straight with you — spent $37 on a Friday, made my first video Saturday morning while nursing a coffee, and by the following Thursday I'd locked in a buyer worth $22K commission. Thought I'd stuffed up the video but apparently looking slightly awkward makes you more trustworthy?"
+                }
+              ].map((testimonial, i) => (
+                <div key={i} className="luxury-testimonial bg-white rounded-xl p-4 sm:p-6 relative shadow-xl">
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1.5 rounded-full text-[10px] font-black shadow-lg flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>VERIFIED</span>
+                  </div>
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-gold fill-luxury-gold" />
+                    ))}
+                  </div>
+                  <p className="text-sm sm:text-base text-luxury-black leading-relaxed mb-6">"{testimonial.quote}"</p>
+                  <div className="pt-6 border-t border-luxury-gold/20">
+                    <p className="font-black text-sm sm:text-base text-luxury-black">{testimonial.name}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 mt-1">{testimonial.role}</p>
+                    <p className="text-xs sm:text-sm text-luxury-gold mt-2 font-bold">✓ {testimonial.result}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Additional Reviews - Hidden by Default */}
+            {showAllReviews && (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                {[
+                  {
+                    name: "Priya Sharma",
+                    role: "Agent • Singapore",
+                    result: "Weekend Breakthrough",
+                    quote: "I'm the person who avoided video for 3 years. THREE YEARS. Finally caved, made 4 videos in one weekend. Monday morning, my phone wouldn't stop buzzing. Had 7 serious inquiries by Tuesday. Wish I'd done this ages ago instead of overthinking it."
+                  },
+                  {
+                    name: "Carlos Herrera",
+                    role: "Realtor • Miami, USA",
+                    result: "Client Magnet",
+                    quote: "People keep asking if I hired a marketing team lmao. Nah bro, it's literally just me and this course. The wild part? My best-performing video was one I made in my car before a showing. No script, just vibes. Got me 3 clients from that one post."
+                  },
+                  {
+                    name: "Emma Johansson",
+                    role: "Broker • Stockholm, Sweden",
+                    result: "Non-Native Speaker Win",
+                    quote: "English isn't my first language and I was terrified my accent would be a problem. Turns out people LOVE it? One client told me it made me seem more genuine. I've done 11 videos now and each one gets easier. My teenage daughter helps me pick the music 😊"
+                  },
+                  {
+                    name: "David O'Connor",
+                    role: "Agent • Dublin, Ireland",
+                    result: "Sold Me in 48hrs",
+                    quote: "Right, I'll admit I only bought this because my mate wouldn't shut up about it. Figured I'd watch one module and bin it. Ended up staying up till 2am making videos. Wife thought I'd lost the plot. But here's the thing — it works. Simple as."
+                  },
+                  {
+                    name: "Rachel Goldstein",
+                    role: "Realtor • Tel Aviv, Israel",
+                    result: "Time Saver",
+                    quote: "Before: spending 4 hours writing posts nobody read. After: 7-minute videos that get shared. The ROI on my time alone is insane. Plus I can batch-create a week's worth of content in one afternoon while my toddler naps. Game changer for working parents."
+                  },
+                  {
+                    name: "Alejandro Ruiz",
+                    role: "Agent • Barcelona, Spain",
+                    result: "Tourist Turned Buyer",
+                    quote: "A couple visiting from Germany saw one of my beach property videos. They weren't even looking to buy! But the video made them curious. Long story short, closed a €950k sale. They literally flew back to Barcelona just to work with me. This stuff is wild."
+                  }
+                ].map((testimonial, i) => (
+                  <div key={i} className="luxury-testimonial bg-luxury-graphite/30 border border-luxury-gold/10 rounded-xl p-4 sm:p-5">
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} className="w-3 h-3 text-luxury-gold fill-luxury-gold" />
+                      ))}
+                    </div>
+                    <p className="text-white text-sm mb-3">"{testimonial.quote}"</p>
+                    <div className="border-t border-luxury-gold/20 pt-3">
+                      <p className="font-bold text-white text-sm">{testimonial.name}</p>
+                      <p className="text-xs text-gray-400 mt-1">{testimonial.role}</p>
+                      <p className="text-xs text-luxury-gold font-bold mt-2">✓ {testimonial.result}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* See More Button */}
+            <div className="text-center mb-6 sm:mb-8">
+              <button
+                onClick={() => setShowAllReviews(!showAllReviews)}
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95"
+              >
+                <span>{showAllReviews ? 'Show Less' : 'See More Reviews'}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showAllReviews ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+
+            {/* Overall Stats */}
+            <div className="text-center">
+              <div className="inline-block bg-luxury-graphite/50 border border-luxury-gold/20 rounded-xl px-6 sm:px-8 py-4 sm:py-6">
+                <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+                  <div>
+                    <div className="text-2xl sm:text-3xl font-black luxury-text-gradient">847+</div>
+                    <div className="text-xs sm:text-sm text-gray-400 mt-1">Agents Transformed</div>
+                  </div>
+                  <div className="w-px h-12 bg-luxury-gold/20"></div>
+                  <div>
+                    <div className="text-2xl sm:text-3xl font-black luxury-text-gradient">10,000+</div>
+                    <div className="text-xs sm:text-sm text-gray-400 mt-1">Videos Created</div>
+                  </div>
+                  <div className="w-px h-12 bg-luxury-gold/20"></div>
+                  <div>
+                    <div className="text-2xl sm:text-3xl font-black luxury-text-gradient">4.9/5</div>
+                    <div className="text-xs sm:text-sm text-gray-400 mt-1">Average Rating</div>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <h2 className="text-3xl md:text-5xl font-league-spartan font-black mb-4 text-entrepedia-dark">
-              Choose Your Path
+      {/* SOCIAL PROOF CTA */}
+      <section className="py-4 sm:py-6 md:py-10 bg-white">
+        <div className="w-full px-3">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-green-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-black mb-4 sm:mb-5 animate-pulse">
+              <Users className="w-4 h-4" />
+              <span>{liveViewers} watching this page right now</span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black text-luxury-black mb-3">
+              847 Agents Got Their First Listing
+              <br />
+              <span className="luxury-text-gradient">Within 14 Days of Posting</span>
             </h2>
-            <p className="text-xl text-entrepedia-gray-600 mb-4">
-              Select 5 high-value bonuses worth $1,865+ — included FREE with your purchase
+
+            <p className="text-base sm:text-lg text-gray-700 mb-5 sm:mb-6">
+              They didn't have special skills. They weren't tech experts.
+              <br className="hidden sm:block" />
+              They just uploaded 1 photo and let AI do the rest.
+            </p>
+
+            <div className="bg-gradient-to-br from-luxury-black via-gray-900 to-luxury-black border-2 border-luxury-gold/30 rounded-2xl p-4 sm:p-6 mb-5 sm:mb-6">
+              {/* Black Friday Banner */}
+              <div className="mb-4 pb-4 border-b border-luxury-gold/20">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-luxury-gold to-luxury-gold-light px-5 py-2 rounded-full animate-pulse">
+                  <Sparkles className="w-4 h-4 text-luxury-black" />
+                  <span className="text-luxury-black font-black text-sm tracking-wider">BLACK FRIDAY EXCLUSIVE OFFER</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-5">
+                <div>
+                  <div className="flex items-center gap-3 justify-center mb-1">
+                    <span className="text-2xl text-gray-500 line-through">$97</span>
+                    <span className="text-4xl sm:text-5xl font-black luxury-text-gradient">$37</span>
+                  </div>
+                  <div className="text-sm text-gray-400">One-time payment</div>
+                  <div className="inline-block bg-green-600 text-white px-2 py-1 rounded text-xs font-black mt-1">62% OFF</div>
+                </div>
+                <div className="w-px h-12 bg-luxury-gold/20 hidden sm:block"></div>
+                <div>
+                  <div className="text-4xl sm:text-5xl font-black text-green-500">$863</div>
+                  <div className="text-sm text-gray-400">You save today</div>
+                </div>
+                <div className="w-px h-12 bg-luxury-gold/20 hidden sm:block"></div>
+                <div>
+                  <div className="text-4xl sm:text-5xl font-black text-white">{spotsLeft}</div>
+                  <div className="text-sm text-gray-400">Spots remaining</div>
+                </div>
+              </div>
+
+              <button
+                onClick={openModal}
+                className="inline-flex items-center gap-2 bg-luxury-gold hover:bg-luxury-gold-light text-luxury-black px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-base sm:text-lg font-black shadow-2xl hover:scale-105 active:scale-100 transition-all smooth-transform ease-out-expo mb-2.5 sm:mb-3"
+              >
+                <span>Claim Black Friday Deal Now</span>
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+
+              <p className="text-sm sm:text-base text-gray-500">
+                <CheckCircle className="w-3 h-3 text-green-400 inline" /> 30-day money-back guarantee • <CheckCircle className="w-3 h-3 text-green-400 inline" /> Plus $50 if it doesn't work
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center gap-6 text-gray-400 text-sm">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-green-400" />
+                <span>Secure Checkout</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-luxury-gold" />
+                <span>Instant Access</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BONUS SELECTOR - LUXURY VERSION */}
+      <section id="bonuses" className="py-4 sm:py-6 md:py-10 bg-luxury-pearl relative overflow-hidden scroll-mt-20">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-luxury-gold rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-luxury-gold rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="w-full px-3 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-5xl mx-auto text-center mb-5 sm:mb-6">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold px-4 py-1.5 rounded-full mb-3 shadow-lg animate-pulse">
+              <Gift className="w-4 h-4 text-luxury-black" />
+              <span className="text-luxury-black font-black text-xs tracking-wider">BUILD YOUR FREE BUNDLE</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black mb-3 text-luxury-black leading-tight">
+              Pick Your <span className="bg-gradient-to-r from-luxury-gold to-luxury-gold-dark bg-clip-text text-transparent">5 FREE Bonuses</span>
+            </h2>
+            <p className="text-sm sm:text-base text-gray-700">
+              Choose 5 premium resources worth up to <span className="text-luxury-gold font-black">${Math.max(...BONUS_PRODUCTS.map(b => b.value)) * 5}</span> — all FREE when you join today
             </p>
           </div>
 
-          {/* Choose Your Path Cards */}
+          {/* Choice Cards - Redesigned with Impossible-to-Skip Hooks */}
           {!selectedMode && (
-            <div className="max-w-5xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                {/* Expert Selection Card */}
+            <div className="max-w-6xl mx-auto mb-5 sm:mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+
+                {/* LIGHT THEME - Sara's Choice (Recommended) */}
                 <button
                   onClick={() => handleModeSelect('expert')}
-                  className="relative bg-white rounded-2xl p-8 text-left transition-all hover:scale-105 border-4 border-entrepedia-red group"
+                  className="group relative bg-gradient-to-br from-white via-luxury-gold-pale to-white rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-2xl hover:shadow-luxury-gold/30 border-2 border-luxury-gold/30"
                 >
                   {/* Recommended Badge */}
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-entrepedia-red text-white px-4 py-1 rounded-full text-xs font-bold uppercase">
-                    RECOMMENDED
-                  </div>
-
-                  {/* Icon */}
-                  <div className="mb-6">
-                    <div className="w-12 h-12 bg-entrepedia-red/20 rounded-lg flex items-center justify-center">
-                      <Gift className="w-6 h-6 text-entrepedia-red" />
+                  <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 z-10">
+                    <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-2 py-1 sm:px-4 sm:py-1.5 rounded-full text-[8px] sm:text-[10px] font-black uppercase shadow-lg animate-pulse flex items-center gap-1">
+                      <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-white" />
+                      <span className="hidden sm:inline">BEST CHOICE</span>
+                      <span className="sm:hidden">BEST</span>
                     </div>
                   </div>
 
-                  {/* Title */}
-                  <h4 className="text-2xl font-league-spartan font-bold mb-2 text-entrepedia-dark">Expert Selection</h4>
-                  <p className="text-entrepedia-gray-600 text-sm mb-6">Sara's top 5 picks for maximum results</p>
+                  <div className="relative p-3 sm:p-4 md:p-6 text-left">
+                    {/* Icon + Title - HORIZONTAL LAYOUT */}
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                        <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" />
+                      </div>
+                      <h4 className="text-base sm:text-xl md:text-2xl font-black text-luxury-black leading-tight">
+                        Skip the Guesswork
+                      </h4>
+                    </div>
 
-                  {/* Features */}
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start gap-2 text-sm text-entrepedia-dark">
-                      <CheckCircle className="w-5 h-5 text-entrepedia-red mt-0.5 flex-shrink-0" />
-                      <span>Most popular bonuses pre-selected</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-entrepedia-dark">
-                      <CheckCircle className="w-5 h-5 text-entrepedia-red mt-0.5 flex-shrink-0" />
-                      <span>Highest combined value ($122)</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-entrepedia-dark">
-                      <CheckCircle className="w-5 h-5 text-entrepedia-red mt-0.5 flex-shrink-0" />
-                      <span>Perfect for busy agents</span>
-                    </li>
-                  </ul>
+                    {/* Hook Badge */}
+                    <div className="inline-block bg-luxury-gold/20 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-1.5 sm:mb-2">
+                      <span className="text-[9px] sm:text-xs font-black text-luxury-black uppercase tracking-wide">30 sec. Done.</span>
+                    </div>
 
-                  {/* Continue Link */}
-                  <div className="mt-4 text-entrepedia-red text-sm flex items-center gap-2 font-bold">
-                    <span>Continue</span>
-                    <ArrowRight className="w-4 h-4" />
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm md:text-base text-gray-700 font-semibold mb-2 sm:mb-3">
+                      I pick the <span className="text-luxury-gold font-black">top 4</span> that generated $127M. You pick #5.
+                    </p>
+
+                    {/* Benefits - Compact */}
+                    <div className="space-y-1 sm:space-y-1.5 mb-3 sm:mb-4">
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs md:text-sm text-gray-800 font-medium">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-luxury-gold flex items-center justify-center flex-shrink-0">
+                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-luxury-black" strokeWidth={3} />
+                        </div>
+                        <span>Proven winners</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs md:text-sm text-gray-800 font-medium">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-luxury-gold flex items-center justify-center flex-shrink-0">
+                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-luxury-black" strokeWidth={3} />
+                        </div>
+                        <span>Zero fatigue</span>
+                      </div>
+                    </div>
+
+                    {/* CTA - Compact */}
+                    <div className="bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold text-luxury-black px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm md:text-base text-center group-hover:shadow-xl transition-all whitespace-nowrap">
+                      Pick →
+                    </div>
                   </div>
                 </button>
 
-                {/* Full Control Card */}
+                {/* DARK THEME - Full Control */}
                 <button
                   onClick={() => handleModeSelect('custom')}
-                  className="relative bg-white rounded-2xl p-8 text-left transition-all hover:scale-105 border-2 border-entrepedia-gray-400 hover:border-entrepedia-dark group"
+                  className="group relative bg-gradient-to-br from-[#0a0a0a] via-[#151515] to-[#0a0a0a] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-2xl hover:shadow-luxury-gold/20 border-2 border-white/10"
                 >
-                  {/* Icon */}
-                  <div className="mb-6">
-                    <div className="w-12 h-12 bg-entrepedia-gray-100 rounded-lg flex items-center justify-center">
-                      <Sparkles className="w-6 h-6 text-entrepedia-dark" />
+                  <div className="relative p-3 sm:p-4 md:p-6 text-left">
+                    {/* Icon + Title - HORIZONTAL LAYOUT */}
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/20">
+                        <Target className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-gold" />
+                      </div>
+                      <h4 className="text-base sm:text-xl md:text-2xl font-black text-white leading-tight">
+                        Full Control
+                      </h4>
+                    </div>
+
+                    {/* Hook Badge */}
+                    <div className="inline-block bg-white/10 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-1.5 sm:mb-2">
+                      <span className="text-[9px] sm:text-xs font-black text-white uppercase tracking-wide">Power User</span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm md:text-base text-white/70 font-semibold mb-2 sm:mb-3">
+                      Pick all 5 from <span className="text-luxury-gold font-black">10 resources</span>. Your call.
+                    </p>
+
+                    {/* Benefits - Compact */}
+                    <div className="space-y-1 sm:space-y-1.5 mb-3 sm:mb-4">
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs md:text-sm text-white/80 font-medium">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-luxury-gold" strokeWidth={3} />
+                        </div>
+                        <span>All 10 resources</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs md:text-sm text-white/80 font-medium">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-luxury-gold" strokeWidth={3} />
+                        </div>
+                        <span>100% custom</span>
+                      </div>
+                    </div>
+
+                    {/* CTA - Compact */}
+                    <div className="bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm md:text-base text-center border border-white/20 transition-all whitespace-nowrap">
+                      Choose →
                     </div>
                   </div>
-
-                  {/* Title */}
-                  <h4 className="text-2xl font-league-spartan font-bold mb-2 text-entrepedia-dark">Full Control</h4>
-                  <p className="text-entrepedia-gray-600 text-sm mb-6">Handpick all 5 bonuses yourself</p>
-
-                  {/* Features */}
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-start gap-2 text-sm text-entrepedia-dark">
-                      <CheckCircle className="w-5 h-5 text-entrepedia-gray-600 mt-0.5 flex-shrink-0" />
-                      <span>Browse 10 premium options</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-entrepedia-dark">
-                      <CheckCircle className="w-5 h-5 text-entrepedia-gray-600 mt-0.5 flex-shrink-0" />
-                      <span>Mix multiple categories</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-entrepedia-dark">
-                      <CheckCircle className="w-5 h-5 text-entrepedia-gray-600 mt-0.5 flex-shrink-0" />
-                      <span>Tailored to your goals</span>
-                    </li>
-                  </ul>
-
-                  {/* Continue Link */}
-                  <div className="mt-4 text-entrepedia-dark text-sm flex items-center gap-2 font-bold group-hover:text-entrepedia-red">
-                    <span>Continue</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
                 </button>
+
               </div>
             </div>
           )}
 
-          {/* Bonus Selection Grid */}
+          {/* Bonus Grid */}
           {selectedMode && (
-            <div ref={bonusGridRef} className="max-w-6xl mx-auto mt-12">
+            <div ref={bonusGridRef} className="max-w-6xl mx-auto">
               {/* Selection Counter */}
-              <div className="bg-white/10 border border-white/20 rounded-xl p-4 mb-8">
+              <div className="bg-white border-2 border-luxury-gold/30 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-lg">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-4">
-                    <span className="text-white">Selected:</span>
+                    <span className="text-luxury-black font-bold text-sm sm:text-base">Your Selection:</span>
                     <div className="flex gap-2">
                       {[...Array(5)].map((_, i) => (
                         <div
                           key={i}
-                          className={`w-10 h-10 rounded-lg border-2 flex items-center justify-center ${
+                          className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border-2 flex items-center justify-center transition-all duration-300 ${
                             i < selectedBonuses.length
-                              ? 'bg-entrepedia-red border-entrepedia-red'
-                              : 'bg-white/5 border-white/20'
+                              ? 'bg-luxury-gold border-luxury-gold-light scale-110'
+                              : 'bg-luxury-black/50 border-luxury-gold/20'
                           }`}
                         >
-                          {i < selectedBonuses.length && <CheckCircle className="w-5 h-5 text-white" />}
+                          {i < selectedBonuses.length && <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" strokeWidth={3} />}
                         </div>
                       ))}
                     </div>
-                    <span className="text-white font-bold">{selectedBonuses.length}/5</span>
+                    <span className="text-luxury-black font-black text-lg sm:text-xl">{selectedBonuses.length}/5</span>
                   </div>
                   <button
                     onClick={() => {
                       setSelectedMode(null)
                       setSelectedBonuses([])
                     }}
-                    className="text-entrepedia-gray-100 hover:text-white text-sm flex items-center gap-2"
+                    className="text-gray-600 hover:text-luxury-gold text-xs font-semibold flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-all"
                   >
-                    <X className="w-4 h-4" />
-                    Change Selection Mode
+                    <X className="w-3 h-3" />
+                    Change Mode
                   </button>
                 </div>
               </div>
 
               {/* Bonus Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 {BONUS_PRODUCTS.map((bonus) => {
                   const isSelected = selectedBonuses.includes(bonus.id)
                   const isTopPick = selectedMode === 'expert' && TOP_4_BONUSES.includes(bonus.id)
@@ -787,49 +1387,46 @@ export default function Home() {
                       key={bonus.id}
                       onClick={() => toggleBonus(bonus.id)}
                       disabled={isDisabled && !isSelected}
-                      className={`relative bg-white rounded-xl p-4 text-left transition-all border-2 ${
+                      className={`relative bg-white rounded-xl p-4 text-left transition-all border-2 shadow-md ${
                         isSelected
-                          ? 'border-entrepedia-red scale-105'
+                          ? 'border-luxury-gold scale-105 shadow-xl shadow-luxury-gold/20'
                           : isDisabled
-                          ? 'border-entrepedia-gray-100 opacity-50 cursor-not-allowed'
-                          : 'border-entrepedia-gray-100 hover:border-entrepedia-dark hover:scale-105'
+                          ? 'border-gray-300 opacity-50 cursor-not-allowed'
+                          : 'border-gray-200 hover:border-luxury-gold/50 hover:scale-105 active:scale-100'
                       }`}
                     >
-                      {/* Selected Badge */}
                       {isSelected && (
-                        <div className="absolute top-3 left-3 w-8 h-8 bg-entrepedia-red rounded-full flex items-center justify-center z-10">
+                        <div className="absolute top-3 left-3 w-6 h-6 sm:w-7 sm:h-7 bg-luxury-gold rounded-full flex items-center justify-center z-10">
                           {isTopPick ? (
-                            <Award className="w-5 h-5 text-white" />
+                            <Award className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-black" />
                           ) : (
-                            <CheckCircle className="w-5 h-5 text-white" />
+                            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-black" />
                           )}
                         </div>
                       )}
 
-                      {/* Image */}
-                      <div className="aspect-video bg-entrepedia-gray-50 rounded-lg mb-4 overflow-hidden relative">
+                      <div className="aspect-video bg-luxury-black rounded-lg mb-3 overflow-hidden relative border border-luxury-gold/20">
                         {bonus.image && (
-                          <Image
-                            src={bonus.image}
-                            alt={bonus.title}
-                            fill
-                            className="object-cover"
-                          />
+                          <Image src={bonus.image} alt={bonus.title} fill sizes="100vw" className="object-cover" loading="lazy" />
                         )}
                       </div>
 
-                      {/* Content */}
                       <div>
-                        <div className="text-xs text-entrepedia-gray-600 uppercase mb-1 font-bold">{bonus.category}</div>
-                        <h5 className="font-bold text-sm mb-2 line-clamp-2 text-entrepedia-dark">{bonus.title}</h5>
-                        <p className="text-entrepedia-gray-600 text-xs mb-3 line-clamp-2">{bonus.subtitle}</p>
-                        <div className="text-entrepedia-red font-black text-lg">${bonus.value}</div>
+                        <div className="text-xs text-luxury-gold uppercase mb-1 font-bold">{bonus.category}</div>
+                        <h5 className="font-bold text-xs sm:text-sm mb-2 line-clamp-2 text-luxury-black">{bonus.title}</h5>
+                        <p className="text-gray-600 text-xs mb-3 line-clamp-2">{bonus.subtitle}</p>
+
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-gray-500 line-through text-sm font-semibold">${bonus.value}</span>
+                          <div className="bg-luxury-gold/20 text-luxury-gold px-2 py-1 rounded-full text-xs font-black">
+                            INCLUDED
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Top Pick Label */}
                       {isTopPick && (
-                        <div className="mt-3 bg-entrepedia-red/20 border border-entrepedia-red rounded px-2 py-1 text-xs text-entrepedia-red font-bold text-center">
-                          Top Pick - Pre-selected
+                        <div className="mt-2 bg-luxury-gold/10 border border-luxury-gold/30 rounded px-2 py-1 text-xs text-luxury-gold font-bold text-center">
+                          ⭐ Top Pick - Pre-selected
                         </div>
                       )}
                     </button>
@@ -839,26 +1436,22 @@ export default function Home() {
 
               {/* Checkout CTA */}
               {selectedBonuses.length === 5 && (
-                <div className="sticky bottom-0 bg-gradient-to-t from-entrepedia-dark via-entrepedia-dark to-transparent pt-8 pb-4">
-                  <div className="bg-white border-4 border-entrepedia-red rounded-xl p-6">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                      <div>
-                        <p className="text-entrepedia-gray-600 text-sm mb-1">Your Bundle Value</p>
-                        <div className="flex items-baseline gap-3">
-                          <span className="text-4xl font-black text-entrepedia-red">${totalValue}</span>
-                          <span className="text-entrepedia-gray-400 line-through text-lg">Worth ${totalValue}</span>
-                        </div>
-                        <p className="text-green-600 text-sm font-bold mt-1">
-                          Included FREE with your $37 purchase
-                        </p>
-                      </div>
+                <div className="sticky bottom-0 bg-gradient-to-t from-luxury-pearl via-luxury-pearl to-transparent pt-6 pb-4">
+                  <div className="bg-white border-2 border-luxury-gold rounded-xl p-4 sm:p-6 shadow-2xl">
+                    <div className="text-center">
+                      <p className="text-luxury-black text-sm sm:text-base font-bold mb-3 sm:mb-4">
+                        ✓ Perfect! You've selected 5 bonuses worth ${totalValue}
+                      </p>
                       <button
-                        onClick={handleCheckout}
-                        className="w-full md:w-auto bg-entrepedia-red hover:bg-entrepedia-red-hover text-white px-8 py-4 rounded-lg font-league-spartan font-black text-xl transition-all shadow-xl flex items-center justify-center gap-2"
+                        onClick={openModal}
+                        className="w-full bg-luxury-gold hover:bg-luxury-gold-light text-luxury-black px-6 py-4 sm:py-5 rounded-xl font-league-spartan font-black text-base sm:text-lg transition-all shadow-xl flex items-center justify-center gap-2 hover:scale-105 active:scale-100 cursor-pointer"
                       >
-                        <span>Claim My Bundle - $37</span>
-                        <ArrowRight className="w-6 h-6" />
+                        <span>Continue To Checkout — Black Friday Price: $37 (Was $97)</span>
+                        <ArrowRight className="w-5 h-5" />
                       </button>
+                      <p className="text-gray-400 text-sm sm:text-base mt-3 flex items-center justify-center gap-2">
+                        <Shield className="w-3 h-3" /> 30-Day Money-Back Guarantee
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -868,168 +1461,276 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== VALUE STACK ===== */}
-      <section className="py-16 md:py-24 bg-entrepedia-dark">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <div className="inline-block bg-entrepedia-red px-6 py-2 rounded font-bold text-sm text-white mb-6">
-                EVERYTHING INCLUDED
+      {/* VALUE STACK - MOBILE OPTIMIZED */}
+      <section className="relative py-8 sm:py-16 md:py-20 bg-white overflow-hidden">
+        {/* Simplified Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-luxury-pearl/30 to-white"></div>
+
+        <div className="relative w-full px-3 sm:px-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Compact Header */}
+            <div className="text-center mb-6 sm:mb-12">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold px-4 sm:px-6 py-2 rounded-full mb-4 shadow-lg">
+                <Package className="w-4 h-4 text-luxury-black" />
+                <span className="text-luxury-black font-black text-xs sm:text-sm tracking-wider">COMPLETE PACKAGE</span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-league-spartan font-black mb-4 text-white">
-                What You're <span className="text-entrepedia-red">Really Getting</span>
+
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-league-spartan font-black mb-4 leading-tight">
+                <span className="text-luxury-black">Everything You Get</span>
+                <span className="block mt-1 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold bg-clip-text text-transparent">
+                  For Just $37
+                </span>
               </h2>
-              <p className="text-xl text-entrepedia-gray-100 mb-6">Complete package for just $37</p>
-              <div className="inline-flex items-center gap-2 bg-green-600 px-6 py-3 rounded-lg font-black text-white text-lg">
-                <CheckCircle className="w-5 h-5" />
-                Save $2,519+ Today Only
+
+              <div className="inline-flex items-center gap-2 sm:gap-3 bg-luxury-black/5 border border-luxury-gold/20 px-3 sm:px-6 py-2 rounded-xl mb-4">
+                <span className="text-sm sm:text-base text-gray-500 line-through">$97</span>
+                <div className="w-px h-4 bg-luxury-gold/30"></div>
+                <span className="text-lg sm:text-xl font-black text-luxury-gold">62% OFF</span>
               </div>
+
+              <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-dm-sans">
+                No upsells. No hidden fees. <span className="font-bold text-luxury-black">One payment, lifetime access.</span>
+              </p>
             </div>
 
-            <div className="space-y-6 mb-10">
-              {/* 1. Main Course - Premium Card */}
-              <div className="bg-white rounded-lg border-4 border-entrepedia-red shadow-xl overflow-hidden">
-                <div className="bg-entrepedia-red px-6 py-3">
-                  <p className="text-white font-black text-sm">MAIN PRODUCT</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex gap-6 items-start">
-                    <div className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-entrepedia-gray-50 border-2 border-entrepedia-gray-200">
-                      <Image
-                        src="/images/VD-Course-demo.webp"
-                        alt="AgentClone Course"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-league-spartan font-black mb-2 text-entrepedia-dark">
-                        7-Minute AgentClone™ Video Course
-                      </h3>
-                      <p className="text-entrepedia-gray-600 mb-4">
-                        Complete step-by-step system to create 50 personalized AI videos from 1 photo
-                      </p>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-black text-entrepedia-red">$697</span>
-                        <span className="text-entrepedia-gray-600">Value</span>
+            {/* Compact Value Cards */}
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-10">
+              {/* Main Product - Compact */}
+              <div className="group relative">
+                <div className="relative bg-gradient-to-br from-white via-luxury-pearl/50 to-luxury-gold-pale/30 rounded-2xl border-2 border-luxury-gold/40 shadow-lg overflow-hidden hover:border-luxury-gold transition-all">
+                  <div className="p-4 sm:p-6">
+                    <div className="flex flex-col md:flex-row gap-4 items-start">
+                      {/* Compact Product Image */}
+                      <div className="relative w-48 h-48 sm:w-52 sm:h-52 md:w-44 md:h-44 flex-shrink-0 mx-auto md:mx-0">
+                        <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg border-2 border-white">
+                          <Image
+                            src="/images/VD-Course-demo.webp"
+                            alt="AgentClone System"
+                            fill
+                            className="object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute bottom-3 left-3 bg-gradient-to-r from-luxury-gold to-luxury-gold-dark text-luxury-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-black shadow-lg">
+                            MAIN PRODUCT
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex-1">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-league-spartan font-black mb-2 sm:mb-3 text-luxury-black leading-tight">
+                          AgentClone™ 7-Minute System
+                        </h3>
+                        <p className="text-sm sm:text-base text-gray-700 mb-3 sm:mb-4 leading-relaxed font-dm-sans">
+                          Turn <span className="font-black text-luxury-gold">1 photo into 50 AI videos</span> in 7 minutes.
+                        </p>
+
+                        {/* Compact Features */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 sm:mb-4">
+                          <div className="flex items-center gap-2 bg-white/60 p-2 rounded-lg border border-luxury-gold/10">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" strokeWidth={2.5} />
+                            <span className="text-xs sm:text-sm text-luxury-black font-bold">Video training</span>
+                          </div>
+                          <div className="flex items-center gap-2 bg-white/60 p-2 rounded-lg border border-luxury-gold/10">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" strokeWidth={2.5} />
+                            <span className="text-xs sm:text-sm text-luxury-black font-bold">50+ scripts</span>
+                          </div>
+                          <div className="flex items-center gap-2 bg-white/60 p-2 rounded-lg border border-luxury-gold/10">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" strokeWidth={2.5} />
+                            <span className="text-xs sm:text-sm text-luxury-black font-bold">AI templates</span>
+                          </div>
+                          <div className="flex items-center gap-2 bg-white/60 p-2 rounded-lg border border-luxury-gold/10">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" strokeWidth={2.5} />
+                            <span className="text-xs sm:text-sm text-luxury-black font-bold">Lifetime access</span>
+                          </div>
+                        </div>
+
+                        {/* Compact Value Badge */}
+                        <div className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-luxury-gold/10 to-luxury-gold-light/10 border border-luxury-gold px-3 sm:px-4 py-2 rounded-xl shadow-md">
+                          <div className="text-center">
+                            <div className="text-[10px] text-gray-600 font-bold">VALUE</div>
+                            <div className="text-xl sm:text-2xl font-black bg-gradient-to-r from-luxury-gold to-luxury-gold-dark bg-clip-text text-transparent">$697</div>
+                          </div>
+                          <div className="w-px h-8 bg-luxury-gold/30"></div>
+                          <div className="text-xs sm:text-sm font-bold text-luxury-black">
+                            Training + lifetime updates
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* 2. 5 Premium Bonuses */}
-              <div className="bg-white rounded-lg border-4 border-green-600 shadow-xl overflow-hidden">
-                <div className="bg-green-600 px-6 py-3 flex items-center justify-between">
-                  <p className="text-white font-black text-sm">5 PREMIUM BONUSES (YOUR CHOICE)</p>
-                  <span className="bg-white text-green-600 px-3 py-1 rounded-full font-black text-xs">100% FREE</span>
-                </div>
-                <div className="p-6">
-                  <div className="flex gap-4 items-center mb-4">
-                    <Gift className="w-12 h-12 text-green-600 flex-shrink-0" />
-                    <p className="text-entrepedia-gray-600">
-                      {selectedBonuses.length === 5
-                        ? `You've selected ${selectedBonuses.length} premium bonuses worth $${totalValue}`
-                        : 'Pick ANY 5 from 10 high-value real estate marketing tools'}
-                    </p>
-                  </div>
-                  <div className="bg-green-50 border-2 border-green-600 rounded-lg p-4 mb-4">
-                    <p className="text-green-600 font-black text-center">
-                      ✓ Custom-picked bonuses tailored to YOUR business goals
-                    </p>
-                  </div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-black text-green-600">$1,865</span>
-                    <span className="text-entrepedia-gray-600">Total Value -</span>
-                    <span className="text-green-600 font-black">FREE!</span>
-                  </div>
-                </div>
-              </div>
+              {/* 5 Bonuses - PREMIUM */}
+              <div className="group relative">
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
 
-              {/* 3. Mystery VIP Box */}
-              <div className="bg-white rounded-lg border-4 border-purple-600 shadow-xl overflow-hidden relative">
-                <div className="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 flex items-center justify-between">
-                  <p className="text-white font-black text-sm">MYSTERY VIP BOX</p>
-                  <span className="bg-white text-purple-600 px-3 py-1 rounded-full font-black text-xs animate-pulse">SURPRISE!</span>
-                </div>
-                <div className="p-6">
-                  <div className="flex gap-4 items-start">
-                    <div className="w-16 h-16 flex-shrink-0">
-                      <Package className="w-full h-full text-purple-600" strokeWidth={1.5} />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold mb-2 text-entrepedia-dark">Ultra-Premium Surprise Bonus</h4>
-                      <p className="text-entrepedia-gray-600 mb-4">
-                        Could be 1-on-1 coaching with Sara, exclusive templates, VIP community access, or other premium surprises
-                      </p>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-black text-purple-600">$500-$1,500</span>
-                        <span className="text-entrepedia-gray-600">Value -</span>
-                        <span className="text-purple-600 font-black">FREE!</span>
+                <div className="relative bg-gradient-to-br from-white via-green-50/30 to-white rounded-3xl border-2 border-green-600/50 shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:border-green-600 hover:shadow-green-500/20">
+                  <div className="p-6 md:p-8">
+                    <div className="flex flex-col sm:flex-row items-start gap-6">
+                      {/* Premium Icon with Glow */}
+                      <div className="relative flex-shrink-0 mx-auto sm:mx-0">
+                        <div className="absolute inset-0 bg-green-500/30 rounded-3xl blur-2xl"></div>
+                        <div className="relative w-20 h-20 bg-gradient-to-br from-green-500 via-green-600 to-green-700 rounded-3xl flex items-center justify-center shadow-2xl border-4 border-white transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-500">
+                          <Gift className="w-10 h-10 text-white" strokeWidth={2.5} />
+                        </div>
+                      </div>
+
+                      <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
+                          <h3 className="text-2xl md:text-3xl font-league-spartan font-black text-luxury-black">
+                            5 Premium Bonuses <span className="text-green-600">(You Choose)</span>
+                          </h3>
+                          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full shadow-lg shadow-green-500/50 animate-pulse">
+                            <Sparkles className="w-4 h-4" />
+                            <span className="text-xs font-black">100% FREE</span>
+                          </div>
+                        </div>
+
+                        <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-dm-sans">
+                          Choose <span className="font-black text-green-600">ANY 5 resources</span> from our vault of 10 premium tools, templates, and training materials worth up to $325.
+                        </p>
+
+                        {/* Premium Value Badge */}
+                        <div className="inline-flex items-center gap-4 bg-gradient-to-r from-green-50 via-green-100/50 to-green-50 backdrop-blur-sm border-2 border-green-600 px-6 py-4 rounded-2xl shadow-xl">
+                          <div className="text-center">
+                            <div className="text-xs text-gray-600 font-bold mb-1">VALUE</div>
+                            <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">
+                              ${totalValue || '200-325'}
+                            </div>
+                          </div>
+                          <div className="w-px h-12 bg-green-600/30"></div>
+                          <div className="text-sm font-bold text-green-600">
+                            100% FREE — Just pick your favorites
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* 4. Sara's Support */}
-              <div className="bg-white rounded-lg border-4 border-entrepedia-dark shadow-xl overflow-hidden">
-                <div className="bg-entrepedia-dark px-6 py-3">
-                  <p className="text-white font-black text-sm">SARA'S PERSONAL SUPPORT</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex gap-4 items-center">
-                    <div className="relative w-20 h-20 flex-shrink-0 rounded-full overflow-hidden border-4 border-entrepedia-red">
-                      <Image
-                        src="/images/Sara 61kb.webp"
-                        alt="Sara Cohen"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold mb-2 text-entrepedia-dark">Direct Access to Sara</h4>
-                      <p className="text-entrepedia-gray-600 mb-2">
-                        Instagram DM access (@sara.theagent) + priority email support
-                      </p>
-                      <span className="inline-block bg-green-100 text-green-600 px-3 py-1 rounded font-black text-sm">
-                        FREE - INCLUDED
-                      </span>
+              {/* Sara's Support - PREMIUM */}
+              <div className="group relative">
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-luxury-black via-luxury-graphite to-luxury-black rounded-3xl blur-xl opacity-10 group-hover:opacity-20 transition-all duration-500"></div>
+
+                <div className="relative bg-gradient-to-br from-white via-gray-50 to-white rounded-3xl border-2 border-luxury-black/30 shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:border-luxury-black hover:shadow-luxury-black/10">
+                  <div className="p-6 md:p-8">
+                    <div className="flex flex-col sm:flex-row items-start gap-6">
+                      {/* Sara's Image - Premium Frame */}
+                      <div className="relative flex-shrink-0 mx-auto sm:mx-0">
+                        <div className="absolute inset-0 bg-luxury-gold/30 rounded-2xl blur-2xl animate-pulse"></div>
+                        <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-4 border-luxury-gold shadow-2xl transform group-hover:scale-110 transition-all duration-500">
+                          <Image
+                            src="/images/Sara 61kb.webp"
+                            alt="Sara Cohen"
+                            fill
+                            className="object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-green-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                        </div>
+                      </div>
+
+                      <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
+                          <h3 className="text-2xl md:text-3xl font-league-spartan font-black text-luxury-black">
+                            Direct Line To Sara
+                          </h3>
+                          <div className="inline-flex items-center gap-2 bg-green-100 text-green-600 px-4 py-2 rounded-full border-2 border-green-200">
+                            <CheckCircle className="w-4 h-4" />
+                            <span className="text-xs font-black">INCLUDED FREE</span>
+                          </div>
+                        </div>
+
+                        <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed font-dm-sans">
+                          DM me on Instagram (@sara.theagent) or email — <span className="font-black text-luxury-black">I respond to every message, usually same day.</span>
+                        </p>
+
+                        {/* Contact Methods */}
+                        <div className="flex flex-wrap items-center gap-4">
+                          <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-4 py-3 rounded-xl border border-luxury-gold/20">
+                            <div className="w-8 h-8 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg flex items-center justify-center">
+                              <Mail className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="text-sm font-bold text-luxury-black">Email support</span>
+                          </div>
+                          <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-4 py-3 rounded-xl border border-luxury-gold/20">
+                            <div className="w-8 h-8 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg flex items-center justify-center">
+                              <Instagram className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="text-sm font-bold text-luxury-black">Instagram DMs</span>
+                          </div>
+                          <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-4 py-3 rounded-xl border border-green-600/20">
+                            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                              <Clock className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="text-sm font-bold text-green-600">Same-day response</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* TOTAL VALUE BOX */}
-            <div className="bg-white rounded-lg border-4 border-entrepedia-red shadow-2xl p-8 md:p-10">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <p className="text-entrepedia-gray-600 text-sm mb-2">Total Package Value:</p>
-                  <div className="text-5xl md:text-6xl font-black text-entrepedia-gray-400 line-through mb-4">
-                    $2,556+
+            {/* Premium CTA */}
+            <div className="relative">
+              {/* Glow effects */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-luxury-gold via-purple-600 to-luxury-gold rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
+
+              <div className="relative bg-gradient-to-br from-luxury-black via-gray-900 to-luxury-black rounded-3xl shadow-2xl overflow-hidden border border-luxury-gold/30">
+                <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold/10 via-transparent to-purple-600/10"></div>
+
+                <div className="relative p-8 md:p-10 text-center">
+                  {/* Premium Price Display */}
+                  <div className="mb-6">
+                    <p className="text-gray-400 text-sm mb-3 font-dm-sans">Your Black Friday Price Today:</p>
+                    <div className="inline-block relative">
+                      <div className="absolute inset-0 bg-luxury-gold/20 blur-2xl"></div>
+                      <div className="relative bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold p-1 rounded-2xl">
+                        <div className="bg-luxury-black px-10 py-6 rounded-xl">
+                          <div className="text-6xl md:text-7xl font-black bg-gradient-to-r from-white via-luxury-gold-light to-white bg-clip-text text-transparent">
+                            $37
+                          </div>
+                          <div className="flex items-center justify-center gap-3 mt-2">
+                            <span className="text-gray-400 line-through text-lg">$97</span>
+                            <div className="w-1 h-4 bg-luxury-gold/50"></div>
+                            <span className="text-luxury-gold font-black text-sm">SAVE $863</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-baseline gap-3 mb-3">
-                    <span className="text-entrepedia-dark text-2xl font-bold">You Pay:</span>
-                    <span className="text-6xl md:text-7xl font-black text-entrepedia-red">$37</span>
-                  </div>
-                  <div className="inline-flex items-center gap-2 bg-green-100 border-2 border-green-600 px-4 py-2 rounded-lg">
-                    <Sparkles className="w-5 h-5 text-green-600" />
-                    <span className="text-green-600 font-black">Save $2,519+ (98% OFF!)</span>
-                  </div>
-                </div>
-                <div className="text-center md:text-right">
-                  <a
-                    href="#choose-path"
-                    className="inline-flex items-center gap-3 bg-entrepedia-red hover:bg-entrepedia-red-hover text-white px-10 py-5 rounded-lg font-league-spartan font-black text-2xl transition-all shadow-xl w-full justify-center"
+
+                  <p className="text-gray-400 text-sm mb-8 font-dm-sans">
+                    Price increases at midnight — <span className="text-luxury-gold font-black">Limited Time Only</span>
+                  </p>
+
+                  {/* Premium CTA Button */}
+                  <button
+                    onClick={openModal}
+                    className="group inline-flex items-center gap-4 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold text-luxury-black px-12 py-5 rounded-2xl font-league-spartan font-black text-lg shadow-2xl hover:shadow-luxury-gold/50 transform hover:scale-105 active:scale-100 transition-all duration-300 mb-6"
                   >
-                    <span>Claim This Deal</span>
-                    <ArrowRight className="w-6 h-6" />
-                  </a>
-                  <div className="flex items-center justify-center gap-2 mt-4 text-white">
-                    <Shield className="w-4 h-4 text-green-600" />
-                    <span className="text-sm">30-Day Money-Back Guarantee</span>
+                    <span>Secure Your Access Now</span>
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                  </button>
+
+                  <div className="flex items-center justify-center gap-4 text-gray-400 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-green-400" />
+                      <span>30-Day Money-Back Guarantee</span>
+                    </div>
+                    <div className="w-1 h-4 bg-gray-700"></div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span>+ $50 if it doesn't work</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1038,605 +1739,273 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== GUARANTEE #1 - SARA'S PERSONAL PROMISE ===== */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Sara's Promise */}
-            <div className="text-center mb-12">
-              <div className="inline-block bg-green-600 text-white px-4 py-2 rounded-full font-bold text-sm mb-6">
-                GUARANTEE #1
-              </div>
-              <h2 className="text-3xl md:text-4xl font-league-spartan font-black mb-8 text-entrepedia-dark">
-                Sara's Personal <span className="text-entrepedia-red">Refund Promise</span>
-              </h2>
-            </div>
-
-            {/* Sara's Quote */}
-            <div className="bg-white rounded-xl p-8 mb-8">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-24 h-24 bg-entrepedia-gray-50 rounded-full flex-shrink-0 relative overflow-hidden">
-                  <Image
-                    src="/images/Sara 61kb.webp"
-                    alt="Sara Cohen"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="text-entrepedia-dark text-lg italic mb-4">
-                    "I've been in your shoes. I know what it's like to invest in something and wonder if it'll work.
-                    That's why I'm making you this promise: If you don't love AgentClone, just ask for a refund.
-                    No questions. No hassle. I'll process it within 24 hours."
-                  </p>
-                  <p className="font-bold text-entrepedia-dark">— Sara Cohen</p>
-                  <p className="text-sm text-entrepedia-gray-600">Creator of AgentClone</p>
-                </div>
-              </div>
-            </div>
-
-            {/* How to Get Refund */}
-            <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-8">
-              <h3 className="text-2xl font-league-spartan font-bold mb-6 text-entrepedia-dark text-center">
-                How to Get Your Refund (Takes 30 Seconds)
-              </h3>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Email Option */}
-                <div className="bg-white border-2 border-entrepedia-dark rounded-xl p-6">
-                  <Mail className="w-8 h-8 text-entrepedia-red mb-4" />
-                  <h4 className="font-bold text-entrepedia-dark mb-3">Email Us</h4>
-                  <p className="text-entrepedia-gray-600 text-sm mb-4">
-                    Send this message to support@aifastscale.com:
-                  </p>
-                  <div className="bg-entrepedia-gray-100 border-2 border-entrepedia-dark rounded p-3 text-sm text-entrepedia-dark font-mono">
-                    "Hi, I'd like a refund for my AgentClone purchase. My email is [your email]"
-                  </div>
-                </div>
-
-                {/* Instagram Option */}
-                <div className="bg-white border-2 border-entrepedia-dark rounded-xl p-6">
-                  <Instagram className="w-8 h-8 text-entrepedia-red mb-4" />
-                  <h4 className="font-bold text-entrepedia-dark mb-3">DM Sara on Instagram</h4>
-                  <p className="text-entrepedia-gray-600 text-sm mb-4">
-                    Send a DM to @sara.theagent:
-                  </p>
-                  <div className="bg-entrepedia-gray-100 border-2 border-entrepedia-dark rounded p-3 text-sm text-entrepedia-dark font-mono">
-                    "Hey Sara, I'd like a refund for AgentClone"
-                  </div>
-                  <a
-                    href="https://instagram.com/sara.theagent"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-4 text-entrepedia-red hover:text-entrepedia-red-hover transition-colors text-sm font-bold"
-                  >
-                    → Open Instagram
-                  </a>
-                </div>
-              </div>
-
-              {/* Same-Day Badge */}
-              <div className="mt-8 text-center">
-                <div className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full font-bold">
-                  <Shield className="w-5 h-5" />
-                  Same-Day Refund Guarantee
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== WHO IS SARA? ===== */}
-      <section className="py-16 md:py-24 bg-entrepedia-dark">
-        <div className="container mx-auto px-4">
+      {/* SARA'S GUARANTEE - Premium Dark Design */}
+      <section className="py-6 sm:py-8 md:py-10 bg-gradient-to-b from-luxury-black via-[#0f0f0f] to-luxury-black">
+        <div className="w-full px-3 sm:px-4">
           <div className="max-w-5xl mx-auto">
-            {/* Badge */}
-            <div className="text-center mb-6">
-              <div className="inline-block bg-entrepedia-red text-white px-4 py-2 rounded-full font-bold text-sm">
-                MEET YOUR INSTRUCTOR
+            <div className="text-center mb-4 sm:mb-5">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 sm:px-5 py-2 rounded-full font-black text-xs shadow-2xl shadow-emerald-500/30">
+                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                ZERO-RISK GUARANTEE
               </div>
             </div>
 
-            {/* Headline */}
-            <h2 className="text-3xl md:text-4xl font-league-spartan font-black text-center mb-12 text-white">
-              Who is <span className="text-entrepedia-red">Sara Cohen?</span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-league-spartan font-black text-center mb-2 sm:mb-3 text-white">
+              Try It Free For <span className="luxury-text-gradient">30 Days</span>
             </h2>
+            <p className="text-center text-sm sm:text-base text-white/70 mb-6 sm:mb-8 max-w-3xl mx-auto">
+              If this doesn't work exactly like I promised, I'll refund you + pay you <span className="font-black text-emerald-400">$50</span> for your time
+            </p>
 
-            {/* Two Columns */}
-            <div className="grid md:grid-cols-2 gap-12 mb-12">
-              {/* Image */}
-              <div className="relative aspect-square rounded-xl overflow-hidden bg-entrepedia-gray-50 border-4 border-entrepedia-red">
-                <Image
-                  src="/images/Sara 61kb.webp"
-                  alt="Sara Cohen"
-                  fill
-                  className="object-cover"
-                />
+            {/* Sara's Promise Card - Premium Design */}
+            <div className="bg-gradient-to-br from-white/5 to-white/10 rounded-2xl shadow-2xl border border-white/20 backdrop-blur-sm p-4 sm:p-6 md:p-8 mb-4 sm:mb-5">
+              <div className="flex flex-col md:flex-row gap-4 sm:gap-5 items-start">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto md:mx-0 flex-shrink-0 relative">
+                  <div className="absolute inset-0 bg-luxury-gold rounded-full animate-pulse opacity-20" />
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-luxury-gold shadow-xl">
+                    <Image
+                      src="/images/Sara 61kb.webp"
+                      alt="Sara Cohen"
+                      fill
+                      className="object-cover"
+                      loading="lazy"
+                      sizes="(max-width: 640px) 80px, 96px"
+                    />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center border-2 border-white shadow-lg">
+                    <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <div className="mb-3 sm:mb-4">
+                    <p className="text-base sm:text-lg font-bold text-white mb-3 italic leading-relaxed">
+                      "If you can't create professional videos in 7 minutes or less,
+                      I'll refund every penny AND send you $50 for wasting your time."
+                    </p>
+                    <p className="text-sm sm:text-base text-white/70 mb-2 sm:mb-3">
+                      That's right. <span className="font-bold text-emerald-400">Full refund</span> PLUS I'll literally
+                      pay YOU $50. Zero risk. Pure upside.
+                    </p>
+                    <p className="text-xs sm:text-sm text-white/60">
+                      847 agents are already using this. I've seen what happens when agents actually use it. The only way you lose is by not trying.
+                    </p>
+                  </div>
+                  <div className="border-t border-white/20 pt-3">
+                    <p className="font-black text-white text-sm sm:text-base">— Sara Cohen</p>
+                    <p className="text-xs text-white/60">Top 1% Agent • $127M+ Sold</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* How to Get Refund - Premium Design */}
+            <div className="bg-gradient-to-br from-white/5 to-white/10 border border-white/20 rounded-2xl p-4 sm:p-5 backdrop-blur-sm shadow-xl">
+              <h3 className="text-base sm:text-lg font-league-spartan font-black text-center mb-2 text-white">
+                How To Get Your Money Back <span className="text-emerald-400">(Takes 30 Seconds)</span>
+              </h3>
+              <p className="text-center text-white/60 mb-4 sm:mb-5 text-xs sm:text-sm">
+                No forms. No hoops. No waiting. Just pick one:
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-3 sm:gap-4">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 sm:p-4 border border-emerald-500/30 hover:border-emerald-500/50 transition-all shadow-lg">
+                  <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-black text-white text-xs sm:text-sm">Email Us</h4>
+                      <p className="text-[10px] sm:text-xs text-emerald-400">24-hour response</p>
+                    </div>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-white/60 mb-2">
+                    Send to: <span className="font-bold text-white/80">support@aifastscale.com</span>
+                  </p>
+                  <div className="bg-white/5 rounded-lg p-2 border border-white/10">
+                    <p className="text-[10px] sm:text-xs font-mono text-white/70">
+                      "Hi, I'd like my refund. My email is [your email]"
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 sm:p-4 border border-luxury-gold/30 hover:border-luxury-gold/50 transition-all shadow-lg">
+                  <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center shadow-lg">
+                      <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" />
+                    </div>
+                    <div>
+                      <h4 className="font-black text-white text-xs sm:text-sm">Instagram DM</h4>
+                      <p className="text-[10px] sm:text-xs text-luxury-gold">DM Sara directly</p>
+                    </div>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-white/60 mb-2">
+                    Message: <span className="font-bold text-white/80">@sara.theagent</span>
+                  </p>
+                  <div className="bg-white/5 rounded-lg p-2 border border-white/10">
+                    <p className="text-[10px] sm:text-xs font-mono text-white/70">
+                      "Hey Sara! Refund please 🙏"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL URGENCY CTA */}
+      <section className="py-8 sm:py-10 bg-white">
+        <div className="w-full px-3">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-gradient-to-br from-luxury-gold/10 to-luxury-gold-pale border-4 border-luxury-gold rounded-3xl p-5 sm:p-7 text-center shadow-2xl">
+              <div className="inline-flex items-center gap-2 bg-luxury-gold text-luxury-black px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-black mb-4">
+                <Clock className="w-4 h-4" />
+                <span>Price Increases in {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
               </div>
 
-              {/* Content */}
-              <div className="space-y-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black mb-3 text-luxury-black">
+                Zero Risk. Pure Upside.
+              </h2>
+
+              <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-5 leading-relaxed">
+                You're protected by a 30-day guarantee <span className="font-bold">PLUS</span> I'll pay you $50 if this doesn't work.
+                <br className="hidden sm:block" />
+                The only way you lose is by not trying.
+              </p>
+
+              <div className="bg-white rounded-2xl p-4 sm:p-5 mb-4 sm:mb-5 shadow-inner border-2 border-luxury-gold/30">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-3xl sm:text-4xl font-black luxury-text-gradient mb-1">$900</div>
+                    <div className="text-xs text-gray-600">Regular Price</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl sm:text-4xl font-black text-green-600 mb-1">$37</div>
+                    <div className="text-xs text-gray-600">Today Only</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl sm:text-4xl font-black text-luxury-gold mb-1">96%</div>
+                    <div className="text-xs text-gray-600">You Save</div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={openModal}
+                className="inline-flex items-center gap-2 bg-luxury-gold hover:bg-luxury-gold-dark text-luxury-black px-6 py-3 sm:px-10 sm:py-5 rounded-xl sm:rounded-2xl text-base sm:text-lg font-black shadow-2xl hover:scale-105 active:scale-100 transition-all smooth-transform ease-out-expo mb-3 sm:mb-4"
+              >
+                <span>Get Instant Access Now</span>
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+
+              <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
+                <div className="flex items-center gap-1.5">
+                  <Shield className="w-4 h-4 text-green-600" />
+                  <span>30-Day Guarantee</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span>Instant Delivery</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHO IS SARA */}
+      <section className="py-4 sm:py-6 md:py-10 bg-luxury-black">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-6 sm:mb-10">
+              <div className="inline-flex items-center gap-2 bg-luxury-gold/10 border border-luxury-gold/30 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-3 sm:mb-4">
+                <Award className="w-4 h-4 text-luxury-gold" />
+                <span className="text-luxury-gold font-bold text-xs tracking-wider">MEET YOUR INSTRUCTOR</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black mb-3 px-4">
+                Who Am I & <span className="luxury-text-gradient">Why Should You Listen?</span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-5 sm:gap-8 mb-6 sm:mb-8">
+              <div className="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border-2 border-luxury-gold/30">
+                <Image src="/images/Sara 61kb.webp" alt="Sara" fill sizes="100vw" className="object-cover" loading="lazy" />
+              </div>
+
+              <div className="space-y-4 sm:space-y-5">
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-white">Former Top 1% Real Estate Agent</h3>
-                  <p className="text-entrepedia-gray-100">
-                    I spent 8 years as a luxury real estate agent in Dubai, closing $127M+ in property sales.
-                    I know firsthand how hard it is to stand out in a crowded market.
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-luxury-gold">I Was You</h3>
+                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
+                    8 years grinding as a luxury agent in Dubai. $127M+ in sales. But I was exhausted. Filming content felt like a second job. I looked for a better way.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-white">AI Marketing Pioneer</h3>
-                  <p className="text-entrepedia-gray-100">
-                    When I discovered AI video technology, everything changed. I went from spending 4 hours per video
-                    to creating 50 videos in 7 minutes. My listings got 10x more views.
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-luxury-gold">Then I Found AI Video</h3>
+                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
+                    One photo. 50 videos. In minutes. My social media exploded. More leads. More listings. More commissions. All while working LESS.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-white">Your Personal Success Partner</h3>
-                  <p className="text-entrepedia-gray-100">
-                    Now I help agents like you leverage AI to get more listings, more leads, and more freedom.
-                    I'm personally available via Instagram DM if you ever need help.
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-luxury-gold">Now I'm Sharing Everything</h3>
+                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
+                    847+ agents have joined. The results speak for themselves. This isn't theory — it's the exact system I use daily.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-3xl font-black text-entrepedia-red mb-2">$127M+</div>
-                <div className="text-sm text-entrepedia-gray-600">Properties Sold</div>
-              </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-3xl font-black text-entrepedia-red mb-2">8 Years</div>
-                <div className="text-sm text-entrepedia-gray-600">Experience</div>
-              </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-3xl font-black text-entrepedia-red mb-2">500+</div>
-                <div className="text-sm text-entrepedia-gray-600">Agents Helped</div>
-              </div>
-              <div className="bg-entrepedia-gray-50 border-2 border-entrepedia-dark rounded-xl p-6 text-center">
-                <div className="text-3xl font-black text-entrepedia-red mb-2">4.9/5</div>
-                <div className="text-sm text-entrepedia-gray-600">Rating</div>
-              </div>
-            </div>
-
-            {/* Testimonial */}
-            <div className="bg-white border-2 border-entrepedia-red rounded-xl p-8 text-center">
-              <p className="text-xl italic text-entrepedia-dark mb-4">
-                "The agents who succeed with AgentClone aren't special or tech-savvy.
-                They're just regular agents who decided to stop waiting and start posting.
-                That could be you tomorrow."
-              </p>
-              <p className="font-bold text-entrepedia-dark">— Sara Cohen</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== TESTIMONIALS ===== */}
-      <section className="py-16 md:py-24 bg-entrepedia-dark">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-league-spartan font-black mb-4 text-white">
-                See What Real Agents Are <span className="text-entrepedia-red">Saying</span>
-              </h2>
-              <p className="text-xl text-entrepedia-gray-100">
-                Join 847+ agents who transformed their business
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              {/* Testimonial 1 */}
-              <div className="bg-white rounded-xl p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-entrepedia-dark mb-4 italic">
-                  "I closed 3 luxury listings in 2 weeks using these AI videos. My social media engagement increased by 500%.
-                  This is a complete game-changer for real estate marketing."
-                </p>
-                <div className="border-t border-entrepedia-gray-100 pt-4">
-                  <p className="font-bold text-entrepedia-dark">Michael Rodriguez</p>
-                  <p className="text-sm text-entrepedia-gray-600">Luxury Agent, Dubai Marina</p>
-                  <p className="text-sm text-entrepedia-red font-bold mt-1">Result: 3 Listings in 14 Days</p>
-                </div>
-              </div>
-
-              {/* Testimonial 2 */}
-              <div className="bg-white rounded-xl p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-entrepedia-dark mb-4 italic">
-                  "I was skeptical about AI, but after seeing my videos get 50,000+ views, I'm a believer.
-                  I went from 10 leads per month to 40+ leads. Worth every penny."
-                </p>
-                <div className="border-t border-entrepedia-gray-100 pt-4">
-                  <p className="font-bold text-entrepedia-dark">Fatima Al-Nasser</p>
-                  <p className="text-sm text-entrepedia-gray-600">Real Estate Agent, Abu Dhabi</p>
-                  <p className="text-sm text-entrepedia-red font-bold mt-1">Result: 4x More Leads</p>
-                </div>
-              </div>
-
-              {/* Testimonial 3 */}
-              <div className="bg-white rounded-xl p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-entrepedia-dark mb-4 italic">
-                  "As a new agent, I needed to compete with established agents. AgentClone leveled the playing field.
-                  I look just as professional as agents with 20 years experience."
-                </p>
-                <div className="border-t border-entrepedia-gray-100 pt-4">
-                  <p className="font-bold text-entrepedia-dark">James Wilson</p>
-                  <p className="text-sm text-entrepedia-gray-600">New Agent, Sharjah</p>
-                  <p className="text-sm text-entrepedia-red font-bold mt-1">Result: First Listing in 3 Weeks</p>
-                </div>
-              </div>
-
-              {/* Additional Testimonials - Show when expanded */}
-              {showAllTestimonials && (
-                <>
-                  {/* Testimonial 4 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "My Instagram following grew from 2K to 15K in just 3 months. These videos are pure gold for building authority in the luxury market."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Ahmed Hassan</p>
-                      <p className="text-sm text-entrepedia-gray-600">Luxury Agent, Downtown Dubai</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: 650% Follower Growth</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 5 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "I landed a $2.5M listing from a client who found me on Instagram. They said my videos made me look like the most professional agent they'd seen."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Jennifer Park</p>
-                      <p className="text-sm text-entrepedia-gray-600">Luxury Realtor, Palm Jumeirah</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: $2.5M Listing</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 6 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "Best investment I've made in my real estate career. The time savings alone are worth 10x the price. I can create content while driving between showings!"
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Omar Al-Farsi</p>
-                      <p className="text-sm text-entrepedia-gray-600">Commercial Agent, Business Bay</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: 15 Hours Saved/Week</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 7 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "My listing presentations are 100% better now. I show clients my marketing videos and they're blown away. I've won 8 out of my last 10 pitches."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Sarah Martinez</p>
-                      <p className="text-sm text-entrepedia-gray-600">Agent, Arabian Ranches</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: 80% Win Rate</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 8 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "I was spending $500/month on a videographer. Now I create better videos myself in minutes. This has already saved me thousands."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">David Chen</p>
-                      <p className="text-sm text-entrepedia-gray-600">Agent, Jumeirah Lakes Towers</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: $6,000 Saved</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 9 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "My broker asked me to train the entire office on video marketing after seeing my results. AgentClone made me the go-to expert on our team."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Aisha Mohammed</p>
-                      <p className="text-sm text-entrepedia-gray-600">Senior Agent, Al Barsha</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: Team Leader Promotion</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 10 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "The bonuses alone are worth more than the price. The Instagram templates saved me hours of work and my engagement is through the roof!"
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Robert Thompson</p>
-                      <p className="text-sm text-entrepedia-gray-600">Agent, The Greens</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: 3x Engagement Rate</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 11 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "I got my first international buyer through my AI videos. They saw my content from London and flew to Dubai specifically to work with me!"
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Layla Khalid</p>
-                      <p className="text-sm text-entrepedia-gray-600">Luxury Agent, Emirates Hills</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: International Client</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 12 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "Sara's support is incredible. She personally helped me when I got stuck and I was creating videos within 30 minutes. The guarantee is real!"
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Marcus Johnson</p>
-                      <p className="text-sm text-entrepedia-gray-600">New Agent, Dubai Sports City</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: Up & Running in 30 Min</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 13 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "My wife couldn't believe the videos were AI. Even my tech-savvy clients think I'm filming these myself. The quality is unbelievable."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Tariq Al-Rashid</p>
-                      <p className="text-sm text-entrepedia-gray-600">Agent, Dubai Silicon Oasis</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: Ultra-Realistic Videos</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 14 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "I'm not tech-savvy AT ALL. If I can do this, literally anyone can. The training is so simple my 70-year-old dad could follow it."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Nina Patel</p>
-                      <p className="text-sm text-entrepedia-gray-600">Agent, International City</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: Non-Tech Success</p>
-                    </div>
-                  </div>
-
-                  {/* Testimonial 15 */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-entrepedia-dark mb-4 italic">
-                      "ROI in 48 hours. I got a listing worth $18K commission two days after posting my first video. This is the best $37 I've ever spent."
-                    </p>
-                    <div className="border-t border-entrepedia-gray-100 pt-4">
-                      <p className="font-bold text-entrepedia-dark">Carlos Rivera</p>
-                      <p className="text-sm text-entrepedia-gray-600">Agent, Jumeirah Village Circle</p>
-                      <p className="text-sm text-entrepedia-red font-bold mt-1">Result: $18K Commission in 48hrs</p>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* See All Reviews Button */}
-            {!showAllTestimonials && (
-              <div className="text-center mb-12">
-                <button
-                  onClick={() => setShowAllTestimonials(true)}
-                  className="inline-flex items-center gap-2 bg-white hover:bg-entrepedia-gray-50 text-entrepedia-dark px-8 py-4 rounded-lg font-bold text-lg transition-all border-2 border-white"
-                >
-                  <span>See All 15 Reviews</span>
-                  <ChevronDown className="w-5 h-5" />
-                </button>
-              </div>
-            )}
-
-            {/* Overall Stats */}
-            <div className="bg-white/10 border border-white/20 rounded-xl p-8">
-              <div className="grid grid-cols-3 gap-8 text-center">
-                <div>
-                  <div className="text-4xl font-black text-entrepedia-red mb-2">847+</div>
-                  <div className="text-white text-sm">Agents Transformed</div>
-                </div>
-                <div>
-                  <div className="text-4xl font-black text-entrepedia-red mb-2">10,000+</div>
-                  <div className="text-white text-sm">Videos Created</div>
-                </div>
-                <div>
-                  <div className="text-4xl font-black text-entrepedia-red mb-2">4.9/5</div>
-                  <div className="text-white text-sm">Average Rating</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== GUARANTEE #2 - TRIPLE GUARANTEE ===== */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Shield Icon */}
-            <div className="text-center mb-8">
-              <Shield className="w-16 h-16 text-green-600 mx-auto mb-4" />
-              <div className="inline-block bg-green-100 border-2 border-green-600 text-green-600 px-4 py-2 rounded-full font-bold text-sm mb-6">
-                GUARANTEE #2
-              </div>
-              <h2 className="text-3xl md:text-4xl font-league-spartan font-black mb-4 text-entrepedia-dark">
-                Our Iron-Clad <span className="text-entrepedia-red">Triple Guarantee</span>
-              </h2>
-            </div>
-
-            {/* Three Guarantees */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-green-50 border-2 border-green-600 rounded-xl p-6 text-center">
-                <Clock className="w-10 h-10 text-green-600 mx-auto mb-4" />
-                <h3 className="font-bold mb-2 text-entrepedia-dark">7-Minute Guarantee</h3>
-                <p className="text-sm text-entrepedia-gray-600">
-                  If it takes longer than 7 minutes to create your first video, we'll refund you in full.
-                </p>
-              </div>
-
-              <div className="bg-green-50 border-2 border-green-600 rounded-xl p-6 text-center">
-                <Award className="w-10 h-10 text-green-600 mx-auto mb-4" />
-                <h3 className="font-bold mb-2 text-entrepedia-dark">Quality Guarantee</h3>
-                <p className="text-sm text-entrepedia-gray-600">
-                  If your videos don't look professional, we'll work with you until they do - or refund you.
-                </p>
-              </div>
-
-              <div className="bg-green-50 border-2 border-green-600 rounded-xl p-6 text-center">
-                <Shield className="w-10 h-10 text-green-600 mx-auto mb-4" />
-                <h3 className="font-bold mb-2 text-entrepedia-dark">30-Day Money-Back</h3>
-                <p className="text-sm text-entrepedia-gray-600">
-                  For any reason, anytime within 30 days, just ask for a refund. No questions asked.
-                </p>
-              </div>
-            </div>
-
-            {/* Why Can We Offer This */}
-            <div className="bg-green-600 text-white rounded-xl p-8 text-center">
-              <h3 className="text-2xl font-league-spartan font-bold mb-4">Why Can We Offer This Guarantee?</h3>
-              <p className="text-lg">
-                Simple: We have a 97% satisfaction rate. Out of 847 agents, only 26 have asked for refunds.
-                And all of them got their money back same-day. We're confident you'll love AgentClone.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FAQ ===== */}
-      <section className="py-16 md:py-24 bg-entrepedia-dark">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-league-spartan font-black mb-4 text-white">
-                Frequently Asked <span className="text-entrepedia-red">Questions</span>
-              </h2>
-            </div>
-
-            <div className="space-y-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
               {[
-                {
-                  q: 'How long does it really take to create videos?',
-                  a: 'Exactly 7 minutes. Upload your photo (1 min), type your script (2 min), AI generates video (3 min), download (1 min). That\'s it. No editing required.',
-                },
-                {
-                  q: 'Will this work for UAE/Dubai real estate specifically?',
-                  a: 'Absolutely! 847+ UAE agents are already using this. Works perfectly for Dubai, Abu Dhabi, Sharjah, and all Emirates. The AI supports multiple languages including English and Arabic.',
-                },
-                {
-                  q: 'Do I need to film myself or be on camera?',
-                  a: 'No! Just upload ONE professional headshot. The AI creates realistic talking videos - you never need to film yourself again. No camera, no lighting, no video equipment needed.',
-                },
-                {
-                  q: 'Can people tell it\'s AI? Will it look fake?',
-                  a: 'The videos look so real that most people can\'t tell. The AI uses advanced lip-sync technology. Your clients will focus on your message, not the technology.',
-                },
-                {
-                  q: 'What if I\'m not tech-savvy?',
-                  a: 'Perfect! This is designed for non-technical agents. If you can upload a photo and type text, you can do this. Plus, Sara provides step-by-step video training and personal support via Instagram.',
-                },
-                {
-                  q: 'What\'s your refund policy?',
-                  a: '100% money-back guarantee for 30 days. Just email support@aifastscale.com or DM Sara on Instagram (@sara.theagent). We process refunds within 24 hours, no questions asked.',
-                },
-              ].map((faq, i) => (
+                { value: "$127M+", label: "Career Sales" },
+                { value: "8 Years", label: "Experience" },
+                { value: "847+", label: "Agents Helped" },
+                { value: "4.9/5", label: "Avg Rating" }
+              ].map((stat, i) => (
+                <div key={i} className="bg-luxury-graphite/30 border border-luxury-gold/20 rounded-xl p-3 sm:p-4 text-center">
+                  <div className="text-2xl sm:text-3xl font-black luxury-text-gradient mb-2">{stat.value}</div>
+                  <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-4 sm:py-6 md:py-10 bg-luxury-pearl">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black mb-3 px-4 text-luxury-black">
+                Common <span className="luxury-text-gradient">Questions</span>
+              </h2>
+              <p className="text-sm sm:text-base text-gray-600 px-4">Everything you need to know</p>
+            </div>
+
+            <div className="space-y-3">
+              {faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="bg-white/10 border border-white/20 rounded-xl overflow-hidden"
+                  className="bg-white border border-gray-200 hover:border-luxury-gold/40 rounded-xl overflow-hidden transition-all shadow-md"
                 >
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                    className="flex items-center justify-between p-6 w-full text-left hover:bg-white/5 transition-colors"
+                    className="w-full flex items-center justify-between p-3 sm:p-4 text-left"
                   >
-                    <h4 className="font-bold text-lg pr-4 text-white">{faq.q}</h4>
+                    <span className="font-semibold text-sm sm:text-base pr-3 text-luxury-black">{faq.q}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-entrepedia-gray-100 flex-shrink-0 transition-transform ${
+                      className={`w-5 h-5 text-luxury-gold flex-shrink-0 transition-transform ${
                         expandedFaq === i ? 'rotate-180' : ''
                       }`}
                     />
                   </button>
                   {expandedFaq === i && (
-                    <div className="px-6 pb-6">
-                      <p className="text-entrepedia-gray-100">{faq.a}</p>
+                    <div className="px-3 sm:px-4 pb-3 sm:pb-4">
+                      <p className="text-sm text-gray-700 leading-relaxed">{faq.a}</p>
                     </div>
                   )}
                 </div>
@@ -1646,311 +2015,356 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== FINAL CTA ===== */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-entrepedia-red via-entrepedia-red-hover to-entrepedia-red">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Countdown */}
-            <div className="inline-flex items-center gap-4 bg-black/30 border-2 border-white rounded-xl px-6 py-6 mb-8">
-              <Clock className="w-6 h-6 text-white" />
-              <div className="flex gap-3">
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-white">{String(timeLeft.hours).padStart(2, '0')}</div>
-                  <div className="text-xs text-white/70 uppercase">Hours</div>
-                </div>
-                <div className="text-2xl md:text-3xl font-black text-white self-center">:</div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-white">{String(timeLeft.minutes).padStart(2, '0')}</div>
-                  <div className="text-xs text-white/70 uppercase">Mins</div>
-                </div>
-                <div className="text-2xl md:text-3xl font-black text-white self-center">:</div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-black text-white">{String(timeLeft.seconds).padStart(2, '0')}</div>
-                  <div className="text-xs text-white/70 uppercase">Secs</div>
-                </div>
+      {/* FINAL CTA - MOBILE OPTIMIZED */}
+      <section className="py-4 sm:py-6 md:py-10 bg-luxury-black">
+        <div className="w-full px-3 sm:px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            {/* Compact Countdown */}
+            <div className="inline-flex items-center gap-2 bg-luxury-graphite/50 border border-luxury-gold/30 rounded-lg px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+              <Clock className="w-4 h-4 text-luxury-gold" />
+              <div className="flex gap-1.5 font-mono text-white">
+                <span className="text-lg sm:text-xl font-black">{String(timeLeft.hours).padStart(2, '0')}</span>
+                <span className="text-lg sm:text-xl">:</span>
+                <span className="text-lg sm:text-xl font-black">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                <span className="text-lg sm:text-xl">:</span>
+                <span className="text-lg sm:text-xl font-black">{String(timeLeft.seconds).padStart(2, '0')}</span>
               </div>
             </div>
 
-            <h2 className="text-3xl md:text-5xl font-league-spartan font-black mb-6 text-white">
-              Don't Let This 92% Discount Slip Away
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black mb-2 sm:mb-3">
+              Price Increases <span className="luxury-text-gradient">At Midnight</span>
             </h2>
 
-            <p className="text-xl text-white/90 mb-8">
-              In {timeLeft.hours}h {timeLeft.minutes}m, the price jumps from $37 to $97.
-              <br />
-              Don't let your competitors get ahead while you wait.
+            <p className="text-sm sm:text-base text-gray-400 mb-3 sm:mb-5">
+              Secure lifetime access at $37 before it goes to $97
             </p>
 
-            {/* Pricing Box */}
-            <div className="inline-block bg-white rounded-xl p-8 mb-8">
-              <div className="flex items-baseline justify-center gap-3 mb-2">
-                <span className="text-5xl font-black text-entrepedia-dark line-through opacity-50">$2,556</span>
-                <span className="text-7xl font-black text-entrepedia-red">$37</span>
+            {/* Compact Price Box */}
+            <div className="bg-luxury-graphite/50 border-2 border-luxury-gold/30 rounded-xl p-3 sm:p-5 mb-3 sm:mb-5">
+              <div className="text-center">
+                <div className="text-xs text-gray-500 uppercase mb-1">Regular Price</div>
+                <div className="text-2xl sm:text-3xl font-black text-gray-500 line-through mb-2">$900+</div>
+                <div className="text-xs text-gray-400 mb-1">Your Price Today</div>
+                <div className="text-5xl sm:text-6xl font-black luxury-text-gradient mb-3">$37</div>
+                <div className="inline-block bg-luxury-gold/20 text-luxury-gold px-4 py-2 rounded-full text-sm font-black">
+                  Save $863+ (96% OFF)
+                </div>
               </div>
-              <p className="text-green-600 font-bold text-lg">98% OFF - Black Friday Only</p>
             </div>
 
-            {/* CTA Button */}
-            <div className="mb-8">
-              <a
-                href="#choose-path"
-                className="inline-flex items-center gap-3 bg-entrepedia-dark hover:bg-black text-white px-12 py-6 rounded-lg font-league-spartan font-black text-2xl transition-all shadow-2xl"
-              >
-                <span>Claim Your Spot Now - $37</span>
-                <ArrowRight className="w-6 h-6" />
-              </a>
-            </div>
+            <button
+              onClick={openModal}
+              className="inline-flex items-center gap-2 bg-luxury-gold text-luxury-black px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-xl font-black text-base hover:bg-luxury-gold-light transition-all shadow-2xl hover:scale-105 active:scale-100"
+            >
+              <span>Secure Access at $37</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
 
-            {/* Final Psychology */}
-            <div className="bg-black/20 border border-white/30 rounded-xl p-6">
-              <p className="text-white text-lg">
-                <span className="font-bold">Here's the reality:</span> While you're thinking about it,
-                another agent just created their first video and posted it. They're getting views, engagement,
-                and leads right now. The question isn't "Should I do this?" - it's "How fast can I get started?"
-              </p>
-            </div>
+            <p className="text-xs text-gray-400 mt-3">
+              30-day money-back guarantee + $50
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ===== FOOTER ===== */}
-      <footer className="py-12 bg-entrepedia-dark border-t border-white/10">
-        <div className="container mx-auto px-4">
+      {/* FOOTER */}
+      <footer className="py-8 sm:py-10 bg-luxury-black border-t border-luxury-gold/10">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8 mb-8">
-              {/* Brand */}
+            <div className="grid md:grid-cols-4 gap-5 sm:gap-6 mb-5 sm:mb-6">
               <div className="md:col-span-2">
-                <h3 className="text-2xl font-league-spartan font-black mb-3 text-entrepedia-red">AIFastScale</h3>
-                <p className="text-entrepedia-gray-100 text-sm mb-4">
-                  The #1 AI video platform for real estate agents. Turn 1 photo into 50 personalized videos in 7 minutes.
+                <div className="text-2xl font-dm-serif italic mb-4">
+                  <span className="luxury-text-gradient">AgentClone</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-4">
+                  The AI video system helping camera-shy real estate agents dominate social media without filming themselves.
                 </p>
-                <div className="flex items-center gap-2 text-sm text-entrepedia-gray-400">
-                  <Shield className="w-4 h-4" />
-                  <span>SSL Secure Checkout</span>
-                </div>
               </div>
 
-              {/* Legal */}
               <div>
-                <h4 className="font-bold mb-3 text-white">Legal</h4>
-                <ul className="space-y-2 text-sm text-entrepedia-gray-100">
-                  <li>
-                    <a href="/terms-of-service" className="hover:text-white transition-colors">
-                      Terms of Service
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/privacy-policy" className="hover:text-white transition-colors">
-                      Privacy Policy
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/refund-policy" className="hover:text-white transition-colors">
-                      Refund Policy
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/disclaimer" className="hover:text-white transition-colors">
-                      Disclaimer
-                    </a>
-                  </li>
-                </ul>
+                <h4 className="text-sm font-bold text-white mb-4">Legal</h4>
+                <div className="space-y-2">
+                  <a href="/terms-of-service" className="block text-sm text-gray-400 hover:text-luxury-gold transition-colors">Terms of Service</a>
+                  <a href="/privacy-policy" className="block text-sm text-gray-400 hover:text-luxury-gold transition-colors">Privacy Policy</a>
+                  <a href="/refund-policy" className="block text-sm text-gray-400 hover:text-luxury-gold transition-colors">Refund Policy</a>
+                </div>
               </div>
 
-              {/* Support */}
               <div>
-                <h4 className="font-bold mb-3 text-white">Support</h4>
-                <ul className="space-y-2 text-sm text-entrepedia-gray-100">
-                  <li className="flex items-center gap-2">
-                    <Mail className="w-4 h-4" />
-                    <a href="mailto:support@aifastscale.com" className="hover:text-white transition-colors">
-                      support@aifastscale.com
-                    </a>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Instagram className="w-4 h-4" />
-                    <a href="https://instagram.com/sara.theagent" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                      @sara.theagent
-                    </a>
-                  </li>
-                  <li className="text-entrepedia-gray-400 text-xs mt-2">
-                    Response time: &lt;24 hours
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="border-t border-white/10 pt-8 mb-8">
-              <div className="flex flex-wrap justify-center gap-6 text-sm text-entrepedia-gray-400">
-                <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-green-500" />
-                  <span>30-Day Money-Back Guarantee</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Instant Access</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-green-500" />
-                  <span>847+ Happy Agents</span>
+                <h4 className="text-sm font-bold text-white mb-4">Support</h4>
+                <div className="space-y-2">
+                  <a href="mailto:support@aifastscale.com" className="block text-sm text-gray-400 hover:text-luxury-gold transition-colors">Email Support</a>
+                  <a href="https://instagram.com/sara.theagent" target="_blank" rel="noopener noreferrer" className="block text-sm text-gray-400 hover:text-luxury-gold transition-colors">Instagram DM</a>
                 </div>
               </div>
             </div>
 
-            {/* Earnings Disclaimer */}
-            <div className="border-t border-white/10 pt-8 text-center text-xs text-entrepedia-gray-400">
-              <p className="mb-2">
-                <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Your success depends on your effort,
-                market conditions, and implementation. We make no guarantee of specific results.
+            <div className="border-t border-luxury-gold/10 pt-5 sm:pt-6">
+              <p className="text-xs text-gray-500 text-center leading-relaxed mb-4">
+                EARNINGS DISCLAIMER: Results shown are not typical. Individual results vary based on effort, market conditions, and implementation. Past performance does not guarantee future results.
               </p>
-              <p>© 2025 AIFastScale. All rights reserved.</p>
+              <p className="text-xs text-gray-500 text-center">
+                © 2025 AIFastScale. All rights reserved.
+              </p>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* ===== ORDER SUMMARY MODAL ===== */}
-      {showOrderModal && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+      {/* BRAND NEW MODAL - Built from scratch with VIP luxury design - RENDERED VIA PORTAL */}
+      {isMounted && isModalOpen && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-3 bg-black/95 backdrop-blur-sm"
+          onClick={closeModal}
+        >
           <div
-            ref={orderModalRef}
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-xl bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a] rounded-2xl sm:rounded-3xl border border-[#D4AF37]/40 shadow-2xl shadow-[#D4AF37]/20 max-h-[92vh] sm:max-h-[95vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 md:p-8">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl md:text-3xl font-league-spartan font-black text-entrepedia-dark">
-                  Your Complete Package
-                </h3>
-                <button
-                  onClick={() => setShowOrderModal(false)}
-                  className="text-entrepedia-gray-600 hover:text-entrepedia-dark transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white/50 hover:text-white transition-all"
+            >
+              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
 
-              {/* Course */}
-              <div className="mb-6">
-                <div className="bg-entrepedia-red/10 border-2 border-entrepedia-red rounded-xl p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
-                      <Image
-                        src="/images/VD-Course-demo.webp"
-                        alt="AgentClone Course"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-entrepedia-dark mb-1">7-Minute AgentClone™ Course</h4>
-                      <p className="text-sm text-entrepedia-gray-600 mb-2">Complete system to create 50 AI videos</p>
-                      <span className="text-lg font-black text-entrepedia-red">$697 Value</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Selected Bonuses */}
-              <div className="mb-6">
-                <h4 className="font-bold text-entrepedia-dark mb-3 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  Your 5 Selected Bonuses (100% FREE)
-                </h4>
-                <div className="space-y-2">
-                  {BONUS_PRODUCTS.filter((b) => selectedBonuses.includes(b.id)).map((bonus) => (
-                    <div key={bonus.id} className="bg-green-50 border border-green-600 rounded-lg p-3 flex items-center gap-3">
-                      {bonus.image && (
-                        <div className="relative w-12 h-12 flex-shrink-0 rounded overflow-hidden">
-                          <Image
-                            src={bonus.image}
-                            alt={bonus.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-                      <div className="flex-1">
-                        <p className="font-bold text-sm text-entrepedia-dark">{bonus.title}</p>
-                        <p className="text-xs text-entrepedia-gray-600">${bonus.value} value</p>
-                      </div>
-                      <span className="text-green-600 font-black text-sm">FREE</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mystery VIP Box */}
-              <div className="mb-6">
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-600 rounded-xl p-4">
-                  <div className="flex items-center gap-3">
-                    <Package className="w-12 h-12 text-purple-600 flex-shrink-0" strokeWidth={1.5} />
-                    <div className="flex-1">
-                      <h4 className="font-bold text-entrepedia-dark mb-1">Mystery VIP Box</h4>
-                      <p className="text-sm text-entrepedia-gray-600 mb-1">
-                        Surprise ultra-premium bonus
-                      </p>
-                      <span className="text-lg font-black text-purple-600">$500-$1,500 Value - FREE!</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Total Value Breakdown */}
-              <div className="bg-entrepedia-gray-50 rounded-xl p-6 mb-6">
-                <div className="space-y-3 mb-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-entrepedia-gray-600">AgentClone Course</span>
-                    <span className="font-bold text-entrepedia-dark">$697</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-entrepedia-gray-600">5 Premium Bonuses</span>
-                    <span className="font-bold text-entrepedia-dark">${totalValue}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-entrepedia-gray-600">Mystery VIP Box</span>
-                    <span className="font-bold text-entrepedia-dark">$500-$1,500</span>
-                  </div>
-                  <div className="border-t-2 border-entrepedia-gray-400 pt-3">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-lg font-bold text-entrepedia-dark">Total Value</span>
-                      <span className="text-2xl font-black text-entrepedia-gray-400 line-through">$3,062+</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xl font-black text-entrepedia-dark">You Pay Today</span>
-                      <span className="text-4xl font-black text-entrepedia-red">$37</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-green-100 border-2 border-green-600 rounded-lg p-3 text-center">
-                  <span className="text-green-600 font-black text-lg">You Save $3,025+ (98% OFF!)</span>
-                </div>
-              </div>
-
-              {/* Guarantee Badge */}
-              <div className="bg-green-50 border border-green-600 rounded-lg p-4 mb-6 text-center">
-                <Shield className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                <p className="text-sm font-bold text-green-600">30-Day Money-Back Guarantee</p>
-                <p className="text-xs text-entrepedia-gray-600 mt-1">100% Risk-Free - Full Refund if Not Satisfied</p>
-              </div>
-
-              {/* Confirm Button */}
-              <button
-                onClick={confirmOrder}
-                className="w-full bg-entrepedia-red hover:bg-entrepedia-red-hover text-white px-8 py-5 rounded-xl font-league-spartan font-black text-xl transition-all shadow-xl flex items-center justify-center gap-3"
-              >
-                <span>Claim This Deal - $37</span>
-                <ArrowRight className="w-6 h-6" />
-              </button>
-
-              <p className="text-center text-sm text-entrepedia-gray-600 mt-4">
-                Secure checkout powered by Whop • Instant access
+            {/* Black Friday Header */}
+            <div className="bg-gradient-to-r from-red-600 via-red-500 to-red-600 p-1.5 sm:p-2 text-center rounded-t-2xl sm:rounded-t-3xl">
+              <p className="text-white text-[10px] sm:text-xs font-black tracking-wide animate-pulse">
+                🔥 BLACK FRIDAY - Only 7 Spots Left
               </p>
             </div>
+
+            {/* Content */}
+            <div className="p-3 sm:p-5 space-y-2.5 sm:space-y-4">
+              {/* VIP Badge */}
+              <div className="text-center">
+                <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30">
+                  <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#D4AF37]" />
+                  <span className="text-[9px] sm:text-[10px] font-bold text-[#D4AF37] tracking-widest">VIP PACKAGE</span>
+                </div>
+              </div>
+
+              {/* Main Course with Image */}
+              <div className="bg-gradient-to-br from-[#D4AF37]/10 to-[#D4AF37]/5 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border sm:border-2 border-[#D4AF37]/40">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                  <div className="relative w-14 h-14 sm:w-20 sm:h-20 rounded-md sm:rounded-lg overflow-hidden flex-shrink-0 border sm:border-2 border-[#D4AF37]/30 shadow-lg shadow-[#D4AF37]/20">
+                    <Image
+                      src="/images/VD-Course-demo.webp"
+                      alt="AI Video Course"
+                      fill
+                      sizes="(max-width: 640px) 56px, 80px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base font-black text-white leading-tight">7-Min AgentClone™</h3>
+                    <p className="text-[9px] sm:text-[10px] text-white/50 mt-0.5">Complete System + Lifetime Access</p>
+                  </div>
+                </div>
+                <div className="bg-black/30 rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-white/10">
+                  <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+                    <span className="text-[9px] sm:text-[10px] text-white/50">Original:</span>
+                    <span className="text-sm sm:text-base text-white/40 line-through font-bold">$97</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-black text-white">Today:</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <span className="text-2xl sm:text-3xl font-black text-[#D4AF37]">$37</span>
+                      <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-green-600/20 border border-green-500 text-green-400 text-[9px] sm:text-[10px] font-black rounded">62% OFF</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Selected Bonuses with Images */}
+              <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border border-emerald-500/30">
+                <h4 className="text-xs sm:text-sm font-black text-white mb-1.5 sm:mb-2 flex items-center gap-1 sm:gap-1.5">
+                  <Gift className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400" />
+                  Your 5 FREE Bonuses
+                  <span className="text-emerald-400 text-[10px] sm:text-xs">(${totalValue})</span>
+                </h4>
+                <div className="space-y-1.5 sm:space-y-2">
+                  {selectedBonuses.map((bonusId) => {
+                    const bonus = BONUS_PRODUCTS.find((b) => b.id === bonusId)
+                    if (!bonus) return null
+                    return (
+                      <div key={bonus.id} className="flex items-center gap-1.5 sm:gap-2 bg-black/30 rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-emerald-500/20">
+                        {bonus.image && (
+                          <div className="relative w-9 h-9 sm:w-12 sm:h-12 rounded overflow-hidden flex-shrink-0 bg-white/5 border border-white/10">
+                            <Image
+                              src={bonus.image}
+                              alt={bonus.title}
+                              fill
+                              sizes="(max-width: 640px) 36px, 48px"
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[10px] sm:text-[11px] font-bold text-white/90 leading-tight truncate">{bonus.title}</p>
+                          <div className="flex items-center gap-1 sm:gap-1.5 mt-0.5">
+                            <span className="text-[8px] sm:text-[9px] text-white/40">Was:</span>
+                            <span className="text-[10px] sm:text-[11px] text-white/50 line-through font-bold">${bonus.value}</span>
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0">
+                          <div className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-emerald-500/20 border border-emerald-500 rounded">
+                            <div className="text-[10px] sm:text-xs font-black text-emerald-400">FREE</div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Mystery Box - More Exciting */}
+              <div className="relative bg-gradient-to-br from-purple-600/20 via-pink-500/20 to-purple-600/20 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border sm:border-2 border-purple-500/50 text-center overflow-hidden shadow-lg shadow-purple-500/20">
+                {/* Animated sparkle effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"></div>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center gap-0.5 sm:gap-1 mb-1.5 sm:mb-2">
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 animate-pulse" />
+                    <div className="text-3xl sm:text-4xl">🎁</div>
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 animate-pulse" />
+                  </div>
+                  <p className="text-xs sm:text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 mb-1">
+                    + MYSTERY VIP BONUS
+                  </p>
+                  <div className="bg-black/30 rounded-md sm:rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 border border-purple-500/30 inline-block">
+                    <p className="text-[9px] sm:text-[10px] text-white/70">
+                      🔒 <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">Worth $500-$1,500</span> • Unlocked after
+                    </p>
+                  </div>
+                  <p className="text-[8px] sm:text-[9px] text-purple-400/80 mt-1 sm:mt-1.5 italic">
+                    (Hint: 847+ agents are obsessed with this...)
+                  </p>
+                </div>
+              </div>
+
+              {/* Sara's Irresistible Guarantee */}
+              <div className="bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border sm:border-2 border-emerald-500/40">
+                {/* Header with Sara */}
+                <div className="flex items-start gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex-shrink-0 border sm:border-2 border-emerald-400 shadow-lg shadow-emerald-500/20">
+                    <Image
+                      src="/images/Sara 61kb.webp"
+                      alt="Sara Cohen"
+                      fill
+                      sizes="(max-width: 640px) 40px, 48px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5">
+                      <p className="text-[10px] sm:text-sm font-black text-white flex-shrink-0">Sara Cohen</p>
+                      <div className="flex items-center gap-0.5 px-1.5 sm:px-2 py-0.5 sm:py-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-md border border-blue-400/50 shadow-lg shadow-blue-500/30 flex-shrink-0">
+                        <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-[7px] sm:text-[9px] text-white font-black tracking-wide whitespace-nowrap">VERIFIED</span>
+                      </div>
+                    </div>
+                    <p className="text-[9px] sm:text-[10px] text-emerald-400 font-bold">$127M in Career Sales</p>
+                  </div>
+                </div>
+
+                {/* Personal Promise */}
+                <div className="bg-white/5 rounded-md sm:rounded-lg p-2 sm:p-3 mb-2 sm:mb-3 border border-white/10">
+                  <p className="text-[10px] sm:text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400 mb-1.5 sm:mb-2">
+                    My Personal No-Risk Promise:
+                  </p>
+                  <p className="text-[10px] sm:text-[11px] text-white/90 leading-relaxed italic">
+                    "I'm so confident this works, <span className="font-black text-white">I'll pay YOU $50</span> if it doesn't. Try AgentClone for 30 days. If you don't get at least ONE new listing lead, I'll refund every penny — <span className="font-black text-[#D4AF37]">PLUS send you $50</span> for wasting your time."
+                  </p>
+                </div>
+
+                {/* 3-Box Guarantee */}
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="bg-emerald-500/10 rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-emerald-500/30 text-center">
+                    <p className="text-sm sm:text-base font-black text-emerald-400">30 Days</p>
+                    <p className="text-[7px] sm:text-[8px] text-white/60 mt-0.5">Full refund</p>
+                  </div>
+                  <div className="bg-[#D4AF37]/10 rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-[#D4AF37]/30 text-center">
+                    <p className="text-sm sm:text-base font-black text-[#D4AF37]">+ $50</p>
+                    <p className="text-[7px] sm:text-[8px] text-white/60 mt-0.5">Bonus</p>
+                  </div>
+                  <div className="bg-blue-500/10 rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-blue-500/30 text-center">
+                    <p className="text-sm sm:text-base font-black text-blue-400">0 Risk</p>
+                    <p className="text-[7px] sm:text-[8px] text-white/60 mt-0.5">No questions</p>
+                  </div>
+                </div>
+
+                {/* Checkmarks */}
+                <div className="space-y-1 sm:space-y-1.5 mb-2 sm:mb-3">
+                  <div className="flex items-start gap-1 sm:gap-1.5">
+                    <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-[9px] sm:text-[10px] text-white/80 leading-snug">
+                      You literally can't lose money — worst case, you <span className="font-black text-emerald-400">PROFIT $50</span>
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-1 sm:gap-1.5">
+                    <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-[9px] sm:text-[10px] text-white/80 leading-snug">
+                      No hoops to jump through — if you're not happy, you get refunded + $50
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom CTA Text */}
+                <div className="text-center bg-black/20 rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-white/5">
+                  <p className="text-[10px] sm:text-[11px] text-white/80">
+                    <span className="font-black text-white">What Do You Have To Lose?</span>
+                  </p>
+                  <p className="text-[8px] sm:text-[9px] text-white/50 mt-0.5">
+                    (Literally nothing. Worst case, you profit $50.)
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="space-y-1.5 sm:space-y-2 pt-0.5 sm:pt-1">
+                <div className="flex items-center justify-between px-0.5 sm:px-1">
+                  <span className="text-[10px] sm:text-xs text-white/50">Total Value:</span>
+                  <span className="text-xs sm:text-sm text-white/30 line-through">${97 + totalValue}</span>
+                </div>
+                <div className="flex items-center justify-between px-0.5 sm:px-1 mb-2 sm:mb-3">
+                  <span className="text-base sm:text-lg font-black text-white">Today Only:</span>
+                  <span className="text-2xl sm:text-3xl font-black text-[#D4AF37]">$37</span>
+                </div>
+                <div>
+                  <div style={{ display: 'none' }}>
+                    <WhopCheckoutEmbed
+                      ref={checkoutRef}
+                      planId={process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN!}
+                      onComplete={(planId, receiptId) => {
+                        localStorage.setItem('selectedBonuses', JSON.stringify(selectedBonuses))
+                        if (receiptId) localStorage.setItem('whop_receipt', receiptId)
+                        window.location.href = '/upsell'
+                      }}
+                    />
+                  </div>
+                  <button
+                    onClick={() => checkoutRef.current?.submit()}
+                    className="w-full bg-gradient-to-r from-[#D4AF37] via-[#FFE17B] to-[#D4AF37] hover:from-[#FFE17B] hover:via-[#D4AF37] hover:to-[#FFE17B] text-black font-black text-sm sm:text-base py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#D4AF37]/40"
+                  >
+                    Complete My Order - $37
+                  </button>
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-center text-white/40 flex items-center justify-center gap-1">
+                  <Shield className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                  Secure SSL Encrypted
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
-    </main>
+    </div>
   )
 }

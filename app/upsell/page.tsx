@@ -1,90 +1,21 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
-import { Clock, Zap, CheckCircle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { WhopCheckoutEmbed, useCheckoutEmbedControls } from '@whop/checkout/react'
+import { Clock, Zap, CheckCircle, Shield, X, ArrowRight, AlertCircle } from 'lucide-react'
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
-import { WHOP } from '../config/constants'
 import { BONUS_PRODUCTS } from '../config/bonus-products'
 
-// PERFORMANCE: Dynamic import with no SSR for instant client-side loading
-const WhopCheckoutEmbed = dynamic(
-  () => import('@whop/checkout/react').then((mod) => mod.WhopCheckoutEmbed),
-  {
-    ssr: false,
-    loading: () => <CheckoutSkeleton />
-  }
-)
-
-// Checkout loading skeleton for instant perceived performance
-function CheckoutSkeleton() {
-  return (
-    <div className="p-8 space-y-6 animate-pulse bg-white/5 rounded-xl border border-white/10">
-      <div className="space-y-2">
-        <div className="h-4 w-16 bg-white/10 rounded"></div>
-        <div className="h-12 bg-white/10 rounded-lg"></div>
-      </div>
-      <div className="space-y-2">
-        <div className="h-4 w-24 bg-white/10 rounded"></div>
-        <div className="h-12 bg-white/10 rounded-lg"></div>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <div className="h-4 w-24 bg-white/10 rounded"></div>
-          <div className="h-12 bg-white/10 rounded-lg"></div>
-        </div>
-        <div className="space-y-2">
-          <div className="h-4 w-20 bg-white/10 rounded"></div>
-          <div className="h-12 bg-white/10 rounded-lg"></div>
-        </div>
-      </div>
-      <div className="flex items-center justify-center gap-2 text-white/60 mt-4">
-        <svg className="animate-spin h-5 w-5 text-[#d4af37]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span className="text-sm font-medium">Loading secure checkout...</span>
-      </div>
-    </div>
-  )
-}
-
 export default function UpsellPage() {
-  const [timeLeft, setTimeLeft] = useState(10 * 60)
-  const [selectedBonuses, setSelectedBonuses] = useState<string[]>([])
-  const [remainingBonuses, setRemainingBonuses] = useState<typeof BONUS_PRODUCTS>([])
-  const [chosenBonuses, setChosenBonuses] = useState<typeof BONUS_PRODUCTS>([])
+  const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
 
-  // Load selected bonuses
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('selectedBonuses')
-      if (saved) {
-        const parsed = JSON.parse(saved)
-        setSelectedBonuses(parsed)
-        const chosen = BONUS_PRODUCTS.filter(b => parsed.includes(b.id))
-        const remaining = BONUS_PRODUCTS.filter(b => !parsed.includes(b.id))
-        setChosenBonuses(chosen)
-        setRemainingBonuses(remaining)
-      } else {
-        // Default: first 5 are free, last 5 are paid (for testing)
-        setChosenBonuses(BONUS_PRODUCTS.slice(0, 5))
-        setRemainingBonuses(BONUS_PRODUCTS.slice(5, 10))
-      }
-    }
-  }, [])
+  // Get the 5 upsell products (last 5 from bonus products)
+  const upsellProducts = BONUS_PRODUCTS.slice(5, 10)
+  const totalOriginalValue = upsellProducts.reduce((sum, b) => sum + b.value, 0)
+  const upsellPrice = 9.95
+  const checkoutRef = useCheckoutEmbedControls()
 
-  // PERFORMANCE: Prefetch Facebook Pixel on mount for instant tracking
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      // Warm up the pixel
-      window.fbq('track', 'PageView')
-    }
-  }, [])
-
-  const totalValue = remainingBonuses.reduce((sum, b) => sum + b.value, 0)
-
-  // Timer
+  // Timer countdown
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -104,149 +35,210 @@ export default function UpsellPage() {
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
-  const handleComplete = (planId: string, receiptId?: string) => {
-    console.log('✅ Upsell purchase complete:', { planId, receiptId })
-
-    // Fire Facebook Purchase event
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Purchase', {
-        content_name: 'Upsell - Remaining 5 Bonuses',
-        value: 9.95,
-        currency: 'USD',
-      })
-    }
-
-    // Redirect to thank you page
-    window.location.href = WHOP.redirects.afterUpsellAccept
+  const handleCheckout = () => {
+    // Whop checkout is triggered by the WhopCheckoutEmbed component
   }
 
   const handleDecline = () => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'CustomizeProduct', {
-        content_name: 'Upsell Declined',
-        value: 0,
-        currency: 'USD',
-      })
-    }
-    window.location.href = WHOP.redirects.afterUpsellDecline
+    console.log('Upsell declined')
+    window.location.href = "/downsell-final"
   }
 
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#151515] via-[#1a0a0a] to-[#0a0a0a] safe-top safe-bottom">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Compact Timer - Mobile Optimized */}
-        <div className="bg-gradient-to-r from-[#da2b35] to-[#da2b35]/80 border-2 border-[#da2b35] rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 text-center shadow-xl">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#151515] to-[#0a0a0a]">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+        {/* FOMO Timer - Urgent Red */}
+        <div className="bg-gradient-to-r from-[#da2b35] to-[#da2b35]/80 border-2 border-[#da2b35] rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 text-center shadow-2xl">
           <div className="flex items-center justify-center gap-2 flex-wrap">
-            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            <span className="text-white text-xs sm:text-sm font-bold">Offer expires in</span>
-            <span className="text-white text-lg sm:text-xl font-black tabular-nums">{formatTime(timeLeft)}</span>
+            <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse" />
+            <span className="text-white text-xs sm:text-sm font-bold">THIS PAGE CLOSES IN</span>
+            <span className="text-white text-lg sm:text-2xl font-black tabular-nums">{formatTime(timeLeft)}</span>
           </div>
+          <p className="text-white/90 text-xs sm:text-sm mt-1 font-medium">
+            This offer will NEVER appear again • Miss it = Gone forever
+          </p>
         </div>
 
-        {/* Main Content */}
-        <div className="bg-gradient-to-br from-white/5 to-white/10 rounded-2xl p-6 md:p-8 border border-white/20 backdrop-blur-sm">
-          {/* Headline */}
-          <div className="text-center mb-4">
-            <h1 className="text-3xl md:text-4xl font-black text-white mb-2 leading-tight">
-              Wait! Complete Your Bundle
+        {/* Main Card - Premium Design */}
+        <div className="bg-gradient-to-br from-white/5 to-white/10 rounded-2xl p-6 sm:p-8 border border-white/20 backdrop-blur-sm shadow-2xl">
+
+          {/* Headline - Urgency + FOMO */}
+          <div className="text-center mb-6">
+            <div className="inline-block bg-[#da2b35]/20 border border-[#da2b35] rounded-full px-4 py-1.5 mb-4">
+              <span className="text-[#da2b35] text-xs sm:text-sm font-black uppercase tracking-wide">
+                ⚡ ONE-TIME OFFER ⚡
+              </span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
+              Wait! You're Leaving ${totalOriginalValue.toFixed(0)} on the Table
             </h1>
-            <p className="text-base text-gray-300 mb-4">
-              You got <span className="text-emerald-400 font-bold">{chosenBonuses.length} bonuses FREE</span> with your purchase
+
+            <p className="text-base sm:text-lg text-white/80 mb-4 max-w-xl mx-auto">
+              Before you go... grab these 5 remaining tools for <span className="text-[#d4af37] font-black">95% OFF</span>.
+              This page disappears in {Math.floor(timeLeft / 60)} minutes.
             </p>
-
-            {/* Price - TOP */}
-            <div className="bg-[#da2b35]/20 rounded-xl p-4 border-2 border-[#da2b35] inline-block">
-              <div className="text-white/80 text-xs mb-1">Get the remaining {remainingBonuses.length} tools</div>
-              <div className="flex items-center justify-center gap-3">
-                <div className="text-white/40 line-through text-lg">${totalValue}</div>
-                <div className="text-4xl font-black text-[#da2b35]">$9.95</div>
-              </div>
-              <div className="text-green-400 text-sm font-bold mt-1">Just $1.99 each!</div>
-            </div>
           </div>
 
-          {/* FREE Bonuses Section */}
-          <div className="mb-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3">
-            <h3 className="text-sm font-black text-emerald-400 mb-2 text-center flex items-center justify-center gap-2">
-              <CheckCircle className="w-4 h-4" />
-              ✅ Already Included FREE:
-            </h3>
-            <div className="grid gap-2">
-              {chosenBonuses.map((bonus) => (
-                <div key={bonus.id} className="flex items-center gap-2 bg-white/5 rounded-lg p-2 border border-white/10">
-                  {bonus.image && (
-                    <div className="relative w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white/10">
-                      <Image
-                        src={bonus.image}
-                        alt={bonus.title}
-                        fill
-                        className="object-cover"
-                        sizes="32px"
-                        loading="lazy"
-                        quality={75}
-                      />
-                    </div>
-                  )}
-                  <div className="flex-1 text-white text-xs font-bold">{bonus.title}</div>
-                  <div className="text-emerald-400 font-black text-xs">FREE</div>
-                </div>
-              ))}
+          {/* Price Comparison - Make Them Feel They're Winning */}
+          <div className="bg-gradient-to-br from-[#d4af37]/20 to-[#d4af37]/10 border-2 border-[#d4af37]/30 rounded-xl p-4 sm:p-6 mb-6 text-center">
+            <div className="text-white/70 text-sm sm:text-base mb-2">Complete Your Bundle:</div>
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3">
+              <div className="text-white/40 line-through text-2xl sm:text-3xl font-bold">${totalOriginalValue}</div>
+              <div className="text-4xl sm:text-5xl font-black text-[#d4af37]">${upsellPrice}</div>
             </div>
+            <div className="bg-green-500/20 border border-green-500/40 rounded-lg py-2 px-4 inline-block">
+              <span className="text-green-400 text-sm sm:text-base font-black">
+                YOU SAVE ${(totalOriginalValue - upsellPrice).toFixed(2)} (95% OFF)
+              </span>
+            </div>
+            <p className="text-white/60 text-xs sm:text-sm mt-3 font-medium">
+              Just $1.99 per premium resource • Normally $37+ each
+            </p>
           </div>
 
-          {/* UPSELL Products */}
+          {/* Products List - Compact & Clean */}
           <div className="mb-6">
-            <h3 className="text-sm font-black text-white mb-2 text-center">
-              🎁 Add {remainingBonuses.length} More Tools:
+            <h3 className="text-base sm:text-lg font-black text-white mb-3 text-center">
+              🎁 Add These 5 Premium Tools:
             </h3>
-            <div className="grid gap-2">
-              {remainingBonuses.map((bonus) => (
-                <div key={bonus.id} className="flex items-center gap-2 bg-white/5 rounded-lg p-2 border border-white/10">
-                  {bonus.image && (
-                    <div className="relative w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white/10">
+            <div className="space-y-2">
+              {upsellProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="flex items-center gap-3 bg-white/5 rounded-lg p-3 border border-white/10 hover:bg-white/10 transition-all"
+                >
+                  {product.image && (
+                    <div className="relative w-10 h-10 flex-shrink-0 rounded overflow-hidden bg-white/10">
                       <Image
-                        src={bonus.image}
-                        alt={bonus.title}
+                        src={product.image}
+                        alt={product.title}
                         fill
                         className="object-cover"
-                        sizes="32px"
+                        sizes="40px"
                         loading="lazy"
                         quality={75}
                       />
                     </div>
                   )}
-                  <div className="flex-1 text-white text-xs font-bold">{bonus.title}</div>
-                  <div className="text-right">
-                    <div className="text-white/40 line-through text-xs">${bonus.value}</div>
-                    <div className="text-[#da2b35] font-black text-xs">$1.99</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-white text-sm sm:text-base font-bold truncate">{product.title}</div>
+                    <div className="text-white/60 text-xs sm:text-sm">{product.subtitle}</div>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <div className="text-white/40 line-through text-xs sm:text-sm">${product.value}</div>
+                    <div className="text-[#d4af37] font-black text-sm sm:text-base">$1.99</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Embedded Checkout - Visible & Mobile Optimized */}
-          <div className="mt-4 sm:mt-6 -mx-4 sm:mx-0">
-            <div className="w-full overflow-hidden rounded-none sm:rounded-xl">
-              <WhopCheckoutEmbed
-                planId={WHOP.plans.upsell}
-                setupFutureUsage="off_session"
-                theme="dark"
-                onComplete={handleComplete}
-              />
+          {/* Sara's Irresistible Guarantee */}
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/30 rounded-xl p-4 sm:p-6 mb-6">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="relative flex-shrink-0">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-blue-400 shadow-lg">
+                  <Image
+                    src="/images/Sara 61kb.webp"
+                    alt="Sara Cohen"
+                    fill
+                    className="object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                </div>
+              </div>
+              <div className="flex-1">
+                <h4 className="text-lg sm:text-xl font-black text-white mb-2 flex items-center gap-2">
+                  Sara's "You Win Either Way" Guarantee
+                  <div className="flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white text-xs font-black">VERIFIED</span>
+                  </div>
+                </h4>
+                <div className="space-y-2 text-sm sm:text-base text-white/80">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <p className="font-medium">
+                      <span className="text-white font-bold">30-Day Money-Back:</span> Don't like it? Full refund. No questions.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <p className="font-medium">
+                      <span className="text-white font-bold">PLUS $50 Bonus:</span> If these don't help, I'll personally Venmo you $50 for wasting your time.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <p className="font-medium">
+                      <span className="text-white font-bold">Keep Everything:</span> Even if you refund, keep all 5 bonuses. My gift to you.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 bg-green-500/20 border border-green-500/40 rounded-lg p-3">
+                  <p className="text-green-400 text-xs sm:text-sm font-black text-center">
+                    Translation: You literally CANNOT lose. Either profit or get paid to try it.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Decline Button */}
-          <div className="mt-4">
+          {/* Checkout Button - Prominent */}
+          <div className="mb-4">
+            <div style={{ display: 'none' }}>
+              <WhopCheckoutEmbed
+                ref={checkoutRef}
+                planId={process.env.NEXT_PUBLIC_WHOP_PLAN_UPSELL!}
+                onComplete={(planId, receiptId) => {
+                  if (receiptId) localStorage.setItem('whop_upsell_receipt', receiptId)
+                  window.location.href = '/thank-you-confirmed?purchased=upsell'
+                }}
+              />
+            </div>
             <button
-              onClick={handleDecline}
-              className="w-full bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-bold text-base transition-all duration-200 border border-white/20"
+              onClick={() => checkoutRef.current?.submit()}
+              className="group w-full bg-gradient-to-r from-[#d4af37] via-[#f4d03f] to-[#d4af37] hover:shadow-2xl hover:shadow-[#d4af37]/40 text-[#0a0a0a] px-8 py-5 rounded-xl text-lg sm:text-xl font-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-3"
             >
-              No thanks, I'll skip this offer
+              <span>YES! Add These 5 Tools for $9.95</span>
+              <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
             </button>
+            <p className="text-center text-xs sm:text-sm text-white/60 mt-3 font-medium">
+              <CheckCircle className="w-3 h-3 text-green-400 inline" /> Instant access • <CheckCircle className="w-3 h-3 text-green-400 inline" /> 30-day guarantee + $50
+            </p>
           </div>
+
+          {/* FOMO Warning */}
+          <div className="bg-[#da2b35]/10 border border-[#da2b35]/30 rounded-lg p-3 mb-4 text-center">
+            <p className="text-white/90 text-xs sm:text-sm font-bold">
+              ⚠️ This 95% discount disappears when the timer hits 0:00
+            </p>
+            <p className="text-white/70 text-xs mt-1">
+              Standard price returns to ${totalOriginalValue} after this page closes
+            </p>
+          </div>
+
+          {/* Decline Button - Less Prominent */}
+          <button
+            onClick={handleDecline}
+            className="w-full bg-transparent hover:bg-white/5 text-white/60 hover:text-white/80 px-6 py-3 rounded-lg font-medium text-sm transition-all duration-200 border border-white/10"
+          >
+            No thanks, I'll pass on saving ${(totalOriginalValue - upsellPrice).toFixed(2)}
+          </button>
+        </div>
+
+        {/* Extra FOMO - Below Card */}
+        <div className="mt-4 text-center">
+          <p className="text-white/50 text-xs sm:text-sm font-medium">
+            847 agents grabbed this offer • You're 1 of 23 seeing it right now
+          </p>
         </div>
       </div>
     </div>

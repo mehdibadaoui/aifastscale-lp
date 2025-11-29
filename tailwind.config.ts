@@ -9,7 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Entrepedia Design System - EXACT MATCH
+        // LUXURY GOLD + BLACK DESIGN SYSTEM
+        'luxury-gold': '#D4AF37',        // 24k gold primary
+        'luxury-gold-light': '#F4E5C2',  // champagne accent
+        'luxury-gold-dark': '#B8941E',   // deep gold
+        'luxury-gold-pale': '#FAF8F3',   // cream
+        'luxury-black': '#0A0A0A',       // rich black
+        'luxury-charcoal': '#1A1A1A',    // charcoal
+        'luxury-graphite': '#2D2D2D',    // graphite
+        'luxury-pearl': '#F8F9FA',       // pearl white
+        'luxury-silver': '#C0C0C0',      // silver accent
+        'luxury-platinum': '#E5E5E5',    // platinum
+
+        // Keeping old colors for backward compatibility
         'entrepedia-red': '#da2b35',
         'entrepedia-red-hover': '#b71e27',
         'entrepedia-dark': '#151515',
@@ -18,8 +30,6 @@ const config: Config = {
         'entrepedia-gray-100': '#e6e6e6',
         'entrepedia-gray-400': '#8b8b8b',
         'entrepedia-gray-600': '#5e5e5e',
-
-        // Original colors (keeping for backward compatibility)
         'navy-deep': '#0a1128',
         'navy-rich': '#1c2541',
         'navy-medium': '#2d3e5f',
