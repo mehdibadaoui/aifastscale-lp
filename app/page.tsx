@@ -129,6 +129,18 @@ export default function LuxuryLanding() {
     }
   }, [isModalOpen])
 
+  // DEBUG: Log checkout configuration on mount
+  useEffect(() => {
+    console.log('=== CHECKOUT CONFIGURATION ===')
+    console.log('NEXT_PUBLIC_WHOP_PLAN_MAIN:', process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN)
+    console.log('checkoutRef:', checkoutRef)
+    console.log('All env vars:', {
+      MAIN: process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN,
+      UPSELL: process.env.NEXT_PUBLIC_WHOP_PLAN_UPSELL,
+      DOWNSELL: process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL,
+    })
+  }, [])
+
   const faqs = [
     {
       q: 'Does this really take only 7 minutes?',
@@ -2349,7 +2361,19 @@ export default function LuxuryLanding() {
                     />
                   </div>
                   <button
-                    onClick={() => checkoutRef.current?.submit()}
+                    onClick={() => {
+                      console.log('=== CHECKOUT BUTTON CLICKED ===')
+                      console.log('checkoutRef.current:', checkoutRef.current)
+                      console.log('planId:', process.env.NEXT_PUBLIC_WHOP_PLAN_MAIN)
+                      console.log('selectedBonuses:', selectedBonuses)
+                      if (!checkoutRef.current) {
+                        console.error('ERROR: checkoutRef.current is null/undefined')
+                        alert('Checkout initialization failed. Please refresh the page.')
+                        return
+                      }
+                      console.log('Calling checkoutRef.current.submit()')
+                      checkoutRef.current.submit()
+                    }}
                     className="w-full bg-gradient-to-r from-[#D4AF37] via-[#FFE17B] to-[#D4AF37] hover:from-[#FFE17B] hover:via-[#D4AF37] hover:to-[#FFE17B] text-black font-black text-sm sm:text-base py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#D4AF37]/40"
                   >
                     Complete My Order - $37

@@ -209,7 +209,6 @@ export default function DownsellFinalPage() {
                 <div style={{ display: 'none' }}>
                   <WhopCheckoutEmbed
                     ref={checkoutRef}
-                    apiKey={process.env.NEXT_PUBLIC_WHOP_API_KEY!}
                     planId={process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL!}
                     onComplete={(planId, receiptId) => {
                       if (receiptId) localStorage.setItem('whop_downsell_receipt', receiptId)

@@ -196,7 +196,6 @@ export default function UpsellPage() {
             <div style={{ display: 'none' }}>
               <WhopCheckoutEmbed
                 ref={checkoutRef}
-                apiKey={process.env.NEXT_PUBLIC_WHOP_API_KEY!}
                 planId={process.env.NEXT_PUBLIC_WHOP_PLAN_UPSELL!}
                 onComplete={(planId, receiptId) => {
                   if (receiptId) localStorage.setItem('whop_upsell_receipt', receiptId)
