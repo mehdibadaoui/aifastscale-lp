@@ -280,7 +280,7 @@ export default function RootLayout({
         className={`${poppins.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
         {/* Lazy load tracking pixels after window load + 10s for maximum performance */}
-        {/* <LazyTrackingPixels /> */}
+        <LazyTrackingPixels />
         {children}
       </body>
     </html>
