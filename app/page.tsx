@@ -1851,7 +1851,7 @@ export default function LuxuryLanding() {
 
             <div className="grid md:grid-cols-2 gap-5 sm:gap-8 mb-6 sm:mb-8">
               <div className="relative w-full aspect-square max-w-[280px] sm:max-w-md mx-auto rounded-2xl overflow-hidden border-2 border-luxury-gold/30">
-                <Image src="/images/Sara 61kb.webp" alt="Sara" fill sizes="(max-width: 768px) 280px, 448px" className="object-cover" loading="lazy" priority />
+                <Image src="/images/Sara 61kb.webp" alt="Sara" fill sizes="(max-width: 768px) 280px, 448px" className="object-cover" />
               </div>
 
               <div className="space-y-4 sm:space-y-5">
