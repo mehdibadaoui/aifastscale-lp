@@ -240,14 +240,14 @@ export default function LuxuryLanding() {
               <span className="luxury-text-gradient">Talking AI Videos</span>
               <br />
               <span className="text-white">& Generate </span>
-              <span className="text-emerald-400">100+ Monthly Leads</span>
+              <span className="luxury-text-gradient">100+ Monthly Leads</span>
             </h1>
 
             {/* SUBHEADLINE - Social Proof Focused */}
             <p className="text-sm sm:text-xl md:text-2xl text-white/70 max-w-3xl mx-auto mb-5 sm:mb-8 leading-relaxed font-medium px-2">
               <span className="text-luxury-gold font-black">800+ agents</span> use the AgentClone system to scale to
               <span className="text-white font-bold"> 7 figures</span> — without recording videos, with
-              <span className="text-emerald-400 font-bold"> zero experience</span>
+              <span className="text-luxury-gold font-bold"> zero experience</span>
             </p>
 
             {/* HERO IMAGE - Compact */}
