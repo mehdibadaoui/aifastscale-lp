@@ -265,13 +265,6 @@ export default function LuxuryLanding() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/40 via-transparent to-transparent"></div>
 
-                  {/* Play button - Smaller on mobile */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-luxury-gold/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-2xl">
-                      <Play className="w-5 h-5 sm:w-7 sm:h-7 text-luxury-black ml-0.5" fill="currentColor" />
-                    </div>
-                  </div>
-
                   {/* Result badge - Compact */}
                   <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4">
                     <div className="bg-black/70 backdrop-blur-md border border-white/20 rounded-md px-2 py-1 sm:px-3 sm:py-1.5">
