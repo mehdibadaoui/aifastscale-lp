@@ -51,6 +51,7 @@ export default function LuxuryLanding() {
   const [isMounted, setIsMounted] = useState(false)
   const [showAllReviews, setShowAllReviews] = useState(false)
   const [copiedText, setCopiedText] = useState<string | null>(null)
+  const [showWhatIs, setShowWhatIs] = useState(false)
   const bonusGridRef = useRef<HTMLDivElement>(null)
   // Checkout handler - ready for new payment gateway integration
 
@@ -299,7 +300,7 @@ export default function LuxuryLanding() {
             {/* Trust Elements - Compact */}
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[10px] sm:text-xs text-white/40">
               <div className="flex items-center gap-1">
-                <Shield className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-400" />
+                <Shield className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-luxury-gold" />
                 <span>30-day + $50 back</span>
               </div>
               <div className="flex items-center gap-1">
@@ -307,8 +308,32 @@ export default function LuxuryLanding() {
                 <span>Instant access</span>
               </div>
               <div className="flex items-center gap-1">
-                <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-400" />
+                <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-luxury-gold" />
                 <span>7 minutes</span>
+              </div>
+            </div>
+
+            {/* What is AgentClone? - Collapsible Info */}
+            <div className="mt-6 sm:mt-8 max-w-xl mx-auto">
+              <button
+                onClick={() => setShowWhatIs(!showWhatIs)}
+                className="group flex items-center justify-center gap-2 text-white/40 hover:text-white/60 transition-colors mx-auto text-[11px] sm:text-sm"
+              >
+                <span className="border-b border-dashed border-white/20 group-hover:border-white/40 transition-colors">
+                  What is the AgentClone System?
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 ${showWhatIs ? 'rotate-180' : ''}`} />
+              </button>
+
+              <div className={`overflow-hidden transition-all duration-500 ease-out ${showWhatIs ? 'max-h-[500px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 sm:p-5">
+                  <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
+                    <span className="text-white font-semibold">AgentClone</span> is an AI system that creates talking videos of you from a single photo. You upload one image, type what you want to say, and the AI generates a realistic video of "you" speaking — no camera, no filming, no editing required.
+                  </p>
+                  <p className="text-white/50 text-[11px] sm:text-xs mt-3">
+                    Real estate agents use it to create listing videos, market updates, and social content in minutes instead of hours.
+                  </p>
+                </div>
               </div>
             </div>
 
