@@ -6,7 +6,7 @@ import { Loader2 } from 'lucide-react'
 
 interface WhopCheckoutProps {
   planType: PlanType
-  onComplete?: (planId: string, receiptId: string) => void
+  onComplete?: (plan_id: string, receipt_id?: string) => void
   className?: string
 }
 
