@@ -449,7 +449,7 @@ export default function LuxuryLanding() {
       </section>
 
       {/* BONUS MODE SELECTOR - PREMIUM REDESIGN */}
-      <section id="bonus-selector" className="relative py-8 sm:py-16 md:py-20 bg-luxury-black overflow-hidden">
+      <section id="bonus-selector" className="relative py-5 sm:py-16 md:py-20 bg-luxury-black overflow-hidden">
         {/* Premium Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-luxury-black via-luxury-graphite to-luxury-black opacity-90"></div>
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-3xl"></div>
@@ -458,35 +458,35 @@ export default function LuxuryLanding() {
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-7xl mx-auto">
             {/* Premium Header */}
-            <div className="text-center mb-6 sm:mb-10">
-              <div className="inline-block mb-4 sm:mb-5">
-                <div className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-luxury-gold/20 via-luxury-gold/10 to-luxury-gold/20 backdrop-blur-sm border border-luxury-gold/30 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-luxury-gold rounded-full animate-pulse"></div>
-                  <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold" />
-                  <span className="text-luxury-gold font-black text-xs sm:text-sm tracking-widest">BUILD YOUR EXCLUSIVE BUNDLE</span>
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-luxury-gold rounded-full animate-pulse"></div>
+            <div className="text-center mb-4 sm:mb-10">
+              <div className="inline-block mb-2 sm:mb-5">
+                <div className="flex items-center gap-1.5 sm:gap-3 bg-gradient-to-r from-luxury-gold/20 via-luxury-gold/10 to-luxury-gold/20 backdrop-blur-sm border border-luxury-gold/30 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full">
+                  <div className="w-1 h-1 sm:w-2 sm:h-2 bg-luxury-gold rounded-full animate-pulse"></div>
+                  <Gift className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-luxury-gold" />
+                  <span className="text-luxury-gold font-black text-[10px] sm:text-sm tracking-widest">BUILD YOUR EXCLUSIVE BUNDLE</span>
+                  <div className="w-1 h-1 sm:w-2 sm:h-2 bg-luxury-gold rounded-full animate-pulse"></div>
                 </div>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-league-spartan font-black mb-4 sm:mb-5 leading-tight px-4">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-league-spartan font-black mb-2 sm:mb-5 leading-tight px-2">
                 <span className="text-white">Choose Your </span>
-                <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold bg-clip-text text-transparent">
+                <span className="block mt-0.5 sm:mt-2 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold bg-clip-text text-transparent">
                   5 Premium Bonuses
                 </span>
               </h2>
 
-              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 px-4">
-                <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-luxury-gold"></div>
-                <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-semibold">
-                  Worth up to <span className="text-luxury-gold font-black text-2xl sm:text-3xl">$325</span>
+              <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-1.5 sm:mb-3 px-2">
+                <div className="h-px w-6 sm:w-12 bg-gradient-to-r from-transparent to-luxury-gold"></div>
+                <p className="text-sm sm:text-xl md:text-2xl text-gray-300 font-semibold">
+                  Worth up to <span className="text-luxury-gold font-black text-lg sm:text-3xl">$325</span>
                 </p>
-                <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-luxury-gold"></div>
+                <div className="h-px w-6 sm:w-12 bg-gradient-to-l from-transparent to-luxury-gold"></div>
               </div>
-              <p className="text-base sm:text-lg text-gray-400">100% FREE when you join today</p>
+              <p className="text-xs sm:text-lg text-gray-400">100% FREE when you join today</p>
             </div>
 
             {/* Premium Cards Grid */}
-            <div className="grid lg:grid-cols-2 gap-5 sm:gap-7 max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-3 sm:gap-7 max-w-6xl mx-auto">
               {/* SARA'S EXPERT SELECTION - Premium Card */}
               <div className="group relative">
                 {/* Premium Badge */}
@@ -502,50 +502,50 @@ export default function LuxuryLanding() {
                 </div>
 
                 {/* Main Card */}
-                <div className="relative mt-6 sm:mt-7 bg-gradient-to-br from-white via-luxury-pearl to-luxury-gold-pale rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-luxury-gold/50 hover:border-luxury-gold transition-all duration-500 hover:shadow-luxury-gold/20 hover:shadow-3xl hover:-translate-y-2">
+                <div className="relative mt-4 sm:mt-7 bg-gradient-to-br from-white via-luxury-pearl to-luxury-gold-pale rounded-xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-luxury-gold/50 hover:border-luxury-gold transition-all duration-500 hover:shadow-luxury-gold/20 hover:shadow-3xl hover:-translate-y-2">
                   {/* Decorative Corner */}
-                  <div className="absolute top-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-br from-luxury-gold/20 to-transparent rounded-bl-full"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-tr from-luxury-gold/20 to-transparent rounded-tr-full"></div>
+                  <div className="absolute top-0 right-0 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-br from-luxury-gold/20 to-transparent rounded-bl-full"></div>
+                  <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-tr from-luxury-gold/20 to-transparent rounded-tr-full"></div>
 
-                  <div className="relative p-5 sm:p-7 md:p-8">
+                  <div className="relative p-3 sm:p-7 md:p-8">
                     {/* Premium Icon */}
-                    <div className="mb-5 sm:mb-6">
+                    <div className="mb-3 sm:mb-6">
                       <div className="relative inline-block">
-                        <div className="absolute inset-0 bg-luxury-gold rounded-2xl sm:rounded-3xl blur-xl opacity-30 animate-pulse"></div>
-                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 bg-gradient-to-br from-luxury-gold via-luxury-gold-light to-luxury-gold-dark rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl border-3 sm:border-4 border-white">
-                          <Gift className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" strokeWidth={2.5} />
+                        <div className="absolute inset-0 bg-luxury-gold rounded-xl sm:rounded-3xl blur-xl opacity-30 animate-pulse"></div>
+                        <div className="relative w-10 h-10 sm:w-16 sm:h-16 md:w-18 md:h-18 bg-gradient-to-br from-luxury-gold via-luxury-gold-light to-luxury-gold-dark rounded-xl sm:rounded-3xl flex items-center justify-center shadow-2xl border-2 sm:border-4 border-white">
+                          <Gift className="w-5 h-5 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" strokeWidth={2.5} />
                         </div>
                       </div>
                     </div>
 
                     {/* Title & Description */}
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black mb-3 sm:mb-4 text-luxury-black leading-tight">
+                    <h3 className="text-lg sm:text-3xl md:text-4xl font-league-spartan font-black mb-2 sm:mb-4 text-luxury-black leading-tight">
                       Sara's Expert<br />Selection
                     </h3>
 
-                    <p className="text-base sm:text-lg text-gray-700 mb-5 sm:mb-6 leading-relaxed">
+                    <p className="text-xs sm:text-lg text-gray-700 mb-3 sm:mb-6 leading-relaxed">
                       I've personally curated the <span className="font-black text-luxury-gold">top 4 highest-performing</span> resources — you simply choose your 5th bonus
                     </p>
 
                     {/* Premium Benefits */}
-                    <div className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
-                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/60 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                    <div className="space-y-1.5 sm:space-y-3 mb-3 sm:mb-8">
+                      <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3.5 bg-white/60 rounded-lg sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-md sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-3 h-3 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
                         </div>
-                        <span className="text-sm sm:text-base font-bold text-luxury-black leading-snug">Top 4 resources pre-selected based on 847+ success stories</span>
+                        <span className="text-[11px] sm:text-base font-bold text-luxury-black leading-snug">Top 4 resources pre-selected based on 847+ success stories</span>
                       </div>
-                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/60 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                      <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3.5 bg-white/60 rounded-lg sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-md sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-3 h-3 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
                         </div>
-                        <span className="text-sm sm:text-base font-bold text-luxury-black leading-snug">You pick your 5th from remaining premium options</span>
+                        <span className="text-[11px] sm:text-base font-bold text-luxury-black leading-snug">You pick your 5th from remaining premium options</span>
                       </div>
-                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/60 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                      <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3.5 bg-white/60 rounded-lg sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-md sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-3 h-3 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
                         </div>
-                        <span className="text-sm sm:text-base font-bold text-luxury-black leading-snug">Complete in 30 seconds — zero decision fatigue</span>
+                        <span className="text-[11px] sm:text-base font-bold text-luxury-black leading-snug">Complete in 30 seconds — zero decision fatigue</span>
                       </div>
                     </div>
 
@@ -555,18 +555,18 @@ export default function LuxuryLanding() {
                         setSelectedMode('expert')
                         setSelectedBonuses(TOP_4_BONUSES)
                       }}
-                      className="group/btn relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
+                      className="group/btn relative w-full overflow-hidden rounded-lg sm:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold"></div>
                       <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold-dark via-luxury-gold to-luxury-gold-light opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                      <div className="relative px-6 py-3.5 sm:px-7 sm:py-4 md:px-8 md:py-4.5 flex items-center justify-center gap-2 sm:gap-3">
-                        <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" />
-                        <span className="font-league-spartan font-black text-lg sm:text-xl text-luxury-black">Let Sara Choose</span>
-                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black group-hover/btn:translate-x-1 transition-transform" />
+                      <div className="relative px-4 py-2.5 sm:px-7 sm:py-4 md:px-8 md:py-4.5 flex items-center justify-center gap-2 sm:gap-3">
+                        <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-luxury-black" />
+                        <span className="font-league-spartan font-black text-sm sm:text-xl text-luxury-black">Let Sara Choose</span>
+                        <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-luxury-black group-hover/btn:translate-x-1 transition-transform" />
                       </div>
                     </button>
 
-                    <p className="text-center text-xs sm:text-sm text-gray-600 mt-3 sm:mt-4 font-semibold">
+                    <p className="text-center text-[10px] sm:text-sm text-gray-600 mt-2 sm:mt-4 font-semibold">
                       ⭐ Most popular choice • 89% of agents select this
                     </p>
                   </div>
@@ -576,61 +576,61 @@ export default function LuxuryLanding() {
               {/* CUSTOM SELECTION - Premium Dark Card */}
               <div className="group relative">
                 {/* Premium Badge */}
-                <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
+                <div className="absolute -top-2 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-600 rounded-full blur-lg opacity-75"></div>
-                    <div className="relative bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full shadow-2xl border border-gray-600 flex items-center gap-2">
-                      <Target className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold" />
-                      <span className="text-white font-black text-xs sm:text-sm tracking-wider">FULL CONTROL</span>
+                    <div className="relative bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 px-3 py-1.5 sm:px-6 sm:py-2.5 rounded-full shadow-2xl border border-gray-600 flex items-center gap-1.5 sm:gap-2">
+                      <Target className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-luxury-gold" />
+                      <span className="text-white font-black text-[10px] sm:text-sm tracking-wider">FULL CONTROL</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Main Card */}
-                <div className="relative mt-6 sm:mt-7 bg-gradient-to-br from-luxury-black via-luxury-graphite to-gray-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700 hover:border-luxury-gold/50 transition-all duration-500 hover:shadow-luxury-gold/10 hover:shadow-3xl hover:-translate-y-2">
+                <div className="relative mt-4 sm:mt-7 bg-gradient-to-br from-luxury-black via-luxury-graphite to-gray-900 rounded-xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700 hover:border-luxury-gold/50 transition-all duration-500 hover:shadow-luxury-gold/10 hover:shadow-3xl hover:-translate-y-2">
                   {/* Decorative Elements */}
-                  <div className="absolute top-0 right-0 w-40 h-40 sm:w-64 sm:h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
-                  <div className="absolute bottom-0 left-0 w-40 h-40 sm:w-64 sm:h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-64 sm:h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
 
-                  <div className="relative p-5 sm:p-7 md:p-8">
+                  <div className="relative p-3 sm:p-7 md:p-8">
                     {/* Premium Icon */}
-                    <div className="mb-5 sm:mb-6">
+                    <div className="mb-3 sm:mb-6">
                       <div className="relative inline-block">
-                        <div className="absolute inset-0 bg-luxury-gold/30 rounded-2xl sm:rounded-3xl blur-xl animate-pulse"></div>
-                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 bg-gradient-to-br from-gray-800 to-luxury-black rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-2xl border-3 sm:border-4 border-luxury-gold">
-                          <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-luxury-gold" strokeWidth={2.5} />
+                        <div className="absolute inset-0 bg-luxury-gold/30 rounded-xl sm:rounded-3xl blur-xl animate-pulse"></div>
+                        <div className="relative w-10 h-10 sm:w-16 sm:h-16 md:w-18 md:h-18 bg-gradient-to-br from-gray-800 to-luxury-black rounded-xl sm:rounded-3xl flex items-center justify-center shadow-2xl border-2 sm:border-4 border-luxury-gold">
+                          <Sparkles className="w-5 h-5 sm:w-8 sm:h-8 md:w-9 md:h-9 text-luxury-gold" strokeWidth={2.5} />
                         </div>
                       </div>
                     </div>
 
                     {/* Title & Description */}
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black mb-3 sm:mb-4 text-white leading-tight">
+                    <h3 className="text-lg sm:text-3xl md:text-4xl font-league-spartan font-black mb-2 sm:mb-4 text-white leading-tight">
                       Custom<br />Selection
                     </h3>
 
-                    <p className="text-base sm:text-lg text-gray-300 mb-5 sm:mb-6 leading-relaxed">
+                    <p className="text-xs sm:text-lg text-gray-300 mb-3 sm:mb-6 leading-relaxed">
                       Browse all 10 premium resources and build a <span className="font-black text-luxury-gold">personalized bundle</span> based on your exact needs
                     </p>
 
                     {/* Premium Benefits */}
-                    <div className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8">
-                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/5 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                    <div className="space-y-1.5 sm:space-y-3 mb-3 sm:mb-8">
+                      <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3.5 bg-white/5 rounded-lg sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-md sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-3 h-3 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
                         </div>
-                        <span className="text-sm sm:text-base font-bold text-white leading-snug">View all 10 premium resources in the vault</span>
+                        <span className="text-[11px] sm:text-base font-bold text-white leading-snug">View all 10 premium resources in the vault</span>
                       </div>
-                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/5 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                      <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3.5 bg-white/5 rounded-lg sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-md sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-3 h-3 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
                         </div>
-                        <span className="text-sm sm:text-base font-bold text-white leading-snug">Mix content, tools & training categories freely</span>
+                        <span className="text-[11px] sm:text-base font-bold text-white leading-snug">Mix content, tools & training categories freely</span>
                       </div>
-                      <div className="flex items-start gap-3 p-3 sm:p-3.5 bg-white/5 rounded-xl sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
-                        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
+                      <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3.5 bg-white/5 rounded-lg sm:rounded-2xl backdrop-blur-sm border border-luxury-gold/20">
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-md sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Check className="w-3 h-3 sm:w-5 sm:h-5 text-white" strokeWidth={3} />
                         </div>
-                        <span className="text-sm sm:text-base font-bold text-white leading-snug">100% control over your personalized bundle</span>
+                        <span className="text-[11px] sm:text-base font-bold text-white leading-snug">100% control over your personalized bundle</span>
                       </div>
                     </div>
 
@@ -640,18 +640,18 @@ export default function LuxuryLanding() {
                         setSelectedMode('custom')
                         setSelectedBonuses([])
                       }}
-                      className="group/btn relative w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
+                      className="group/btn relative w-full overflow-hidden rounded-lg sm:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
                     >
                       <div className="absolute inset-0 bg-white"></div>
                       <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold-light via-white to-luxury-gold-light opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                      <div className="relative px-6 py-3.5 sm:px-7 sm:py-4 md:px-8 md:py-4.5 flex items-center justify-center gap-2 sm:gap-3">
-                        <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black" />
-                        <span className="font-league-spartan font-black text-lg sm:text-xl text-luxury-black">Browse All Options</span>
-                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black group-hover/btn:translate-x-1 transition-transform" />
+                      <div className="relative px-4 py-2.5 sm:px-7 sm:py-4 md:px-8 md:py-4.5 flex items-center justify-center gap-2 sm:gap-3">
+                        <Eye className="w-4 h-4 sm:w-6 sm:h-6 text-luxury-black" />
+                        <span className="font-league-spartan font-black text-sm sm:text-xl text-luxury-black">Browse All Options</span>
+                        <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-luxury-black group-hover/btn:translate-x-1 transition-transform" />
                       </div>
                     </button>
 
-                    <p className="text-center text-xs sm:text-sm text-gray-400 mt-3 sm:mt-4 font-semibold">
+                    <p className="text-center text-[10px] sm:text-sm text-gray-400 mt-2 sm:mt-4 font-semibold">
                       🎯 Perfect for agents who know exactly what they need
                     </p>
                   </div>
@@ -1501,10 +1501,15 @@ export default function LuxuryLanding() {
 
             {/* Premium Value Stack */}
             <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-10">
-              {/* Item 1 - Main Course */}
+              {/* Item 1 - Main Course with Sara Image */}
               <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Play className="w-5 h-5 sm:w-6 sm:h-6 text-luxury-black fill-luxury-black" />
+                <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl overflow-hidden flex-shrink-0 border-2 border-luxury-gold shadow-lg">
+                  <Image src="/images/VD-Course-demo.webp" alt="Sara AgentClone" fill className="object-cover" loading="lazy" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/90 rounded-full flex items-center justify-center">
+                      <Play className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-gold fill-luxury-gold ml-0.5" />
+                    </div>
+                  </div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-white font-black text-xs sm:text-base">AgentClone™ 7-Minute System</h4>
@@ -1556,13 +1561,31 @@ export default function LuxuryLanding() {
                   <div className="text-purple-400 font-black text-sm sm:text-lg">$297</div>
                 </div>
               </div>
+
+              {/* Item 5 - Mystery Box */}
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-orange-500/15 to-orange-500/[0.02] backdrop-blur-sm border border-orange-500/30 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-orange-500/50 transition-all relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5 animate-pulse"></div>
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-500/30">
+                  <Package className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </div>
+                <div className="relative flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-white font-black text-xs sm:text-base">Mystery Box</h4>
+                    <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-black animate-pulse">SECRET</span>
+                  </div>
+                  <p className="text-gray-400 text-[10px] sm:text-sm">Exclusive surprise revealed after purchase</p>
+                </div>
+                <div className="relative text-right flex-shrink-0">
+                  <div className="text-orange-400 font-black text-sm sm:text-lg">$500-$1,500</div>
+                </div>
+              </div>
             </div>
 
             {/* Total Value & Price */}
             <div className="bg-gradient-to-br from-luxury-gold/10 to-luxury-gold/5 border-2 border-luxury-gold/40 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
               <div className="flex items-center justify-between mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-luxury-gold/20">
                 <span className="text-gray-300 font-bold text-xs sm:text-base">Total Value</span>
-                <span className="text-white line-through text-lg sm:text-2xl font-black">$1,516</span>
+                <span className="text-white line-through text-lg sm:text-2xl font-black">$2,516+</span>
               </div>
 
               <div className="flex items-center justify-between">
