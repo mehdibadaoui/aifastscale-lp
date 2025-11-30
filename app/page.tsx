@@ -35,6 +35,7 @@ import {
 import Image from 'next/image'
 import { BONUS_PRODUCTS } from './config/bonus-products'
 import type { BonusProduct } from './config/bonus-products'
+import CheckoutModal from './components/CheckoutModal'
 
 // Top 4 pre-selected bonuses
 const TOP_4_BONUSES = ['90-day-blueprint', 'instagram-stories-templates', 'hooks-impossible-to-skip', 'instagram-dm-scripts']
@@ -48,6 +49,7 @@ export default function LuxuryLanding() {
   const [showMrLucasVideo, setShowMrLucasVideo] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [showAllReviews, setShowAllReviews] = useState(false)
   const [copiedText, setCopiedText] = useState<string | null>(null)
@@ -328,7 +330,7 @@ export default function LuxuryLanding() {
               <div className={`overflow-hidden transition-all duration-500 ease-out ${showWhatIs ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
                 <div className="bg-gradient-to-br from-luxury-gold/10 to-white/5 backdrop-blur-sm border border-luxury-gold/20 rounded-xl p-4 sm:p-5">
                   <p className="text-white text-xs sm:text-sm leading-relaxed mb-3">
-                    You upload <span className="text-luxury-gold font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in 2024.
+                    You upload <span className="text-luxury-gold font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in {new Date().getFullYear()}.
                   </p>
                   <p className="text-white/80 text-xs sm:text-sm leading-relaxed mb-3">
                     The AI transforms your photo into a <span className="text-luxury-gold font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
@@ -1650,21 +1652,23 @@ export default function LuxuryLanding() {
                 </div>
               </div>
 
-              {/* Item 2 - 5 Bonuses */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-luxury-gold/10 to-luxury-gold/[0.02] backdrop-blur-sm border border-luxury-gold/30 rounded-xl sm:rounded-xl p-3 sm:p-4 hover:border-luxury-gold/50 transition-all">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                  <Gift className="w-6 h-6 sm:w-7 sm:h-7 text-luxury-black" />
+              {/* Item 2 - 5 Premium Bonuses - EMERALD */}
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-emerald-500/10 to-emerald-500/[0.02] backdrop-blur-sm border border-emerald-500/30 rounded-xl sm:rounded-xl p-3 sm:p-4 hover:border-emerald-400/50 transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-white font-black text-xs sm:text-base">5 Premium Bonuses (You Choose)</h4>
                   <p className="text-gray-400 text-[10px] sm:text-sm">Pick any 5 from 10 exclusive resources</p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <div className="text-luxury-gold font-black text-sm sm:text-lg">${totalValue || '325'}</div>
+                  <div className="text-emerald-400 font-black text-sm sm:text-lg">${totalValue || '325'}</div>
                 </div>
               </div>
 
-              {/* Item 3 - Direct Access */}
+              {/* Item 3 - Direct Access to Sara */}
               <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
                 <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden flex-shrink-0 border-2 border-luxury-gold shadow-lg">
                   <Image src="/images/Sara 61kb.webp" alt="Sara" fill className="object-cover" />
@@ -1678,35 +1682,43 @@ export default function LuxuryLanding() {
                 </div>
               </div>
 
-              {/* Item 4 - Lifetime Updates */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-luxury-gold/80 to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                  <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-luxury-black" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-white font-black text-xs sm:text-base">Lifetime Updates</h4>
-                  <p className="text-gray-400 text-[10px] sm:text-sm">All future content included forever</p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <div className="text-luxury-gold font-black text-sm sm:text-lg">$297</div>
-                </div>
-              </div>
-
-              {/* Item 5 - Mystery Box */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-luxury-gold/15 to-luxury-gold/[0.02] backdrop-blur-sm border border-luxury-gold/40 rounded-xl p-3 sm:p-4 hover:border-luxury-gold/60 transition-all relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold/5 via-transparent to-luxury-gold/5 animate-pulse"></div>
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-luxury-gold/30">
-                  <Package className="w-6 h-6 sm:w-7 sm:h-7 text-luxury-black" />
+              {/* Item 4 - Mystery Box - PURPLE/VIOLET */}
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-violet-500/15 to-purple-500/[0.02] backdrop-blur-sm border border-violet-500/40 rounded-xl p-3 sm:p-4 hover:border-violet-400/60 transition-all relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-transparent to-purple-500/5 animate-pulse"></div>
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-violet-500/30">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                  </svg>
                 </div>
                 <div className="relative flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h4 className="text-white font-black text-xs sm:text-base">Mystery Box</h4>
-                    <span className="bg-luxury-gold/30 text-luxury-gold px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-black animate-pulse">SECRET</span>
+                    <span className="bg-violet-500/30 text-violet-300 px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-black animate-pulse">SECRET</span>
                   </div>
                   <p className="text-gray-400 text-[10px] sm:text-sm">Exclusive surprise revealed after purchase</p>
                 </div>
                 <div className="relative text-right flex-shrink-0">
-                  <div className="text-luxury-gold font-black text-sm sm:text-lg">$500-$1,500</div>
+                  <div className="text-violet-400 font-black text-sm sm:text-lg">$500-$1,500</div>
+                </div>
+              </div>
+
+              {/* Item 5 - Lifetime Updates - CYAN/BLUE (LAST) */}
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-cyan-500/15 to-blue-500/[0.02] backdrop-blur-sm border border-cyan-500/40 rounded-xl p-3 sm:p-4 hover:border-cyan-400/60 transition-all relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-blue-500/5"></div>
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/30">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <div className="relative flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-white font-black text-xs sm:text-base">Lifetime Updates</h4>
+                    <span className="bg-cyan-500/30 text-cyan-300 px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-black">WEEKLY</span>
+                  </div>
+                  <p className="text-gray-400 text-[10px] sm:text-sm">New tools & tips added every week forever</p>
+                </div>
+                <div className="relative text-right flex-shrink-0">
+                  <div className="text-cyan-400 font-black text-sm sm:text-lg">$297</div>
                 </div>
               </div>
             </div>
@@ -2394,8 +2406,9 @@ export default function LuxuryLanding() {
                       }
                       // Save selected bonuses to localStorage
                       localStorage.setItem('selectedBonuses', JSON.stringify(selectedBonuses))
-                      // Redirect to Whop checkout for main course ($37)
-                      window.location.href = 'https://whop.com/checkout/plan_7x5Kz1cflmrYH'
+                      // Close order summary modal and open checkout modal
+                      setIsModalOpen(false)
+                      setShowCheckoutModal(true)
                     }}
                     className="w-full bg-gradient-to-r from-[#D4AF37] via-[#FFE17B] to-[#D4AF37] hover:from-[#FFE17B] hover:via-[#D4AF37] hover:to-[#FFE17B] text-black font-black text-sm sm:text-base py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#D4AF37]/40"
                   >
@@ -2412,6 +2425,15 @@ export default function LuxuryLanding() {
         </div>,
         document.body
       )}
+
+      {/* Whop Embedded Checkout Modal */}
+      <CheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        planId="plan_7x5Kz1cflmrYH"
+        planName="7-Min AgentClone™ System"
+        price="$37"
+      />
     </div>
   )
 }
