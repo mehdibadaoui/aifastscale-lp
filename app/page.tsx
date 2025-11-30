@@ -776,75 +776,109 @@ export default function LuxuryLanding() {
         </div>
       </section>
 
-      {/* PROOF SECTION - MR LUCAS */}
-      <section id="proof" className="py-6 sm:py-10 md:py-14 bg-white">
-        <div className="w-full px-3 sm:px-4 lg:px-8">
-          <div className="max-w-5xl mx-auto">
+      {/* PROOF SECTION - MR LUCAS - Premium Redesign */}
+      <section id="proof" className="py-8 sm:py-12 md:py-16 bg-gradient-to-b from-white via-luxury-pearl to-white">
+        <div className="w-full px-3 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
             {/* Verified Badge */}
-            <div className="text-center mb-3 sm:mb-5">
-              <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-green-600 to-emerald-500 text-white px-3 py-1.5 sm:px-5 sm:py-2 rounded-full font-black text-[10px] sm:text-xs shadow-lg">
-                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                VERIFIED RESULT - 100% REAL
+            <div className="text-center mb-4 sm:mb-6">
+              <div className="inline-flex items-center gap-2 bg-luxury-black text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-full font-black text-[10px] sm:text-sm shadow-xl border border-luxury-gold/30">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold" />
+                <span>REAL AGENT. REAL RESULTS. VERIFIED.</span>
               </div>
             </div>
 
             {/* Headline */}
-            <h2 className="text-[19px] sm:text-2xl md:text-4xl font-league-spartan font-black text-center mb-2 sm:mb-3 text-luxury-black px-2">
-              This 47-Second AI Video Made{' '}
-              <span className="luxury-text-gradient">$12,000 in One Week</span>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-league-spartan font-black text-center mb-3 sm:mb-4 text-luxury-black px-2">
+              One Selfie. One AI Video.
+              <br />
+              <span className="luxury-text-gradient">$12,000 in 7 Days.</span>
             </h2>
-            <p className="text-center text-[11px] sm:text-base text-gray-600 mb-4 sm:mb-6 px-2">
-              Mr. Lucas never touched a camera. He used 1 selfie. Here's what happened:
+            <p className="text-center text-sm sm:text-lg text-gray-600 mb-6 sm:mb-10 px-2 max-w-2xl mx-auto">
+              Mr. Lucas didn't film anything. He uploaded <span className="font-black">1 photo</span>, typed a script, and let AI do the rest.
             </p>
 
-            {/* Clean Card Layout */}
-            <div className="bg-gradient-to-br from-luxury-pearl to-white rounded-xl sm:rounded-2xl overflow-hidden border border-luxury-gold/20 shadow-xl">
-              <div className="flex flex-col md:flex-row">
-                {/* Video - Professional Size */}
-                <div className="md:w-[320px] lg:w-[380px] flex-shrink-0 bg-luxury-black p-3 sm:p-4">
-                  <div className="relative w-full aspect-[9/16] max-w-[200px] sm:max-w-[280px] mx-auto rounded-lg sm:rounded-xl overflow-hidden shadow-2xl border-2 border-luxury-gold/30">
+            {/* Premium Card Layout */}
+            <div className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-luxury-gold/20">
+              <div className="grid md:grid-cols-2">
+                {/* Video Side - Dark Background */}
+                <div className="bg-luxury-black p-6 sm:p-8 flex items-center justify-center">
+                  <div className="relative w-full max-w-[240px] sm:max-w-[300px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border-2 border-luxury-gold/40">
                     {!showMrLucasVideo ? (
                       <>
-                        <Image src="/images/mr-lucas-thumbnail.webp" alt="Success Story" fill sizes="(max-width: 768px) 200px, 280px" className="object-cover" loading="lazy" />
+                        <Image
+                          src="/images/mr-lucas-thumbnail.webp"
+                          alt="Mr. Lucas Success Story"
+                          fill
+                          sizes="(max-width: 768px) 240px, 300px"
+                          className="object-cover"
+                        />
                         <button
                           onClick={() => setShowMrLucasVideo(true)}
-                          className="absolute inset-0 flex items-center justify-center bg-black/30 group hover:bg-black/20 transition-colors"
+                          className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/20 to-transparent group"
                         >
-                          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
-                            <Play className="w-5 h-5 sm:w-7 sm:h-7 text-luxury-black fill-luxury-black ml-0.5" />
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl border-4 border-white/20">
+                            <Play className="w-7 h-7 sm:w-9 sm:h-9 text-luxury-black fill-luxury-black ml-1" />
                           </div>
+                          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xs sm:text-sm font-bold bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                            Watch 47-sec Video
+                          </span>
                         </button>
                       </>
                     ) : (
-                      <video src="/videos/mr-lucas-case-study.mp4" controls autoPlay playsInline className="w-full h-full object-cover" />
+                      <video
+                        src="/videos/mr-lucas-case-study.mp4"
+                        controls
+                        autoPlay
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-cover"
+                      />
                     )}
                   </div>
                 </div>
 
-                {/* Results */}
-                <div className="flex-1 p-4 sm:p-6 flex flex-col justify-center">
-                  <h3 className="text-lg sm:text-2xl font-black mb-1 sm:mb-2 text-luxury-black">
-                    $12,000 in Commission
-                  </h3>
-                  <p className="text-gray-600 text-xs sm:text-base mb-3 sm:mb-4">From One 47-Second Video</p>
+                {/* Results Side */}
+                <div className="p-6 sm:p-10 flex flex-col justify-center">
+                  {/* Big Result Number */}
+                  <div className="mb-6 sm:mb-8">
+                    <p className="text-sm sm:text-base text-gray-500 font-bold mb-1">Commission Earned</p>
+                    <div className="text-5xl sm:text-7xl font-black luxury-text-gradient">$12,000</div>
+                    <p className="text-gray-600 text-sm sm:text-lg mt-1">from a single 47-second AI video</p>
+                  </div>
 
-                  <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <div className="bg-luxury-gold/10 rounded-lg p-2.5 sm:p-4 text-center border border-luxury-gold/20">
-                      <div className="text-xl sm:text-3xl font-black luxury-text-gradient">3</div>
-                      <div className="text-[10px] sm:text-sm text-gray-600">New Clients</div>
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                    <div className="text-center p-3 sm:p-4 bg-luxury-gold/5 rounded-xl border border-luxury-gold/20">
+                      <div className="text-2xl sm:text-4xl font-black text-luxury-black">1</div>
+                      <div className="text-[10px] sm:text-sm text-gray-600 font-medium">Selfie Used</div>
                     </div>
-                    <div className="bg-luxury-gold/10 rounded-lg p-2.5 sm:p-4 text-center border border-luxury-gold/20">
-                      <div className="text-xl sm:text-3xl font-black luxury-text-gradient">7 Days</div>
-                      <div className="text-[10px] sm:text-sm text-gray-600">To Close</div>
+                    <div className="text-center p-3 sm:p-4 bg-luxury-gold/5 rounded-xl border border-luxury-gold/20">
+                      <div className="text-2xl sm:text-4xl font-black text-luxury-black">3</div>
+                      <div className="text-[10px] sm:text-sm text-gray-600 font-medium">Clients Closed</div>
+                    </div>
+                    <div className="text-center p-3 sm:p-4 bg-luxury-gold/5 rounded-xl border border-luxury-gold/20">
+                      <div className="text-2xl sm:text-4xl font-black text-luxury-black">7</div>
+                      <div className="text-[10px] sm:text-sm text-gray-600 font-medium">Days Total</div>
                     </div>
                   </div>
 
-                  <p className="text-[11px] sm:text-base text-gray-700 leading-relaxed mb-3 sm:mb-4 italic">
-                    "I uploaded one selfie. The AI did everything else. Three clients reached out within a week. All three closed."
-                  </p>
-                  <div className="pt-2 sm:pt-3 border-t border-luxury-gold/20">
-                    <p className="font-black text-xs sm:text-base text-luxury-black">Mr. Lucas</p>
-                    <p className="text-[10px] sm:text-sm text-gray-600">Dubai Marina • Luxury Specialist</p>
+                  {/* Quote */}
+                  <blockquote className="border-l-4 border-luxury-gold pl-4 sm:pl-6 mb-6">
+                    <p className="text-sm sm:text-lg text-gray-700 italic leading-relaxed">
+                      "I uploaded one selfie. The AI created a talking video of ME. Three clients reached out that week. <span className="font-black not-italic text-luxury-black">All three closed.</span>"
+                    </p>
+                  </blockquote>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-luxury-gold/20 flex items-center justify-center border-2 border-luxury-gold">
+                      <span className="text-lg sm:text-xl font-black text-luxury-gold">ML</span>
+                    </div>
+                    <div>
+                      <p className="font-black text-sm sm:text-lg text-luxury-black">Mr. Lucas</p>
+                      <p className="text-xs sm:text-sm text-gray-600">Dubai Marina • Luxury Real Estate</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1495,44 +1529,45 @@ export default function LuxuryLanding() {
             </div>
 
             {/* Premium Value Stack */}
-            <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-10">
-              {/* Item 1 - Main Course with Sara Image */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
-                <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl overflow-hidden flex-shrink-0 border-2 border-luxury-gold shadow-lg">
-                  <Image src="/images/VD-Course-demo.webp" alt="Sara AgentClone" fill className="object-cover" loading="lazy" />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/90 rounded-full flex items-center justify-center">
-                      <Play className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-gold fill-luxury-gold ml-0.5" />
-                    </div>
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-10">
+              {/* Item 1 - MAIN COURSE - Featured & Bigger */}
+              <div className="bg-gradient-to-r from-luxury-gold/20 via-luxury-gold/10 to-luxury-gold/5 backdrop-blur-sm border-2 border-luxury-gold/50 rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:border-luxury-gold transition-all shadow-lg shadow-luxury-gold/10">
+                <div className="flex items-center gap-4 sm:gap-5">
+                  <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl overflow-hidden flex-shrink-0 border-2 border-luxury-gold shadow-xl">
+                    <Image src="/images/VD-Course-demo.webp" alt="AgentClone System" fill className="object-cover" />
                   </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-white font-black text-xs sm:text-base">AgentClone™ 7-Minute System</h4>
-                  <p className="text-gray-400 text-[10px] sm:text-sm">Complete video training + 50 scripts</p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <div className="text-luxury-gold font-black text-sm sm:text-lg">$697</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="bg-luxury-gold text-luxury-black px-2 py-0.5 rounded text-[9px] sm:text-xs font-black">MAIN COURSE</span>
+                    </div>
+                    <h4 className="text-white font-black text-sm sm:text-xl mb-1">AgentClone™ 7-Minute System</h4>
+                    <p className="text-gray-300 text-[11px] sm:text-sm">Complete video training + 50 ready-to-use scripts</p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <div className="text-luxury-gold font-black text-lg sm:text-2xl">$697</div>
+                    <p className="text-[10px] sm:text-xs text-gray-400">value</p>
+                  </div>
                 </div>
               </div>
 
               {/* Item 2 - 5 Bonuses */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-green-500/10 to-green-500/[0.02] backdrop-blur-sm border border-green-500/20 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-green-500/40 transition-all">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-luxury-gold/10 to-luxury-gold/[0.02] backdrop-blur-sm border border-luxury-gold/30 rounded-xl sm:rounded-xl p-3 sm:p-4 hover:border-luxury-gold/50 transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Gift className="w-6 h-6 sm:w-7 sm:h-7 text-luxury-black" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-white font-black text-xs sm:text-base">5 Premium Bonuses (You Choose)</h4>
-                  <p className="text-gray-400 text-[10px] sm:text-sm">Pick any 5 from 10 resources</p>
+                  <p className="text-gray-400 text-[10px] sm:text-sm">Pick any 5 from 10 exclusive resources</p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <div className="text-green-400 font-black text-sm sm:text-lg">${totalValue || '325'}</div>
+                  <div className="text-luxury-gold font-black text-sm sm:text-lg">${totalValue || '325'}</div>
                 </div>
               </div>
 
               {/* Item 3 - Direct Access */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl overflow-hidden flex-shrink-0 border-2 border-luxury-gold">
-                  <Image src="/images/Sara 61kb.webp" alt="Sara" fill className="object-cover" loading="lazy" />
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden flex-shrink-0 border-2 border-luxury-gold shadow-lg">
+                  <Image src="/images/Sara 61kb.webp" alt="Sara" fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-white font-black text-xs sm:text-base">Direct Line to Sara</h4>
@@ -1544,34 +1579,34 @@ export default function LuxuryLanding() {
               </div>
 
               {/* Item 4 - Lifetime Updates */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 sm:p-4 hover:border-luxury-gold/30 transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-luxury-gold/80 to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-luxury-black" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-white font-black text-xs sm:text-base">Lifetime Updates</h4>
-                  <p className="text-gray-400 text-[10px] sm:text-sm">All future content included</p>
+                  <p className="text-gray-400 text-[10px] sm:text-sm">All future content included forever</p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <div className="text-purple-400 font-black text-sm sm:text-lg">$297</div>
+                  <div className="text-luxury-gold font-black text-sm sm:text-lg">$297</div>
                 </div>
               </div>
 
               {/* Item 5 - Mystery Box */}
-              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-orange-500/15 to-orange-500/[0.02] backdrop-blur-sm border border-orange-500/30 rounded-lg sm:rounded-xl p-3 sm:p-4 hover:border-orange-500/50 transition-all relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5 animate-pulse"></div>
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-500/30">
-                  <Package className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-luxury-gold/15 to-luxury-gold/[0.02] backdrop-blur-sm border border-luxury-gold/40 rounded-xl p-3 sm:p-4 hover:border-luxury-gold/60 transition-all relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-luxury-gold/5 via-transparent to-luxury-gold/5 animate-pulse"></div>
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-luxury-gold/30">
+                  <Package className="w-6 h-6 sm:w-7 sm:h-7 text-luxury-black" />
                 </div>
                 <div className="relative flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h4 className="text-white font-black text-xs sm:text-base">Mystery Box</h4>
-                    <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-black animate-pulse">SECRET</span>
+                    <span className="bg-luxury-gold/30 text-luxury-gold px-1.5 py-0.5 rounded text-[8px] sm:text-[10px] font-black animate-pulse">SECRET</span>
                   </div>
                   <p className="text-gray-400 text-[10px] sm:text-sm">Exclusive surprise revealed after purchase</p>
                 </div>
                 <div className="relative text-right flex-shrink-0">
-                  <div className="text-orange-400 font-black text-sm sm:text-lg">$500-$1,500</div>
+                  <div className="text-luxury-gold font-black text-sm sm:text-lg">$500-$1,500</div>
                 </div>
               </div>
             </div>
@@ -1586,7 +1621,7 @@ export default function LuxuryLanding() {
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-luxury-gold font-black text-sm sm:text-lg">BLACK FRIDAY PRICE</span>
-                  <div className="inline-flex items-center gap-2 ml-2 sm:ml-3 bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-black">
+                  <div className="inline-flex items-center gap-2 ml-2 sm:ml-3 bg-luxury-gold/20 text-luxury-gold px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-black">
                     SAVE 97%
                   </div>
                 </div>
