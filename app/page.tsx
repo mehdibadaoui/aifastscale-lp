@@ -805,53 +805,87 @@ export default function LuxuryLanding() {
       </section>
 
       {/* PROOF SECTION - MR LUCAS - Premium Redesign */}
-      <section id="proof" className="py-8 sm:py-12 md:py-16 bg-gradient-to-b from-white via-luxury-pearl to-white">
+      <section id="proof" className="py-6 sm:py-10 md:py-14 bg-gradient-to-b from-white via-luxury-pearl to-white">
         <div className="w-full px-3 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {/* Verified Badge */}
-            <div className="text-center mb-4 sm:mb-6">
-              <div className="inline-flex items-center gap-2 bg-luxury-black text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-full font-black text-[10px] sm:text-sm shadow-xl border border-luxury-gold/30">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold" />
-                <span>REAL AGENT. REAL RESULTS. VERIFIED.</span>
+            <div className="text-center mb-3 sm:mb-5">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-luxury-black text-white px-3 py-1.5 sm:px-5 sm:py-2 rounded-full font-black text-[9px] sm:text-xs shadow-xl border border-luxury-gold/30">
+                <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-gold" />
+                <span>VERIFIED CASE STUDY</span>
               </div>
             </div>
 
-            {/* Headline */}
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-league-spartan font-black text-center mb-3 sm:mb-4 text-luxury-black px-2">
-              One Selfie. One AI Video.
-              <br />
-              <span className="luxury-text-gradient">$12,000 in 7 Days.</span>
+            {/* Headline - Mobile First */}
+            <h2 className="text-xl sm:text-2xl md:text-4xl font-league-spartan font-black text-center mb-2 sm:mb-3 text-luxury-black px-1 leading-tight">
+              He Uploaded <span className="luxury-text-gradient">1 Photo</span>.
+              <br className="sm:hidden" /> Made <span className="luxury-text-gradient">$12,000</span>.
             </h2>
-            <p className="text-center text-sm sm:text-lg text-gray-600 mb-6 sm:mb-10 px-2 max-w-2xl mx-auto">
-              Mr. Lucas didn't film anything. He uploaded <span className="font-black">1 photo</span>, typed a script, and let AI do the rest.
+            <p className="text-center text-xs sm:text-base text-gray-600 mb-5 sm:mb-8 px-2 max-w-xl mx-auto">
+              No camera. No editing. Just AI magic in <span className="font-black text-luxury-black">7 minutes</span>.
             </p>
 
-            {/* Premium Card Layout */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-luxury-gold/20">
-              <div className="grid md:grid-cols-2">
-                {/* Video Side - Dark Background */}
-                <div className="bg-luxury-black p-6 sm:p-8 flex items-center justify-center">
-                  <div className="relative w-full max-w-[240px] sm:max-w-[300px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border-2 border-luxury-gold/40">
+            {/* THE TRANSFORMATION - Mobile Optimized */}
+            <div className="bg-luxury-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 shadow-2xl">
+              <div className="text-center mb-3 sm:mb-5">
+                <span className="text-[10px] sm:text-xs uppercase tracking-widest text-luxury-gold font-bold">The Magic</span>
+              </div>
+
+              {/* Before → After Visual */}
+              <div className="flex items-center justify-center gap-2 sm:gap-4">
+                {/* BEFORE: Photo */}
+                <div className="relative flex-1 max-w-[130px] sm:max-w-[180px]">
+                  <div className="text-[9px] sm:text-xs text-gray-400 text-center mb-1.5 sm:mb-2 uppercase tracking-wider font-bold">Photo</div>
+                  <div className="relative aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl">
+                    <Image
+                      src="/images/lucas-photo.webp"
+                      alt="Mr. Lucas - Original Photo"
+                      fill
+                      sizes="(max-width: 768px) 130px, 180px"
+                      className="object-cover"
+                    />
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <div className="bg-black/70 backdrop-blur-sm rounded-md px-2 py-1 text-center">
+                        <span className="text-[8px] sm:text-[10px] text-white font-medium">Just a selfie</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Arrow Animation */}
+                <div className="flex flex-col items-center gap-1 px-1 sm:px-3">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-luxury-gold rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-luxury-gold/30">
+                    <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-luxury-black" />
+                  </div>
+                  <span className="text-[8px] sm:text-[10px] text-luxury-gold font-bold">AI Magic</span>
+                </div>
+
+                {/* AFTER: Video */}
+                <div className="relative flex-1 max-w-[130px] sm:max-w-[180px]">
+                  <div className="text-[9px] sm:text-xs text-luxury-gold text-center mb-1.5 sm:mb-2 uppercase tracking-wider font-bold">Talking Video</div>
+                  <div className="relative aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden border-2 border-luxury-gold/50 shadow-xl shadow-luxury-gold/20">
                     {!showMrLucasVideo ? (
                       <>
                         <Image
-                          src="/images/mr-lucas-thumbnail.webp"
-                          alt="Mr. Lucas Success Story"
+                          src="/images/lucas-photo.webp"
+                          alt="Mr. Lucas - AI Video"
                           fill
-                          sizes="(max-width: 768px) 240px, 300px"
+                          sizes="(max-width: 768px) 130px, 180px"
                           className="object-cover"
                         />
                         <button
                           onClick={() => setShowMrLucasVideo(true)}
-                          className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/20 to-transparent group"
+                          className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/70 via-black/30 to-transparent group"
                         >
-                          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl border-4 border-white/20">
-                            <Play className="w-7 h-7 sm:w-9 sm:h-9 text-luxury-black fill-luxury-black ml-1" />
+                          <div className="w-10 h-10 sm:w-14 sm:h-14 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl border-2 border-white/30">
+                            <Play className="w-5 h-5 sm:w-7 sm:h-7 text-luxury-black fill-luxury-black ml-0.5" />
                           </div>
-                          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-xs sm:text-sm font-bold bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
-                            Watch 47-sec Video
-                          </span>
                         </button>
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <div className="bg-luxury-gold/90 backdrop-blur-sm rounded-md px-2 py-1 text-center">
+                            <span className="text-[8px] sm:text-[10px] text-luxury-black font-black">HE'S TALKING!</span>
+                          </div>
+                        </div>
                       </>
                     ) : (
                       <video
@@ -865,50 +899,83 @@ export default function LuxuryLanding() {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Results Side */}
-                <div className="p-6 sm:p-10 flex flex-col justify-center">
-                  {/* Big Result Number */}
-                  <div className="mb-6 sm:mb-8">
-                    <p className="text-sm sm:text-base text-gray-500 font-bold mb-1">Commission Earned</p>
-                    <div className="text-5xl sm:text-7xl font-black luxury-text-gradient">$12,000</div>
-                    <p className="text-gray-600 text-sm sm:text-lg mt-1">from a single 47-second AI video</p>
+            {/* Results Card - Compact */}
+            <div className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-luxury-gold/20">
+              {/* Big Result - Mobile First */}
+              <div className="bg-gradient-to-r from-luxury-gold/10 via-luxury-gold/5 to-transparent p-4 sm:p-6 border-b border-luxury-gold/10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Result</p>
+                    <div className="text-3xl sm:text-5xl font-black luxury-text-gradient">$12,000</div>
+                    <p className="text-xs sm:text-sm text-gray-600 mt-0.5">in <span className="font-black">7 days</span></p>
                   </div>
-
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                    <div className="text-center p-3 sm:p-4 bg-luxury-gold/5 rounded-xl border border-luxury-gold/20">
-                      <div className="text-2xl sm:text-4xl font-black text-luxury-black">1</div>
-                      <div className="text-[10px] sm:text-sm text-gray-600 font-medium">Selfie Used</div>
-                    </div>
-                    <div className="text-center p-3 sm:p-4 bg-luxury-gold/5 rounded-xl border border-luxury-gold/20">
-                      <div className="text-2xl sm:text-4xl font-black text-luxury-black">3</div>
-                      <div className="text-[10px] sm:text-sm text-gray-600 font-medium">Clients Closed</div>
-                    </div>
-                    <div className="text-center p-3 sm:p-4 bg-luxury-gold/5 rounded-xl border border-luxury-gold/20">
-                      <div className="text-2xl sm:text-4xl font-black text-luxury-black">7</div>
-                      <div className="text-[10px] sm:text-sm text-gray-600 font-medium">Days Total</div>
-                    </div>
-                  </div>
-
-                  {/* Quote */}
-                  <blockquote className="border-l-4 border-luxury-gold pl-4 sm:pl-6 mb-6">
-                    <p className="text-sm sm:text-lg text-gray-700 italic leading-relaxed">
-                      "I uploaded one selfie. The AI created a talking video of ME. Three clients reached out that week. <span className="font-black not-italic text-luxury-black">All three closed.</span>"
-                    </p>
-                  </blockquote>
-
-                  {/* Author */}
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-luxury-gold/20 flex items-center justify-center border-2 border-luxury-gold">
-                      <span className="text-lg sm:text-xl font-black text-luxury-gold">ML</span>
-                    </div>
-                    <div>
-                      <p className="font-black text-sm sm:text-lg text-luxury-black">Mr. Lucas</p>
-                      <p className="text-xs sm:text-sm text-gray-600">Dubai Marina • Luxury Real Estate</p>
+                  <div className="text-right">
+                    <div className="flex gap-2 sm:gap-3 mb-2">
+                      <div className="text-center">
+                        <div className="text-lg sm:text-2xl font-black text-luxury-black">1</div>
+                        <div className="text-[8px] sm:text-[10px] text-gray-500">Photo</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg sm:text-2xl font-black text-luxury-black">3</div>
+                        <div className="text-[8px] sm:text-[10px] text-gray-500">Clients</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg sm:text-2xl font-black text-luxury-black">7</div>
+                        <div className="text-[8px] sm:text-[10px] text-gray-500">Days</div>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Quote + Author - Compact */}
+              <div className="p-4 sm:p-6">
+                <blockquote className="mb-3 sm:mb-4">
+                  <p className="text-sm sm:text-base text-gray-700 italic leading-relaxed">
+                    "I was skeptical. Then I uploaded my photo, typed 3 sentences, and the AI made ME talk. <span className="font-black not-italic text-luxury-black">3 clients messaged that week. All 3 closed.</span>"
+                  </p>
+                </blockquote>
+
+                <div className="flex items-center gap-3">
+                  <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-luxury-gold">
+                    <Image
+                      src="/images/lucas-photo.webp"
+                      alt="Mr. Lucas"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-black text-sm sm:text-base text-luxury-black">Mr. Lucas</p>
+                    <p className="text-[10px] sm:text-xs text-gray-600">Dubai Marina • Luxury Real Estate</p>
+                  </div>
+                  <div className="ml-auto">
+                    <div className="flex items-center gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-luxury-gold fill-luxury-gold" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scannable Summary - Mobile */}
+            <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-2 sm:gap-3 text-center">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 sm:p-4 border border-luxury-gold/10 shadow-sm">
+                <div className="text-lg sm:text-2xl mb-0.5">📸</div>
+                <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Upload Photo</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 sm:p-4 border border-luxury-gold/10 shadow-sm">
+                <div className="text-lg sm:text-2xl mb-0.5">🤖</div>
+                <div className="text-[9px] sm:text-xs text-gray-600 font-medium">AI Makes Video</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 sm:p-4 border border-luxury-gold/10 shadow-sm">
+                <div className="text-lg sm:text-2xl mb-0.5">💰</div>
+                <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Get Clients</div>
               </div>
             </div>
           </div>
