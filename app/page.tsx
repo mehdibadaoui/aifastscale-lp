@@ -317,21 +317,24 @@ export default function LuxuryLanding() {
             <div className="mt-6 sm:mt-8 max-w-xl mx-auto">
               <button
                 onClick={() => setShowWhatIs(!showWhatIs)}
-                className="group flex items-center justify-center gap-2 text-white/40 hover:text-white/60 transition-colors mx-auto text-[11px] sm:text-sm"
+                className="group flex items-center justify-center gap-2 mx-auto text-[11px] sm:text-sm"
               >
-                <span className="border-b border-dashed border-white/20 group-hover:border-white/40 transition-colors">
+                <span className="text-luxury-gold font-medium border-b border-dashed border-luxury-gold/40 group-hover:border-luxury-gold transition-colors animate-pulse">
                   What is the AgentClone System?
                 </span>
-                <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 ${showWhatIs ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-gold transition-transform duration-300 ${showWhatIs ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className={`overflow-hidden transition-all duration-500 ease-out ${showWhatIs ? 'max-h-[500px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 sm:p-5">
-                  <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
-                    <span className="text-white font-semibold">AgentClone</span> is an AI system that creates talking videos of you from a single photo. You upload one image, type what you want to say, and the AI generates a realistic video of "you" speaking — no camera, no filming, no editing required.
+              <div className={`overflow-hidden transition-all duration-500 ease-out ${showWhatIs ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
+                <div className="bg-gradient-to-br from-luxury-gold/10 to-white/5 backdrop-blur-sm border border-luxury-gold/20 rounded-xl p-4 sm:p-5">
+                  <p className="text-white text-xs sm:text-sm leading-relaxed mb-3">
+                    You upload <span className="text-luxury-gold font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in 2024.
                   </p>
-                  <p className="text-white/50 text-[11px] sm:text-xs mt-3">
-                    Real estate agents use it to create listing videos, market updates, and social content in minutes instead of hours.
+                  <p className="text-white/80 text-xs sm:text-sm leading-relaxed mb-3">
+                    The AI transforms your photo into a <span className="text-luxury-gold font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
+                  </p>
+                  <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
+                    Inside the AgentClone System, you get the <span className="text-white font-bold">complete A-to-Z video course</span> that shows you exactly how to do this — even if you've never touched AI before. Just follow along, copy-paste, and create professional videos that help you scale to 7 figures.
                   </p>
                 </div>
               </div>
