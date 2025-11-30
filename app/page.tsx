@@ -225,7 +225,7 @@ export default function LuxuryLanding() {
                 <div className="w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 border border-[#0a0a0a]"></div>
                 <div className="w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 border border-[#0a0a0a]"></div>
               </div>
-              <span className="font-medium">847+ agents inside</span>
+              <span className="font-medium">800+ agents inside</span>
               <span className="text-white/30 hidden sm:inline">•</span>
               <div className="hidden sm:flex items-center gap-1">
                 <Star className="w-3 h-3 text-luxury-gold fill-luxury-gold" />
@@ -233,19 +233,21 @@ export default function LuxuryLanding() {
               </div>
             </div>
 
-            {/* HEADLINE - Compact Mobile */}
-            <h1 className="text-[22px] sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-5 leading-[1.15] tracking-tight px-1">
-              <span className="text-white">Stop Losing Listings to Agents</span>
+            {/* HEADLINE - Bold & Attention-Grabbing */}
+            <h1 className="text-[26px] sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-5 leading-[1.1] tracking-tight px-1">
+              <span className="text-white">Turn Your Image Into</span>
               <br />
-              <span className="text-white">Who Post More Than You</span>
+              <span className="luxury-text-gradient">Talking AI Videos</span>
+              <br />
+              <span className="text-white">& Generate </span>
+              <span className="text-emerald-400">100+ Monthly Leads</span>
             </h1>
 
-            {/* SUBHEADLINE - Compact */}
-            <p className="text-sm sm:text-xl md:text-2xl text-white/60 max-w-3xl mx-auto mb-5 sm:mb-8 leading-relaxed font-medium px-2">
-              Create <span className="text-white font-bold">30 days of content</span> in one afternoon.
-              <span className="sm:hidden"> </span>
-              <br className="hidden sm:block" />
-              <span className="text-luxury-gold font-bold">No filming. No editing. No camera.</span>
+            {/* SUBHEADLINE - Social Proof Focused */}
+            <p className="text-sm sm:text-xl md:text-2xl text-white/70 max-w-3xl mx-auto mb-5 sm:mb-8 leading-relaxed font-medium px-2">
+              <span className="text-luxury-gold font-black">800+ agents</span> use the AgentClone system to scale to
+              <span className="text-white font-bold"> 7 figures</span> — without recording videos, with
+              <span className="text-emerald-400 font-bold"> zero experience</span>
             </p>
 
             {/* HERO IMAGE - Compact */}
