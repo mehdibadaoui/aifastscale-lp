@@ -828,25 +828,25 @@ export default function LuxuryLanding() {
             {/* THE TRANSFORMATION - Mobile Optimized */}
             <div className="bg-luxury-black rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 shadow-2xl">
               <div className="text-center mb-3 sm:mb-5">
-                <span className="text-[10px] sm:text-xs uppercase tracking-widest text-luxury-gold font-bold">The Magic</span>
+                <span className="text-[10px] sm:text-xs uppercase tracking-widest text-luxury-gold font-bold">The Magic in 7 Minutes</span>
               </div>
 
               {/* Before → After Visual */}
               <div className="flex items-center justify-center gap-2 sm:gap-4">
-                {/* BEFORE: Photo */}
-                <div className="relative flex-1 max-w-[130px] sm:max-w-[180px]">
-                  <div className="text-[9px] sm:text-xs text-gray-400 text-center mb-1.5 sm:mb-2 uppercase tracking-wider font-bold">Photo</div>
+                {/* BEFORE: Image */}
+                <div className="relative flex-1 max-w-[140px] sm:max-w-[200px]">
+                  <div className="text-[9px] sm:text-xs text-gray-400 text-center mb-1.5 sm:mb-2 uppercase tracking-wider font-bold">Image</div>
                   <div className="relative aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl">
                     <Image
                       src="/images/lucas-photo.webp"
-                      alt="Mr. Lucas - Original Photo"
+                      alt="Mr. Lucas - Original Image"
                       fill
-                      sizes="(max-width: 768px) 130px, 180px"
+                      sizes="(max-width: 768px) 140px, 200px"
                       className="object-cover"
                     />
                     <div className="absolute bottom-2 left-2 right-2">
                       <div className="bg-black/70 backdrop-blur-sm rounded-md px-2 py-1 text-center">
-                        <span className="text-[8px] sm:text-[10px] text-white font-medium">Just a selfie</span>
+                        <span className="text-[8px] sm:text-[10px] text-white font-medium">Just an image</span>
                       </div>
                     </div>
                   </div>
@@ -857,11 +857,11 @@ export default function LuxuryLanding() {
                   <div className="w-8 h-8 sm:w-12 sm:h-12 bg-luxury-gold rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-luxury-gold/30">
                     <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-luxury-black" />
                   </div>
-                  <span className="text-[8px] sm:text-[10px] text-luxury-gold font-bold">AI Magic</span>
+                  <span className="text-[8px] sm:text-[10px] text-luxury-gold font-bold">7 min</span>
                 </div>
 
                 {/* AFTER: Video */}
-                <div className="relative flex-1 max-w-[130px] sm:max-w-[180px]">
+                <div className="relative flex-1 max-w-[140px] sm:max-w-[200px]">
                   <div className="text-[9px] sm:text-xs text-luxury-gold text-center mb-1.5 sm:mb-2 uppercase tracking-wider font-bold">Talking Video</div>
                   <div className="relative aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden border-2 border-luxury-gold/50 shadow-xl shadow-luxury-gold/20">
                     {!showMrLucasVideo ? (
@@ -870,15 +870,15 @@ export default function LuxuryLanding() {
                           src="/images/lucas-photo.webp"
                           alt="Mr. Lucas - AI Video"
                           fill
-                          sizes="(max-width: 768px) 130px, 180px"
+                          sizes="(max-width: 768px) 140px, 200px"
                           className="object-cover"
                         />
                         <button
                           onClick={() => setShowMrLucasVideo(true)}
                           className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/70 via-black/30 to-transparent group"
                         >
-                          <div className="w-10 h-10 sm:w-14 sm:h-14 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl border-2 border-white/30">
-                            <Play className="w-5 h-5 sm:w-7 sm:h-7 text-luxury-black fill-luxury-black ml-0.5" />
+                          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-luxury-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl border-2 border-white/30">
+                            <Play className="w-6 h-6 sm:w-8 sm:h-8 text-luxury-black fill-luxury-black ml-0.5" />
                           </div>
                         </button>
                         <div className="absolute bottom-2 left-2 right-2">
@@ -889,11 +889,10 @@ export default function LuxuryLanding() {
                       </>
                     ) : (
                       <video
-                        src="/videos/mr-lucas-case-study.mp4"
+                        src="/videos/Mr Lucas.mp4"
                         controls
                         autoPlay
                         playsInline
-                        preload="metadata"
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -966,15 +965,21 @@ export default function LuxuryLanding() {
             {/* Scannable Summary - Mobile */}
             <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-2 sm:gap-3 text-center">
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 sm:p-4 border border-luxury-gold/10 shadow-sm">
-                <div className="text-lg sm:text-2xl mb-0.5">📸</div>
-                <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Upload Photo</div>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-1 bg-luxury-gold/10 rounded-full flex items-center justify-center">
+                  <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-gold" />
+                </div>
+                <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Upload Image</div>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 sm:p-4 border border-luxury-gold/10 shadow-sm">
-                <div className="text-lg sm:text-2xl mb-0.5">🤖</div>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-1 bg-luxury-gold/10 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-gold" />
+                </div>
                 <div className="text-[9px] sm:text-xs text-gray-600 font-medium">AI Makes Video</div>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 sm:p-4 border border-luxury-gold/10 shadow-sm">
-                <div className="text-lg sm:text-2xl mb-0.5">💰</div>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-1 bg-luxury-gold/10 rounded-full flex items-center justify-center">
+                  <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-gold" />
+                </div>
                 <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Get Clients</div>
               </div>
             </div>
