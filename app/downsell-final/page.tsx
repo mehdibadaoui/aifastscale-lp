@@ -202,8 +202,8 @@ export default function DownsellFinalPage() {
                 {/* Accept Button */}
                 <button
                   onClick={() => {
-                    // TODO: Add new payment gateway checkout URL here
-                    alert('Payment gateway not configured. Please contact support.')
+                    // Redirect to Whop checkout for downsell
+                    window.location.href = 'https://whop.com/checkout/plan_plZSk0NMKNZJj'
                   }}
                   className="group w-full bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold hover:shadow-2xl hover:shadow-luxury-gold/50 text-luxury-black px-6 sm:px-8 py-5 sm:py-6 rounded-2xl text-lg sm:text-xl font-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-3"
                 >

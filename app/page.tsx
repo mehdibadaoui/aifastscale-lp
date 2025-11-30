@@ -2394,8 +2394,8 @@ export default function LuxuryLanding() {
                       }
                       // Save selected bonuses to localStorage
                       localStorage.setItem('selectedBonuses', JSON.stringify(selectedBonuses))
-                      // TODO: Add new payment gateway checkout URL here
-                      alert('Payment gateway not configured. Please contact support.')
+                      // Redirect to Whop checkout for main course ($37)
+                      window.location.href = 'https://whop.com/checkout/plan_7x5Kz1cflmrYH'
                     }}
                     className="w-full bg-gradient-to-r from-[#D4AF37] via-[#FFE17B] to-[#D4AF37] hover:from-[#FFE17B] hover:via-[#D4AF37] hover:to-[#FFE17B] text-black font-black text-sm sm:text-base py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-[#D4AF37]/40"
                   >

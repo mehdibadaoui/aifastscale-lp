@@ -189,8 +189,8 @@ export default function UpsellPage() {
           <div className="mb-4">
             <button
               onClick={() => {
-                // TODO: Add new payment gateway checkout URL here
-                alert('Payment gateway not configured. Please contact support.')
+                // Redirect to Whop checkout for upsell
+                window.location.href = 'https://whop.com/checkout/plan_R3FywBSQynds0'
               }}
               className="group w-full bg-gradient-to-r from-[#d4af37] via-[#f4d03f] to-[#d4af37] hover:shadow-2xl hover:shadow-[#d4af37]/40 text-[#0a0a0a] px-8 py-5 rounded-xl text-lg sm:text-xl font-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-3"
             >
