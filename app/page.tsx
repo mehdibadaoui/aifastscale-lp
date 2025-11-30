@@ -1704,39 +1704,28 @@ export default function LuxuryLanding() {
                         <p className="text-[10px] sm:text-xs text-emerald-400">24-hour response</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard('support@aifastscale.com', 'email')}
-                      className="flex items-center gap-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 px-2 py-1 rounded-lg text-[10px] sm:text-xs font-bold transition-all"
-                    >
-                      {copiedText === 'email' ? (
-                        <>
-                          <CheckCircle className="w-3 h-3" />
-                          <span>Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3 h-3" />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </button>
                   </div>
-                  <div className="bg-white/5 rounded-lg p-2 sm:p-3 border border-white/10 flex items-center justify-between">
-                    <code className="text-[10px] sm:text-xs font-mono text-white/80">support@aifastscale.com</code>
+                  <div className="bg-white/5 rounded-lg p-2 sm:p-3 border border-white/10">
+                    <p className="text-[10px] sm:text-xs text-white/60 mb-1">Send to:</p>
+                    <code className="text-[10px] sm:text-xs font-mono text-white/80 block">support@aifastscale.com</code>
+                  </div>
+                  <div className="bg-emerald-500/10 rounded-lg p-2 sm:p-3 border border-emerald-500/20 mt-2">
+                    <p className="text-[10px] sm:text-xs text-emerald-400/80 mb-1">Message to copy:</p>
+                    <p className="text-[10px] sm:text-xs text-white/90 italic">"Hi Sara, I'd like my refund please. My purchase email is [YOUR EMAIL]"</p>
                   </div>
                   <button
-                    onClick={() => copyToClipboard("Hi, I'd like my refund. My email is ", 'refund-email')}
-                    className="mt-2 w-full flex items-center justify-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 py-2 rounded-lg text-[10px] sm:text-xs font-bold transition-all"
+                    onClick={() => copyToClipboard("Hi Sara, I'd like my refund please. My purchase email is ", 'refund-email')}
+                    className="mt-2 w-full flex items-center justify-center gap-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-400 py-2.5 rounded-lg text-[11px] sm:text-sm font-black transition-all"
                   >
                     {copiedText === 'refund-email' ? (
                       <>
-                        <CheckCircle className="w-3 h-3" />
+                        <CheckCircle className="w-4 h-4" />
                         <span>Message Copied!</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3 h-3" />
-                        <span>Copy Refund Message</span>
+                        <Copy className="w-4 h-4" />
+                        <span>Copy Email Message</span>
                       </>
                     )}
                   </button>
@@ -1744,48 +1733,35 @@ export default function LuxuryLanding() {
 
                 {/* Instagram Option */}
                 <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 sm:p-4 border border-luxury-gold/30 hover:border-luxury-gold/50 transition-all shadow-lg">
-                  <div className="flex items-center justify-between mb-2 sm:mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
-                        <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" />
-                      </div>
-                      <div>
-                        <h4 className="font-black text-white text-xs sm:text-sm">Instagram DM</h4>
-                        <p className="text-[10px] sm:text-xs text-luxury-gold">DM Sara directly</p>
-                      </div>
+                  <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-luxury-gold to-luxury-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+                      <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-black" />
                     </div>
-                    <button
-                      onClick={() => copyToClipboard('@sara.theagent', 'instagram')}
-                      className="flex items-center gap-1 bg-luxury-gold/20 hover:bg-luxury-gold/30 text-luxury-gold px-2 py-1 rounded-lg text-[10px] sm:text-xs font-bold transition-all"
-                    >
-                      {copiedText === 'instagram' ? (
-                        <>
-                          <CheckCircle className="w-3 h-3" />
-                          <span>Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3 h-3" />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </button>
+                    <div>
+                      <h4 className="font-black text-white text-xs sm:text-sm">Instagram DM</h4>
+                      <p className="text-[10px] sm:text-xs text-luxury-gold">DM Sara directly</p>
+                    </div>
                   </div>
-                  <div className="bg-white/5 rounded-lg p-2 sm:p-3 border border-white/10 flex items-center justify-between">
-                    <code className="text-[10px] sm:text-xs font-mono text-white/80">@sara.theagent</code>
+                  <div className="bg-white/5 rounded-lg p-2 sm:p-3 border border-white/10">
+                    <p className="text-[10px] sm:text-xs text-white/60 mb-1">DM to:</p>
+                    <code className="text-[10px] sm:text-xs font-mono text-white/80 block">@sara.theagent</code>
+                  </div>
+                  <div className="bg-luxury-gold/10 rounded-lg p-2 sm:p-3 border border-luxury-gold/20 mt-2">
+                    <p className="text-[10px] sm:text-xs text-luxury-gold/80 mb-1">Message to copy:</p>
+                    <p className="text-[10px] sm:text-xs text-white/90 italic">"Hey Sara! Refund please. My email is [YOUR EMAIL]"</p>
                   </div>
                   <button
-                    onClick={() => copyToClipboard('Hey Sara! Refund please', 'refund-dm')}
-                    className="mt-2 w-full flex items-center justify-center gap-1.5 bg-luxury-gold/10 hover:bg-luxury-gold/20 border border-luxury-gold/30 text-luxury-gold py-2 rounded-lg text-[10px] sm:text-xs font-bold transition-all"
+                    onClick={() => copyToClipboard("Hey Sara! Refund please. My email is ", 'refund-dm')}
+                    className="mt-2 w-full flex items-center justify-center gap-1.5 bg-luxury-gold/20 hover:bg-luxury-gold/30 border border-luxury-gold/40 text-luxury-gold py-2.5 rounded-lg text-[11px] sm:text-sm font-black transition-all"
                   >
                     {copiedText === 'refund-dm' ? (
                       <>
-                        <CheckCircle className="w-3 h-3" />
+                        <CheckCircle className="w-4 h-4" />
                         <span>Message Copied!</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3 h-3" />
+                        <Copy className="w-4 h-4" />
                         <span>Copy DM Message</span>
                       </>
                     )}
@@ -1872,8 +1848,8 @@ export default function LuxuryLanding() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-5 sm:gap-8 mb-6 sm:mb-8">
-              <div className="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border-2 border-luxury-gold/30">
-                <Image src="/images/Sara 61kb.webp" alt="Sara" fill sizes="100vw" className="object-cover" loading="lazy" />
+              <div className="relative w-full aspect-square max-w-[280px] sm:max-w-md mx-auto rounded-2xl overflow-hidden border-2 border-luxury-gold/30">
+                <Image src="/images/Sara 61kb.webp" alt="Sara" fill sizes="(max-width: 768px) 280px, 448px" className="object-cover" loading="lazy" priority />
               </div>
 
               <div className="space-y-4 sm:space-y-5">
