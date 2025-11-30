@@ -1,7 +1,6 @@
 // Whop Configuration
-// API Key: apik_5I4iYWtjxHXj3_C3816808_0d897f14aaf8b062a7df7e2f31f022d33453593193559aa064e5daf8d0e0e2fd
-// Webhook Secret: ws_6605b0e8bccbc3747f8b14198fada8ca8934d03dcf83006ff789966024c50564
-// Webhook Hook ID: hook_6dLA0ExwCuJ8S
+// API credentials are stored in environment variables (not in code)
+// WHOP_API_KEY, WHOP_WEBHOOK_SECRET in .env.local
 
 export const WHOP_CONFIG = {
   // Plan IDs
