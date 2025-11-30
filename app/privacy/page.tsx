@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Privacy Policy | AI FastScale',
-  description: 'Privacy Policy for AI FastScale - 7 Minute AgentClone Course. Payment gateway compliance for Whop and Stripe.',
+  description: 'Privacy Policy for AI FastScale - 7 Minute AgentClone Course. Payment gateway compliance and data protection.',
 }
 
 export default function PrivacyPolicy() {
@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
                 2.3 Payment Information - CRITICAL
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>IMPORTANT:</strong> AI FastScale DOES NOT collect, store, process, or have access to your payment card information. Your payment data is handled exclusively by our PCI-DSS Level 1 certified payment processor (Whop/Stripe). We only receive:
+                <strong>IMPORTANT:</strong> AI FastScale DOES NOT collect, store, process, or have access to your payment card information. Your payment data is handled exclusively by our PCI-DSS compliant payment processor. We only receive:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Cardholder name</li>
@@ -148,10 +148,10 @@ export default function PrivacyPolicy() {
               </ul>
 
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
-                4.2 Whop & Stripe Integration
+                4.2 Payment Processor Integration
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Our primary payment processor is Whop, which uses Stripe for payment processing. Both companies comply with:
+                Our payment processor complies with:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>PCI-DSS Level 1 Compliance</li>
@@ -160,7 +160,7 @@ export default function PrivacyPolicy() {
                 <li>Advanced fraud prevention and security protocols</li>
               </ul>
               <p className="leading-relaxed text-gray-700">
-                For details about how Whop and Stripe handle your data, please review their privacy policies at whop.com/privacy and stripe.com/privacy.
+                For details about how our payment processor handles your data, please review their privacy policy.
               </p>
 
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
@@ -198,7 +198,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
-                  <strong>Payment Processors:</strong> Whop and Stripe for secure payment processing
+                  <strong>Payment Processors:</strong> For secure payment processing
                 </li>
                 <li>
                   <strong>Email Service Providers:</strong> For sending course materials, updates, and transactional emails
@@ -207,7 +207,7 @@ export default function PrivacyPolicy() {
                   <strong>Hosting Providers:</strong> Vercel for website hosting and content delivery
                 </li>
                 <li>
-                  <strong>Analytics Providers:</strong> Google Analytics, Meta Pixel, TikTok Pixel, Microsoft Clarity for analytics and advertising
+                  <strong>Analytics Providers:</strong> Meta Pixel for analytics and advertising
                 </li>
                 <li>
                   <strong>Legal/Compliance:</strong> When required by law, court order, or regulation
@@ -242,26 +242,8 @@ export default function PrivacyPolicy() {
               </h3>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
-                  <strong>Google Analytics 4:</strong> Tracks website usage, traffic sources, and user behavior. Data is anonymized.
-                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline ml-1">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
                   <strong>Meta Pixel (Facebook):</strong> Tracks conversions and enables retargeting on Facebook/Instagram.
                   <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline ml-1">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <strong>TikTok Pixel:</strong> Tracks conversions and enables TikTok advertising.
-                  <a href="https://www.tiktok.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline ml-1">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <strong>Microsoft Clarity:</strong> Records session replays and heatmaps for user experience improvement.
-                  <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline ml-1">
                     Privacy Policy
                   </a>
                 </li>
@@ -300,7 +282,7 @@ export default function PrivacyPolicy() {
                 <li><strong>Course Access:</strong> Lifetime (as promised in your purchase)</li>
                 <li><strong>Email Communications:</strong> Until you unsubscribe or request deletion</li>
                 <li><strong>Support Tickets:</strong> 3 years (quality assurance and dispute resolution)</li>
-                <li><strong>Analytics Data:</strong> 26 months (Google Analytics standard retention)</li>
+                <li><strong>Analytics Data:</strong> 26 months</li>
                 <li><strong>Deleted Accounts:</strong> Permanently deleted within 30 days (except records required by law)</li>
               </ul>
             </section>

@@ -95,7 +95,8 @@ export default function RootLayout({
         {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
 
         {/* Critical preconnects for faster DNS resolution */}
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* Payment gateway preconnects will be added here when new system is integrated */}

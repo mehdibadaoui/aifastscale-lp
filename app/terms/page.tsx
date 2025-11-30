@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Terms & Conditions | AI FastScale',
-  description: 'Terms & Conditions for AI FastScale - 7 Minute AgentClone Course. Payment gateway compliance for Whop and Stripe.',
+  description: 'Terms & Conditions for AI FastScale - 7 Minute AgentClone Course. Payment gateway compliance and data protection.',
 }
 
 export default function Terms() {
@@ -58,11 +58,10 @@ export default function Terms() {
                 2.1 Payment Processor & Security
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                All payments are processed securely through our PCI-DSS Level 1 certified payment processor (Whop), which complies with:
+                All payments are processed securely through our PCI-DSS compliant payment processor, which complies with:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Payment Card Industry Data Security Standard (PCI-DSS)</li>
-                <li>Stripe's security requirements (for Stripe-supported transactions)</li>
                 <li>Industry-standard TLS 1.2+ encryption</li>
                 <li>International payment security standards</li>
               </ul>

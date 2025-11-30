@@ -175,7 +175,7 @@ export default function PrivacyPolicy() {
                   <strong>Email Service Providers:</strong> To send course materials, updates, and transactional emails
                 </li>
                 <li>
-                  <strong>Analytics Providers:</strong> Google Analytics, Meta Pixel (Facebook), TikTok Pixel, Microsoft Clarity for website analytics and advertising
+                  <strong>Analytics Providers:</strong> Meta Pixel (Facebook) for website analytics and advertising
                 </li>
                 <li>
                   <strong>Hosting Providers:</strong> Vercel, Inc. for website hosting and content delivery
@@ -204,20 +204,8 @@ export default function PrivacyPolicy() {
               </h3>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
-                  <strong>Google Analytics (GA4):</strong> Tracks website usage, traffic sources, and user behavior. Data is anonymized and used for analytics purposes.{' '}
-                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a>
-                </li>
-                <li>
                   <strong>Meta Pixel (Facebook):</strong> Tracks conversions and enables retargeting advertising on Facebook and Instagram.{' '}
                   <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a>
-                </li>
-                <li>
-                  <strong>TikTok Pixel:</strong> Tracks conversions and enables advertising on TikTok platform.{' '}
-                  <a href="https://www.tiktok.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a>
-                </li>
-                <li>
-                  <strong>Microsoft Clarity:</strong> Records session replays and heatmaps to improve user experience.{' '}
-                  <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a>
                 </li>
                 <li>
                   <strong>Essential Cookies:</strong> Required for website functionality, including shopping cart, checkout, and user authentication.
@@ -250,7 +238,7 @@ export default function PrivacyPolicy() {
                 <li><strong>Course Access:</strong> Lifetime (as promised in your purchase)</li>
                 <li><strong>Email Communications:</strong> Until you unsubscribe or request deletion</li>
                 <li><strong>Support Tickets:</strong> 3 years for quality assurance</li>
-                <li><strong>Analytics Data:</strong> 26 months (Google Analytics default)</li>
+                <li><strong>Analytics Data:</strong> 26 months</li>
                 <li><strong>Deleted Accounts:</strong> Permanently deleted within 30 days (except transaction records required by law)</li>
               </ul>
             </section>

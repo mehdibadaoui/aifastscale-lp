@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { WhopCheckoutEmbed, useCheckoutEmbedControls } from '@whop/checkout/react'
 import { X, CheckCircle, Shield, ArrowRight, Sparkles, Gift, Clock } from 'lucide-react'
 import Image from 'next/image'
 import { BONUS_PRODUCTS } from '../config/bonus-products'
@@ -13,7 +12,6 @@ export default function DownsellFinalPage() {
   const downsellProducts = BONUS_PRODUCTS.slice(0, 5)
   const totalOriginalValue = downsellProducts.reduce((sum, b) => sum + b.value, 0)
   const downsellPrice = 4.97 // $0.99 per product
-  const checkoutRef = useCheckoutEmbedControls()
 
   // Timer countdown
   useEffect(() => {
@@ -33,10 +31,6 @@ export default function DownsellFinalPage() {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
-  }
-
-  const handleCheckout = () => {
-    // Whop checkout is triggered by the WhopCheckoutEmbed component
   }
 
   const handleFinalDecline = () => {
@@ -206,18 +200,11 @@ export default function DownsellFinalPage() {
               {/* CTA Buttons */}
               <div className="space-y-3">
                 {/* Accept Button */}
-                <div style={{ display: 'none' }}>
-                  <WhopCheckoutEmbed
-                    ref={checkoutRef}
-                    planId={process.env.NEXT_PUBLIC_WHOP_PLAN_DOWNSELL!}
-                    onComplete={(planId, receiptId) => {
-                      if (receiptId) localStorage.setItem('whop_downsell_receipt', receiptId)
-                      window.location.href = '/thank-you-confirmed?purchased=downsell'
-                    }}
-                  />
-                </div>
                 <button
-                  onClick={() => checkoutRef.current?.submit()}
+                  onClick={() => {
+                    // TODO: Add new payment gateway checkout URL here
+                    alert('Payment gateway not configured. Please contact support.')
+                  }}
                   className="group w-full bg-gradient-to-r from-luxury-gold via-luxury-gold-light to-luxury-gold hover:shadow-2xl hover:shadow-luxury-gold/50 text-luxury-black px-6 sm:px-8 py-5 sm:py-6 rounded-2xl text-lg sm:text-xl font-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-3"
                 >
                   <Gift className="w-6 h-6" />

@@ -65,19 +65,9 @@ export const GOOGLE_DRIVE = {
 // ============================================================================
 
 export const TRACKING = {
-  ga4: {
-    measurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '',
-    adsId: 'AW-17695777512',
-  },
   meta: {
-    pixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '',
+    pixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '806502898408304',
     conversionsApiToken: process.env.META_CONVERSIONS_API_TOKEN || '',
-  },
-  tiktok: {
-    pixelId: process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || '',
-  },
-  clarity: {
-    projectId: process.env.NEXT_PUBLIC_CLARITY_ID || '',
   },
 } as const
 

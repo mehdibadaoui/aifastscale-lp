@@ -224,10 +224,10 @@ export default function RefundPolicy() {
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Credit card → Refunded to that credit card</li>
                 <li>Debit card → Refunded to that debit card</li>
-                <li>PayPal (if applicable) → Refunded to your PayPal account</li>
+                <li>Digital wallet (if applicable) → Refunded to your original account</li>
               </ul>
               <p className="leading-relaxed text-gray-700">
-                All refunds are processed securely through our PCI-DSS Level 1 certified payment processor (Whop/Stripe).
+                All refunds are processed securely through our PCI-DSS compliant payment processor.
               </p>
 
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">

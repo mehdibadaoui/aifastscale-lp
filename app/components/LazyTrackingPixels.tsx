@@ -1,41 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
-import MetaPixel from './MetaPixel' // Direct import - NO dynamic loading!
-
-// Other pixels load with delay for performance
-const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), { ssr: false })
-const MicrosoftClarity = dynamic(() => import('./MicrosoftClarity'), { ssr: false })
+import MetaPixel from './MetaPixel'
 
 export default function LazyTrackingPixels() {
-  const [shouldLoadOthers, setShouldLoadOthers] = useState(false)
-
-  useEffect(() => {
-    // Load non-critical pixels after 10 seconds + requestIdleCallback for max performance
-    const timer = setTimeout(() => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => setShouldLoadOthers(true), { timeout: 2000 })
-      } else {
-        setShouldLoadOthers(true)
-      }
-    }, 10000) // 10 seconds for non-critical pixels (GA, Clarity)
-
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
     <>
-      {/* Meta Pixel loads IMMEDIATELY - NO dynamic import! */}
+      {/* Meta Pixel - Primary tracking solution */}
       <MetaPixel />
-
-      {/* Other pixels load after delay */}
-      {shouldLoadOthers && (
-        <>
-          <GoogleAnalytics />
-          <MicrosoftClarity />
-        </>
-      )}
     </>
   )
 }

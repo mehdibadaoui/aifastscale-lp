@@ -9,15 +9,16 @@ declare global {
   }
 }
 
-export default function MetaPixel() {
-  const PIXEL_ID = '806502898408304' // Hardcoded for reliability
+// Meta Pixel ID - hardcoded for reliability
+const PIXEL_ID = '806502898408304'
 
+export default function MetaPixel() {
   return (
     <>
-      {/* Meta Pixel - Changed to lazyOnload for maximum performance score */}
+      {/* Meta Pixel Base Code - afterInteractive for reliable tracking */}
       <Script
         id="meta-pixel-base"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
@@ -41,9 +42,30 @@ export default function MetaPixel() {
         }}
       />
 
+      {/* Noscript fallback for users with JS disabled */}
       <noscript dangerouslySetInnerHTML={{
         __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1" />`
       }} />
     </>
   )
+}
+
+// Helper function to track custom events (can be imported and used anywhere)
+export function trackMetaEvent(
+  eventName: string,
+  params?: Record<string, any>
+) {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', eventName, params)
+  }
+}
+
+// Helper function to track custom conversions
+export function trackMetaCustomEvent(
+  eventName: string,
+  params?: Record<string, any>
+) {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('trackCustom', eventName, params)
+  }
 }

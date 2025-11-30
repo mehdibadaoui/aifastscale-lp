@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { WhopCheckoutEmbed, useCheckoutEmbedControls } from '@whop/checkout/react'
 import { Clock, Zap, CheckCircle, Shield, X, ArrowRight, AlertCircle } from 'lucide-react'
 import Image from 'next/image'
 import { BONUS_PRODUCTS } from '../config/bonus-products'
@@ -13,7 +12,6 @@ export default function UpsellPage() {
   const upsellProducts = BONUS_PRODUCTS.slice(5, 10)
   const totalOriginalValue = upsellProducts.reduce((sum, b) => sum + b.value, 0)
   const upsellPrice = 9.95
-  const checkoutRef = useCheckoutEmbedControls()
 
   // Timer countdown
   useEffect(() => {
@@ -33,10 +31,6 @@ export default function UpsellPage() {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
-  }
-
-  const handleCheckout = () => {
-    // Whop checkout is triggered by the WhopCheckoutEmbed component
   }
 
   const handleDecline = () => {
@@ -193,18 +187,11 @@ export default function UpsellPage() {
 
           {/* Checkout Button - Prominent */}
           <div className="mb-4">
-            <div style={{ display: 'none' }}>
-              <WhopCheckoutEmbed
-                ref={checkoutRef}
-                planId={process.env.NEXT_PUBLIC_WHOP_PLAN_UPSELL!}
-                onComplete={(planId, receiptId) => {
-                  if (receiptId) localStorage.setItem('whop_upsell_receipt', receiptId)
-                  window.location.href = '/thank-you-confirmed?purchased=upsell'
-                }}
-              />
-            </div>
             <button
-              onClick={() => checkoutRef.current?.submit()}
+              onClick={() => {
+                // TODO: Add new payment gateway checkout URL here
+                alert('Payment gateway not configured. Please contact support.')
+              }}
               className="group w-full bg-gradient-to-r from-[#d4af37] via-[#f4d03f] to-[#d4af37] hover:shadow-2xl hover:shadow-[#d4af37]/40 text-[#0a0a0a] px-8 py-5 rounded-xl text-lg sm:text-xl font-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-3"
             >
               <span>YES! Add These 5 Tools for $9.95</span>
