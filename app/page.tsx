@@ -204,8 +204,8 @@ export default function CleanLandingPage() {
   }, [])
 
   const handleCheckout = () => {
-    // Add theme=light for light mode + hideAddress=true to remove address fields
-    window.open(`${WHOP_CONFIG.plans.mainCourse.checkoutUrl}?theme=light&hideAddress=true`, '_blank')
+    // Whop checkout params: theme=light, hideAddressForm=true (from docs.whop.com)
+    window.open(`${WHOP_CONFIG.plans.mainCourse.checkoutUrl}?theme=light&hideAddressForm=true`, '_blank')
   }
 
   const scrollToSection = (id: string) => {
