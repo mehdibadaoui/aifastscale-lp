@@ -286,26 +286,28 @@ export default function CleanLandingPage() {
         </div>
 
         <div className="w-full px-4 sm:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Main Headline */}
-            <h1 className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.1] ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
-              <span className="text-white">Turn Any Photo Into a</span>
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Main Headline - BIG & BOLD */}
+            <h1 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
+              <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
               <br />
-              <span className="bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium bg-clip-text text-transparent">
-                Talking AI Video
+              <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: '0 0 40px rgba(212, 175, 55, 0.3)' }}>
+                  Talking AI Video
+                </span>
               </span>
               <br />
-              <span className="text-white">&</span>
-              <span className="bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium bg-clip-text text-transparent">
-                {' '}Generate 100+ Leads Monthly
+              <span className="text-white drop-shadow-lg">&</span>
+              <span className="bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium bg-clip-text text-transparent" style={{ textShadow: '0 0 40px rgba(212, 175, 55, 0.3)' }}>
+                {' '}Generate 100+ Leads
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className={`text-sm sm:text-lg md:text-xl text-gray-400 mb-4 sm:mb-6 max-w-2xl mx-auto ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            {/* Subtitle - Larger & More Visible */}
+            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-5 sm:mb-8 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               Even if you've never edited a video in your life —
               <br className="hidden sm:block" />
-              <span className="text-white/80">all you need is your phone</span>
+              <span className="text-white font-semibold">all you need is your phone</span>
             </p>
 
             {/* Hero Image - Clean, no badge */}
