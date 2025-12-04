@@ -72,16 +72,20 @@ export default function WhopEmbeddedCheckout({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-hidden touch-none"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
+      onTouchMove={(e) => e.stopPropagation()}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-scale-in">
+      <div
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto overscroll-contain animate-scale-in"
+        onTouchMove={(e) => e.stopPropagation()}
+      >
         {/* Close button */}
         <button
           onClick={onClose}
