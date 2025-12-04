@@ -15,6 +15,7 @@ export default function WhopEmbeddedCheckout({
   planId = WHOP_CONFIG.plans.mainCourse.id,
 }: WhopEmbeddedCheckoutProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const scrollYRef = useRef(0)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -53,18 +54,41 @@ export default function WhopEmbeddedCheckout({
     }
   }, [isOpen, planId])
 
-  // Handle escape key
+  // Handle escape key and body scroll lock
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
+
     if (isOpen) {
+      // Save scroll position before locking
+      scrollYRef.current = window.scrollY
+
       document.addEventListener('keydown', handleEscape)
+
+      // Lock body scroll - iOS fix using position:fixed
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollYRef.current}px`
+      document.body.style.left = '0'
+      document.body.style.right = '0'
       document.body.style.overflow = 'hidden'
     }
+
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
+
+      // Only restore if we were open
+      if (document.body.style.position === 'fixed') {
+        // Restore body styles
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
+        document.body.style.overflow = ''
+
+        // Restore scroll position
+        window.scrollTo(0, scrollYRef.current)
+      }
     }
   }, [isOpen, onClose])
 
