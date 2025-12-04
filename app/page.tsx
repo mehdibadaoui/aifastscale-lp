@@ -134,6 +134,7 @@ export default function CleanLandingPage() {
   ]
 
   // Scroll animation observer - optimized for performance
+  // MOBILE FIX: Use lower threshold and positive rootMargin to trigger earlier
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -145,14 +146,23 @@ export default function CleanLandingPage() {
           }
         })
       },
-      { threshold: 0.15, rootMargin: '0px 0px -80px 0px' }
+      { threshold: 0.01, rootMargin: '100px 0px 100px 0px' } // Trigger when just 1% visible, with 100px buffer
     )
 
     // Observe all elements with scroll-animate classes
     const animatedElements = document.querySelectorAll('[data-animate], .scroll-animate, .scroll-animate-scale')
     animatedElements.forEach((el) => observer.observe(el))
 
-    return () => observer.disconnect()
+    // MOBILE FALLBACK: If intersection observer doesn't trigger after 2s, show all sections
+    const fallbackTimer = setTimeout(() => {
+      const allSections = ['hero', 'how-it-works', 'case-study', 'whats-inside', 'testimonials', 'guarantee1', 'pricing', 'faq', 'guarantee2', 'meet-sara', 'final-cta']
+      setVisibleSections(new Set(allSections))
+    }, 2000)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(fallbackTimer)
+    }
   }, [])
 
   // Countdown timer
