@@ -1905,6 +1905,7 @@ a.luxury-link:hover::after {
 .testimonial-carousel-wrapper {
   position: relative;
   overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Left fade shadow */
@@ -1913,7 +1914,7 @@ a.luxury-link:hover::after {
   position: absolute;
   top: 0;
   left: 0;
-  width: 120px;
+  width: 80px;
   height: 100%;
   background: linear-gradient(to right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 10;
@@ -1926,7 +1927,7 @@ a.luxury-link:hover::after {
   position: absolute;
   top: 0;
   right: 0;
-  width: 120px;
+  width: 80px;
   height: 100%;
   background: linear-gradient(to left, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 10;
@@ -1936,13 +1937,14 @@ a.luxury-link:hover::after {
 /* Infinite scroll track */
 .testimonial-scroll-track {
   display: flex;
-  gap: 1.5rem;
-  animation: infiniteScrollLeft 35s linear infinite;
+  gap: 1rem;
+  animation: infiniteScrollLeft 40s linear infinite;
   width: max-content;
   will-change: transform;
+  padding: 0.5rem 0;
 }
 
-/* Pause animation on hover */
+/* Pause animation on hover/touch */
 .testimonial-scroll-track:hover {
   animation-play-state: paused;
 }
@@ -1950,45 +1952,63 @@ a.luxury-link:hover::after {
 /* Testimonial card styling - dark premium look */
 .testimonial-card {
   flex-shrink: 0;
-  width: 380px;
+  width: 340px;
   background: rgb(28, 28, 28);
-  border-radius: 24px;
-  padding: 28px;
+  border-radius: 16px;
+  padding: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.3s ease;
 }
 
 .testimonial-card:hover {
   border-color: rgba(212, 175, 55, 0.3);
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 /* Quote icon circle */
 .testimonial-quote-icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
-/* Mobile adjustments */
+.testimonial-quote-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile adjustments - MUCH tighter */
 @media (max-width: 640px) {
   .testimonial-card {
-    width: 300px;
-    padding: 20px;
+    width: 280px;
+    padding: 16px;
+    border-radius: 12px;
   }
 
   .testimonial-scroll-track {
-    animation-duration: 25s;
+    animation-duration: 30s;
+    gap: 0.75rem;
   }
 
   .testimonial-carousel-wrapper::before,
   .testimonial-carousel-wrapper::after {
-    width: 60px;
+    width: 30px;
+  }
+
+  .testimonial-quote-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-quote-icon svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
