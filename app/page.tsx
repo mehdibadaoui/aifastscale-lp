@@ -211,7 +211,31 @@ export default function CleanLandingPage() {
   }
 
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    const element = document.getElementById(id)
+    if (!element) return
+
+    const targetPosition = element.getBoundingClientRect().top + window.scrollY - 20
+    const startPosition = window.scrollY
+    const distance = targetPosition - startPosition
+    const duration = 1200 // 1.2 seconds for smooth feel
+    let startTime: number | null = null
+
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+
+    const animateScroll = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const easeProgress = easeOutCubic(progress)
+
+      window.scrollTo(0, startPosition + distance * easeProgress)
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll)
+      }
+    }
+
+    requestAnimationFrame(animateScroll)
   }
 
   const handlePlayVideo = () => {
@@ -1687,11 +1711,11 @@ export default function CleanLandingPage() {
 
       {/* Animation Styles - Modern, smooth, GPU-accelerated */}
       <style jsx global>{`
-        /* Modern cubic-bezier for smooth feel */
+        /* Modern cubic-bezier for buttery smooth feel */
         @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
@@ -1700,7 +1724,7 @@ export default function CleanLandingPage() {
         }
 
         .animate-fade-in-up {
-          animation: fadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
           will-change: opacity, transform;
         }
 
@@ -1715,7 +1739,7 @@ export default function CleanLandingPage() {
         @keyframes scaleUp {
           from {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.92);
           }
           to {
             opacity: 1;
@@ -1724,14 +1748,30 @@ export default function CleanLandingPage() {
         }
 
         .animate-scale-up {
-          animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: scaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Modal scale in animation */
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .animate-scale-in {
+          animation: scaleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         /* Fade in from left */
         @keyframes fadeInLeft {
           from {
             opacity: 0;
-            transform: translateX(-30px);
+            transform: translateX(-25px);
           }
           to {
             opacity: 1;
@@ -1740,14 +1780,14 @@ export default function CleanLandingPage() {
         }
 
         .animate-fade-in-left {
-          animation: fadeInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: fadeInLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         /* Fade in from right */
         @keyframes fadeInRight {
           from {
             opacity: 0;
-            transform: translateX(30px);
+            transform: translateX(25px);
           }
           to {
             opacity: 1;
@@ -1756,13 +1796,22 @@ export default function CleanLandingPage() {
         }
 
         .animate-fade-in-right {
-          animation: fadeInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: fadeInRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
+
+        /* Stagger animation for lists */
+        .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+        .stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+        .stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+        .stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+        .stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+        .stagger-children > *:nth-child(6) { animation-delay: 400ms; }
 
         /* Respect user motion preferences */
         @media (prefers-reduced-motion: reduce) {
           .animate-fade-in-up,
           .animate-scale-up,
+          .animate-scale-in,
           .animate-fade-in-left,
           .animate-fade-in-right {
             animation: none;
