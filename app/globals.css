@@ -658,18 +658,77 @@ video {
 }
 
 /* ============================================================================
-   MOBILE PERFORMANCE OPTIMIZATION
+   MOBILE PERFORMANCE OPTIMIZATION - AGGRESSIVE
+   Critical for 90+ Lighthouse score
    ============================================================================ */
 
-/* Reduce animations on mobile for better performance */
-@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .animate-pulse,
-  .animate-spin-slow {
-    animation-duration: 3s;
+/* CRITICAL: Disable expensive animations on mobile for better TBT/LCP */
+@media (max-width: 768px) {
+  /* Disable all luxury shimmer/glow animations */
+  .luxury-shimmer,
+  .animate-shimmer,
+  .animate-gradient-shift {
+    animation: none !important;
   }
 
-  .animate-bounce-subtle {
-    animation: none;
+  /* Simplify pulse animations */
+  .animate-pulse,
+  .animate-pulse-slow,
+  .animate-spin-slow,
+  .luxury-pulse {
+    animation: none !important;
+  }
+
+  /* Disable floating/bounce animations */
+  .animate-bounce-subtle,
+  .animate-float,
+  .luxury-float {
+    animation: none !important;
+  }
+
+  /* Disable background particle animations */
+  .bg-particles::before,
+  .bg-particles::after,
+  .bg-animated-gradient::before {
+    animation: none !important;
+  }
+
+  /* Simplify scroll reveal - just fade in, no transform */
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .scroll-animate.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Disable hover transforms on mobile (no hover anyway) */
+  .luxury-card:hover,
+  .luxury-testimonial:hover,
+  .luxury-button:hover {
+    transform: none !important;
+  }
+
+  /* Reduce transition durations globally */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.1s !important;
+  }
+
+  /* Disable will-change on mobile to save memory */
+  .will-change-transform,
+  .will-change-opacity,
+  .smooth-transform {
+    will-change: auto !important;
+  }
+
+  /* Keep testimonial carousel but make it instant */
+  .testimonial-scroll-track {
+    animation-duration: 60s !important;
   }
 }
 

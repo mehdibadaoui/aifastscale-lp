@@ -17,12 +17,15 @@ import {
   X,
 } from 'lucide-react'
 import { trackInitiateCheckout, trackViewContent } from '../utils/meta-tracking'
+import WhopEmbeddedCheckout from '../components/WhopEmbeddedCheckout'
+import { WHOP_CONFIG } from '../config/whop'
 
 export default function DownsellPage() {
   const [timeLeft, setTimeLeft] = useState(5 * 60) // 5 minutes
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
 
   useEffect(() => {
-    trackViewContent('Done-For-You 3 Month Downsell', 197)
+    trackViewContent('Done-For-You 3 Month Downsell', 195)
   }, [])
 
   // Timer countdown
@@ -46,8 +49,8 @@ export default function DownsellPage() {
   }
 
   const handleCheckout = () => {
-    trackInitiateCheckout('Done-For-You 3 Month Downsell', 197)
-    window.open('https://whop.com/checkout/plan_kBs0C47hTeNS7', '_blank')
+    trackInitiateCheckout('Done-For-You 3 Month Downsell', 195)
+    setIsCheckoutOpen(true)
   }
 
   const handleDecline = () => {
@@ -101,7 +104,7 @@ export default function DownsellPage() {
               </p>
               <p className="text-white text-sm sm:text-base leading-relaxed mt-2">
                 I'll give you <span className="text-gold-premium font-bold">3 months of content (24 videos)</span> at a
-                <span className="text-green-400 font-bold"> 33% discount</span> - just $197 instead of $295."
+                <span className="text-green-400 font-bold"> 34% discount</span> - just $195 instead of $295."
               </p>
             </div>
           </div>
@@ -118,7 +121,7 @@ export default function DownsellPage() {
               </div>
               <div className="text-right">
                 <p className="text-gray-400 line-through text-sm">$295</p>
-                <p className="text-gold-premium font-black text-3xl">$197</p>
+                <p className="text-gold-premium font-black text-3xl">$195</p>
               </div>
             </div>
           </div>
@@ -154,7 +157,7 @@ export default function DownsellPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-300 text-sm">Price per video:</span>
-                <span className="text-gold-premium font-bold">$8.21</span>
+                <span className="text-gold-premium font-bold">$8.13</span>
               </div>
             </div>
 
@@ -164,8 +167,8 @@ export default function DownsellPage() {
                 <Check className="w-5 h-5 text-green-400" />
               </div>
               <div>
-                <p className="text-green-400 font-bold">You save $98</p>
-                <p className="text-gray-400 text-sm">33% off the regular 3-month price</p>
+                <p className="text-green-400 font-bold">You save $100</p>
+                <p className="text-gray-400 text-sm">34% off the regular 3-month price</p>
               </div>
             </div>
           </div>
@@ -176,7 +179,7 @@ export default function DownsellPage() {
               onClick={handleCheckout}
               className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-4 rounded-xl font-black text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2 mb-3"
             >
-              Yes! Give Me 24 Videos for $197
+              Yes! Give Me 24 Videos for $195
               <ArrowRight className="w-5 h-5" />
             </button>
 
@@ -234,6 +237,13 @@ export default function DownsellPage() {
           </button>
         </div>
       </div>
+
+      {/* Whop Embedded Checkout Modal */}
+      <WhopEmbeddedCheckout
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        planId={WHOP_CONFIG.plans.downsell3month.id}
+      />
     </main>
   )
 }

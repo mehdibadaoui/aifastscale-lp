@@ -112,21 +112,26 @@ export default function RootLayout({
         <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Whop checkout preload for instant checkout popup */}
-        <link rel="preconnect" href="https://js.whop.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://whop.com" crossOrigin="anonymous" />
+        {/* Whop - dns-prefetch only (script loaded lazily when checkout opens) */}
         <link rel="dns-prefetch" href="https://js.whop.com" />
         <link rel="dns-prefetch" href="https://whop.com" />
 
-        {/* Wistia video - dns-prefetch only (defer full preconnect until needed) */}
-        <link rel="dns-prefetch" href="https://fast.wistia.net" />
-        <link rel="dns-prefetch" href="https://fast.wistia.com" />
-
-        {/* Whop Embedded Checkout Script */}
-        <script async defer src="https://js.whop.com/static/checkout/loader.js" />
-
         {/* HERO OPTIMIZATION: Preload critical above-fold images for faster LCP */}
-        <link rel="preload" href="/images/hero-showcase.webp" as="image" type="image/webp" fetchPriority="high" />
+        {/* Mobile-first: preload smaller mobile image */}
+        <link
+          rel="preload"
+          href="/images/hero-showcase-mobile.webp"
+          as="image"
+          type="image/webp"
+          media="(max-width: 768px)"
+        />
+        <link
+          rel="preload"
+          href="/images/hero-showcase.webp"
+          as="image"
+          type="image/webp"
+          media="(min-width: 769px)"
+        />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />

@@ -29,31 +29,6 @@ export const PRICING = {
 } as const
 
 // ============================================================================
-// PAYMENT CONFIGURATION - WHOP
-// ============================================================================
-
-// NOTE: For Whop configuration, use /app/config/whop.ts instead
-// This is kept for backwards compatibility with other parts of the app
-export const WHOP = {
-  plans: {
-    main: 'plan_7x5Kz1cflmrYH',
-    upsell6month: 'plan_0fbyyZAq8n1yI',  // DFY 6-month (72 videos)
-    upsell3month: 'plan_gdD4gop6sejQG',  // DFY 3-month (24 videos)
-    downsell6month: 'plan_zzn3Y7w2G5NQq', // Downsell 6-month
-    downsell3month: 'plan_kBs0C47hTeNS7', // Downsell 3-month ($197)
-  },
-  prices: {
-    main: 37,
-    upsell6month: 565.20,  // 72 videos @ $7.85/video
-    upsell3month: 295,     // 24 videos @ $12.29/video
-    downsell3month: 197,   // 24 videos @ $8.21/video (33% off)
-  },
-  redirects: {
-    main: 'https://whop.com/checkout/plan_7x5Kz1cflmrYH',
-  },
-} as const
-
-// ============================================================================
 // VIDEO CONFIGURATION
 // ============================================================================
 

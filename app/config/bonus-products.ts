@@ -148,7 +148,6 @@ export const BONUS_PRODUCTS: BonusProduct[] = [
 export const BONUS_PRICING = {
   individualPrice: 1.99,
   bundlePrice: 9.90,
-  bundleDiscount: 0.5, // 50% off
   currency: 'USD',
   currencySymbol: '$',
 } as const
@@ -156,15 +155,4 @@ export const BONUS_PRICING = {
 // Calculate total value
 export const getTotalBonusValue = (): number => {
   return BONUS_PRODUCTS.reduce((total, product) => total + product.value, 0)
-}
-
-// Calculate savings
-export const getBundleSavings = (): number => {
-  const individualTotal = BONUS_PRODUCTS.length * BONUS_PRICING.individualPrice
-  return individualTotal - BONUS_PRICING.bundlePrice
-}
-
-// Get products by category
-export const getProductsByCategory = (category: BonusProduct['category']) => {
-  return BONUS_PRODUCTS.filter(product => product.category === category)
 }

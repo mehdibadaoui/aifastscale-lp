@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { WHOP_CONFIG } from '../config/whop'
 
 interface WhopEmbeddedCheckoutProps {
@@ -8,6 +8,10 @@ interface WhopEmbeddedCheckoutProps {
   onClose: () => void
   planId?: string
 }
+
+// Track if Whop script is already loaded globally
+let whopScriptLoaded = false
+let whopScriptLoading = false
 
 export default function WhopEmbeddedCheckout({
   isOpen,
@@ -17,6 +21,46 @@ export default function WhopEmbeddedCheckout({
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollYRef = useRef(0)
   const [isLoading, setIsLoading] = useState(true)
+
+  // Lazy load Whop script only when checkout opens
+  const loadWhopScript = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      // Already loaded
+      if (whopScriptLoaded && (window as any).WhopCheckout) {
+        resolve()
+        return
+      }
+
+      // Currently loading, wait for it
+      if (whopScriptLoading) {
+        const checkReady = () => {
+          if ((window as any).WhopCheckout) {
+            resolve()
+          } else {
+            setTimeout(checkReady, 50)
+          }
+        }
+        checkReady()
+        return
+      }
+
+      // Start loading
+      whopScriptLoading = true
+      const script = document.createElement('script')
+      script.src = 'https://js.whop.com/static/checkout/loader.js'
+      script.async = true
+      script.onload = () => {
+        whopScriptLoaded = true
+        whopScriptLoading = false
+        resolve()
+      }
+      script.onerror = () => {
+        whopScriptLoading = false
+        resolve() // Resolve anyway to not block UI
+      }
+      document.head.appendChild(script)
+    })
+  }, [])
 
   useEffect(() => {
     if (isOpen && containerRef.current) {
@@ -34,25 +78,26 @@ export default function WhopEmbeddedCheckout({
 
       containerRef.current.appendChild(checkoutDiv)
 
-      // Wait for Whop loader script to be ready, then initialize
-      const initCheckout = () => {
-        if ((window as any).WhopCheckout) {
-          (window as any).WhopCheckout.init()
-          setIsLoading(false)
-        } else {
-          // Script not loaded yet, wait and retry
-          setTimeout(initCheckout, 100)
+      // Load script lazily then initialize
+      loadWhopScript().then(() => {
+        // Wait for Whop loader script to be ready, then initialize
+        const initCheckout = () => {
+          if ((window as any).WhopCheckout) {
+            (window as any).WhopCheckout.init()
+            setIsLoading(false)
+          } else {
+            // Script not loaded yet, wait and retry
+            setTimeout(initCheckout, 100)
+          }
         }
-      }
+        initCheckout()
+      })
 
-      // Give script time to load, then init
-      setTimeout(initCheckout, 300)
-
-      // Fallback: hide loading after 3s regardless
-      const fallbackTimer = setTimeout(() => setIsLoading(false), 3000)
+      // Fallback: hide loading after 4s regardless
+      const fallbackTimer = setTimeout(() => setIsLoading(false), 4000)
       return () => clearTimeout(fallbackTimer)
     }
-  }, [isOpen, planId])
+  }, [isOpen, planId, loadWhopScript])
 
   // Handle escape key and body scroll lock
   useEffect(() => {

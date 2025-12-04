@@ -48,8 +48,8 @@ export default function CleanLandingPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Animation refs for scroll detection
-  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
+  // Animation refs for scroll detection - initialize with hero visible for instant animation
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
 
   const faqs = [
     {
@@ -84,7 +84,7 @@ export default function CleanLandingPage() {
       name: 'Sofia Martinez',
       role: 'Luxury Real Estate Agent',
       location: 'Miami, FL',
-      image: '/images/Reviews/Review REA 1.jpeg',
+      image: '/images/Reviews/Review REA 1.webp',
       review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 4 qualified leads that same week.",
       results: '4 leads in first week',
     },
@@ -93,7 +93,7 @@ export default function CleanLandingPage() {
       name: 'Marcus Williams',
       role: 'Commercial Broker',
       location: 'Atlanta, GA',
-      image: '/images/Reviews/Review REA 2.jpeg',
+      image: '/images/Reviews/Review REA 2.webp',
       review: "After 15 years in real estate, I thought I'd seen it all. Closed $2.3M in listings last month - all from AI video leads.",
       results: '$2.3M in closings',
     },
@@ -102,7 +102,7 @@ export default function CleanLandingPage() {
       name: 'Yasmin Al-Rashid',
       role: 'Property Consultant',
       location: 'Dubai, UAE',
-      image: '/images/Reviews/Review REA 3.jpeg',
+      image: '/images/Reviews/Review REA 3.webp',
       review: "As a Dubai agent, I need to look premium. These AI videos make my listings look like million-dollar productions. Went from 2-3 leads to 15+ per week.",
       results: '15+ leads/week',
     },
@@ -111,7 +111,7 @@ export default function CleanLandingPage() {
       name: 'Dr. Raj Patel',
       role: 'Investment Specialist',
       location: 'London, UK',
-      image: '/images/Reviews/Review REA 5.jpeg',
+      image: '/images/Reviews/Review REA 5.webp',
       review: "Was spending £800/month on video production. Now I create better content myself in minutes. ROI was immediate.",
       results: '50x ROI',
     },
@@ -120,7 +120,7 @@ export default function CleanLandingPage() {
       name: 'Jennifer Kim',
       role: 'Urban Properties',
       location: 'Vancouver, Canada',
-      image: '/images/Reviews/Review REA 9.jpeg',
+      image: '/images/Reviews/Review REA 9.webp',
       review: "My listing video got 47K views. Sold the property in 5 days for $80K over asking. This system pays for itself daily.",
       results: 'Sold $80K over asking',
     },
@@ -129,41 +129,46 @@ export default function CleanLandingPage() {
       name: 'Carlos Mendoza',
       role: 'Family Homes Expert',
       location: 'Los Angeles, CA',
-      image: '/images/Reviews/Review REA 11.jpeg',
+      image: '/images/Reviews/Review REA 11.webp',
       review: "25 years selling homes and I wish I had this sooner. 6 closings last month from social media alone.",
       results: '6 closings from social',
     },
   ]
 
-  // Scroll animation observer - optimized for performance
-  // MOBILE FIX: Use lower threshold and positive rootMargin to trigger earlier
+  // Scroll animation observer - trigger animations as sections come into view
+  // PERFORMANCE: Disabled on mobile for faster TBT
   useEffect(() => {
+    // Skip animation observer on mobile for performance
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+    if (isMobile) {
+      // On mobile, immediately show all sections without animation
+      setVisibleSections(new Set(['hero', 'how-it-works', 'case-study', 'case-study-lucas', 'testimonials', 'whats-inside', 'bonuses', 'faq', 'final-cta']))
+      return
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Add visible class for CSS animations
             entry.target.classList.add('visible')
-            setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+            if (entry.target.id) {
+              setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+            }
           }
         })
       },
-      { threshold: 0.01, rootMargin: '100px 0px 100px 0px' } // Trigger when just 1% visible, with 100px buffer
+      { threshold: 0, rootMargin: '50px 0px 200px 0px' } // Trigger 200px before entering viewport
     )
 
-    // Observe all elements with scroll-animate classes
-    const animatedElements = document.querySelectorAll('[data-animate], .scroll-animate, .scroll-animate-scale')
-    animatedElements.forEach((el) => observer.observe(el))
-
-    // MOBILE FALLBACK: If intersection observer doesn't trigger after 2s, show all sections
-    const fallbackTimer = setTimeout(() => {
-      const allSections = ['hero', 'how-it-works', 'case-study', 'whats-inside', 'testimonials', 'guarantee1', 'pricing', 'faq', 'guarantee2', 'meet-sara', 'final-cta']
-      setVisibleSections(new Set(allSections))
-    }, 2000)
+    // Small delay to ensure DOM is ready
+    const initTimer = setTimeout(() => {
+      const animatedElements = document.querySelectorAll('[data-animate]')
+      animatedElements.forEach((el) => observer.observe(el))
+    }, 100)
 
     return () => {
       observer.disconnect()
-      clearTimeout(fallbackTimer)
+      clearTimeout(initTimer)
     }
   }, [])
 
@@ -311,17 +316,26 @@ export default function CleanLandingPage() {
               <span className="text-white font-semibold">all you need is your phone</span>
             </p>
 
-            {/* Hero Image - Clean, no badge */}
+            {/* Hero Image - Clean, no badge - RESPONSIVE for mobile performance */}
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-gold-premium/30 sm:border-2 sm:border-gold-premium/40 shadow-xl shadow-gold-premium/10">
-                <Image
-                  src="/images/hero-showcase.webp"
-                  alt="AI Video System Showcase"
-                  width={1365}
-                  height={768}
-                  className="w-full h-auto"
-                  priority
-                />
+                {/* Mobile: smaller optimized image */}
+                <picture>
+                  <source
+                    media="(max-width: 768px)"
+                    srcSet="/images/hero-showcase-mobile.webp"
+                    type="image/webp"
+                  />
+                  <Image
+                    src="/images/hero-showcase.webp"
+                    alt="AI Video System Showcase"
+                    width={1365}
+                    height={768}
+                    className="w-full h-auto"
+                    priority
+                    fetchPriority="high"
+                  />
+                </picture>
               </div>
             </div>
 
@@ -484,7 +498,7 @@ export default function CleanLandingPage() {
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-gold-premium">
-                        <Image src="/images/jessica-photo.jpeg" alt="Jessica Rivera" width={96} height={96} className="object-cover w-full h-full" />
+                        <Image src="/images/jessica-photo.webp" alt="Jessica Rivera" width={96} height={96} className="object-cover w-full h-full" />
                       </div>
                       <div className="absolute -bottom-1 -right-1 bg-gold-premium text-black text-[10px] font-black px-2 py-0.5 rounded-full">
                         VERIFIED
@@ -520,12 +534,12 @@ export default function CleanLandingPage() {
                 {/* Image without overlay on mobile for clarity */}
                 <div className="rounded-xl overflow-hidden border-2 border-gold-premium/40 shadow-2xl">
                   <Image
-                    src="/images/jessica-photo.jpeg"
+                    src="/images/jessica-photo.webp"
                     alt="Jessica Rivera - 17 Buyer Leads in 3 Weeks"
                     width={1365}
                     height={768}
                     className="w-full h-auto object-cover"
-                    priority
+                    loading="lazy"
                   />
                 </div>
                 {/* Caption below image for clarity */}
@@ -617,7 +631,7 @@ export default function CleanLandingPage() {
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gold-premium">
-                        <Image src="/images/jessica-photo.jpeg" alt="Jessica" width={40} height={40} className="object-cover" />
+                        <Image src="/images/jessica-photo.webp" alt="Jessica" width={40} height={40} className="object-cover" />
                       </div>
                       <div>
                         <p className="text-white font-bold">Jessica Rivera</p>
@@ -889,40 +903,49 @@ export default function CleanLandingPage() {
             </div>
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
-            <div className={`bg-gradient-to-br from-gold-premium/15 to-gold-premium/5 border-2 border-gold-premium rounded-xl sm:rounded-2xl p-4 sm:p-8 mb-4 sm:mb-6 ${
+            <div className={`bg-gradient-to-br from-gold-premium/15 to-gold-premium/5 border-2 border-gold-premium rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
               visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
             }`}>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <span className="bg-gold-premium text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
-                <span className="text-gray-400 line-through text-xs sm:text-sm">$697</span>
-                <span className="text-gold-premium font-black text-xs sm:text-base">INCLUDED</span>
+              {/* Large Course Thumbnail */}
+              <div className="relative w-full aspect-video">
+                <Image
+                  src="/images/vd-course-thumbnail.webp"
+                  alt="AgentClone 7-Minute Video System - Turn Your Image Into a Talking AI Video"
+                  fill
+                  className="object-cover"
+                  loading="lazy"
+                />
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
-                <div className="relative w-full lg:w-72 h-36 sm:h-44 rounded-lg sm:rounded-xl overflow-hidden flex-shrink-0 border-2 border-gold-premium/50">
-                  <Image src="/images/VD-Course-demo.webp" alt="AgentClone System" fill className="object-cover" />
+              {/* Course Details */}
+              <div className="p-4 sm:p-8">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <span className="bg-gold-premium text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
+                  <span className="text-gray-400 line-through text-xs sm:text-sm">$697</span>
+                  <span className="text-gold-premium font-black text-xs sm:text-base">INCLUDED</span>
                 </div>
 
-                <div className="flex-1">
-                  <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">AgentClone 7-Minute Video System</h3>
-                  <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed">
-                    The complete A-to-Z video training that shows you exactly how to create professional AI videos
-                    in just 7 minutes. Watch over my shoulder as I walk you through every step —
-                    from uploading your photo to posting viral content.
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
-                    {[
-                      'Step-by-step video walkthrough',
-                      '50+ ready-to-use scripts',
-                      'AI tool setup guide',
-                      'Best posting strategies',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
-                        <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-premium flex-shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
+                <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">AgentClone 7-Minute Video System</h3>
+                <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed">
+                  Even if you've never touched AI before — follow along and create your first talking video today.
+                  No tech skills needed. I show you everything click-by-click.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+                  {[
+                    'Turn any photo into a talking AI video',
+                    'Create your personal AI avatar that looks like you',
+                    'Clone your voice so the AI speaks exactly like you',
+                    'Put yourself anywhere — beaches, offices, luxury homes (looks 100% real)',
+                    'All free tools included — zero monthly fees',
+                    'Ready-to-use AI scriptwriter (writes viral scripts for you)',
+                    'Every prompt you need — just copy & paste',
+                    'Edit videos on your phone in minutes (no experience needed)',
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-premium flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -938,15 +961,17 @@ export default function CleanLandingPage() {
             {/* BONUS PRODUCTS - Full images with clear pricing */}
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {/* Bonus 1 - Brand Kit */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/brand-kit.webp" alt="Brand Kit" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+                  <Image src="/images/products/brand-kit.webp" alt="Brand Kit" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">The Luxury Agent's Brand Kit</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$55</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">The Luxury Agent's Brand Kit</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$55</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Logo templates, business cards, letterheads & social media templates.
@@ -956,15 +981,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 2 - Business Planner */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/business-planner.webp" alt="Business Planner" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+                  <Image src="/images/products/business-planner.webp" alt="Business Planner" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">2026 Million Dollar Roadmap Planner</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$67</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">2026 Million Dollar Roadmap Planner</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$67</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     The exact 12-month planning system top 1% agents use.
@@ -974,15 +1001,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 3 - Hooks */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/hooks-impossible-to-skip.webp" alt="Hooks" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/hooks-impossible-to-skip.webp" alt="Hooks" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">45 Scroll-Stopping Hooks</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$49</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">45 Scroll-Stopping Hooks</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$49</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Opening lines tested on 10M+ views. Stop thumbs mid-scroll with hooks
@@ -992,15 +1021,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 4 - ChatGPT Mentor */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/chatgpt-mentor.webp" alt="AI Mentor" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/chatgpt-mentor.webp" alt="AI Mentor" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">Custom ChatGPT AI Mentor</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$45</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">Custom ChatGPT AI Mentor</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$45</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Your personal AI coach trained on strategies from top producers.
@@ -1010,15 +1041,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 5 - Personal Brand */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/personal-brand.webp" alt="Personal Brand" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/personal-brand.webp" alt="Personal Brand" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">$10M Personal Brand Masterclass</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$65</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">$10M Personal Brand Masterclass</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$65</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Build a magnetic personal brand in 90 days.
@@ -1028,15 +1061,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 6 - Instagram Stories */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/instagram-stories.webp" alt="Instagram Stories" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/instagram-stories.webp" alt="Instagram Stories" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">327 Instagram Story Templates</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$47</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">327 Instagram Story Templates</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$47</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Done-for-you story templates that drive DMs.
@@ -1046,15 +1081,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 7 - Fall Reels */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/viral-reels.webp" alt="Viral Reels" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/viral-reels.webp" alt="Viral Reels" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">25 Seasonal Reel Templates</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$29</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">25 Seasonal Reel Templates</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$29</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Seasonal content that converts during peak buying seasons.
@@ -1064,15 +1101,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 8 - Funny Posts */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/funny-posts.webp" alt="Funny Posts" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/funny-posts.webp" alt="Funny Posts" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">30 Funny Real Estate Posts</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$25</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">30 Funny Real Estate Posts</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$25</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Humor that gets 3X more engagement. Stand out with personality-driven
@@ -1082,15 +1121,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 9 - DM Scripts */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/instagram-dm-scripts.webp" alt="DM Scripts" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/instagram-dm-scripts.webp" alt="DM Scripts" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">89 DM Scripts That Convert</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$39</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">89 DM Scripts That Convert</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$39</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Copy-paste messages with 40%+ response rates.
@@ -1100,15 +1141,17 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 10 - Email Signatures */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                <div className="w-full aspect-[16/9] relative bg-gray-900">
-                  <Image src="/images/products/email-signature-professional.webp" alt="Email Signatures" fill className="object-contain" />
+              <div className={`bg-gradient-to-br from-white/8 to-white/3 border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold-premium/50 hover:shadow-lg hover:shadow-gold-premium/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black">
+                  <Image src="/images/products/email-signature-professional.webp" alt="Email Signatures" fill className="object-contain p-2" />
                 </div>
-                <div className="p-3 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-                    <h4 className="text-white font-bold text-sm sm:text-lg">Professional Email Signatures</h4>
-                    <span className="text-gray-400 line-through text-xs sm:text-sm">$17</span>
-                    <span className="bg-green-500 text-white font-bold text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded">FREE</span>
+                <div className="p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h4 className="text-white font-bold text-base sm:text-lg">Professional Email Signatures</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 line-through text-sm sm:text-base font-semibold">$17</span>
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                    </div>
                   </div>
                   <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                     Turn every email into a marketing opportunity. 25+ templates with your
@@ -1315,15 +1358,40 @@ export default function CleanLandingPage() {
               </div>
 
               <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
-                <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-full overflow-hidden border-3 sm:border-4 border-gold-premium flex-shrink-0 shadow-xl">
-                  <Image src="/images/Sara 61kb.webp" alt="Sara" width={128} height={128} className="object-cover w-full h-full" />
+                {/* Guarantee Badge - Instantly Recognizable */}
+                <div className="relative flex-shrink-0">
+                  {/* Modern Guarantee Seal */}
+                  <div className="w-28 h-28 sm:w-40 sm:h-40 relative">
+                    {/* Outer rotating ring */}
+                    <div className="absolute inset-0 rounded-full border-4 border-dashed border-gold-premium/40 animate-spin-slow" />
+                    {/* Main badge */}
+                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gold-premium via-gold-light to-gold-premium shadow-2xl shadow-gold-premium/30 flex flex-col items-center justify-center">
+                      {/* Inner circle with text */}
+                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-2">
+                        <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-gold-premium mb-1" />
+                        <span className="text-gold-premium font-black text-lg sm:text-2xl leading-none">30</span>
+                        <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Day Money</span>
+                        <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Back</span>
+                        <span className="text-gold-premium font-black text-[10px] sm:text-sm mt-0.5">+$50</span>
+                      </div>
+                    </div>
+                    {/* Ribbon accent */}
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[8px] sm:text-xs px-3 py-0.5 rounded-full shadow-lg">
+                      GUARANTEED
+                    </div>
+                  </div>
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-gray-700 text-sm sm:text-lg leading-relaxed mb-3 sm:mb-4 italic">
                     "If you can't create professional videos in 7 minutes or less, or if this system doesn't work for you for ANY reason —
                     I'll refund every penny AND send you $50 for wasting your time. No questions asked. No hoops to jump through."
                   </p>
-                  <p className="text-gold-dark font-bold text-sm sm:text-lg">— Sara Cohen</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-gold-premium flex-shrink-0">
+                      <Image src="/images/Sara 61kb.webp" alt="Sara" width={48} height={48} className="object-cover w-full h-full" />
+                    </div>
+                    <p className="text-gold-dark font-bold text-sm sm:text-lg">— Sara Cohen</p>
+                  </div>
                 </div>
               </div>
 
@@ -1504,8 +1572,24 @@ export default function CleanLandingPage() {
               visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''
             }`}>
               <div className="text-center mb-5 sm:mb-8">
-                <div className="inline-flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 bg-gold-premium/20 rounded-full mb-3 sm:mb-4">
-                  <Shield className="w-7 h-7 sm:w-10 sm:h-10 text-gold-premium" />
+                {/* Modern Guarantee Badge - Instantly Recognizable */}
+                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 relative">
+                  {/* Outer rotating ring */}
+                  <div className="absolute inset-0 rounded-full border-4 border-dashed border-gold-premium/40 animate-spin-slow" />
+                  {/* Main badge */}
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gold-premium via-gold-light to-gold-premium shadow-2xl shadow-gold-premium/40 flex flex-col items-center justify-center">
+                    {/* Inner circle with text */}
+                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-1">
+                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-gold-premium mb-0.5" />
+                      <span className="text-gold-premium font-black text-base sm:text-xl leading-none">30</span>
+                      <span className="text-white font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Day Money</span>
+                      <span className="text-white font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Back</span>
+                    </div>
+                  </div>
+                  {/* Ribbon accent */}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
+                    100% RISK FREE
+                  </div>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
                   Try It Risk-Free for 30 Days

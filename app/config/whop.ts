@@ -34,22 +34,22 @@ export const WHOP_CONFIG = {
       name: 'Done-For-You 3 Month Content',
       checkoutUrl: 'https://whop.com/checkout/plan_gdD4gop6sejQG',
     },
-    // Downsell 6 Months
+    // Downsell 6 Months - $395 (30% off from $565)
     downsell6month: {
       id: 'plan_zzn3Y7w2G5NQq',
-      price: 565.20,
-      pricePerVideo: 7.85,
+      price: 395,
+      pricePerVideo: 5.49,
       totalVideos: 72,
       months: 6,
       videosPerWeek: 3,
       name: 'Done-For-You 6 Month Content (Downsell)',
       checkoutUrl: 'https://whop.com/checkout/plan_zzn3Y7w2G5NQq',
     },
-    // Downsell 3 Months
+    // Downsell 3 Months - $195 (34% off from $295)
     downsell3month: {
       id: 'plan_kBs0C47hTeNS7',
-      price: 197,
-      pricePerVideo: 8.21,
+      price: 195,
+      pricePerVideo: 8.13,
       totalVideos: 24,
       months: 3,
       videosPerWeek: 2,
@@ -72,10 +72,3 @@ export const WHOP_CONFIG = {
     accentColor: 'gold' as const,
   },
 } as const
-
-// Helper to get plan by type
-export type PlanType = 'mainCourse' | 'upsell' | 'upsellLite' | 'downsell6month' | 'downsell3month'
-
-export function getPlan(type: PlanType) {
-  return WHOP_CONFIG.plans[type]
-}

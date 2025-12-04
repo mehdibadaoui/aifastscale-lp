@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import { markUserAsSpun } from '../utils/fingerprint'
-import { WHOP } from '../config/constants'
+import { WHOP_CONFIG } from '../config/whop'
 import { BONUS_PRODUCTS, BonusProduct } from '../config/bonus-products'
 import WhopCheckoutModal from './WhopCheckoutModal'
 import { trackInitiateCheckout, trackAddToCart } from '../utils/meta-tracking'
@@ -1789,7 +1789,7 @@ export default function SpinWheel({ onSpinComplete, isOpen, onClose }: SpinWheel
 
       {/* EMBEDDED CHECKOUT MODAL - Keeps users on-site! */}
       <WhopCheckoutModal
-        planId={WHOP.plans.main}
+        planId={WHOP_CONFIG.plans.mainCourse.id}
         isOpen={showCheckoutModal}
         onClose={() => setShowCheckoutModal(false)}
         onComplete={async () => {
