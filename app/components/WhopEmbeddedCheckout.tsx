@@ -33,15 +33,23 @@ export default function WhopEmbeddedCheckout({
 
       containerRef.current.appendChild(checkoutDiv)
 
-      // Trigger Whop loader to initialize the checkout
-      // The loader script looks for elements with data-whop-checkout-plan-id
-      if ((window as any).WhopCheckout) {
-        (window as any).WhopCheckout.init()
+      // Wait for Whop loader script to be ready, then initialize
+      const initCheckout = () => {
+        if ((window as any).WhopCheckout) {
+          (window as any).WhopCheckout.init()
+          setIsLoading(false)
+        } else {
+          // Script not loaded yet, wait and retry
+          setTimeout(initCheckout, 100)
+        }
       }
 
-      // Hide loading after a delay (checkout takes time to load)
-      const timer = setTimeout(() => setIsLoading(false), 1500)
-      return () => clearTimeout(timer)
+      // Give script time to load, then init
+      setTimeout(initCheckout, 300)
+
+      // Fallback: hide loading after 3s regardless
+      const fallbackTimer = setTimeout(() => setIsLoading(false), 3000)
+      return () => clearTimeout(fallbackTimer)
     }
   }, [isOpen, planId])
 
