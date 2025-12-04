@@ -261,7 +261,7 @@ export default function CleanLandingPage() {
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Headline */}
-            <h1 className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.1] ${visibleSections.has('hero') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <h1 className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.1] ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
               <span className="text-white">Turn Any Photo Into a</span>
               <br />
               <span className="bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium bg-clip-text text-transparent">
@@ -275,14 +275,14 @@ export default function CleanLandingPage() {
             </h1>
 
             {/* Subtitle */}
-            <p className={`text-sm sm:text-lg md:text-xl text-gray-400 mb-4 sm:mb-6 max-w-2xl mx-auto ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : 'opacity-0'}`}>
+            <p className={`text-sm sm:text-lg md:text-xl text-gray-400 mb-4 sm:mb-6 max-w-2xl mx-auto ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               Even if you've never edited a video in your life —
               <br className="hidden sm:block" />
               <span className="text-white/80">all you need is your phone</span>
             </p>
 
             {/* Hero Image - Clean, no badge */}
-            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : 'opacity-0'}`}>
+            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-gold-premium/30 sm:border-2 sm:border-gold-premium/40 shadow-xl shadow-gold-premium/10">
                 <Image
                   src="/images/hero-showcase.webp"
@@ -296,7 +296,7 @@ export default function CleanLandingPage() {
             </div>
 
             {/* Trust badges - UNDER the image */}
-            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : 'opacity-0'}`}>
+            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
               <div className="flex items-center gap-1.5">
                 <Users className="w-4 h-4 sm:w-5 sm:h-5 text-gold-premium" />
                 <span><span className="text-white font-bold">847+</span> agents</span>
@@ -316,7 +316,7 @@ export default function CleanLandingPage() {
             {/* CTA - Scrolls to What's Inside */}
             <button
               onClick={() => scrollToSection('whats-inside')}
-              className={`group relative bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-10 py-5 rounded-xl font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 overflow-hidden ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : 'opacity-0'}`}
+              className={`group relative bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-10 py-5 rounded-xl font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 overflow-hidden ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
               <span className="relative flex items-center gap-3">
@@ -325,12 +325,12 @@ export default function CleanLandingPage() {
               </span>
             </button>
 
-            <p className={`text-gray-600 text-sm mt-4 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : 'opacity-0'}`}>
+            <p className={`text-gray-600 text-sm mt-4 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               ↓ Scroll to see everything you get ↓
             </p>
 
             {/* What is AgentClone? - Collapsible */}
-            <div className={`max-w-xl mx-auto mt-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : 'opacity-0'}`}>
+            <div className={`max-w-xl mx-auto mt-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <button
                 onClick={() => setExpandedFaq(expandedFaq === -1 ? null : -1)}
                 className="group flex items-center justify-center gap-2 mx-auto text-sm"
@@ -369,7 +369,7 @@ export default function CleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full mb-3">
                 <Zap className="w-3.5 h-3.5 text-gold-premium" />
                 <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Simple Process</span>
@@ -389,7 +389,7 @@ export default function CleanLandingPage() {
                 <div
                   key={item.step}
                   className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-gold-premium/50 transition-all hover:shadow-xl ${
-                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : 'opacity-0'
+                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''
                   }`}
                   style={{ animationDelay: `${i * 150}ms` }}
                 >
@@ -408,7 +408,7 @@ export default function CleanLandingPage() {
               ))}
             </div>
 
-            <div className={`flex justify-center mt-6 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : 'opacity-0'}`}>
+            <div className={`flex justify-center mt-6 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-6 bg-gold-premium/5 border border-gold-premium/30 rounded-full px-4 sm:px-8 py-2.5 sm:py-4">
                 <Clock className="w-5 h-5 sm:w-8 sm:h-8 text-gold-premium" />
                 <div>
@@ -433,7 +433,7 @@ export default function CleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-gold-premium" />
                 <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Featured Case Study</span>
@@ -445,7 +445,7 @@ export default function CleanLandingPage() {
             </div>
 
             {/* Jessica Case Study Card */}
-            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden mb-8 sm:mb-16 ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : 'opacity-0'}`}>
+            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden mb-8 sm:mb-16 ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Top: Profile + Before Situation */}
               <div className="p-4 sm:p-8 border-b border-white/10">
@@ -633,7 +633,7 @@ export default function CleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-gold-premium" />
                 <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Listing Agent Success</span>
@@ -645,7 +645,7 @@ export default function CleanLandingPage() {
             </div>
 
             {/* Lucas Case Study Card - Light Theme */}
-            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : 'opacity-0'}`}>
+            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Top: Profile + Before Situation */}
               <div className="p-4 sm:p-8 border-b border-gray-100">
@@ -851,7 +851,7 @@ export default function CleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Here's What You Get <span className="text-gold-premium">Today</span>
               </h2>
@@ -860,7 +860,7 @@ export default function CleanLandingPage() {
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
             <div className={`bg-gradient-to-br from-gold-premium/15 to-gold-premium/5 border-2 border-gold-premium rounded-xl sm:rounded-2xl p-4 sm:p-8 mb-4 sm:mb-6 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : 'opacity-0'
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
             }`}>
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <span className="bg-gold-premium text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
@@ -898,7 +898,7 @@ export default function CleanLandingPage() {
             </div>
 
             {/* BONUSES HEADER */}
-            <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : 'opacity-0'}`}>
+            <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gold-premium/20 border border-gold-premium/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
                 <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-gold-premium" />
                 <span className="text-gold-premium font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
@@ -908,7 +908,7 @@ export default function CleanLandingPage() {
             {/* BONUS PRODUCTS - Full images with clear pricing */}
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {/* Bonus 1 - Brand Kit */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/brand-kit.webp" alt="Brand Kit" fill className="object-contain" />
                 </div>
@@ -926,7 +926,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 2 - Business Planner */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/business-planner.webp" alt="Business Planner" fill className="object-contain" />
                 </div>
@@ -944,7 +944,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 3 - Hooks */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/hooks-impossible-to-skip.webp" alt="Hooks" fill className="object-contain" />
                 </div>
@@ -962,7 +962,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 4 - ChatGPT Mentor */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/chatgpt-mentor.webp" alt="AI Mentor" fill className="object-contain" />
                 </div>
@@ -980,7 +980,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 5 - Personal Brand */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/personal-brand.webp" alt="Personal Brand" fill className="object-contain" />
                 </div>
@@ -998,7 +998,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 6 - Instagram Stories */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/instagram-stories.webp" alt="Instagram Stories" fill className="object-contain" />
                 </div>
@@ -1016,7 +1016,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 7 - Fall Reels */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/viral-reels.webp" alt="Viral Reels" fill className="object-contain" />
                 </div>
@@ -1034,7 +1034,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 8 - Funny Posts */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/funny-posts.webp" alt="Funny Posts" fill className="object-contain" />
                 </div>
@@ -1052,7 +1052,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 9 - DM Scripts */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/instagram-dm-scripts.webp" alt="DM Scripts" fill className="object-contain" />
                 </div>
@@ -1070,7 +1070,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Bonus 10 - Email Signatures */}
-              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+              <div className={`bg-white/5 border border-gold-premium/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-gold-premium/40 transition-all ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 <div className="w-full aspect-[16/9] relative bg-gray-900">
                   <Image src="/images/products/email-signature-professional.webp" alt="Email Signatures" fill className="object-contain" />
                 </div>
@@ -1089,7 +1089,7 @@ export default function CleanLandingPage() {
             </div>
 
             {/* EXTRA BONUSES - Support & Updates */}
-            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
               <div className="bg-gradient-to-br from-gold-premium/10 to-transparent border border-gold-premium/30 rounded-xl p-5">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold-premium">
@@ -1119,7 +1119,7 @@ export default function CleanLandingPage() {
 
             {/* TOTAL VALUE + CTA - Compact on mobile */}
             <div className={`bg-gradient-to-br from-gold-premium/20 to-black rounded-2xl border-2 border-gold-premium p-4 sm:p-8 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : 'opacity-0'
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Price Box - Compact */}
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-gold-premium/30">
@@ -1170,7 +1170,7 @@ export default function CleanLandingPage() {
       >
         {/* Header */}
         <div className="max-w-6xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
-          <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-up' : ''}`}>
             <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full mb-3">
               <Users className="w-3.5 h-3.5 text-gold-premium" />
               <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Success Stories</span>
@@ -1271,7 +1271,7 @@ export default function CleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className={`bg-gradient-to-br from-gold-premium/10 to-white border-2 border-gold-premium/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 ${
-              visibleSections.has('guarantee1') ? 'animate-fade-in-up' : 'opacity-0'
+              visibleSections.has('guarantee1') ? 'animate-fade-in-up' : ''
             }`}>
               <div className="text-center mb-5 sm:mb-8">
                 <div className="inline-flex items-center gap-2 bg-gold-premium/20 border border-gold-premium/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
@@ -1325,7 +1325,7 @@ export default function CleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4 animate-pulse">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
                 <span className="text-red-400 font-bold text-xs sm:text-sm">Only {spotsLeft} spots left at this price</span>
@@ -1336,7 +1336,7 @@ export default function CleanLandingPage() {
             </div>
 
             {/* Price Comparison - horizontal scroll on mobile */}
-            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-200' : 'opacity-0'}`}>
+            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               <div className="flex gap-3 sm:grid sm:grid-cols-3 sm:gap-4" style={{ minWidth: 'max-content' }}>
                 {/* Old Way */}
                 <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-red-500/30 relative flex-shrink-0 w-[200px] sm:w-auto">
@@ -1381,7 +1381,7 @@ export default function CleanLandingPage() {
 
             {/* Main Price Box - Compact on mobile */}
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-gold-premium/50 shadow-2xl ${
-              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : 'opacity-0'
+              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
                 <span className="text-4xl sm:text-6xl font-black text-gold-premium">$37</span>
@@ -1426,7 +1426,7 @@ export default function CleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-3xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2 sm:mb-4">
                 Common <span className="text-gold-premium">Questions</span>
               </h2>
@@ -1437,7 +1437,7 @@ export default function CleanLandingPage() {
                 <div
                   key={i}
                   className={`bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden ${
-                    visibleSections.has('faq') ? 'animate-fade-in-up' : 'opacity-0'
+                    visibleSections.has('faq') ? 'animate-fade-in-up' : ''
                   }`}
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
@@ -1471,7 +1471,7 @@ export default function CleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-gold-premium/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 ${
-              visibleSections.has('guarantee2') ? 'animate-fade-in-up' : 'opacity-0'
+              visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''
             }`}>
               <div className="text-center mb-5 sm:mb-8">
                 <div className="inline-flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 bg-gold-premium/20 rounded-full mb-3 sm:mb-4">
@@ -1534,7 +1534,7 @@ export default function CleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('meet-sara') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('meet-sara') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full mb-3">
                 <Award className="w-3.5 h-3.5 text-gold-premium" />
                 <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Meet Your Instructor</span>
@@ -1546,7 +1546,7 @@ export default function CleanLandingPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 items-center">
               {/* Sara Image */}
-              <div className={`relative ${visibleSections.has('meet-sara') ? 'animate-fade-in-up animation-delay-200' : 'opacity-0'}`}>
+              <div className={`relative ${visibleSections.has('meet-sara') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                 <div className="relative aspect-[3/4] max-w-[200px] sm:max-w-sm mx-auto rounded-xl sm:rounded-2xl overflow-hidden border-3 sm:border-4 border-gold-premium/50 shadow-2xl">
                   <Image
                     src="/images/Sara 61kb.webp"
@@ -1561,7 +1561,7 @@ export default function CleanLandingPage() {
               </div>
 
               {/* Sara Story */}
-              <div className={`space-y-4 sm:space-y-6 ${visibleSections.has('meet-sara') ? 'animate-fade-in-up animation-delay-300' : 'opacity-0'}`}>
+              <div className={`space-y-4 sm:space-y-6 ${visibleSections.has('meet-sara') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
                 <div>
                   <h3 className="text-gold-premium font-black text-lg sm:text-xl mb-2 sm:mb-3">I Was You</h3>
                   <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
@@ -1615,7 +1615,7 @@ export default function CleanLandingPage() {
         className="py-10 sm:py-24 bg-gradient-to-br from-gold-premium via-gold-light to-gold-premium"
       >
         <div className="w-full px-3 sm:px-6">
-          <div className={`max-w-xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className={`max-w-xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : ''}`}>
             <h2 className="text-xl sm:text-4xl font-black text-black mb-2 sm:mb-4">
               Ready to Start Getting Leads?
             </h2>
