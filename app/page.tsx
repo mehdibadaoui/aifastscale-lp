@@ -136,16 +136,7 @@ export default function CleanLandingPage() {
   ]
 
   // Scroll animation observer - trigger animations as sections come into view
-  // PERFORMANCE: Disabled on mobile for faster TBT
   useEffect(() => {
-    // Skip animation observer on mobile for performance
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-    if (isMobile) {
-      // On mobile, immediately show all sections without animation
-      setVisibleSections(new Set(['hero', 'how-it-works', 'case-study', 'case-study-lucas', 'testimonials', 'whats-inside', 'bonuses', 'faq', 'final-cta']))
-      return
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
