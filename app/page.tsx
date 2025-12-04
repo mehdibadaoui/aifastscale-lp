@@ -214,7 +214,8 @@ export default function CleanLandingPage() {
     const element = document.getElementById(id)
     if (!element) return
 
-    const targetPosition = element.getBoundingClientRect().top + window.scrollY - 20
+    // Scroll to exactly the top of the section (with small padding)
+    const targetPosition = element.offsetTop - 10
     const startPosition = window.scrollY
     const distance = targetPosition - startPosition
     const duration = 1200 // 1.2 seconds for smooth feel
@@ -876,7 +877,7 @@ export default function CleanLandingPage() {
       <section
         id="whats-inside"
         data-animate
-        className="py-10 sm:py-20 bg-black scroll-mt-16"
+        className="py-10 sm:py-20 bg-black"
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
