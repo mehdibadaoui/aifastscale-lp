@@ -68,7 +68,7 @@ export const WHOP_CONFIG = {
 
   // Theme settings for embedded checkout
   theme: {
-    mode: 'dark' as const,
+    mode: 'light' as const,
     accentColor: 'gold' as const,
   },
 } as const

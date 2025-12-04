@@ -204,7 +204,8 @@ export default function CleanLandingPage() {
   }, [])
 
   const handleCheckout = () => {
-    window.open(WHOP_CONFIG.plans.mainCourse.checkoutUrl, '_blank')
+    // Add theme=light to force light mode on Whop checkout
+    window.open(`${WHOP_CONFIG.plans.mainCourse.checkoutUrl}?theme=light`, '_blank')
   }
 
   const scrollToSection = (id: string) => {
