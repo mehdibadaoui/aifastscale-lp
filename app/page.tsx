@@ -36,6 +36,7 @@ import {
 } from 'lucide-react'
 import { WHOP_CONFIG } from './config/whop'
 import { BONUS_PRODUCTS, getTotalBonusValue } from './config/bonus-products'
+import WhopEmbeddedCheckout from './components/WhopEmbeddedCheckout'
 
 export default function CleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
@@ -44,6 +45,7 @@ export default function CleanLandingPage() {
   const [isVideoMuted, setIsVideoMuted] = useState(true)
   const [spotsLeft, setSpotsLeft] = useState(7)
   const [viewersNow, setViewersNow] = useState(23)
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   // Animation refs for scroll detection
@@ -204,8 +206,8 @@ export default function CleanLandingPage() {
   }, [])
 
   const handleCheckout = () => {
-    // Whop checkout params: theme=light, hideAddressForm=true (from docs.whop.com)
-    window.open(`${WHOP_CONFIG.plans.mainCourse.checkoutUrl}?theme=light&hideAddressForm=true`, '_blank')
+    // Open embedded Whop checkout modal (recommended approach for higher conversions)
+    setIsCheckoutOpen(true)
   }
 
   const scrollToSection = (id: string) => {
@@ -1769,6 +1771,12 @@ export default function CleanLandingPage() {
           }
         }
       `}</style>
+
+      {/* Whop Embedded Checkout Modal */}
+      <WhopEmbeddedCheckout
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+      />
     </main>
   )
 }

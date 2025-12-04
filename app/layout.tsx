@@ -122,6 +122,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fast.wistia.net" />
         <link rel="dns-prefetch" href="https://fast.wistia.com" />
 
+        {/* Whop Embedded Checkout Script */}
+        <script async defer src="https://js.whop.com/static/checkout/loader.js" />
+
         {/* HERO OPTIMIZATION: Preload critical above-fold images for faster LCP */}
         <link rel="preload" href="/images/hero-showcase.webp" as="image" type="image/webp" fetchPriority="high" />
 
