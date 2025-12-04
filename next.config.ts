@@ -101,7 +101,12 @@ const nextConfig: NextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react', 'react', 'react-dom'],
+    optimizePackageImports: ['lucide-react', 'react', 'react-dom', 'canvas-confetti'],
+  },
+
+  // Turbopack configuration (Next.js 16+ default bundler)
+  turbopack: {
+    // Empty config to acknowledge Turbopack usage
   },
 };
 

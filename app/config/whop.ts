@@ -12,27 +12,57 @@ export const WHOP_CONFIG = {
       name: 'AgentClone 7-Minute System',
       checkoutUrl: 'https://whop.com/checkout/plan_7x5Kz1cflmrYH',
     },
-    // Upsell/OTO - Higher tier offer
+    // Upsell Pack 1 - Done-For-You 6 Month Package (72 videos)
     upsell: {
-      id: 'plan_R3FywBSQynds0',
-      price: 97, // Adjust based on your actual upsell price
-      name: 'AgentClone Pro Bundle',
-      checkoutUrl: 'https://whop.com/checkout/plan_R3FywBSQynds0',
+      id: 'plan_0fbyyZAq8n1yI',
+      price: 565.20,
+      pricePerVideo: 7.85,
+      totalVideos: 72,
+      months: 6,
+      videosPerWeek: 3,
+      name: 'Done-For-You 6 Month Content',
+      checkoutUrl: 'https://whop.com/checkout/plan_0fbyyZAq8n1yI',
     },
-    // Downsell - Lower tier offer for those who decline upsell
-    downsell: {
-      id: 'plan_plZSk0NMKNZJj',
-      price: 27, // Adjust based on your actual downsell price
-      name: 'AgentClone Lite',
-      checkoutUrl: 'https://whop.com/checkout/plan_plZSk0NMKNZJj',
+    // Upsell Pack 2 - Done-For-You 3 Month Package (24 videos)
+    upsellLite: {
+      id: 'plan_gdD4gop6sejQG',
+      price: 295,
+      pricePerVideo: 12.29,
+      totalVideos: 24,
+      months: 3,
+      videosPerWeek: 2,
+      name: 'Done-For-You 3 Month Content',
+      checkoutUrl: 'https://whop.com/checkout/plan_gdD4gop6sejQG',
+    },
+    // Downsell 6 Months
+    downsell6month: {
+      id: 'plan_zzn3Y7w2G5NQq',
+      price: 565.20,
+      pricePerVideo: 7.85,
+      totalVideos: 72,
+      months: 6,
+      videosPerWeek: 3,
+      name: 'Done-For-You 6 Month Content (Downsell)',
+      checkoutUrl: 'https://whop.com/checkout/plan_zzn3Y7w2G5NQq',
+    },
+    // Downsell 3 Months
+    downsell3month: {
+      id: 'plan_kBs0C47hTeNS7',
+      price: 197,
+      pricePerVideo: 8.21,
+      totalVideos: 24,
+      months: 3,
+      videosPerWeek: 2,
+      name: 'Done-For-You 3 Month Content (Downsell)',
+      checkoutUrl: 'https://whop.com/checkout/plan_kBs0C47hTeNS7',
     },
   },
 
-  // Redirect URLs after purchase
+  // Redirect URLs after purchase (configured in Whop dashboard)
   redirects: {
-    thankYou: 'https://aifastscale.com/thank-you',
-    upsell: 'https://aifastscale.com/oto',
-    downsell: 'https://aifastscale.com/downsell',
+    thankYou: 'https://aifastscale.com/thank-you-confirmed',
+    upsell: 'https://aifastscale.com/upsell',
+    downsell: 'https://aifastscale.com/downsell-final',
     membersArea: 'https://whop.com/agentclone',
   },
 
@@ -44,7 +74,7 @@ export const WHOP_CONFIG = {
 } as const
 
 // Helper to get plan by type
-export type PlanType = 'mainCourse' | 'upsell' | 'downsell'
+export type PlanType = 'mainCourse' | 'upsell' | 'upsellLite' | 'downsell6month' | 'downsell3month'
 
 export function getPlan(type: PlanType) {
   return WHOP_CONFIG.plans[type]

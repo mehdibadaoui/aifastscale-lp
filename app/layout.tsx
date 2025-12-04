@@ -8,9 +8,9 @@ const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
   weight: ['700'], // CRITICAL PERFORMANCE: Only 1 weight - reduce to 1 font file
-  display: 'swap', // PERFORMANCE FIX: Use swap for better CLS
+  display: 'optional', // PERFORMANCE FIX: 'optional' is best for LCP - uses fallback if font not ready
   preload: true, // PERFORMANCE FIX: Preload for faster font display
-  fallback: ['system-ui', 'sans-serif'],
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
   adjustFontFallback: true, // Reduces layout shift
 })
 
@@ -92,17 +92,38 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* CRITICAL: Minimal head for maximum performance - defer everything else */}
+        {/* CRITICAL: Inline critical CSS for instant hero rendering - prevents render blocking */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          /* Critical above-fold styles - inlined for instant paint */
+          *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+          html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+          body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a1128}
+          .bg-navy-deep{background:#0a1128}.text-white{color:#fff}
+          .bg-gold-premium{background:#d4af37}.text-gold-premium{color:#d4af37}
+          .font-black{font-weight:900}.text-center{text-align:center}
+          .flex{display:flex}.items-center{align-items:center}.justify-center{justify-content:center}
+          .rounded-full{border-radius:9999px}.overflow-hidden{overflow:hidden}
+          .relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}
+          .inset-0{inset:0}.z-50{z-index:50}.min-h-screen{min-height:100vh}
+        `}} />
 
         {/* Critical preconnects for faster DNS resolution */}
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Payment gateway preconnects will be added here when new system is integrated */}
+        {/* Whop checkout preload for instant checkout popup */}
+        <link rel="preconnect" href="https://js.whop.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://whop.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://js.whop.com" />
+        <link rel="dns-prefetch" href="https://whop.com" />
 
-        {/* HERO OPTIMIZATION: Only preload poster image for instant LCP (video loads on-demand) */}
-        <link rel="preload" href="/videos/VSL-thumbnail.jpg" as="image" fetchPriority="high" />
+        {/* Wistia video - dns-prefetch only (defer full preconnect until needed) */}
+        <link rel="dns-prefetch" href="https://fast.wistia.net" />
+        <link rel="dns-prefetch" href="https://fast.wistia.com" />
+
+        {/* HERO OPTIMIZATION: Preload critical above-fold images for faster LCP */}
+        <link rel="preload" href="/images/hero-showcase.webp" as="image" type="image/webp" fetchPriority="high" />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />

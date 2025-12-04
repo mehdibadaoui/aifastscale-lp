@@ -2,6 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Members Page Premium Animations */
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+.animate-confetti {
+  animation: confetti 3s ease-out forwards;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+.animate-shake { animation: shake 0.3s ease-in-out; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInUp { animation: fadeInUp 0.3s ease-out; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scaleIn { animation: scaleIn 0.5s ease-out; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slideUp { animation: slideUp 0.3s ease-out; }
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.animate-shimmer { animation: shimmer 2s infinite; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn 0.4s ease-out; }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* ============================================================================
    BLACK FRIDAY LUXURY DESIGN SYSTEM - 2025
    Colors defined in tailwind.config.ts
@@ -1601,5 +1650,534 @@ a.luxury-link:hover::after {
   .ultra-compact p {
     font-size: 0.8125rem !important;
     margin-bottom: 0.5rem !important;
+  }
+}
+
+/* ============================================================================
+   ADVANCED UX ANIMATIONS - WORLD-CLASS MICRO-INTERACTIONS
+   ============================================================================ */
+
+/* Confetti Animation */
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confetti 3s ease-out forwards;
+}
+
+/* Selection Pop Animation */
+@keyframes selectionPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-selection-pop {
+  animation: selectionPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Success Pulse */
+@keyframes successPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-success-pulse {
+  animation: successPulse 1s ease-in-out infinite;
+}
+
+/* Glow Pulse for Checkout Button */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.6), 0 0 60px rgba(16, 185, 129, 0.3);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* Bounce In */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Shake for attention */
+@keyframes attentionShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+.animate-attention-shake {
+  animation: attentionShake 0.5s ease-in-out;
+}
+
+/* Slide Up Fade */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slideUpFade 0.4s ease-out forwards;
+}
+
+/* Counter Tick */
+@keyframes counterTick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-counter-tick {
+  animation: counterTick 0.2s ease-out;
+}
+
+/* Progress Fill */
+@keyframes progressFill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Ripple Effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.animate-ripple {
+  animation: ripple 0.6s linear;
+}
+
+/* Slow Pulse for emphasis */
+@keyframes slowPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: slowPulse 3s ease-in-out infinite;
+}
+
+/* Floating effect */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient shift for premium feel */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .touch-feedback:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Stagger children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: slideUpFade 0.4s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(9) { animation-delay: 0.45s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.5s; }
+
+/* ================================================================
+   INFINITE SCROLL TESTIMONIAL CAROUSEL - Entrepedia Style
+   ================================================================ */
+
+/* Infinite scroll animation - scrolls left continuously */
+@keyframes infiniteScrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Testimonial carousel wrapper with shadow overlays */
+.testimonial-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left fade shadow */
+.testimonial-carousel-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(to right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Right fade shadow */
+.testimonial-carousel-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(to left, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Infinite scroll track */
+.testimonial-scroll-track {
+  display: flex;
+  gap: 1.5rem;
+  animation: infiniteScrollLeft 35s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Pause animation on hover */
+.testimonial-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+/* Testimonial card styling - dark premium look */
+.testimonial-card {
+  flex-shrink: 0;
+  width: 380px;
+  background: rgb(28, 28, 28);
+  border-radius: 24px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  transform: translateY(-4px);
+}
+
+/* Quote icon circle */
+.testimonial-quote-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .testimonial-card {
+    width: 300px;
+    padding: 20px;
+  }
+
+  .testimonial-scroll-track {
+    animation-duration: 25s;
+  }
+
+  .testimonial-carousel-wrapper::before,
+  .testimonial-carousel-wrapper::after {
+    width: 60px;
+  }
+}
+
+/* ================================================================
+   MODERN SCROLL REVEAL ANIMATIONS
+   GPU-accelerated for 60fps performance
+   ================================================================ */
+
+/* Base scroll reveal - optimized with will-change */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for child elements */
+.scroll-animate-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.scroll-animate-stagger > *:nth-child(2) { transition-delay: 80ms; }
+.scroll-animate-stagger > *:nth-child(3) { transition-delay: 160ms; }
+.scroll-animate-stagger > *:nth-child(4) { transition-delay: 240ms; }
+.scroll-animate-stagger > *:nth-child(5) { transition-delay: 320ms; }
+.scroll-animate-stagger > *:nth-child(6) { transition-delay: 400ms; }
+
+/* Scale up animation variant */
+.scroll-animate-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.scroll-animate-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Slide from left */
+.scroll-animate-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-animate-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide from right */
+.scroll-animate-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-animate-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ================================================================
+   SUBTLE ANIMATED BACKGROUND
+   Pure CSS - GPU accelerated, no JS
+   ================================================================ */
+
+/* Animated gradient orbs - very subtle */
+.bg-animated-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-animated-gradient::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(212, 175, 55, 0.03) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 70% 70%,
+    rgba(212, 175, 55, 0.02) 0%,
+    transparent 40%
+  );
+  animation: subtleGradientMove 20s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes subtleGradientMove {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(2%, 2%) rotate(1deg);
+  }
+  66% {
+    transform: translate(-1%, 1%) rotate(-1deg);
+  }
+}
+
+/* Floating particles - CSS only */
+.bg-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-particles::before,
+.bg-particles::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 50%;
+  animation: floatParticle 15s ease-in-out infinite;
+}
+
+.bg-particles::before {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.bg-particles::after {
+  top: 60%;
+  right: 15%;
+  animation-delay: 7s;
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+/* Noise texture overlay - very subtle */
+.bg-noise {
+  position: relative;
+}
+
+.bg-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Reduced motion - respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-animate,
+  .scroll-animate-scale,
+  .scroll-animate-left,
+  .scroll-animate-right {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .bg-animated-gradient::before {
+    animation: none;
+  }
+
+  .bg-particles::before,
+  .bg-particles::after {
+    animation: none;
+  }
+
+  .testimonial-scroll-track {
+    animation: none;
   }
 }

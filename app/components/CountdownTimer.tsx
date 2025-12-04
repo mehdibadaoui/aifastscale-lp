@@ -17,7 +17,7 @@ interface TimeLeft {
 
 export default function CountdownTimer({
   endDate,
-  urgencyText = 'BLACK FRIDAY ENDS IN:',
+  urgencyText = '⚡ LAST CHANCE - OFFER ENDS TONIGHT:',
 }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,

@@ -15,10 +15,10 @@ const PIXEL_ID = '806502898408304'
 export default function MetaPixel() {
   return (
     <>
-      {/* Meta Pixel Base Code - afterInteractive for reliable tracking */}
+      {/* Meta Pixel Base Code - lazyOnload for maximum performance, fires after page fully loaded */}
       <Script
         id="meta-pixel-base"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)

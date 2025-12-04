@@ -3,173 +3,216 @@
 import { CheckCircle, Copy, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useState, useEffect } from 'react'
-
-// Declare fbq for TypeScript
-declare global {
-  interface Window {
-    fbq?: (...args: any[]) => void
-  }
-}
+import { Suspense, useState, useEffect, useRef } from 'react'
+import { trackPurchase } from '../utils/meta-tracking'
 
 function ThankYouContent() {
   const searchParams = useSearchParams()
   const purchased = searchParams.get('purchased')
   const [copied, setCopied] = useState(false)
+  const [hasCopied, setHasCopied] = useState(false)
+  const [showCopyWarning, setShowCopyWarning] = useState(false)
+
+  // CRITICAL: Prevent double-firing from React StrictMode
+  const hasTrackedPurchase = useRef(false)
 
   const password = "im the best agent in the world"
 
-  // Fire Facebook Pixel Purchase event
+  // Fire Facebook Pixel + CAPI Purchase event - ONLY for main product ($37)
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      // Determine purchase value based on what was purchased
-      let value = 37.00
-      let contentName = '7 Minute AgentClone - Main Product'
-
-      if (purchased === 'upsell') {
-        value = 9.95
-        contentName = '5 Premium Tools Upsell'
-      } else if (purchased === 'downsell') {
-        value = 4.97
-        contentName = '5 Premium Tools Downsell'
-      }
-
-      // Fire the Purchase event
-      window.fbq('track', 'Purchase', {
-        value: value,
-        currency: 'USD',
-        content_name: contentName,
-        content_type: 'product',
-        content_category: 'AI Video Course'
-      })
-
-      console.log('Facebook Pixel Purchase event fired:', { value, contentName })
+    // Skip tracking for upsell/downsell - only track main product purchase
+    if (purchased === 'upsell' || purchased === 'oto' || purchased === 'downsell') {
+      console.log('Upsell/downsell - not tracking as Purchase')
+      return
     }
+
+    // Prevent double-firing (React StrictMode runs useEffect twice)
+    if (hasTrackedPurchase.current) {
+      console.log('Purchase already tracked, skipping duplicate')
+      return
+    }
+
+    // Also check sessionStorage for page refresh protection
+    const purchaseKey = 'purchase_tracked_main'
+    if (typeof window !== 'undefined' && sessionStorage.getItem(purchaseKey)) {
+      console.log('Purchase already tracked in this session, skipping')
+      return
+    }
+
+    // Mark as tracked IMMEDIATELY (before async call)
+    hasTrackedPurchase.current = true
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem(purchaseKey, 'true')
+    }
+
+    // Fire unified Purchase event (Pixel + CAPI with deduplication)
+    trackPurchase('7 Minute AgentClone - Main Product', 37.00)
+    console.log('Purchase event fired (Pixel + CAPI): $37 main product')
   }, [purchased])
 
   const copyPassword = () => {
     navigator.clipboard.writeText(password)
     setCopied(true)
+    setHasCopied(true)
+    setShowCopyWarning(false)
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const handleEnterClick = (e: React.MouseEvent) => {
+    if (!hasCopied) {
+      e.preventDefault()
+      setShowCopyWarning(true)
+      // Auto-hide warning after 3 seconds
+      setTimeout(() => setShowCopyWarning(false), 3000)
+    }
+  }
+
+  // Force body to allow scroll on this page
+  useEffect(() => {
+    document.body.style.height = 'auto'
+    document.body.style.overflow = 'auto'
+    document.documentElement.style.height = 'auto'
+    document.documentElement.style.overflow = 'auto'
+    return () => {
+      document.body.style.height = ''
+      document.body.style.overflow = ''
+      document.documentElement.style.height = ''
+      document.documentElement.style.overflow = ''
+    }
+  }, [])
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0a1128] to-[#1a1a2e]">
-      <div className="container mx-auto px-4 py-12 md:py-20">
-        <div className="mx-auto max-w-3xl">
-          {/* Success Icon */}
-          <div className="mb-8 flex justify-center">
+    <div className="bg-gradient-to-br from-[#0a0a0a] via-[#0a1128] to-[#1a1a2e]" style={{ minHeight: '100vh' }}>
+      <div className="container mx-auto px-3 md:px-4 py-6 md:py-16" style={{ paddingBottom: 'max(8rem, calc(2rem + env(safe-area-inset-bottom)))' }}>
+        <div className="mx-auto max-w-2xl">
+          {/* Success Icon - Smaller on mobile */}
+          <div className="mb-4 md:mb-8 flex justify-center">
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-[#d4af37]/20 blur-xl"></div>
-              <CheckCircle className="relative h-20 w-20 text-[#d4af37] md:h-24 md:w-24" />
+              <CheckCircle className="relative h-14 w-14 md:h-20 md:w-20 text-[#d4af37]" />
             </div>
           </div>
 
-          {/* Thank You Message */}
-          <div className="mb-8 text-center">
-            <h1 className="mb-4 text-4xl font-black text-white md:mb-6 md:text-6xl">
+          {/* Thank You Message - Compact on mobile */}
+          <div className="mb-5 md:mb-8 text-center">
+            <h1 className="mb-2 md:mb-4 text-2xl md:text-5xl font-black text-white">
               🎉 Payment Successful! 🎉
             </h1>
-            <p className="text-xl font-bold text-white md:text-2xl">
+            <p className="text-base md:text-xl font-bold text-white">
               Welcome to AI FastScale!
             </p>
-            <p className="text-gray-300 mt-2">
+            <p className="text-gray-400 text-xs md:text-base mt-1">
               Check your email for details (arriving within 60 seconds)
             </p>
           </div>
 
-          {/* PASSWORD & MEMBERS ACCESS - MAIN FOCUS */}
-          <div className="mb-8 rounded-2xl bg-gradient-to-br from-[#d4af37]/20 via-[#d4af37]/10 to-transparent border-2 border-[#d4af37] p-6 md:p-8 backdrop-blur-sm">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <h2 className="text-2xl font-black text-white md:text-3xl text-center">
-                🔐 YOUR MEMBERS AREA ACCESS
-              </h2>
-            </div>
+          {/* PASSWORD & MEMBERS ACCESS - Optimized for mobile */}
+          <div className="mb-5 md:mb-8 rounded-xl md:rounded-2xl bg-gradient-to-br from-[#d4af37]/20 via-[#d4af37]/10 to-transparent border border-[#d4af37] p-4 md:p-8 backdrop-blur-sm">
+            <h2 className="text-lg md:text-2xl font-black text-white text-center mb-4 md:mb-6">
+              🔐 YOUR MEMBERS AREA ACCESS
+            </h2>
 
-            {/* Password Display with COPY button */}
-            <div className="bg-[#0a0a0a]/60 backdrop-blur-sm rounded-xl p-6 mb-6 border border-white/20">
-              <p className="text-center text-[#d4af37] text-sm font-bold uppercase tracking-wide mb-3">
+            {/* Password Display - Compact */}
+            <div className="bg-[#0a0a0a]/60 backdrop-blur-sm rounded-lg p-3 md:p-5 mb-4 md:mb-6 border border-white/20">
+              <p className="text-center text-[#d4af37] text-[10px] md:text-sm font-bold uppercase tracking-wide mb-2">
                 Your Password:
               </p>
 
-              <div className="bg-gradient-to-r from-[#0a1128] to-[#1a1a2e] rounded-lg p-4 border-2 border-[#d4af37] mb-3">
-                <p className="text-center text-[#d4af37] text-xl md:text-2xl font-black break-all">
+              <div className="bg-gradient-to-r from-[#0a1128] to-[#1a1a2e] rounded-lg p-2.5 md:p-4 border border-[#d4af37] mb-2 md:mb-3">
+                <p className="text-center text-[#d4af37] text-sm md:text-xl font-black">
                   {password}
                 </p>
               </div>
 
-              {/* COPY Button - VERY VISIBLE */}
+              {/* COPY Button */}
               <button
                 onClick={copyPassword}
-                className="w-full bg-white/10 hover:bg-white/20 border-2 border-[#d4af37] text-[#d4af37] px-6 py-3 rounded-lg font-bold text-base transition-all duration-200 flex items-center justify-center gap-2"
+                className="w-full bg-white/10 hover:bg-white/20 border border-[#d4af37] text-[#d4af37] px-4 py-2 md:py-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-200 flex items-center justify-center gap-2"
               >
-                <Copy className="w-5 h-5" />
+                <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
                 {copied ? '✓ Copied!' : 'Click to Copy Password'}
               </button>
             </div>
 
-            {/* Members Area Button - HUGE GOLD */}
+            {/* Warning Message - Show when user tries to enter without copying */}
+            {showCopyWarning && (
+              <div className="mb-3 bg-red-500/20 border border-red-500 rounded-lg p-3 text-center animate-pulse">
+                <p className="text-red-400 font-bold text-xs md:text-sm">
+                  ⚠️ Please copy your password first!
+                </p>
+                <p className="text-red-300/80 text-[10px] md:text-xs mt-1">
+                  You'll need it to access the members area
+                </p>
+              </div>
+            )}
+
+            {/* Members Area Button */}
             <Link
-              href="/members"
+              href={hasCopied ? "/members" : "#"}
+              onClick={handleEnterClick}
               className="block w-full"
             >
-              <div className="w-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-[#0a0a0a] px-8 py-6 rounded-xl font-black text-xl md:text-2xl transition-all duration-200 shadow-2xl shadow-[#d4af37]/30 hover:scale-[1.02] active:scale-[0.98] text-center">
-                <span className="flex items-center justify-center gap-3">
-                  <Star className="w-6 h-6" />
-                  ENTER MEMBERS AREA →
-                  <Star className="w-6 h-6" />
+              <div className={`w-full px-4 py-4 md:py-5 rounded-xl font-black text-base md:text-xl transition-all duration-200 shadow-lg text-center ${
+                hasCopied
+                  ? 'bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-[#0a0a0a] shadow-[#d4af37]/20 hover:scale-[1.02] active:scale-[0.98]'
+                  : 'bg-gradient-to-r from-[#d4af37]/60 to-[#f4d03f]/60 text-[#0a0a0a]/70'
+              }`}>
+                <span className="flex items-center justify-center gap-2">
+                  <Star className="w-4 h-4 md:w-5 md:h-5" />
+                  {hasCopied ? 'ENTER MEMBERS AREA →' : '⬆️ COPY PASSWORD FIRST'}
+                  <Star className="w-4 h-4 md:w-5 md:h-5" />
                 </span>
               </div>
             </Link>
-            <p className="mt-4 text-sm font-semibold text-gray-300 text-center">
-              🎁 Access all your bonuses and course materials
+            <p className="mt-2 md:mt-3 text-[10px] md:text-sm font-medium text-gray-400 text-center">
+              {hasCopied ? '🎁 Access all your bonuses and course materials' : '👆 Click "Copy Password" above first'}
             </p>
           </div>
 
-          {/* Quick Steps - Simple */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
-            <h3 className="text-2xl font-black text-white mb-6 text-center">
+          {/* Quick Steps - Compact on mobile */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/10 mb-5 md:mb-8">
+            <h3 className="text-base md:text-xl font-black text-white mb-3 md:mb-5 text-center">
               Quick Start (3 Steps):
             </h3>
 
-            <div className="space-y-4">
-              <div className="flex gap-4 items-start">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-lg font-black text-[#0a0a0a]">
+            <div className="space-y-3 md:space-y-4">
+              <div className="flex gap-3 items-start">
+                <div className="flex h-7 w-7 md:h-9 md:w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-xs md:text-base font-black text-[#0a0a0a]">
                   1
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-1">
+                  <h4 className="text-sm md:text-base font-bold text-white">
                     Copy Your Password
                   </h4>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-400 text-[10px] md:text-sm">
                     Click the copy button above to save your password
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 items-start">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-lg font-black text-[#0a0a0a]">
+              <div className="flex gap-3 items-start">
+                <div className="flex h-7 w-7 md:h-9 md:w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-xs md:text-base font-black text-[#0a0a0a]">
                   2
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-1">
+                  <h4 className="text-sm md:text-base font-bold text-white">
                     Enter Members Area
                   </h4>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-400 text-[10px] md:text-sm">
                     Click the gold button to access all your bonuses
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 items-start">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-lg font-black text-[#0a0a0a]">
+              <div className="flex gap-3 items-start">
+                <div className="flex h-7 w-7 md:h-9 md:w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-xs md:text-base font-black text-[#0a0a0a]">
                   3
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-1">
+                  <h4 className="text-sm md:text-base font-bold text-white">
                     Start Creating Videos
                   </h4>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-400 text-[10px] md:text-sm">
                     Follow the training to create your first AI video in 7 minutes
                   </p>
                 </div>
@@ -178,11 +221,11 @@ function ThankYouContent() {
           </div>
 
           {/* Lifetime Access Notice - Compact */}
-          <div className="mt-8 rounded-xl bg-emerald-500/20 border border-emerald-400 p-6 text-center">
-            <p className="text-white font-bold text-lg mb-2">
+          <div className="rounded-lg md:rounded-xl bg-emerald-500/20 border border-emerald-400/50 p-3 md:p-5 text-center">
+            <p className="text-white font-bold text-sm md:text-base mb-1">
               ✅ Lifetime Access Activated
             </p>
-            <p className="text-white/80 text-sm">
+            <p className="text-white/70 text-[10px] md:text-sm">
               You get lifetime access + all future updates FREE forever
             </p>
           </div>
