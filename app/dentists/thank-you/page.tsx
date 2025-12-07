@@ -4,8 +4,15 @@ import { CheckCircle, Copy, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState, useEffect, useRef } from 'react'
-// TODO: Add tracking when payment is integrated
-// import { trackPurchase } from '../../utils/tracking'
+import { trackTikTokEvent } from '../../components/TikTokPixel'
+import { trackMetaEvent } from '../../components/MetaPixel'
+
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void
+  }
+}
 
 function ThankYouContent() {
   const searchParams = useSearchParams()
@@ -19,10 +26,88 @@ function ThankYouContent() {
 
   const password = "im the best dentist in the world"
 
-  // TODO: Fire purchase tracking when payment integration is added
+  // Fire purchase tracking
   useEffect(() => {
-    // Track purchase event here when payment is integrated
-    // Example: trackPurchase('CloneYourself Dentist - Main Product', 58.22)
+    if (hasTrackedPurchase.current) return
+    hasTrackedPurchase.current = true
+
+    // Determine product and value based on purchase type
+    let productName = 'CloneYourself Dentist'
+    let value = 37 // Main product price
+
+    if (purchased === 'oto') {
+      productName = 'CloneYourself Dentist - OTO Bundle'
+      value = 47
+    } else if (purchased === 'downsell') {
+      productName = 'CloneYourself Dentist - Downsell Bundle'
+      value = 27
+    }
+
+    // Track TikTok CompletePayment (browser pixel)
+    trackTikTokEvent('CompletePayment', {
+      content_id: `dentist-${purchased || 'main'}`,
+      content_name: productName,
+      value: value,
+      currency: 'USD'
+    })
+
+    // Track GA4 Purchase Event (for Google Ads conversions)
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'purchase', {
+        transaction_id: `dentist_order_${Date.now()}`,
+        value: value,
+        currency: 'USD',
+        items: [{
+          item_id: `dentist-${purchased || 'main'}`,
+          item_name: productName,
+          price: value,
+          quantity: 1
+        }]
+      })
+    }
+
+    // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
+    trackMetaEvent('Purchase', {
+      content_ids: [`dentist-${purchased || 'main'}`],
+      content_name: productName,
+      content_type: 'product',
+      value: value,
+      currency: 'USD'
+    })
+
+    // Send server-side event via TikTok CAPI
+    fetch('/api/tiktok-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'CompletePayment',
+        content_id: `dentist-${purchased || 'main'}`,
+        content_name: productName,
+        value: value,
+        currency: 'USD',
+        url: window.location.href,
+        referrer: document.referrer
+      })
+    }).catch(console.error)
+
+    // Send server-side event via Meta CAPI (for better iOS 14.5+ tracking)
+    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || ''
+    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || ''
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName: 'Purchase',
+        sourceUrl: window.location.href,
+        fbc: fbc,
+        fbp: fbp,
+        value: value,
+        currency: 'USD',
+        contentName: productName,
+        contentType: 'product',
+        contentIds: [`dentist-${purchased || 'main'}`]
+      })
+    }).catch(console.error)
   }, [purchased])
 
   const copyPassword = () => {

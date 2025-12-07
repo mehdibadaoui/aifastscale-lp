@@ -5,6 +5,14 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { trackTikTokEvent } from '../components/TikTokPixel'
+import { trackMetaEvent } from '../components/MetaPixel'
+
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void
+  }
+}
 
 function ThankYouContent() {
   const searchParams = useSearchParams()
@@ -43,7 +51,31 @@ function ThankYouContent() {
       currency: 'USD'
     })
 
-    // Send server-side event via CAPI
+    // Track GA4 Purchase Event (for Google Ads conversions)
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'purchase', {
+        transaction_id: `order_${Date.now()}`,
+        value: value,
+        currency: 'USD',
+        items: [{
+          item_id: purchased || 'main',
+          item_name: productName,
+          price: value,
+          quantity: 1
+        }]
+      })
+    }
+
+    // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
+    trackMetaEvent('Purchase', {
+      content_ids: [purchased || 'main'],
+      content_name: productName,
+      content_type: 'product',
+      value: value,
+      currency: 'USD'
+    })
+
+    // Send server-side event via TikTok CAPI
     const ttclid = searchParams.get('ttclid') || ''
     fetch('/api/tiktok-capi', {
       method: 'POST',
@@ -57,6 +89,25 @@ function ThankYouContent() {
         ttclid: ttclid,
         url: window.location.href,
         referrer: document.referrer
+      })
+    }).catch(console.error)
+
+    // Send server-side event via Meta CAPI (for better iOS 14.5+ tracking)
+    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || ''
+    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || ''
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName: 'Purchase',
+        sourceUrl: window.location.href,
+        fbc: fbc,
+        fbp: fbp,
+        value: value,
+        currency: 'USD',
+        contentName: productName,
+        contentType: 'product',
+        contentIds: [purchased || 'main']
       })
     }).catch(console.error)
   }, [purchased, searchParams])

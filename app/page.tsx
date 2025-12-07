@@ -37,6 +37,21 @@ import {
 } from 'lucide-react'
 import { BONUS_PRODUCTS, getTotalBonusValue } from './config/bonus-products'
 import { trackTikTokInitiateCheckout } from './components/TikTokPixel'
+import { trackMetaEvent } from './components/MetaPixel'
+
+// Combined tracking function for all platforms
+const trackInitiateCheckout = (contentId: string, value: number) => {
+  // TikTok tracking
+  trackTikTokInitiateCheckout(contentId, value)
+  // Meta Pixel tracking
+  trackMetaEvent('InitiateCheckout', {
+    content_ids: [contentId],
+    content_name: '7 Minute AgentClone',
+    content_type: 'product',
+    value: value,
+    currency: 'USD'
+  })
+}
 
 export default function CleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
@@ -1199,7 +1214,7 @@ export default function CleanLandingPage() {
               {/* CTA Button */}
               <a
                 href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackTikTokInitiateCheckout('7min-agentclone', 37)}
+                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
                 className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1482,7 +1497,7 @@ export default function CleanLandingPage() {
 
               <a
                 href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackTikTokInitiateCheckout('7min-agentclone', 37)}
+                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
                 className="w-full max-w-md mx-auto bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1736,7 +1751,7 @@ export default function CleanLandingPage() {
 
               <a
                 href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackTikTokInitiateCheckout('7min-agentclone', 37)}
+                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
                 className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />

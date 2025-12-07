@@ -19,6 +19,7 @@ import {
   Crown,
 } from 'lucide-react'
 import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
+import { trackMetaEvent } from '../components/MetaPixel'
 
 // Whop payment links
 const WHOP_LINKS = {
@@ -67,6 +68,14 @@ export default function DoneForYouOTO() {
       `oto-${selectedPackage}`,
       currentPackage.totalPrice
     )
+    // Track Meta Pixel InitiateCheckout event
+    trackMetaEvent('InitiateCheckout', {
+      content_ids: [`oto-${selectedPackage}`],
+      content_name: currentPackage.name,
+      content_type: 'product',
+      value: currentPackage.totalPrice,
+      currency: 'USD'
+    })
     window.location.href = WHOP_LINKS[selectedPackage]
   }
 

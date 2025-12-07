@@ -17,6 +17,7 @@ import {
   X,
 } from 'lucide-react'
 import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
+import { trackMetaEvent } from '../components/MetaPixel'
 
 // Whop payment link for 3-month downsell
 const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_kBs0C47hTeNS7'
@@ -47,6 +48,14 @@ export default function DownsellPage() {
   const handleCheckout = () => {
     // Track TikTok InitiateCheckout event
     trackTikTokInitiateCheckout('downsell-3month', 195)
+    // Track Meta Pixel InitiateCheckout event
+    trackMetaEvent('InitiateCheckout', {
+      content_ids: ['downsell-3month'],
+      content_name: '3-Month Content Package',
+      content_type: 'product',
+      value: 195,
+      currency: 'USD'
+    })
     window.location.href = WHOP_DOWNSELL_LINK
   }
 
