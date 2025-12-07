@@ -4,7 +4,7 @@ import { CheckCircle, Copy, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState, useEffect, useRef } from 'react'
-import { trackPurchase } from '../utils/meta-tracking'
+import { trackTikTokEvent } from '../components/TikTokPixel'
 
 function ThankYouContent() {
   const searchParams = useSearchParams()
@@ -18,37 +18,48 @@ function ThankYouContent() {
 
   const password = "im the best agent in the world"
 
-  // Fire Facebook Pixel + CAPI Purchase event - ONLY for main product ($37)
+  // Fire purchase tracking for TikTok
   useEffect(() => {
-    // Skip tracking for upsell/downsell - only track main product purchase
-    if (purchased === 'upsell' || purchased === 'oto' || purchased === 'downsell') {
-      console.log('Upsell/downsell - not tracking as Purchase')
-      return
-    }
-
-    // Prevent double-firing (React StrictMode runs useEffect twice)
-    if (hasTrackedPurchase.current) {
-      console.log('Purchase already tracked, skipping duplicate')
-      return
-    }
-
-    // Also check sessionStorage for page refresh protection
-    const purchaseKey = 'purchase_tracked_main'
-    if (typeof window !== 'undefined' && sessionStorage.getItem(purchaseKey)) {
-      console.log('Purchase already tracked in this session, skipping')
-      return
-    }
-
-    // Mark as tracked IMMEDIATELY (before async call)
+    if (hasTrackedPurchase.current) return
     hasTrackedPurchase.current = true
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem(purchaseKey, 'true')
+
+    // Determine product and value based on purchase type
+    let productName = '7 Minute AgentClone'
+    let value = 37
+
+    if (purchased === 'oto') {
+      productName = 'OTO Bundle'
+      value = 47
+    } else if (purchased === 'downsell') {
+      productName = 'Downsell Bundle'
+      value = 27
     }
 
-    // Fire unified Purchase event (Pixel + CAPI with deduplication)
-    trackPurchase('7 Minute AgentClone - Main Product', 37.00)
-    console.log('Purchase event fired (Pixel + CAPI): $37 main product')
-  }, [purchased])
+    // Track TikTok CompletePayment (browser pixel)
+    trackTikTokEvent('CompletePayment', {
+      content_id: purchased || 'main',
+      content_name: productName,
+      value: value,
+      currency: 'USD'
+    })
+
+    // Send server-side event via CAPI
+    const ttclid = searchParams.get('ttclid') || ''
+    fetch('/api/tiktok-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'CompletePayment',
+        content_id: purchased || 'main',
+        content_name: productName,
+        value: value,
+        currency: 'USD',
+        ttclid: ttclid,
+        url: window.location.href,
+        referrer: document.referrer
+      })
+    }).catch(console.error)
+  }, [purchased, searchParams])
 
   const copyPassword = () => {
     navigator.clipboard.writeText(password)

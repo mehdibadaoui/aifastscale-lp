@@ -686,7 +686,7 @@ video {
 }
 
 /* ============================================================================
-   MOBILE CHECKOUT OPTIMIZATION
+   MOBILE MODAL OPTIMIZATION
    ============================================================================ */
 
 @media (max-width: 768px) {
@@ -1704,7 +1704,7 @@ a.luxury-link:hover::after {
   animation: successPulse 1s ease-in-out infinite;
 }
 
-/* Glow Pulse for Checkout Button */
+/* Glow Pulse for CTA Button */
 @keyframes glowPulse {
   0%, 100% {
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2);

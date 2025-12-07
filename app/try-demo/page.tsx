@@ -233,7 +233,7 @@ export default function TryDemoPage() {
     } else {
       window.open(shareUrls[platform], '_blank', 'width=600,height=400')
       setTimeout(() => {
-        alert('🎉 Thanks for sharing! Use code SHARE50 at checkout for 50% off!')
+        alert('🎉 Thanks for sharing!')
       }, 2000)
     }
     setShowShareModal(false)

@@ -28,15 +28,15 @@ import {
   VolumeX,
   Eye,
   Heart,
+  Camera,
   ThumbsUp,
   RefreshCw,
   MessageSquare,
   Calendar,
   FileText,
 } from 'lucide-react'
-import { WHOP_CONFIG } from './config/whop'
 import { BONUS_PRODUCTS, getTotalBonusValue } from './config/bonus-products'
-import WhopEmbeddedCheckout from './components/WhopEmbeddedCheckout'
+import { trackTikTokInitiateCheckout } from './components/TikTokPixel'
 
 export default function CleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
@@ -45,7 +45,6 @@ export default function CleanLandingPage() {
   const [isVideoMuted, setIsVideoMuted] = useState(true)
   const [spotsLeft, setSpotsLeft] = useState(7)
   const [viewersNow, setViewersNow] = useState(23)
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   // Animation refs for scroll detection - initialize with hero visible for instant animation
@@ -74,7 +73,7 @@ export default function CleanLandingPage() {
     },
     {
       q: 'When do I get access?',
-      a: 'Immediately after purchase. Check your email for login details. You can create your first video in the next 10 minutes.',
+      a: 'Immediately after signing up. Check your email for login details. You can create your first video in the next 10 minutes.',
     },
   ]
 
@@ -200,11 +199,6 @@ export default function CleanLandingPage() {
     }, 3000)
     return () => clearInterval(interval)
   }, [])
-
-  const handleCheckout = () => {
-    // Open embedded Whop checkout modal (recommended approach for higher conversions)
-    setIsCheckoutOpen(true)
-  }
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -467,188 +461,192 @@ export default function CleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            {/* Section Header */}
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full mb-3">
-                <Play className="w-3.5 h-3.5 text-gold-premium" />
-                <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Featured Case Study</span>
+            {/* Section Header - Attention Grabbing */}
+            <div className={`text-center mb-8 sm:mb-12 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-4 py-2 rounded-full mb-4">
+                <div className="w-2 h-2 bg-gold-premium rounded-full animate-pulse" />
+                <span className="text-gold-premium font-bold text-xs uppercase tracking-wide">Real Results • Real Agent</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-                She Closed <span className="text-gold-premium">17 Buyer Leads</span> in 3 Weeks
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-3 sm:mb-4 leading-tight">
+                This is Jessica. She Got <span className="text-gold-premium">17 Buyer Leads</span>...
               </h2>
-              <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">...without recording a single video</p>
+              <p className="text-xl sm:text-2xl text-white/80 font-bold">Without Recording a Single Video.</p>
             </div>
 
-            {/* Jessica Case Study Card */}
-            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-gold-premium/30 rounded-xl sm:rounded-2xl overflow-hidden mb-8 sm:mb-16 ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            {/* Jessica Case Study Card - Premium Modern Design */}
+            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-gold-premium/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
-              {/* Top: Profile + Before Situation */}
-              <div className="p-4 sm:p-8 border-b border-white/10">
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
-                  {/* Profile */}
-                  <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
-                    <div className="relative">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-gold-premium">
-                        <Image src="/images/jessica-photo.webp" alt="Jessica Rivera" width={96} height={96} className="object-cover w-full h-full" />
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 bg-gold-premium text-black text-[10px] font-black px-2 py-0.5 rounded-full">
-                        VERIFIED
-                      </div>
-                    </div>
-                    <div className="sm:mt-2">
-                      <h3 className="text-white font-black text-lg">Jessica Rivera</h3>
-                      <p className="text-gray-400 text-sm">Buyer's Agent</p>
-                      <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
-                        <MapPin className="w-3 h-3" />
-                        <span>Miami, Florida</span>
-                      </div>
-                    </div>
-                  </div>
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gold-premium/5 via-transparent to-gold-premium/5 pointer-events-none" />
 
-                  {/* Before Story */}
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full mb-3">
-                      <span className="text-red-400 text-xs font-bold">THE PROBLEM</span>
-                    </div>
-                    <p className="text-gray-300 leading-relaxed">
-                      "I was spending <span className="text-white font-bold">3 hours every day</span> trying to create content.
-                      Between filming, editing, and coming up with ideas - I had <span className="text-white font-bold">zero time left for actual clients</span>.
-                      My social media looked dead. <span className="text-red-400 font-bold">I was invisible online</span>.
-                      Then I discovered this system..."
-                    </p>
+              {/* Hero Section - Big Visual */}
+              <div className="relative p-4 sm:p-8">
+                {/* The Hook Text */}
+                <div className="text-center mb-6">
+                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see her talking on camera...</p>
+                  <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
+                    She Never Filmed Anything.
+                  </p>
+                  <p className="text-gold-premium text-base sm:text-lg font-medium">
+                    She just uploaded her photo, and the AI created a ready-to-post video for her.
+                  </p>
+                </div>
+
+                {/* Big Before/After Video - Full Width - Autoplay like GIF */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-gold-premium/30 shadow-2xl shadow-gold-premium/10">
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-auto"
+                    poster="/images/jessica-photo_result.webp"
+                  >
+                    <source src="/videos/jessica-demo.mp4" type="video/mp4" />
+                    {/* Fallback to static image for browsers that don't support video */}
+                    <Image
+                      src="/images/jessica-photo_result.webp"
+                      alt="Jessica - Photo to AI Video transformation"
+                      width={1365}
+                      height={768}
+                      className="w-full h-auto"
+                    />
+                  </video>
+                  {/* Subtle gradient overlay at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
+
+                {/* Verified Badge */}
+                <div className="flex justify-center mt-4">
+                  <div className="bg-gold-premium text-black text-xs sm:text-sm font-black px-4 py-2 rounded-full inline-flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" />
+                    VERIFIED STORY
                   </div>
                 </div>
               </div>
 
-              {/* Big Hero Image of Jessica */}
-              <div className="p-4 sm:p-8 bg-black/50">
-                {/* Image without overlay on mobile for clarity */}
-                <div className="rounded-xl overflow-hidden border-2 border-gold-premium/40 shadow-2xl">
-                  <Image
-                    src="/images/jessica-photo.webp"
-                    alt="Jessica Rivera - 17 Buyer Leads in 3 Weeks"
-                    width={1365}
-                    height={768}
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Caption below image for clarity */}
-                <div className="mt-4 text-center">
-                  <p className="text-gold-premium font-black text-xl sm:text-3xl mb-1">17 Buyer Leads in 3 Weeks</p>
-                  <p className="text-gray-400 text-sm">Without recording a single video</p>
-                </div>
-              </div>
-
-              {/* The Transformation */}
-              <div className="p-4 sm:p-8 bg-black/30">
-                <div className="text-center mb-4">
-                  <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full">
-                    <span className="text-gold-premium text-xs font-bold">THE 7-MINUTE TRANSFORMATION</span>
-                  </div>
+              {/* The Viral Growth Story - Visual Timeline */}
+              <div className="bg-black/60 border-t border-b border-white/10 p-5 sm:p-10">
+                <div className="text-center mb-6">
+                  <span className="text-gold-premium text-xs sm:text-sm font-black uppercase tracking-wider">The Journey</span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                {/* Video Performance Cards */}
+                <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-8">
                   {[
-                    { number: '17', label: 'Buyer Leads', sub: 'in 3 weeks' },
-                    { number: '7', label: 'Minutes', sub: 'per video' },
-                    { number: '0', label: 'Hours Filming', sub: 'on camera' },
-                  ].map((stat, i) => (
-                    <div key={i} className="bg-gold-premium/10 border border-gold-premium/30 rounded-xl p-3 sm:p-4 text-center">
-                      <div className="text-gold-premium text-3xl sm:text-5xl font-black mb-0.5">{stat.number}</div>
-                      <div className="text-white font-bold text-xs sm:text-sm">{stat.label}</div>
-                      <div className="text-gray-500 text-[10px] sm:text-xs">{stat.sub}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <p className="text-gray-500 text-xs sm:text-sm mt-4 text-center">
-                  Posted <span className="text-gold-premium font-bold">21 AI videos</span> in 3 weeks • Zero filming • Zero editing stress
-                </p>
-              </div>
-
-              {/* Timeline / Results */}
-              <div className="p-4 sm:p-8 border-t border-white/10">
-                <div className="text-center mb-4 sm:mb-6">
-                  <div className="inline-flex items-center gap-2 bg-gold-premium/10 border border-gold-premium/30 px-3 py-1.5 rounded-full">
-                    <span className="text-gold-premium text-xs font-bold">WHAT HAPPENED NEXT</span>
-                  </div>
-                </div>
-
-                {/* Timeline - improved mobile layout */}
-                <div className="space-y-3 sm:space-y-4">
-                  {[
-                    { time: 'Day 1', event: 'Created her first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 3', event: '12,000 views on first 3 videos combined', icon: Eye, color: 'gray' },
-                    { time: 'Week 1', event: '4 buyer inquiries in her DMs', icon: MessageSquare, color: 'gold' },
-                    { time: 'Week 2', event: '8 more leads • 2 showing appointments booked', icon: Calendar, color: 'gold' },
-                    { time: 'Week 3', event: '17 total buyer leads • 3 under contract', icon: FileText, color: 'gold' },
-                    { time: 'Month 2', event: '2 closings • $18,400 commission earned', icon: DollarSign, color: 'green' },
+                    { video: 'Video 1', views: '2,700', color: 'from-gray-600 to-gray-700' },
+                    { video: 'Video 2', views: '19,000', color: 'from-gold-premium/60 to-gold-premium/40' },
+                    { video: 'Video 3', views: '220,000', color: 'from-gold-premium to-yellow-500', highlight: true },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        item.color === 'green' ? 'bg-green-500/20 border border-green-500/40' :
-                        item.color === 'gold' ? 'bg-gold-premium/20 border border-gold-premium/40' :
-                        'bg-white/5 border border-white/20'
-                      }`}>
-                        <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                          item.color === 'green' ? 'text-green-400' :
-                          item.color === 'gold' ? 'text-gold-premium' :
-                          'text-gray-400'
-                        }`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
-                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
-                          item.color === 'gold' ? 'bg-gold-premium/20 text-gold-premium' :
-                          'bg-white/10 text-gray-400'
-                        }`}>{item.time}</span>
-                        <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
-                      </div>
+                    <div key={i} className={`relative rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center ${item.highlight ? 'ring-2 ring-gold-premium shadow-lg shadow-gold-premium/20' : ''}`}
+                      style={{ background: `linear-gradient(135deg, ${item.color.includes('gray') ? '#374151, #4b5563' : '#d4af37, #fbbf24'})` }}>
+                      {item.highlight && (
+                        <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[8px] sm:text-[10px] font-black px-2 py-0.5 rounded-full animate-pulse">
+                          VIRAL
+                        </div>
+                      )}
+                      <p className={`text-[10px] sm:text-xs font-bold mb-1 ${item.highlight ? 'text-black' : 'text-white/80'}`}>{item.video}</p>
+                      <p className={`text-lg sm:text-3xl font-black ${item.highlight ? 'text-black' : 'text-white'}`}>{item.views}</p>
+                      <p className={`text-[9px] sm:text-xs ${item.highlight ? 'text-black/70' : 'text-white/60'}`}>views</p>
                     </div>
                   ))}
                 </div>
-              </div>
 
-              {/* Final Quote */}
-              <div className="p-6 sm:p-8 bg-gradient-to-r from-gold-premium/10 to-gold-premium/5 border-t border-gold-premium/30">
-                <div className="flex items-start gap-4">
-                  <div className="text-gold-premium text-4xl font-serif leading-none">"</div>
-                  <div>
-                    <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      I went from <span className="text-gold-premium font-bold">invisible to booked out</span> in 3 weeks.
-                      My buyers find ME now. I haven't cold called in months.
-                      This system gave me my time back AND filled my pipeline.
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gold-premium">
-                        <Image src="/images/jessica-photo.webp" alt="Jessica" width={40} height={40} className="object-cover" />
+                {/* The Shock Moment */}
+                <div className="bg-gradient-to-r from-gold-premium/10 to-transparent border-l-4 border-gold-premium rounded-r-xl p-4 sm:p-6 mb-6">
+                  <p className="text-white text-base sm:text-xl font-bold leading-relaxed">
+                    The third one shocked her. It reached <span className="text-gold-premium">220,000 views in 24 hours</span>...
+                  </p>
+                  <p className="text-gold-premium text-lg sm:text-2xl font-black mt-2">
+                    And later grew to 1.2 MILLION.
+                  </p>
+                </div>
+
+                {/* Social Proof Messages */}
+                <div className="space-y-3">
+                  <p className="text-gray-400 text-xs sm:text-sm font-medium text-center mb-3">Then something crazy happened...</p>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                    <p className="text-gray-300 text-sm sm:text-base mb-3">Other real estate agents started messaging her:</p>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <MessageSquare className="w-4 h-4 text-gold-premium flex-shrink-0 mt-0.5" />
+                        <p className="text-white text-sm sm:text-base italic">"I saw your viral video on TikTok and Instagram"</p>
                       </div>
-                      <div>
-                        <p className="text-white font-bold">Jessica Rivera</p>
-                        <p className="text-gray-400 text-sm">2 months after joining</p>
-                      </div>
-                      <div className="ml-auto flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-gold-premium text-gold-premium" />
-                        ))}
+                      <div className="flex items-start gap-2">
+                        <MessageSquare className="w-4 h-4 text-gold-premium flex-shrink-0 mt-0.5" />
+                        <p className="text-white text-sm sm:text-base italic">"I love how confident you looked on camera"</p>
                       </div>
                     </div>
+                    <p className="text-gold-premium text-sm sm:text-base font-bold mt-4">
+                      None of them knew Jessica never recorded anything herself.
+                    </p>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">It was all AI turning her image into a realistic talking video.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Results Section - The Money Shot */}
+              <div className="p-5 sm:p-10 bg-gradient-to-b from-transparent to-gold-premium/5">
+                <div className="text-center mb-6">
+                  <span className="text-gold-premium text-xs sm:text-sm font-black uppercase tracking-wider">The Results</span>
+                </div>
+
+                <div className="bg-white/5 border border-gold-premium/30 rounded-2xl p-5 sm:p-8 mb-6">
+                  <p className="text-gray-300 text-sm sm:text-base mb-4">She didn't expect buyers from these videos...</p>
+                  <p className="text-white text-lg sm:text-xl font-bold mb-6">But she ended up closing deals she never imagined:</p>
+
+                  {/* Big Numbers */}
+                  <div className="grid grid-cols-3 gap-3 sm:gap-6">
+                    <div className="text-center">
+                      <div className="text-gold-premium text-3xl sm:text-5xl font-black">17</div>
+                      <div className="text-white text-xs sm:text-sm font-bold">Buyer Leads</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-gold-premium text-3xl sm:text-5xl font-black">2</div>
+                      <div className="text-white text-xs sm:text-sm font-bold">Closings</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-green-400 text-3xl sm:text-5xl font-black">$18.4K</div>
+                      <div className="text-white text-xs sm:text-sm font-bold">Commissions</div>
+                    </div>
+                  </div>
+
+                  <p className="text-center text-gold-premium font-black text-base sm:text-xl mt-6">
+                    All from videos she didn't even film.
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA Section */}
+              <div className="p-5 sm:p-10 bg-gradient-to-r from-gold-premium/20 via-gold-premium/10 to-gold-premium/20 border-t border-gold-premium/30">
+                <div className="text-center max-w-2xl mx-auto">
+                  <p className="text-gray-300 text-sm sm:text-base mb-3">I know it sounds strange, but you should try it yourself.</p>
+                  <p className="text-white text-lg sm:text-xl font-bold mb-4">
+                    For the first time ever, I'm giving a special offer on my video course that teaches real estate agents exactly how to do this from A to Z — <span className="text-gold-premium">even with zero experience</span>.
+                  </p>
+
+                  {/* Promise/Guarantee */}
+                  <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mt-6">
+                    <p className="text-white font-bold text-sm sm:text-base mb-1">And here's my promise:</p>
+                    <p className="text-green-400 text-sm sm:text-base">
+                      If you don't get results, or you feel it's not worth it, contact me and I'll refund you 100%, no questions asked.
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Bottom Stats Bar */}
-              <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
+              <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/80">
                 {[
-                  { value: '$37', label: 'Investment', sub: 'One-time' },
-                  { value: '17', label: 'Buyer Leads', sub: '3 weeks' },
-                  { value: '$18.4K', label: 'Commissions', sub: '2 months' },
+                  { icon: Clock, value: '7 min', label: 'Per Video' },
+                  { icon: Camera, value: '0', label: 'Filming Required' },
+                  { icon: TrendingUp, value: '1.2M+', label: 'Total Views' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
-                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-gold-premium' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
-                    <div className="text-gray-400 text-xs font-semibold">{stat.label}</div>
-                    <div className="text-gray-600 text-[10px]">{stat.sub}</div>
+                    <stat.icon className="w-5 h-5 text-gold-premium mx-auto mb-2" />
+                    <div className="text-white text-lg sm:text-2xl font-black">{stat.value}</div>
+                    <div className="text-gray-500 text-[10px] sm:text-xs">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -1199,14 +1197,15 @@ export default function CleanLandingPage() {
               </div>
 
               {/* CTA Button */}
-              <button
-                onClick={handleCheckout}
-                className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4"
+              <a
+                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+                onClick={() => trackTikTokInitiateCheckout('7min-agentclone', 37)}
+                className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+              </a>
 
               {/* Trust - Compact */}
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-400 text-xs sm:text-sm">
@@ -1216,7 +1215,7 @@ export default function CleanLandingPage() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-premium" />
-                  <span>Secure Checkout</span>
+                  <span>SSL Secured</span>
                 </div>
               </div>
             </div>
@@ -1481,14 +1480,15 @@ export default function CleanLandingPage() {
               </div>
               <p className="text-gold-premium font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
 
-              <button
-                onClick={handleCheckout}
-                className="w-full max-w-md mx-auto bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl flex items-center justify-center gap-2"
+              <a
+                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+                onClick={() => trackTikTokInitiateCheckout('7min-agentclone', 37)}
+                className="w-full max-w-md mx-auto bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+              </a>
 
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-gray-400 text-[10px] sm:text-sm">
                 <div className="flex items-center gap-1">
@@ -1497,7 +1497,7 @@ export default function CleanLandingPage() {
                 </div>
                 <div className="flex items-center gap-1">
                   <CheckCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-gold-premium" />
-                  <span>Secure Checkout</span>
+                  <span>SSL Secured</span>
                 </div>
               </div>
             </div>
@@ -1734,14 +1734,15 @@ export default function CleanLandingPage() {
                 <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
               </div>
 
-              <button
-                onClick={handleCheckout}
-                className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              <a
+                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+                onClick={() => trackTikTokInitiateCheckout('7min-agentclone', 37)}
+                className="w-full bg-gradient-to-r from-gold-premium to-gold-dark text-black py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+              </a>
 
               <p className="text-gray-500 text-xs sm:text-sm mt-3 sm:mt-4 flex items-center justify-center gap-1.5">
                 <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -1781,7 +1782,12 @@ export default function CleanLandingPage() {
               <a href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</a>
               <span className="hidden sm:inline">•</span>
               <a href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
             </div>
+            <p className="text-gray-500 text-xs mt-3">
+              Contact: support@aifastscale.com
+            </p>
           </div>
         </div>
       </footer>
@@ -1898,12 +1904,6 @@ export default function CleanLandingPage() {
           }
         }
       `}</style>
-
-      {/* Whop Embedded Checkout Modal */}
-      <WhopEmbeddedCheckout
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-      />
     </main>
   )
 }

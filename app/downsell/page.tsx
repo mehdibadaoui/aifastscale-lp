@@ -16,17 +16,13 @@ import {
   Gift,
   X,
 } from 'lucide-react'
-import { trackInitiateCheckout, trackViewContent } from '../utils/meta-tracking'
-import WhopEmbeddedCheckout from '../components/WhopEmbeddedCheckout'
-import { WHOP_CONFIG } from '../config/whop'
+import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
+
+// Whop payment link for 3-month downsell
+const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_kBs0C47hTeNS7'
 
 export default function DownsellPage() {
   const [timeLeft, setTimeLeft] = useState(5 * 60) // 5 minutes
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
-
-  useEffect(() => {
-    trackViewContent('Done-For-You 3 Month Downsell', 195)
-  }, [])
 
   // Timer countdown
   useEffect(() => {
@@ -49,8 +45,9 @@ export default function DownsellPage() {
   }
 
   const handleCheckout = () => {
-    trackInitiateCheckout('Done-For-You 3 Month Downsell', 195)
-    setIsCheckoutOpen(true)
+    // Track TikTok InitiateCheckout event
+    trackTikTokInitiateCheckout('downsell-3month', 195)
+    window.location.href = WHOP_DOWNSELL_LINK
   }
 
   const handleDecline = () => {
@@ -238,12 +235,6 @@ export default function DownsellPage() {
         </div>
       </div>
 
-      {/* Whop Embedded Checkout Modal */}
-      <WhopEmbeddedCheckout
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        planId={WHOP_CONFIG.plans.downsell3month.id}
-      />
     </main>
   )
 }

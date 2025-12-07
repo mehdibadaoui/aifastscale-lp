@@ -144,7 +144,7 @@ export const POLICIES = {
   },
   guarantee: {
     agents: 500, // 500+ Happy Agents
-    security: 'SSL Encrypted Payment',
+    security: 'SSL Secured',
   },
 } as const
 

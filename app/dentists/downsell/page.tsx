@@ -3,17 +3,17 @@
 import { useState, useEffect } from 'react'
 import { Clock, CheckCircle, ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
-import { DENTIST_BONUS_PRODUCTS, DENTIST_PLAN_IDS } from '../../config/dentist-bonus-products'
+import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 import CheckoutModal from '../../components/CheckoutModal'
-import { trackInitiateCheckout, trackViewContent } from '../../utils/meta-tracking'
+import { DENTIST_PAYMENT_CONFIG } from '../../config/payment'
 
 export default function DentistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
   const [showCheckoutModal, setShowCheckoutModal] = useState(false)
 
-  // Track ViewContent on page load
+  // Track page view when payment integration is added
   useEffect(() => {
-    trackViewContent('5 Bonus Products Bundle (Downsell)', 4.97)
+    // TODO: Add tracking when payment is integrated
   }, [])
 
   // Get the 5 upsell products (same as upsell - user declined those)
@@ -231,7 +231,6 @@ export default function DentistDownsellPage() {
           <div className="space-y-1.5 md:space-y-2">
             <button
               onClick={() => {
-                trackInitiateCheckout('5 Bonus Products Bundle (Downsell)', 4.97)
                 setShowCheckoutModal(true)
               }}
               className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-orange-500/30 animate-pulse"
@@ -267,9 +266,9 @@ export default function DentistDownsellPage() {
         isOpen={showCheckoutModal}
         onClose={() => setShowCheckoutModal(false)}
         onDecline={handleFinalDecline}
-        planId={DENTIST_PLAN_IDS.downsell}
-        planName="Lite Bundle - 5 Premium Tools"
-        price="$4.97"
+        planId={DENTIST_PAYMENT_CONFIG.plans.downsell.id}
+        planName={DENTIST_PAYMENT_CONFIG.plans.downsell.name}
+        price={`$${downsellPrice}`}
         declineText="No thanks, go to my course →"
       />
     </div>

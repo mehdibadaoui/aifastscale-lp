@@ -139,24 +139,6 @@ export const DENTIST_BONUS_PRODUCTS: DentistBonusProduct[] = [
   },
 ]
 
-// Pricing Configuration
-export const DENTIST_BONUS_PRICING = {
-  mainPrice: 58.22,
-  upsellPrice: 9.95,
-  downsellPrice: 4.97,
-  pricePerItemUpsell: 1.99,
-  pricePerItemDownsell: 0.99,
-  currency: 'USD',
-  currencySymbol: '$',
-} as const
-
-// Plan IDs
-export const DENTIST_PLAN_IDS = {
-  main: 'plan_SxMS4HqFxJKNT',
-  upsell: 'plan_IbsV5qrvMPBgb',
-  downsell: 'plan_C2l5ZPXSWCxQu',
-} as const
-
 // Calculate total value
 export const getDentistTotalBonusValue = (): number => {
   return DENTIST_BONUS_PRODUCTS.reduce((total, product) => total + product.value, 0)

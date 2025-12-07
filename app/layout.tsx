@@ -92,6 +92,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Analytics 4 (GA4) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7JM9NRV7Z"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-Q7JM9NRV7Z');
+            `,
+          }}
+        />
+
         {/* CRITICAL: Inline critical CSS for instant hero rendering - prevents render blocking */}
         <style dangerouslySetInnerHTML={{ __html: `
           /* Critical above-fold styles - inlined for instant paint */
@@ -110,11 +123,9 @@ export default function RootLayout({
         {/* Critical preconnects for faster DNS resolution */}
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
+        <link rel="preconnect" href="https://analytics.tiktok.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        {/* Whop - dns-prefetch only (script loaded lazily when checkout opens) */}
-        <link rel="dns-prefetch" href="https://js.whop.com" />
-        <link rel="dns-prefetch" href="https://whop.com" />
 
         {/* HERO OPTIMIZATION: Preload critical above-fold images for faster LCP */}
         {/* Mobile-first: preload smaller mobile image */}

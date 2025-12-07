@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import {
   Check,
@@ -18,19 +18,18 @@ import {
   Play,
   Crown,
 } from 'lucide-react'
-import { trackInitiateCheckout, trackViewContent } from '../utils/meta-tracking'
-import WhopEmbeddedCheckout from '../components/WhopEmbeddedCheckout'
-import { WHOP_CONFIG } from '../config/whop'
+import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
+
+// Whop payment links
+const WHOP_LINKS = {
+  premium: 'https://whop.com/checkout/plan_0fbyyZAq8n1yI', // 6 months
+  starter: 'https://whop.com/checkout/plan_gdD4gop6sejQG', // 3 months
+}
 
 export default function DoneForYouOTO() {
   const [selectedPackage, setSelectedPackage] = useState<'premium' | 'starter'>('premium')
   const [spotsLeft] = useState(2)
   const [showReviews, setShowReviews] = useState(false)
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
-
-  useEffect(() => {
-    trackViewContent('Done-For-You 6 Month Content', 565.20)
-  }, [])
 
   const packages = {
     premium: {
@@ -40,7 +39,6 @@ export default function DoneForYouOTO() {
       pricePerVideo: 7.85,
       totalPrice: 565.20,
       videosPerWeek: 3,
-      planId: WHOP_CONFIG.plans.upsell.id,
     },
     starter: {
       name: '3-Month Quick Start',
@@ -49,7 +47,6 @@ export default function DoneForYouOTO() {
       pricePerVideo: 12.29,
       totalPrice: 295,
       videosPerWeek: 2,
-      planId: WHOP_CONFIG.plans.upsellLite.id,
     },
   }
 
@@ -65,8 +62,12 @@ export default function DoneForYouOTO() {
   ]
 
   const handleCheckout = () => {
-    trackInitiateCheckout(currentPackage.name, currentPackage.totalPrice)
-    setIsCheckoutOpen(true)
+    // Track TikTok InitiateCheckout event
+    trackTikTokInitiateCheckout(
+      `oto-${selectedPackage}`,
+      currentPackage.totalPrice
+    )
+    window.location.href = WHOP_LINKS[selectedPackage]
   }
 
   const handleDecline = () => {
@@ -500,12 +501,6 @@ export default function DoneForYouOTO() {
         </div>
       </div>
 
-      {/* Whop Embedded Checkout Modal */}
-      <WhopEmbeddedCheckout
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        planId={currentPackage.planId}
-      />
     </main>
   )
 }

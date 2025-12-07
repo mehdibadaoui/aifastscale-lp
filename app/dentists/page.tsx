@@ -1,682 +1,379 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { createPortal } from 'react-dom'
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import {
   Gift,
-  Users,
-  Star,
-  Clock,
-  Check,
-  TrendingUp,
-  Zap,
-  CheckCircle,
-  Play,
   Shield,
-  ChevronDown,
-  ChevronUp,
-  X,
-  Award,
-  Target,
-  TrendingDown,
-  Sparkles,
+  CheckCircle,
   ArrowRight,
-  Mail,
-  Package,
-  AlertCircle,
+  ArrowDown,
+  Clock,
+  Users,
   Video,
-  DollarSign,
-  Eye,
-  Phone,
+  Upload,
+  TrendingUp,
+  Play,
+  ChevronDown,
+  Star,
+  Check,
+  X,
+  AlertTriangle,
+  Zap,
   Crown,
-  Stethoscope,
+  MapPin,
+  Award,
+  DollarSign,
+  Volume2,
+  VolumeX,
+  Eye,
   Heart,
+  ThumbsUp,
+  RefreshCw,
+  MessageSquare,
   Calendar,
   FileText,
-  Smile,
-  Layout,
-  Instagram,
-  Copy,
-  Globe,
-  Camera,
-  MapPin,
-} from 'lucide-react'
-import Image from 'next/image'
-import dynamic from 'next/dynamic'
-import { DENTIST_BONUS_PRODUCTS, DENTIST_PLAN_IDS, getDentistTotalBonusValue } from '../config/dentist-bonus-products'
-import type { DentistBonusProduct } from '../config/dentist-bonus-products'
-import CheckoutModal from '../components/CheckoutModal'
-
-// Dynamic import DentistSpinWheel - only loads when user clicks to spin (massive JS savings)
-const DentistSpinWheel = dynamic(() => import('../components/DentistSpinWheel'), {
-  loading: () => (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
-      <div className="text-center">
-        <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-teal-500 font-bold">Loading Spin Wheel...</p>
-      </div>
-    </div>
-  ),
-  ssr: false // No server-side rendering needed for modal
-})
-
-// Top 4 pre-selected bonuses for dentists
-const TOP_4_BONUSES = ['patient-reactivation-system', 'google-review-machine', 'case-acceptance-playbook', 'dental-social-media-bundle']
-
-// Haptic feedback utility
-const triggerHaptic = (type: 'light' | 'medium' | 'heavy' | 'success') => {
-  if (typeof window !== 'undefined' && 'vibrate' in navigator) {
-    const patterns = {
-      light: [10],
-      medium: [20],
-      heavy: [30],
-      success: [10, 50, 10, 50, 30],
-    }
-    navigator.vibrate(patterns[type])
-  }
-}
-
-// Confetti explosion component
-const ConfettiExplosion = ({ active }: { active: boolean }) => {
-  if (!active) return null
-
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
-      {[...Array(50)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-confetti"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: '-10px',
-            width: `${8 + Math.random() * 8}px`,
-            height: `${8 + Math.random() * 8}px`,
-            backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444', '#8b5cf6', '#ec4899'][Math.floor(Math.random() * 6)],
-            borderRadius: Math.random() > 0.5 ? '50%' : '0',
-            animationDelay: `${Math.random() * 0.5}s`,
-            animationDuration: `${2 + Math.random() * 2}s`,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
-// Icon mapping for dynamic icons
-const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
-  Users,
-  Star,
-  Target,
-  Layout,
+  Stethoscope,
   Phone,
-  Smile,
-  TrendingUp,
-  FileText,
-  Mail,
-  Sparkles,
-  Video,
-  Globe,
-  Camera,
-}
+} from 'lucide-react'
+import { DENTIST_BONUS_PRODUCTS, getDentistTotalBonusValue } from '../config/dentist-bonus-products'
 
-export default function DentistLanding() {
+export default function DentistCleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
-  const [spotsLeft] = useState(11) // Limited spots
-  const [liveViewers] = useState(19) // Simulated live viewers
-  const [selectedMode, setSelectedMode] = useState<'expert' | 'custom' | null>('custom')
-  const [selectedBonuses, setSelectedBonuses] = useState<string[]>(TOP_4_BONUSES)
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [showCheckoutModal, setShowCheckoutModal] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
-  const [showAllReviews, setShowAllReviews] = useState(false)
-  const [copiedText, setCopiedText] = useState<string | null>(null)
-  const [showWhatIs, setShowWhatIs] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [justSelected, setJustSelected] = useState<string | null>(null)
-  const [animatedValue, setAnimatedValue] = useState(0)
-  const [socialProof, setSocialProof] = useState<{ name: string; location: string; time: string } | null>(null)
-  const [showDrMarcusVideo, setShowDrMarcusVideo] = useState(false)
-  const [showSpinWheel, setShowSpinWheel] = useState(false)
-  const [selectedGift, setSelectedGift] = useState<any>(null)
-  const [showScrollTop, setShowScrollTop] = useState(false)
-  const bonusGridRef = useRef<HTMLDivElement>(null)
-  const checkoutButtonRef = useRef<HTMLDivElement>(null)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [isVideoMuted, setIsVideoMuted] = useState(true)
+  const [spotsLeft, setSpotsLeft] = useState(7)
+  const [viewersNow, setViewersNow] = useState(23)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Track client-side mount
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  // Animation refs for scroll detection - initialize with hero visible for instant animation
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
 
-  // Show/hide scroll-to-top button based on scroll position
+  const faqs = [
+    {
+      q: 'Does this really take only 7 minutes?',
+      a: 'Yes. Upload photo (1 min), type script (2 min), AI generates (4 min). Done. Zero editing needed. I timed it myself.',
+    },
+    {
+      q: 'Will patients know it\'s AI?',
+      a: 'Most can\'t tell. The lip-sync is incredibly realistic. Your patients care about your message and expertise, not how you made it. 500+ dentists are already using this successfully.',
+    },
+    {
+      q: 'I\'m not tech-savvy. Can I do this?',
+      a: 'If you can text and upload a photo, you can do this. Step-by-step training included. Plus support is available if you get stuck.',
+    },
+    {
+      q: 'Do I need expensive AI tools?',
+      a: 'No. Everything is included. The system shows you exactly which free/cheap tools to use. No hidden costs.',
+    },
+    {
+      q: 'Will this work for my dental practice?',
+      a: 'Yes. 500+ dentists across the US, UK, Canada, and Australia use this daily. Works for general dentistry, cosmetic, ortho, and all specialties.',
+    },
+    {
+      q: 'When do I get access?',
+      a: 'Immediately after signing up. Check your email for login details. You can create your first video in the next 10 minutes.',
+    },
+  ]
+
+  const testimonials = [
+    {
+      id: 1,
+      name: 'Dr. Sarah Mitchell',
+      role: 'Cosmetic Dentist',
+      location: 'Los Angeles, CA',
+      image: '/images/dentist/review-1.webp',
+      review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 12 new patient inquiries that same week.",
+      results: '12 new patients in first week',
+    },
+    {
+      id: 2,
+      name: 'Dr. James Rodriguez',
+      role: 'Family Dentistry',
+      location: 'Houston, TX',
+      image: '/images/dentist/review-2.webp',
+      review: "After 20 years in dentistry, I thought I'd seen it all. My hygiene schedule is now booked 6 weeks out - all from AI video leads.",
+      results: 'Booked 6 weeks out',
+    },
+    {
+      id: 3,
+      name: 'Dr. Emily Chen',
+      role: 'Orthodontist',
+      location: 'San Francisco, CA',
+      image: '/images/dentist/review-3.webp',
+      review: "As a Bay Area orthodontist, I need to stand out. These AI videos make my practice look like a premium brand. Went from 2-3 consults to 15+ per week.",
+      results: '15+ consults/week',
+    },
+    {
+      id: 4,
+      name: 'Dr. Michael Thompson',
+      role: 'Implant Specialist',
+      location: 'Chicago, IL',
+      image: '/images/dentist/review-5.webp',
+      review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
+      results: '50x ROI',
+    },
+    {
+      id: 5,
+      name: 'Dr. Lisa Park',
+      role: 'Pediatric Dentist',
+      location: 'Seattle, WA',
+      image: '/images/dentist/review-9.webp',
+      review: "My TikTok video got 89K views. Booked 23 new pediatric patients that month. This system pays for itself daily.",
+      results: '23 new patients from 1 video',
+    },
+    {
+      id: 6,
+      name: 'Dr. Robert Johnson',
+      role: 'General Dentist',
+      location: 'Phoenix, AZ',
+      image: '/images/dentist/review-11.webp',
+      review: "25 years in dentistry and I wish I had this sooner. 8 new patients last month from social media alone.",
+      results: '8 patients from social',
+    },
+  ]
+
+  // Scroll animation observer - trigger animations as sections come into view
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 600)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+            if (entry.target.id) {
+              setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+            }
+          }
+        })
+      },
+      { threshold: 0, rootMargin: '50px 0px 200px 0px' } // Trigger 200px before entering viewport
+    )
+
+    // Small delay to ensure DOM is ready
+    const initTimer = setTimeout(() => {
+      const animatedElements = document.querySelectorAll('[data-animate]')
+      animatedElements.forEach((el) => observer.observe(el))
+    }, 100)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(initTimer)
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Countdown timer to midnight
+  // Countdown timer
   useEffect(() => {
     const calculateTimeToMidnight = () => {
       const now = new Date()
       const midnight = new Date(now)
       midnight.setHours(24, 0, 0, 0)
       const diff = midnight.getTime() - now.getTime()
-      const hours = Math.floor(diff / (1000 * 60 * 60))
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-      return { hours, minutes, seconds }
+      return {
+        hours: Math.floor(diff / (1000 * 60 * 60)),
+        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((diff % (1000 * 60)) / 1000)
+      }
     }
     setTimeLeft(calculateTimeToMidnight())
     const timer = setInterval(() => setTimeLeft(calculateTimeToMidnight()), 1000)
     return () => clearInterval(timer)
   }, [])
 
-  // Social proof notifications
+  // Scarcity
   useEffect(() => {
-    const buyers = [
-      { name: 'Dr. Sarah M.', location: 'Houston, TX' },
-      { name: 'Dr. James K.', location: 'Los Angeles, CA' },
-      { name: 'Dr. Emily R.', location: 'Chicago, IL' },
-      { name: 'Dr. Michael T.', location: 'Miami, FL' },
-      { name: 'Dr. Jennifer L.', location: 'New York, NY' },
-      { name: 'Dr. David W.', location: 'Seattle, WA' },
-      { name: 'Dr. Lisa P.', location: 'Phoenix, AZ' },
-      { name: 'Dr. Robert H.', location: 'Denver, CO' },
-      { name: 'Dr. Amanda C.', location: 'Atlanta, GA' },
-      { name: 'Dr. Kevin S.', location: 'Boston, MA' },
-    ]
-    const times = ['just now', '2 min ago', '5 min ago', '8 min ago', '12 min ago']
-
-    const initialDelay = setTimeout(() => {
-      const buyer = buyers[Math.floor(Math.random() * buyers.length)]
-      const time = times[Math.floor(Math.random() * times.length)]
-      setSocialProof({ ...buyer, time })
-      setTimeout(() => setSocialProof(null), 4000)
-    }, 15000)
-
     const interval = setInterval(() => {
-      const buyer = buyers[Math.floor(Math.random() * buyers.length)]
-      const time = times[Math.floor(Math.random() * times.length)]
-      setSocialProof({ ...buyer, time })
-      setTimeout(() => setSocialProof(null), 4000)
-    }, 90000 + Math.random() * 60000)
-
-    return () => {
-      clearTimeout(initialDelay)
-      clearInterval(interval)
-    }
+      setSpotsLeft(prev => prev > 3 ? prev - 1 : 7)
+    }, 45000)
+    return () => clearInterval(interval)
   }, [])
 
-  // Check for saved gift on mount & handle reset parameter
+  // Viewers
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    if (urlParams.get('reset') === 'true') {
-      localStorage.removeItem('dentistSpinGift')
-      setSelectedGift(null)
-      window.history.replaceState({}, '', window.location.pathname)
-      return
-    }
-
-    const savedGift = localStorage.getItem('dentistSpinGift')
-    if (savedGift) {
-      setSelectedGift({ id: savedGift })
-    }
+    const interval = setInterval(() => {
+      setViewersNow(prev => {
+        const change = Math.random() > 0.5 ? 1 : -1
+        const newVal = prev + change
+        return newVal < 15 ? 15 : newVal > 35 ? 35 : newVal
+      })
+    }, 3000)
+    return () => clearInterval(interval)
   }, [])
 
-  // Handle spin complete
-  const handleSpinComplete = (gift: any) => {
-    setSelectedGift(gift)
-    setShowSpinWheel(false)
-    triggerHaptic('success')
-  }
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    if (!element) return
 
-  // Handle spin button click with haptic
-  const handleSpinClick = () => {
-    triggerHaptic('medium')
-    setShowSpinWheel(true)
-  }
+    // Scroll to exactly the top of the section (with small padding)
+    const targetPosition = element.offsetTop - 10
+    const startPosition = window.scrollY
+    const distance = targetPosition - startPosition
+    const duration = 1200 // 1.2 seconds for smooth feel
+    let startTime: number | null = null
 
-  // Handle mode selection
-  const handleModeSelect = (mode: 'expert' | 'custom') => {
-    setSelectedMode(mode)
-    if (mode === 'expert') {
-      setSelectedBonuses(TOP_4_BONUSES)
-    } else {
-      setSelectedBonuses([])
-    }
-    setTimeout(() => {
-      bonusGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 300)
-  }
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
 
-  // Calculate total value of selected bonuses
-  const calculateSelectedValue = () => {
-    return selectedBonuses.reduce((total, id) => {
-      const product = DENTIST_BONUS_PRODUCTS.find(p => p.id === id)
-      return total + (product?.value || 0)
-    }, 0)
-  }
-
-  // Animate value when bonuses change
-  useEffect(() => {
-    const targetValue = calculateSelectedValue()
-    const startValue = animatedValue
-    const duration = 500
-    const startTime = Date.now()
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime
+    const animateScroll = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime
+      const elapsed = currentTime - startTime
       const progress = Math.min(elapsed / duration, 1)
-      const easeOut = 1 - Math.pow(1 - progress, 3)
-      setAnimatedValue(Math.round(startValue + (targetValue - startValue) * easeOut))
+      const easeProgress = easeOutCubic(progress)
+
+      window.scrollTo(0, startPosition + distance * easeProgress)
 
       if (progress < 1) {
-        requestAnimationFrame(animate)
+        requestAnimationFrame(animateScroll)
       }
     }
-    requestAnimationFrame(animate)
-  }, [selectedBonuses])
 
-  // Handle bonus selection
-  const handleBonusToggle = (bonusId: string) => {
-    triggerHaptic('medium')
+    requestAnimationFrame(animateScroll)
+  }
 
-    if (selectedBonuses.includes(bonusId)) {
-      setSelectedBonuses(selectedBonuses.filter(id => id !== bonusId))
-    } else if (selectedBonuses.length < 5) {
-      setSelectedBonuses([...selectedBonuses, bonusId])
-      setJustSelected(bonusId)
-      setTimeout(() => setJustSelected(null), 600)
-
-      if (selectedBonuses.length === 4) {
-        triggerHaptic('success')
-        setShowConfetti(true)
-        setTimeout(() => setShowConfetti(false), 3000)
-      }
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false
+      setIsVideoMuted(false)
+      videoRef.current.play()
+      setIsVideoPlaying(true)
     }
   }
 
-  // Scroll to bonuses
-  const scrollToBonuses = () => {
-    bonusGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
-  // Modal handlers for Order Summary
-  const openModal = () => {
-    if (selectedBonuses.length === 5) {
-      setIsModalOpen(true)
-      document.body.style.overflow = 'hidden'
-    } else {
-      alert('Please select exactly 5 bonuses first!')
+  const toggleVideoMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted
+      setIsVideoMuted(!isVideoMuted)
     }
   }
 
-  const closeModal = () => {
-    setIsModalOpen(false)
-    document.body.style.overflow = ''
+  const allBonuses = DENTIST_BONUS_PRODUCTS
+  const totalBonusValue = getDentistTotalBonusValue()
+
+  // Animation class helper
+  const getAnimClass = (sectionId: string, delay: number = 0) => {
+    const isVisible = visibleSections.has(sectionId)
+    return `transition-all duration-700 ${delay ? `delay-[${delay}ms]` : ''} ${
+      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+    }`
   }
-
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isModalOpen])
-
-  // FAQs for dentists
-  const faqs = [
-    {
-      q: 'Does this really take only 7 minutes?',
-      a: 'Yes. Upload photo (1 min), type script (3 min), AI makes video (2 min), download (1 min). Done. Zero editing. I timed it myself.',
-    },
-    {
-      q: 'Will patients know it\'s AI? Will it look fake?',
-      a: 'Most can\'t tell. The lip-sync is incredibly realistic. Your patients care about your message and expertise, not how you made the video. 340+ dentists are already using this successfully.',
-    },
-    {
-      q: 'I\'m not tech-savvy. Can I do this?',
-      a: 'If you can text and upload a photo, you can do this. Step-by-step training included. Plus I\'m on email (support@aifastscale.com) if you get stuck.',
-    },
-    {
-      q: 'What if this doesn\'t work for me?',
-      a: 'Email support@aifastscale.com. Say "refund" and I\'ll send your money back + $50 for your time. 30 days. Zero questions.',
-    },
-    {
-      q: 'When do I get access?',
-      a: 'Immediately after purchase. Check your email for login details. You can create your first patient video in the next 10 minutes.',
-    },
-    {
-      q: 'Do I need expensive video equipment?',
-      a: 'No. Just ONE professional headshot photo. The AI does everything else. No camera, no lighting, no editing software. Zero hidden costs.',
-    },
-    {
-      q: 'Is this HIPAA compliant?',
-      a: 'The system itself doesn\'t store patient data. You create educational content about procedures, not patient records. Many dentists use it for patient education and marketing.',
-    },
-    {
-      q: 'Can I use this for my dental practice social media?',
-      a: 'Absolutely! That\'s the primary use case. Create Invisalign explainers, whitening education, new patient welcomes, procedure breakdowns — all without filming.',
-    },
-  ]
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] font-sans text-white">
-      {/* Confetti */}
-      <ConfettiExplosion active={showConfetti} />
+    <main className="min-h-screen bg-black bg-animated-gradient-dentist">
+      {/* Subtle floating particles */}
+      <div className="bg-particles-dentist" />
 
-      {/* Social Proof Toast */}
-      {socialProof && (
-        <div
-          className="fixed bottom-20 sm:bottom-6 left-3 sm:left-6 z-[9999]"
-          style={{ animation: 'slideUp 0.4s ease-out' }}
-        >
-          <div className="flex items-center gap-3 bg-white rounded-xl p-3 pr-5 shadow-2xl border border-gray-100 max-w-[320px]">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-teal-400-dark rounded-full flex items-center justify-center flex-shrink-0">
-              <CheckCircle className="w-5 h-5 text-white" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-gray-900 font-bold text-sm truncate">{socialProof.name}</p>
-              <p className="text-gray-500 text-xs">purchased from {socialProof.location}</p>
-              <p className="text-teal-400 text-[10px] font-semibold mt-0.5">{socialProof.time}</p>
-            </div>
-          </div>
-        </div>
-      )}
-      <style jsx>{`
-        @keyframes slideUp {
-          from { transform: translateY(100px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes confetti {
-          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-        .animate-confetti {
-          animation: confetti 3s ease-out forwards;
-        }
-      `}</style>
-
-
-      {/* HERO SECTION WITH SPIN WHEEL */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#0f1f1f] to-black text-white py-8 sm:py-12 md:py-20">
-        {/* Refined Background */}
+      {/* ================================================================
+          1. HERO SECTION - BLACK WITH TEAL (Normal Structure)
+          ================================================================ */}
+      <section
+        id="hero"
+        data-animate
+        className="relative bg-black text-white py-8 sm:py-16 md:py-20 overflow-hidden"
+      >
+        {/* Subtle teal grid pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.3) 1px, transparent 0)',
-            backgroundSize: '32px 32px'
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.4) 1px, transparent 0)',
+            backgroundSize: '40px 40px'
           }} />
-          <div className="absolute top-0 left-0 w-48 sm:w-64 h-48 sm:h-64 bg-teal-500 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-cyan-400 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="w-full px-3 sm:px-6 relative z-10">
-          {/* Hero Text */}
-          <div className="max-w-4xl mx-auto text-center mb-6 sm:mb-10 md:mb-14">
-            {/* Social Proof Badge - Compact */}
-            <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2">
-              <div className="flex -space-x-1.5">
-                <div className="w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-teal-500 to-cyan-400 border border-[#0a0a0a]"></div>
-                <div className="w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-cyan-500 to-teal-600 border border-[#0a0a0a]"></div>
-                <div className="w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 border border-[#0a0a0a]"></div>
-              </div>
-              <span className="text-white/90 text-xs sm:text-sm font-semibold">340+ dentists inside</span>
-              <span className="text-white/30 hidden sm:inline">•</span>
-              <div className="hidden sm:flex items-center gap-1">
-                <Star className="w-3 h-3 text-teal-500 fill-teal-500" />
-                <span className="text-white/90 text-sm font-semibold">4.9/5</span>
-              </div>
-            </div>
-
-            {/* Main Headline - Mobile First */}
-            <h1 className="text-[26px] sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.1] tracking-tight px-1">
-              <span className="text-white">Turn Your Headshot Into</span>
+        <div className="w-full px-4 sm:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Main Headline - BIG & BOLD */}
+            <h1 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
+              <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
               <br />
-              <span className="bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-500 bg-clip-text text-transparent">
-                Talking Patient Videos
+              <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: '0 0 40px rgba(20, 184, 166, 0.3)' }}>
+                  Talking AI Video
+                </span>
               </span>
               <br />
-              <span className="text-white">In Just </span>
-              <span className="bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-500 bg-clip-text text-transparent">
-                7 Minutes
+              <span className="text-white drop-shadow-lg">&</span>
+              <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent" style={{ textShadow: '0 0 40px rgba(20, 184, 166, 0.3)' }}>
+                {' '}Get 100+ New Patients
               </span>
             </h1>
 
-            {/* Subheadline */}
-            <p className="text-sm sm:text-lg md:text-xl text-gray-300 mb-3 sm:mb-4 px-2">
-              No camera. No editing. No tech skills.
-              <br />
-              <span className="text-teal-400 font-semibold">
-                340+ dentists are using AI to fill more chairs & boost case acceptance
-              </span>
+            {/* Subtitle - Larger & More Visible */}
+            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-5 sm:mb-8 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              Even if you've never edited a video in your life —
+              <br className="hidden sm:block" />
+              <span className="text-white font-semibold">all you need is your phone</span>
             </p>
 
-            {/* Trust Elements - Compact */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[10px] sm:text-xs text-white/60 mb-4 sm:mb-6">
-              <div className="flex items-center gap-1">
-                <Shield className="w-3 h-3 text-teal-500" />
-                <span>30-day + $50 back</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Zap className="w-3 h-3 text-teal-500" />
-                <span>Instant access</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Clock className="w-3 h-3 text-teal-500" />
-                <span>7 minutes</span>
+            {/* Hero Image - Clean, no badge - RESPONSIVE for mobile performance */}
+            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-teal-500/30 sm:border-2 sm:border-teal-500/40 shadow-xl shadow-teal-500/10">
+                <Image
+                  src="/images/dentist/course-demo.webp"
+                  alt="AI Video System for Dentists Showcase"
+                  width={1365}
+                  height={768}
+                  className="w-full h-auto"
+                  priority
+                  fetchPriority="high"
+                />
               </div>
             </div>
-          </div>
 
-          {/* Spin Wheel CTA */}
-          <div className="max-w-3xl mx-auto">
-            {selectedGift ? (
-              /* Already Spun - Show Bonus Secured */
-              <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-teal-400 shadow-2xl">
-                <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-3xl sm:text-4xl md:text-5xl">🦷</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-white font-black text-lg sm:text-xl md:text-2xl mb-1 sm:mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
-                      BONUS SECURED!
-                    </p>
-                    <p className="text-white/90 text-xs sm:text-sm md:text-base truncate">
-                      Ultimate Custom Bundle ($1,623 value)
-                    </p>
-                  </div>
-                </div>
-                <p className="text-white/80 text-xs sm:text-sm md:text-base text-center">
-                  Complete your purchase below to claim this exclusive bonus ↓
-                </p>
-                {/* Reset Button for Testing */}
-                <button
-                  onClick={() => {
-                    localStorage.removeItem('dentistSpinGift')
-                    setSelectedGift(null)
-                  }}
-                  className="mt-3 sm:mt-4 mx-auto block text-white/50 hover:text-white text-[10px] sm:text-xs underline"
-                >
-                  🔄 Reset Spin (Testing)
-                </button>
+            {/* Trust badges - UNDER the image */}
+            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+              <div className="flex items-center gap-1.5">
+                <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+                <span><span className="text-white font-bold">500+</span> dentists</span>
               </div>
-            ) : (
-              /* Not Spun Yet - Show Spin Wheel CTA */
-              <div className="bg-gradient-to-br from-[#0a0a0a] via-[#0f1f1f] to-black border-2 sm:border-4 border-teal-500 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
-                {/* FREE Badge */}
-                <div className="flex justify-center mb-3 sm:mb-4">
-                  <div className="bg-teal-500/10 backdrop-blur-sm border border-teal-500/30 text-teal-500 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full font-bold text-[10px] sm:text-xs uppercase tracking-wide shadow-lg flex items-center gap-1.5 sm:gap-2">
-                    <Gift className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    FREE 1 SPIN • LIMITED TIME
-                  </div>
-                </div>
-
-                {/* Headline */}
-                <h2 className="text-xl sm:text-2xl md:text-4xl font-black text-center mb-2 sm:mb-3 leading-tight">
-                  <span className="bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-500 bg-clip-text text-transparent">
-                    You Have 1 FREE Spin<br className="hidden sm:block" /> Waiting For You!
-                  </span>
-                </h2>
-
-                {/* Value Proposition */}
-                <p className="text-white/90 text-center text-xs sm:text-sm md:text-base mb-4 sm:mb-6">
-                  Win <span className="text-teal-500 font-bold">exclusive bonuses worth up to $1,623</span> instantly!
-                  <br />
-                  <span className="text-white/70 text-[10px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 mt-1">
-                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                    100% Win Rate • Everyone Gets Premium Bonuses
-                  </span>
-                </p>
-
-                {/* VISUAL SPIN WHEEL PREVIEW - Compact for Mobile */}
-                <div className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 mx-auto mb-4 sm:mb-6">
-                  {/* Refined Glow Rings */}
-                  <div className="absolute inset-0 rounded-full border-2 border-teal-500/30"></div>
-                  <div className="absolute inset-[-4px] sm:inset-[-6px] rounded-full border-2 border-teal-500/20"></div>
-                  <div className="absolute inset-[-8px] sm:inset-[-12px] rounded-full border-2 border-teal-500/10"></div>
-
-                  {/* Pointer Arrow */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-3 sm:-translate-y-4 z-20">
-                    <div className="relative">
-                      <div className="w-0 h-0 border-l-[12px] sm:border-l-[18px] border-l-transparent border-r-[12px] sm:border-r-[18px] border-r-transparent border-t-[24px] sm:border-t-[36px] border-t-teal-500 drop-shadow-2xl"></div>
-                    </div>
-                  </div>
-
-                  {/* Spinning Wheel */}
-                  <div className="absolute inset-0 animate-spin-slow">
-                    <svg viewBox="0 0 200 200" className="w-full h-full" style={{ filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3))' }}>
-                      <defs>
-                        <radialGradient id="tealGrad" cx="50%" cy="50%">
-                          <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.9"/>
-                          <stop offset="60%" stopColor="#0d9488" />
-                          <stop offset="100%" stopColor="#0f766e" />
-                        </radialGradient>
-                        <radialGradient id="cyanGrad" cx="50%" cy="50%">
-                          <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.9"/>
-                          <stop offset="60%" stopColor="#0891b2" />
-                          <stop offset="100%" stopColor="#0e7490" />
-                        </radialGradient>
-                        <radialGradient id="grayGrad" cx="50%" cy="50%">
-                          <stop offset="0%" stopColor="#E8E8E8" stopOpacity="0.9"/>
-                          <stop offset="60%" stopColor="#C0C0C0" />
-                          <stop offset="100%" stopColor="#A0A0A0" />
-                        </radialGradient>
-                        <radialGradient id="centerTealGrad" cx="50%" cy="40%">
-                          <stop offset="0%" stopColor="#14b8a6" />
-                          <stop offset="50%" stopColor="#0d9488" />
-                          <stop offset="100%" stopColor="#0f766e" />
-                        </radialGradient>
-                      </defs>
-
-                      {/* Outer Ring */}
-                      <circle cx="100" cy="100" r="98" fill="none" stroke="url(#centerTealGrad)" strokeWidth="5"/>
-
-                      {/* Wheel Segments */}
-                      <path d="M 100 100 L 100 2 A 98 98 0 0 1 169.7 30.3 Z" fill="url(#tealGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 169.7 30.3 A 98 98 0 0 1 198 100 Z" fill="url(#cyanGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 30.3 169.7 A 98 98 0 0 1 2 100 Z" fill="url(#cyanGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 169.7 169.7 A 98 98 0 0 1 100 198 Z" fill="url(#cyanGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 30.3 30.3 A 98 98 0 0 1 2 100 Z" fill="url(#grayGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 198 100 A 98 98 0 0 1 169.7 169.7 Z" fill="url(#grayGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 100 198 A 98 98 0 0 1 30.3 169.7 Z" fill="url(#grayGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 2 100 A 98 98 0 0 1 30.3 30.3 Z" fill="url(#grayGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-                      <path d="M 100 100 L 100 2 A 98 98 0 0 0 30.3 30.3 Z" fill="url(#grayGrad)" stroke="#ffffff" strokeWidth="2.5"/>
-
-                      {/* Center Button */}
-                      <circle cx="100" cy="100" r="28" fill="url(#centerTealGrad)" stroke="#ffffff" strokeWidth="4"/>
-                      <text x="100" y="107" textAnchor="middle" fill="#ffffff" fontSize="18" fontWeight="900">SPIN</text>
-                    </svg>
-                  </div>
-
-                  {/* Glow Effects */}
-                  <div className="absolute inset-0 bg-teal-500 rounded-full blur-2xl opacity-15"></div>
-                </div>
-
-                {/* CTA Button */}
-                <button
-                  onClick={handleSpinClick}
-                  className="group relative w-full bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-500 text-white px-6 sm:px-8 py-3.5 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl font-black text-base sm:text-xl md:text-2xl hover:scale-105 active:scale-95 transition-all shadow-2xl border-2 sm:border-4 border-white/50 overflow-hidden mb-3 sm:mb-4"
-                >
-                  <span className="relative flex items-center justify-center gap-2">
-                    <Gift className="w-5 h-5 sm:w-6 sm:h-6" />
-                    🎁 SPIN NOW - WIN $1,623 IN BONUSES
-                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </span>
-                </button>
-
-                {/* Social Proof */}
-                <p className="text-center text-white/60 text-[10px] sm:text-xs">
-                  🔥 <span className="text-teal-400 font-semibold">47 dentists</span> spun in the last hour • Your bonus is waiting!
-                </p>
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-teal-400 text-teal-400" />
+                ))}
+                <span className="ml-1 text-white font-bold">4.9/5</span>
               </div>
-            )}
-          </div>
+              <div className="flex items-center gap-1.5">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+                <span>30-Day Guarantee</span>
+              </div>
+            </div>
 
-          {/* What is CloneYourself? - Collapsible */}
-          <div className="mt-6 sm:mt-8 max-w-xl mx-auto text-center">
+            {/* CTA - Scrolls to What's Inside */}
             <button
-              onClick={() => setShowWhatIs(!showWhatIs)}
-              className="group flex items-center justify-center gap-2 mx-auto text-[11px] sm:text-sm"
+              onClick={() => scrollToSection('whats-inside')}
+              className={`group relative bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-10 py-5 rounded-xl font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30 overflow-hidden ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
-              <span className="text-teal-400 font-medium border-b border-dashed border-teal-500/40 group-hover:border-teal-500 transition-colors animate-pulse">
-                What is CloneYourself for Dentists?
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+              <span className="relative flex items-center gap-3">
+                See What's Inside
+                <ArrowDown className="w-6 h-6" />
               </span>
-              <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400 transition-transform duration-300 ${showWhatIs ? 'rotate-180' : ''}`} />
             </button>
 
-            <div className={`overflow-hidden transition-all duration-500 ease-out ${showWhatIs ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
-              <div className="bg-gradient-to-br from-teal-400/10 to-white/5 backdrop-blur-sm border border-teal-500/20 rounded-xl p-4 sm:p-5">
-                <p className="text-white text-xs sm:text-sm leading-relaxed mb-3">
-                  You upload <span className="text-teal-400 font-bold">one professional headshot</span> to a free AI software — the #1 tool for generating realistic talking videos in {new Date().getFullYear()}.
-                </p>
-                <p className="text-white/80 text-xs sm:text-sm leading-relaxed mb-3">
-                  The AI transforms your photo into a <span className="text-teal-400 font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
-                </p>
-                <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
-                  Inside CloneYourself, you get the <span className="text-white font-bold">complete A-to-Z training</span> that shows you exactly how to do this — even if you've never touched AI before. Create patient education videos, social media content, and more.
-                </p>
-              </div>
-            </div>
-          </div>
+            <p className={`text-gray-600 text-sm mt-4 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              ↓ Scroll to see everything you get ↓
+            </p>
 
-          {/* Course Demo Image - Visual Showcase */}
-          <div className="mt-6 sm:mt-10 max-w-4xl mx-auto">
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-teal-500/20 border-2 border-teal-500/30">
-              <Image
-                src="/images/dentist/course-demo.webp"
-                alt="CloneYourself for Dentists - Course Platform"
-                width={1365}
-                height={768}
-                className="w-full h-auto"
-                priority
-              />
-              {/* Overlay badge */}
-              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-teal-500/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-black flex items-center gap-1.5 shadow-lg">
-                <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                INSIDE THE COURSE
-              </div>
-              {/* Bottom CTA overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                  <div className="text-center sm:text-left">
-                    <p className="text-white font-black text-sm sm:text-lg">Get Instant Access Today</p>
-                    <p className="text-white/70 text-xs sm:text-sm">Step-by-step training + 5 FREE bonuses</p>
-                  </div>
-                  <button
-                    onClick={handleSpinClick}
-                    className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-5 py-2.5 rounded-lg font-black text-sm hover:scale-105 active:scale-95 transition-transform shadow-lg flex items-center gap-2"
-                  >
-                    <Gift className="w-4 h-4" />
-                    Spin To Win - $58
-                  </button>
+            {/* What is CloneYourself? - Collapsible */}
+            <div className={`max-w-xl mx-auto mt-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              <button
+                onClick={() => setExpandedFaq(expandedFaq === -1 ? null : -1)}
+                className="group flex items-center justify-center gap-2 mx-auto text-sm"
+              >
+                <span className="text-teal-400 font-medium border-b border-dashed border-teal-400/40 group-hover:border-teal-400 transition-colors">
+                  What is the CloneYourself System?
+                </span>
+                <ChevronDown className={`w-4 h-4 text-teal-400 transition-transform duration-300 ${expandedFaq === -1 ? 'rotate-180' : ''}`} />
+              </button>
+
+              <div className={`overflow-hidden transition-all duration-500 ease-out ${expandedFaq === -1 ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
+                <div className="bg-gradient-to-br from-teal-500/10 to-white/5 backdrop-blur-sm border border-teal-500/20 rounded-xl p-5 text-left">
+                  <p className="text-white text-sm leading-relaxed mb-3">
+                    You upload <span className="text-teal-400 font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in {new Date().getFullYear()}.
+                  </p>
+                  <p className="text-white/80 text-sm leading-relaxed mb-3">
+                    The AI transforms your photo into a <span className="text-teal-400 font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
+                  </p>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Inside the CloneYourself System, you get the <span className="text-white font-bold">complete A-to-Z video course</span> that shows you exactly how to do this — even if you've never touched AI before. Just follow along, copy-paste, and create professional videos that bring in new patients.
+                  </p>
                 </div>
               </div>
             </div>
@@ -684,1304 +381,1345 @@ export default function DentistLanding() {
         </div>
       </section>
 
-      {/* HOW IT WORKS - Redesigned Visual Section */}
-      <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-b from-[#0a0a0a] via-[#0f1f1f] to-[#0a0a0a]">
+      {/* ================================================================
+          2. HOW IT WORKS - WHITE SECTION
+          ================================================================ */}
+      <section
+        id="how-it-works"
+        data-animate
+        className="py-10 sm:py-20 bg-white"
+      >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            {/* Section Header */}
-            <div className="text-center mb-8 sm:mb-14">
-              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-4 py-2 rounded-full mb-4">
-                <Zap className="w-4 h-4 text-teal-400" />
-                <span className="text-teal-400 text-sm font-bold">Dead Simple Process</span>
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Zap className="w-3.5 h-3.5 text-teal-500" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Simple Process</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-3 sm:mb-4 px-2">
-                <span className="text-white">So Simple It's</span>{' '}
-                <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Embarrassing</span>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
+                Create Videos in <span className="text-teal-500">3 Easy Steps</span>
               </h2>
-              <p className="text-sm sm:text-lg text-white/60 px-2">3 steps. 7 minutes. Unlimited patient videos ready to post.</p>
+              <p className="text-gray-600 text-sm sm:text-lg">No filming. No editing. No experience needed.</p>
             </div>
 
-            {/* Steps Grid - Visual Cards */}
-            <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
               {[
-                {
-                  num: "01",
-                  title: "Upload Photo",
-                  desc: "Drop in your professional headshot. That's literally it.",
-                  time: "1 min",
-                  icon: Camera,
-                  gradient: "from-teal-500/20 to-cyan-500/10",
-                  borderColor: "border-teal-500/40"
-                },
-                {
-                  num: "02",
-                  title: "Add Your Script",
-                  desc: "Type your message or use our 100+ ready-made templates.",
-                  time: "2 min",
-                  icon: FileText,
-                  gradient: "from-cyan-500/20 to-teal-500/10",
-                  borderColor: "border-cyan-500/40"
-                },
-                {
-                  num: "03",
-                  title: "Watch AI Work",
-                  desc: "AI creates a talking video of YOU. Download. Post. Get patients.",
-                  time: "4 min",
-                  icon: Sparkles,
-                  gradient: "from-teal-400/20 to-emerald-500/10",
-                  borderColor: "border-teal-400/40"
-                }
-              ].map((step, i) => (
+                { step: 1, icon: Upload, title: 'Upload Your Photo', time: '1 min', desc: 'Any headshot works - selfie, professional shot, or even your website photo. The AI does the rest.' },
+                { step: 2, icon: Video, title: 'Type Your Script', time: '2 min', desc: 'Write your message or pick from 100+ ready-made templates designed for dental practices.' },
+                { step: 3, icon: TrendingUp, title: 'Get Your Video', time: '4 min', desc: 'AI generates your video with perfect lip-sync. Download, post, watch new patients call.' },
+              ].map((item, i) => (
                 <div
-                  key={i}
-                  className={`relative bg-gradient-to-br ${step.gradient} rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 ${step.borderColor} group hover:scale-[1.02] transition-transform`}
+                  key={item.step}
+                  className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-teal-500/50 transition-all hover:shadow-xl ${
+                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''
+                  }`}
+                  style={{ animationDelay: `${i * 150}ms` }}
                 >
-                  {/* Step Number */}
-                  <div className="absolute top-4 right-4 sm:top-5 sm:right-5 text-5xl sm:text-7xl font-black text-white/5 group-hover:text-white/10 transition-colors">
-                    {step.num}
+                  <div className="absolute -top-3 sm:-top-5 left-4 sm:left-8 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-black text-sm sm:text-xl">{item.step}</span>
                   </div>
-
-                  {/* Icon */}
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/30 mb-4 sm:mb-5">
-                    <step.icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-teal-500/10 text-teal-600 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-bold border border-teal-500/30">
+                    {item.time}
                   </div>
-
-                  {/* Content */}
-                  <h3 className="text-xl sm:text-2xl font-black text-white mb-2">{step.title}</h3>
-                  <p className="text-white/70 text-sm sm:text-base mb-4 leading-relaxed">{step.desc}</p>
-
-                  {/* Time Badge */}
-                  <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-3 py-1.5 rounded-full">
-                    <Clock className="w-4 h-4 text-teal-400" />
-                    <span className="text-teal-400 font-bold text-sm">{step.time}</span>
+                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-teal-500/10 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-5 mt-3 sm:mt-4">
+                    <item.icon className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
                   </div>
+                  <h3 className="text-base sm:text-xl font-black text-gray-900 mb-1.5 sm:mb-3">{item.title}</h3>
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
 
-            {/* Connecting Line + Total Time - Desktop */}
-            <div className="hidden md:flex items-center justify-center gap-6 mb-8">
-              <div className="h-1 w-20 bg-gradient-to-r from-transparent via-teal-500/50 to-transparent rounded-full"></div>
-              <div className="bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl px-8 py-5 shadow-2xl shadow-teal-500/30">
-                <div className="text-center">
-                  <div className="text-white/70 text-sm font-bold uppercase tracking-wider mb-1">Total Time</div>
-                  <div className="text-4xl font-black text-white flex items-center gap-2">
-                    <Clock className="w-8 h-8" />
-                    7 Minutes
-                  </div>
-                </div>
-              </div>
-              <div className="h-1 w-20 bg-gradient-to-r from-transparent via-teal-500/50 to-transparent rounded-full"></div>
-            </div>
-
-            {/* Mobile Total Time */}
-            <div className="md:hidden text-center mb-6">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-3 rounded-xl shadow-lg">
-                <Clock className="w-6 h-6 text-white" />
-                <span className="text-white font-black text-xl">Total: 7 Minutes</span>
-              </div>
-            </div>
-
-            {/* CTA Card */}
-            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border-2 border-teal-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-center">
-              <p className="text-white text-lg sm:text-2xl font-black mb-2 sm:mb-3">
-                While Other Dentists Spend <span className="text-teal-400">Hours</span> Filming...
-              </p>
-              <p className="text-white/60 text-sm sm:text-lg mb-5 max-w-xl mx-auto">
-                You'll have 50+ professional patient videos ready to post. No camera. No editing. No stress.
-              </p>
-              <button
-                onClick={handleSpinClick}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-4 rounded-xl text-base sm:text-lg font-black shadow-xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-transform"
-              >
-                <Gift className="w-5 h-5" />
-                <span>Spin To Win + Get Access</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <div className="flex items-center justify-center gap-4 mt-4 text-white/50 text-xs sm:text-sm">
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="w-4 h-4 text-teal-400" />
-                  <span>30-day guarantee</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Users className="w-4 h-4 text-teal-400" />
-                  <span>{spotsLeft} spots left</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DR. MARCUS'S GUARANTEE - White Section */}
-      <section className="py-5 sm:py-10 md:py-14 bg-white">
-        <div className="w-full px-2 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            {/* Main Guarantee Card */}
-            <div className="relative bg-gradient-to-br from-teal-400/5 via-white to-teal-400/10 rounded-xl sm:rounded-2xl shadow-xl border border-teal-500/50 overflow-hidden">
-              {/* Verified Badge */}
-              <div className="hidden sm:block absolute top-4 right-4">
-                <div className="bg-teal-500 text-white px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-                  <Shield className="w-3 h-3" />
-                  <span className="text-[10px] font-black tracking-wider">VERIFIED - 100% REAL</span>
-                </div>
-              </div>
-
-              <div className="p-3 sm:p-6 md:p-8">
-                <div className="flex flex-col md:flex-row gap-3 sm:gap-5 items-start">
-                  {/* Dr. Marcus's Image */}
-                  <div className="relative flex-shrink-0 flex items-center gap-3 sm:block">
-                    <div className="relative w-16 h-16 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-teal-500 shadow-xl">
-                      <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus Chen" fill className="object-cover" />
-                    </div>
-                    {/* Mobile: Show name inline */}
-                    <div className="sm:hidden">
-                      <p className="font-black text-gray-900 text-sm">Dr. Marcus Chen</p>
-                      <p className="text-[10px] text-gray-600">Cosmetic Dentist • Austin, TX</p>
-                    </div>
-                    {/* Desktop badge */}
-                    <div className="hidden sm:block absolute -bottom-2 -right-2 bg-gradient-to-r from-teal-400 to-teal-400-light text-white px-2.5 py-1 rounded-full text-[9px] font-black shadow-lg">
-                      15+ YEARS
-                    </div>
-                  </div>
-
-                  {/* Guarantee Content */}
-                  <div className="flex-1">
-                    <div className="hidden sm:block mb-2 sm:mb-4">
-                      <h2 className="text-lg sm:text-2xl font-black text-gray-900">Dr. Marcus Chen</h2>
-                      <p className="text-xs sm:text-sm text-gray-600 font-medium">Cosmetic Dentist • Practice Owner • AI Video Pioneer</p>
-                    </div>
-
-                    {/* Quote Box */}
-                    <div className="bg-teal-500/10 border-l-4 border-teal-500 rounded-r-lg p-2.5 sm:p-4 mb-3 sm:mb-5">
-                      <p className="text-gray-800 text-[11px] sm:text-base italic leading-relaxed">
-                        "I created this system because I was tired of watching competitors dominate social media while I hid from the camera. Now I create 30+ patient videos per month without filming a single one. My case acceptance went from 42% to 78%. If it doesn't work for you, I'll refund every penny AND pay you $50 for your time."
-                      </p>
-                    </div>
-
-                    {/* Guarantee Breakdown */}
-                    <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-5">
-                      <div className="bg-white rounded-lg p-2 sm:p-3 text-center border border-teal-500/20 shadow-sm">
-                        <div className="text-lg sm:text-2xl font-black text-teal-400">30</div>
-                        <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Day Refund</div>
-                      </div>
-                      <div className="bg-white rounded-lg p-2 sm:p-3 text-center border border-teal-500/20 shadow-sm">
-                        <div className="text-lg sm:text-2xl font-black text-teal-400">$50</div>
-                        <div className="text-[9px] sm:text-xs text-gray-600 font-medium">If It Fails</div>
-                      </div>
-                      <div className="bg-white rounded-lg p-2 sm:p-3 text-center border border-teal-500/20 shadow-sm">
-                        <div className="text-lg sm:text-2xl font-black text-teal-400">0</div>
-                        <div className="text-[9px] sm:text-xs text-gray-600 font-medium">Questions Asked</div>
-                      </div>
-                    </div>
-
-                    {/* Why This Works */}
-                    <div className="bg-white/60 rounded-lg p-2.5 sm:p-4 mb-3 sm:mb-4">
-                      <p className="text-gray-700 text-[10px] sm:text-sm leading-relaxed">
-                        <span className="font-bold text-gray-900">Why this guarantee?</span> Because I know this works. 340+ dentists have used this exact system. If you follow the training and it doesn't help your practice, something went wrong on my end — and I'll make it right.
-                      </p>
-                    </div>
-
-                    {/* Bottom CTA */}
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                      <button
-                        onClick={scrollToBonuses}
-                        className="flex-1 sm:flex-none bg-gradient-to-r from-teal-400 to-teal-400-light text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg font-bold text-xs sm:text-sm hover:bg-teal-500-light transition-all shadow-lg"
-                      >
-                        I'm Ready to Start →
-                      </button>
-                      <p className="text-[10px] sm:text-xs text-gray-500 flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3 text-green-500 inline" /> {spotsLeft} spots left at $58
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="py-6 sm:py-10 md:py-14 bg-gray-50">
-        <div className="w-full px-3 sm:px-4 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-6 sm:mb-10">
-              <p className="text-teal-600 text-xs sm:text-sm font-semibold mb-2 uppercase tracking-wide">From Our Community</p>
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 mb-2 px-2">
-                What Dentists Are Saying
-              </h2>
-              <p className="text-sm sm:text-base text-gray-500 px-2 max-w-2xl mx-auto">
-                Honest feedback from dentists who tried the system
-              </p>
-            </div>
-
-            {/* Testimonials Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {[
-                {
-                  name: "Dr. Sarah M.",
-                  location: "Phoenix, AZ",
-                  role: "General Dentist • 12 years",
-                  image: "/images/dentist/review-1.webp",
-                  quote: "I was paying a marketing company $1,800/month and honestly wasn't seeing much return. This cost me less than one month of that, and I've already made 3 videos my front desk plays for new patients. Nothing fancy, but it works.",
-                  verified: true
-                },
-                {
-                  name: "Dr. Kevin P.",
-                  location: "Austin, TX",
-                  role: "Cosmetic Dentist • 8 years",
-                  image: "/images/dentist/review-2.webp",
-                  quote: "Look, I'm not tech-savvy at all. My 14-year-old had to help me set up my Instagram. But this was surprisingly simple. Made my first video in about 20 minutes. Patients actually comment on it now.",
-                  verified: true
-                },
-                {
-                  name: "Dr. Amanda T.",
-                  location: "Miami, FL",
-                  role: "Pediatric Dentist • 6 years",
-                  image: "/images/dentist/review-3.webp",
-                  quote: "The review request templates are what sold me. I went from maybe 2-3 new Google reviews per month to about 8-10. Parents seem more comfortable leaving reviews when you make it easy for them.",
-                  verified: true
-                },
-                {
-                  name: "Dr. James L.",
-                  location: "Seattle, WA",
-                  role: "Orthodontist • 15 years",
-                  image: "/images/dentist/review-4.webp",
-                  quote: "I'll be honest - I was skeptical. Another 'marketing solution' promising the world. But for $58, I figured why not. The Invisalign templates alone have helped me explain treatment better. Patients seem to get it faster now.",
-                  verified: true
-                },
-                {
-                  name: "Dr. Lisa R.",
-                  location: "Denver, CO",
-                  role: "Periodontist • 10 years",
-                  image: "/images/dentist/review-5.webp",
-                  quote: "My case acceptance on implants improved. Not overnight, but over a few months I noticed patients coming in more prepared. They'd already watched my explanation video. Makes consultations smoother.",
-                  verified: true
-                },
-                {
-                  name: "Dr. Michael C.",
-                  location: "Chicago, IL",
-                  role: "General Dentist • 4 years",
-                  image: "/images/dentist/review-6.webp",
-                  quote: "As a newer practice owner, I couldn't afford the marketing agencies everyone recommended. This gave me something to work with. Is it perfect? No. But it's 10x better than what I was doing before, which was nothing.",
-                  verified: true
-                },
-                {
-                  name: "Dr. Jennifer W.",
-                  location: "Boston, MA",
-                  role: "General Dentist • 9 years",
-                  image: "/images/dentist/review-7.webp",
-                  quote: "The patient reactivation emails are gold. Sent them to patients who hadn't been in for 18+ months. Got 12 appointments booked that week. Some of those patients I thought we'd lost forever.",
-                  verified: true
-                },
-                {
-                  name: "Dr. David K.",
-                  location: "San Diego, CA",
-                  role: "Endodontist • 11 years",
-                  image: "/images/dentist/review-8.webp",
-                  quote: "I mainly use it for the referral system templates. Started sending them to GPs in my area. Getting a few more referrals each month now. Nothing crazy, but steady growth.",
-                  verified: true
-                },
-                {
-                  name: "Dr. Emily H.",
-                  location: "Las Vegas, NV",
-                  role: "Cosmetic Dentist • 7 years",
-                  image: "/images/dentist/review-9.webp",
-                  quote: "The before/after post templates helped me finally start posting consistently. I was always too busy to think about social media. Now I batch create a month's worth in one afternoon.",
-                  verified: true
-                }
-              ].map((testimonial, i) => (
-                <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                  {/* Clean Image - No overlays */}
-                  <div className="relative h-48 sm:h-56">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {/* Content */}
-                  <div className="p-4 sm:p-5">
-                    {/* Rating */}
-                    <div className="flex gap-0.5 mb-3">
-                      {[...Array(5)].map((_, j) => (
-                        <Star key={j} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    {/* Quote */}
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4">"{testimonial.quote}"</p>
-                    {/* Author */}
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-gray-900 font-semibold text-sm">{testimonial.name}</p>
-                        <p className="text-gray-400 text-xs">{testimonial.role}</p>
-                        <p className="text-gray-400 text-xs">{testimonial.location}</p>
-                      </div>
-                      {testimonial.verified && (
-                        <div className="flex items-center gap-1 text-green-600 text-xs">
-                          <CheckCircle className="w-3.5 h-3.5" />
-                          <span>Verified</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Simple Trust Indicator */}
-            <div className="mt-8 sm:mt-12 text-center">
-              <p className="text-gray-400 text-sm mb-4">Join 340+ dentists already using the system</p>
-              <button
-                onClick={handleSpinClick}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
-                <Gift className="w-5 h-5" />
-                <span>Get Started - $58</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SOCIAL PROOF CTA */}
-      <section className="py-4 sm:py-6 md:py-10 bg-white">
-        <div className="w-full px-3">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-green-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-black mb-4 sm:mb-5 animate-pulse">
-              <Users className="w-4 h-4" />
-              <span>{liveViewers} watching this page right now</span>
-            </div>
-
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black text-white mb-3">
-              340+ Dentists Got New Patients
-              <br />
-              <span className="text-teal-400">Within 14 Days of Posting</span>
-            </h2>
-
-            <p className="text-base sm:text-lg text-gray-700 mb-5 sm:mb-6">
-              They didn't have special skills. They weren't tech experts.
-              <br className="hidden sm:block" />
-              They just uploaded 1 photo and let AI do the rest.
-            </p>
-
-            <div className="bg-gradient-to-br from-luxury-black via-gray-900 to-luxury-black border-2 border-teal-500/30 rounded-2xl p-4 sm:p-6 mb-5 sm:mb-6">
-              {/* Offer Banner */}
-              <div className="mb-4 pb-4 border-b border-teal-500/20">
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-400 to-teal-400-light px-5 py-2 rounded-full animate-pulse">
-                  <Sparkles className="w-4 h-4 text-white" />
-                  <span className="text-white font-black text-sm tracking-wider">LIMITED TIME OFFER</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-5">
+            <div className={`flex justify-center mt-6 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              <div className="flex items-center gap-3 sm:gap-6 bg-teal-500/5 border border-teal-500/30 rounded-full px-4 sm:px-8 py-2.5 sm:py-4">
+                <Clock className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
                 <div>
-                  <div className="flex items-center gap-3 justify-center mb-1">
-                    <span className="text-2xl text-gray-500 line-through">$197</span>
-                    <span className="text-4xl sm:text-5xl font-black text-teal-400">$58</span>
-                  </div>
-                  <div className="text-sm text-gray-400">One-time payment</div>
-                  <div className="inline-block bg-green-600 text-white px-2 py-1 rounded text-xs font-black mt-1">71% OFF</div>
+                  <span className="text-teal-500 font-black text-xl sm:text-3xl">7 minutes</span>
+                  <span className="text-gray-600 text-sm sm:text-lg ml-1.5 sm:ml-2">total time</span>
                 </div>
-                <div className="w-px h-12 bg-teal-500/20 hidden sm:block"></div>
-                <div>
-                  <div className="text-4xl sm:text-5xl font-black text-green-500">$1,623</div>
-                  <div className="text-sm text-gray-400">You save today</div>
-                </div>
-                <div className="w-px h-12 bg-teal-500/20 hidden sm:block"></div>
-                <div>
-                  <div className="text-4xl sm:text-5xl font-black text-white">{spotsLeft}</div>
-                  <div className="text-sm text-gray-400">Spots remaining</div>
-                </div>
-              </div>
-
-              <button
-                onClick={scrollToBonuses}
-                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-500-light text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-base sm:text-lg font-black shadow-2xl hover:scale-105 active:scale-100 transition-all smooth-transform ease-out-expo mb-2.5 sm:mb-3"
-              >
-                <span>Claim Your Spot Now</span>
-                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-              </button>
-
-              <p className="text-sm sm:text-base text-gray-500">
-                <CheckCircle className="w-3 h-3 text-green-400 inline" /> 30-day money-back guarantee • <CheckCircle className="w-3 h-3 text-green-400 inline" /> Plus $50 if it doesn't work
-              </p>
-            </div>
-
-            <div className="flex items-center justify-center gap-6 text-gray-400 text-sm">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-400" />
-                <span>Secure Checkout</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-teal-400" />
-                <span>Instant Access</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* WHO THIS IS FOR - Redesigned Visual Section */}
-      <section className="py-6 sm:py-10 md:py-14 bg-[#0a0a0a]">
+      {/* ================================================================
+          3. DR. MARCUS CASE STUDY - BLACK SECTION
+          "She booked 23 new patients in 3 weeks"
+          ================================================================ */}
+      <section
+        id="case-study"
+        data-animate
+        className="py-10 sm:py-24 bg-black"
+      >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
-            <div className="text-center mb-6 sm:mb-10">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2">
-                Is This <span className="text-teal-400">Right For You?</span>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Play className="w-3.5 h-3.5 text-teal-400" />
+                <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Featured Case Study</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
+                She Booked <span className="text-teal-400">23 New Patients</span> in 3 Weeks
               </h2>
-              <p className="text-white/60 text-sm sm:text-base">Quick check to see if CloneYourself fits your practice</p>
+              <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">...without recording a single video</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              {/* Perfect For - Green/Teal Card */}
-              <div className="bg-gradient-to-br from-teal-500/10 via-teal-500/5 to-transparent rounded-2xl sm:rounded-3xl p-5 sm:p-8 border-2 border-teal-500/40 relative overflow-hidden">
-                {/* Background glow */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl"></div>
+            {/* Dr. Sarah Case Study Card */}
+            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden mb-8 sm:mb-16 ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-5 sm:mb-6 relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/30">
-                    <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              {/* Top: Profile + Before Situation */}
+              <div className="p-4 sm:p-8 border-b border-white/10">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                  {/* Profile */}
+                  <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
+                    <div className="relative">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-teal-400">
+                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Sarah Mitchell" width={96} height={96} className="object-cover w-full h-full" />
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 bg-teal-400 text-black text-[10px] font-black px-2 py-0.5 rounded-full">
+                        VERIFIED
+                      </div>
+                    </div>
+                    <div className="sm:mt-2">
+                      <h3 className="text-white font-black text-lg">Dr. Sarah Mitchell</h3>
+                      <p className="text-gray-400 text-sm">Cosmetic Dentist</p>
+                      <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
+                        <MapPin className="w-3 h-3" />
+                        <span>Los Angeles, CA</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-black text-white">Perfect For</h3>
-                    <p className="text-teal-400 text-xs sm:text-sm font-bold">You'll love this if...</p>
+
+                  {/* Before Story */}
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full mb-3">
+                      <span className="text-red-400 text-xs font-bold">THE PROBLEM</span>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed">
+                      "I was spending <span className="text-white font-bold">$3,000 every month</span> on marketing with barely any results.
+                      My social media looked dead. <span className="text-white font-bold">New patient calls were declining</span>.
+                      My front desk was slow. <span className="text-red-400 font-bold">I was invisible online</span>.
+                      Then I discovered this system..."
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Big Hero Image */}
+              <div className="p-4 sm:p-8 bg-black/50">
+                {/* Image without overlay on mobile for clarity */}
+                <div className="rounded-xl overflow-hidden border-2 border-teal-500/40 shadow-2xl">
+                  <Image
+                    src="/images/dentist/dr-marcus.webp"
+                    alt="Dr. Sarah Mitchell - 23 New Patients in 3 Weeks"
+                    width={1365}
+                    height={768}
+                    className="w-full h-auto object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                {/* Caption below image for clarity */}
+                <div className="mt-4 text-center">
+                  <p className="text-teal-400 font-black text-xl sm:text-3xl mb-1">23 New Patients in 3 Weeks</p>
+                  <p className="text-gray-400 text-sm">Without recording a single video</p>
+                </div>
+              </div>
+
+              {/* The Transformation */}
+              <div className="p-4 sm:p-8 bg-black/30">
+                <div className="text-center mb-4">
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full">
+                    <span className="text-teal-400 text-xs font-bold">THE 7-MINUTE TRANSFORMATION</span>
                   </div>
                 </div>
 
-                {/* Items with icons */}
-                <div className="space-y-3 sm:space-y-4 relative z-10">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   {[
-                    { icon: Camera, text: "Camera-shy? You never have to film again", highlight: "never film" },
-                    { icon: Clock, text: "Zero time to create content? 7 minutes max", highlight: "7 minutes" },
-                    { icon: TrendingUp, text: "Want higher case acceptance? Most see 30%+ increase", highlight: "30%+ increase" },
-                    { icon: Users, text: "Competing for patients? Stand out instantly", highlight: "Stand out" },
-                    { icon: Star, text: "Need more reviews? Automated system included", highlight: "Automated" },
-                    { icon: Zap, text: "Ready to grow in 2025? Start today", highlight: "Start today" },
+                    { number: '23', label: 'New Patients', sub: 'in 3 weeks' },
+                    { number: '7', label: 'Minutes', sub: 'per video' },
+                    { number: '0', label: 'Hours Filming', sub: 'on camera' },
+                  ].map((stat, i) => (
+                    <div key={i} className="bg-teal-500/10 border border-teal-500/30 rounded-xl p-3 sm:p-4 text-center">
+                      <div className="text-teal-400 text-3xl sm:text-5xl font-black mb-0.5">{stat.number}</div>
+                      <div className="text-white font-bold text-xs sm:text-sm">{stat.label}</div>
+                      <div className="text-gray-500 text-[10px] sm:text-xs">{stat.sub}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-gray-500 text-xs sm:text-sm mt-4 text-center">
+                  Posted <span className="text-teal-400 font-bold">18 AI videos</span> in 3 weeks • Zero filming • Zero editing stress
+                </p>
+              </div>
+
+              {/* Timeline / Results */}
+              <div className="p-4 sm:p-8 border-t border-white/10">
+                <div className="text-center mb-4 sm:mb-6">
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full">
+                    <span className="text-teal-400 text-xs font-bold">WHAT HAPPENED NEXT</span>
+                  </div>
+                </div>
+
+                {/* Timeline - improved mobile layout */}
+                <div className="space-y-3 sm:space-y-4">
+                  {[
+                    { time: 'Day 1', event: 'Created her first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
+                    { time: 'Day 3', event: '15,000 views on first 3 videos combined', icon: Eye, color: 'gray' },
+                    { time: 'Week 1', event: '6 new patient calls from Instagram', icon: Phone, color: 'teal' },
+                    { time: 'Week 2', event: '12 more inquiries • 8 appointments booked', icon: Calendar, color: 'teal' },
+                    { time: 'Week 3', event: '23 total new patients • Schedule full', icon: FileText, color: 'teal' },
+                    { time: 'Month 2', event: '$47,000 in new patient revenue', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white/5 rounded-xl p-3 sm:p-4 border border-teal-500/20 hover:border-teal-500/40 transition-colors group">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-500/20 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500/30 transition-colors">
-                        <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-teal-400" />
+                    <div key={i} className="flex items-start gap-3">
+                      <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        item.color === 'green' ? 'bg-green-500/20 border border-green-500/40' :
+                        item.color === 'teal' ? 'bg-teal-500/20 border border-teal-500/40' :
+                        'bg-white/5 border border-white/20'
+                      }`}>
+                        <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                          item.color === 'green' ? 'text-green-400' :
+                          item.color === 'teal' ? 'text-teal-400' :
+                          'text-gray-400'
+                        }`} />
                       </div>
-                      <p className="text-white text-sm sm:text-base">
-                        {item.text.split(item.highlight)[0]}
-                        <span className="text-teal-400 font-bold">{item.highlight}</span>
-                        {item.text.split(item.highlight)[1]}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
+                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
+                          item.color === 'teal' ? 'bg-teal-500/20 text-teal-400' :
+                          'bg-white/10 text-gray-400'
+                        }`}>{item.time}</span>
+                        <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* NOT For - Red/Dark Card */}
-              <div className="bg-gradient-to-br from-red-500/10 via-slate-900 to-slate-950 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border-2 border-red-500/30 relative overflow-hidden">
-                {/* Background glow */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-red-500/10 rounded-full blur-3xl"></div>
-
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-5 sm:mb-6 relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/30">
-                    <X className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                  </div>
+              {/* Final Quote */}
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
+                <div className="flex items-start gap-4">
+                  <div className="text-teal-400 text-4xl font-serif leading-none">"</div>
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-black text-white">NOT For</h3>
-                    <p className="text-red-400 text-xs sm:text-sm font-bold">Skip this if...</p>
-                  </div>
-                </div>
-
-                {/* Items */}
-                <div className="space-y-3 sm:space-y-4 relative z-10">
-                  {[
-                    { icon: AlertCircle, text: "You won't follow the simple step-by-step training" },
-                    { icon: Clock, text: "You expect instant overnight success with no effort" },
-                    { icon: Shield, text: "You want magic results without doing any work" },
-                    { icon: TrendingDown, text: "You're not open to trying new marketing methods" },
-                    { icon: Users, text: "You're happy with declining patient numbers" },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white/5 rounded-xl p-3 sm:p-4 border border-red-500/20 group">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-500/10 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                        <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-red-400" />
-                      </div>
-                      <p className="text-white/70 text-sm sm:text-base">{item.text}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom CTA */}
-            <div className="mt-6 sm:mt-8 text-center">
-              <p className="text-white/60 text-sm sm:text-base mb-4">Sound like a fit? Join 340+ dentists already inside</p>
-              <button
-                onClick={handleSpinClick}
-                className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-black text-base sm:text-lg hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-teal-500/30 flex items-center gap-2 mx-auto"
-              >
-                <Gift className="w-5 h-5" />
-                Spin To Win Your Bonuses
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* VALUE STACK */}
-      <section className="py-6 sm:py-10 md:py-14 bg-white">
-        <div className="w-full px-3 sm:px-6">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-center mb-6 sm:mb-8 text-gray-900">
-              Everything You Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-400-light">Today</span>
-            </h2>
-
-            <div className="space-y-3 sm:space-y-4">
-              {/* Main Course */}
-              <div className="bg-gradient-to-r from-teal-400 to-teal-400-light rounded-xl p-4 sm:p-5 text-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                      <Video className="w-5 h-5 sm:w-6 sm:h-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-black text-sm sm:text-lg">CloneYourself AI Video System</h3>
-                      <p className="text-white/80 text-xs sm:text-sm">Complete A-to-Z training course</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl sm:text-2xl font-black">$197</p>
-                    <p className="text-white/60 text-xs line-through">value</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 5 Bonuses */}
-              <div className="bg-teal-500/5 border border-teal-500/20 rounded-xl p-4 sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
-                      <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-teal-400" />
-                    </div>
-                    <div>
-                      <h3 className="font-black text-gray-900 text-sm sm:text-lg">5 Premium Bonuses (Your Choice)</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm">Practice growth tools & templates</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl sm:text-2xl font-black text-teal-400">${getDentistTotalBonusValue()}</p>
-                    <p className="text-gray-400 text-xs line-through">value</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Direct Access */}
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-black text-gray-900 text-sm sm:text-lg">Direct Email Support</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm">Get answers when you need them</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl sm:text-2xl font-black text-gray-700">$97</p>
-                    <p className="text-gray-400 text-xs line-through">value</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Mystery Box */}
-              <div className="bg-gradient-to-r from-violet-100 to-purple-100 border border-violet-300 rounded-xl p-4 sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-black text-gray-900 text-sm sm:text-lg">Mystery Box</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm">Secret surprise after purchase</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl sm:text-2xl font-black text-violet-600">$500+</p>
-                    <p className="text-gray-400 text-xs line-through">value</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Lifetime Updates */}
-              <div className="bg-gradient-to-r from-teal-400/10 to-teal-400/5 border border-teal-500/30 rounded-xl p-4 sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-400 to-teal-400-dark rounded-lg flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-black text-gray-900 text-sm sm:text-lg">Lifetime Updates</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm">New content added weekly</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl sm:text-2xl font-black text-teal-400">$297</p>
-                    <p className="text-gray-400 text-xs line-through">value</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Total */}
-              <div className="bg-gray-900 rounded-xl p-4 sm:p-6 mt-4">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-white/60 text-sm sm:text-base">Total Value:</span>
-                  <span className="text-white/40 line-through text-lg sm:text-xl">${197 + getDentistTotalBonusValue() + 97 + 500 + 297}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-bold text-lg sm:text-xl">Today Only:</span>
-                  <span className="text-3xl sm:text-4xl font-black text-teal-400">$58</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECOND GUARANTEE - Try It Free 30 Days */}
-      <section className="py-6 sm:py-10 md:py-14 bg-white">
-        <div className="w-full px-3 sm:px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-4 sm:mb-5">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 sm:px-5 py-2 rounded-full font-black text-xs shadow-2xl shadow-emerald-500/30">
-                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                ZERO-RISK GUARANTEE
-              </div>
-            </div>
-
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-league-spartan font-black text-center mb-2 sm:mb-3 text-white">
-              Try It Free For <span className="text-teal-400">30 Days</span>
-            </h2>
-            <p className="text-center text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto">
-              If this doesn't work exactly like I promised, I'll refund you + pay you <span className="font-black text-emerald-600">$50</span> for your time
-            </p>
-
-            {/* Dr. Marcus's Promise Card - Premium Design */}
-            <div className="bg-gradient-to-br from-luxury-black to-gray-900 rounded-2xl shadow-2xl border border-teal-500/30 p-4 sm:p-6 md:p-8 mb-4 sm:mb-5">
-              <div className="flex flex-col md:flex-row gap-4 sm:gap-5 items-start">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto md:mx-0 flex-shrink-0 relative">
-                  <div className="absolute inset-0 bg-teal-500 rounded-full animate-pulse opacity-20" />
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-teal-500 shadow-xl">
-                    <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus Chen" fill className="object-cover" />
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center border-2 border-white shadow-lg">
-                    <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                  </div>
-                </div>
-
-                <div className="flex-1">
-                  <div className="mb-3 sm:mb-4">
-                    <p className="text-sm sm:text-lg font-bold text-white mb-2 sm:mb-3 italic leading-relaxed">
-                      "If you can't create professional patient videos in 7 minutes or less,
-                      I'll refund every penny AND send you $50 for wasting your time."
+                    <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
+                      I went from <span className="text-teal-400 font-bold">invisible to fully booked</span> in 3 weeks.
+                      Patients find ME now. My phone rings daily.
+                      This system gave me my practice back AND filled my schedule.
                     </p>
-                    <p className="text-xs sm:text-base text-white/70 mb-2">
-                      <span className="font-bold text-emerald-400">Full refund</span> PLUS I'll pay YOU $50. Zero risk.
-                    </p>
-                  </div>
-                  <div className="border-t border-white/20 pt-2 sm:pt-3">
-                    <p className="font-black text-white text-xs sm:text-sm">— Dr. Marcus Chen</p>
-                    <p className="text-[10px] sm:text-xs text-white/60">Cosmetic Dentist • Austin, TX</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* How to Get Refund - Premium Design */}
-            <div className="bg-gradient-to-br from-luxury-black to-gray-900 border border-teal-500/30 rounded-2xl p-4 sm:p-5 shadow-xl">
-              <h3 className="text-sm sm:text-lg font-league-spartan font-black text-center mb-2 text-white">
-                How To Get Your Money Back <span className="text-emerald-400">(30 Seconds)</span>
-              </h3>
-              <p className="text-center text-white/60 mb-4 sm:mb-5 text-[10px] sm:text-sm">
-                No forms. No hoops. No waiting. Just email us:
-              </p>
-
-              <div className="max-w-md mx-auto">
-                {/* Email Option */}
-                <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-3 sm:p-4 border border-emerald-500/30 hover:border-emerald-500/50 transition-all shadow-lg">
-                  <div className="flex items-center justify-between mb-2 sm:mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
-                        <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
+                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Sarah" width={40} height={40} className="object-cover" />
                       </div>
                       <div>
-                        <h4 className="font-black text-white text-xs sm:text-sm">Email Us</h4>
-                        <p className="text-[10px] sm:text-xs text-emerald-400">24-hour response</p>
+                        <p className="text-white font-bold">Dr. Sarah Mitchell</p>
+                        <p className="text-gray-400 text-sm">2 months after joining</p>
+                      </div>
+                      <div className="ml-auto flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-teal-400 text-teal-400" />
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white/5 rounded-lg p-2 sm:p-3 border border-white/10">
-                    <p className="text-[10px] sm:text-xs text-white/60 mb-1">Send to:</p>
-                    <code className="text-[10px] sm:text-xs font-mono text-white/80 block">support@aifastscale.com</code>
-                  </div>
-                  <div className="bg-emerald-500/10 rounded-lg p-2 sm:p-3 border border-emerald-500/20 mt-2">
-                    <p className="text-[10px] sm:text-xs text-emerald-400/80 mb-1">Message to copy:</p>
-                    <p className="text-[10px] sm:text-xs text-white/90 italic">"Hi, I'd like my refund please. My purchase email is [YOUR EMAIL]"</p>
-                  </div>
                 </div>
+              </div>
+
+              {/* Bottom Stats Bar */}
+              <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
+                {[
+                  { value: '$58', label: 'Investment', sub: 'One-time' },
+                  { value: '23', label: 'New Patients', sub: '3 weeks' },
+                  { value: '$47K', label: 'Revenue', sub: '2 months' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-4 sm:p-6 text-center">
+                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-teal-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
+                    <div className="text-gray-400 text-xs font-semibold">{stat.label}</div>
+                    <div className="text-gray-600 text-[10px]">{stat.sub}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* WHO IS DR. MARCUS */}
-      <section className="py-4 sm:py-6 md:py-10 bg-luxury-black">
-        <div className="w-full px-3 sm:px-6 lg:px-8">
+      {/* ================================================================
+          3B. DR. DAVID CASE STUDY - CREAM/WHITE SECTION (Implant Specialist)
+          ================================================================ */}
+      <section
+        id="case-study-david"
+        data-animate
+        className="py-10 sm:py-24 bg-gradient-to-b from-teal-50 to-white"
+      >
+        <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-6 sm:mb-10">
-              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-3 sm:mb-4">
-                <Award className="w-4 h-4 text-teal-400" />
-                <span className="text-teal-400 font-bold text-xs tracking-wider">MEET YOUR INSTRUCTOR</span>
+            {/* Section Header */}
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Play className="w-3.5 h-3.5 text-teal-500" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Implant Specialist Success</span>
               </div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-league-spartan font-black mb-3 px-4">
-                Who Am I & <span className="text-teal-400">Why Should You Listen?</span>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
+                His First AI Video Generated <span className="text-teal-500">$47,000</span> in Implant Cases
               </h2>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From spending $2,000/month on marketing to getting patients for free</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5 sm:gap-8 mb-6 sm:mb-8">
-              <div className="relative w-full aspect-[4/3] max-w-[320px] sm:max-w-md mx-auto rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-xl shadow-teal-500/20">
+            {/* Dr. David Case Study Card - Light Theme */}
+            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+
+              {/* Top: Profile + Before Situation */}
+              <div className="p-4 sm:p-8 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                  {/* Profile */}
+                  <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
+                    <div className="relative">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-teal-500 shadow-lg">
+                        <Image src="/images/dentist/review-5.webp" alt="Dr. David Kim" width={96} height={96} className="object-cover w-full h-full" />
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 bg-teal-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
+                        VERIFIED
+                      </div>
+                    </div>
+                    <div className="sm:mt-2">
+                      <h3 className="text-gray-900 font-black text-lg">Dr. David Kim</h3>
+                      <p className="text-teal-600 text-sm font-medium">Implant Specialist</p>
+                      <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
+                        <MapPin className="w-3 h-3" />
+                        <span>Chicago, IL</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Before Story */}
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 px-3 py-1 rounded-full mb-3">
+                      <span className="text-red-600 text-xs font-bold">THE PROBLEM</span>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed">
+                      "I was spending <span className="text-gray-900 font-bold">$2,000 every month</span> on dental marketing agencies.
+                      After 6 months, I had <span className="text-gray-900 font-bold">$12,000 spent</span> and
+                      <span className="text-red-600 font-bold"> only 3 implant consultations</span>. Meanwhile, younger dentists were
+                      getting all the attention on social media. I felt outdated..."
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Video Section */}
+              <div className="p-6 sm:p-8 bg-gray-50">
+                <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full mb-4">
+                  <span className="text-teal-600 text-xs font-bold">HIS FIRST AI VIDEO</span>
+                </div>
+
+                <div className="relative rounded-xl overflow-hidden border-2 border-teal-500/40 shadow-2xl">
+                  <Image
+                    src="/images/dentist/review-5.webp"
+                    alt="Dr. David Kim - AI Video Success"
+                    width={1365}
+                    height={768}
+                    className="w-full h-auto object-cover"
+                    loading="lazy"
+                  />
+
+                  {/* Play Overlay - like Lucas video */}
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer group">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl shadow-teal-500/50 group-hover:scale-110 transition-transform">
+                      <Play className="w-10 h-10 sm:w-12 sm:h-12 text-white fill-white ml-1" />
+                    </div>
+                    <div className="absolute bottom-3 left-3 bg-black/80 text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-teal-500/30">
+                      ▶ Watch His First AI Video
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-gray-500 text-sm mt-3 text-center">
+                  Created in <span className="text-teal-600 font-bold">7 minutes</span> • Posted on Instagram Reels • Day 1 of using the system
+                </p>
+              </div>
+
+              {/* The Speed Stats */}
+              <div className="p-6 sm:p-8 bg-white border-t border-gray-100">
+                <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full mb-4">
+                  <span className="text-teal-600 text-xs font-bold">THE SPEED OF AI CONTENT</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { number: '48', label: 'Hours to First Lead', sub: 'not weeks' },
+                    { number: '$0', label: 'Marketing Cost', sub: 'vs $2,000/mo before' },
+                    { number: '5', label: 'Implant Cases', sub: 'from 1 week of videos' },
+                  ].map((stat, i) => (
+                    <div key={i} className="bg-gradient-to-br from-teal-50 to-white border border-teal-500/30 rounded-xl p-4 text-center">
+                      <div className="text-teal-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
+                      <div className="text-gray-900 font-bold text-sm">{stat.label}</div>
+                      <div className="text-gray-500 text-xs">{stat.sub}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Timeline / Results */}
+              <div className="p-4 sm:p-8 border-t border-gray-100 bg-gray-50">
+                <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full mb-4 sm:mb-6">
+                  <span className="text-teal-600 text-xs font-bold">THE TIMELINE</span>
+                </div>
+
+                {/* Timeline - improved mobile layout */}
+                <div className="space-y-3 sm:space-y-4">
+                  {[
+                    { time: 'Day 1', event: 'Posted his first AI video about implant benefits (took 7 minutes)', icon: Upload, color: 'gray' },
+                    { time: 'Day 2', event: 'Instagram inquiry: "I need implants, are you accepting patients?"', icon: MessageSquare, color: 'teal' },
+                    { time: 'Day 5', event: '3 implant consultations scheduled', icon: Calendar, color: 'teal' },
+                    { time: 'Week 2', event: '5 implant cases accepted • $47,000 in treatment plans', icon: FileText, color: 'teal' },
+                    { time: 'Month 2', event: 'All 5 cases completed • Cancelled marketing agency', icon: DollarSign, color: 'green' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        item.color === 'green' ? 'bg-green-100 border border-green-300' :
+                        item.color === 'teal' ? 'bg-teal-100 border border-teal-500/40' :
+                        'bg-gray-100 border border-gray-300'
+                      }`}>
+                        <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                          item.color === 'green' ? 'text-green-600' :
+                          item.color === 'teal' ? 'text-teal-600' :
+                          'text-gray-500'
+                        }`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
+                          item.color === 'green' ? 'bg-green-100 text-green-700' :
+                          item.color === 'teal' ? 'bg-teal-100 text-teal-600' :
+                          'bg-gray-100 text-gray-600'
+                        }`}>{item.time}</span>
+                        <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-700 font-bold' : 'text-gray-700'}`}>{item.event}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Final Quote */}
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-teal-50 border-t border-teal-500/20">
+                <div className="flex items-start gap-4">
+                  <div className="text-teal-500 text-4xl font-serif leading-none">"</div>
+                  <div>
+                    <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
+                      One week of AI videos. <span className="text-teal-600 font-bold">$47,000 in implant cases</span>.
+                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $58 and
+                      I had 5 cases in a week. The ROI is unreal.
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-500">
+                        <Image src="/images/dentist/review-5.webp" alt="Dr. David" width={40} height={40} className="object-cover" />
+                      </div>
+                      <div>
+                        <p className="text-gray-900 font-bold">Dr. David Kim</p>
+                        <p className="text-gray-500 text-sm">2 months after joining</p>
+                      </div>
+                      <div className="ml-auto flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-teal-500 text-teal-500" />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Stats Bar */}
+              <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
+                {[
+                  { value: '$58', label: 'Investment', sub: 'One-time' },
+                  { value: '$47K', label: 'Revenue', sub: '2 weeks' },
+                  { value: '810x', label: 'ROI', sub: 'Return' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-4 sm:p-6 text-center">
+                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>
+                    <div className="text-gray-600 text-xs font-semibold">{stat.label}</div>
+                    <div className="text-gray-400 text-[10px]">{stat.sub}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          4. WHAT'S INSIDE - BLACK SECTION (Product Showcase)
+          ================================================================ */}
+      <section
+        id="whats-inside"
+        data-animate
+        className="py-10 sm:py-20 bg-gradient-to-b from-black via-slate-950 to-black"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
+                Here's What You Get <span className="text-teal-400">Today</span>
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-lg">Everything you need to start getting new patients with AI videos</p>
+            </div>
+
+            {/* PRODUCT #1 - THE MAIN COURSE */}
+            <div className={`bg-gradient-to-br from-teal-500/15 to-teal-500/5 border-2 border-teal-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
+            }`}>
+              {/* Large Course Thumbnail */}
+              <div className="relative w-full aspect-video">
                 <Image
-                  src="/images/dentist/dr-marcus.webp"
-                  alt="Dr. Marcus Chen"
+                  src="/images/dentist/course-demo.webp"
+                  alt="CloneYourself 7-Minute Video System for Dentists"
                   fill
                   className="object-cover"
+                  loading="lazy"
                 />
               </div>
 
-              <div className="space-y-4 sm:space-y-5">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-teal-400">I Was You</h3>
-                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
-                    15 years running my cosmetic practice in Austin. Watching competitors dominate social media while I hid from the camera. I knew video worked — I just couldn't bring myself to film.
-                  </p>
+              {/* Course Details */}
+              <div className="p-4 sm:p-8">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <span className="bg-teal-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
+                  <span className="text-gray-400 line-through text-xs sm:text-sm">$497</span>
+                  <span className="text-teal-400 font-black text-xs sm:text-base">INCLUDED</span>
                 </div>
 
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-teal-400">Then I Found AI Video</h3>
-                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
-                    One headshot. 30+ patient education videos. In minutes. My case acceptance jumped from 42% to 78%. Patients understood procedures before they even sat in my chair.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-teal-400">Now I'm Sharing Everything</h3>
-                  <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
-                    340+ dentists have joined. The results speak for themselves. This isn't theory — it's the exact system that transformed my practice.
-                  </p>
+                <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">CloneYourself 7-Minute Video System</h3>
+                <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed">
+                  Even if you've never touched AI before — follow along and create your first talking video today.
+                  No tech skills needed. I show you everything click-by-click.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+                  {[
+                    'Turn any photo into a talking AI video',
+                    'Create your personal AI avatar that looks like you',
+                    'Clone your voice so the AI speaks exactly like you',
+                    'Put yourself anywhere — your office, treatment rooms, anywhere',
+                    'All free tools included — zero monthly fees',
+                    'Ready-to-use AI scriptwriter (writes viral scripts for you)',
+                    'Every prompt you need — just copy & paste',
+                    'Edit videos on your phone in minutes (no experience needed)',
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400 flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-              {[
-                { value: "$2.1M+", label: "Revenue Generated" },
-                { value: "15 Years", label: "Experience" },
-                { value: "340+", label: "Dentists Helped" },
-                { value: "4.9/5", label: "Avg Rating" }
-              ].map((stat, i) => (
-                <div key={i} className="bg-luxury-graphite/30 border border-teal-500/20 rounded-xl p-3 sm:p-4 text-center">
-                  <div className="text-2xl sm:text-3xl font-black text-teal-400 mb-2">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
+            {/* BONUSES HEADER */}
+            <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
+                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+                <span className="text-teal-400 font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
+              </div>
+            </div>
+
+            {/* ALL 10 BONUS PRODUCTS */}
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+              {allBonuses.map((bonus, index) => (
+                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                  <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" />
+                  </div>
+                  <div className="p-4 sm:p-5">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                      <h4 className="text-white font-bold text-base sm:text-lg">{bonus.title}</h4>
+                      <div className="flex items-center gap-2">
+                        <span className="text-red-400 line-through text-sm sm:text-base font-semibold">${bonus.value}</span>
+                        <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                      {bonus.description.substring(0, 150)}...
+                    </p>
+                  </div>
                 </div>
               ))}
+            </div>
+
+            {/* EXTRA BONUSES - Support & Updates */}
+            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Stethoscope className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold">Direct Support</h4>
+                    <p className="text-gray-400 text-sm">Email + chat support included</p>
+                    <p className="text-teal-400 font-bold text-sm mt-1">$197 value — FREE</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <RefreshCw className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold">Lifetime Updates</h4>
+                    <p className="text-gray-400 text-sm">New tools & templates weekly</p>
+                    <p className="text-teal-400 font-bold text-sm mt-1">$297 value — FREE</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* TOTAL VALUE + CTA - Compact on mobile */}
+            <div className={`bg-gradient-to-br from-teal-500/20 to-black rounded-2xl border-2 border-teal-500 p-4 sm:p-8 ${
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
+            }`}>
+              {/* Price Box - Compact */}
+              <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
+                <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
+                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$58</span>
+                  <div className="text-left">
+                    <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">88% OFF</span>
+                    <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
+                  </div>
+                </div>
+                <p className="text-gray-400 text-xs sm:text-sm">Lifetime access • No hidden costs</p>
+              </div>
+
+              {/* CTA Button */}
+              <div
+                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4"
+              >
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+                Get Instant Access Now
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+
+              {/* Trust - Compact */}
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-400 text-xs sm:text-sm">
+                <div className="flex items-center gap-1.5">
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
+                  <span>30-Day Guarantee</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
+                  <span>SSL Secured</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-8 sm:py-10 bg-[#0a0a0a]">
-        <div className="w-full px-3 sm:px-6">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-xl sm:text-2xl font-black text-center mb-6 sm:mb-8 text-white">
-              Frequently Asked Questions
+      {/* ================================================================
+          5. TESTIMONIALS - DARK ANIMATED CAROUSEL
+          ================================================================ */}
+      <section
+        id="testimonials"
+        data-animate
+        className="py-8 sm:py-16 bg-black"
+      >
+        {/* Header */}
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
+          <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-up' : ''}`}>
+            <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+              <Stethoscope className="w-3.5 h-3.5 text-teal-400" />
+              <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
+              Real Dentists. <span className="text-teal-400">Real Results.</span>
             </h2>
+            <div className="flex items-center justify-center gap-3 sm:gap-6 text-gray-400 text-xs sm:text-base">
+              <span><span className="text-teal-400 font-bold">500+</span> success stories</span>
+              <span>•</span>
+              <span><span className="text-teal-400 font-bold">20+</span> countries</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Infinite Scroll Carousel with fade shadows */}
+        <div className="testimonial-carousel-wrapper-dentist">
+          <div className="testimonial-scroll-track-dentist">
+            {/* First set of testimonials */}
+            {testimonials.map((t) => (
+              <div key={`first-${t.id}`} className="testimonial-card-dentist">
+                {/* Quote Icon */}
+                <div className="testimonial-quote-icon-dentist">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 8H6C4.89543 8 4 8.89543 4 10V14C4 15.1046 4.89543 16 6 16H8C9.10457 16 10 15.1046 10 14V8ZM10 8C10 5.79086 8.20914 4 6 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M20 8H16C14.8954 8 14 8.89543 14 10V14C14 15.1046 14.8954 16 16 16H18C19.1046 16 20 15.1046 20 14V8ZM20 8C20 5.79086 18.2091 4 16 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+
+                {/* Headline - Results */}
+                <h3 className="text-white text-lg sm:text-xl font-bold mb-2 leading-tight">
+                  {t.results}
+                </h3>
+
+                {/* Review Text */}
+                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4">
+                  "{t.review}"
+                </p>
+
+                {/* Author - Larger image */}
+                <div className="flex items-center gap-3">
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-teal-500/40 shadow-lg">
+                    <Image src={t.image} alt={t.name} fill className="object-cover" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
+                    <p className="text-gray-500 text-xs sm:text-sm">{t.location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Duplicated set for seamless infinite loop */}
+            {testimonials.map((t) => (
+              <div key={`second-${t.id}`} className="testimonial-card-dentist">
+                {/* Quote Icon */}
+                <div className="testimonial-quote-icon-dentist">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 8H6C4.89543 8 4 8.89543 4 10V14C4 15.1046 4.89543 16 6 16H8C9.10457 16 10 15.1046 10 14V8ZM10 8C10 5.79086 8.20914 4 6 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M20 8H16C14.8954 8 14 8.89543 14 10V14C14 15.1046 14.8954 16 16 16H18C19.1046 16 20 15.1046 20 14V8ZM20 8C20 5.79086 18.2091 4 16 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+
+                {/* Headline - Results */}
+                <h3 className="text-white text-lg sm:text-xl font-bold mb-2 leading-tight">
+                  {t.results}
+                </h3>
+
+                {/* Review Text */}
+                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4">
+                  "{t.review}"
+                </p>
+
+                {/* Author - Larger image */}
+                <div className="flex items-center gap-3">
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-teal-500/40 shadow-lg">
+                    <Image src={t.image} alt={t.name} fill className="object-cover" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
+                    <p className="text-gray-500 text-xs sm:text-sm">{t.location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          6. GUARANTEE #1 - WHITE SECTION
+          ================================================================ */}
+      <section
+        id="guarantee1"
+        data-animate
+        className="py-10 sm:py-20 bg-white"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className={`bg-gradient-to-br from-teal-500/10 to-white border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 ${
+              visibleSections.has('guarantee1') ? 'animate-fade-in-up' : ''
+            }`}>
+              <div className="text-center mb-5 sm:mb-8">
+                <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-500" />
+                  <span className="text-teal-600 font-bold text-xs sm:text-sm uppercase">Iron-Clad Guarantee</span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
+                  30-Day Money Back + <span className="text-teal-500">$50 Cash</span>
+                </h2>
+                <p className="text-gray-600 text-sm sm:text-base">You literally cannot lose.</p>
+              </div>
+
+              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
+                {/* Guarantee Badge - Instantly Recognizable */}
+                <div className="relative flex-shrink-0">
+                  {/* Modern Guarantee Seal */}
+                  <div className="w-28 h-28 sm:w-40 sm:h-40 relative">
+                    {/* Outer rotating ring */}
+                    <div className="absolute inset-0 rounded-full border-4 border-dashed border-teal-500/40 animate-spin-slow" />
+                    {/* Main badge */}
+                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500 shadow-2xl shadow-teal-500/30 flex flex-col items-center justify-center">
+                      {/* Inner circle with text */}
+                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-2">
+                        <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-teal-400 mb-1" />
+                        <span className="text-teal-400 font-black text-lg sm:text-2xl leading-none">30</span>
+                        <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Day Money</span>
+                        <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Back</span>
+                        <span className="text-teal-400 font-black text-[10px] sm:text-sm mt-0.5">+$50</span>
+                      </div>
+                    </div>
+                    {/* Ribbon accent */}
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[8px] sm:text-xs px-3 py-0.5 rounded-full shadow-lg">
+                      GUARANTEED
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <p className="text-gray-700 text-sm sm:text-lg leading-relaxed mb-3 sm:mb-4 italic">
+                    "If you can't create professional videos in 7 minutes or less, or if this system doesn't work for you for ANY reason —
+                    I'll refund every penny AND send you $50 for wasting your time. No questions asked. No hoops to jump through."
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-teal-500 flex-shrink-0 bg-teal-500 flex items-center justify-center">
+                      <Stethoscope className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    </div>
+                    <p className="text-teal-600 font-bold text-sm sm:text-lg">— CloneYourself Team</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-6 sm:mt-8">
+                {[
+                  { icon: CheckCircle, title: 'Full Refund', desc: 'Every penny back' },
+                  { icon: DollarSign, title: '+$50 Cash', desc: 'For your time' },
+                  { icon: Clock, title: '30 Days', desc: 'To try everything' },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white rounded-xl p-3 sm:p-4 text-center border border-teal-500/20 shadow-lg">
+                    <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-teal-500 mx-auto mb-1.5 sm:mb-2" />
+                    <p className="text-gray-900 font-bold text-xs sm:text-base">{item.title}</p>
+                    <p className="text-gray-500 text-[10px] sm:text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          7. PRICING - BLACK SECTION (Reveal price!)
+          ================================================================ */}
+      <section
+        id="pricing"
+        data-animate
+        className="py-10 sm:py-20 bg-black scroll-mt-16"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4 animate-pulse">
+                <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Only {spotsLeft} spots left at this price</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
+                Get Everything Today For
+              </h2>
+            </div>
+
+            {/* Price Comparison - horizontal scroll on mobile */}
+            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              <div className="flex gap-3 sm:grid sm:grid-cols-3 sm:gap-4" style={{ minWidth: 'max-content' }}>
+                {/* Old Way */}
+                <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-red-500/30 relative flex-shrink-0 w-[200px] sm:w-auto">
+                  <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
+                    Expensive
+                  </div>
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
+                    <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" />
+                    <h3 className="font-bold text-white text-sm sm:text-base">Hire Videographer</h3>
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black text-red-400 mb-1 sm:mb-2">$500<span className="text-sm sm:text-lg text-gray-500">/video</span></div>
+                  <p className="text-gray-500 text-xs sm:text-sm">50 videos = $25,000</p>
+                </div>
+
+                {/* DIY */}
+                <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-gray-600 relative flex-shrink-0 w-[200px] sm:w-auto">
+                  <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-gray-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
+                    Time Sink
+                  </div>
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
+                    <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+                    <h3 className="font-bold text-white text-sm sm:text-base">Learn Video Editing</h3>
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black text-gray-400 mb-1 sm:mb-2">$3,000+</div>
+                  <p className="text-gray-500 text-xs sm:text-sm">+ 100 hours learning</p>
+                </div>
+
+                {/* Smart Way */}
+                <div className="bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto">
+                  <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-black text-teal-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black">
+                    Best Value
+                  </div>
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
+                    <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$58<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Main Price Box - Compact on mobile */}
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-teal-500/50 shadow-2xl ${
+              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
+            }`}>
+              <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$58</span>
+                <div className="text-left">
+                  <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">88% OFF</span>
+                  <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
+                </div>
+              </div>
+              <p className="text-teal-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
+
+              <div
+                className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2"
+              >
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+                Get Instant Access Now
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-gray-400 text-[10px] sm:text-sm">
+                <div className="flex items-center gap-1">
+                  <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-teal-400" />
+                  <span>30-Day Guarantee</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-teal-400" />
+                  <span>SSL Secured</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          8. FAQ - WHITE SECTION
+          ================================================================ */}
+      <section
+        id="faq"
+        data-animate
+        className="py-10 sm:py-20 bg-white"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-3xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-up' : ''}`}>
+              <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2 sm:mb-4">
+                Common <span className="text-teal-500">Questions</span>
+              </h2>
+            </div>
 
             <div className="space-y-2 sm:space-y-3">
               {faqs.map((faq, i) => (
-                <div key={i} className="bg-white rounded-xl overflow-hidden">
+                <div
+                  key={i}
+                  className={`bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden ${
+                    visibleSections.has('faq') ? 'animate-fade-in-up' : ''
+                  }`}
+                  style={{ animationDelay: `${i * 100}ms` }}
+                >
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-3 sm:p-4 text-left"
+                    className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left"
                   >
-                    <span className="font-semibold text-[13px] sm:text-base pr-2 text-gray-900">{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
+                    <span className="font-semibold pr-3 text-gray-900 text-sm sm:text-base">{faq.q}</span>
+                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-teal-500 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   {expandedFaq === i && (
-                    <div className="px-3 sm:px-4 pb-3 sm:pb-4 pt-0">
-                      <p className="text-[13px] sm:text-sm text-gray-700 leading-relaxed">{faq.a}</p>
+                    <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5">
+                      <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{faq.a}</p>
                     </div>
                   )}
                 </div>
               ))}
             </div>
-
-            {/* CTA After FAQ */}
-            <div className="mt-8 sm:mt-10 text-center">
-              <p className="text-white/70 text-sm sm:text-base mb-4">Still have questions? Email support@aifastscale.com</p>
-              <button
-                onClick={handleSpinClick}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-4 rounded-xl text-base sm:text-lg font-black shadow-xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-transform"
-              >
-                <Gift className="w-5 h-5" />
-                <span>Spin To Win Your Bonuses</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* FINAL URGENCY CTA */}
-      <section className="py-8 sm:py-10 bg-white">
-        <div className="w-full px-3">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-teal-400/10 to-teal-400-pale border-4 border-teal-500 rounded-3xl p-5 sm:p-7 text-center shadow-2xl">
-              <div className="inline-flex items-center gap-2 bg-teal-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-black mb-4">
-                <Clock className="w-4 h-4" />
-                <span>Price Increases in {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
-              </div>
-
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-league-spartan font-black mb-3 text-white">
-                Zero Risk. Pure Upside.
-              </h2>
-
-              <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-5 leading-relaxed">
-                You're protected by a 30-day guarantee <span className="font-bold">PLUS</span> I'll pay you $50 if this doesn't work.
-                <br className="hidden sm:block" />
-                The only way you lose is by not trying.
-              </p>
-
-              <div className="bg-white rounded-2xl p-4 sm:p-5 mb-4 sm:mb-5 shadow-inner border-2 border-teal-500/30">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-3xl sm:text-4xl font-black text-teal-400 mb-1">$197</div>
-                    <div className="text-xs text-gray-600">Regular Price</div>
+      {/* ================================================================
+          9. GUARANTEE #2 - BLACK SECTION
+          ================================================================ */}
+      <section
+        id="guarantee2"
+        data-animate
+        className="py-10 sm:py-20 bg-black"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 ${
+              visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''
+            }`}>
+              <div className="text-center mb-5 sm:mb-8">
+                {/* Modern Guarantee Badge - Instantly Recognizable */}
+                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 relative">
+                  {/* Outer rotating ring */}
+                  <div className="absolute inset-0 rounded-full border-4 border-dashed border-teal-500/40 animate-spin-slow" />
+                  {/* Main badge */}
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500 shadow-2xl shadow-teal-500/40 flex flex-col items-center justify-center">
+                    {/* Inner circle with text */}
+                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-1">
+                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-teal-400 mb-0.5" />
+                      <span className="text-teal-400 font-black text-base sm:text-xl leading-none">30</span>
+                      <span className="text-white font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Day Money</span>
+                      <span className="text-white font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Back</span>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-3xl sm:text-4xl font-black text-green-600 mb-1">$58</div>
-                    <div className="text-xs text-gray-600">Today Only</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl sm:text-4xl font-black text-teal-400 mb-1">71%</div>
-                    <div className="text-xs text-gray-600">You Save</div>
+                  {/* Ribbon accent */}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
+                    100% RISK FREE
                   </div>
                 </div>
-              </div>
-
-              <button
-                onClick={handleSpinClick}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-4 sm:px-12 sm:py-5 rounded-xl sm:rounded-2xl text-lg sm:text-xl font-black shadow-2xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-all mb-3 sm:mb-4"
-              >
-                <Gift className="w-6 h-6" />
-                <span>Spin To Win + Get Access</span>
-                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-              </button>
-
-              <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
-                <div className="flex items-center gap-1.5">
-                  <Shield className="w-4 h-4 text-green-600" />
-                  <span>30-Day Guarantee</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>Instant Delivery</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* FOOTER */}
-      <footer className="py-8 sm:py-10 bg-[#0a0a0a] border-t border-teal-500/10">
-        <div className="w-full px-4 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-center sm:text-left">
-                <div className="text-lg font-bold text-teal-400 mb-1">
-                  CloneYourself
-                </div>
-                <p className="text-white/40 text-xs">
-                  The AI video system for dentists
+                <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
+                  Try It Risk-Free for 30 Days
+                </h2>
+                <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
+                  I'm so confident this will work for you that I'm taking ALL the risk.
+                  If you're not 100% satisfied, you get every penny back — PLUS $50 for trying.
                 </p>
               </div>
-              <div className="flex items-center gap-4 text-white/40 text-xs">
-                <a href="/privacy-policy" className="hover:text-white/60 transition-colors">Privacy</a>
-                <a href="/terms-of-service" className="hover:text-white/60 transition-colors">Terms</a>
-                <a href="/refund-policy" className="hover:text-white/60 transition-colors">Refund</a>
-                <a href="mailto:support@aifastscale.com" className="hover:text-white/60 transition-colors">Contact</a>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 mb-5 sm:mb-8">
+                {[
+                  {
+                    icon: ThumbsUp,
+                    title: 'Love It?',
+                    desc: 'Keep everything and start getting new patients with AI videos.',
+                  },
+                  {
+                    icon: Heart,
+                    title: 'Not Sure?',
+                    desc: 'Take the full 30 days to test everything. No rush.',
+                  },
+                  {
+                    icon: DollarSign,
+                    title: 'Don\'t Like It?',
+                    desc: 'Get a full refund + $50 cash. Keep the bonuses.',
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="bg-black/50 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center border border-teal-500/20">
+                    <div className="w-10 h-10 sm:w-14 sm:h-14 mx-auto rounded-full flex items-center justify-center mb-2 sm:mb-4 bg-teal-500/20">
+                      <item.icon className="w-5 h-5 sm:w-7 sm:h-7 text-teal-400" />
+                    </div>
+                    <h3 className="font-black text-white text-base sm:text-lg mb-1 sm:mb-2">{item.title}</h3>
+                    <p className="text-gray-400 text-xs sm:text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="text-center">
+                <p className="text-teal-400 font-bold text-sm sm:text-lg">
+                  You literally have NOTHING to lose and everything to gain.
+                </p>
               </div>
             </div>
-            <div className="mt-6 pt-6 border-t border-white/5 text-center">
-              <p className="text-white/30 text-xs">
-                © {new Date().getFullYear()} CloneYourself. All rights reserved. Results may vary. This is not medical advice.
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          10. MEET YOUR INSTRUCTOR - WHITE SECTION (matches Sara)
+          ================================================================ */}
+      <section
+        id="meet-instructor"
+        data-animate
+        className="py-10 sm:py-20 bg-white"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Award className="w-3.5 h-3.5 text-teal-500" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Meet Your Instructor</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
+                Who Am I & <span className="text-teal-500">Why Should You Listen?</span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 items-center">
+              {/* Instructor Image */}
+              <div className={`relative ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+                <div className="relative aspect-[3/4] max-w-[200px] sm:max-w-sm mx-auto rounded-xl sm:rounded-2xl overflow-hidden border-3 sm:border-4 border-teal-500/50 shadow-2xl">
+                  <Image
+                    src="/images/dentist/dr-marcus.webp"
+                    alt="Dr. Marcus Chen"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-teal-500 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg font-bold text-xs sm:text-sm">
+                    ✦ Verified
+                  </div>
+                </div>
+              </div>
+
+              {/* Instructor Story */}
+              <div className={`space-y-4 sm:space-y-6 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+                <div>
+                  <h3 className="text-teal-500 font-black text-lg sm:text-xl mb-2 sm:mb-3">I Was You</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                    15 years running a successful practice. $2M+ in annual revenue. But I was exhausted.
+                    Creating content felt like a second job. I looked for a better way.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-teal-500 font-black text-lg sm:text-xl mb-2 sm:mb-3">Then I Found AI Video</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                    One photo. 50 videos. In minutes. My social media exploded. More patients. More revenue.
+                    More referrals. All while working LESS.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-teal-500 font-black text-lg sm:text-xl mb-2 sm:mb-3">Now I'm Sharing Everything</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                    500+ dentists have joined. The results speak for themselves. This isn't theory —
+                    it's the exact system I use daily.
+                  </p>
+                </div>
+
+                {/* Stats */}
+                <div className="grid grid-cols-4 gap-2 sm:gap-3 pt-4 sm:pt-6">
+                  {[
+                    { value: '$2M+', label: 'Annual Revenue' },
+                    { value: '15 Years', label: 'Experience' },
+                    { value: '500+', label: 'Dentists Helped' },
+                    { value: '4.9/5', label: 'Avg Rating' },
+                  ].map((stat, i) => (
+                    <div key={i} className="bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-4 text-center border border-gray-200">
+                      <div className="text-teal-500 font-black text-sm sm:text-xl">{stat.value}</div>
+                      <div className="text-gray-500 text-[10px] sm:text-xs">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          11. FINAL CTA - TEAL SECTION
+          ================================================================ */}
+      <section
+        id="final-cta"
+        data-animate
+        className="py-10 sm:py-24 bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className={`max-w-xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : ''}`}>
+            <h2 className="text-xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
+              Ready to Get More Patients?
+            </h2>
+            <p className="text-white/80 text-xs sm:text-lg mb-4 sm:mb-8">
+              Join 500+ dentists using AI videos to fill their schedules
+            </p>
+
+            <div className="bg-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-4">
+                <span className="text-2xl sm:text-5xl font-black text-teal-400">$58</span>
+                <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">88% OFF</span>
+              </div>
+
+              <div
+                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl flex items-center justify-center gap-2"
+              >
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+                Get Instant Access Now
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+
+              <p className="text-gray-500 text-xs sm:text-sm mt-3 sm:mt-4 flex items-center justify-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                30-Day Money-Back Guarantee
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          FOOTER - BLACK
+          ================================================================ */}
+      <footer className="py-6 sm:py-10 bg-black border-t border-gray-900">
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 mb-3 sm:mb-6 text-gray-500 text-xs sm:text-sm">
+              <div className="flex items-center gap-1.5">
+                <Stethoscope className="w-4 h-4 text-teal-400" />
+                <span>500+ Dentists</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Shield className="w-4 h-4 text-teal-400" />
+                <span>SSL Secured</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Zap className="w-4 h-4 text-teal-400" />
+                <span>Instant Access</span>
+              </div>
+            </div>
+            <p className="text-gray-700 text-xs sm:text-sm mb-3">
+              © {new Date().getFullYear()} CloneYourself. All rights reserved.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm">
+              <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</a>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* ORDER SUMMARY MODAL - Compact Design like Upsell/Downsell */}
-      {isMounted && isModalOpen && createPortal(
-        <div
-          className="fixed inset-0 z-[9999] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-y-auto overscroll-contain"
-          onClick={closeModal}
-        >
-          <div className="min-h-screen flex items-center justify-center p-2 md:p-3">
-            <div
-              className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl md:rounded-2xl border border-teal-500/30 shadow-2xl shadow-teal-500/10 overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header - Timer */}
-              <div className="bg-gradient-to-r from-teal-500 to-cyan-500 px-3 md:px-4 py-2 md:py-2.5">
-                <div className="flex items-center justify-center gap-1.5 md:gap-2">
-                  <Clock className="w-3 h-3 md:w-4 md:h-4 text-white animate-pulse" />
-                  <span className="text-white/90 text-[10px] md:text-xs font-bold">LIMITED TIME OFFER</span>
-                  <span className="text-white text-sm md:text-lg font-black tabular-nums">
-                    {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
-                  </span>
-                </div>
-              </div>
+      {/* Animation Styles - Modern, smooth, GPU-accelerated */}
+      <style jsx global>{`
+        /* Dentist-specific background gradient */
+        .bg-animated-gradient-dentist {
+          background: linear-gradient(135deg, #000000 0%, #0f172a 50%, #000000 100%);
+        }
 
-              {/* All Content - Scrollable */}
-              <div className="p-3 md:p-4 max-h-[85vh] overflow-y-auto">
-                {/* Close Button */}
-                <button
-                  onClick={closeModal}
-                  className="absolute top-12 right-3 z-10 w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/60 hover:text-white transition-all"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
+        .bg-particles-dentist {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0.3;
+          background-image: radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0);
+          background-size: 50px 50px;
+        }
 
-                {/* Title */}
-                <div className="text-center mb-3 md:mb-4">
-                  <h1 className="text-lg md:text-xl font-black text-white mb-0.5 md:mb-1">
-                    Your Order Summary
-                  </h1>
-                  <p className="text-white/60 text-xs md:text-sm">
-                    Everything you're getting for just <span className="text-teal-400 font-black">$58</span>
-                  </p>
-                </div>
+        /* Testimonial carousel styles for dentist */
+        .testimonial-carousel-wrapper-dentist {
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
 
-                {/* Main Course Card */}
-                <div className="bg-gradient-to-br from-teal-500/15 to-cyan-500/10 rounded-lg md:rounded-xl p-2.5 md:p-3 border border-teal-500/40 mb-3 md:mb-4">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="w-14 h-10 md:w-16 md:h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gradient-to-br from-teal-500/30 to-cyan-500/20 flex items-center justify-center">
-                      <Play className="w-6 h-6 md:w-7 md:h-7 text-teal-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-white text-xs md:text-sm font-black">CloneYourself™ AI Video System</div>
-                      <p className="text-white/50 text-[9px] md:text-[10px]">Complete System + Lifetime Access</p>
-                    </div>
-                    <div className="flex flex-col items-end flex-shrink-0">
-                      <span className="text-white/40 line-through text-[10px] md:text-xs">$197</span>
-                      <span className="text-teal-400 font-black text-sm md:text-base">$58</span>
-                    </div>
-                  </div>
-                </div>
+        .testimonial-scroll-track-dentist {
+          display: flex;
+          gap: 1rem;
+          animation: scroll-dentist 40s linear infinite;
+          width: fit-content;
+        }
 
-                {/* Selected Bonuses Card */}
-                <div className="bg-white/5 rounded-lg md:rounded-xl border border-teal-500/30 mb-3 md:mb-4">
-                  <div className="px-2.5 md:px-3 py-1.5 md:py-2 border-b border-white/10">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 md:gap-2">
-                        <Gift className="w-3 h-3 md:w-4 md:h-4 text-teal-400" />
-                        <span className="text-white font-bold text-xs md:text-sm">Your 5 FREE Bonuses</span>
-                      </div>
-                      <span className="text-teal-400 font-black text-xs md:text-sm">${getDentistTotalBonusValue()} value</span>
-                    </div>
-                  </div>
+        .testimonial-card-dentist {
+          flex-shrink: 0;
+          width: 300px;
+          background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+          border: 1px solid rgba(20, 184, 166, 0.2);
+          border-radius: 1rem;
+          padding: 1.5rem;
+          position: relative;
+        }
 
-                  <div className="p-1.5 md:p-2 space-y-1 md:space-y-1.5">
-                    {selectedBonuses.map((bonusId) => {
-                      const bonus = DENTIST_BONUS_PRODUCTS.find((b) => b.id === bonusId)
-                      if (!bonus) return null
-                      return (
-                        <div
-                          key={bonus.id}
-                          className="flex items-center gap-1.5 md:gap-2 bg-white/5 rounded-lg p-1.5 md:p-2"
-                        >
-                          <div className="w-12 h-8 md:w-14 md:h-9 flex-shrink-0 rounded-lg overflow-hidden">
-                            {bonus.image ? (
-                              <img
-                                src={bonus.image}
-                                alt={bonus.title}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-teal-500/20 flex items-center justify-center">
-                                <Gift className="w-4 h-4 text-teal-400" />
-                              </div>
-                            )}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-white text-[10px] md:text-xs font-bold truncate">{bonus.title}</div>
-                          </div>
-                          <div className="flex items-center gap-1 md:gap-1.5 flex-shrink-0">
-                            <span className="text-red-400 line-through text-[9px] md:text-[10px]">${bonus.value}</span>
-                            <span className="text-teal-400 font-black text-[10px] md:text-xs bg-teal-500/20 px-1 md:px-1.5 py-0.5 rounded">FREE</span>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
+        .testimonial-quote-icon-dentist {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          width: 24px;
+          height: 24px;
+          opacity: 0.3;
+        }
 
-                {/* Mystery Box */}
-                <div className="bg-gradient-to-r from-violet-600/20 to-purple-600/20 rounded-lg md:rounded-xl p-2.5 md:p-3 border border-violet-500/40 mb-2.5 md:mb-3">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/30 flex-shrink-0">
-                      <Gift className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-1.5 md:gap-2">
-                        <span className="text-white font-black text-xs md:text-sm">Mystery Box</span>
-                        <span className="bg-violet-500/30 text-violet-300 px-1 md:px-1.5 py-0.5 rounded text-[8px] md:text-[9px] font-black">SECRET</span>
-                      </div>
-                      <p className="text-white/50 text-[9px] md:text-[10px]">Exclusive surprise revealed after purchase</p>
-                    </div>
-                    <span className="text-violet-400 font-black text-xs md:text-sm">$500-$1.5k</span>
-                  </div>
-                </div>
+        @keyframes scroll-dentist {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
 
-                {/* Lifetime Updates */}
-                <div className="bg-gradient-to-r from-teal-500/15 to-cyan-500/15 rounded-lg md:rounded-xl p-2.5 md:p-3 border border-teal-500/40 mb-3 md:mb-4">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shadow-teal-500/30 flex-shrink-0">
-                      <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-1.5 md:gap-2">
-                        <span className="text-white font-black text-xs md:text-sm">Lifetime Updates</span>
-                        <span className="bg-teal-500/30 text-teal-300 px-1 md:px-1.5 py-0.5 rounded text-[8px] md:text-[9px] font-black">WEEKLY</span>
-                      </div>
-                      <p className="text-white/50 text-[9px] md:text-[10px]">New tools & templates added weekly forever</p>
-                    </div>
-                    <span className="text-teal-400 font-black text-xs md:text-sm">$297</span>
-                  </div>
-                </div>
+        /* Modern cubic-bezier for buttery smooth feel */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-                {/* Guarantee */}
-                <div className="bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/30 rounded-lg md:rounded-xl p-2.5 md:p-3 mb-3 md:mb-4">
-                  <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                    <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-teal-400 flex-shrink-0">
-                      <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" fill className="object-cover" />
-                    </div>
-                    <div>
-                      <p className="text-white font-black text-xs md:text-sm">"You Win Either Way" Guarantee</p>
-                      <div className="inline-flex items-center gap-1 bg-teal-500 rounded px-1 md:px-1.5 py-0.5 mt-0.5 md:mt-1">
-                        <CheckCircle className="w-2 h-2 md:w-2.5 md:h-2.5 text-white" />
-                        <span className="text-white text-[8px] md:text-[9px] font-bold">VERIFIED</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-1.5 md:space-y-2 text-xs md:text-sm">
-                    <div className="flex items-start gap-1.5 md:gap-2">
-                      <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-white/80 text-[10px] md:text-sm"><span className="text-white font-bold">30-Day Money-Back:</span> Full refund, no questions.</p>
-                    </div>
-                    <div className="flex items-start gap-1.5 md:gap-2">
-                      <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-white/80 text-[10px] md:text-sm"><span className="text-white font-bold">PLUS $50 Bonus:</span> If it doesn't help, I'll Venmo you $50.</p>
-                    </div>
-                    <div className="flex items-start gap-1.5 md:gap-2">
-                      <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-white/80 text-[10px] md:text-sm"><span className="text-white font-bold">Keep Everything:</span> Even if you refund, keep all bonuses.</p>
-                    </div>
-                  </div>
-                  <div className="mt-2 md:mt-3 bg-teal-500/10 rounded-lg p-1.5 md:p-2 text-center">
-                    <p className="text-teal-400 text-[10px] md:text-xs font-bold">You literally CANNOT lose. Either profit or get paid to try it.</p>
-                  </div>
-                </div>
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          will-change: opacity, transform;
+        }
 
-                {/* Price Section */}
-                <div className="bg-white/5 rounded-lg md:rounded-xl p-3 md:p-4 mb-3 md:mb-4">
-                  <div className="flex items-center justify-between mb-1.5 md:mb-2">
-                    <span className="text-white/50 text-xs md:text-sm">Total Value:</span>
-                    <span className="text-white/40 line-through text-xs md:text-sm">${197 + getDentistTotalBonusValue() + 297 + 500}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white font-bold text-sm md:text-lg">Today Only:</span>
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                      <span className="text-2xl md:text-3xl font-black text-teal-400">$58</span>
-                      <span className="bg-teal-500/20 text-teal-400 text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded font-black">
-                        70% OFF
-                      </span>
-                    </div>
-                  </div>
-                </div>
+        .animation-delay-100 { animation-delay: 100ms; }
+        .animation-delay-200 { animation-delay: 200ms; }
+        .animation-delay-300 { animation-delay: 300ms; }
+        .animation-delay-400 { animation-delay: 400ms; }
+        .animation-delay-500 { animation-delay: 500ms; }
+        .animation-delay-600 { animation-delay: 600ms; }
 
-                {/* CTA Buttons */}
-                <div className="space-y-1.5 md:space-y-2">
-                  <button
-                    onClick={() => {
-                      if (selectedBonuses.length !== 5) {
-                        alert('Please select exactly 5 bonuses first!')
-                        return
-                      }
-                      localStorage.setItem('selectedDentistBonuses', JSON.stringify(selectedBonuses))
-                      setIsModalOpen(false)
-                      setShowCheckoutModal(true)
-                    }}
-                    className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"
-                  >
-                    <Gift className="w-4 h-4 md:w-5 md:h-5" />
-                    Complete My Order - $58
-                    <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-                  </button>
+        /* Scale up animation */
+        @keyframes scaleUp {
+          from {
+            opacity: 0;
+            transform: scale(0.92);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
 
-                  <button
-                    onClick={closeModal}
-                    className="w-full text-white/70 text-xs md:text-sm py-2.5 md:py-3 hover:text-white transition-colors underline underline-offset-2"
-                  >
-                    Go back and review →
-                  </button>
-                </div>
+        .animate-scale-up {
+          animation: scaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
 
-                {/* Trust badges */}
-                <div className="flex items-center justify-center gap-1.5 md:gap-2 text-white/30 text-[9px] md:text-[10px] mt-2 md:mt-3">
-                  <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  <span>SSL Encrypted</span>
-                  <span>•</span>
-                  <span>Instant Access</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>,
-        document.body
-      )}
+        /* Modal scale in animation */
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
 
-      {/* GLOBAL STICKY CHECKOUT - Only when 5 bonuses selected */}
-      {selectedBonuses.length === 5 && !isModalOpen && isMounted && createPortal(
-        <div
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 999999,
-            padding: '12px 16px',
-            paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
-            background: 'linear-gradient(to top, rgba(10,10,10,0.98), rgba(10,10,10,0.9), transparent)',
-          }}
-        >
-          <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-            <div
-              style={{
-                background: 'linear-gradient(145deg, #0f172a, #1e293b)',
-                border: '2px solid rgba(20, 184, 166, 0.5)',
-                borderRadius: '20px',
-                padding: '16px',
-                boxShadow: '0 -8px 40px rgba(20, 184, 166, 0.15)',
-              }}
-            >
-              {/* Status Badge */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: 'rgba(20, 184, 166, 0.15)',
-                    border: '1px solid rgba(20, 184, 166, 0.4)',
-                    borderRadius: '100px',
-                    padding: '8px 16px',
-                  }}
-                >
-                  <CheckCircle style={{ width: '18px', height: '18px', color: '#14b8a6' }} />
-                  <span style={{ color: '#14b8a6', fontWeight: 800, fontSize: '13px' }}>5/5 SELECTED</span>
-                  <span style={{ color: '#06b6d4', fontWeight: 700, fontSize: '12px', marginLeft: '4px' }}>${animatedValue} VALUE</span>
-                </div>
-              </div>
+        .animate-scale-in {
+          animation: scaleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
 
-              {/* CTA Button */}
-              <button
-                onClick={() => {
-                  localStorage.setItem('selectedDentistBonuses', JSON.stringify(selectedBonuses))
-                  setIsModalOpen(true)
-                }}
-                style={{
-                  width: '100%',
-                  background: 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #14b8a6 100%)',
-                  color: 'black',
-                  padding: '16px 24px',
-                  borderRadius: '14px',
-                  fontWeight: 900,
-                  fontSize: '17px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '12px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 20px rgba(20, 184, 166, 0.4)',
-                }}
-              >
-                <Zap style={{ width: '20px', height: '20px' }} />
-                <span>Complete Order - $58</span>
-              </button>
+        /* Slow spin for guarantee badge */
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
 
-              {/* Trust Line */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '12px',
-                marginTop: '10px',
-                color: 'rgba(255,255,255,0.5)',
-                fontSize: '10px',
-              }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Shield style={{ width: '12px', height: '12px', color: '#14b8a6' }} />
-                  SSL Secure
-                </span>
-                <span style={{ color: 'rgba(255,255,255,0.3)' }}>•</span>
-                <span>30-Day Guarantee</span>
-                <span style={{ color: 'rgba(255,255,255,0.3)' }}>•</span>
-                <span>Instant Access</span>
-              </div>
-            </div>
-          </div>
-        </div>,
-        document.body
-      )}
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
 
-
-      {/* Checkout Modal */}
-      <CheckoutModal
-        isOpen={showCheckoutModal}
-        onClose={() => setShowCheckoutModal(false)}
-        planId={DENTIST_PLAN_IDS.main}
-        planName="CloneYourself for Dentists"
-        price="$58"
-      />
-
-      {/* Spin Wheel Modal */}
-      {showSpinWheel && (
-        <DentistSpinWheel
-          isOpen={showSpinWheel}
-          onClose={() => setShowSpinWheel(false)}
-        />
-      )}
-    </div>
+        /* Respect user motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-fade-in-up,
+          .animate-scale-up,
+          .animate-scale-in,
+          .testimonial-scroll-track-dentist {
+            animation: none;
+            opacity: 1;
+            transform: none;
+          }
+        }
+      `}</style>
+    </main>
   )
 }

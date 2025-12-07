@@ -1,19 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Clock, CheckCircle, ArrowRight, Gift, Smile, TrendingUp, FileText, Mail, Sparkles, Shield, Users, Star, Camera } from 'lucide-react'
+import { Clock, CheckCircle, ArrowRight, Gift } from 'lucide-react'
 import Image from 'next/image'
-import { DENTIST_BONUS_PRODUCTS, DENTIST_PLAN_IDS } from '../../config/dentist-bonus-products'
+import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 import CheckoutModal from '../../components/CheckoutModal'
-import { trackInitiateCheckout, trackViewContent } from '../../utils/meta-tracking'
+import { DENTIST_PAYMENT_CONFIG } from '../../config/payment'
 
 export default function DentistOtoPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
   const [showCheckoutModal, setShowCheckoutModal] = useState(false)
 
-  // Track ViewContent on page load
+  // Track page view when payment integration is added
   useEffect(() => {
-    trackViewContent('Pro Bundle - 5 Premium Tools (Upsell)', 9.95)
+    // TODO: Add tracking when payment is integrated
   }, [])
 
   // Get the 5 upsell products (last 5 from bonus products)
@@ -209,7 +209,6 @@ export default function DentistOtoPage() {
           <div className="space-y-1.5 md:space-y-2">
             <button
               onClick={() => {
-                trackInitiateCheckout('Pro Bundle - 5 Premium Tools (Upsell)', 9.95)
                 setShowCheckoutModal(true)
               }}
               className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"
@@ -245,9 +244,9 @@ export default function DentistOtoPage() {
         isOpen={showCheckoutModal}
         onClose={() => setShowCheckoutModal(false)}
         onDecline={handleDecline}
-        planId={DENTIST_PLAN_IDS.upsell}
-        planName="Pro Bundle - 5 Premium Tools"
-        price="$9.95"
+        planId={DENTIST_PAYMENT_CONFIG.plans.upsell.id}
+        planName={DENTIST_PAYMENT_CONFIG.plans.upsell.name}
+        price={`$${upsellPrice}`}
         declineText="No thanks, skip this offer →"
       />
     </div>

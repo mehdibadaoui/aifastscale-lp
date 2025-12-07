@@ -1,6 +1,6 @@
 /**
  * Bonus Products Configuration
- * All bonus products available for upsell after main purchase
+ * All bonus products available
  *
  * ✅ VETERAN COPYWRITER EDITION
  * - Never say "PDF" - use Masterclass/Guide/Blueprint/Playbook
