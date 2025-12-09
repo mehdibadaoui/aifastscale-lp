@@ -166,14 +166,14 @@ export default function CleanLandingPage() {
           }
         })
       },
-      { threshold: 0, rootMargin: '50px 0px 200px 0px' } // Trigger 200px before entering viewport
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' } // Trigger when 10% visible, 50px before bottom edge
     )
 
     // Small delay to ensure DOM is ready
     const initTimer = setTimeout(() => {
       const animatedElements = document.querySelectorAll('[data-animate]')
       animatedElements.forEach((el) => observer.observe(el))
-    }, 100)
+    }, 50)
 
     return () => {
       observer.disconnect()
@@ -1338,6 +1338,23 @@ export default function CleanLandingPage() {
                 </div>
               </div>
             </div>
+
+            {/* CTA - After How It Works */}
+            <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
+              <a
+                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
+              >
+                <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
+                  <Video className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="sm:hidden">Create My First Video</span>
+                  <span className="hidden sm:inline">Create My First AI Video in 7 Minutes</span>
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </a>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">Join 847+ agents who made the switch</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1712,6 +1729,24 @@ export default function CleanLandingPage() {
             ))}
           </div>
         </div>
+
+        {/* CTA - After Testimonials */}
+        <div className={`max-w-xl mx-auto px-3 sm:px-6 mt-8 sm:mt-12 text-center relative z-10 ${visibleSections.has('testimonials') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+          <p className="text-gray-400 text-sm mb-4">Ready to join them?</p>
+          <a
+            href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+            onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+            className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
+          >
+            <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
+              <Crown className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="sm:hidden">Join 847+ Agents</span>
+              <span className="hidden sm:inline">Join 847+ Successful Agents Today</span>
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </a>
+          <p className="text-gray-500 text-xs mt-3">30-day money back guarantee</p>
+        </div>
       </section>
 
       {/* ================================================================
@@ -1960,6 +1995,24 @@ export default function CleanLandingPage() {
                   )}
                 </div>
               ))}
+            </div>
+
+            {/* CTA - After FAQ */}
+            <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
+              <a
+                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
+              >
+                <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="sm:hidden">Try It Risk-Free</span>
+                  <span className="hidden sm:inline">Try It Risk-Free for 30 Days</span>
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </a>
+              <p className="text-gray-500 text-xs mt-3">Full refund + $50 if it doesn't work</p>
             </div>
           </div>
         </div>
