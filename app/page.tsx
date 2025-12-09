@@ -1612,32 +1612,32 @@ export default function CleanLandingPage() {
         <div className="sm:hidden px-3">
           <div className="grid grid-cols-2 gap-3">
             {testimonials.slice(0, 4).map((t) => (
-              <div key={`mobile-${t.id}`} className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl p-3 border border-white/10 hover:border-gold-premium/30 transition-colors">
+              <div key={`mobile-${t.id}`} className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-gold-premium/30 transition-colors">
                 {/* Result Badge */}
-                <div className="bg-gold-premium/20 text-gold-premium text-[10px] font-bold px-2 py-1 rounded-full inline-block mb-2">
+                <div className="bg-gold-premium/20 text-gold-premium text-xs font-bold px-2.5 py-1 rounded-full inline-block mb-2">
                   {t.results}
                 </div>
 
                 {/* Short Review */}
-                <p className="text-gray-300 text-[11px] leading-relaxed mb-3 line-clamp-3">
+                <p className="text-gray-300 text-xs leading-relaxed mb-3 line-clamp-3">
                   "{t.review}"
                 </p>
 
                 {/* Author - Compact */}
                 <div className="flex items-center gap-2">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gold-premium/40">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gold-premium/40">
                     <Image src={t.image} alt={t.name} fill className="object-cover" />
                   </div>
                   <div>
-                    <p className="text-white font-semibold text-xs">{t.name}</p>
-                    <p className="text-gray-500 text-[10px]">{t.location}</p>
+                    <p className="text-white font-semibold text-sm">{t.name}</p>
+                    <p className="text-gray-500 text-xs">{t.location}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
           {/* See more indicator */}
-          <p className="text-center text-gray-500 text-xs mt-4">+ 843 more success stories</p>
+          <p className="text-center text-gray-400 text-sm mt-4 font-medium">+ 843 more success stories</p>
         </div>
 
         {/* DESKTOP: Infinite Scroll Carousel */}

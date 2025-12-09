@@ -2,6 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================================
+   MOBILE-FIRST TYPOGRAPHY ENHANCEMENTS
+   Minimum font sizes for better readability on small screens
+   ================================================================ */
+
+/* Ensure minimum readable text sizes on mobile */
+@media (max-width: 640px) {
+  /* Base body text should never be smaller than 14px */
+  body {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Improve small text readability */
+  .text-\[10px\], .text-\[11px\] {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+  .text-\[9px\] {
+    font-size: 11px !important;
+  }
+
+  /* Ensure adequate line height for body text */
+  p, span, div {
+    line-height: 1.5;
+  }
+
+  /* Better touch targets - minimum 44px */
+  button, a, [role="button"] {
+    min-height: 44px;
+  }
+
+  /* Improve form elements on mobile */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+}
+
+/* Extra small phones (iPhone SE, etc) */
+@media (max-width: 375px) {
+  .text-xs {
+    font-size: 0.8rem !important; /* 12.8px instead of 12px */
+  }
+
+  .text-sm {
+    font-size: 0.9rem !important; /* 14.4px instead of 14px */
+  }
+
+  /* Slightly larger headings for readability */
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ================================================================
+   MOBILE TOUCH IMPROVEMENTS
+   Better tap feedback and spacing
+   ================================================================ */
+@media (max-width: 640px) {
+  /* Add tap highlight for better feedback */
+  button, a {
+    -webkit-tap-highlight-color: rgba(212, 175, 55, 0.2);
+  }
+
+  /* Improve scrolling performance */
+  .overflow-x-auto, .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent accidental text selection while scrolling */
+  .no-select {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
 /* Members Page Premium Animations */
 @keyframes confetti {
   0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
