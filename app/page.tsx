@@ -367,16 +367,17 @@ export default function CleanLandingPage() {
             </div>
 
             {/* CTA - Scrolls to What's Inside */}
-            <button
-              onClick={() => scrollToSection('whats-inside')}
-              className={`group relative bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-10 py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 overflow-hidden animate-glow-pulse ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
+            <a
+              href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+              onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+              className={`group relative bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 overflow-hidden animate-glow-pulse ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
               <span className="relative flex items-center gap-2 sm:gap-3">
-                See What's Inside
-                <ArrowDown className="w-5 h-5 sm:w-6 sm:h-6" />
+                Start Creating AI Videos
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </span>
-            </button>
+            </a>
 
             {/* PRICE TEASER - Shows value early */}
             <div className={`mt-4 sm:mt-5 flex flex-col items-center gap-2 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
@@ -625,6 +626,19 @@ export default function CleanLandingPage() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* CTA After Jessica Proof */}
+            <div className="mt-8 text-center">
+              <a
+                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
+                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+                className="group inline-flex items-center gap-3 bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/40"
+              >
+                <span>Get The Same System Jessica Used</span>
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">Join 847+ agents already creating AI videos</p>
             </div>
           </div>
         </div>
@@ -1196,13 +1210,13 @@ export default function CleanLandingPage() {
               <a
                 href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
                 onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-5 sm:py-6 rounded-xl font-black text-lg sm:text-2xl shadow-2xl shadow-gold-premium/30 flex items-center justify-center gap-3 mb-4 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer overflow-hidden"
+                className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-5 sm:py-6 rounded-xl font-black text-lg sm:text-2xl shadow-2xl shadow-gold-premium/30 flex items-center justify-center gap-3 mb-4 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer overflow-hidden animate-glow-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2 sm:gap-3">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
-                  Yes! Give Me Instant Access
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  Claim My $1,659 Bundle for $37
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
 
@@ -1566,7 +1580,7 @@ export default function CleanLandingPage() {
       </section>
 
       {/* ================================================================
-          6. TESTIMONIALS - DARK ANIMATED CAROUSEL
+          6. TESTIMONIALS - MOBILE: 2-ROW GRID | DESKTOP: CAROUSEL
           ================================================================ */}
       <section
         id="testimonials"
@@ -1594,8 +1608,40 @@ export default function CleanLandingPage() {
           </div>
         </div>
 
-        {/* Infinite Scroll Carousel with fade shadows */}
-        <div className="testimonial-carousel-wrapper">
+        {/* MOBILE: 2-Row Grid Layout - Fast & Clean */}
+        <div className="sm:hidden px-3">
+          <div className="grid grid-cols-2 gap-3">
+            {testimonials.slice(0, 4).map((t) => (
+              <div key={`mobile-${t.id}`} className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl p-3 border border-white/10 hover:border-gold-premium/30 transition-colors">
+                {/* Result Badge */}
+                <div className="bg-gold-premium/20 text-gold-premium text-[10px] font-bold px-2 py-1 rounded-full inline-block mb-2">
+                  {t.results}
+                </div>
+
+                {/* Short Review */}
+                <p className="text-gray-300 text-[11px] leading-relaxed mb-3 line-clamp-3">
+                  "{t.review}"
+                </p>
+
+                {/* Author - Compact */}
+                <div className="flex items-center gap-2">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gold-premium/40">
+                    <Image src={t.image} alt={t.name} fill className="object-cover" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-xs">{t.name}</p>
+                    <p className="text-gray-500 text-[10px]">{t.location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* See more indicator */}
+          <p className="text-center text-gray-500 text-xs mt-4">+ 843 more success stories</p>
+        </div>
+
+        {/* DESKTOP: Infinite Scroll Carousel */}
+        <div className="hidden sm:block testimonial-carousel-wrapper">
           <div className="testimonial-scroll-track">
             {/* First set of testimonials */}
             {testimonials.map((t) => (
@@ -1837,8 +1883,8 @@ export default function CleanLandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
-                  Yes! Give Me Instant Access
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  Start My 7-Minute Video System
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
 
@@ -2134,13 +2180,13 @@ export default function CleanLandingPage() {
               <a
                 href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
                 onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden shine-effect"
+                className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden shine-effect animate-glow-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
-                  Yes! Give Me Instant Access
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  Get Instant Access Now
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
 
@@ -2160,34 +2206,9 @@ export default function CleanLandingPage() {
       </section>
 
       {/* ================================================================
-          STICKY MOBILE CTA - Shows after scrolling past hero
+          FOOTER - BLACK
           ================================================================ */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-black/95 backdrop-blur-lg border-t border-gold-premium/30 p-3 transform translate-y-0 transition-transform duration-300"
-           style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
-        <a
-          href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-          onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-          className="w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-3.5 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-lg"
-        >
-          <span className="flex items-center gap-2">
-            Get Access — $37
-            <ArrowRight className="w-4 h-4" />
-          </span>
-        </a>
-        <div className="flex items-center justify-center gap-3 mt-2 text-gray-400 text-[10px]">
-          <span className="flex items-center gap-1">
-            <Shield className="w-3 h-3 text-green-500" />
-            30-Day Guarantee
-          </span>
-          <span>•</span>
-          <span>Instant Access</span>
-        </div>
-      </div>
-
-      {/* ================================================================
-          FOOTER - BLACK (Extra padding on mobile for sticky CTA)
-          ================================================================ */}
-      <footer className="py-6 sm:py-10 pb-24 sm:pb-10 bg-black border-t border-gray-900">
+      <footer className="py-6 sm:py-10 bg-black border-t border-gray-900">
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 mb-3 sm:mb-6 text-gray-500 text-xs sm:text-sm">
