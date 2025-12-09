@@ -2344,71 +2344,78 @@ a.luxury-link:hover::after {
 }
 
 /* ============================================================================
-   MASTER SCROLL ANIMATION SYSTEM - CLEAN & WORKING
-   All sections animate beautifully when scrolling into view
+   MASTER SCROLL ANIMATION SYSTEM - SEO SAFE
+   Content is VISIBLE by default, animations are enhancement only
    ============================================================================ */
 
-/* Base state for ALL animated sections - starts hidden */
+/*
+ * IMPORTANT: Content must be visible by default for:
+ * - SEO crawlers (Google doesn't run JS)
+ * - Users with JS disabled
+ * - Fast initial paint (FCP/LCP)
+ *
+ * Animations only activate AFTER JS adds .js-ready to html
+ */
+
+/* DEFAULT: All content visible */
 [data-animate] {
-  opacity: 0;
-  transform: translateY(60px);
-  transition:
-    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* When section becomes visible - animate in */
-[data-animate].animate-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* HERO - Always visible immediately */
-#hero[data-animate] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ============================================================================
-   CHILD ELEMENT ANIMATIONS - Staggered cascade effect
-   ============================================================================ */
-
-/* Elements that animate when parent section is visible */
-.scroll-child {
+/* ONLY when JS is ready: hide sections that aren't visible yet */
+html.js-ready [data-animate]:not(.animate-visible):not(#hero) {
   opacity: 0;
   transform: translateY(40px);
-  transition:
-    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.scroll-child.animate-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Cards with scale effect */
-.scroll-card {
-  opacity: 0;
-  transform: translateY(40px) scale(0.95);
   transition:
     opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.scroll-card.animate-visible,
-[data-animate].animate-visible .scroll-card {
+/* Animate in when visible */
+html.js-ready [data-animate].animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero is ALWAYS visible */
+#hero {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ============================================================================
+   CHILD ELEMENT ANIMATIONS - Only with JS
+   ============================================================================ */
+
+/* Cards - visible by default */
+.scroll-card {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-/* Stagger delays */
-.scroll-delay-1 { transition-delay: 100ms !important; }
-.scroll-delay-2 { transition-delay: 200ms !important; }
-.scroll-delay-3 { transition-delay: 300ms !important; }
-.scroll-delay-4 { transition-delay: 400ms !important; }
-.scroll-delay-5 { transition-delay: 500ms !important; }
-.scroll-delay-6 { transition-delay: 600ms !important; }
+/* Only animate when JS ready */
+html.js-ready .scroll-card:not(.animate-visible) {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition:
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+html.js-ready .scroll-card.animate-visible,
+html.js-ready [data-animate].animate-visible .scroll-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Stagger delays - only with JS */
+html.js-ready .scroll-delay-1 { transition-delay: 100ms; }
+html.js-ready .scroll-delay-2 { transition-delay: 200ms; }
+html.js-ready .scroll-delay-3 { transition-delay: 300ms; }
+html.js-ready .scroll-delay-4 { transition-delay: 400ms; }
+html.js-ready .scroll-delay-5 { transition-delay: 500ms; }
+html.js-ready .scroll-delay-6 { transition-delay: 600ms; }
 
 /* ============================================================================
    HERO ANIMATIONS - Immediate on page load
@@ -2437,39 +2444,55 @@ a.luxury-link:hover::after {
 .animation-delay-600 { animation-delay: 600ms; }
 
 /* ============================================================================
-   LEGACY ANIMATION CLASSES - Keep for compatibility
+   LEGACY ANIMATION CLASSES - SEO Safe
    ============================================================================ */
 
+/* Cards visible by default */
 .animate-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Only animate when JS is ready */
+html.js-ready .animate-card:not(.animate-visible):not(.visible) {
   opacity: 0;
   transform: translateY(30px) scale(0.96);
   transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.animate-card.visible,
-[data-animate].animate-visible .animate-card {
+html.js-ready .animate-card.visible,
+html.js-ready .animate-card.animate-visible,
+html.js-ready [data-animate].animate-visible .animate-card {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
+/* Scale-in visible by default */
 .animate-scale-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+html.js-ready .animate-scale-in:not(.animate-visible):not(.visible) {
   opacity: 0;
   transform: scale(0.9);
   transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.animate-scale-in.visible,
-[data-animate].animate-visible .animate-scale-in {
+html.js-ready .animate-scale-in.visible,
+html.js-ready .animate-scale-in.animate-visible,
+html.js-ready [data-animate].animate-visible .animate-scale-in {
   opacity: 1;
   transform: scale(1);
 }
 
-.stagger-delay-1 { transition-delay: 100ms; }
-.stagger-delay-2 { transition-delay: 200ms; }
-.stagger-delay-3 { transition-delay: 300ms; }
-.stagger-delay-4 { transition-delay: 400ms; }
-.stagger-delay-5 { transition-delay: 500ms; }
-.stagger-delay-6 { transition-delay: 600ms; }
+/* Stagger delays only with JS */
+html.js-ready .stagger-delay-1 { transition-delay: 100ms; }
+html.js-ready .stagger-delay-2 { transition-delay: 200ms; }
+html.js-ready .stagger-delay-3 { transition-delay: 300ms; }
+html.js-ready .stagger-delay-4 { transition-delay: 400ms; }
+html.js-ready .stagger-delay-5 { transition-delay: 500ms; }
+html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
 
 /* ============================================================================
    SPECIAL EFFECTS

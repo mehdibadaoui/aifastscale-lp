@@ -154,8 +154,11 @@ export default function CleanLandingPage() {
   ]
 
   // SMOOTH SCROLL ANIMATION SYSTEM
-  // Triggers beautiful animations as user scrolls down the page
+  // SEO-safe: Content visible by default, animations are progressive enhancement
   useEffect(() => {
+    // Add js-ready class to enable animations (content visible without JS for SEO)
+    document.documentElement.classList.add('js-ready')
+
     // Create observer with smooth trigger points
     const observer = new IntersectionObserver(
       (entries) => {
@@ -164,12 +167,12 @@ export default function CleanLandingPage() {
             // Add visible class for CSS animations
             entry.target.classList.add('animate-visible')
 
-            // Also animate all children with .scroll-child class
-            const children = entry.target.querySelectorAll('.scroll-child')
+            // Also animate all children with animation classes
+            const children = entry.target.querySelectorAll('.scroll-child, .scroll-card, .animate-card')
             children.forEach((child, index) => {
               setTimeout(() => {
                 child.classList.add('animate-visible')
-              }, index * 100) // Stagger by 100ms
+              }, index * 80) // Stagger by 80ms
             })
 
             // Update React state for conditional rendering
@@ -183,12 +186,12 @@ export default function CleanLandingPage() {
         })
       },
       {
-        threshold: 0.1, // Trigger when 10% is visible
-        rootMargin: '0px 0px -10% 0px' // Trigger slightly before fully in view
+        threshold: 0.12, // Trigger when 12% is visible
+        rootMargin: '0px 0px -5% 0px' // Trigger slightly before fully in view
       }
     )
 
-    // Start observing all sections
+    // Start observing all sections after a brief delay
     const initTimer = setTimeout(() => {
       const sections = document.querySelectorAll('[data-animate]')
       sections.forEach((el) => {
@@ -199,11 +202,12 @@ export default function CleanLandingPage() {
           observer.observe(el)
         }
       })
-    }, 100)
+    }, 50)
 
     return () => {
       observer.disconnect()
       clearTimeout(initTimer)
+      document.documentElement.classList.remove('js-ready')
     }
   }, [])
 
