@@ -377,26 +377,18 @@ export default function CleanLandingPage() {
               <span className="text-white font-semibold">without filming, editing, or being on camera</span>
             </p>
 
-            {/* Hero Image - Clean, no badge - RESPONSIVE for mobile performance */}
+            {/* Hero Image - LCP element - NO wrapper, direct Image for best performance */}
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-gold-premium/30 sm:border-2 sm:border-gold-premium/40 shadow-xl shadow-gold-premium/10">
-                {/* Mobile: smaller optimized image */}
-                <picture>
-                  <source
-                    media="(max-width: 768px)"
-                    srcSet="/images/hero-showcase-mobile.webp"
-                    type="image/webp"
-                  />
-                  <Image
-                    src="/images/hero-showcase.webp"
-                    alt="AI Video System Showcase"
-                    width={1365}
-                    height={768}
-                    className="w-full h-auto"
-                    priority
-                    fetchPriority="high"
-                  />
-                </picture>
+                <Image
+                  src="/images/hero-showcase.webp"
+                  alt="AI Video System Showcase"
+                  width={1365}
+                  height={768}
+                  className="w-full h-auto"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                />
               </div>
             </div>
 
@@ -520,26 +512,20 @@ export default function CleanLandingPage() {
                   </p>
                 </div>
 
-                {/* Big Before/After Video - Full Width - Lazy loaded */}
-                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-gold-premium/30 shadow-2xl shadow-gold-premium/10">
+                {/* Big Before/After Video - Full Width - Lazy loaded - Fixed aspect ratio to prevent CLS */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-gold-premium/30 shadow-2xl shadow-gold-premium/10" style={{ aspectRatio: '16/9' }}>
                   <video
                     ref={jessicaVideoRef}
                     muted
                     loop
                     playsInline
                     preload="none"
-                    className="w-full h-auto"
+                    className="w-full h-full object-cover"
                     poster="/images/jessica-photo_result.webp"
+                    width={1365}
+                    height={768}
                   >
                     <source src="/videos/jessica-demo.mp4" type="video/mp4" />
-                    {/* Fallback to static image for browsers that don't support video */}
-                    <Image
-                      src="/images/jessica-photo_result.webp"
-                      alt="Jessica - Photo to AI Video transformation"
-                      width={1365}
-                      height={768}
-                      className="w-full h-auto"
-                    />
                   </video>
                   {/* Subtle gradient overlay at bottom */}
                   <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
