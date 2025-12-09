@@ -65,6 +65,7 @@ export default function CleanLandingPage() {
   // REMOVED: spotsLeft - fake scarcity kills trust
   const [viewersNow, setViewersNow] = useState(23)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const jessicaVideoRef = useRef<HTMLVideoElement>(null)
 
   // Animation refs for scroll detection - initialize with hero visible for instant animation
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
@@ -209,6 +210,28 @@ export default function CleanLandingPage() {
       clearTimeout(initTimer)
       document.documentElement.classList.remove('js-ready')
     }
+  }, [])
+
+  // Lazy load Jessica video when it becomes visible
+  useEffect(() => {
+    const videoElement = jessicaVideoRef.current
+    if (!videoElement) return
+
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoElement.load()
+            videoElement.play().catch(() => {})
+            videoObserver.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.3, rootMargin: '100px' }
+    )
+
+    videoObserver.observe(videoElement)
+    return () => videoObserver.disconnect()
   }, [])
 
   // Countdown timer - REAL deadline: December 15th for Organic Leads Mastery bonus
@@ -497,14 +520,14 @@ export default function CleanLandingPage() {
                   </p>
                 </div>
 
-                {/* Big Before/After Video - Full Width - Autoplay like GIF */}
+                {/* Big Before/After Video - Full Width - Lazy loaded */}
                 <div className="relative w-full rounded-2xl overflow-hidden border-2 border-gold-premium/30 shadow-2xl shadow-gold-premium/10">
                   <video
-                    autoPlay
+                    ref={jessicaVideoRef}
                     muted
                     loop
                     playsInline
-                    preload="metadata"
+                    preload="none"
                     className="w-full h-auto"
                     poster="/images/jessica-photo_result.webp"
                   >
@@ -1443,7 +1466,7 @@ export default function CleanLandingPage() {
                       muted={isVideoMuted}
                       playsInline
                       webkit-playsinline="true"
-                      preload="auto"
+                      preload="none"
                       onEnded={() => setIsVideoPlaying(false)}
                       onPause={() => setIsVideoPlaying(false)}
                       onPlay={() => setIsVideoPlaying(true)}
