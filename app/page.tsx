@@ -153,31 +153,47 @@ export default function CleanLandingPage() {
     },
   ]
 
-  // Scroll animation observer - trigger animations as sections come into view
+  // SMOOTH SCROLL ANIMATION SYSTEM
+  // Triggers beautiful animations as user scrolls down the page
   useEffect(() => {
+    // Create observer with smooth trigger points
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // Add visible class for CSS animations
             entry.target.classList.add('visible')
+
+            // Update React state for conditional rendering
             if (entry.target.id) {
               setVisibleSections((prev) => new Set([...prev, entry.target.id]))
             }
+
+            // Stop observing once visible (animations don't reverse)
+            observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' } // Trigger when 10% visible, 50px before bottom edge
+      {
+        threshold: 0.05, // Trigger when just 5% is visible
+        rootMargin: '0px 0px 100px 0px' // Start animation 100px before element enters viewport
+      }
     )
 
-    // Small delay to ensure DOM is ready
-    const initTimer = setTimeout(() => {
+    // Start observing after a tiny delay for DOM readiness
+    const initTimer = requestAnimationFrame(() => {
       const animatedElements = document.querySelectorAll('[data-animate]')
-      animatedElements.forEach((el) => observer.observe(el))
-    }, 50)
+      animatedElements.forEach((el) => {
+        // Don't observe hero - it's always visible
+        if (el.id !== 'hero') {
+          observer.observe(el)
+        }
+      })
+    })
 
     return () => {
       observer.disconnect()
-      clearTimeout(initTimer)
+      cancelAnimationFrame(initTimer)
     }
   }, [])
 
@@ -302,27 +318,26 @@ export default function CleanLandingPage() {
 
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Main Headline - BIG & BOLD */}
+            {/* Main Headline - HORMOZI-STYLE VALUE EQUATION */}
             <h1 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
-              <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
+              <span className="text-white drop-shadow-lg">From One Selfie to</span>
               <br />
               <span className="relative inline-block">
                 <span className="bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: '0 0 40px rgba(212, 175, 55, 0.3)' }}>
-                  Talking AI Video
+                  100+ Leads
                 </span>
               </span>
-              <br />
-              <span className="text-white drop-shadow-lg">&</span>
+              <span className="text-white drop-shadow-lg"> in </span>
               <span className="bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium bg-clip-text text-transparent" style={{ textShadow: '0 0 40px rgba(212, 175, 55, 0.3)' }}>
-                {' '}Generate 100+ Leads
+                7 Minutes
               </span>
             </h1>
 
-            {/* Subtitle - Larger & More Visible */}
-            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-5 sm:mb-8 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              Even if you've never edited a video in your life —
+            {/* Subtitle - SOCIAL PROOF + OBJECTION KILLER */}
+            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-5 sm:mb-8 max-w-3xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              The AI video system <span className="text-gold-premium font-bold">847+ real estate agents</span> use to create viral content
               <br className="hidden sm:block" />
-              <span className="text-white font-semibold">all you need is your phone</span>
+              <span className="text-white font-semibold">without filming, editing, or being on camera</span>
             </p>
 
             {/* Hero Image - Clean, no badge - RESPONSIVE for mobile performance */}
@@ -666,8 +681,8 @@ export default function CleanLandingPage() {
             </div>
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
-            <div className={`bg-gradient-to-br from-gold-premium/15 to-gold-premium/5 border-2 border-gold-premium rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
+            <div className={`bg-gradient-to-br from-gold-premium/15 to-gold-premium/5 border-2 border-gold-premium rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 animate-scale-in ${
+              visibleSections.has('whats-inside') ? 'visible' : ''
             }`}>
               {/* Large Course Thumbnail */}
               <div className="relative w-full aspect-video">
@@ -737,7 +752,7 @@ export default function CleanLandingPage() {
                   BONUS #1 - ORGANIC LEADS MASTERY (THE ANCHOR - $197)
                   This is the "I'd pay for this alone" product
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-emerald-500/10 via-black to-emerald-500/5 border-2 border-emerald-500/50 rounded-2xl sm:rounded-3xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-emerald-500/10 via-black to-emerald-500/5 border-2 border-emerald-500/50 rounded-2xl sm:rounded-3xl overflow-hidden hover-lift animate-card stagger-delay-1 ${visibleSections.has('whats-inside') ? 'visible' : ''}`}>
                 {/* Premium Badge */}
                 <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                   <span className="bg-gradient-to-r from-emerald-500 to-green-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg shadow-emerald-500/30 uppercase tracking-wider animate-pulse">
@@ -802,7 +817,7 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #2 - THE SCRIPT VAULT ($97)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-amber-500/10 via-black to-amber-500/5 border border-amber-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-amber-500/10 via-black to-amber-500/5 border border-amber-500/40 rounded-2xl overflow-hidden hover-lift animate-card stagger-delay-2 ${visibleSections.has('whats-inside') ? 'visible' : ''}`}>
                 {/* Fan Favorite Badge */}
                 <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                   <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
@@ -866,7 +881,7 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #3 - AI REAL ESTATE MENTOR ($97)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-violet-500/10 via-black to-violet-500/5 border border-violet-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-violet-500/10 via-black to-violet-500/5 border border-violet-500/40 rounded-2xl overflow-hidden hover-lift animate-card stagger-delay-3 ${visibleSections.has('whats-inside') ? 'visible' : ''}`}>
                 {/* AI Badge */}
                 <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                   <span className="bg-gradient-to-r from-violet-500 to-purple-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
@@ -930,7 +945,7 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #4 - DM-TO-DEAL SYSTEM ($67)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-pink-500/10 via-black to-pink-500/5 border border-pink-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-pink-500/10 via-black to-pink-500/5 border border-pink-500/40 rounded-2xl overflow-hidden hover-lift animate-card stagger-delay-4 ${visibleSections.has('whats-inside') ? 'visible' : ''}`}>
                 {/* Proven Badge */}
                 <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                   <span className="bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
@@ -994,7 +1009,7 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #5 - 90-DAY AUTHORITY ACCELERATOR ($47)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-cyan-500/10 via-black to-cyan-500/5 border border-cyan-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-cyan-500/10 via-black to-cyan-500/5 border border-cyan-500/40 rounded-2xl overflow-hidden hover-lift animate-card stagger-delay-5 ${visibleSections.has('whats-inside') ? 'visible' : ''}`}>
                 {/* Roadmap Badge */}
                 <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                   <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
@@ -1309,10 +1324,9 @@ export default function CleanLandingPage() {
               ].map((item, i) => (
                 <div
                   key={item.step}
-                  className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-gold-premium/50 transition-all hover-3d hover:shadow-xl ${
-                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''
+                  className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-gold-premium/50 transition-all hover-3d hover:shadow-xl animate-card stagger-delay-${i + 1} ${
+                    visibleSections.has('how-it-works') ? 'visible' : ''
                   }`}
-                  style={{ animationDelay: `${i * 150}ms` }}
                 >
                   <div className="absolute -top-3 sm:-top-5 left-4 sm:left-8 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-gold-premium to-gold-dark rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
                     <span className="text-black font-black text-sm sm:text-xl">{item.step}</span>
