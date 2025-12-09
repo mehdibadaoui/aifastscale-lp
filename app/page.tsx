@@ -366,15 +366,15 @@ export default function CleanLandingPage() {
               </div>
             </div>
 
-            {/* CTA - Scrolls to What's Inside */}
+            {/* CTA - Main Hero Button */}
             <a
               href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
               onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-              className={`group relative bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 overflow-hidden animate-glow-pulse ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
+              className={`group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-6 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <span className="relative flex items-center gap-2 sm:gap-3">
-                Start Creating AI Videos
+              <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
+                <span className="sm:hidden">Get Instant Access</span>
+                <span className="hidden sm:inline">Start Creating AI Videos</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
