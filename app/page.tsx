@@ -512,23 +512,19 @@ export default function CleanLandingPage() {
                   </p>
                 </div>
 
-                {/* Big Before/After Video - Full Width - Lazy loaded - Fixed aspect ratio to prevent CLS */}
-                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-gold-premium/30 shadow-2xl shadow-gold-premium/10" style={{ aspectRatio: '16/9' }}>
+                {/* Big Before/After Video - Full Width - Lazy loaded - Original size preserved */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-gold-premium/30 shadow-2xl shadow-gold-premium/10 bg-black">
                   <video
                     ref={jessicaVideoRef}
                     muted
                     loop
                     playsInline
                     preload="none"
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto block"
                     poster="/images/jessica-photo_result.webp"
-                    width={1365}
-                    height={768}
                   >
                     <source src="/videos/jessica-demo.mp4" type="video/mp4" />
                   </video>
-                  {/* Subtle gradient overlay at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
 
                 {/* Verified Badge */}
@@ -1397,58 +1393,64 @@ export default function CleanLandingPage() {
       </section>
 
       {/* ================================================================
-          5. LUCAS CASE STUDY - LIGHT SECTION (Alternating)
+          5. LUCAS CASE STUDY - DARK PREMIUM SECTION
           ================================================================ */}
       <section
         id="case-study-lucas"
         data-animate
-        className="py-10 sm:py-24 bg-gradient-to-br from-stone-100 via-white to-amber-50/30 relative overflow-hidden"
+        className="py-12 sm:py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden"
       >
-        {/* Subtle animated particles */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.2) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }} />
-        </div>
-        <div className="w-full px-3 sm:px-6">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-premium/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-gold-premium/5 rounded-full blur-3xl" />
+
+        <div className="w-full px-4 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            {/* Section Header - Different from Jessica */}
-            <div className={`mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study-lucas') ? 'animate-fade-in-up' : ''}`}>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 bg-gold-premium/20 border border-gold-premium/40 px-3 py-1.5 rounded-full mb-3">
-                    <div className="w-2 h-2 bg-gold-premium rounded-full animate-pulse" />
-                    <span className="text-gold-dark font-bold text-xs uppercase tracking-wide">Luxury Listing Success</span>
-                  </div>
-                  <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight">
-                    One AI Video Sold a<br />
-                    <span className="text-gold-dark">$1.85M Luxury Villa</span>
-                  </h2>
-                </div>
-                {/* Big Commission Badge */}
-                <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/10 border-2 border-green-600/50 rounded-2xl p-4 sm:p-6 text-center shadow-lg">
-                  <p className="text-green-700 text-xs font-bold uppercase tracking-wider mb-1">Commission Earned</p>
-                  <p className="text-green-600 text-3xl sm:text-5xl font-black">$46,250</p>
-                  <p className="text-green-700/70 text-xs mt-1">From 1 video</p>
-                </div>
+
+            {/* Section Header - Centered */}
+            <div className={`text-center mb-10 sm:mb-14 relative z-10 ${visibleSections.has('case-study-lucas') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-gold-premium/20 border border-gold-premium/40 px-4 py-2 rounded-full mb-5">
+                <div className="w-2 h-2 bg-gold-premium rounded-full animate-pulse" />
+                <span className="text-gold-premium font-bold text-sm uppercase tracking-wider">Success Story</span>
               </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-4">
+                One AI Video Sold a<br />
+                <span className="bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium bg-clip-text text-transparent">$1.85M Luxury Villa</span>
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                See how Lucas earned <span className="text-green-400 font-bold">$46,250</span> in commission from a single 7-minute video
+              </p>
             </div>
 
-            {/* Main Content - Side by Side Layout */}
-            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 ${visibleSections.has('case-study-lucas') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            {/* Main Content - Video Centered with Stats */}
+            <div className={`${visibleSections.has('case-study-lucas') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
-              {/* Left: Video + Profile */}
-              <div className="space-y-4">
-                {/* Video - Mobile Optimized Player */}
-                <div className="relative rounded-2xl overflow-hidden border-2 border-gold-premium/40 shadow-2xl shadow-gold-premium/20 bg-black">
-                  {/* Video Container with proper aspect ratio */}
-                  <div className="relative w-full" style={{ aspectRatio: '9/16', maxHeight: '70vh' }}>
+              {/* Stats Row - Above Video */}
+              <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-6 sm:mb-8">
+                <div className="bg-gradient-to-br from-gold-premium/20 to-gold-premium/5 border border-gold-premium/30 rounded-2xl p-4 sm:p-6 text-center">
+                  <p className="text-gold-premium text-2xl sm:text-4xl font-black">$1.85M</p>
+                  <p className="text-gray-400 text-xs sm:text-sm mt-1">Villa Sold</p>
+                </div>
+                <div className="bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30 rounded-2xl p-4 sm:p-6 text-center">
+                  <p className="text-green-400 text-2xl sm:text-4xl font-black">$46,250</p>
+                  <p className="text-gray-400 text-xs sm:text-sm mt-1">Commission</p>
+                </div>
+                <div className="bg-gradient-to-br from-gold-premium/20 to-gold-premium/5 border border-gold-premium/30 rounded-2xl p-4 sm:p-6 text-center">
+                  <p className="text-gold-premium text-2xl sm:text-4xl font-black">28</p>
+                  <p className="text-gray-400 text-xs sm:text-sm mt-1">Days to Close</p>
+                </div>
+              </div>
+
+              {/* Video Container - Centered, Mobile-First */}
+              <div className="max-w-md mx-auto mb-8">
+                <div className="relative rounded-3xl overflow-hidden border-2 border-gold-premium/50 shadow-2xl shadow-gold-premium/20 bg-black">
+                  {/* Video with proper aspect ratio */}
+                  <div className="relative w-full" style={{ aspectRatio: '9/16' }}>
                     <video
                       ref={videoRef}
                       src="/videos/lucas-video.mp4"
                       poster="/images/lucas-photo.webp"
-                      className="absolute inset-0 w-full h-full object-contain bg-black"
+                      className="absolute inset-0 w-full h-full object-cover"
                       muted={isVideoMuted}
                       playsInline
                       webkit-playsinline="true"
@@ -1469,19 +1471,32 @@ export default function CleanLandingPage() {
                       }}
                     />
 
-                    {/* Play Overlay - Only when not playing */}
+                    {/* Play Overlay */}
                     {!isVideoPlaying && (
                       <div
-                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center cursor-pointer group z-10"
+                        className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col items-center justify-center cursor-pointer group z-10"
                         onClick={handlePlayVideo}
                       >
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-gold-premium to-yellow-400 rounded-full flex items-center justify-center shadow-2xl shadow-gold-premium/50 group-hover:scale-110 transition-transform animate-pulse">
+                        {/* Play Button */}
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-gold-premium to-yellow-400 rounded-full flex items-center justify-center shadow-2xl shadow-gold-premium/50 group-hover:scale-110 transition-transform mb-4">
                           <Play className="w-10 h-10 sm:w-12 sm:h-12 text-black fill-black ml-1" />
                         </div>
+                        <p className="text-white font-bold text-lg">Watch the Video</p>
+                        <p className="text-gray-400 text-sm">That sold a $1.85M villa</p>
+
+                        {/* Profile Badge at Bottom */}
                         <div className="absolute bottom-4 left-4 right-4">
-                          <div className="bg-black/80 backdrop-blur-sm text-white px-4 py-3 rounded-xl border border-gold-premium/30">
-                            <p className="text-gold-premium font-bold text-sm mb-1">Watch Lucas's AI Video</p>
-                            <p className="text-gray-400 text-xs">The exact video that sold a $1.85M villa</p>
+                          <div className="bg-black/80 backdrop-blur-sm p-3 rounded-xl border border-gold-premium/30 flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold-premium flex-shrink-0">
+                              <Image src="/images/lucas-photo.webp" alt="Lucas Martinez" width={48} height={48} className="object-cover w-full h-full" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-white font-bold text-sm truncate">Lucas Martinez</p>
+                              <p className="text-gold-premium text-xs">Luxury Property Specialist • Dubai</p>
+                            </div>
+                            <div className="bg-gold-premium text-black text-[9px] font-black px-2 py-1 rounded-full flex-shrink-0">
+                              VERIFIED
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1491,31 +1506,22 @@ export default function CleanLandingPage() {
                     {isVideoPlaying && (
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 z-20">
                         <div className="flex items-center justify-between gap-3">
-                          {/* Play/Pause Button */}
                           <button
                             onClick={(e) => {
                               e.stopPropagation()
-                              if (videoRef.current) {
-                                videoRef.current.pause()
-                              }
+                              if (videoRef.current) videoRef.current.pause()
                             }}
-                            className="bg-gold-premium/20 hover:bg-gold-premium/40 p-2.5 rounded-full border border-gold-premium/50 transition-colors"
+                            className="bg-white/20 hover:bg-white/30 p-3 rounded-full transition-colors"
                           >
                             <Pause className="w-5 h-5 text-white" />
                           </button>
-
-                          {/* Progress text */}
-                          <div className="flex-1 text-center">
-                            <p className="text-white/80 text-xs font-medium">Tap video to pause</p>
-                          </div>
-
-                          {/* Mute Button */}
+                          <p className="text-white/80 text-sm font-medium flex-1 text-center">Tap to pause</p>
                           <button
                             onClick={(e) => {
                               e.stopPropagation()
                               toggleVideoMute()
                             }}
-                            className="bg-black/60 hover:bg-black/80 p-2.5 rounded-full border border-gold-premium/30 transition-colors"
+                            className="bg-white/20 hover:bg-white/30 p-3 rounded-full transition-colors"
                           >
                             {isVideoMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
                           </button>
@@ -1524,106 +1530,55 @@ export default function CleanLandingPage() {
                     )}
                   </div>
                 </div>
+              </div>
 
-                {/* Profile Card */}
-                <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-4 shadow-lg">
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gold-premium">
-                      <Image src="/images/lucas-photo.webp" alt="Lucas Martinez" width={64} height={64} className="object-cover w-full h-full" />
+              {/* Timeline - Below Video */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-8 mb-8">
+                <h3 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-gold-premium" />
+                  Lucas's Journey to $46,250
+                </h3>
+                <div className="space-y-4">
+                  {[
+                    { day: 'Day 1', text: 'Created first AI video showcasing a villa', highlight: false },
+                    { day: 'Day 3', text: 'Video reached 45,000 views on Instagram', highlight: false },
+                    { day: 'Day 5', text: 'International buyer DMs: "I want to see this villa"', highlight: true },
+                    { day: 'Day 12', text: 'Virtual tour with buyer from London', highlight: false },
+                    { day: 'Day 28', text: '$1.85M sale closed → $46,250 commission', highlight: true },
+                  ].map((item, i) => (
+                    <div key={i} className={`flex items-center gap-4 ${item.highlight ? 'bg-gold-premium/10 -mx-3 px-3 py-2 rounded-lg' : ''}`}>
+                      <span className={`font-black text-sm px-3 py-1.5 rounded-lg whitespace-nowrap ${item.highlight ? 'bg-gold-premium text-black' : 'bg-white/10 text-gold-premium'}`}>
+                        {item.day}
+                      </span>
+                      <p className={`text-sm sm:text-base ${item.highlight ? 'text-white font-bold' : 'text-gray-300'}`}>{item.text}</p>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 bg-gold-premium text-black text-[8px] font-black px-1.5 py-0.5 rounded-full">
-                      VERIFIED
-                    </div>
-                  </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quote Box */}
+              <div className="bg-gradient-to-br from-gold-premium/10 to-transparent border border-gold-premium/30 rounded-2xl p-6 sm:p-8">
+                <div className="flex gap-4">
+                  <div className="text-gold-premium text-5xl font-serif leading-none hidden sm:block">"</div>
                   <div>
-                    <h3 className="text-gray-900 font-black text-lg">Lucas Martinez</h3>
-                    <p className="text-gold-dark text-sm font-medium">Luxury Property Specialist</p>
-                    <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
-                      <MapPin className="w-3 h-3" />
-                      <span>Dubai, UAE</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right: The Story */}
-              <div className="space-y-4 relative z-10">
-                {/* Before Box */}
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4 sm:p-5 shadow-md">
-                  <div className="flex items-center gap-2 mb-3">
-                    <X className="w-5 h-5 text-red-500" />
-                    <span className="text-red-600 font-bold text-sm">THE STRUGGLE</span>
-                  </div>
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    "I was spending <span className="text-gray-900 font-bold">$500/video</span> on professional shoots.
-                    After <span className="text-gray-900 font-bold">$3,000</span> and 6 months, I had zero luxury listings.
-                    High-net-worth clients weren't finding me online."
-                  </p>
-                </div>
-
-                {/* The Transformation */}
-                <div className="bg-amber-50 border border-gold-premium/40 rounded-xl p-4 sm:p-5 shadow-md">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-5 h-5 text-gold-dark" />
-                    <span className="text-gold-dark font-bold text-sm">THE TRANSFORMATION</span>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { day: 'Day 1', text: 'Created first AI video showcasing a villa (7 min)' },
-                      { day: 'Day 3', text: 'Video hit 45,000 views on Instagram' },
-                      { day: 'Day 5', text: 'International buyer DMs: "I want to see this villa"' },
-                      { day: 'Day 12', text: 'Virtual tour with buyer from London' },
-                      { day: 'Day 28', text: '$1.85M sale closed at 2.5% commission' },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <span className="text-gold-dark font-bold text-xs bg-gold-premium/20 px-2 py-1 rounded whitespace-nowrap">{item.day}</span>
-                        <p className="text-gray-700 text-sm">{item.text}</p>
+                    <p className="text-white text-lg sm:text-xl leading-relaxed mb-5">
+                      <span className="text-gold-premium font-bold">$46,250 commission</span> from a 7-minute video.
+                      My videographer wanted $2,000 to shoot that villa. I spent <span className="text-gold-premium font-bold">$37</span> on this system and
+                      the AI video outperformed everything I ever paid for.
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gold-premium">
+                        <Image src="/images/lucas-photo.webp" alt="Lucas" width={56} height={56} className="object-cover w-full h-full" />
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Result Stats */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="bg-white border border-gray-200 rounded-xl p-3 text-center shadow-md">
-                    <p className="text-gold-dark text-2xl sm:text-3xl font-black">$1.85M</p>
-                    <p className="text-gray-500 text-xs">Villa Sold</p>
-                  </div>
-                  <div className="bg-white border border-gray-200 rounded-xl p-3 text-center shadow-md">
-                    <p className="text-green-600 text-2xl sm:text-3xl font-black">28</p>
-                    <p className="text-gray-500 text-xs">Days to Close</p>
-                  </div>
-                  <div className="bg-white border border-gray-200 rounded-xl p-3 text-center shadow-md">
-                    <p className="text-gold-dark text-2xl sm:text-3xl font-black">1,250x</p>
-                    <p className="text-gray-500 text-xs">ROI</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Quote */}
-            <div className={`mt-8 bg-gradient-to-br from-gray-900 via-black to-gray-900 border border-gold-premium/40 rounded-2xl p-5 sm:p-8 shadow-2xl relative z-10 ${visibleSections.has('case-study-lucas') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-              <div className="flex flex-col sm:flex-row items-start gap-4">
-                <div className="text-gold-premium text-5xl font-serif leading-none">"</div>
-                <div className="flex-1">
-                  <p className="text-white text-lg sm:text-xl font-medium leading-relaxed mb-4">
-                    <span className="text-gold-premium font-bold">$46,250 commission</span> from a 7-minute video.
-                    My videographer wanted $2,000 to shoot that villa. I spent $37 on Sara's system and
-                    the AI video outperformed everything I ever paid for. <span className="text-gold-premium">The luxury market is all about perception</span> —
-                    and these AI videos make you look like a million-dollar agent.
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold-premium">
-                      <Image src="/images/lucas-photo.webp" alt="Lucas" width={48} height={48} className="object-cover" />
-                    </div>
-                    <div>
-                      <p className="text-white font-bold">Lucas Martinez</p>
-                      <p className="text-gray-400 text-sm">28 days after joining • $1.85M sale</p>
-                    </div>
-                    <div className="ml-auto hidden sm:flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-gold-premium text-gold-premium" />
-                      ))}
+                      <div>
+                        <p className="text-white font-bold text-lg">Lucas Martinez</p>
+                        <p className="text-gray-400 text-sm">Luxury Property Specialist • Dubai</p>
+                      </div>
+                      <div className="ml-auto flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-gold-premium text-gold-premium" />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
