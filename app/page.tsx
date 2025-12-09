@@ -14,6 +14,7 @@ import {
   Upload,
   TrendingUp,
   Play,
+  Pause,
   ChevronDown,
   Star,
   Check,
@@ -1371,45 +1372,89 @@ export default function CleanLandingPage() {
 
               {/* Left: Video + Profile */}
               <div className="space-y-4">
-                {/* Video */}
-                <div className="relative rounded-2xl overflow-hidden border-2 border-gold-premium/40 shadow-2xl shadow-gold-premium/20">
-                  <video
-                    ref={videoRef}
-                    src="/videos/Mr Lucas.mp4"
-                    poster="/images/lucas-photo.webp"
-                    className="w-full h-auto"
-                    muted={isVideoMuted}
-                    playsInline
-                    preload="metadata"
-                    onEnded={() => setIsVideoPlaying(false)}
-                  />
+                {/* Video - Mobile Optimized Player */}
+                <div className="relative rounded-2xl overflow-hidden border-2 border-gold-premium/40 shadow-2xl shadow-gold-premium/20 bg-black">
+                  {/* Video Container with proper aspect ratio */}
+                  <div className="relative w-full" style={{ aspectRatio: '9/16', maxHeight: '70vh' }}>
+                    <video
+                      ref={videoRef}
+                      src="/videos/lucas-video.mp4"
+                      poster="/images/lucas-photo.webp"
+                      className="absolute inset-0 w-full h-full object-contain bg-black"
+                      muted={isVideoMuted}
+                      playsInline
+                      webkit-playsinline="true"
+                      preload="auto"
+                      onEnded={() => setIsVideoPlaying(false)}
+                      onPause={() => setIsVideoPlaying(false)}
+                      onPlay={() => setIsVideoPlaying(true)}
+                      onClick={() => {
+                        if (videoRef.current) {
+                          if (isVideoPlaying) {
+                            videoRef.current.pause()
+                          } else {
+                            videoRef.current.muted = false
+                            setIsVideoMuted(false)
+                            videoRef.current.play()
+                          }
+                        }
+                      }}
+                    />
 
-                  {/* Play Overlay */}
-                  {!isVideoPlaying && (
-                    <div
-                      className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center cursor-pointer group"
-                      onClick={handlePlayVideo}
-                    >
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-gold-premium to-yellow-400 rounded-full flex items-center justify-center shadow-2xl shadow-gold-premium/50 group-hover:scale-110 transition-transform">
-                        <Play className="w-10 h-10 sm:w-12 sm:h-12 text-black fill-black ml-1" />
-                      </div>
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="bg-black/80 backdrop-blur-sm text-white px-4 py-3 rounded-xl border border-gold-premium/30">
-                          <p className="text-gold-premium font-bold text-sm mb-1">Watch Lucas's AI Video</p>
-                          <p className="text-gray-400 text-xs">The exact video that sold a $1.85M villa</p>
+                    {/* Play Overlay - Only when not playing */}
+                    {!isVideoPlaying && (
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center cursor-pointer group z-10"
+                        onClick={handlePlayVideo}
+                      >
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-gold-premium to-yellow-400 rounded-full flex items-center justify-center shadow-2xl shadow-gold-premium/50 group-hover:scale-110 transition-transform animate-pulse">
+                          <Play className="w-10 h-10 sm:w-12 sm:h-12 text-black fill-black ml-1" />
+                        </div>
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="bg-black/80 backdrop-blur-sm text-white px-4 py-3 rounded-xl border border-gold-premium/30">
+                            <p className="text-gold-premium font-bold text-sm mb-1">Watch Lucas's AI Video</p>
+                            <p className="text-gray-400 text-xs">The exact video that sold a $1.85M villa</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {isVideoPlaying && (
-                    <button
-                      onClick={toggleVideoMute}
-                      className="absolute bottom-3 right-3 bg-black/80 p-2 rounded-full border border-gold-premium/30"
-                    >
-                      {isVideoMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
-                    </button>
-                  )}
+                    {/* Video Controls - When playing */}
+                    {isVideoPlaying && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 z-20">
+                        <div className="flex items-center justify-between gap-3">
+                          {/* Play/Pause Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              if (videoRef.current) {
+                                videoRef.current.pause()
+                              }
+                            }}
+                            className="bg-gold-premium/20 hover:bg-gold-premium/40 p-2.5 rounded-full border border-gold-premium/50 transition-colors"
+                          >
+                            <Pause className="w-5 h-5 text-white" />
+                          </button>
+
+                          {/* Progress text */}
+                          <div className="flex-1 text-center">
+                            <p className="text-white/80 text-xs font-medium">Tap video to pause</p>
+                          </div>
+
+                          {/* Mute Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleVideoMute()
+                            }}
+                            className="bg-black/60 hover:bg-black/80 p-2.5 rounded-full border border-gold-premium/30 transition-colors"
+                          >
+                            {isVideoMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Profile Card */}
