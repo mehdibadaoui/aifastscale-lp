@@ -725,48 +725,61 @@ export default function CleanLandingPage() {
               <div className={`relative bg-gradient-to-br from-emerald-500/10 via-black to-emerald-500/5 border-2 border-emerald-500/50 rounded-2xl sm:rounded-3xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                 {/* Premium Badge */}
                 <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
-                  <span className="bg-gradient-to-r from-emerald-500 to-green-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg shadow-emerald-500/30 uppercase tracking-wider">
+                  <span className="bg-gradient-to-r from-emerald-500 to-green-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg shadow-emerald-500/30 uppercase tracking-wider animate-pulse">
                     Most Valuable
                   </span>
                 </div>
 
                 <div className="p-5 sm:p-8">
-                  {/* Header */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30">
-                      <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Bonus #1</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-red-400 line-through text-sm font-semibold">$197</span>
-                          <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                  {/* Two Column Layout - Image + Content */}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    {/* Product Image */}
+                    <div className="lg:w-2/5 flex-shrink-0">
+                      <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-emerald-500/20 border border-emerald-500/30 group">
+                        <Image
+                          src="/products/organic-leads-mastery.webp"
+                          alt="Organic Leads Mastery"
+                          width={500}
+                          height={300}
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Bonus #1</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-red-400 line-through text-sm font-semibold">$197</span>
+                              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <h4 className="text-xl sm:text-2xl font-black text-white">Organic Leads Mastery</h4>
-                      <p className="text-emerald-400 font-medium text-sm sm:text-base">The Zero-Ad Blueprint: Get Free Buyer Leads from Instagram & TikTok</p>
                     </div>
-                  </div>
 
-                  {/* Description */}
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                    The complete system for attracting international buyers and sellers <span className="text-white font-bold">WITHOUT spending a single dollar on ads</span>. Learn exactly how to create viral content that reaches worldwide buyers, turn views into DMs, and DMs into signed deals.
-                  </p>
+                    {/* Content */}
+                    <div className="lg:w-3/5">
+                      <h4 className="text-xl sm:text-2xl font-black text-white mb-2">Organic Leads Mastery</h4>
+                      <p className="text-emerald-400 font-medium text-sm sm:text-base mb-3">The Zero-Ad Blueprint: Get Free Buyer Leads from Instagram & TikTok</p>
 
-                  {/* Highlights Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {[
-                      'The Viral Content Formula (beat the algorithm)',
-                      'Reach worldwide buyers with $0 ad spend',
-                      'Content-to-DM Pipeline (views → conversations)',
-                      '30-Day Viral Content Calendar (just post)',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-emerald-500/10 rounded-lg px-3 py-2">
-                        <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="text-white text-xs sm:text-sm">{item}</span>
+                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                        The complete system for attracting international buyers and sellers <span className="text-white font-bold">WITHOUT spending a single dollar on ads</span>. Learn exactly how to create viral content that reaches worldwide buyers, turn views into DMs, and DMs into signed deals.
+                      </p>
+
+                      {/* Highlights Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                        {[
+                          'The Viral Content Formula (beat the algorithm)',
+                          'Reach worldwide buyers with $0 ad spend',
+                          'Content-to-DM Pipeline (views → conversations)',
+                          '30-Day Viral Content Calendar (just post)',
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-emerald-500/10 rounded-lg px-3 py-2">
+                            <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                            <span className="text-white text-xs sm:text-sm">{item}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -783,39 +796,54 @@ export default function CleanLandingPage() {
                 </div>
 
                 <div className="p-5 sm:p-8">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/30">
-                      <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-amber-400 font-bold text-xs uppercase tracking-wider">Bonus #2</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-red-400 line-through text-sm font-semibold">$97</span>
-                          <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                  {/* Two Column Layout - Image + Content */}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    {/* Product Image */}
+                    <div className="lg:w-2/5 flex-shrink-0">
+                      <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-amber-500/20 border border-amber-500/30 group">
+                        <Image
+                          src="/products/script-vault.webp"
+                          alt="The Script Vault"
+                          width={500}
+                          height={300}
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-amber-400 font-bold text-xs uppercase tracking-wider">Bonus #2</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-red-400 line-through text-sm font-semibold">$97</span>
+                              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <h4 className="text-xl sm:text-2xl font-black text-white">The Script Vault</h4>
-                      <p className="text-amber-400 font-medium text-sm sm:text-base">100+ Viral Hooks, Scripts & Captions That Stop The Scroll</p>
                     </div>
-                  </div>
 
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                    Never stare at a blank screen again. <span className="text-white font-bold">100+ proven hooks tested on 10M+ views</span>, ready-to-use video scripts, and captions that drive engagement. Just copy, paste, and post.
-                  </p>
+                    {/* Content */}
+                    <div className="lg:w-3/5">
+                      <h4 className="text-xl sm:text-2xl font-black text-white mb-2">The Script Vault</h4>
+                      <p className="text-amber-400 font-medium text-sm sm:text-base mb-3">100+ Viral Hooks, Scripts & Captions That Stop The Scroll</p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {[
-                      '45 scroll-stopping hooks (tested on 10M+ views)',
-                      '30 ready-to-film video scripts',
-                      '25 high-engagement caption templates',
-                      'Organized by category for quick access',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-amber-500/10 rounded-lg px-3 py-2">
-                        <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                        <span className="text-white text-xs sm:text-sm">{item}</span>
+                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                        Never stare at a blank screen again. <span className="text-white font-bold">100+ proven hooks tested on 10M+ views</span>, ready-to-use video scripts, and captions that drive engagement. Just copy, paste, and post.
+                      </p>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                        {[
+                          '45 scroll-stopping hooks (tested on 10M+ views)',
+                          '30 ready-to-film video scripts',
+                          '25 high-engagement caption templates',
+                          'Organized by category for quick access',
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-amber-500/10 rounded-lg px-3 py-2">
+                            <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                            <span className="text-white text-xs sm:text-sm">{item}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -823,41 +851,63 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #3 - AI REAL ESTATE MENTOR ($97)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-indigo-500/10 via-black to-indigo-500/5 border border-indigo-500/40 rounded-2xl overflow-hidden ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-violet-500/10 via-black to-violet-500/5 border border-violet-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                {/* AI Badge */}
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+                  <span className="bg-gradient-to-r from-violet-500 to-purple-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+                    AI-Powered
+                  </span>
+                </div>
+
                 <div className="p-5 sm:p-8">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/30">
-                      <Bot className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-indigo-400 font-bold text-xs uppercase tracking-wider">Bonus #3</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-red-400 line-through text-sm font-semibold">$97</span>
-                          <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                  {/* Two Column Layout - Image + Content */}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    {/* Product Image */}
+                    <div className="lg:w-2/5 flex-shrink-0">
+                      <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-violet-500/20 border border-violet-500/30 group">
+                        <Image
+                          src="/products/ai-real-estate-mentor.webp"
+                          alt="AI Real Estate Mentor"
+                          width={500}
+                          height={300}
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-violet-400 font-bold text-xs uppercase tracking-wider">Bonus #3</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-red-400 line-through text-sm font-semibold">$97</span>
+                              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <h4 className="text-xl sm:text-2xl font-black text-white">AI Real Estate Mentor</h4>
-                      <p className="text-indigo-400 font-medium text-sm sm:text-base">Your 24/7 Expert Coach Trained on Top Producer Strategies</p>
                     </div>
-                  </div>
 
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                    Get instant answers at 3am or 3pm. This custom AI is <span className="text-white font-bold">trained on strategies from agents who close $10M+ annually</span>. It's like having a mentor who never sleeps and never charges hourly.
-                  </p>
+                    {/* Content */}
+                    <div className="lg:w-3/5">
+                      <h4 className="text-xl sm:text-2xl font-black text-white mb-2">AI Real Estate Mentor</h4>
+                      <p className="text-violet-400 font-medium text-sm sm:text-base mb-3">Your 24/7 Expert Coach Trained on Top Producer Strategies</p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {[
-                      'Instant answers on scripts & objections',
-                      'Pricing strategy & negotiation tactics',
-                      'Content ideas generated in seconds',
-                      'Available 24/7 (no $500/hour fees)',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-indigo-500/10 rounded-lg px-3 py-2">
-                        <Check className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-                        <span className="text-white text-xs sm:text-sm">{item}</span>
+                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                        Get instant answers at 3am or 3pm. This custom AI is <span className="text-white font-bold">trained on strategies from agents who close $10M+ annually</span>. It's like having a mentor who never sleeps and never charges hourly.
+                      </p>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                        {[
+                          'Instant answers on scripts & objections',
+                          'Pricing strategy & negotiation tactics',
+                          'Content ideas generated in seconds',
+                          'Available 24/7 (no $500/hour fees)',
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-violet-500/10 rounded-lg px-3 py-2">
+                            <Check className="w-4 h-4 text-violet-400 flex-shrink-0" />
+                            <span className="text-white text-xs sm:text-sm">{item}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -865,41 +915,63 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #4 - DM-TO-DEAL SYSTEM ($67)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-pink-500/10 via-black to-pink-500/5 border border-pink-500/40 rounded-2xl overflow-hidden ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-pink-500/10 via-black to-pink-500/5 border border-pink-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                {/* Proven Badge */}
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+                  <span className="bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+                    40%+ Response Rate
+                  </span>
+                </div>
+
                 <div className="p-5 sm:p-8">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-pink-500/30">
-                      <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-pink-400 font-bold text-xs uppercase tracking-wider">Bonus #4</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-red-400 line-through text-sm font-semibold">$67</span>
-                          <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                  {/* Two Column Layout - Image + Content */}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    {/* Product Image */}
+                    <div className="lg:w-2/5 flex-shrink-0">
+                      <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-pink-500/20 border border-pink-500/30 group">
+                        <Image
+                          src="/products/dm-to-deal-system.webp"
+                          alt="DM-to-Deal System"
+                          width={500}
+                          height={300}
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-pink-400 font-bold text-xs uppercase tracking-wider">Bonus #4</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-red-400 line-through text-sm font-semibold">$67</span>
+                              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <h4 className="text-xl sm:text-2xl font-black text-white">DM-to-Deal System</h4>
-                      <p className="text-pink-400 font-medium text-sm sm:text-base">89 Copy-Paste Messages That Turn Followers Into Clients</p>
                     </div>
-                  </div>
 
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                    The exact messages top agents use to convert DMs into signed deals. Each script tested to achieve <span className="text-white font-bold">40%+ response rates</span>. Stop winging your DMs and start closing.
-                  </p>
+                    {/* Content */}
+                    <div className="lg:w-3/5">
+                      <h4 className="text-xl sm:text-2xl font-black text-white mb-2">DM-to-Deal System</h4>
+                      <p className="text-pink-400 font-medium text-sm sm:text-base mb-3">89 Copy-Paste Messages That Turn Followers Into Clients</p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {[
-                      'First-touch messages that get replies',
-                      'Follow-up sequences (day 1, 3, 7, 14)',
-                      'Objection handling scripts',
-                      '40%+ response rate proven',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-pink-500/10 rounded-lg px-3 py-2">
-                        <Check className="w-4 h-4 text-pink-400 flex-shrink-0" />
-                        <span className="text-white text-xs sm:text-sm">{item}</span>
+                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                        The exact messages top agents use to convert DMs into signed deals. Each script tested to achieve <span className="text-white font-bold">40%+ response rates</span>. Stop winging your DMs and start closing.
+                      </p>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                        {[
+                          'First-touch messages that get replies',
+                          'Follow-up sequences (day 1, 3, 7, 14)',
+                          'Objection handling scripts',
+                          '40%+ response rate proven',
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-pink-500/10 rounded-lg px-3 py-2">
+                            <Check className="w-4 h-4 text-pink-400 flex-shrink-0" />
+                            <span className="text-white text-xs sm:text-sm">{item}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -907,41 +979,63 @@ export default function CleanLandingPage() {
               {/* ══════════════════════════════════════════════════════════
                   BONUS #5 - 90-DAY AUTHORITY ACCELERATOR ($47)
                   ══════════════════════════════════════════════════════════ */}
-              <div className={`relative bg-gradient-to-br from-purple-500/10 via-black to-purple-500/5 border border-purple-500/40 rounded-2xl overflow-hidden ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-cyan-500/10 via-black to-cyan-500/5 border border-cyan-500/40 rounded-2xl overflow-hidden hover-lift ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                {/* Roadmap Badge */}
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+                  <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+                    Step-by-Step
+                  </span>
+                </div>
+
                 <div className="p-5 sm:p-8">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/30">
-                      <Target className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-purple-400 font-bold text-xs uppercase tracking-wider">Bonus #5</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-red-400 line-through text-sm font-semibold">$47</span>
-                          <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                  {/* Two Column Layout - Image + Content */}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    {/* Product Image */}
+                    <div className="lg:w-2/5 flex-shrink-0">
+                      <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-cyan-500/20 border border-cyan-500/30 group">
+                        <Image
+                          src="/products/90-day-authority-accelerator.webp"
+                          alt="90-Day Authority Accelerator"
+                          width={500}
+                          height={300}
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-cyan-400 font-bold text-xs uppercase tracking-wider">Bonus #5</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-red-400 line-through text-sm font-semibold">$47</span>
+                              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs px-2.5 py-1 rounded-lg">FREE</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <h4 className="text-xl sm:text-2xl font-black text-white">90-Day Authority Accelerator</h4>
-                      <p className="text-purple-400 font-medium text-sm sm:text-base">The Week-by-Week Roadmap to Becoming THE Agent in Your Market</p>
                     </div>
-                  </div>
 
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                    Stop guessing what to do next. This <span className="text-white font-bold">90-day blueprint</span> breaks down exactly what to post, when to post, and how to position yourself as the go-to agent in your market.
-                  </p>
+                    {/* Content */}
+                    <div className="lg:w-3/5">
+                      <h4 className="text-xl sm:text-2xl font-black text-white mb-2">90-Day Authority Accelerator</h4>
+                      <p className="text-cyan-400 font-medium text-sm sm:text-base mb-3">The Week-by-Week Roadmap to Becoming THE Agent in Your Market</p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {[
-                      'Week-by-week action plan (no guessing)',
-                      '17-minute daily ritual for consistency',
-                      'Milestone checkpoints to track progress',
-                      'Position yourself as THE market expert',
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-purple-500/10 rounded-lg px-3 py-2">
-                        <Check className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                        <span className="text-white text-xs sm:text-sm">{item}</span>
+                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                        Stop guessing what to do next. This <span className="text-white font-bold">90-day blueprint</span> breaks down exactly what to post, when to post, and how to position yourself as the go-to agent in your market.
+                      </p>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                        {[
+                          'Week-by-week action plan (no guessing)',
+                          '17-minute daily ritual for consistency',
+                          'Milestone checkpoints to track progress',
+                          'Position yourself as THE market expert',
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-cyan-500/10 rounded-lg px-3 py-2">
+                            <Check className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                            <span className="text-white text-xs sm:text-sm">{item}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
