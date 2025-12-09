@@ -162,7 +162,15 @@ export default function CleanLandingPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // Add visible class for CSS animations
-            entry.target.classList.add('visible')
+            entry.target.classList.add('animate-visible')
+
+            // Also animate all children with .scroll-child class
+            const children = entry.target.querySelectorAll('.scroll-child')
+            children.forEach((child, index) => {
+              setTimeout(() => {
+                child.classList.add('animate-visible')
+              }, index * 100) // Stagger by 100ms
+            })
 
             // Update React state for conditional rendering
             if (entry.target.id) {
@@ -175,25 +183,27 @@ export default function CleanLandingPage() {
         })
       },
       {
-        threshold: 0.05, // Trigger when just 5% is visible
-        rootMargin: '0px 0px 100px 0px' // Start animation 100px before element enters viewport
+        threshold: 0.1, // Trigger when 10% is visible
+        rootMargin: '0px 0px -10% 0px' // Trigger slightly before fully in view
       }
     )
 
-    // Start observing after a tiny delay for DOM readiness
-    const initTimer = requestAnimationFrame(() => {
-      const animatedElements = document.querySelectorAll('[data-animate]')
-      animatedElements.forEach((el) => {
-        // Don't observe hero - it's always visible
-        if (el.id !== 'hero') {
+    // Start observing all sections
+    const initTimer = setTimeout(() => {
+      const sections = document.querySelectorAll('[data-animate]')
+      sections.forEach((el) => {
+        // Hero is always visible immediately
+        if (el.id === 'hero') {
+          el.classList.add('animate-visible')
+        } else {
           observer.observe(el)
         }
       })
-    })
+    }, 100)
 
     return () => {
       observer.disconnect()
-      cancelAnimationFrame(initTimer)
+      clearTimeout(initTimer)
     }
   }, [])
 
