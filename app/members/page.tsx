@@ -33,7 +33,6 @@ const BONUSES = [
   { id: 'masterclass', name: '$10M Brand Secrets', type: 'pdf', file: '/products/personal-brand-masterclass.pdf', image: '/images/personal-brand.webp', cat: 'training', description: 'Build your personal brand' },
   { id: 'planner', name: '2026 Business Planner', type: 'pdf', file: '/products/business-planner-1.pdf', image: '/images/business-planner.webp', cat: 'training', description: 'Plan your success' },
   { id: 'edit-video', name: 'Edit Videos Fast', type: 'video', file: '/products/edit-video-20min.mp4', image: '/images/brand-kit.webp', cat: 'training', description: '20-minute editing course' },
-  { id: 'brand-kit', name: 'Luxury Brand Kit', type: 'pdf', file: '/products/brand-kit.pdf', image: '/images/brand-kit.webp', cat: 'training', description: 'Premium design templates' },
 ]
 
 // Confetti Component
