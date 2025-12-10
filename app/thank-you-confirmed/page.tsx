@@ -5,13 +5,35 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { trackTikTokEvent } from '../components/TikTokPixel'
-import { trackMetaEvent } from '../components/MetaPixel'
 
-// Declare gtag for TypeScript
+// Declare gtag and fbq for TypeScript
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void
+    fbq?: (...args: any[]) => void
   }
+}
+
+// CRITICAL: Track Meta Purchase with retry logic to ensure fbq is ready
+function trackMetaPurchase(params: {
+  content_ids: string[]
+  content_name: string
+  content_type: string
+  value: number
+  currency: string
+}) {
+  const attemptTrack = (retries: number) => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'Purchase', params)
+      console.log('Meta Purchase tracked:', params)
+    } else if (retries > 0) {
+      // Retry after 500ms if fbq not ready
+      setTimeout(() => attemptTrack(retries - 1), 500)
+    } else {
+      console.warn('Meta fbq not available after retries')
+    }
+  }
+  attemptTrack(5) // Try up to 5 times (2.5 seconds total)
 }
 
 function ThankYouContent() {
@@ -70,7 +92,8 @@ function ThankYouContent() {
     }
 
     // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
-    trackMetaEvent('Purchase', {
+    // Uses retry logic to ensure fbq is loaded before tracking
+    trackMetaPurchase({
       content_ids: [purchased || 'main'],
       content_name: productName,
       content_type: 'product',
