@@ -9,30 +9,30 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 
-// Product data with UNIQUE images
+// Product data with UNIQUE images - images are in /images/products/
 const MAIN_COURSE = {
   title: "AI Video Mastery",
   items: [
-    { id: 'register', name: 'Register Account', type: 'pdf', file: '/products/register-here.pdf', duration: '2 min', image: '/images/chatgpt-mentor.webp', description: 'Create your HeyGen account' },
-    { id: 'prompt-guide', name: 'Prompt Mastery Guide', type: 'pdf', file: '/products/prompt-guide.pdf', duration: '5 min', image: '/images/personal-brand.webp', description: 'Learn to write perfect prompts' },
-    { id: 'video-1', name: 'Core Training', type: 'video', file: '/products/training-video-1.mov', duration: '12 min', image: '/images/brand-kit.webp', description: 'Step-by-step video creation' },
-    { id: 'video-2', name: 'Advanced Tips', type: 'video', file: '/products/training-video-2.mov', duration: '8 min', image: '/images/hooks-impossible-to-skip.webp', description: 'Pro techniques & shortcuts' },
-    { id: 'template-1', name: 'Script Template A', type: 'doc', file: '/products/prompt-template-1.rtf', duration: '1 min', image: '/images/instagram-dm-scripts.webp', description: 'Copy-paste video scripts' },
-    { id: 'template-2', name: 'Script Template B', type: 'doc', file: '/products/prompt-template-2.rtf', duration: '1 min', image: '/images/instagram-stories.webp', description: 'More ready-to-use scripts' },
+    { id: 'register', name: 'Register Account', type: 'pdf', file: '/products/register-here.pdf', duration: '2 min', image: '/images/products/chatgpt-mentor.webp', description: 'Create your HeyGen account' },
+    { id: 'prompt-guide', name: 'Prompt Mastery Guide', type: 'pdf', file: '/products/prompt-guide.pdf', duration: '5 min', image: '/images/products/personal-brand.webp', description: 'Learn to write perfect prompts' },
+    { id: 'video-1', name: 'Core Training', type: 'video', file: '/products/training-video-1.mov', duration: '12 min', image: '/images/products/brand-kit.webp', description: 'Step-by-step video creation' },
+    { id: 'video-2', name: 'Advanced Tips', type: 'video', file: '/products/training-video-2.mov', duration: '8 min', image: '/images/products/hooks-impossible-to-skip.webp', description: 'Pro techniques & shortcuts' },
+    { id: 'template-1', name: 'Script Template A', type: 'doc', file: '/products/prompt-template-1.rtf', duration: '1 min', image: '/images/products/instagram-dm-scripts.webp', description: 'Copy-paste video scripts' },
+    { id: 'template-2', name: 'Script Template B', type: 'doc', file: '/products/prompt-template-2.rtf', duration: '1 min', image: '/images/products/instagram-stories.webp', description: 'More ready-to-use scripts' },
   ]
 }
 
 const BONUSES = [
-  { id: 'marcus-gpt', name: 'Marcus AI Mentor', type: 'link', url: 'https://chatgpt.com/g/g-6923615c25948191a95562d0181d1ee3-real-estate-mentor-marcus-rodriguez', image: '/images/chatgpt-mentor.webp', cat: 'tool', description: 'Your 24/7 AI coach' },
-  { id: 'dm-scripts', name: '89 DM Scripts', type: 'pdf', file: '/products/89-dm-scripts.pdf', image: '/images/instagram-dm-scripts.webp', cat: 'tool', description: 'Ready-to-send messages' },
-  { id: 'hooks', name: '45 Viral Hooks', type: 'pdf', file: '/products/17-hooks.pdf', image: '/images/hooks-impossible-to-skip.webp', cat: 'tool', description: 'Scroll-stopping openers' },
-  { id: 'reels', name: '25 Reel Templates', type: 'pdf', file: '/products/reels-templates.pdf', image: '/images/viral-reels.webp', cat: 'template', description: 'Trending reel formats' },
-  { id: 'stories', name: '327 Story Ideas', type: 'pdf', file: '/products/stories-posts-templates.pdf', image: '/images/instagram-stories.webp', cat: 'template', description: 'Never run out of content' },
-  { id: 'funny-posts', name: '30 Funny Posts', type: 'pdf', file: '/products/30-funny-posts.pdf', image: '/images/funny-posts.webp', cat: 'template', description: 'Engagement boosters' },
-  { id: 'signature', name: 'Pro Email Signature', type: 'pdf', file: '/products/professional-signature.pdf', image: '/images/email-signature-professional.webp', cat: 'template', description: 'Look professional instantly' },
-  { id: 'masterclass', name: '$10M Brand Secrets', type: 'pdf', file: '/products/personal-brand-masterclass.pdf', image: '/images/personal-brand.webp', cat: 'training', description: 'Build your personal brand' },
-  { id: 'planner', name: '2026 Business Planner', type: 'pdf', file: '/products/business-planner-1.pdf', image: '/images/business-planner.webp', cat: 'training', description: 'Plan your success' },
-  { id: 'edit-video', name: 'Edit Videos Fast', type: 'video', file: '/products/edit-video-20min.mp4', image: '/images/brand-kit.webp', cat: 'training', description: '20-minute editing course' },
+  { id: 'marcus-gpt', name: 'Marcus AI Mentor', type: 'link', url: 'https://chatgpt.com/g/g-6923615c25948191a95562d0181d1ee3-real-estate-mentor-marcus-rodriguez', image: '/images/products/chatgpt-mentor.webp', cat: 'tool', description: 'Your 24/7 AI coach' },
+  { id: 'dm-scripts', name: '89 DM Scripts', type: 'pdf', file: '/products/89-dm-scripts.pdf', image: '/images/products/instagram-dm-scripts.webp', cat: 'tool', description: 'Ready-to-send messages' },
+  { id: 'hooks', name: '45 Viral Hooks', type: 'pdf', file: '/products/17-hooks.pdf', image: '/images/products/hooks-impossible-to-skip.webp', cat: 'tool', description: 'Scroll-stopping openers' },
+  { id: 'reels', name: '25 Reel Templates', type: 'pdf', file: '/products/reels-templates.pdf', image: '/images/products/viral-reels.webp', cat: 'template', description: 'Trending reel formats' },
+  { id: 'stories', name: '327 Story Ideas', type: 'pdf', file: '/products/stories-posts-templates.pdf', image: '/images/products/instagram-stories.webp', cat: 'template', description: 'Never run out of content' },
+  { id: 'funny-posts', name: '30 Funny Posts', type: 'pdf', file: '/products/30-funny-posts.pdf', image: '/images/products/funny-posts.webp', cat: 'template', description: 'Engagement boosters' },
+  { id: 'signature', name: 'Pro Email Signature', type: 'pdf', file: '/products/professional-signature.pdf', image: '/images/products/email-signature-professional.webp', cat: 'template', description: 'Look professional instantly' },
+  { id: 'masterclass', name: '$10M Brand Secrets', type: 'pdf', file: '/products/personal-brand-masterclass.pdf', image: '/images/products/personal-brand.webp', cat: 'training', description: 'Build your personal brand' },
+  { id: 'planner', name: '2026 Business Planner', type: 'pdf', file: '/products/business-planner-1.pdf', image: '/images/products/business-planner.webp', cat: 'training', description: 'Plan your success' },
+  { id: 'edit-video', name: 'Edit Videos Fast', type: 'video', file: '/products/edit-video-20min.mp4', image: '/images/products/brand-kit.webp', cat: 'training', description: '20-minute editing course' },
 ]
 
 // Confetti Component
