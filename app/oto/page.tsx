@@ -27,6 +27,41 @@ const WHOP_LINKS = {
   starter: 'https://whop.com/checkout/plan_gdD4gop6sejQG', // 3 months
 }
 
+// Save tracking params to localStorage before Whop redirect
+const saveTrackingParams = () => {
+  if (typeof window === 'undefined') return
+
+  const params = new URLSearchParams(window.location.search)
+  const trackingData: Record<string, string> = {}
+
+  // Capture Meta fbclid
+  const fbclid = params.get('fbclid')
+  if (fbclid) trackingData.fbclid = fbclid
+
+  // Capture TikTok ttclid
+  const ttclid = params.get('ttclid')
+  if (ttclid) trackingData.ttclid = ttclid
+
+  // Capture UTM params
+  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+  utmParams.forEach(param => {
+    const value = params.get(param)
+    if (value) trackingData[param] = value
+  })
+
+  // Capture Meta cookies (_fbc, _fbp) if they exist
+  const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1]
+  const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1]
+  if (fbc) trackingData._fbc = fbc
+  if (fbp) trackingData._fbp = fbp
+
+  // Save timestamp
+  trackingData.checkout_started = new Date().toISOString()
+
+  // Store in localStorage (persists across redirect to Whop and back)
+  localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
+}
+
 export default function DoneForYouOTO() {
   const [selectedPackage, setSelectedPackage] = useState<'premium' | 'starter'>('premium')
   const [spotsLeft] = useState(2)
@@ -63,6 +98,9 @@ export default function DoneForYouOTO() {
   ]
 
   const handleCheckout = () => {
+    // Save tracking params BEFORE redirect
+    saveTrackingParams()
+
     // Track TikTok InitiateCheckout event
     trackTikTokInitiateCheckout(
       `oto-${selectedPackage}`,

@@ -35,12 +35,15 @@ function ThankYouContent() {
     let productName = '7 Minute AgentClone'
     let value = 37
 
-    if (purchased === 'oto') {
-      productName = 'OTO Bundle'
-      value = 47
+    if (purchased === 'oto-premium') {
+      productName = '6-Month Content Partner'
+      value = 565
+    } else if (purchased === 'oto-starter') {
+      productName = '3-Month Quick Start'
+      value = 295
     } else if (purchased === 'downsell') {
-      productName = 'Downsell Bundle'
-      value = 27
+      productName = '3-Month Content Package'
+      value = 195
     }
 
     // Track TikTok CompletePayment (browser pixel)
@@ -75,8 +78,23 @@ function ThankYouContent() {
       currency: 'USD'
     })
 
+    // Retrieve saved tracking params from localStorage (saved before Whop redirect)
+    let savedTracking: Record<string, string> = {}
+    try {
+      const stored = localStorage.getItem('aifastscale_tracking')
+      if (stored) {
+        savedTracking = JSON.parse(stored)
+        // Clear after reading to prevent duplicate attributions
+        localStorage.removeItem('aifastscale_tracking')
+      }
+    } catch (e) {
+      console.error('Error reading tracking data:', e)
+    }
+
+    // Get ttclid from URL params OR localStorage
+    const ttclid = searchParams.get('ttclid') || savedTracking.ttclid || ''
+
     // Send server-side event via TikTok CAPI
-    const ttclid = searchParams.get('ttclid') || ''
     fetch('/api/tiktok-capi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -92,9 +110,11 @@ function ThankYouContent() {
       })
     }).catch(console.error)
 
+    // Get fbc/fbp from cookies OR localStorage (localStorage has pre-redirect values)
+    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || savedTracking._fbc || ''
+    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || savedTracking._fbp || ''
+
     // Send server-side event via Meta CAPI (for better iOS 14.5+ tracking)
-    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || ''
-    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || ''
     fetch('/api/meta-capi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
