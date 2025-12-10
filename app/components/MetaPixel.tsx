@@ -1,7 +1,6 @@
 'use client'
 
 import Script from 'next/script'
-import { useEffect, useState } from 'react'
 
 declare global {
   interface Window {
@@ -14,42 +13,12 @@ declare global {
 const PIXEL_ID = '806502898408304'
 
 export default function MetaPixel() {
-  const [shouldLoad, setShouldLoad] = useState(false)
-
-  useEffect(() => {
-    // PERFORMANCE: Defer Facebook pixel loading to improve TBT
-    // Load after 3 seconds OR when browser is idle
-    const loadPixel = () => setShouldLoad(true)
-
-    // Use requestIdleCallback if available (better for performance)
-    if (typeof window !== 'undefined') {
-      const ric = (window as any).requestIdleCallback
-      if (ric) {
-        ric(() => {
-          setTimeout(loadPixel, 2000) // Additional 2s delay after idle
-        })
-      } else {
-        // Fallback: load after 4 seconds
-        setTimeout(loadPixel, 4000)
-      }
-    }
-  }, [])
-
-  if (!shouldLoad) {
-    return (
-      // Noscript fallback for users with JS disabled
-      <noscript dangerouslySetInnerHTML={{
-        __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1" />`
-      }} />
-    )
-  }
-
   return (
     <>
-      {/* Meta Pixel Base Code - loads after idle + delay for maximum performance */}
+      {/* Meta Pixel Base Code - loads immediately after page is interactive for proper detection */}
       <Script
         id="meta-pixel-base"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
