@@ -1932,9 +1932,9 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          FOOTER - BLACK
+          FOOTER - BLACK (with extra padding for sticky CTA)
           ================================================================ */}
-      <footer className="py-6 sm:py-10 bg-black border-t border-gray-900">
+      <footer className="py-6 sm:py-10 pb-24 sm:pb-10 bg-black border-t border-gray-900">
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 mb-3 sm:mb-6 text-gray-500 text-xs sm:text-sm">
@@ -1965,6 +1965,23 @@ export default function DentistCleanLandingPage() {
         </div>
       </footer>
 
+      {/* ================================================================
+          STICKY MOBILE CTA - Always visible on mobile
+          ================================================================ */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-safe">
+        <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+          <a
+            href={WHOP_CHECKOUT_LINK}
+            onClick={() => trackInitiateCheckout('cloneyourself-dentist-sticky', 37)}
+            className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
+          >
+            <span>Get Access</span>
+            <span className="text-teal-200 font-bold">$37</span>
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+
       {/* Animation Styles - Modern, smooth, GPU-accelerated */}
       <style jsx global>{`
         /* Dentist-specific background gradient */
@@ -1985,38 +2002,39 @@ export default function DentistCleanLandingPage() {
           background-size: 50px 50px;
         }
 
-        /* Testimonial carousel styles for dentist */
+        /* Testimonial carousel styles for dentist - MOBILE OPTIMIZED */
         .testimonial-carousel-wrapper-dentist {
           position: relative;
           overflow: hidden;
           width: 100%;
-          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-          -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
         }
 
         .testimonial-scroll-track-dentist {
           display: flex;
-          gap: 1rem;
-          animation: scroll-dentist 40s linear infinite;
+          gap: 0.75rem;
+          animation: scroll-dentist 35s linear infinite;
           width: fit-content;
+          padding: 0.5rem 0;
         }
 
         .testimonial-card-dentist {
           flex-shrink: 0;
-          width: 300px;
+          width: 280px;
           background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
           border: 1px solid rgba(20, 184, 166, 0.2);
           border-radius: 1rem;
-          padding: 1.5rem;
+          padding: 1.25rem;
           position: relative;
         }
 
         .testimonial-quote-icon-dentist {
           position: absolute;
-          top: 1rem;
-          right: 1rem;
-          width: 24px;
-          height: 24px;
+          top: 0.75rem;
+          right: 0.75rem;
+          width: 20px;
+          height: 20px;
           opacity: 0.3;
         }
 
@@ -2026,6 +2044,17 @@ export default function DentistCleanLandingPage() {
           }
           100% {
             transform: translateX(-50%);
+          }
+        }
+
+        /* Mobile-specific testimonial adjustments */
+        @media (max-width: 640px) {
+          .testimonial-card-dentist {
+            width: 260px;
+            padding: 1rem;
+          }
+          .testimonial-scroll-track-dentist {
+            gap: 0.5rem;
           }
         }
 
