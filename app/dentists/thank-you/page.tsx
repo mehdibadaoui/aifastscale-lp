@@ -5,13 +5,35 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { trackTikTokEvent } from '../../components/TikTokPixel'
-import { trackMetaEvent } from '../../components/MetaPixel'
 
-// Declare gtag for TypeScript
+// Declare gtag and fbq for TypeScript
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void
+    fbq?: (...args: any[]) => void
   }
+}
+
+// CRITICAL: Track Meta Purchase with retry logic to ensure fbq is ready
+function trackMetaPurchase(params: {
+  content_ids: string[]
+  content_name: string
+  content_type: string
+  value: number
+  currency: string
+}) {
+  const attemptTrack = (retries: number) => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'Purchase', params)
+      console.log('Meta Purchase tracked:', params)
+    } else if (retries > 0) {
+      // Retry after 500ms if fbq not ready
+      setTimeout(() => attemptTrack(retries - 1), 500)
+    } else {
+      console.warn('Meta fbq not available after retries')
+    }
+  }
+  attemptTrack(5) // Try up to 5 times (2.5 seconds total)
 }
 
 function ThankYouContent() {
@@ -26,21 +48,24 @@ function ThankYouContent() {
 
   const password = "im the best dentist in the world"
 
-  // Fire purchase tracking
+  // Fire purchase tracking for TikTok
   useEffect(() => {
     if (hasTrackedPurchase.current) return
     hasTrackedPurchase.current = true
 
     // Determine product and value based on purchase type
     let productName = 'CloneYourself Dentist'
-    let value = 37 // Main product price
+    let value = 37
 
-    if (purchased === 'oto') {
-      productName = 'CloneYourself Dentist - OTO Bundle'
-      value = 47
+    if (purchased === 'oto-premium') {
+      productName = 'CloneYourself Dentist - Premium Bundle'
+      value = 565
+    } else if (purchased === 'oto-starter') {
+      productName = 'CloneYourself Dentist - Starter Bundle'
+      value = 295
     } else if (purchased === 'downsell') {
-      productName = 'CloneYourself Dentist - Downsell Bundle'
-      value = 27
+      productName = 'CloneYourself Dentist - Downsell'
+      value = 195
     }
 
     // Track TikTok CompletePayment (browser pixel)
@@ -67,13 +92,30 @@ function ThankYouContent() {
     }
 
     // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
-    trackMetaEvent('Purchase', {
+    // Uses retry logic to ensure fbq is loaded before tracking
+    trackMetaPurchase({
       content_ids: [`dentist-${purchased || 'main'}`],
       content_name: productName,
       content_type: 'product',
       value: value,
       currency: 'USD'
     })
+
+    // Retrieve saved tracking params from localStorage (saved before Whop redirect)
+    let savedTracking: Record<string, string> = {}
+    try {
+      const stored = localStorage.getItem('aifastscale_tracking')
+      if (stored) {
+        savedTracking = JSON.parse(stored)
+        // Clear after reading to prevent duplicate attributions
+        localStorage.removeItem('aifastscale_tracking')
+      }
+    } catch (e) {
+      console.error('Error reading tracking data:', e)
+    }
+
+    // Get ttclid from URL params OR localStorage
+    const ttclid = searchParams.get('ttclid') || savedTracking.ttclid || ''
 
     // Send server-side event via TikTok CAPI
     fetch('/api/tiktok-capi', {
@@ -85,15 +127,19 @@ function ThankYouContent() {
         content_name: productName,
         value: value,
         currency: 'USD',
+        ttclid: ttclid,
         url: window.location.href,
         referrer: document.referrer
       })
     }).catch(console.error)
 
-    // Send server-side event via Meta CAPI (for better iOS 14.5+ tracking)
-    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || ''
-    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || ''
-    fetch('/api/meta-capi', {
+    // Get fbc/fbp from cookies OR localStorage (localStorage has pre-redirect values)
+    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || savedTracking._fbc || ''
+    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || savedTracking._fbp || ''
+
+    // Send server-side event via DENTIST-SPECIFIC Meta CAPI (Pixel: 834713712860127)
+    // This goes to the separate dentist ad account for clean attribution
+    fetch('/api/dentist-meta-capi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -108,7 +154,7 @@ function ThankYouContent() {
         contentIds: [`dentist-${purchased || 'main'}`]
       })
     }).catch(console.error)
-  }, [purchased])
+  }, [purchased, searchParams])
 
   const copyPassword = () => {
     navigator.clipboard.writeText(password)
@@ -206,9 +252,9 @@ function ThankYouContent() {
               </div>
             )}
 
-            {/* Members Area Button */}
+            {/* Members Area Button - Links to DENTIST members area */}
             <Link
-              href={hasCopied ? "/members" : "#"}
+              href={hasCopied ? "/dentists/members" : "#"}
               onClick={handleEnterClick}
               className="block w-full"
             >

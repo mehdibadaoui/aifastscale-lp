@@ -37,24 +37,32 @@ export const PAYMENT_CONFIG = {
   },
 } as const
 
-// Dentist-specific plan IDs (if different from main)
+// Dentist-specific plan IDs
+// IMPORTANT: Replace these placeholder IDs with your actual Whop plan IDs
 export const DENTIST_PAYMENT_CONFIG = {
   plans: {
     mainCourse: {
-      id: '', // Add your plan ID
+      id: 'plan_DENTIST_MAIN_37', // REPLACE: Your Whop plan ID for $37 dentist course
       price: 37,
       name: 'CloneYourself Dentist System',
     },
     upsell: {
-      id: '', // Add your plan ID
-      price: 565,
-      name: 'Done-For-You Dental Content Package',
+      id: 'plan_DENTIST_OTO_10', // REPLACE: Your Whop plan ID for $9.95 upsell
+      price: 9.95,
+      name: 'CloneYourself Dentist - Premium Bundle',
     },
     downsell: {
-      id: '', // Add your plan ID
-      price: 395,
-      name: 'Done-For-You Dental Content Package (Discounted)',
+      id: 'plan_DENTIST_DS_5', // REPLACE: Your Whop plan ID for $4.97 downsell
+      price: 4.97,
+      name: 'CloneYourself Dentist - Value Bundle',
     },
+  },
+
+  // Whop checkout links - REPLACE with your actual Whop links
+  checkoutLinks: {
+    main: 'https://whop.com/checkout/plan_DENTIST_MAIN_37', // REPLACE with real link
+    upsell: 'https://whop.com/checkout/plan_DENTIST_OTO_10', // REPLACE with real link
+    downsell: 'https://whop.com/checkout/plan_DENTIST_DS_5', // REPLACE with real link
   },
 
   redirects: {

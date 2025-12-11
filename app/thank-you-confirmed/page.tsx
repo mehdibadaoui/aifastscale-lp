@@ -138,7 +138,25 @@ function ThankYouContent() {
     const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || savedTracking._fbp || ''
 
     // Send server-side event via Meta CAPI (for better iOS 14.5+ tracking)
+    // PIXEL 1: Original Real Estate pixel
     fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName: 'Purchase',
+        sourceUrl: window.location.href,
+        fbc: fbc,
+        fbp: fbp,
+        value: value,
+        currency: 'USD',
+        contentName: productName,
+        contentType: 'product',
+        contentIds: [purchased || 'main']
+      })
+    }).catch(console.error)
+
+    // PIXEL 2: Real Estate 2 from Dentists Clone account
+    fetch('/api/realestate2-meta-capi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

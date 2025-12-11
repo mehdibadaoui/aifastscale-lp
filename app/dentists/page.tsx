@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   Gift,
   Shield,
@@ -37,13 +38,72 @@ import {
   Phone,
 } from 'lucide-react'
 import { DENTIST_BONUS_PRODUCTS, getDentistTotalBonusValue } from '../config/dentist-bonus-products'
+import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
+import { trackMetaEvent } from '../components/MetaPixel'
+import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/ExpertPersona'
+
+// Whop checkout link - REPLACE WITH YOUR ACTUAL DENTIST PRODUCT LINK
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_DENTIST_MAIN_37'
+
+// Save tracking params to localStorage before Whop redirect
+// This preserves fbclid, ttclid, UTMs for thank-you page attribution
+const saveTrackingParams = () => {
+  if (typeof window === 'undefined') return
+
+  const params = new URLSearchParams(window.location.search)
+  const trackingData: Record<string, string> = {}
+
+  // Capture Meta fbclid
+  const fbclid = params.get('fbclid')
+  if (fbclid) trackingData.fbclid = fbclid
+
+  // Capture TikTok ttclid
+  const ttclid = params.get('ttclid')
+  if (ttclid) trackingData.ttclid = ttclid
+
+  // Capture UTM params
+  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+  utmParams.forEach(param => {
+    const value = params.get(param)
+    if (value) trackingData[param] = value
+  })
+
+  // Capture Meta cookies (_fbc, _fbp) if they exist
+  const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1]
+  const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1]
+  if (fbc) trackingData._fbc = fbc
+  if (fbp) trackingData._fbp = fbp
+
+  // Save timestamp
+  trackingData.checkout_started = new Date().toISOString()
+
+  // Store in localStorage (persists across redirect to Whop and back)
+  localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
+}
+
+// Combined tracking function for all platforms
+const trackInitiateCheckout = (contentId: string, value: number) => {
+  // Save tracking params BEFORE redirect
+  saveTrackingParams()
+
+  // TikTok tracking
+  trackTikTokInitiateCheckout(contentId, value)
+  // Meta Pixel tracking
+  trackMetaEvent('InitiateCheckout', {
+    content_ids: [contentId],
+    content_name: 'CloneYourself Dentist System',
+    content_type: 'product',
+    value: value,
+    currency: 'USD'
+  })
+}
 
 export default function DentistCleanLandingPage() {
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 })
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [isVideoMuted, setIsVideoMuted] = useState(true)
-  const [spotsLeft, setSpotsLeft] = useState(7)
+  // REMOVED: spotsLeft - fake scarcity kills trust
   const [viewersNow, setViewersNow] = useState(23)
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -162,31 +222,33 @@ export default function DentistCleanLandingPage() {
     }
   }, [])
 
-  // Countdown timer
+  // Countdown timer - REAL deadline: December 20th for Premium Bundle bonus
+  const BONUS_DEADLINE = new Date('2024-12-20T23:59:59')
+
   useEffect(() => {
-    const calculateTimeToMidnight = () => {
+    const calculateTimeLeft = () => {
       const now = new Date()
-      const midnight = new Date(now)
-      midnight.setHours(24, 0, 0, 0)
-      const diff = midnight.getTime() - now.getTime()
+      const diff = BONUS_DEADLINE.getTime() - now.getTime()
+
+      // If deadline passed, show zeros
+      if (diff <= 0) {
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+      }
+
       return {
-        hours: Math.floor(diff / (1000 * 60 * 60)),
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
         seconds: Math.floor((diff % (1000 * 60)) / 1000)
       }
     }
-    setTimeLeft(calculateTimeToMidnight())
-    const timer = setInterval(() => setTimeLeft(calculateTimeToMidnight()), 1000)
+    setTimeLeft(calculateTimeLeft())
+    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
     return () => clearInterval(timer)
   }, [])
 
-  // Scarcity
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSpotsLeft(prev => prev > 3 ? prev - 1 : 7)
-    }, 45000)
-    return () => clearInterval(interval)
-  }, [])
+  // REMOVED: Fake scarcity that resets - kills trust
+  // Real urgency comes from the December 20th bonus deadline
 
   // Viewers
   useEffect(() => {
@@ -257,56 +319,74 @@ export default function DentistCleanLandingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black bg-animated-gradient-dentist">
-      {/* Subtle floating particles */}
-      <div className="bg-particles-dentist" />
-
+    <main className="min-h-screen bg-gradient-premium noise-overlay font-sans">
       {/* ================================================================
-          1. HERO SECTION - BLACK WITH TEAL (Normal Structure)
+          1. HERO SECTION - PREMIUM ANIMATED GRADIENT
           ================================================================ */}
       <section
         id="hero"
         data-animate
-        className="relative bg-black text-white py-8 sm:py-16 md:py-20 overflow-hidden"
+        className="relative bg-gradient-hero text-white py-8 sm:py-16 md:py-20 overflow-hidden section-premium"
       >
-        {/* Subtle teal grid pattern */}
-        <div className="absolute inset-0 opacity-10">
+        {/* Premium animated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 animate-gradient-xy" style={{ backgroundSize: '400% 400%' }} />
+
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.07]">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.4) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.5) 1px, transparent 0)',
+            backgroundSize: '48px 48px'
           }} />
         </div>
 
+        {/* Premium floating orbs */}
+        <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+        <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-cyan-500/8 to-teal-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/3 rounded-full blur-3xl" />
+
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Main Headline - BIG & BOLD */}
-            <h1 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
+            {/* Main Headline - PREMIUM TYPOGRAPHY */}
+            <h1 className={`font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
               <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
               <br />
               <span className="relative inline-block">
-                <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: '0 0 40px rgba(20, 184, 166, 0.3)' }}>
+                <span className="text-gradient-premium drop-shadow-2xl">
+                  Talking AI Video
+                </span>
+                {/* Glow effect */}
+                <span className="absolute inset-0 text-gradient-premium blur-2xl opacity-50 -z-10">
                   Talking AI Video
                 </span>
               </span>
               <br />
               <span className="text-white drop-shadow-lg">&</span>
-              <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent" style={{ textShadow: '0 0 40px rgba(20, 184, 166, 0.3)' }}>
+              <span className="text-gradient-premium">
                 {' '}Get 100+ New Patients
               </span>
             </h1>
 
             {/* Subtitle - Larger & More Visible */}
-            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-5 sm:mb-8 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               Even if you've never edited a video in your life —
               <br className="hidden sm:block" />
               <span className="text-white font-semibold">all you need is your phone</span>
             </p>
 
-            {/* Hero Image - Clean, no badge - RESPONSIVE for mobile performance */}
+            {/* Expert Trust Line - Premium Badge */}
+            <div className={`mb-5 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-250' : ''}`}>
+              <div className="inline-flex items-center gap-2 badge-premium badge-glow">
+                <Award className="w-4 h-4 text-teal-400" />
+                <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
+                <span className="text-teal-300 font-semibold text-xs sm:text-sm">Dr. Alexander Voss, DDS, MClinDent</span>
+              </div>
+            </div>
+
+            {/* Hero Image - Premium Glass Container */}
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
-              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-teal-500/30 sm:border-2 sm:border-teal-500/40 shadow-xl shadow-teal-500/10">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift">
                 <Image
-                  src="/images/dentist/course-demo.webp"
+                  src="/images/dentist/course-demo-new.webp"
                   alt="AI Video System for Dentists Showcase"
                   width={1365}
                   height={768}
@@ -317,39 +397,46 @@ export default function DentistCleanLandingPage() {
               </div>
             </div>
 
-            {/* Trust badges - UNDER the image */}
-            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-              <div className="flex items-center gap-1.5">
+            {/* Trust badges - Premium Glass Cards */}
+            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
                 <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
-                <span><span className="text-white font-bold">500+</span> dentists</span>
+                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">500+</span> dentists</span>
               </div>
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-teal-400 text-teal-400" />
                 ))}
-                <span className="ml-1 text-white font-bold">4.9/5</span>
+                <span className="ml-1 text-white font-bold text-xs sm:text-sm">4.9/5</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
-                <span>30-Day Guarantee</span>
+                <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
               </div>
             </div>
 
-            {/* CTA - Scrolls to What's Inside */}
-            <button
-              onClick={() => scrollToSection('whats-inside')}
-              className={`group relative bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-10 py-5 rounded-xl font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30 overflow-hidden ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
+            {/* CTA - Premium Button with Glow */}
+            <a
+              href={WHOP_CHECKOUT_LINK}
+              onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+              className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <span className="relative flex items-center gap-3">
-                See What's Inside
-                <ArrowDown className="w-6 h-6" />
+              <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
+                <span className="sm:hidden">Get Instant Access</span>
+                <span className="hidden sm:inline">Start Creating AI Videos</span>
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </span>
-            </button>
+            </a>
 
-            <p className={`text-gray-600 text-sm mt-4 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
-              ↓ Scroll to see everything you get ↓
-            </p>
+            {/* PRICE TEASER - Premium Glass Style */}
+            <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
+              <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
+                <span className="text-gray-500 text-sm line-through">${getDentistTotalBonusValue() + 37}</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$37</span>
+                <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
+              </div>
+              <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
+            </div>
 
             {/* What is CloneYourself? - Collapsible */}
             <div className={`max-w-xl mx-auto mt-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
@@ -382,176 +469,151 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          2. HOW IT WORKS - WHITE SECTION
+          REASONS WHY - Why Is This Only $37? (Hormozi Principle)
           ================================================================ */}
       <section
-        id="how-it-works"
+        id="reasons-why"
         data-animate
-        className="py-10 sm:py-20 bg-white"
+        className="py-8 sm:py-16 bg-gradient-to-b from-black to-slate-950"
       >
         <div className="w-full px-3 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
-                <Zap className="w-3.5 h-3.5 text-teal-500" />
-                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Simple Process</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                Create Videos in <span className="text-teal-500">3 Easy Steps</span>
+          <div className="max-w-3xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
+              <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
+                Why Is This Only <span className="text-gradient-premium">$37</span>?
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg">No filming. No editing. No experience needed.</p>
+              <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
+            <div className={`space-y-4 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               {[
-                { step: 1, icon: Upload, title: 'Upload Your Photo', time: '1 min', desc: 'Any headshot works - selfie, professional shot, or even your website photo. The AI does the rest.' },
-                { step: 2, icon: Video, title: 'Type Your Script', time: '2 min', desc: 'Write your message or pick from 100+ ready-made templates designed for dental practices.' },
-                { step: 3, icon: TrendingUp, title: 'Get Your Video', time: '4 min', desc: 'AI generates your video with perfect lip-sync. Download, post, watch new patients call.' },
+                {
+                  num: '1',
+                  title: 'I Use This Every Day',
+                  desc: 'I built this system for my own practice first. I use it to create 3-5 videos weekly. This works because it solves MY problem before it solves yours.',
+                },
+                {
+                  num: '2',
+                  title: 'I Don\'t Need To Charge You A Lot',
+                  desc: 'Unlike software companies that need recurring revenue, my success comes from helping dentists succeed. When you win, I win. So I price based on value delivered, not what I can get away with.',
+                },
+                {
+                  num: '3',
+                  title: 'High Volume = Better For Both Of Us',
+                  desc: 'At $37, I can reach 500+ dentists. Even if only 10% create videos and 5% get results, that\'s 25 dentists getting new patients. That\'s 25 success stories. That\'s worth more to me than charging $497 to 50 dentists.',
+                },
+                {
+                  num: '4',
+                  title: 'I\'m Betting On You',
+                  desc: 'The $50 guarantee isn\'t a loss leader. It\'s me saying: "I\'m confident this works. I\'ll literally pay you $50 if it doesn\'t." That confidence only works if the price is low enough that you\'ll actually TRY it.',
+                },
               ].map((item, i) => (
-                <div
-                  key={item.step}
-                  className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-teal-500/50 transition-all hover:shadow-xl ${
-                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''
-                  }`}
-                  style={{ animationDelay: `${i * 150}ms` }}
-                >
-                  <div className="absolute -top-3 sm:-top-5 left-4 sm:left-8 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
-                    <span className="text-white font-black text-sm sm:text-xl">{item.step}</span>
+                <div key={i} className="flex gap-4 bg-white/5 border border-teal-500/20 rounded-xl p-4 sm:p-5">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-teal-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-teal-400 font-black text-sm sm:text-base">{item.num}</span>
                   </div>
-                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-teal-500/10 text-teal-600 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-bold border border-teal-500/30">
-                    {item.time}
+                  <div>
+                    <h3 className="text-white font-bold text-sm sm:text-base mb-1">{item.title}</h3>
+                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
                   </div>
-                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-teal-500/10 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-5 mt-3 sm:mt-4">
-                    <item.icon className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
-                  </div>
-                  <h3 className="text-base sm:text-xl font-black text-gray-900 mb-1.5 sm:mb-3">{item.title}</h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
 
-            <div className={`flex justify-center mt-6 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
-              <div className="flex items-center gap-3 sm:gap-6 bg-teal-500/5 border border-teal-500/30 rounded-full px-4 sm:px-8 py-2.5 sm:py-4">
-                <Clock className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
-                <div>
-                  <span className="text-teal-500 font-black text-xl sm:text-3xl">7 minutes</span>
-                  <span className="text-gray-600 text-sm sm:text-lg ml-1.5 sm:ml-2">total time</span>
-                </div>
-              </div>
+            <div className={`mt-6 text-center ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+              <p className="text-teal-400 font-bold text-sm sm:text-base">
+                Bottom line: This is priced to be tried, not priced to be expensive.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ================================================================
-          3. DR. MARCUS CASE STUDY - BLACK SECTION
+          2. CASE STUDY #1 - DR. SARAH - LIGHT CREAM SECTION (Alternating)
           "She booked 23 new patients in 3 weeks"
           ================================================================ */}
       <section
         id="case-study"
         data-animate
-        className="py-10 sm:py-24 bg-black"
+        className="py-10 sm:py-24 bg-gradient-to-br from-stone-100 via-white to-stone-50 relative overflow-hidden"
       >
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0)',
+            backgroundSize: '32px 32px'
+          }} />
+        </div>
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            {/* Section Header */}
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
-                <Play className="w-3.5 h-3.5 text-teal-400" />
-                <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Featured Case Study</span>
+            {/* Section Header - Attention Grabbing */}
+            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
+                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
+                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dentist</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-                She Booked <span className="text-teal-400">23 New Patients</span> in 3 Weeks
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
+                This is Dr. Sarah. She Got <span className="text-teal-600">23 New Patients</span>...
               </h2>
-              <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">...without recording a single video</p>
+              <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Recording a Single Video.</p>
             </div>
 
-            {/* Dr. Sarah Case Study Card */}
-            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden mb-8 sm:mb-16 ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            {/* Dr. Sarah Case Study Card - Premium Modern Design */}
+            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
-              {/* Top: Profile + Before Situation */}
-              <div className="p-4 sm:p-8 border-b border-white/10">
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
-                  {/* Profile */}
-                  <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
-                    <div className="relative">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-teal-400">
-                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Sarah Mitchell" width={96} height={96} className="object-cover w-full h-full" />
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 bg-teal-400 text-black text-[10px] font-black px-2 py-0.5 rounded-full">
-                        VERIFIED
-                      </div>
-                    </div>
-                    <div className="sm:mt-2">
-                      <h3 className="text-white font-black text-lg">Dr. Sarah Mitchell</h3>
-                      <p className="text-gray-400 text-sm">Cosmetic Dentist</p>
-                      <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
-                        <MapPin className="w-3 h-3" />
-                        <span>Los Angeles, CA</span>
-                      </div>
-                    </div>
-                  </div>
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
 
-                  {/* Before Story */}
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full mb-3">
-                      <span className="text-red-400 text-xs font-bold">THE PROBLEM</span>
-                    </div>
-                    <p className="text-gray-300 leading-relaxed">
-                      "I was spending <span className="text-white font-bold">$3,000 every month</span> on marketing with barely any results.
-                      My social media looked dead. <span className="text-white font-bold">New patient calls were declining</span>.
-                      My front desk was slow. <span className="text-red-400 font-bold">I was invisible online</span>.
-                      Then I discovered this system..."
-                    </p>
-                  </div>
+              {/* Hero Section - Big Visual */}
+              <div className="relative p-4 sm:p-8">
+                {/* The Hook Text */}
+                <div className="text-center mb-6">
+                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see her talking on camera...</p>
+                  <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
+                    She Never Filmed Anything.
+                  </p>
+                  <p className="text-teal-400 text-base sm:text-lg font-medium">
+                    She just uploaded her photo, and the AI created a ready-to-post video for her.
+                  </p>
                 </div>
-              </div>
 
-              {/* Big Hero Image */}
-              <div className="p-4 sm:p-8 bg-black/50">
-                {/* Image without overlay on mobile for clarity */}
-                <div className="rounded-xl overflow-hidden border-2 border-teal-500/40 shadow-2xl">
+                {/* Big Before/After Image - Full Width */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black">
                   <Image
                     src="/images/dentist/dr-marcus.webp"
-                    alt="Dr. Sarah Mitchell - 23 New Patients in 3 Weeks"
+                    alt="Dr. Sarah Mitchell - AI Video Transformation"
                     width={1365}
                     height={768}
                     className="w-full h-auto object-cover"
                     loading="lazy"
                   />
                 </div>
-                {/* Caption below image for clarity */}
-                <div className="mt-4 text-center">
-                  <p className="text-teal-400 font-black text-xl sm:text-3xl mb-1">23 New Patients in 3 Weeks</p>
-                  <p className="text-gray-400 text-sm">Without recording a single video</p>
+
+                {/* Verified Badge */}
+                <div className="flex justify-center mt-4">
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-4 py-2 rounded-full">
+                    <Check className="w-4 h-4 text-teal-400" />
+                    <span className="text-white text-sm font-medium">Real dentist • Verified results</span>
+                  </div>
                 </div>
               </div>
 
-              {/* The Transformation */}
-              <div className="p-4 sm:p-8 bg-black/30">
-                <div className="text-center mb-4">
-                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full">
-                    <span className="text-teal-400 text-xs font-bold">THE 7-MINUTE TRANSFORMATION</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2 sm:gap-4">
+              {/* Results Strip */}
+              <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-4 px-4 sm:px-8">
+                <div className="grid grid-cols-3 gap-4 text-center">
                   {[
                     { number: '23', label: 'New Patients', sub: 'in 3 weeks' },
                     { number: '7', label: 'Minutes', sub: 'per video' },
-                    { number: '0', label: 'Hours Filming', sub: 'on camera' },
+                    { number: '$0', label: 'Ad Spend', sub: 'organic only' },
                   ].map((stat, i) => (
-                    <div key={i} className="bg-teal-500/10 border border-teal-500/30 rounded-xl p-3 sm:p-4 text-center">
-                      <div className="text-teal-400 text-3xl sm:text-5xl font-black mb-0.5">{stat.number}</div>
-                      <div className="text-white font-bold text-xs sm:text-sm">{stat.label}</div>
+                    <div key={i}>
+                      <div className="text-teal-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
+                      <div className="text-white text-xs sm:text-sm font-bold">{stat.label}</div>
                       <div className="text-gray-500 text-[10px] sm:text-xs">{stat.sub}</div>
                     </div>
                   ))}
                 </div>
-
-                <p className="text-gray-500 text-xs sm:text-sm mt-4 text-center">
-                  Posted <span className="text-teal-400 font-bold">18 AI videos</span> in 3 weeks • Zero filming • Zero editing stress
-                </p>
               </div>
 
               {/* Timeline / Results */}
@@ -628,7 +690,7 @@ export default function DentistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
                 {[
-                  { value: '$58', label: 'Investment', sub: 'One-time' },
+                  { value: '$37', label: 'Investment', sub: 'One-time' },
                   { value: '23', label: 'New Patients', sub: '3 weeks' },
                   { value: '$47K', label: 'Revenue', sub: '2 months' },
                 ].map((stat, i) => (
@@ -645,7 +707,286 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          3B. DR. DAVID CASE STUDY - CREAM/WHITE SECTION (Implant Specialist)
+          3. WHAT'S INSIDE - BLACK SECTION (Product Showcase)
+          ================================================================ */}
+      <section
+        id="whats-inside"
+        data-animate
+        className="py-10 sm:py-20 bg-gradient-to-b from-black via-slate-950 to-black"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
+                Here's What You Get <span className="text-teal-400">Today</span>
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-lg">Everything you need to start getting new patients with AI videos</p>
+            </div>
+
+            {/* PRODUCT #1 - THE MAIN COURSE */}
+            <div className={`bg-gradient-to-br from-teal-500/15 to-teal-500/5 border-2 border-teal-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
+            }`}>
+              {/* Large Course Thumbnail */}
+              <div className="relative w-full aspect-video">
+                <Image
+                  src="/images/dentist/course-demo-new.webp"
+                  alt="CloneYourself 7-Minute Video System for Dentists"
+                  fill
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Course Details */}
+              <div className="p-4 sm:p-8">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <span className="bg-teal-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
+                  <span className="text-gray-400 line-through text-xs sm:text-sm">$497</span>
+                  <span className="text-teal-400 font-black text-xs sm:text-base">INCLUDED</span>
+                </div>
+
+                <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">CloneYourself 7-Minute Video System</h3>
+                <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed">
+                  Even if you've never touched AI before — follow along and create your first talking video today.
+                  No tech skills needed. I show you everything click-by-click.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+                  {[
+                    'Turn any photo into a talking AI video',
+                    'Create your personal AI avatar that looks like you',
+                    'Clone your voice so the AI speaks exactly like you',
+                    'Put yourself anywhere — your office, treatment rooms, anywhere',
+                    'All free tools included — zero monthly fees',
+                    'Ready-to-use AI scriptwriter (writes viral scripts for you)',
+                    'Every prompt you need — just copy & paste',
+                    'Edit videos on your phone in minutes (no experience needed)',
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400 flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Expert credibility line */}
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
+                    <Award className="w-4 h-4 text-teal-400 flex-shrink-0" />
+                    <span>Clinically-structured lessons and examples created with input from <span className="text-teal-400 font-medium">Dr. Alexander Voss</span>, Aesthetic and Restorative Dentist</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* BONUSES HEADER */}
+            <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
+                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+                <span className="text-teal-400 font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
+              </div>
+            </div>
+
+            {/* ALL 10 BONUS PRODUCTS */}
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+              {allBonuses.map((bonus, index) => (
+                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                  <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" />
+                  </div>
+                  <div className="p-4 sm:p-5">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                      <h4 className="text-white font-bold text-base sm:text-lg">{bonus.title}</h4>
+                      <div className="flex items-center gap-2">
+                        <span className="text-red-400 line-through text-sm sm:text-base font-semibold">${bonus.value}</span>
+                        <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                      {bonus.description.substring(0, 150)}...
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* EXTRA BONUSES - Support & Updates */}
+            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Stethoscope className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold">Direct Support</h4>
+                    <p className="text-gray-400 text-sm">Email + chat support included</p>
+                    <p className="text-teal-400 font-bold text-sm mt-1">$197 value — FREE</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <RefreshCw className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold">Lifetime Updates</h4>
+                    <p className="text-gray-400 text-sm">New tools & templates weekly</p>
+                    <p className="text-teal-400 font-bold text-sm mt-1">$297 value — FREE</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* TOTAL VALUE + CTA - Compact on mobile */}
+            <div className={`bg-gradient-to-br from-teal-500/20 to-black rounded-2xl border-2 border-teal-500 p-4 sm:p-8 ${
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
+            }`}>
+              {/* Price Box - Compact */}
+              <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
+                <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
+                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$37</span>
+                  <div className="text-left">
+                    <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
+                    <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
+                  </div>
+                </div>
+                <p className="text-gray-400 text-xs sm:text-sm">Lifetime access • No hidden costs</p>
+              </div>
+
+              {/* CTA Button */}
+              <Link
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => trackInitiateCheckout('dentist-main', 37)}
+                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              >
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+                Get Instant Access Now
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </Link>
+
+              {/* Trust - Compact */}
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-400 text-xs sm:text-sm">
+                <div className="flex items-center gap-1.5">
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
+                  <span>30-Day Guarantee</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
+                  <span>SSL Secured</span>
+                </div>
+              </div>
+            </div>
+
+            {/* What Happens After - Hormozi Style */}
+            <div className={`mt-6 sm:mt-8 bg-white/5 rounded-xl border border-white/10 p-4 sm:p-6 ${
+              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
+            }`}>
+              <h4 className="text-white font-bold text-base sm:text-lg mb-4 text-center">What Happens After You Click The Button?</h4>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                {[
+                  { step: '1', title: 'Checkout', desc: 'Secure payment (2 min)', icon: CheckCircle },
+                  { step: '2', title: 'Check Email', desc: 'Instant access link', icon: Clock },
+                  { step: '3', title: 'Watch Training', desc: '15-min setup video', icon: Play },
+                  { step: '4', title: 'Create & Post', desc: 'Your first AI video today', icon: Video },
+                ].map((item, i) => (
+                  <div key={i} className="text-center">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-500/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-teal-400 font-black text-lg sm:text-xl">{item.step}</span>
+                    </div>
+                    <h5 className="text-white font-bold text-sm sm:text-base">{item.title}</h5>
+                    <p className="text-gray-400 text-xs sm:text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          4. HOW IT WORKS - WHITE SECTION
+          ================================================================ */}
+      <section
+        id="how-it-works"
+        data-animate
+        className="py-10 sm:py-20 bg-white"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Zap className="w-3.5 h-3.5 text-teal-500" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Simple Process</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
+                Create Videos in <span className="text-teal-500">3 Easy Steps</span>
+              </h2>
+              <p className="text-gray-600 text-sm sm:text-lg">No filming. No editing. No experience needed.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
+              {[
+                { step: 1, icon: Upload, title: 'Upload Your Photo', time: '1 min', desc: 'Any headshot works - selfie, professional shot, or even your website photo. The AI does the rest.' },
+                { step: 2, icon: Video, title: 'Type Your Script', time: '2 min', desc: 'Write your message or pick from 100+ ready-made templates designed for dental practices.' },
+                { step: 3, icon: TrendingUp, title: 'Get Your Video', time: '4 min', desc: 'AI generates your video with perfect lip-sync. Download, post, watch new patients call.' },
+              ].map((item, i) => (
+                <div
+                  key={item.step}
+                  className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-teal-500/50 transition-all hover:shadow-xl ${
+                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''
+                  }`}
+                  style={{ animationDelay: `${i * 150}ms` }}
+                >
+                  <div className="absolute -top-3 sm:-top-5 left-4 sm:left-8 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-black text-sm sm:text-xl">{item.step}</span>
+                  </div>
+                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-teal-500/10 text-teal-600 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-bold border border-teal-500/30">
+                    {item.time}
+                  </div>
+                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-teal-500/10 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-5 mt-3 sm:mt-4">
+                    <item.icon className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
+                  </div>
+                  <h3 className="text-base sm:text-xl font-black text-gray-900 mb-1.5 sm:mb-3">{item.title}</h3>
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className={`flex justify-center mt-6 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              <div className="flex items-center gap-3 sm:gap-6 bg-teal-500/5 border border-teal-500/30 rounded-full px-4 sm:px-8 py-2.5 sm:py-4">
+                <Clock className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
+                <div>
+                  <span className="text-teal-500 font-black text-xl sm:text-3xl">7 minutes</span>
+                  <span className="text-gray-600 text-sm sm:text-lg ml-1.5 sm:ml-2">total time</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA - After How It Works */}
+            <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
+              <a
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
+              >
+                <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
+                  <Video className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="sm:hidden">Create My First Video</span>
+                  <span className="hidden sm:inline">Create My First AI Video in 7 Minutes</span>
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </a>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">Join 500+ dentists who made the switch</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          5. CASE STUDY #2 - DR. DAVID - CREAM/WHITE SECTION (Implant Specialist)
           ================================================================ */}
       <section
         id="case-study-david"
@@ -807,7 +1148,7 @@ export default function DentistCleanLandingPage() {
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       One week of AI videos. <span className="text-teal-600 font-bold">$47,000 in implant cases</span>.
-                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $58 and
+                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $37 and
                       I had 5 cases in a week. The ROI is unreal.
                     </p>
                     <div className="flex items-center gap-3">
@@ -831,7 +1172,7 @@ export default function DentistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
-                  { value: '$58', label: 'Investment', sub: 'One-time' },
+                  { value: '$37', label: 'Investment', sub: 'One-time' },
                   { value: '$47K', label: 'Revenue', sub: '2 weeks' },
                   { value: '810x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
@@ -848,174 +1189,7 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          4. WHAT'S INSIDE - BLACK SECTION (Product Showcase)
-          ================================================================ */}
-      <section
-        id="whats-inside"
-        data-animate
-        className="py-10 sm:py-20 bg-gradient-to-b from-black via-slate-950 to-black"
-      >
-        <div className="w-full px-3 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-                Here's What You Get <span className="text-teal-400">Today</span>
-              </h2>
-              <p className="text-gray-400 text-sm sm:text-lg">Everything you need to start getting new patients with AI videos</p>
-            </div>
-
-            {/* PRODUCT #1 - THE MAIN COURSE */}
-            <div className={`bg-gradient-to-br from-teal-500/15 to-teal-500/5 border-2 border-teal-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
-            }`}>
-              {/* Large Course Thumbnail */}
-              <div className="relative w-full aspect-video">
-                <Image
-                  src="/images/dentist/course-demo.webp"
-                  alt="CloneYourself 7-Minute Video System for Dentists"
-                  fill
-                  className="object-cover"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Course Details */}
-              <div className="p-4 sm:p-8">
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <span className="bg-teal-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
-                  <span className="text-gray-400 line-through text-xs sm:text-sm">$497</span>
-                  <span className="text-teal-400 font-black text-xs sm:text-base">INCLUDED</span>
-                </div>
-
-                <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">CloneYourself 7-Minute Video System</h3>
-                <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed">
-                  Even if you've never touched AI before — follow along and create your first talking video today.
-                  No tech skills needed. I show you everything click-by-click.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
-                  {[
-                    'Turn any photo into a talking AI video',
-                    'Create your personal AI avatar that looks like you',
-                    'Clone your voice so the AI speaks exactly like you',
-                    'Put yourself anywhere — your office, treatment rooms, anywhere',
-                    'All free tools included — zero monthly fees',
-                    'Ready-to-use AI scriptwriter (writes viral scripts for you)',
-                    'Every prompt you need — just copy & paste',
-                    'Edit videos on your phone in minutes (no experience needed)',
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
-                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400 flex-shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* BONUSES HEADER */}
-            <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
-                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
-                <span className="text-teal-400 font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
-              </div>
-            </div>
-
-            {/* ALL 10 BONUS PRODUCTS */}
-            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-              {allBonuses.map((bonus, index) => (
-                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-                  <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" />
-                  </div>
-                  <div className="p-4 sm:p-5">
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
-                      <h4 className="text-white font-bold text-base sm:text-lg">{bonus.title}</h4>
-                      <div className="flex items-center gap-2">
-                        <span className="text-red-400 line-through text-sm sm:text-base font-semibold">${bonus.value}</span>
-                        <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-black text-xs sm:text-sm px-2.5 py-1 rounded-lg shadow-lg">FREE</span>
-                      </div>
-                    </div>
-                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                      {bonus.description.substring(0, 150)}...
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* EXTRA BONUSES - Support & Updates */}
-            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Stethoscope className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold">Direct Support</h4>
-                    <p className="text-gray-400 text-sm">Email + chat support included</p>
-                    <p className="text-teal-400 font-bold text-sm mt-1">$197 value — FREE</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <RefreshCw className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold">Lifetime Updates</h4>
-                    <p className="text-gray-400 text-sm">New tools & templates weekly</p>
-                    <p className="text-teal-400 font-bold text-sm mt-1">$297 value — FREE</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* TOTAL VALUE + CTA - Compact on mobile */}
-            <div className={`bg-gradient-to-br from-teal-500/20 to-black rounded-2xl border-2 border-teal-500 p-4 sm:p-8 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
-            }`}>
-              {/* Price Box - Compact */}
-              <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
-                <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
-                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$58</span>
-                  <div className="text-left">
-                    <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">88% OFF</span>
-                    <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
-                  </div>
-                </div>
-                <p className="text-gray-400 text-xs sm:text-sm">Lifetime access • No hidden costs</p>
-              </div>
-
-              {/* CTA Button */}
-              <div
-                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4"
-              >
-                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                Get Instant Access Now
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-
-              {/* Trust - Compact */}
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-400 text-xs sm:text-sm">
-                <div className="flex items-center gap-1.5">
-                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
-                  <span>30-Day Guarantee</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
-                  <span>SSL Secured</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================
-          5. TESTIMONIALS - DARK ANIMATED CAROUSEL
+          6. TESTIMONIALS - DARK ANIMATED CAROUSEL
           ================================================================ */}
       <section
         id="testimonials"
@@ -1168,12 +1342,22 @@ export default function DentistCleanLandingPage() {
                     I'll refund every penny AND send you $50 for wasting your time. No questions asked. No hoops to jump through."
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-teal-500 flex-shrink-0 bg-teal-500 flex items-center justify-center">
-                      <Stethoscope className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-teal-500 flex-shrink-0 bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
+                      <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <p className="text-teal-600 font-bold text-sm sm:text-lg">— CloneYourself Team</p>
+                    <div>
+                      <p className="text-teal-600 font-bold text-sm sm:text-lg">— Dr. Alexander Voss, DDS</p>
+                      <p className="text-gray-500 text-[10px] sm:text-xs">Aesthetic & Restorative Dentistry Specialist</p>
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Expert credibility reinforcement */}
+              <div className="mt-4 pt-4 border-t border-gray-200 text-center">
+                <p className="text-gray-500 text-xs sm:text-sm">
+                  This content is designed based on 12+ years of real-world clinical experience and patient communication challenges.
+                </p>
               </div>
 
               <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-6 sm:mt-8">
@@ -1205,9 +1389,9 @@ export default function DentistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4 animate-pulse">
+              <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 font-bold text-xs sm:text-sm">Only {spotsLeft} spots left at this price</span>
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires December 20th</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Get Everything Today For
@@ -1252,8 +1436,72 @@ export default function DentistCleanLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$58<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$37<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
                   <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
+                </div>
+              </div>
+            </div>
+
+            {/* VISUAL VALUE STACK - Hormozi Style */}
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-teal-500/30 mb-6 ${
+              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
+            }`}>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $37 Actually Includes:</h3>
+
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                {/* Main Course */}
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">CloneYourself 7-Minute Video Course</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$497</span>
+                </div>
+
+                {/* Bonuses */}
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Dental Video Scripts</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">365 Days Social Media Content</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$197</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">High-Converting Website Template</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$397</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">Dental Profit Simulator</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$247</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">Front Desk Conversion Scripts</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">+ 5 More Premium Bonuses</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$836</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">Direct Support + Lifetime Updates</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$494</span>
+                </div>
+              </div>
+
+              {/* Total */}
+              <div className="bg-black/30 rounded-xl p-4 sm:p-5">
+                <div className="flex justify-between items-center mb-3 pb-3 border-b border-white/20">
+                  <span className="text-white font-bold text-base sm:text-lg">TOTAL VALUE:</span>
+                  <span className="text-white font-black text-xl sm:text-2xl">${(497 + totalBonusValue + 494).toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-teal-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
+                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$37</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-400 font-black text-lg sm:text-xl">${(497 + totalBonusValue + 494 - 37).toLocaleString()}</span>
+                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">98% OFF</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1263,21 +1511,23 @@ export default function DentistCleanLandingPage() {
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-teal-400">$58</span>
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$37</span>
                 <div className="text-left">
-                  <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">88% OFF</span>
+                  <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
                 </div>
               </div>
               <p className="text-teal-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
 
-              <div
-                className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2"
+              <Link
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => trackInitiateCheckout('dentist-main', 37)}
+                className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
+              </Link>
 
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-gray-400 text-[10px] sm:text-sm">
                 <div className="flex items-center gap-1">
@@ -1333,6 +1583,24 @@ export default function DentistCleanLandingPage() {
                   )}
                 </div>
               ))}
+            </div>
+
+            {/* CTA - After FAQ */}
+            <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
+              <a
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
+              >
+                <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="sm:hidden">Try It Risk-Free</span>
+                  <span className="hidden sm:inline">Try It Risk-Free for 30 Days</span>
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </a>
+              <p className="text-gray-500 text-xs mt-3">Full refund + $50 if it doesn't work</p>
             </div>
           </div>
         </div>
@@ -1419,7 +1687,7 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          10. MEET YOUR INSTRUCTOR - WHITE SECTION (matches Sara)
+          10. MEET YOUR EXPERT - WHITE SECTION (Dr. Alexander Voss)
           ================================================================ */}
       <section
         id="meet-instructor"
@@ -1431,110 +1699,233 @@ export default function DentistCleanLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Award className="w-3.5 h-3.5 text-teal-500" />
-                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Meet Your Instructor</span>
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Meet Your Expert</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                Who Am I & <span className="text-teal-500">Why Should You Listen?</span>
+                The Clinical Mind <span className="text-teal-500">Behind This System</span>
               </h2>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
+                Learn from an internationally trained specialist who understands both clinical excellence and modern patient acquisition.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 items-center">
-              {/* Instructor Image */}
-              <div className={`relative ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-                <div className="relative aspect-[3/4] max-w-[200px] sm:max-w-sm mx-auto rounded-xl sm:rounded-2xl overflow-hidden border-3 sm:border-4 border-teal-500/50 shadow-2xl">
+            <div className={`${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              <ExpertPersona {...DR_VOSS_DATA} />
+            </div>
+
+            {/* Dr. Voss Photo Gallery - Speaking, At Work, With Team */}
+            <div className={`mt-8 sm:mt-12 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+              <p className="text-center text-gray-500 text-xs sm:text-sm uppercase tracking-wide font-bold mb-4">
+                Dr. Voss in Action
+              </p>
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto">
+                {/* Photo 1 - Clinical */}
+                <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg group">
                   <Image
-                    src="/images/dentist/dr-marcus.webp"
-                    alt="Dr. Marcus Chen"
+                    src="/images/dentist/dr-voss-1.webp"
+                    alt="Dr. Voss in his dental practice"
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-teal-500 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg font-bold text-xs sm:text-sm">
-                    ✦ Verified
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <span className="absolute bottom-2 left-2 text-white text-[10px] sm:text-xs font-bold">In Practice</span>
                 </div>
-              </div>
-
-              {/* Instructor Story */}
-              <div className={`space-y-4 sm:space-y-6 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
-                <div>
-                  <h3 className="text-teal-500 font-black text-lg sm:text-xl mb-2 sm:mb-3">I Was You</h3>
-                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    15 years running a successful practice. $2M+ in annual revenue. But I was exhausted.
-                    Creating content felt like a second job. I looked for a better way.
-                  </p>
+                {/* Photo 2 - Conference/Speaking */}
+                <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg group">
+                  <Image
+                    src="/images/dentist/dr-voss-conference.webp"
+                    alt="Dr. Voss speaking at dental conference"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <span className="absolute bottom-2 left-2 text-white text-[10px] sm:text-xs font-bold">Speaking</span>
                 </div>
-
-                <div>
-                  <h3 className="text-teal-500 font-black text-lg sm:text-xl mb-2 sm:mb-3">Then I Found AI Video</h3>
-                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    One photo. 50 videos. In minutes. My social media exploded. More patients. More revenue.
-                    More referrals. All while working LESS.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-teal-500 font-black text-lg sm:text-xl mb-2 sm:mb-3">Now I'm Sharing Everything</h3>
-                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    500+ dentists have joined. The results speak for themselves. This isn't theory —
-                    it's the exact system I use daily.
-                  </p>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-4 gap-2 sm:gap-3 pt-4 sm:pt-6">
-                  {[
-                    { value: '$2M+', label: 'Annual Revenue' },
-                    { value: '15 Years', label: 'Experience' },
-                    { value: '500+', label: 'Dentists Helped' },
-                    { value: '4.9/5', label: 'Avg Rating' },
-                  ].map((stat, i) => (
-                    <div key={i} className="bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-4 text-center border border-gray-200">
-                      <div className="text-teal-500 font-black text-sm sm:text-xl">{stat.value}</div>
-                      <div className="text-gray-500 text-[10px] sm:text-xs">{stat.label}</div>
-                    </div>
-                  ))}
+                {/* Photo 3 - With Team */}
+                <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg group">
+                  <Image
+                    src="/images/dentist/dr-voss-team.webp"
+                    alt="Dr. Voss with his dental team"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <span className="absolute bottom-2 left-2 text-white text-[10px] sm:text-xs font-bold">With Team</span>
                 </div>
               </div>
             </div>
+
+            {/* SEO-friendly expert description */}
+            <p className="sr-only">
+              Dr. Alexander Voss is an aesthetic and restorative dentist with over 12 years of experience in veneers, smile makeovers, dental implants, and full mouth rehabilitation. He has helped dentists across 15+ countries attract high-value cosmetic patients.
+            </p>
           </div>
         </div>
       </section>
 
       {/* ================================================================
-          11. FINAL CTA - TEAL SECTION
+          11. FINAL CTA - PREMIUM DARK (Hormozi Two Options Style)
           ================================================================ */}
       <section
         id="final-cta"
         data-animate
-        className="py-10 sm:py-24 bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500"
+        className="py-10 sm:py-24 bg-gradient-to-b from-gray-50 to-white"
       >
         <div className="w-full px-3 sm:px-6">
-          <div className={`max-w-xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : ''}`}>
-            <h2 className="text-xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
-              Ready to Get More Patients?
+          <div className={`max-w-2xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : ''}`}>
+            {/* Hormozi-Style Last Chance Copy */}
+            <h2 className="font-heading text-2xl sm:text-4xl font-extrabold text-gray-900 mb-3 sm:mb-4">
+              You Have Two Options Right Now...
             </h2>
-            <p className="text-white/80 text-xs sm:text-lg mb-4 sm:mb-8">
-              Join 500+ dentists using AI videos to fill their schedules
-            </p>
 
-            <div className="bg-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
-              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-4">
-                <span className="text-2xl sm:text-5xl font-black text-teal-400">$58</span>
-                <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">88% OFF</span>
+            {/* Option 1 vs Option 2 - CLEAN CARDS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 sm:mb-8">
+              {/* Option 1 - Pain */}
+              <div className="bg-gray-100 rounded-xl p-4 sm:p-5 text-left border border-gray-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                    <X className="w-5 h-5 text-red-500" />
+                  </div>
+                  <span className="font-black text-gray-900 text-base sm:text-lg">Option 1: Leave</span>
+                </div>
+                <div className="space-y-2 text-gray-600 text-xs sm:text-sm">
+                  <p>→ Your schedule stays half-empty</p>
+                  <p>→ You watch TikTok dentists book patients</p>
+                  <p>→ Keep spending $2,000/month on ads that barely convert</p>
+                  <p>→ Your team sits around bored</p>
+                  <p>→ Next year? Same problem. Still struggling.</p>
+                </div>
+                <div className="mt-3 pt-3 border-t border-gray-200">
+                  <p className="text-red-600 font-bold text-xs">Cost: $24K/year in marketing + lost revenue</p>
+                </div>
               </div>
 
-              <div
-                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl flex items-center justify-center gap-2"
+              {/* Option 2 - Future */}
+              <div className="bg-teal-50 rounded-xl p-4 sm:p-5 text-left border-2 border-teal-500">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                    <Check className="w-5 h-5 text-teal-600" />
+                  </div>
+                  <span className="font-black text-gray-900 text-base sm:text-lg">Option 2: Get Access</span>
+                </div>
+                <div className="space-y-2 text-gray-700 text-xs sm:text-sm">
+                  <p>→ In 7 minutes, create your first AI video</p>
+                  <p>→ By tomorrow, it's live on Instagram Reels</p>
+                  <p>→ By day 3, first patient inquiry comes in</p>
+                  <p>→ By week 2, schedule starts filling up</p>
+                  <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
+                </div>
+                <div className="mt-3 pt-3 border-t border-teal-200">
+                  <p className="text-teal-700 font-bold text-xs">Cost: $37 one-time. Worst case: refund + $50</p>
+                </div>
+              </div>
+            </div>
+
+            {/* The Math Section */}
+            <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
+              <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
+              <div className="space-y-2 text-gray-600 text-sm">
+                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $37 investment.</p>
+                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $37.</p>
+                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you're up $50</span> and lost nothing.</p>
+              </div>
+              <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
+            </div>
+
+            <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
+              {/* Price with Savings */}
+              <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <span className="text-3xl sm:text-5xl font-black text-teal-400">$37</span>
+                <div className="text-left">
+                  <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
+                  <p className="text-gray-500 text-xs mt-0.5">One-time</p>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <Link
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => trackInitiateCheckout('dentist-main', 37)}
+                className="group relative w-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
-                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                Get Instant Access Now
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                <span className="relative flex items-center gap-2">
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
+                  Get Instant Access Now
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+
+              {/* Guarantee */}
+              <div className="flex items-center justify-center gap-2 mt-4 text-gray-400 text-xs sm:text-sm">
+                <Shield className="w-4 h-4 text-green-500" />
+                <span>30-Day Money Back + $50 Cash Guarantee</span>
+              </div>
+            </div>
+
+            {/* Final Reassurance */}
+            <p className="text-black/60 text-xs sm:text-sm">
+              Join 500+ dentists • Instant access • No risk
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          STILL THINKING? - Regret Prevention (Hormozi)
+          ================================================================ */}
+      <section
+        id="still-thinking"
+        data-animate
+        className="py-8 sm:py-16 bg-slate-950"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-2xl mx-auto">
+            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-teal-500/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 ${visibleSections.has('still-thinking') ? 'animate-fade-in-up' : ''}`}>
+              <h2 className="text-xl sm:text-2xl font-black text-white text-center mb-4 sm:mb-6">
+                Still Thinking About It?
+              </h2>
+
+              <div className="text-gray-400 text-sm sm:text-base leading-relaxed space-y-3 mb-6">
+                <p>Here's what usually happens:</p>
+                <p>You leave this page. You think about it tonight. You wake up tomorrow thinking <span className="text-white">"Yeah, I should try that."</span></p>
+                <p>But you get busy. Patients to see. Staff drama. Insurance calls.</p>
+                <p>Two weeks later you forgot about this completely.</p>
+                <p>Three months later you're frustrated your schedule is slow again.</p>
+                <p className="text-teal-400 font-bold">You regret not trying it when you saw it.</p>
               </div>
 
-              <p className="text-gray-500 text-xs sm:text-sm mt-3 sm:mt-4 flex items-center justify-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                30-Day Money-Back Guarantee
+              <div className="bg-black/30 rounded-xl p-4 sm:p-5 mb-6">
+                <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$37</p>
+                    <p className="text-gray-500 text-xs">Cost</p>
+                  </div>
+                  <div>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$0</p>
+                    <p className="text-gray-500 text-xs">Risk</p>
+                  </div>
+                  <div>
+                    <p className="text-red-400 font-black text-lg sm:text-xl">$$$</p>
+                    <p className="text-gray-500 text-xs">Regret of NOT trying</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-white font-bold text-center text-sm sm:text-base mb-4">
+                Click now. Decide later. You have 30 days.
               </p>
+
+              <a
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              >
+                <Zap className="w-5 h-5" />
+                Get Instant Access Now
+                <ArrowRight className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>

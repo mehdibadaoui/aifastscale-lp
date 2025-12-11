@@ -1,17 +1,27 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import LazyTrackingPixels from './components/LazyTrackingPixels'
 import { SITE_CONFIG } from './config/constants'
 
-const poppins = Poppins({
-  variable: '--font-poppins',
+// Premium font: Inter for body text - clean, modern, highly readable
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['700'], // CRITICAL PERFORMANCE: Only 1 weight - reduce to 1 font file
-  display: 'optional', // PERFORMANCE FIX: 'optional' is best for LCP - uses fallback if font not ready
-  preload: true, // PERFORMANCE FIX: Preload for faster font display
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: true,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-  adjustFontFallback: true, // Reduces layout shift
+})
+
+// Premium font: Plus Jakarta Sans for headings - modern, bold, premium feel
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: '--font-plus-jakarta',
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -92,7 +102,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* META PIXEL - CRITICAL: Must be in head for proper detection by Meta Events Manager */}
+        {/* META PIXELS - CRITICAL: Must be in head for proper detection by Meta Events Manager */}
+        {/* Pixel 1: Real Estate Original (806502898408304) */}
+        {/* Pixel 2: Real Estate 2 from Dentists Clone account (1897880187469286) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -105,12 +117,16 @@ export default function RootLayout({
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '806502898408304');
+              fbq('init', '1897880187469286');
               fbq('track', 'PageView');
             `,
           }}
         />
         <noscript>
           <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=806502898408304&ev=PageView&noscript=1" alt="" />
+        </noscript>
+        <noscript>
+          <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1897880187469286&ev=PageView&noscript=1" alt="" />
         </noscript>
 
         {/* Google Analytics 4 (GA4) */}
@@ -339,7 +355,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${poppins.variable} min-h-screen bg-white text-black antialiased font-sans`}
+        className={`${inter.variable} ${plusJakarta.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
         {/* Lazy load tracking pixels after window load + 10s for maximum performance */}
         <LazyTrackingPixels />

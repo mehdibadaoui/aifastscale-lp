@@ -4,16 +4,77 @@ import { useState, useEffect } from 'react'
 import { Clock, CheckCircle, ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
-import CheckoutModal from '../../components/CheckoutModal'
-import { DENTIST_PAYMENT_CONFIG } from '../../config/payment'
+import { trackTikTokInitiateCheckout } from '../../components/TikTokPixel'
+import { trackMetaEvent } from '../../components/MetaPixel'
+
+// Whop checkout link for Downsell - REPLACE WITH YOUR ACTUAL PLAN LINK
+const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_DENTIST_DS_5'
+
+// Save tracking params to localStorage before Whop redirect
+const saveTrackingParams = () => {
+  if (typeof window === 'undefined') return
+
+  const params = new URLSearchParams(window.location.search)
+  const trackingData: Record<string, string> = {}
+
+  // Capture Meta fbclid
+  const fbclid = params.get('fbclid')
+  if (fbclid) trackingData.fbclid = fbclid
+
+  // Capture TikTok ttclid
+  const ttclid = params.get('ttclid')
+  if (ttclid) trackingData.ttclid = ttclid
+
+  // Capture UTM params
+  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+  utmParams.forEach(param => {
+    const value = params.get(param)
+    if (value) trackingData[param] = value
+  })
+
+  // Capture Meta cookies (_fbc, _fbp) if they exist
+  const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1]
+  const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1]
+  if (fbc) trackingData._fbc = fbc
+  if (fbp) trackingData._fbp = fbp
+
+  // Save timestamp
+  trackingData.checkout_started = new Date().toISOString()
+
+  // Store in localStorage (persists across redirect to Whop and back)
+  localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
+}
+
+// Combined tracking function for all platforms
+const trackInitiateCheckout = (contentId: string, contentName: string, value: number) => {
+  // Save tracking params BEFORE redirect
+  saveTrackingParams()
+
+  // TikTok tracking
+  trackTikTokInitiateCheckout(contentId, value)
+  // Meta Pixel tracking
+  trackMetaEvent('InitiateCheckout', {
+    content_ids: [contentId],
+    content_name: contentName,
+    content_type: 'product',
+    value: value,
+    currency: 'USD'
+  })
+}
 
 export default function DentistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
-  const [showCheckoutModal, setShowCheckoutModal] = useState(false)
 
-  // Track page view when payment integration is added
+  // Track page view
   useEffect(() => {
-    // TODO: Add tracking when payment is integrated
+    // Track ViewContent when page loads
+    trackMetaEvent('ViewContent', {
+      content_ids: ['dentist-downsell'],
+      content_name: 'CloneYourself Dentist - Value Bundle',
+      content_type: 'product',
+      value: 4.97,
+      currency: 'USD'
+    })
   }, [])
 
   // Get the 5 upsell products (same as upsell - user declined those)
@@ -231,7 +292,8 @@ export default function DentistDownsellPage() {
           <div className="space-y-1.5 md:space-y-2">
             <button
               onClick={() => {
-                setShowCheckoutModal(true)
+                trackInitiateCheckout('dentist-downsell', 'CloneYourself Dentist - Value Bundle', downsellPrice)
+                window.location.href = WHOP_DOWNSELL_LINK
               }}
               className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-orange-500/30 animate-pulse"
             >
@@ -260,17 +322,6 @@ export default function DentistDownsellPage() {
 
         </div>
       </div>
-
-      {/* Checkout Modal */}
-      <CheckoutModal
-        isOpen={showCheckoutModal}
-        onClose={() => setShowCheckoutModal(false)}
-        onDecline={handleFinalDecline}
-        planId={DENTIST_PAYMENT_CONFIG.plans.downsell.id}
-        planName={DENTIST_PAYMENT_CONFIG.plans.downsell.name}
-        price={`$${downsellPrice}`}
-        declineText="No thanks, go to my course →"
-      />
     </div>
   )
 }
