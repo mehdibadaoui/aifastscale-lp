@@ -38,23 +38,24 @@ const LoginScreen = memo(function LoginScreen({ onLogin, darkMode, setDarkMode }
   }
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 relative overflow-hidden ${darkMode ? 'dark dark-premium-bg' : 'bg-gradient-to-br from-slate-50 via-white to-teal-50 mesh-gradient'}`}>
-      {/* Animated Background */}
-      <AnimatedBackground darkMode={darkMode} reducedMotion={false} />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium noise-overlay section-premium">
+      {/* Floating Gradient Orbs - LP Style */}
+      <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-cyan-500/8 to-teal-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10 w-full max-w-md">
-        <div className="bg-white dark:bg-slate-900 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-teal-500/20 dark:shadow-teal-500/10 border border-slate-200 dark:border-slate-700 p-6 sm:p-8">
+        <div className="glass-premium backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-teal-500/20 border border-teal-500/20 p-6 sm:p-8">
           <div className="text-center mb-6 sm:mb-8">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-xl shadow-teal-400/30 mb-4 sm:mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal mb-4 sm:mb-6">
               <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">{COURSE_CONFIG.title}</h1>
-            <p className="text-teal-500 font-bold text-base sm:text-lg">{COURSE_CONFIG.subtitle}</p>
+            <h1 className="text-2xl sm:text-3xl font-black text-white">{COURSE_CONFIG.title}</h1>
+            <p className="text-teal-400 font-bold text-base sm:text-lg">{COURSE_CONFIG.subtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div>
-              <label htmlFor="password" className="block text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">
+              <label htmlFor="password" className="block text-slate-300 text-sm font-semibold mb-2">
                 Enter Your Password
               </label>
               <input
@@ -63,37 +64,28 @@ const LoginScreen = memo(function LoginScreen({ onLogin, darkMode, setDarkMode }
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-teal-500 dark:focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all text-base"
+                className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-dark border-2 border-teal-500/30 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all text-base"
                 aria-describedby={error ? 'password-error' : undefined}
               />
             </div>
             {error && (
-              <div id="password-error" className="p-3 sm:p-4 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm text-center font-medium" role="alert">
+              <div id="password-error" className="p-3 sm:p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm text-center font-medium" role="alert">
                 {error}
               </div>
             )}
             <button
               type="submit"
-              className="w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 active:scale-[0.98] transition-all shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 btn-press focus-ring touch-manipulation"
+              className="btn-premium w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white shadow-glow-teal animate-pulse-glow focus-ring touch-manipulation"
             >
               Access My Course
             </button>
           </form>
 
-          <p className="mt-5 sm:mt-6 text-center text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
+          <p className="mt-5 sm:mt-6 text-center text-slate-500 text-xs sm:text-sm">
             Your password was shown on the thank-you page after purchase
           </p>
         </div>
       </div>
-
-      {/* Dark mode toggle */}
-      <button
-        onClick={() => setDarkMode(d => !d)}
-        className="fixed bottom-6 right-4 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:scale-105 active:scale-95 transition-all focus-ring touch-manipulation"
-        aria-label="Toggle dark mode"
-      >
-        {darkMode ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
-      </button>
     </div>
   )
 })
@@ -111,29 +103,30 @@ interface BlockedScreenProps {
 
 const BlockedScreen = memo(function BlockedScreen({ darkMode, setDarkMode }: BlockedScreenProps) {
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 relative overflow-hidden ${darkMode ? 'dark dark-premium-bg' : 'bg-gradient-to-br from-slate-50 via-white to-teal-50 mesh-gradient'}`}>
-      {/* Animated Background */}
-      <AnimatedBackground darkMode={darkMode} reducedMotion={false} />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium noise-overlay section-premium">
+      {/* Floating Gradient Orbs - LP Style */}
+      <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-red-500/10 to-orange-500/5 rounded-full blur-3xl floating-slow" />
+      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-orange-500/8 to-red-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10 w-full max-w-lg">
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-red-400/10 border border-white/50 dark:border-slate-700/50 p-8 text-center">
+        <div className="glass-premium backdrop-blur-xl rounded-3xl shadow-2xl border border-red-500/20 p-8 text-center">
           {/* Icon */}
-          <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-xl shadow-red-400/30 mb-6">
+          <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/30 mb-6">
             <LogOut className="w-10 h-10 text-white" />
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-3">
+          <h1 className="text-3xl font-black text-white mb-3">
             Access Expired
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-lg mb-8">
+          <p className="text-slate-400 text-lg mb-8">
             Your subscription has been cancelled or refunded. To regain full access to the course and all bonuses, please purchase again.
           </p>
 
           {/* CTA Button */}
           <a
             href={WHOP_CHECKOUT_LINK}
-            className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 transition-all shadow-lg shadow-teal-400/30 hover:shadow-xl hover:shadow-teal-400/40 btn-press focus-ring"
+            className="btn-premium inline-flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg text-white shadow-glow-teal focus-ring"
           >
             <Sparkles className="w-5 h-5" />
             Get Access Now - $47
@@ -141,23 +134,14 @@ const BlockedScreen = memo(function BlockedScreen({ darkMode, setDarkMode }: Blo
           </a>
 
           {/* Support link */}
-          <p className="mt-6 text-slate-500 dark:text-slate-400 text-sm">
+          <p className="mt-6 text-slate-500 text-sm">
             Need help? Contact{' '}
-            <a href={`mailto:${COURSE_CONFIG.supportEmail}`} className="text-teal-500 hover:underline">
+            <a href={`mailto:${COURSE_CONFIG.supportEmail}`} className="text-teal-400 hover:underline">
               {COURSE_CONFIG.supportEmail}
             </a>
           </p>
         </div>
       </div>
-
-      {/* Dark mode toggle */}
-      <button
-        onClick={() => setDarkMode(d => !d)}
-        className="fixed bottom-4 right-4 p-3 rounded-xl bg-white dark:bg-slate-700/90 shadow-lg border border-slate-200 dark:border-slate-600 hover:scale-105 transition-all focus-ring"
-        aria-label="Toggle dark mode"
-      >
-        {darkMode ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
-      </button>
     </div>
   )
 })
@@ -176,55 +160,36 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStudentName, darkMode, reducedMotion }: WelcomeScreenProps) {
   const statCards = [
-    { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-teal-500 to-cyan-500', iconBg: 'bg-teal-500/10', iconColor: 'text-teal-500' },
-    { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-cyan-500 to-blue-500', iconBg: 'bg-cyan-500/10', iconColor: 'text-cyan-500' },
-    { icon: Star, label: 'Total Value', value: `$${BONUSES.reduce((acc, b) => acc + b.value, 0)}`, gradient: 'from-emerald-500 to-teal-500', iconBg: 'bg-emerald-500/10', iconColor: 'text-emerald-500' },
-    { icon: Trophy, label: 'Achievements', value: ACHIEVEMENTS.length, gradient: 'from-amber-500 to-orange-500', iconBg: 'bg-amber-500/10', iconColor: 'text-amber-500' },
+    { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-teal-500 to-cyan-500' },
+    { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-cyan-500 to-blue-500' },
+    { icon: Star, label: 'Total Value', value: `$${BONUSES.reduce((acc, b) => acc + b.value, 0)}`, gradient: 'from-emerald-500 to-teal-500' },
+    { icon: Trophy, label: 'Achievements', value: ACHIEVEMENTS.length, gradient: 'from-amber-500 to-orange-500' },
   ]
 
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 py-8 sm:p-4 ${darkMode ? 'dark bg-slate-950' : 'bg-gradient-to-br from-slate-100 via-white to-teal-50'}`}>
-      {/* Enhanced Parallax Background */}
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:p-4 bg-gradient-premium noise-overlay section-premium relative overflow-hidden">
+      {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        {/* Primary gradient orbs - smaller on mobile */}
-        <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-teal-300/40 to-cyan-300/40 dark:from-teal-800/30 dark:to-cyan-800/30 rounded-full blur-3xl ${reducedMotion ? '' : 'animate-float'}`} />
-        <div className={`absolute bottom-1/4 left-0 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-gradient-to-br from-cyan-300/30 to-teal-300/30 dark:from-cyan-800/20 dark:to-teal-900/20 rounded-full blur-3xl ${reducedMotion ? '' : 'animate-float'}`} style={{ animationDelay: '2s' }} />
-
-        {/* Floating particles - hidden on mobile for performance */}
-        {!reducedMotion && (
-          <div className="hidden sm:block">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-2 h-2 rounded-full bg-teal-400/50 dark:bg-teal-400/40 animate-float"
-                style={{
-                  left: `${15 + i * 15}%`,
-                  top: `${20 + (i % 3) * 25}%`,
-                  animationDelay: `${i * 0.5}s`,
-                  animationDuration: `${4 + i}s`,
-                }}
-              />
-            ))}
-          </div>
-        )}
+        <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-teal-500/15 to-cyan-500/10 rounded-full blur-3xl ${reducedMotion ? '' : 'floating-slow'}`} />
+        <div className={`absolute bottom-1/4 left-0 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-gradient-to-br from-cyan-500/10 to-teal-500/5 rounded-full blur-3xl ${reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
       </div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto w-full">
         <div className="mb-6 sm:mb-8">
-          <div className={`w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-2xl shadow-teal-500/40 ${reducedMotion ? '' : 'animate-bounce-slow'}`}>
+          <div className={`w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal ${reducedMotion ? '' : 'animate-bounce-slow'}`}>
             <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
           </div>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 text-slate-900 dark:text-white leading-tight">
-          Welcome to Your <span className={`text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-500 ${reducedMotion ? '' : 'gradient-text-animated'}`}>Premium Course</span>
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 text-white leading-tight drop-shadow-lg">
+          Welcome to Your <span className={`text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 ${reducedMotion ? '' : 'gradient-text-animated'}`}>Premium Course</span>
         </h1>
 
-        <p className="text-base sm:text-xl text-slate-600 dark:text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
+        <p className="text-base sm:text-xl text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
           Transform your dental practice with AI video marketing.
         </p>
 
-        {/* Student Name Input - Modern Design */}
+        {/* Student Name Input - LP Glass Style */}
         <div className="max-w-md mx-auto mb-6 sm:mb-8">
           <label htmlFor="student-name" className="sr-only">Enter your name for your certificate</label>
           <input
@@ -233,36 +198,36 @@ const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStu
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             placeholder="Enter your name for your certificate"
-            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-center text-sm sm:text-base focus:border-teal-500 dark:focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all shadow-lg shadow-slate-200/50 dark:shadow-none"
+            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-premium border-2 border-teal-500/30 text-white placeholder-slate-500 text-center text-sm sm:text-base focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all"
           />
         </div>
 
-        {/* Welcome Stats - Modern Glass Cards */}
+        {/* Welcome Stats - LP Glass Cards */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-8 sm:mb-12 max-w-2xl mx-auto">
           {statCards.map((stat, i) => (
             <div
               key={i}
-              className="bg-white dark:bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-100 dark:border-slate-700 animate-fade-in hover:scale-[1.02] transition-transform"
+              className="glass-premium backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-teal-500/20 animate-fade-in hover-lift"
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              <div className={`w-10 h-10 sm:w-12 sm:h-12 ${stat.iconBg} rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3`}>
-                <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${stat.iconColor}`} />
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${stat.gradient} rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-lg`}>
+                <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">{stat.value}</div>
-              <div className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">{stat.label}</div>
+              <div className="text-2xl sm:text-3xl font-black text-white">{stat.value}</div>
+              <div className="text-slate-400 text-xs sm:text-sm font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
 
         <button
           onClick={onStart}
-          className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-bold text-base sm:text-xl text-white bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 active:scale-[0.98] transition-all shadow-xl shadow-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/40 btn-press focus-ring touch-manipulation"
+          className="btn-premium group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-bold text-base sm:text-xl text-white shadow-glow-teal animate-pulse-glow focus-ring touch-manipulation"
         >
           Enter My Dashboard
           <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 ${reducedMotion ? '' : 'group-hover:translate-x-1 transition-transform'}`} />
         </button>
 
-        <p className="mt-6 sm:mt-8 text-slate-400 text-xs sm:text-sm">{TOTAL_RUNTIME} minutes of premium training</p>
+        <p className="mt-6 sm:mt-8 text-slate-500 text-xs sm:text-sm">{TOTAL_RUNTIME} minutes of premium training</p>
       </div>
     </div>
   )
@@ -297,30 +262,30 @@ const Navigation = memo(function Navigation({
   ]
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border-b border-slate-200/30 dark:border-teal-500/10 shadow-lg shadow-slate-200/20 dark:shadow-teal-900/30" role="navigation" aria-label="Main navigation">
+    <nav className="sticky top-0 z-40 glass-premium backdrop-blur-2xl border-b border-teal-500/20 shadow-lg shadow-teal-900/20" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-400/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal">
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">
-              <div className="font-bold text-slate-900 dark:text-white">{COURSE_CONFIG.title}</div>
-              <div className="text-xs text-teal-500 font-medium">{COURSE_CONFIG.subtitle}</div>
+              <div className="font-bold text-white">{COURSE_CONFIG.title}</div>
+              <div className="text-xs text-teal-400 font-medium">{COURSE_CONFIG.subtitle}</div>
             </div>
           </div>
 
-          {/* Desktop Navigation Tabs */}
-          <div className="hidden md:flex items-center bg-slate-100/80 dark:bg-slate-800/50 backdrop-blur-sm rounded-full p-1.5 border border-slate-200/50 dark:border-slate-700/50" role="tablist">
+          {/* Desktop Navigation Tabs - LP Glass Style */}
+          <div className="hidden md:flex items-center glass-dark backdrop-blur-sm rounded-full p-1.5 border border-teal-500/20" role="tablist">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveSection(tab.id)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 focus-ring ${
                   activeSection === tab.id
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-500/30 scale-105'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-300 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                    ? 'btn-premium text-white shadow-glow-teal scale-105'
+                    : 'text-slate-400 hover:text-teal-400 hover:bg-white/5'
                 }`}
                 role="tab"
                 aria-selected={activeSection === tab.id}
@@ -335,38 +300,29 @@ const Navigation = memo(function Navigation({
           {/* Right Side */}
           <div className="flex items-center gap-2">
             {/* Points */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-amber-50 dark:bg-amber-900/30 rounded-full">
-              <Star className="w-4 h-4 text-amber-500" aria-hidden="true" />
-              <span className="text-sm font-bold text-amber-700 dark:text-amber-400" aria-label={`${totalPoints} points`}>{totalPoints}</span>
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 glass-teal rounded-full">
+              <Star className="w-4 h-4 text-amber-400" aria-hidden="true" />
+              <span className="text-sm font-bold text-amber-400" aria-label={`${totalPoints} points`}>{totalPoints}</span>
             </div>
 
             {/* Streak */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-orange-50 dark:bg-orange-900/30 rounded-full">
-              <Flame className="w-4 h-4 text-orange-500" aria-hidden="true" />
-              <span className="text-sm font-bold text-orange-700 dark:text-orange-400" aria-label={`${streak} day streak`}>{streak}</span>
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 glass-teal rounded-full">
+              <Flame className="w-4 h-4 text-orange-400" aria-hidden="true" />
+              <span className="text-sm font-bold text-orange-400" aria-label={`${streak} day streak`}>{streak}</span>
             </div>
 
             {/* VIP Badge */}
             {vipGuest && (
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-purple-500/30 dark:to-pink-500/30 rounded-full border border-purple-400/30">
-                <Crown className="w-4 h-4 text-purple-500" aria-hidden="true" />
-                <span className="text-sm font-bold text-purple-700 dark:text-purple-300">{vipGuest.badge}</span>
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 glass-teal rounded-full border border-purple-500/30">
+                <Crown className="w-4 h-4 text-purple-400" aria-hidden="true" />
+                <span className="text-sm font-bold text-purple-400">{vipGuest.badge}</span>
               </div>
             )}
-
-            {/* Dark mode toggle */}
-            <button
-              onClick={() => setDarkMode(d => !d)}
-              className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-500 dark:text-slate-400 focus-ring"
-              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
 
             {/* Settings */}
             <button
               onClick={() => setShowSettingsModal(true)}
-              className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-500 dark:text-slate-400 focus-ring"
+              className="p-2 rounded-xl hover:bg-white/10 transition-all text-slate-400 focus-ring"
               aria-label="Open settings"
             >
               <Settings className="w-5 h-5" />
@@ -375,7 +331,7 @@ const Navigation = memo(function Navigation({
             {/* Keyboard shortcuts */}
             <button
               onClick={() => setShowKeyboardModal(true)}
-              className="hidden md:block p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-500 dark:text-slate-400 focus-ring"
+              className="hidden md:block p-2 rounded-xl hover:bg-white/10 transition-all text-slate-400 focus-ring"
               aria-label="Show keyboard shortcuts"
             >
               <HelpCircle className="w-5 h-5" />
@@ -384,7 +340,7 @@ const Navigation = memo(function Navigation({
             {/* Logout */}
             <button
               onClick={() => setShowLogoutConfirm(true)}
-              className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-500 dark:text-slate-400 focus-ring"
+              className="p-2 rounded-xl hover:bg-white/10 transition-all text-slate-400 focus-ring"
               aria-label="Log out"
             >
               <LogOut className="w-5 h-5" />
@@ -393,16 +349,16 @@ const Navigation = memo(function Navigation({
         </div>
       </div>
 
-      {/* Mobile Navigation - Compact with integrated stats */}
-      <div className="flex md:hidden border-t border-slate-200/50 dark:border-slate-700/50" role="tablist">
+      {/* Mobile Navigation - LP Glass Style */}
+      <div className="flex md:hidden border-t border-teal-500/20" role="tablist">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveSection(tab.id)}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 min-h-[48px] text-[10px] font-semibold transition-all touch-manipulation ${
               activeSection === tab.id
-                ? 'text-teal-500 dark:text-teal-300 bg-teal-50/50 dark:bg-teal-900/20 border-b-2 border-teal-500'
-                : 'text-slate-500 dark:text-slate-400 active:bg-slate-100 dark:active:bg-slate-800'
+                ? 'text-teal-400 bg-teal-500/10 border-b-2 border-teal-400'
+                : 'text-slate-500 active:bg-white/5'
             }`}
             role="tab"
             aria-selected={activeSection === tab.id}
@@ -413,17 +369,17 @@ const Navigation = memo(function Navigation({
         ))}
 
         {/* Integrated mini stats in nav */}
-        <div className="flex items-center justify-center gap-2 px-2 border-l border-slate-200/50 dark:border-slate-700/50">
+        <div className="flex items-center justify-center gap-2 px-2 border-l border-teal-500/20">
           <div className="flex items-center gap-0.5">
-            <Star className="w-3.5 h-3.5 text-amber-500" />
-            <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400">{totalPoints}</span>
+            <Star className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-[10px] font-bold text-amber-400">{totalPoints}</span>
           </div>
           <div className="flex items-center gap-0.5">
-            <Flame className="w-3.5 h-3.5 text-orange-500" />
-            <span className="text-[10px] font-bold text-orange-700 dark:text-orange-400">{streak}</span>
+            <Flame className="w-3.5 h-3.5 text-orange-400" />
+            <span className="text-[10px] font-bold text-orange-400">{streak}</span>
           </div>
           {vipGuest && (
-            <Crown className="w-3.5 h-3.5 text-purple-500" />
+            <Crown className="w-3.5 h-3.5 text-purple-400" />
           )}
         </div>
       </div>
@@ -445,15 +401,15 @@ const LogoutModal = memo(function LogoutModal({ isOpen, onClose, onConfirm }: Lo
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm animate-fade-in" onClick={onClose}>
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 max-w-sm w-full" onClick={e => e.stopPropagation()}>
-        <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">Log Out?</h3>
-        <p className="text-slate-600 dark:text-slate-400 mb-6">Your progress is saved and will be here when you return.</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+      <div className="glass-premium rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-teal-500/20" onClick={e => e.stopPropagation()}>
+        <h3 className="text-xl font-black text-white mb-2">Log Out?</h3>
+        <p className="text-slate-400 mb-6">Your progress is saved and will be here when you return.</p>
         <div className="flex gap-3">
-          <button onClick={onClose} className="flex-1 py-3 rounded-xl font-bold bg-white dark:bg-slate-700/80 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 transition-all focus-ring">
+          <button onClick={onClose} className="flex-1 py-3 rounded-xl font-bold glass-dark text-slate-300 border border-teal-500/20 hover:bg-white/10 transition-all focus-ring">
             Cancel
           </button>
-          <button onClick={onConfirm} className="flex-1 py-3 rounded-xl font-bold bg-red-500 text-white hover:bg-red-600 transition-all focus-ring">
+          <button onClick={onConfirm} className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg hover:shadow-red-500/30 transition-all focus-ring">
             Log Out
           </button>
         </div>
@@ -513,13 +469,17 @@ function PremiumCoursePlatformInner() {
     )
   }
 
-  // Main platform
+  // Main platform - LP Premium Theme
   return (
-    <div className={`min-h-screen relative overflow-hidden ${state.darkMode ? 'dark dark-premium-bg' : 'bg-gradient-to-br from-slate-50 via-white to-teal-50 mesh-gradient'}`}>
+    <div className="min-h-screen relative overflow-hidden bg-gradient-premium noise-overlay section-premium">
       <ThemeStyles />
 
-      {/* Premium Animated Background */}
-      <AnimatedBackground darkMode={state.darkMode} reducedMotion={state.reducedMotion} />
+      {/* Floating Gradient Orbs - LP Style */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className={`absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating-slow'}`} />
+        <div className={`absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-gradient-to-br from-cyan-500/8 to-teal-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
+        <div className={`absolute top-1/2 left-1/3 w-[200px] h-[200px] bg-gradient-to-br from-teal-500/5 to-transparent rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '4s' }} />
+      </div>
 
       {/* Skip to main content link */}
       <a href="#main-content" className="skip-link focus-ring">

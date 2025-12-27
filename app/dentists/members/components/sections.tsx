@@ -22,7 +22,7 @@ import { usePlatformState } from './hooks'
 type PlatformStateType = ReturnType<typeof usePlatformState>
 
 // ============================================
-// DASHBOARD SECTION - REDESIGNED FOR MOBILE
+// DASHBOARD SECTION - PREMIUM LP THEME
 // ============================================
 
 interface DashboardProps {
@@ -48,22 +48,22 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
 
   return (
     <div className="space-y-4 sm:space-y-8 animate-fade-in">
-      {/* MOBILE: Hero Progress Card - Dark Premium Style */}
-      <div className="sm:hidden relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-5 border border-slate-700/50">
-        {/* Gradient Orbs */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-500/30 to-cyan-500/10 rounded-full blur-2xl" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-cyan-500/20 to-teal-500/5 rounded-full blur-2xl" />
+      {/* MOBILE: Hero Progress Card - Dentist LP Premium Style */}
+      <div className="sm:hidden relative overflow-hidden rounded-3xl bg-gradient-premium p-5 border border-teal-500/20 noise-overlay section-premium">
+        {/* Floating Gradient Orbs - LP Style */}
+        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-teal-500/20 to-cyan-500/10 rounded-full blur-3xl floating" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-500/15 to-teal-500/5 rounded-full blur-3xl floating-slow" style={{ animationDelay: '2s' }} />
 
         <div className="relative z-10">
           {/* Greeting */}
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-teal-400 text-xs font-bold uppercase tracking-wider mb-1">Welcome back</p>
-              <h1 className="text-2xl font-black text-white">
+              <h1 className="text-2xl font-black text-white drop-shadow-lg">
                 {state.studentName || 'Student'}
               </h1>
             </div>
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-500/30">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal">
               <span className="text-2xl font-black text-white">{Math.round(state.progressPercent)}%</span>
             </div>
           </div>
@@ -74,7 +74,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               <span className="text-slate-400">{state.completedCount} of {state.totalModules} modules</span>
               <span className="text-teal-400 font-bold">{state.timeRemaining} min left</span>
             </div>
-            <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+            <div className="h-2.5 bg-black/30 rounded-full overflow-hidden backdrop-blur-sm">
               <div
                 className="h-full bg-gradient-to-r from-teal-500 to-cyan-400 rounded-full transition-all duration-500"
                 style={{ width: `${state.progressPercent}%` }}
@@ -82,13 +82,13 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             </div>
           </div>
 
-          {/* Continue Button */}
+          {/* Continue Button - LP btn-premium style */}
           <button
             onClick={() => {
               state.setCurrentModuleIndex(state.nextIncompleteModuleIndex)
               state.setActiveSection('course')
             }}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold text-base flex items-center justify-center gap-2 shadow-lg shadow-teal-500/30 active:scale-[0.98] transition-transform"
+            className="btn-premium w-full py-4 rounded-2xl text-white font-bold text-base flex items-center justify-center gap-2 shadow-glow-teal animate-pulse-glow"
           >
             <Play className="w-5 h-5" fill="white" />
             {state.progressPercent > 0 ? 'Continue Learning' : 'Start Course'}
@@ -96,119 +96,120 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       </div>
 
-      {/* DESKTOP: Original Welcome Header */}
-      <div className="hidden sm:block bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-400 rounded-3xl p-8 text-white relative overflow-hidden card-lift shadow-2xl shadow-teal-500/30">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-300/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
+      {/* DESKTOP: Welcome Header - LP Style */}
+      <div className="hidden sm:block relative overflow-hidden rounded-3xl bg-gradient-hero p-8 text-white section-premium noise-overlay border border-teal-500/20">
+        {/* Floating Gradient Orbs */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-teal-500/15 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-br from-cyan-500/10 to-teal-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
         <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-black mb-2">
+          <h1 className="text-3xl md:text-4xl font-black mb-2 drop-shadow-lg">
             {state.studentName ? `Welcome, ${state.studentName}!` : 'Welcome Back!'}
           </h1>
-          <p className="text-teal-200 text-lg mb-6">
+          <p className="text-teal-300 text-lg mb-6">
             {state.progressPercent >= 100 ? "Congratulations! You've completed the course!" : `${state.timeRemaining} min remaining`}
           </p>
-          <div className="bg-white/20 rounded-full h-4 mb-2 overflow-hidden">
-            <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${state.progressPercent}%` }} />
+          <div className="bg-black/30 backdrop-blur-sm rounded-full h-4 mb-2 overflow-hidden border border-teal-500/20">
+            <div className="h-full bg-gradient-to-r from-teal-500 to-cyan-400 rounded-full transition-all duration-500" style={{ width: `${state.progressPercent}%` }} />
           </div>
           <div className="flex justify-between text-sm">
-            <span>{state.completedCount}/{state.totalModules} modules</span>
-            <span className="font-bold">{Math.round(state.progressPercent)}%</span>
+            <span className="text-slate-300">{state.completedCount}/{state.totalModules} modules</span>
+            <span className="font-bold text-teal-400">{Math.round(state.progressPercent)}%</span>
           </div>
         </div>
       </div>
 
-      {/* MOBILE: Quick Stats Grid - Modern Cards */}
+      {/* MOBILE: Quick Stats Grid - LP Glass Style */}
       <div className="sm:hidden grid grid-cols-2 gap-3">
         {[
-          { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-violet-500 to-purple-600', iconBg: 'bg-violet-500/20' },
-          { icon: Star, label: 'Points', value: state.totalPoints.toString(), color: 'from-amber-500 to-orange-500', iconBg: 'bg-amber-500/20' },
-          { icon: Flame, label: 'Day Streak', value: `${state.streak}`, color: 'from-rose-500 to-pink-500', iconBg: 'bg-rose-500/20' },
-          { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'from-emerald-500 to-teal-500', iconBg: 'bg-emerald-500/20' },
+          { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-teal-500 to-cyan-500', iconColor: '#14b8a6' },
+          { icon: Star, label: 'Points', value: state.totalPoints.toString(), color: 'from-amber-500 to-orange-500', iconColor: '#f59e0b' },
+          { icon: Flame, label: 'Day Streak', value: `${state.streak}`, color: 'from-rose-500 to-pink-500', iconColor: '#f43f5e' },
+          { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'from-emerald-500 to-teal-500', iconColor: '#10b981' },
         ].map((stat, i) => (
-          <div key={i} className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800/80 p-4 border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
-            <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${stat.color} opacity-10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2`} />
-            <div className={`w-10 h-10 rounded-xl ${stat.iconBg} flex items-center justify-center mb-2`}>
-              <stat.icon className={`w-5 h-5 bg-gradient-to-r ${stat.color} bg-clip-text`} style={{ color: i === 0 ? '#8b5cf6' : i === 1 ? '#f59e0b' : i === 2 ? '#f43f5e' : '#10b981' }} />
+          <div key={i} className="relative overflow-hidden rounded-2xl glass-teal p-4 hover-lift">
+            <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${stat.color} opacity-10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2`} />
+            <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-2 shadow-lg`}>
+              <stat.icon className="w-5 h-5 text-white" />
             </div>
-            <p className="text-2xl font-black text-slate-900 dark:text-white">{stat.value}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{stat.label}</p>
+            <p className="text-2xl font-black text-white">{stat.value}</p>
+            <p className="text-xs text-slate-400 font-medium">{stat.label}</p>
           </div>
         ))}
       </div>
 
-      {/* DESKTOP: Original Stats Grid */}
+      {/* DESKTOP: Stats Grid - LP Glass Style */}
       <div className="hidden sm:grid grid-cols-3 lg:grid-cols-5 gap-4">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-800 card-lift col-span-1">
+        <div className="glass-premium rounded-2xl p-6 hover-lift col-span-1 border border-teal-500/20">
           <div className="flex items-center gap-4">
             <ProgressRing progress={state.progressPercent} size={48} strokeWidth={4} />
             <div>
-              <div className="text-sm text-slate-500 dark:text-slate-400">Progress</div>
-              <div className="text-2xl font-black text-slate-900 dark:text-white">{Math.round(state.progressPercent)}%</div>
+              <div className="text-sm text-slate-400">Progress</div>
+              <div className="text-2xl font-black text-white">{Math.round(state.progressPercent)}%</div>
             </div>
           </div>
         </div>
         {[
-          { icon: Clock, label: 'Watched', value: `${state.totalWatchTimeMinutes}m`, color: 'indigo' },
-          { icon: Star, label: 'Points', value: state.totalPoints, color: 'amber' },
-          { icon: Flame, label: 'Streak', value: `${state.streak}d`, color: 'orange' },
-          { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'emerald' },
+          { icon: Clock, label: 'Watched', value: `${state.totalWatchTimeMinutes}m`, color: 'from-teal-500 to-cyan-500' },
+          { icon: Star, label: 'Points', value: state.totalPoints, color: 'from-amber-500 to-orange-500' },
+          { icon: Flame, label: 'Streak', value: `${state.streak}d`, color: 'from-orange-500 to-red-500' },
+          { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'from-emerald-500 to-teal-500' },
         ].map((stat, i) => (
-          <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-800 card-lift">
+          <div key={i} className="glass-premium rounded-2xl p-6 hover-lift border border-teal-500/10">
             <div className="flex items-center gap-4">
-              <div className={`w-12 h-12 rounded-xl bg-${stat.color}-100 dark:bg-${stat.color}-900/30 flex items-center justify-center`}>
-                <stat.icon className={`w-6 h-6 text-${stat.color}-600`} />
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}>
+                <stat.icon className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-sm text-slate-500 dark:text-slate-400">{stat.label}</div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white">{stat.value}</div>
+                <div className="text-sm text-slate-400">{stat.label}</div>
+                <div className="text-2xl font-black text-white">{stat.value}</div>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* MOBILE: Next Module Card */}
+      {/* MOBILE: Next Module Card - LP Glass Style */}
       {state.progressPercent < 100 && (
         <div className="sm:hidden">
-          <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-1">Up Next</h3>
+          <h3 className="text-sm font-bold text-teal-400 uppercase tracking-wider mb-3 px-1">Up Next</h3>
           <button
             onClick={() => {
               state.setCurrentModuleIndex(state.nextIncompleteModuleIndex)
               state.setActiveSection('course')
             }}
-            className="w-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/20 border border-teal-200/50 dark:border-teal-500/30 p-4 text-left active:scale-[0.99] transition-transform"
+            className="w-full relative overflow-hidden rounded-2xl glass-teal p-4 text-left active:scale-[0.99] transition-transform hover-lift"
           >
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-500/30 flex-shrink-0">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal flex-shrink-0">
                 <Play className="w-7 h-7 text-white" fill="white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-teal-600 dark:text-teal-400 mb-0.5">
+                <p className="text-xs font-bold text-teal-400 mb-0.5">
                   Module {state.nextIncompleteModule?.number}
                   {resumeSeconds > 0 && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-[10px]">
+                    <span className="ml-2 px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] border border-amber-500/30">
                       Resume {Math.floor(resumeSeconds / 60)}:{String(Math.floor(resumeSeconds % 60)).padStart(2, '0')}
                     </span>
                   )}
                 </p>
-                <p className="text-base font-bold text-slate-900 dark:text-white truncate">{state.nextIncompleteModule?.title}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
+                <p className="text-base font-bold text-white truncate">{state.nextIncompleteModule?.title}</p>
+                <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
                   <Clock className="w-3 h-3" />
                   {state.nextIncompleteModule?.duration}
                 </p>
               </div>
-              <ChevronRight className="w-5 h-5 text-teal-500 flex-shrink-0" />
+              <ChevronRight className="w-5 h-5 text-teal-400 flex-shrink-0" />
             </div>
           </button>
         </div>
       )}
 
-      {/* MOBILE: Dr. Voss Welcome - Compact */}
+      {/* MOBILE: Dr. Voss Welcome - LP Glass Style */}
       {state.completedCount === 0 && !showWelcomeVideo && (
         <div className="sm:hidden">
-          <div className="rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/10 border border-amber-200/50 dark:border-amber-500/30 p-4">
+          <div className="rounded-2xl glass-premium p-4 border border-amber-500/20">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-amber-300 dark:ring-amber-500/50 shadow-lg">
+              <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-amber-500/50 shadow-lg">
                 <Image
                   src={COURSE_CONFIG.drVoss?.image || '/images/dentist/dr-voss.webp'}
                   alt={COURSE_CONFIG.drVoss?.name || 'Dr. Voss'}
@@ -218,11 +219,11 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 />
               </div>
               <div className="flex-1">
-                <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Start Here</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Message from Dr. Voss</p>
+                <p className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Start Here</p>
+                <p className="text-sm font-bold text-white">Message from Dr. Voss</p>
                 <button
                   onClick={() => setShowWelcomeVideo(true)}
-                  className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md active:scale-95 transition-transform"
+                  className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg active:scale-95 transition-transform"
                 >
                   <Play className="w-3.5 h-3.5" fill="white" /> Watch
                 </button>
@@ -232,11 +233,11 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       )}
 
-      {/* DESKTOP: Dr. Voss Welcome - Full */}
+      {/* DESKTOP: Dr. Voss Welcome - LP Glass Style */}
       {state.completedCount === 0 && !showWelcomeVideo && (
-        <div className="hidden sm:block bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-3xl p-6 border border-amber-200 dark:border-amber-800">
+        <div className="hidden sm:block glass-premium rounded-3xl p-6 border border-amber-500/20">
           <div className="flex items-center gap-6">
-            <div className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 shadow-xl ring-4 ring-amber-200 dark:ring-amber-800">
+            <div className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 shadow-xl ring-4 ring-amber-500/30">
               <Image
                 src={COURSE_CONFIG.drVoss?.image || '/images/dentist/dr-voss.webp'}
                 alt={COURSE_CONFIG.drVoss?.name || 'Dr. Voss'}
@@ -246,8 +247,8 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               />
             </div>
             <div className="flex-1">
-              <div className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">Start Here</div>
-              <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">Welcome from {COURSE_CONFIG.drVoss?.name?.split(' ')[0] || 'Dr. Voss'}</h3>
+              <div className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">Start Here</div>
+              <h3 className="text-xl font-black text-white mb-2">Welcome from {COURSE_CONFIG.drVoss?.name?.split(' ')[0] || 'Dr. Voss'}</h3>
               <button
                 onClick={() => setShowWelcomeVideo(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:shadow-lg transition-all btn-press"
@@ -259,10 +260,10 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       )}
 
-      {/* Welcome Video Modal */}
+      {/* Welcome Video Modal - LP Glass Style */}
       {showWelcomeVideo && (
-        <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+        <div className="glass-premium rounded-3xl shadow-2xl border border-teal-500/20 overflow-hidden">
+          <div className="p-4 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl overflow-hidden">
                 <Image
@@ -274,12 +275,12 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 />
               </div>
               <div>
-                <div className="font-bold text-slate-900 dark:text-white">{COURSE_CONFIG.drVoss?.name}</div>
-                <div className="text-sm text-slate-500 dark:text-slate-400">{COURSE_CONFIG.drVoss?.title}</div>
+                <div className="font-bold text-white">{COURSE_CONFIG.drVoss?.name}</div>
+                <div className="text-sm text-slate-400">{COURSE_CONFIG.drVoss?.title}</div>
               </div>
             </div>
-            <button onClick={() => setShowWelcomeVideo(false)} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
-              <svg className="w-5 h-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button onClick={() => setShowWelcomeVideo(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+              <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -288,9 +289,9 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       )}
 
-      {/* MOBILE: Quick Actions - Compact Row */}
+      {/* MOBILE: Quick Actions - LP Glass Style */}
       <div className="sm:hidden">
-        <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-1">Quick Actions</h3>
+        <h3 className="text-sm font-bold text-teal-400 uppercase tracking-wider mb-3 px-1">Quick Actions</h3>
         <div className="flex gap-3">
           {[
             { icon: Gift, label: 'Bonuses', color: 'from-cyan-500 to-blue-500', section: 'bonuses' as const },
@@ -301,115 +302,113 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               <button
                 key={i}
                 onClick={() => state.setActiveSection(item.section)}
-                className="flex-1 relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 p-4 text-center active:scale-95 transition-transform shadow-sm"
+                className="flex-1 relative overflow-hidden rounded-2xl glass-teal p-4 text-center active:scale-95 transition-transform hover-lift"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-5`} />
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mx-auto mb-2 shadow-lg`}>
                   <item.icon className="w-6 h-6 text-white" />
                 </div>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{item.label}</p>
+                <p className="text-xs font-bold text-white">{item.label}</p>
               </button>
             ) : (
               <a
                 key={i}
                 href={`mailto:${COURSE_CONFIG.supportEmail}`}
-                className="flex-1 relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 p-4 text-center active:scale-95 transition-transform shadow-sm"
+                className="flex-1 relative overflow-hidden rounded-2xl glass-teal p-4 text-center active:scale-95 transition-transform hover-lift"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-5`} />
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mx-auto mb-2 shadow-lg`}>
                   <item.icon className="w-6 h-6 text-white" />
                 </div>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{item.label}</p>
+                <p className="text-xs font-bold text-white">{item.label}</p>
               </a>
             )
           ))}
         </div>
       </div>
 
-      {/* DESKTOP: Continue Learning & Quick Actions */}
+      {/* DESKTOP: Continue Learning & Quick Actions - LP Glass Style */}
       <div className="hidden sm:grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 shadow-lg border border-slate-200/50 dark:border-teal-500/10">
-          <h2 className="text-xl font-black text-slate-900 dark:text-white mb-4">
+        <div className="lg:col-span-2 glass-premium rounded-2xl p-6 border border-teal-500/20">
+          <h2 className="text-xl font-black text-white mb-4">
             {state.progressPercent >= 100 ? 'Course Complete!' : 'Continue Learning'}
           </h2>
           {state.progressPercent >= 100 ? (
             <div className="text-center py-6">
-              <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-xl shadow-emerald-500/30 mb-4">
+              <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-glow-teal mb-4">
                 <Trophy className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">Congratulations!</h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-4">You've completed all available modules!</p>
+              <h3 className="text-xl font-black text-white mb-2">Congratulations!</h3>
+              <p className="text-slate-400 mb-4">You've completed all available modules!</p>
               <button
                 onClick={() => state.setShowCertificateModal(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:shadow-lg transition-all btn-press"
+                className="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-glow-teal"
               >
                 <Award className="w-5 h-5" /> Get Certificate
               </button>
             </div>
           ) : (
             <button
-              className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-800/20 dark:to-cyan-800/20 border border-teal-100 dark:border-teal-700 hover:shadow-md transition-all card-lift text-left"
+              className="w-full flex items-center gap-4 p-4 rounded-xl glass-teal hover-lift text-left"
               onClick={() => {
                 state.setCurrentModuleIndex(state.nextIncompleteModuleIndex)
                 state.setActiveSection('course')
               }}
             >
-              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-400/30 relative flex-shrink-0">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal relative flex-shrink-0">
                 <Play className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm text-teal-500 dark:text-teal-300 font-medium mb-1">
+                <div className="text-sm text-teal-400 font-medium mb-1">
                   Module {state.nextIncompleteModule?.number}
                 </div>
-                <div className="font-bold text-slate-900 dark:text-white truncate">
+                <div className="font-bold text-white truncate">
                   {state.nextIncompleteModule?.title || state.currentModule.title}
                 </div>
-                <div className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                <div className="text-sm text-slate-400 flex items-center gap-2">
                   <Clock className="w-3 h-3" />
                   {state.nextIncompleteModule?.duration || state.currentModule.duration}
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-teal-500 flex-shrink-0" />
+              <ArrowRight className="w-5 h-5 text-teal-400 flex-shrink-0" />
             </button>
           )}
         </div>
 
-        <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-6 shadow-lg border border-slate-200/50 dark:border-teal-500/10">
-          <h2 className="text-xl font-black text-slate-900 dark:text-white mb-4">Quick Actions</h2>
+        <div className="glass-premium rounded-2xl p-6 border border-teal-500/20">
+          <h2 className="text-xl font-black text-white mb-4">Quick Actions</h2>
           <div className="space-y-3">
             <button
               onClick={() => state.setActiveSection('bonuses')}
-              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:border-cyan-300 dark:hover:border-cyan-500/50 transition-all shadow-sm"
+              className="w-full flex items-center gap-3 p-4 rounded-xl glass-teal hover:border-cyan-400/50 transition-all hover-lift"
             >
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center">
-                <Gift className="w-5 h-5 text-cyan-500" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg">
+                <Gift className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-slate-700 dark:text-slate-200">View Bonuses</span>
+              <span className="font-bold text-white">View Bonuses</span>
             </button>
             <button
               onClick={() => state.setActiveSection('achievements')}
-              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:border-amber-300 dark:hover:border-amber-500/50 transition-all shadow-sm"
+              className="w-full flex items-center gap-3 p-4 rounded-xl glass-teal hover:border-amber-400/50 transition-all hover-lift"
             >
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                <Trophy className="w-5 h-5 text-amber-500" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
+                <Trophy className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-slate-700 dark:text-slate-200">View Achievements</span>
+              <span className="font-bold text-white">View Achievements</span>
             </button>
             <a
               href={`mailto:${COURSE_CONFIG.supportEmail}`}
-              className="w-full flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all shadow-sm"
+              className="w-full flex items-center gap-3 p-4 rounded-xl glass-teal hover:border-emerald-400/50 transition-all hover-lift"
             >
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-emerald-500" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
+                <MessageCircle className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-slate-700 dark:text-slate-200">Get Support</span>
+              <span className="font-bold text-white">Get Support</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* MOBILE: Social Proof - Compact */}
-      <div className="sm:hidden rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700/50 p-4">
+      {/* MOBILE: Social Proof - LP Glass Style */}
+      <div className="sm:hidden rounded-2xl glass-premium p-4 border border-teal-500/20">
         <div className="grid grid-cols-4 gap-2 text-center">
           {[
             { icon: Users, value: `${(memberStats.totalMembers / 1000).toFixed(1)}k`, label: 'Students', color: 'text-teal-400' },
@@ -422,6 +421,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 <div className="flex items-center justify-center gap-1 mb-1">
                   <div className="relative">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                    <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
                   </div>
                   <span className={`text-lg font-black ${stat.color}`}>{stat.value}</span>
                 </div>
@@ -434,103 +434,110 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       </div>
 
-      {/* DESKTOP: Social Proof Banner */}
-      <div className="hidden sm:block bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-5 shadow-lg border border-slate-200/50 dark:border-teal-500/10">
+      {/* DESKTOP: Social Proof Banner - LP Glass Style */}
+      <div className="hidden sm:block glass-premium rounded-2xl p-5 border border-teal-500/20">
         <div className="grid grid-cols-4 gap-4 text-center">
-          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg bg-slate-50/50 dark:bg-slate-800/30">
-            <Users className="w-5 h-5 text-teal-500" />
+          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-teal">
+            <Users className="w-5 h-5 text-teal-400" />
             <div className="flex items-center gap-1">
-              <span className="font-black text-slate-900 dark:text-white">{memberStats.totalMembers.toLocaleString()}+</span>
-              <span className="text-slate-500 dark:text-slate-400 text-sm">enrolled</span>
+              <span className="font-black text-white">{memberStats.totalMembers.toLocaleString()}+</span>
+              <span className="text-slate-400 text-sm">enrolled</span>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg bg-emerald-50/50 dark:bg-emerald-900/20">
+          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-teal">
             <div className="relative">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+              <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
             </div>
             <div className="flex items-center gap-1">
-              <span className="font-black text-emerald-600 dark:text-emerald-400">{memberStats.activeNow.toLocaleString()}</span>
-              <span className="text-slate-500 dark:text-slate-400 text-sm">active</span>
+              <span className="font-black text-emerald-400">{memberStats.activeNow.toLocaleString()}</span>
+              <span className="text-slate-400 text-sm">active</span>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg bg-amber-50/50 dark:bg-amber-900/20">
+          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-teal">
             <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
             <div className="flex items-center gap-1">
-              <span className="font-black text-slate-900 dark:text-white">4.9</span>
-              <span className="text-slate-500 dark:text-slate-400 text-sm">rating</span>
+              <span className="font-black text-white">4.9</span>
+              <span className="text-slate-400 text-sm">rating</span>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg bg-blue-50/50 dark:bg-blue-900/20">
-            <Globe className="w-5 h-5 text-blue-500" />
+          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-teal">
+            <Globe className="w-5 h-5 text-blue-400" />
             <div className="flex items-center gap-1">
-              <span className="font-black text-slate-900 dark:text-white">23</span>
-              <span className="text-slate-500 dark:text-slate-400 text-sm">countries</span>
+              <span className="font-black text-white">23</span>
+              <span className="text-slate-400 text-sm">countries</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Coming Soon Courses - Hidden on mobile, show on desktop */}
-      <div className="hidden sm:block bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 rounded-2xl p-8 shadow-2xl border border-slate-700/50">
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <div>
-            <h2 className="text-2xl font-black text-white flex items-center gap-3">
-              <Sparkles className="w-6 h-6 text-amber-400" />
-              Coming Soon
-            </h2>
-            <p className="text-slate-400 mt-1">New courses for dentists. Join the waitlist!</p>
-          </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30">
-            <Bell className="w-4 h-4 text-amber-400" />
-            <span className="text-amber-400 text-sm font-bold">{state.waitlistedCourses.length} on list</span>
-          </div>
-        </div>
+      {/* Coming Soon Courses - LP Premium Style */}
+      <div className="hidden sm:block relative overflow-hidden rounded-2xl bg-gradient-hero p-8 section-premium noise-overlay border border-teal-500/20">
+        {/* Floating Gradient Orbs */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-cyan-500/10 to-teal-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {COMING_SOON_COURSES.map((course) => {
-            const isWaitlisted = state.waitlistedCourses.includes(course.id)
-            const IconComponent = course.icon
-            return (
-              <div key={course.id} className="relative group bg-slate-800/50 hover:bg-slate-800 rounded-xl p-5 border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${course.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
-                    <IconComponent className="w-6 h-6 text-white" />
+        <div className="relative z-10">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-2xl font-black text-white flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-amber-400" />
+                Coming Soon
+              </h2>
+              <p className="text-slate-400 mt-1">New courses for dentists. Join the waitlist!</p>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-teal border border-amber-500/30">
+              <Bell className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-400 text-sm font-bold">{state.waitlistedCourses.length} on list</span>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {COMING_SOON_COURSES.map((course) => {
+              const isWaitlisted = state.waitlistedCourses.includes(course.id)
+              const IconComponent = course.icon
+              return (
+                <div key={course.id} className="relative group glass-premium rounded-xl p-5 border border-teal-500/20 hover:border-teal-400/40 transition-all duration-300 hover-lift">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${course.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                      <IconComponent className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0 pr-16">
+                      <h3 className="font-bold text-white text-lg leading-tight">{course.title}</h3>
+                      <p className="text-slate-400 text-sm truncate">{course.subtitle}</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0 pr-16">
-                    <h3 className="font-bold text-white text-lg leading-tight">{course.title}</h3>
-                    <p className="text-slate-400 text-sm truncate">{course.subtitle}</p>
+                  <p className="text-slate-300 text-sm mb-4 line-clamp-2">{course.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {course.features.slice(0, 2).map((feature, i) => (
+                      <span key={i} className="px-2 py-1 rounded-md glass-teal text-slate-300 text-xs">{feature}</span>
+                    ))}
+                    {course.features.length > 2 && (
+                      <span className="px-2 py-1 rounded-md glass-teal text-slate-400 text-xs">+{course.features.length - 2} more</span>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between text-sm mb-4">
+                    <span className="text-slate-400"><span className="text-teal-400 font-bold">{course.waitlistCount.toLocaleString()}</span> waiting</span>
+                    <span className="text-slate-500">{course.estimatedLaunch}</span>
+                  </div>
+                  <button
+                    onClick={() => state.toggleWaitlist(course.id)}
+                    className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
+                      isWaitlisted
+                        ? 'glass-teal text-teal-400 border border-teal-500/30'
+                        : 'btn-premium text-white shadow-glow-teal'
+                    }`}
+                  >
+                    {isWaitlisted ? <><Check className="w-4 h-4" /> On Your Waitlist</> : <><Bell className="w-4 h-4" /> Notify Me</>}
+                  </button>
+                  <div className="absolute top-4 right-4 px-2 py-1 rounded-md glass-dark border border-slate-600/50">
+                    <span className="text-slate-400 text-xs line-through mr-1">${course.price}</span>
+                    <span className="text-emerald-400 text-xs font-bold">FREE</span>
                   </div>
                 </div>
-                <p className="text-slate-300 text-sm mb-4 line-clamp-2">{course.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {course.features.slice(0, 2).map((feature, i) => (
-                    <span key={i} className="px-2 py-1 rounded-md bg-slate-700/50 text-slate-300 text-xs">{feature}</span>
-                  ))}
-                  {course.features.length > 2 && (
-                    <span className="px-2 py-1 rounded-md bg-slate-700/50 text-slate-400 text-xs">+{course.features.length - 2} more</span>
-                  )}
-                </div>
-                <div className="flex items-center justify-between text-sm mb-4">
-                  <span className="text-slate-400"><span className="text-teal-400 font-bold">{course.waitlistCount.toLocaleString()}</span> waiting</span>
-                  <span className="text-slate-500">{course.estimatedLaunch}</span>
-                </div>
-                <button
-                  onClick={() => state.toggleWaitlist(course.id)}
-                  className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
-                    isWaitlisted
-                      ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
-                      : 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:shadow-lg hover:shadow-teal-500/25'
-                  }`}
-                >
-                  {isWaitlisted ? <><Check className="w-4 h-4" /> On Your Waitlist</> : <><Bell className="w-4 h-4" /> Notify Me</>}
-                </button>
-                <div className="absolute top-4 right-4 px-2 py-1 rounded-md bg-slate-900/80 border border-slate-600/50">
-                  <span className="text-slate-400 text-xs line-through mr-1">${course.price}</span>
-                  <span className="text-emerald-400 text-xs font-bold">FREE</span>
-                </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>
@@ -538,7 +545,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
 })
 
 // ============================================
-// COURSE SECTION - REDESIGNED FOR MOBILE
+// COURSE SECTION - PREMIUM LP THEME
 // ============================================
 
 interface CourseProps {
@@ -573,30 +580,30 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
 
   return (
     <div {...swipeHandlers} className="space-y-4 sm:space-y-6 animate-fade-in touch-pan-y">
-      {/* MOBILE: Compact Header */}
+      {/* MOBILE: Compact Header - LP Glass Style */}
       <div className="sm:hidden flex items-center justify-between">
         <button
           onClick={() => state.setActiveSection('dashboard')}
-          className="p-2 -ml-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          className="p-2 -ml-2 rounded-xl text-slate-400 hover:bg-white/10 transition-colors"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <div className="text-center">
-          <p className="text-xs text-teal-500 dark:text-teal-400 font-bold">Module {currentModule.number}</p>
-          <p className="text-[10px] text-slate-500 dark:text-slate-400">{state.completedCount}/{state.totalModules} complete</p>
+          <p className="text-xs text-teal-400 font-bold">Module {currentModule.number}</p>
+          <p className="text-[10px] text-slate-500">{state.completedCount}/{state.totalModules} complete</p>
         </div>
         <div className="flex items-center gap-1">
           <button
             onClick={() => state.toggleBookmark(currentModule.id)}
-            className={`p-2 rounded-xl transition-all ${isBookmarked ? 'text-teal-500 bg-teal-50 dark:bg-teal-900/30' : 'text-slate-400'}`}
+            className={`p-2 rounded-xl transition-all ${isBookmarked ? 'text-teal-400 glass-teal' : 'text-slate-400'}`}
           >
             {isBookmarked ? <BookmarkCheck className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Video Player */}
-      <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+      {/* Video Player - LP Premium Shadow */}
+      <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-teal-500/10 glass-premium border border-teal-500/20">
         {!currentModule.comingSoon && currentModule.wistiaId ? (
           <WistiaPlayer
             wistiaId={currentModule.wistiaId}
@@ -607,10 +614,10 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
             reducedMotion={state.reducedMotion}
           />
         ) : (
-          <div className="aspect-video rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-slate-700">
+          <div className="aspect-video bg-gradient-hero flex items-center justify-center">
             <div className="text-center">
-              <div className="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-                <Lock className="w-8 h-8 text-slate-500" />
+              <div className="w-16 h-16 rounded-2xl glass-premium flex items-center justify-center mx-auto mb-4 border border-teal-500/20">
+                <Lock className="w-8 h-8 text-slate-400" />
               </div>
               <p className="text-xl font-bold text-white mb-1">Coming Soon</p>
               <p className="text-sm text-slate-400">This module is not yet available</p>
@@ -619,26 +626,26 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
         )}
       </div>
 
-      {/* MOBILE: Module Info Card */}
-      <div className="sm:hidden bg-white dark:bg-slate-800/80 rounded-2xl p-4 border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
+      {/* MOBILE: Module Info Card - LP Glass Style */}
+      <div className="sm:hidden glass-premium rounded-2xl p-4 border border-teal-500/20">
         {/* Module badges */}
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-teal-500 to-cyan-500 text-white">
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg">
             Module {currentModule.number}
           </span>
-          <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+          <span className="px-3 py-1 rounded-full text-xs font-medium glass-teal text-slate-300">
             {currentModule.duration}
           </span>
           {isCompleted && (
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 flex items-center gap-1 border border-emerald-500/30">
               <CheckCircle className="w-3 h-3" /> Done
             </span>
           )}
         </div>
 
         {/* Title & Description */}
-        <h1 className="text-lg font-black text-slate-900 dark:text-white mb-2">{currentModule.title}</h1>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{currentModule.description}</p>
+        <h1 className="text-lg font-black text-white mb-2">{currentModule.title}</h1>
+        <p className="text-sm text-slate-400 mb-4">{currentModule.description}</p>
 
         {/* Mark Complete / Navigation */}
         <div className="flex items-center gap-3">
@@ -648,8 +655,8 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
               disabled={isCompleted}
               className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${
                 isCompleted
-                  ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400'
-                  : 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-500/30 active:scale-[0.98]'
+                  ? 'glass-teal text-emerald-400 border border-emerald-500/30'
+                  : 'btn-premium text-white shadow-glow-teal active:scale-[0.98]'
               }`}
             >
               {isCompleted ? <><CheckCircle className="w-4 h-4" /> Completed</> : <><CheckCircle className="w-4 h-4" /> Mark Complete</>}
@@ -659,14 +666,14 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
             <button
               onClick={state.prevModule}
               disabled={!canGoPrev}
-              className={`p-3 rounded-xl border transition-all ${canGoPrev ? 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 active:scale-95' : 'opacity-40 border-slate-200 dark:border-slate-700'}`}
+              className={`p-3 rounded-xl transition-all ${canGoPrev ? 'glass-teal text-slate-300 active:scale-95' : 'opacity-40 glass-dark'}`}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={state.nextModule}
               disabled={!canGoNext}
-              className={`p-3 rounded-xl transition-all ${canGoNext ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md active:scale-95' : 'opacity-40 bg-slate-200 dark:bg-slate-700'}`}
+              className={`p-3 rounded-xl transition-all ${canGoNext ? 'btn-premium text-white shadow-glow-teal active:scale-95' : 'opacity-40 glass-dark'}`}
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -674,74 +681,74 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
         </div>
       </div>
 
-      {/* DESKTOP: Module Info */}
+      {/* DESKTOP: Module Info - LP Glass Style */}
       <div className="hidden sm:grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-800">
+          <div className="glass-premium rounded-2xl p-6 border border-teal-500/20">
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-teal-100 dark:bg-teal-800/30 text-teal-600 dark:text-teal-300">
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg">
                 MODULE {currentModule.number}
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 border border-slate-200/50 dark:border-slate-600">
+              <span className="px-3 py-1 rounded-full text-xs font-medium glass-teal text-slate-300">
                 {currentModule.duration}
               </span>
               {isCompleted && state.showCompletedBadge && (
-                <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 flex items-center gap-1 border border-emerald-500/30">
                   <CheckCircle className="w-3 h-3" /> Done
                 </span>
               )}
               <button
                 onClick={() => state.toggleBookmark(currentModule.id)}
-                className={`ml-auto p-2 rounded-lg transition-all border ${
+                className={`ml-auto p-2 rounded-lg transition-all ${
                   isBookmarked
-                    ? 'bg-teal-100 dark:bg-teal-800/30 text-teal-500 border-teal-200 dark:border-teal-700'
-                    : 'bg-white dark:bg-slate-700/80 text-slate-400 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:text-teal-500'
+                    ? 'glass-teal text-teal-400'
+                    : 'glass-dark text-slate-400 hover:text-teal-400'
                 }`}
               >
                 {isBookmarked ? <BookmarkCheck className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
               </button>
               <button
                 onClick={() => state.setShowNotesModal(true)}
-                className={`p-2 rounded-lg transition-all border ${
+                className={`p-2 rounded-lg transition-all ${
                   hasNotes
-                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 border-amber-200 dark:border-amber-700'
-                    : 'bg-white dark:bg-slate-700/80 text-slate-400 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:text-amber-600'
+                    ? 'glass-teal text-amber-400'
+                    : 'glass-dark text-slate-400 hover:text-amber-400'
                 }`}
               >
                 <StickyNote className="w-5 h-5" />
               </button>
             </div>
-            <h1 className="text-2xl font-black text-slate-900 dark:text-white mb-3">{currentModule.title}</h1>
-            <p className="text-slate-600 dark:text-slate-400 mb-6">{currentModule.description}</p>
+            <h1 className="text-2xl font-black text-white mb-3">{currentModule.title}</h1>
+            <p className="text-slate-400 mb-6">{currentModule.description}</p>
             {!currentModule.comingSoon && (
               <button
                 onClick={state.markComplete}
                 disabled={isCompleted}
                 className={`w-full py-4 rounded-xl font-bold transition-all ${
                   isCompleted
-                    ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400'
-                    : 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:shadow-lg btn-press'
+                    ? 'glass-teal text-emerald-400 border border-emerald-500/30'
+                    : 'btn-premium text-white shadow-glow-teal'
                 }`}
               >
                 {isCompleted ? <><CheckCircle className="w-5 h-5 inline mr-2" /> Completed</> : <><CheckCircle className="w-5 h-5 inline mr-2" /> Mark Complete</>}
               </button>
             )}
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+            <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
               <button
                 onClick={state.prevModule}
                 disabled={!canGoPrev}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition-all ${
-                  canGoPrev ? 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' : 'opacity-40'
+                  canGoPrev ? 'text-slate-300 hover:bg-white/10' : 'opacity-40'
                 }`}
               >
                 <ChevronLeft className="w-5 h-5" /> Prev
               </button>
-              <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">{state.currentModuleIndex + 1}/{state.totalModules}</span>
+              <span className="text-sm text-slate-500 font-medium">{state.currentModuleIndex + 1}/{state.totalModules}</span>
               <button
                 onClick={state.nextModule}
                 disabled={!canGoNext}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-white transition-all ${
-                  canGoNext ? 'bg-teal-500 hover:bg-teal-600' : 'opacity-40 bg-slate-300'
+                  canGoNext ? 'btn-premium shadow-glow-teal' : 'opacity-40 glass-dark'
                 }`}
               >
                 Next <ChevronRight className="w-5 h-5" />
@@ -749,28 +756,28 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
             </div>
           </div>
 
-          {/* What You'll Learn */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-800">
-            <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-amber-500" /> What You'll Learn
+          {/* What You'll Learn - LP Glass Style */}
+          <div className="glass-premium rounded-2xl p-6 border border-teal-500/20">
+            <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-amber-400" /> What You'll Learn
             </h3>
             <div className="space-y-3">
               {currentModule.lessons.map((lesson, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 shadow-sm">
-                  <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-4 h-4 text-emerald-500" />
+                <div key={i} className="flex items-center gap-3 p-3 rounded-xl glass-teal">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-emerald-400" />
                   </div>
-                  <span className="text-slate-700 dark:text-slate-200 font-medium">{lesson}</span>
+                  <span className="text-slate-200 font-medium">{lesson}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Resources */}
+          {/* Resources - LP Glass Style */}
           {currentModule.resources.length > 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-800">
-              <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                <Download className="w-5 h-5 text-teal-500" /> Resources
+            <div className="glass-premium rounded-2xl p-6 border border-teal-500/20">
+              <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+                <Download className="w-5 h-5 text-teal-400" /> Resources
               </h3>
               <div className="space-y-3">
                 {currentModule.resources.map((resource, i) => (
@@ -779,16 +786,16 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                     href={resource.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-teal-300 dark:hover:border-teal-500 hover:bg-teal-50 dark:hover:bg-teal-800/20 transition-all"
+                    className="flex items-center gap-4 p-4 rounded-xl glass-teal hover:border-teal-400/50 transition-all hover-lift"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-800/30 flex items-center justify-center flex-shrink-0">
-                      {resource.type === 'link' ? <ExternalLink className="w-5 h-5 text-teal-500" /> : <FileDown className="w-5 h-5 text-teal-500" />}
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                      {resource.type === 'link' ? <ExternalLink className="w-5 h-5 text-white" /> : <FileDown className="w-5 h-5 text-white" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-slate-900 dark:text-white truncate">{resource.name}</div>
-                      <div className="text-sm text-slate-500 dark:text-slate-400">{resource.type === 'link' ? 'Open Link' : 'Download'}</div>
+                      <div className="font-bold text-white truncate">{resource.name}</div>
+                      <div className="text-sm text-slate-400">{resource.type === 'link' ? 'Open Link' : 'Download'}</div>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                    <ArrowRight className="w-5 h-5 text-teal-400 flex-shrink-0" />
                   </a>
                 ))}
               </div>
@@ -796,10 +803,10 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
           )}
         </div>
 
-        {/* Module List Sidebar */}
+        {/* Module List Sidebar - LP Glass Style */}
         <div className="space-y-4">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-800">
-            <h2 className="text-xl font-black text-slate-900 dark:text-white mb-4">All Modules</h2>
+          <div className="glass-premium rounded-2xl p-6 border border-teal-500/20">
+            <h2 className="text-xl font-black text-white mb-4">All Modules</h2>
             <div className="space-y-2">
               {COURSE_MODULES.filter(m => !m.comingSoon).map((module) => {
                 const moduleCompleted = state.completedModules.includes(module.id)
@@ -808,25 +815,25 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                   <button
                     key={module.id}
                     onClick={() => state.setCurrentModuleIndex(COURSE_MODULES.findIndex(m => m.id === module.id))}
-                    className={`w-full p-4 rounded-xl text-left transition-all ${
+                    className={`w-full p-4 rounded-xl text-left transition-all hover-lift ${
                       isCurrent
-                        ? 'bg-teal-100 dark:bg-teal-800/30 border-2 border-teal-400'
+                        ? 'glass-teal border-2 border-teal-400'
                         : moduleCompleted
-                          ? 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800'
-                          : 'bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:border-teal-300 dark:hover:border-teal-500 shadow-sm'
+                          ? 'glass-teal border border-emerald-500/30'
+                          : 'glass-dark hover:border-teal-500/50'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                        moduleCompleted ? 'bg-emerald-500 text-white' : isCurrent ? 'bg-teal-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
+                        moduleCompleted ? 'bg-emerald-500 text-white' : isCurrent ? 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white' : 'glass-dark text-slate-400'
                       }`}>
                         {moduleCompleted ? <Check className="w-4 h-4" /> : module.number}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className={`text-sm font-bold truncate ${isCurrent ? 'text-teal-600 dark:text-teal-300' : 'text-slate-900 dark:text-white'}`}>
+                        <div className={`text-sm font-bold truncate ${isCurrent ? 'text-teal-400' : 'text-white'}`}>
                           {module.title}
                         </div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">{module.duration}</div>
+                        <div className="text-xs text-slate-500">{module.duration}</div>
                       </div>
                     </div>
                   </button>
@@ -837,12 +844,12 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
         </div>
       </div>
 
-      {/* MOBILE: Module List (collapsible) */}
+      {/* MOBILE: Module List (collapsible) - LP Glass Style */}
       <div className="sm:hidden">
         <details className="group">
-          <summary className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 cursor-pointer list-none">
-            <span className="font-bold text-slate-900 dark:text-white">All Modules</span>
-            <ChevronRight className="w-5 h-5 text-slate-400 transition-transform group-open:rotate-90" />
+          <summary className="flex items-center justify-between p-4 rounded-2xl glass-premium border border-teal-500/20 cursor-pointer list-none">
+            <span className="font-bold text-white">All Modules</span>
+            <ChevronRight className="w-5 h-5 text-teal-400 transition-transform group-open:rotate-90" />
           </summary>
           <div className="mt-2 space-y-2">
             {COURSE_MODULES.filter(m => !m.comingSoon).map((module) => {
@@ -854,25 +861,25 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                   onClick={() => state.setCurrentModuleIndex(COURSE_MODULES.findIndex(m => m.id === module.id))}
                   className={`w-full p-4 rounded-xl text-left transition-all ${
                     isCurrent
-                      ? 'bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/20 border-2 border-teal-400'
+                      ? 'glass-teal border-2 border-teal-400'
                       : moduleCompleted
-                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800'
-                        : 'bg-white dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50'
+                        ? 'glass-teal border border-emerald-500/30'
+                        : 'glass-dark'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
-                      moduleCompleted ? 'bg-emerald-500 text-white' : isCurrent ? 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
+                      moduleCompleted ? 'bg-emerald-500 text-white' : isCurrent ? 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white shadow-glow-teal' : 'glass-dark text-slate-400'
                     }`}>
                       {moduleCompleted ? <Check className="w-5 h-5" /> : module.number}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className={`text-sm font-bold ${isCurrent ? 'text-teal-600 dark:text-teal-300' : 'text-slate-900 dark:text-white'}`}>
+                      <div className={`text-sm font-bold ${isCurrent ? 'text-teal-400' : 'text-white'}`}>
                         {module.title}
                       </div>
-                      <div className="text-xs text-slate-500 dark:text-slate-400">{module.duration}</div>
+                      <div className="text-xs text-slate-500">{module.duration}</div>
                     </div>
-                    {isCurrent && <Play className="w-4 h-4 text-teal-500" />}
+                    {isCurrent && <Play className="w-4 h-4 text-teal-400" />}
                   </div>
                 </button>
               )
@@ -885,7 +892,7 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
 })
 
 // ============================================
-// BONUSES SECTION - REDESIGNED FOR MOBILE
+// BONUSES SECTION - PREMIUM LP THEME
 // ============================================
 
 interface BonusesProps {
@@ -905,31 +912,31 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* MOBILE: Header */}
+      {/* MOBILE: Header - LP Style */}
       <div className="sm:hidden">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white">Bonuses</h1>
-          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-bold">
+          <h1 className="text-2xl font-black text-white">Bonuses</h1>
+          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-bold shadow-glow-teal">
             ${TOTAL_BONUS_VALUE} Value
           </div>
         </div>
-        <p className="text-sm text-slate-500 dark:text-slate-400">{BONUSES.length} premium resources included</p>
+        <p className="text-sm text-slate-400">{BONUSES.length} premium resources included</p>
       </div>
 
-      {/* DESKTOP: Header */}
+      {/* DESKTOP: Header - LP Style */}
       <div className="hidden sm:flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-            <Gift className="w-8 h-8 text-cyan-500" /> Bonus Resources
+          <h1 className="text-3xl font-black text-white flex items-center gap-3">
+            <Gift className="w-8 h-8 text-teal-400" /> Bonus Resources
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1">Resources worth <span className="font-bold text-teal-500">${TOTAL_BONUS_VALUE}</span></p>
+          <p className="text-slate-400 mt-1">Resources worth <span className="font-bold text-teal-400">${TOTAL_BONUS_VALUE}</span></p>
         </div>
         <div className="text-right">
-          <p className="text-slate-500 dark:text-slate-400 text-sm">{state.downloadedBonuses.length}/{BONUSES.length} downloaded</p>
+          <p className="text-slate-500 text-sm">{state.downloadedBonuses.length}/{BONUSES.length} downloaded</p>
         </div>
       </div>
 
-      {/* MOBILE: Category Pills - Horizontal Scroll */}
+      {/* MOBILE: Category Pills - LP Glass Style */}
       <div className="sm:hidden flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
         {['All', ...BONUS_CATEGORIES].map((cat) => (
           <button
@@ -937,8 +944,8 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
             onClick={() => { setCategoryFilter(cat); haptic.light() }}
             className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
               categoryFilter === cat
-                ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md'
-                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                ? 'btn-premium text-white shadow-glow-teal'
+                : 'glass-dark text-slate-300'
             }`}
           >
             {cat}
@@ -946,16 +953,16 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
         ))}
       </div>
 
-      {/* DESKTOP: Search & Filters */}
+      {/* DESKTOP: Search & Filters - LP Glass Style */}
       <div className="hidden sm:block space-y-4">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search bonuses..."
-            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-400/10 transition-all shadow-sm"
+            className="w-full pl-12 pr-4 py-3 rounded-xl glass-premium border border-teal-500/20 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-400/10 transition-all"
           />
         </div>
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
@@ -965,8 +972,8 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
               onClick={() => setCategoryFilter(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                 categoryFilter === cat
-                  ? 'bg-teal-500 text-white'
-                  : 'bg-white dark:bg-slate-700/80 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-600'
+                  ? 'btn-premium text-white shadow-glow-teal'
+                  : 'glass-dark text-slate-300 hover:border-teal-500/50'
               }`}
             >
               {cat}
@@ -975,22 +982,22 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
         </div>
       </div>
 
-      {/* Bonuses Grid */}
+      {/* Bonuses Grid - LP Glass Style */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredBonuses.map((bonus) => {
           const Icon = bonus.icon
           const isDownloaded = state.downloadedBonuses.includes(bonus.id)
           return (
-            <div key={bonus.id} className="bg-white dark:bg-slate-800/80 rounded-2xl sm:rounded-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+            <div key={bonus.id} className="glass-premium rounded-2xl border border-teal-500/20 overflow-hidden hover-lift group">
               {/* Bonus Image */}
-              <div className="relative aspect-[16/10] bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 overflow-hidden">
+              <div className="relative aspect-[16/10] bg-gradient-hero overflow-hidden">
                 <Image
                   src={bonus.image}
                   alt={bonus.name}
                   fill
                   className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-slate-900/80 backdrop-blur-sm border border-slate-700/50">
+                <div className="absolute top-2 right-2 px-2 py-1 rounded-lg glass-dark border border-teal-500/30">
                   <span className="text-emerald-400 text-xs font-bold">${bonus.value}</span>
                 </div>
               </div>
@@ -998,15 +1005,15 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
               {/* Bonus Info */}
               <div className="p-4">
                 <div className="flex items-start gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal flex-shrink-0">
                     <Icon className="w-5 h-5 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">{bonus.name}</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{bonus.category}</p>
+                    <h3 className="font-bold text-white text-sm leading-tight">{bonus.name}</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">{bonus.category}</p>
                   </div>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">{bonus.description}</p>
+                <p className="text-xs text-slate-400 mb-4 line-clamp-2">{bonus.description}</p>
                 <a
                   href={bonus.url}
                   target="_blank"
@@ -1014,8 +1021,8 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
                   onClick={() => { if (!isDownloaded) state.handleBonusDownload(bonus.id); haptic.success() }}
                   className={`w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                     isDownloaded
-                      ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400'
-                      : 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md active:scale-[0.98]'
+                      ? 'glass-teal text-emerald-400 border border-emerald-500/30'
+                      : 'btn-premium text-white shadow-glow-teal active:scale-[0.98]'
                   }`}
                 >
                   {isDownloaded ? <><Check className="w-4 h-4" /> Downloaded</> : <><Download className="w-4 h-4" /> Get Bonus</>}
@@ -1030,7 +1037,7 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
 })
 
 // ============================================
-// ACHIEVEMENTS SECTION - REDESIGNED FOR MOBILE
+// ACHIEVEMENTS SECTION - PREMIUM LP THEME
 // ============================================
 
 interface AchievementsProps {
@@ -1042,42 +1049,42 @@ export const AchievementsSection = memo(function AchievementsSection({ state }: 
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* MOBILE: Header with Progress */}
+      {/* MOBILE: Header with Progress - LP Style */}
       <div className="sm:hidden">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white">Achievements</h1>
-          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold">
+          <h1 className="text-2xl font-black text-white">Achievements</h1>
+          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold shadow-lg">
             {state.unlockedCount}/{ACHIEVEMENTS.length}
           </div>
         </div>
-        <p className="text-sm text-slate-500 dark:text-slate-400">{state.totalPoints} total points earned</p>
+        <p className="text-sm text-slate-400">{state.totalPoints} total points earned</p>
       </div>
 
-      {/* DESKTOP: Header */}
+      {/* DESKTOP: Header - LP Style */}
       <div className="hidden sm:flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-            <Trophy className="w-8 h-8 text-amber-500" /> Achievements
+          <h1 className="text-3xl font-black text-white flex items-center gap-3">
+            <Trophy className="w-8 h-8 text-amber-400" /> Achievements
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1">{state.unlockedCount} of {ACHIEVEMENTS.length} unlocked • {state.totalPoints} points</p>
+          <p className="text-slate-400 mt-1">{state.unlockedCount} of {ACHIEVEMENTS.length} unlocked • {state.totalPoints} points</p>
         </div>
       </div>
 
-      {/* MOBILE: Stats Cards */}
+      {/* MOBILE: Stats Cards - LP Glass Style */}
       <div className="sm:hidden grid grid-cols-3 gap-3">
         {[
           { label: 'Unlocked', value: state.unlockedCount, color: 'from-amber-500 to-orange-500' },
-          { label: 'Points', value: state.totalPoints, color: 'from-violet-500 to-purple-500' },
+          { label: 'Points', value: state.totalPoints, color: 'from-teal-500 to-cyan-500' },
           { label: 'Streak', value: `${state.streak}d`, color: 'from-rose-500 to-pink-500' },
         ].map((stat, i) => (
-          <div key={i} className="bg-white dark:bg-slate-800/80 rounded-2xl p-4 text-center border border-slate-200/50 dark:border-slate-700/50">
+          <div key={i} className="glass-premium rounded-2xl p-4 text-center border border-teal-500/20">
             <p className={`text-2xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>{stat.value}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{stat.label}</p>
+            <p className="text-xs text-slate-500 font-medium">{stat.label}</p>
           </div>
         ))}
       </div>
 
-      {/* Achievements Grid */}
+      {/* Achievements Grid - LP Glass Style */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {ACHIEVEMENTS.map((achievement) => {
           const isUnlocked = state.unlockedAchievements[achievement.id]
@@ -1085,15 +1092,15 @@ export const AchievementsSection = memo(function AchievementsSection({ state }: 
           return (
             <div
               key={achievement.id}
-              className={`relative overflow-hidden rounded-2xl border p-4 transition-all ${
+              className={`relative overflow-hidden rounded-2xl border p-4 transition-all hover-lift ${
                 isUnlocked
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/10 border-amber-200 dark:border-amber-500/30'
-                  : 'bg-white dark:bg-slate-800/80 border-slate-200/50 dark:border-slate-700/50 opacity-60'
+                  ? 'glass-premium border-amber-500/30'
+                  : 'glass-dark border-slate-700/50 opacity-60'
               }`}
             >
               {/* Glow for unlocked */}
               {isUnlocked && (
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-2xl" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl floating" />
               )}
 
               <div className="relative z-10">
@@ -1101,27 +1108,27 @@ export const AchievementsSection = memo(function AchievementsSection({ state }: 
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
                     isUnlocked
                       ? 'bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/30'
-                      : 'bg-slate-200 dark:bg-slate-700'
+                      : 'glass-dark'
                   }`}>
-                    <Icon className={`w-7 h-7 ${isUnlocked ? 'text-white' : 'text-slate-400 dark:text-slate-500'}`} />
+                    <Icon className={`w-7 h-7 ${isUnlocked ? 'text-white' : 'text-slate-500'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`font-bold text-base ${isUnlocked ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}>
+                    <h3 className={`font-bold text-base ${isUnlocked ? 'text-white' : 'text-slate-500'}`}>
                       {achievement.name}
                     </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">{achievement.description}</p>
+                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{achievement.description}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/50 dark:border-slate-700/50">
+                <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/10">
                   <span className={`text-xs font-bold uppercase px-2 py-1 rounded-full ${
-                    achievement.tier === 'gold' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' :
-                    achievement.tier === 'silver' ? 'bg-slate-100 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300' :
-                    'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400'
+                    achievement.tier === 'gold' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
+                    achievement.tier === 'silver' ? 'glass-dark text-slate-400' :
+                    'bg-orange-500/20 text-orange-400 border border-orange-500/30'
                   }`}>
                     {achievement.tier}
                   </span>
-                  <span className={`text-sm font-bold ${isUnlocked ? 'text-teal-500 dark:text-teal-300' : 'text-slate-400'}`}>
+                  <span className={`text-sm font-bold ${isUnlocked ? 'text-teal-400' : 'text-slate-500'}`}>
                     +{achievement.points} pts
                   </span>
                 </div>
@@ -1131,18 +1138,26 @@ export const AchievementsSection = memo(function AchievementsSection({ state }: 
         })}
       </div>
 
-      {/* Share Section */}
+      {/* Share Section - LP Premium Style */}
       {state.progressPercent >= 100 && (
-        <div className="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl p-6 sm:p-8 text-center text-white">
-          <Award className="w-12 h-12 mx-auto mb-4" />
-          <h3 className="text-2xl font-black mb-2">AI Video Master!</h3>
-          <p className="text-teal-200 mb-6">Share your achievement</p>
-          <button
-            onClick={() => state.setShowCertificateModal(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-white text-teal-500 hover:bg-teal-50 active:scale-95 transition-all"
-          >
-            <Award className="w-5 h-5" /> Get Certificate
-          </button>
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-hero p-6 sm:p-8 text-center border border-teal-500/20 section-premium noise-overlay">
+          {/* Floating Gradient Orbs */}
+          <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-teal-500/20 to-cyan-500/10 rounded-full blur-3xl floating" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-500/15 to-teal-500/5 rounded-full blur-3xl floating-slow" />
+
+          <div className="relative z-10">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal">
+              <Award className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-2xl font-black text-white mb-2">AI Video Master!</h3>
+            <p className="text-slate-400 mb-6">Share your achievement</p>
+            <button
+              onClick={() => state.setShowCertificateModal(true)}
+              className="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-glow-teal"
+            >
+              <Award className="w-5 h-5" /> Get Certificate
+            </button>
+          </div>
         </div>
       )}
     </div>
