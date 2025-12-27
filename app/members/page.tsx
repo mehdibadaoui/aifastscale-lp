@@ -5,7 +5,7 @@ import {
   Lock, CheckCircle, Copy, Check, Play, Sparkles, Home, Gift,
   HelpCircle, ChevronRight, Zap, MessageCircle, ExternalLink,
   Download, ChevronLeft, Video, PartyPopper, Clock,
-  ArrowRight, Star, Trophy, Flame, Target, Crown
+  ArrowRight, Star, Trophy, Flame, Target, Crown, X, Users, Shield
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -35,7 +35,7 @@ const BONUSES = [
   { id: 'edit-video', name: 'Edit Videos Fast', type: 'video', file: '/products/edit-video-20min.mp4', image: '/images/products/brand-kit.webp', cat: 'training', description: '20-minute editing course' },
 ]
 
-// Confetti Component
+// Confetti Component - Light Theme Colors
 function Confetti({ show }: { show: boolean }) {
   if (!show) return null
 
@@ -50,36 +50,13 @@ function Confetti({ show }: { show: boolean }) {
             top: '-20px',
             width: `${6 + Math.random() * 10}px`,
             height: `${6 + Math.random() * 10}px`,
-            backgroundColor: ['#d4af37', '#f4d03f', '#10b981', '#22d3ee', '#ffffff', '#ec4899'][Math.floor(Math.random() * 6)],
+            backgroundColor: ['#8b5cf6', '#6366f1', '#10b981', '#22d3ee', '#ec4899', '#f59e0b'][Math.floor(Math.random() * 6)],
             borderRadius: Math.random() > 0.5 ? '50%' : '2px',
             animationDelay: `${Math.random() * 0.5}s`,
             animationDuration: `${2.5 + Math.random() * 2}s`,
           }}
         />
       ))}
-    </div>
-  )
-}
-
-// Skeleton Loader
-function Skeleton({ className }: { className?: string }) {
-  return (
-    <div className={`animate-pulse bg-white/10 rounded-lg ${className}`} />
-  )
-}
-
-// Achievement Badge
-function AchievementBadge({ icon: Icon, label, unlocked }: { icon: any; label: string; unlocked: boolean }) {
-  return (
-    <div className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-300 ${
-      unlocked ? 'bg-[#d4af37]/20 scale-100' : 'bg-white/5 scale-95 opacity-50'
-    }`}>
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-        unlocked ? 'bg-[#d4af37] text-black' : 'bg-white/10 text-white/30'
-      }`}>
-        <Icon className="w-4 h-4" />
-      </div>
-      <span className={`text-[8px] font-bold ${unlocked ? 'text-[#d4af37]' : 'text-white/30'}`}>{label}</span>
     </div>
   )
 }
@@ -98,20 +75,16 @@ export default function MembersPage() {
   const [justCompleted, setJustCompleted] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [streak, setStreak] = useState(0)
-  const [lastVisit, setLastVisit] = useState<string | null>(null)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const correctPassword = 'im the best agent in the world'
   const totalItems = MAIN_COURSE.items.length + BONUSES.length
   const progressPercent = Math.round((downloaded.length / totalItems) * 100)
 
-  // Calculate total time remaining
   const totalMinutes = MAIN_COURSE.items.reduce((sum, item) => {
     const mins = parseInt(item.duration) || 0
     return sum + (downloaded.includes(item.id) ? 0 : mins)
   }, 0)
 
-  // Time-based greeting
   const getGreeting = () => {
     const hour = new Date().getHours()
     if (hour < 12) return 'Good morning'
@@ -119,7 +92,6 @@ export default function MembersPage() {
     return 'Good evening'
   }
 
-  // Play completion sound
   const playSound = (type: 'complete' | 'unlock' | 'celebrate') => {
     try {
       const frequencies: Record<string, number[]> = {
@@ -144,7 +116,6 @@ export default function MembersPage() {
     } catch (e) {}
   }
 
-  // Haptic feedback
   const vibrate = (pattern: number | number[] = 10) => {
     if (navigator.vibrate) navigator.vibrate(pattern)
   }
@@ -154,7 +125,6 @@ export default function MembersPage() {
     if (saved) setDownloaded(JSON.parse(saved))
     if (localStorage.getItem('memberUnlocked') === 'true') setIsUnlocked(true)
 
-    // Streak tracking
     const lastVisitDate = localStorage.getItem('lastVisit')
     const savedStreak = parseInt(localStorage.getItem('streak') || '0')
     const today = new Date().toDateString()
@@ -162,7 +132,6 @@ export default function MembersPage() {
     if (lastVisitDate) {
       const lastDate = new Date(lastVisitDate)
       const diffDays = Math.floor((new Date().getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24))
-
       if (diffDays === 1) {
         setStreak(savedStreak + 1)
         localStorage.setItem('streak', String(savedStreak + 1))
@@ -178,16 +147,11 @@ export default function MembersPage() {
     }
 
     localStorage.setItem('lastVisit', today)
-    setLastVisit(today)
-
-    // Simulate loading for smooth transition
-    setTimeout(() => setIsLoading(false), 800)
+    setTimeout(() => setIsLoading(false), 600)
   }, [])
 
   useEffect(() => {
     if (downloaded.length) localStorage.setItem('downloaded', JSON.stringify(downloaded))
-
-    // Show celebration when hitting 100%
     if (downloaded.length === totalItems && downloaded.length > 0 && !showCelebration) {
       setShowCelebration(true)
       setShowConfetti(true)
@@ -230,7 +194,6 @@ export default function MembersPage() {
     if (item.type === 'link' && item.url) {
       window.open(item.url, '_blank')
     } else if (item.type === 'pdf' && item.file) {
-      // Direct download for PDFs on mobile (better UX than iframe)
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
       if (isMobile) {
         window.open(item.file, '_blank')
@@ -254,12 +217,6 @@ export default function MembersPage() {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const switchTab = (tab: typeof activeTab) => {
-    vibrate(10)
-    setActiveTab(tab)
-  }
-
-  // Find next incomplete item for "Continue" feature
   const getNextItem = () => {
     const courseItem = MAIN_COURSE.items.find(i => !downloaded.includes(i.id))
     if (courseItem) return { ...courseItem, section: 'course' }
@@ -269,238 +226,320 @@ export default function MembersPage() {
   }
 
   const nextItem = getNextItem()
+  const filteredBonuses = filter === 'all' ? BONUSES : BONUSES.filter(b => b.cat === filter)
 
-  // Achievement checks
-  const achievements = {
-    firstStep: downloaded.length >= 1,
-    halfway: downloaded.length >= Math.floor(totalItems / 2),
-    courseComplete: MAIN_COURSE.items.every(i => downloaded.includes(i.id)),
-    allDone: downloaded.length === totalItems,
-    streakMaster: streak >= 3,
-  }
-
-  // Password Gate
+  // ==================== PASSWORD GATE - LIGHT THEME ====================
   if (!isUnlocked) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
-        <div className="max-w-sm w-full">
-          <div className="w-20 h-20 bg-gradient-to-br from-[#d4af37] to-[#f4d03f] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-[#d4af37]/30 animate-pulse">
-            <Lock className="w-10 h-10 text-black" />
-          </div>
-          <h1 className="text-3xl font-black text-white text-center mb-2">Welcome!</h1>
-          <p className="text-white/50 text-sm text-center mb-8">Enter your password to unlock your course</p>
-          <form onSubmit={handleUnlock} className="space-y-4">
-            <div className="relative">
-              <input
-                type="text"
-                value={passwordInput}
-                onChange={(e) => { setPasswordInput(e.target.value); setPasswordError('') }}
-                placeholder="Paste your password here..."
-                className={`w-full bg-white/5 border-2 ${passwordError ? 'border-red-500 animate-shake' : 'border-white/10'} rounded-2xl px-5 py-4 text-white text-base placeholder-white/30 outline-none focus:border-[#d4af37] text-center transition-all duration-300`}
-              />
-              {passwordError && (
-                <p className="text-red-400 text-xs text-center mt-2 animate-fadeIn">{passwordError}</p>
-              )}
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-black py-4 rounded-2xl font-black text-base shadow-xl shadow-[#d4af37]/30 active:scale-[0.97] transition-all duration-200 hover:shadow-2xl hover:shadow-[#d4af37]/40"
-            >
-              UNLOCK MY COURSE →
-            </button>
-          </form>
-          <p className="text-white/30 text-xs text-center mt-6">Check your email for the password</p>
+      <div className="relative min-h-screen overflow-hidden bg-[#fafafa]">
+        {/* Animated Background */}
+        <div className="pointer-events-none fixed inset-0" style={{ zIndex: 1 }}>
+          <div className="absolute inset-x-0 top-0 h-[500px] bg-gradient-to-b from-violet-100/80 via-indigo-50/40 to-transparent" />
+          <div className="absolute -right-32 -top-32 h-[500px] w-[500px] animate-glow rounded-full bg-gradient-to-br from-violet-200/50 via-indigo-200/30 to-transparent blur-[80px]" />
+          <div className="absolute -bottom-32 -left-32 h-[400px] w-[400px] animate-glow-delayed rounded-full bg-gradient-to-tr from-blue-200/40 via-cyan-100/20 to-transparent blur-[80px]" />
         </div>
+
+        <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
+          <div className="w-full max-w-md">
+            {/* Logo */}
+            <div className="mb-8 flex justify-center">
+              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-2xl shadow-violet-300">
+                <Lock className="h-10 w-10 text-white" />
+              </div>
+            </div>
+
+            {/* Card */}
+            <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-2xl shadow-violet-100/50 backdrop-blur-xl">
+              <h1 className="mb-2 text-center text-3xl font-black text-slate-900">Welcome Back!</h1>
+              <p className="mb-8 text-center text-slate-500">Enter your password to access your course</p>
+
+              <form onSubmit={handleUnlock} className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    value={passwordInput}
+                    onChange={(e) => { setPasswordInput(e.target.value); setPasswordError('') }}
+                    placeholder="Paste your password here..."
+                    className={`w-full rounded-2xl border-2 bg-slate-50 px-5 py-4 text-center text-base text-slate-900 outline-none transition-all placeholder:text-slate-400 ${
+                      passwordError ? 'border-red-400 animate-shake' : 'border-slate-200 focus:border-violet-500'
+                    }`}
+                  />
+                  {passwordError && (
+                    <p className="mt-2 text-center text-sm text-red-500">{passwordError}</p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 py-4 text-base font-black text-white shadow-xl shadow-violet-200 transition-all hover:shadow-2xl hover:shadow-violet-300 active:scale-[0.98]"
+                >
+                  UNLOCK MY COURSE
+                  <ArrowRight className="ml-2 inline h-5 w-5" />
+                </button>
+              </form>
+
+              <p className="mt-6 text-center text-sm text-slate-400">Check your email for the password</p>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="mt-6 flex items-center justify-center gap-6 text-slate-400">
+              <div className="flex items-center gap-1.5 text-xs">
+                <Shield className="h-4 w-4" />
+                <span>Secure Access</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs">
+                <Users className="h-4 w-4" />
+                <span>847+ Members</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Animations */}
+        <style jsx global>{`
+          @keyframes glow { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+          @keyframes glow-delayed { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.08); } }
+          @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+          @keyframes confetti { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+          .animate-glow { animation: glow 8s ease-in-out infinite; }
+          .animate-glow-delayed { animation: glow-delayed 10s ease-in-out infinite 2s; }
+          .animate-shake { animation: shake 0.3s ease-in-out; }
+          .animate-confetti { animation: confetti 3s ease-out forwards; }
+        `}</style>
       </div>
     )
   }
 
-  // Loading State
+  // ==================== LOADING STATE ====================
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <Skeleton className="w-32 h-10" />
-          <Skeleton className="w-16 h-8 rounded-full" />
-        </div>
-        <Skeleton className="w-full h-2 mb-6" />
-        <Skeleton className="w-full h-24 rounded-2xl mb-4" />
-        <Skeleton className="w-full h-40 rounded-xl mb-4" />
-        <div className="grid grid-cols-2 gap-3">
-          <Skeleton className="aspect-[4/3] rounded-xl" />
-          <Skeleton className="aspect-[4/3] rounded-xl" />
+      <div className="flex min-h-screen items-center justify-center bg-[#fafafa]">
+        <div className="text-center">
+          <div className="mb-4 flex h-16 w-16 animate-pulse items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 mx-auto">
+            <Sparkles className="h-8 w-8 text-white" />
+          </div>
+          <p className="text-slate-500">Loading your dashboard...</p>
         </div>
       </div>
     )
   }
 
-  // Celebration Modal
+  // ==================== CELEBRATION MODAL ====================
   if (showCelebration) {
     return (
       <>
         <Confetti show={true} />
-        <div className="fixed inset-0 z-[300] bg-black/95 flex items-center justify-center px-4">
-          <div className="text-center animate-scaleIn">
-            <div className="w-24 h-24 bg-gradient-to-br from-[#d4af37] to-[#f4d03f] rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-[#d4af37]/50 animate-bounce">
-              <Trophy className="w-12 h-12 text-black" />
+        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-white/95 px-4 backdrop-blur-xl">
+          <div className="text-center">
+            <div className="mx-auto mb-6 flex h-24 w-24 animate-bounce items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 shadow-2xl shadow-violet-300">
+              <Trophy className="h-12 w-12 text-white" />
             </div>
-            <h2 className="text-3xl font-black text-white mb-3">CHAMPION! 🏆</h2>
-            <p className="text-white/70 text-base mb-6">You completed everything!</p>
-            <div className="flex justify-center gap-2 mb-6">
+            <h2 className="mb-3 text-4xl font-black text-slate-900">CHAMPION!</h2>
+            <p className="mb-6 text-lg text-slate-600">You completed everything!</p>
+            <div className="mb-6 flex justify-center gap-2">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-8 h-8 text-[#d4af37] fill-[#d4af37] animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
+                <Star key={i} className="h-8 w-8 animate-pulse fill-violet-500 text-violet-500" style={{ animationDelay: `${i * 0.1}s` }} />
               ))}
             </div>
-            <p className="text-[#d4af37] text-sm font-bold">Now go create amazing videos!</p>
+            <p className="font-bold text-violet-600">Now go create amazing videos!</p>
           </div>
         </div>
       </>
     )
   }
 
-  // Viewer Modal
+  // ==================== VIEWER MODAL ====================
   if (viewer) {
     return (
-      <div className="fixed inset-0 z-[200] bg-black flex flex-col animate-slideUp">
-        <div className="flex items-center justify-between px-4 py-4 bg-[#0a0a0a] border-b border-white/10">
-          <button onClick={() => setViewer(null)} className="flex items-center gap-2 text-white/70 active:opacity-50 transition-opacity">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="text-sm font-bold">Back</span>
+      <div className="fixed inset-0 z-[200] flex flex-col bg-white">
+        <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-4 lg:px-8">
+          <button onClick={() => setViewer(null)} className="flex items-center gap-2 text-slate-600 transition-colors hover:text-slate-900">
+            <ChevronLeft className="h-5 w-5" />
+            <span className="font-bold">Back</span>
           </button>
-          <span className="text-white text-sm font-bold truncate max-w-[180px]">{viewer.title}</span>
-          <a href={viewer.url} download className="bg-[#d4af37] text-black px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95 transition-transform">
-            <Download className="w-4 h-4" />
+          <span className="max-w-[200px] truncate font-bold text-slate-900 lg:max-w-none">{viewer.title}</span>
+          <a href={viewer.url} download className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-bold text-white transition-all hover:shadow-lg">
+            <Download className="h-4 w-4" />
             Save
           </a>
         </div>
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden bg-slate-100">
           {viewer.type === 'pdf' ? (
-            <iframe src={`${viewer.url}#toolbar=0`} className="w-full h-full" />
+            <iframe src={`${viewer.url}#toolbar=0`} className="h-full w-full" />
           ) : (
-            <video src={viewer.url} controls autoPlay playsInline className="w-full h-full object-contain" />
+            <video src={viewer.url} controls autoPlay playsInline className="h-full w-full object-contain" />
           )}
         </div>
       </div>
     )
   }
 
-  const filteredBonuses = filter === 'all' ? BONUSES : BONUSES.filter(b => b.cat === filter)
-
+  // ==================== MAIN DASHBOARD - LIGHT THEME ====================
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pb-20" style={{ paddingBottom: 'calc(80px + env(safe-area-inset-bottom))' }}>
+    <div className="relative min-h-screen overflow-hidden bg-[#fafafa]">
       <Confetti show={showConfetti} />
 
+      {/* Animated Background */}
+      <div className="pointer-events-none fixed inset-0" style={{ zIndex: 1 }}>
+        <div className="absolute inset-x-0 top-0 h-[500px] bg-gradient-to-b from-violet-100/60 via-indigo-50/30 to-transparent" />
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] animate-glow rounded-full bg-gradient-to-br from-violet-200/40 via-indigo-200/20 to-transparent blur-[80px]" />
+        <div className="absolute -bottom-32 -left-32 h-[300px] w-[300px] animate-glow-delayed rounded-full bg-gradient-to-tr from-blue-200/30 via-cyan-100/15 to-transparent blur-[80px]" />
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#0a0a0a]/98 backdrop-blur-md border-b border-white/5 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-black text-white flex items-center gap-2">
-              AgentClone™
-              {streak >= 3 && <Flame className="w-4 h-4 text-orange-500 animate-pulse" />}
-            </h1>
-            <p className="text-[10px] text-white/40">Your VIP Dashboard</p>
-          </div>
-          <div className="flex items-center gap-2">
-            {streak > 1 && (
-              <div className="bg-orange-500/20 px-2 py-1 rounded-full flex items-center gap-1">
-                <Flame className="w-3 h-3 text-orange-400" />
-                <span className="text-orange-400 text-[10px] font-bold">{streak} days</span>
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-4 py-4 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 lg:h-12 lg:w-12">
+                <Sparkles className="h-5 w-5 text-white lg:h-6 lg:w-6" />
               </div>
-            )}
-            <div className="bg-emerald-500/20 px-2.5 py-1 rounded-full flex items-center gap-1.5">
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-              <span className="text-emerald-400 text-xs font-bold">{progressPercent}%</span>
+              <div>
+                <h1 className="flex items-center gap-2 text-lg font-black text-slate-900 lg:text-xl">
+                  AgentClone
+                  {streak >= 3 && <Flame className="h-4 w-4 animate-pulse text-orange-500" />}
+                </h1>
+                <p className="text-xs text-slate-500">Your VIP Dashboard</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {streak > 1 && (
+                <div className="hidden items-center gap-1 rounded-full bg-orange-100 px-3 py-1.5 sm:flex">
+                  <Flame className="h-4 w-4 text-orange-500" />
+                  <span className="text-xs font-bold text-orange-600">{streak} day streak</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 lg:px-4 lg:py-2">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
+                <span className="text-xs font-bold text-emerald-600 lg:text-sm">{progressPercent}% Complete</span>
+              </div>
             </div>
           </div>
+
+          {/* Progress Bar */}
+          <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-200">
+            <div
+              className="relative h-full overflow-hidden rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-violet-500 transition-all duration-700"
+              style={{ width: `${progressPercent}%` }}
+            >
+              <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+          </div>
+          {totalMinutes > 0 && (
+            <p className="mt-2 flex items-center gap-1 text-xs text-slate-400">
+              <Clock className="h-3 w-3" />
+              ~{totalMinutes} min remaining
+            </p>
+          )}
         </div>
-        {/* Animated Progress Bar */}
-        <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-[#d4af37] via-emerald-400 to-[#d4af37] rounded-full transition-all duration-700 ease-out relative overflow-hidden"
-            style={{ width: `${progressPercent}%` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+
+        {/* Navigation Tabs - Desktop */}
+        <div className="mx-auto hidden max-w-7xl border-t border-slate-100 lg:block">
+          <div className="flex gap-1 px-8 py-2">
+            {[
+              { id: 'home', icon: Home, label: 'Dashboard' },
+              { id: 'course', icon: Video, label: 'Course' },
+              { id: 'bonuses', icon: Gift, label: 'Bonuses' },
+              { id: 'help', icon: HelpCircle, label: 'Help' },
+            ].map((tab) => {
+              const isActive = activeTab === tab.id
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                  className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
+                    isActive
+                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-200'
+                      : 'text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  <tab.icon className="h-4 w-4" />
+                  {tab.label}
+                </button>
+              )
+            })}
           </div>
         </div>
-        {totalMinutes > 0 && (
-          <p className="text-[10px] text-white/30 mt-1.5 flex items-center gap-1">
-            <Clock className="w-3 h-3" />
-            ~{totalMinutes} min remaining
-          </p>
-        )}
       </header>
 
-      <main className="px-4 py-4">
-        {/* HOME TAB */}
+      {/* Main Content */}
+      <main className="relative z-10 mx-auto max-w-7xl px-4 py-6 pb-24 lg:px-8 lg:pb-8">
+
+        {/* ==================== HOME TAB ==================== */}
         {activeTab === 'home' && (
-          <div className="space-y-5 animate-fadeIn">
-            {/* Welcome Message */}
-            <div className="bg-gradient-to-br from-[#d4af37]/20 via-[#d4af37]/10 to-transparent border border-[#d4af37]/30 rounded-2xl p-5">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#d4af37] to-[#f4d03f] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#d4af37]/20">
-                  {progressPercent === 100 ? <Crown className="w-6 h-6 text-black" /> : <Sparkles className="w-6 h-6 text-black" />}
+          <div className="space-y-6 lg:space-y-8">
+            {/* Welcome Card */}
+            <div className="overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-6 shadow-xl shadow-violet-100/50 lg:rounded-3xl lg:p-8">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-200 lg:h-16 lg:w-16">
+                  {progressPercent === 100 ? <Crown className="h-7 w-7 text-white lg:h-8 lg:w-8" /> : <Sparkles className="h-7 w-7 text-white lg:h-8 lg:w-8" />}
                 </div>
-                <div>
-                  <h2 className="text-white font-bold text-base mb-1">
-                    {progressPercent === 0 ? `${getGreeting()}! Let's begin` :
-                     progressPercent === 100 ? "You're a Champion! 🏆" :
-                     `${getGreeting()}! Keep going`}
+                <div className="flex-1">
+                  <h2 className="mb-1 text-xl font-black text-slate-900 lg:text-2xl">
+                    {progressPercent === 0 ? `${getGreeting()}! Let's begin your journey` :
+                     progressPercent === 100 ? "You're a Champion!" :
+                     `${getGreeting()}! Keep up the great work`}
                   </h2>
-                  <p className="text-white/60 text-sm">
-                    {progressPercent === 0 ? "Your journey to AI video mastery starts now" :
-                     progressPercent === 100 ? "You've mastered everything. Time to create!" :
+                  <p className="text-slate-600">
+                    {progressPercent === 0 ? "Your path to AI video mastery starts now" :
+                     progressPercent === 100 ? "You've completed everything. Time to create amazing videos!" :
                      `${downloaded.length} of ${totalItems} completed • ${100 - progressPercent}% to go`}
                   </p>
                 </div>
+                {progressPercent === 100 && (
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-6 w-6 fill-violet-500 text-violet-500" />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Achievements Row */}
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
-              <AchievementBadge icon={Target} label="First Step" unlocked={achievements.firstStep} />
-              <AchievementBadge icon={Zap} label="Halfway" unlocked={achievements.halfway} />
-              <AchievementBadge icon={Video} label="Course Done" unlocked={achievements.courseComplete} />
-              <AchievementBadge icon={Trophy} label="Champion" unlocked={achievements.allDone} />
-              <AchievementBadge icon={Flame} label="3-Day Streak" unlocked={achievements.streakMaster} />
-            </div>
-
-            {/* Continue Where You Left Off */}
+            {/* Continue Where Left Off */}
             {nextItem && progressPercent > 0 && progressPercent < 100 && (
               <button
                 onClick={() => openItem(nextItem as any)}
-                className="w-full bg-gradient-to-r from-[#d4af37]/20 to-[#d4af37]/5 border border-[#d4af37]/30 rounded-2xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all duration-200"
+                className="group w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-lg transition-all hover:border-violet-300 hover:shadow-xl lg:p-6"
               >
-                <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 relative shadow-lg">
-                  <Image src={nextItem.image} alt={nextItem.name} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                      <Play className="w-5 h-5 text-white ml-0.5" />
+                <div className="flex items-center gap-4 lg:gap-6">
+                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl shadow-lg lg:h-24 lg:w-24">
+                    <Image src={nextItem.image} alt={nextItem.name} fill className="object-cover" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                        <Play className="h-6 w-6 text-violet-600" fill="currentColor" />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex-1 text-left">
-                  <p className="text-[10px] text-[#d4af37] font-bold uppercase tracking-wider">Continue</p>
-                  <p className="text-white text-base font-bold truncate">{nextItem.name}</p>
-                  <p className="text-white/40 text-xs">{(nextItem as any).description}</p>
-                </div>
-                <div className="w-10 h-10 bg-[#d4af37] rounded-full flex items-center justify-center">
-                  <ArrowRight className="w-5 h-5 text-black" />
+                  <div className="flex-1 text-left">
+                    <p className="mb-1 text-xs font-bold uppercase tracking-wider text-violet-600">Continue Learning</p>
+                    <p className="text-lg font-bold text-slate-900 lg:text-xl">{nextItem.name}</p>
+                    <p className="text-sm text-slate-500">{(nextItem as any).description}</p>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg transition-transform group-hover:scale-110">
+                    <ArrowRight className="h-6 w-6 text-white" />
+                  </div>
                 </div>
               </button>
             )}
 
-            {/* Quick Start - CLICKABLE */}
+            {/* Quick Start Guide */}
             {progressPercent < 100 && (
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-[#d4af37]/20 rounded-lg flex items-center justify-center">
-                    <Zap className="w-4 h-4 text-[#d4af37]" />
+              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg lg:rounded-3xl">
+                <div className="border-b border-slate-100 bg-slate-50 px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100">
+                      <Zap className="h-5 w-5 text-violet-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900">Quick Start Guide</h3>
+                      <p className="text-sm text-slate-500">Get started in 3 easy steps</p>
+                    </div>
                   </div>
-                  <span className="text-white text-sm font-bold">Quick Start Guide</span>
                 </div>
-                <div className="space-y-2">
+                <div className="divide-y divide-slate-100 p-2">
                   {[
-                    { n: 1, t: 'Register Account', id: 'register', item: MAIN_COURSE.items[0] },
+                    { n: 1, t: 'Register Your Account', id: 'register', item: MAIN_COURSE.items[0] },
                     { n: 2, t: 'Watch Core Training', id: 'video-1', item: MAIN_COURSE.items[2] },
                     { n: 3, t: 'Get Your Scripts', id: 'prompt-guide', item: MAIN_COURSE.items[1] },
                   ].map((s) => {
@@ -509,18 +548,19 @@ export default function MembersPage() {
                       <button
                         key={s.n}
                         onClick={() => openItem(s.item)}
-                        className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200 active:scale-[0.98] ${
-                          done ? 'bg-emerald-500/20 border border-emerald-500/30' : 'bg-white/5 border border-white/5 hover:border-white/20'
-                        }`}
+                        className={`flex w-full items-center gap-4 rounded-xl p-4 transition-all hover:bg-slate-50 ${done ? 'opacity-80' : ''}`}
                       >
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
-                          done ? 'bg-emerald-500 text-white' : 'bg-[#d4af37] text-black'
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
+                          done ? 'bg-emerald-500 text-white' : 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white'
                         }`}>
-                          {done ? <Check className="w-4 h-4" /> : s.n}
+                          {done ? <Check className="h-5 w-5" /> : s.n}
                         </div>
-                        <span className={`text-sm flex-1 text-left font-medium ${done ? 'text-emerald-400' : 'text-white'}`}>{s.t}</span>
-                        {!done && <ChevronRight className="w-5 h-5 text-white/30" />}
-                        {done && <span className="text-emerald-400 text-xs font-bold bg-emerald-500/20 px-2 py-0.5 rounded-full">Done</span>}
+                        <span className={`flex-1 text-left font-semibold ${done ? 'text-emerald-600' : 'text-slate-900'}`}>{s.t}</span>
+                        {done ? (
+                          <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-600">Complete</span>
+                        ) : (
+                          <ChevronRight className="h-5 w-5 text-slate-400" />
+                        )}
                       </button>
                     )
                   })}
@@ -528,104 +568,120 @@ export default function MembersPage() {
               </div>
             )}
 
-            {/* Course Preview */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-white text-sm font-bold">Your Course</h3>
-                <button onClick={() => switchTab('course')} className="text-[#d4af37] text-xs font-bold flex items-center gap-1 active:opacity-70">
-                  See All <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-              <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory">
-                {MAIN_COURSE.items.slice(0, 4).map((item) => {
-                  const done = downloaded.includes(item.id)
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => openItem(item)}
-                      className={`flex-shrink-0 w-32 rounded-2xl overflow-hidden border-2 snap-start transition-all duration-200 active:scale-[0.95] ${
-                        done ? 'border-emerald-500/50' : 'border-white/10 hover:border-white/20'
-                      }`}
-                    >
-                      <div className="aspect-square relative bg-white/5">
-                        <Image src={item.image} alt={item.name} fill className="object-cover" />
-                        {done && <div className="absolute inset-0 bg-emerald-500/40 flex items-center justify-center"><CheckCircle className="w-8 h-8 text-emerald-400" /></div>}
-                        {item.type === 'video' && !done && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                              <Play className="w-5 h-5 text-white ml-0.5" />
+            {/* Course & Bonuses Grid */}
+            <div className="grid gap-6 lg:grid-cols-2">
+              {/* Course Preview */}
+              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                  <h3 className="font-bold text-slate-900">Your Course</h3>
+                  <button onClick={() => setActiveTab('course')} className="flex items-center gap-1 text-sm font-bold text-violet-600 hover:underline">
+                    View All <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 gap-3 p-4 lg:grid-cols-3">
+                  {MAIN_COURSE.items.slice(0, 6).map((item) => {
+                    const done = downloaded.includes(item.id)
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => openItem(item)}
+                        className={`group overflow-hidden rounded-xl border-2 transition-all hover:shadow-lg ${
+                          done ? 'border-emerald-300' : 'border-slate-200 hover:border-violet-300'
+                        }`}
+                      >
+                        <div className="relative aspect-square bg-slate-100">
+                          <Image src={item.image} alt={item.name} fill className="object-cover" />
+                          {done && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-emerald-500/40">
+                              <CheckCircle className="h-8 w-8 text-emerald-500" />
                             </div>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-2.5 bg-[#0a0a0a]">
-                        <p className="text-white text-[11px] font-bold truncate">{item.name}</p>
-                        <p className="text-white/40 text-[10px] flex items-center gap-1"><Clock className="w-2.5 h-2.5" />{item.duration}</p>
-                      </div>
-                    </button>
-                  )
-                })}
+                          )}
+                          {item.type === 'video' && !done && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                              <Play className="h-8 w-8 text-white" fill="white" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="bg-white p-2">
+                          <p className="truncate text-xs font-bold text-slate-900">{item.name}</p>
+                          <p className="flex items-center gap-1 text-[10px] text-slate-400">
+                            <Clock className="h-2.5 w-2.5" />{item.duration}
+                          </p>
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Bonuses Preview */}
+              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                  <h3 className="font-bold text-slate-900">Your Bonuses</h3>
+                  <button onClick={() => setActiveTab('bonuses')} className="flex items-center gap-1 text-sm font-bold text-violet-600 hover:underline">
+                    View All <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 gap-3 p-4 lg:grid-cols-3">
+                  {BONUSES.slice(0, 6).map((item) => {
+                    const done = downloaded.includes(item.id)
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => openItem(item as any)}
+                        className={`group overflow-hidden rounded-xl border-2 transition-all hover:shadow-lg ${
+                          done ? 'border-emerald-300' : 'border-slate-200 hover:border-violet-300'
+                        }`}
+                      >
+                        <div className="relative aspect-[4/3] bg-slate-100">
+                          <Image src={item.image} alt={item.name} fill className="object-cover" />
+                          {done && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-emerald-500/40">
+                              <CheckCircle className="h-8 w-8 text-emerald-500" />
+                            </div>
+                          )}
+                          {item.type === 'link' && !done && (
+                            <div className="absolute right-2 top-2 rounded-lg bg-white/90 p-1.5 shadow">
+                              <ExternalLink className="h-3 w-3 text-violet-600" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="bg-white p-2">
+                          <p className="truncate text-xs font-bold text-slate-900">{item.name}</p>
+                          <p className="text-[10px] font-semibold text-emerald-500">Included Free</p>
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
             </div>
 
-            {/* Bonuses Preview */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-white text-sm font-bold">Your Bonuses</h3>
-                <button onClick={() => switchTab('bonuses')} className="text-[#d4af37] text-xs font-bold flex items-center gap-1 active:opacity-70">
-                  See All <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {BONUSES.slice(0, 4).map((item) => {
-                  const done = downloaded.includes(item.id)
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => openItem(item as any)}
-                      className={`rounded-2xl overflow-hidden border-2 transition-all duration-200 active:scale-[0.95] ${
-                        done ? 'border-emerald-500/50' : 'border-white/10 hover:border-white/20'
-                      }`}
-                    >
-                      <div className="aspect-[4/3] relative bg-white/5">
-                        <Image src={item.image} alt={item.name} fill className="object-cover" />
-                        {done && <div className="absolute inset-0 bg-emerald-500/40 flex items-center justify-center"><CheckCircle className="w-8 h-8 text-emerald-400" /></div>}
-                        {item.type === 'link' && !done && <div className="absolute top-2 right-2 bg-black/70 p-1.5 rounded-lg backdrop-blur-sm"><ExternalLink className="w-3.5 h-3.5 text-white" /></div>}
-                      </div>
-                      <div className="p-2.5 bg-[#0a0a0a]">
-                        <p className="text-white text-[11px] font-bold truncate">{item.name}</p>
-                        <p className="text-emerald-400 text-[10px] font-bold">Included</p>
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Save Link - Subtle */}
+            {/* Bookmark Button */}
             <button
               onClick={copyLink}
-              className={`w-full p-3.5 rounded-xl border-2 flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.98] ${
-                copied ? 'bg-emerald-500/20 border-emerald-500/30' : 'bg-white/5 border-white/10'
+              className={`flex w-full items-center justify-center gap-2 rounded-xl border-2 p-4 transition-all ${
+                copied ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200 bg-white hover:border-violet-300'
               }`}
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-white/50" />}
-              <span className={`text-xs font-bold ${copied ? 'text-emerald-400' : 'text-white/50'}`}>
+              {copied ? <Check className="h-5 w-5 text-emerald-500" /> : <Copy className="h-5 w-5 text-slate-400" />}
+              <span className={`font-semibold ${copied ? 'text-emerald-600' : 'text-slate-600'}`}>
                 {copied ? 'Link Copied!' : 'Bookmark This Page'}
               </span>
             </button>
           </div>
         )}
 
-        {/* COURSE TAB */}
+        {/* ==================== COURSE TAB ==================== */}
         {activeTab === 'course' && (
-          <div className="space-y-4 animate-fadeIn">
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-white text-lg font-bold">Main Course</h2>
-              <span className="text-emerald-400 text-xs font-bold bg-emerald-500/20 px-3 py-1 rounded-full">
-                {MAIN_COURSE.items.filter(i => downloaded.includes(i.id)).length}/{MAIN_COURSE.items.length} Done
+              <h2 className="text-2xl font-black text-slate-900">Main Course</h2>
+              <span className="rounded-full bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-600">
+                {MAIN_COURSE.items.filter(i => downloaded.includes(i.id)).length}/{MAIN_COURSE.items.length} Complete
               </span>
             </div>
+
             <div className="space-y-3">
               {MAIN_COURSE.items.map((item, index) => {
                 const done = downloaded.includes(item.id)
@@ -634,38 +690,41 @@ export default function MembersPage() {
                   <button
                     key={item.id}
                     onClick={() => openItem(item)}
-                    className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 active:scale-[0.98] ${
-                      done ? 'bg-emerald-500/10 border-emerald-500/30' :
-                      isNext ? 'bg-[#d4af37]/10 border-[#d4af37]/40 shadow-lg shadow-[#d4af37]/10' :
-                      'bg-white/5 border-white/10'
+                    className={`group flex w-full items-center gap-4 rounded-2xl border-2 p-4 transition-all lg:gap-6 lg:p-5 ${
+                      done ? 'border-emerald-300 bg-emerald-50' :
+                      isNext ? 'border-violet-300 bg-violet-50 shadow-lg shadow-violet-100' :
+                      'border-slate-200 bg-white hover:border-violet-300 hover:shadow-lg'
                     }`}
                   >
-                    <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 relative shadow-md">
+                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl shadow-md lg:h-20 lg:w-20">
                       <Image src={item.image} alt={item.name} fill className="object-cover" />
                       {item.type === 'video' && !done && (
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                          <Play className="w-7 h-7 text-white" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                          <Play className="h-6 w-6 text-white" fill="white" />
                         </div>
                       )}
                       {done && (
-                        <div className="absolute inset-0 bg-emerald-500/50 flex items-center justify-center">
-                          <CheckCircle className="w-7 h-7 text-emerald-400" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-emerald-500/50">
+                          <CheckCircle className="h-8 w-8 text-emerald-500" />
                         </div>
                       )}
                     </div>
                     <div className="flex-1 text-left">
-                      {isNext && <p className="text-[10px] text-[#d4af37] font-bold uppercase tracking-wider mb-0.5">Up Next</p>}
-                      <p className={`text-base font-bold ${done ? 'text-emerald-400' : 'text-white'}`}>{item.name}</p>
-                      <p className="text-white/50 text-xs">{item.description}</p>
-                      <div className="flex items-center gap-3 mt-1.5">
-                        <span className="text-white/30 text-[10px] flex items-center gap-1">
-                          <Clock className="w-3 h-3" /> {item.duration}
+                      {isNext && <p className="mb-1 text-xs font-bold uppercase tracking-wider text-violet-600">Up Next</p>}
+                      <p className={`text-lg font-bold ${done ? 'text-emerald-600' : 'text-slate-900'}`}>{item.name}</p>
+                      <p className="text-sm text-slate-500">{item.description}</p>
+                      <div className="mt-2 flex items-center gap-3">
+                        <span className="flex items-center gap-1 text-xs text-slate-400">
+                          <Clock className="h-3 w-3" /> {item.duration}
                         </span>
-                        {item.type === 'video' && <span className="text-white/30 text-[10px] bg-white/10 px-1.5 py-0.5 rounded">Video</span>}
-                        {item.type === 'pdf' && <span className="text-white/30 text-[10px] bg-white/10 px-1.5 py-0.5 rounded">PDF</span>}
+                        <span className="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500">
+                          {item.type === 'video' ? 'Video' : 'PDF'}
+                        </span>
                       </div>
                     </div>
-                    <ChevronRight className={`w-6 h-6 ${done ? 'text-emerald-400' : isNext ? 'text-[#d4af37]' : 'text-white/20'}`} />
+                    <ChevronRight className={`h-6 w-6 transition-transform group-hover:translate-x-1 ${
+                      done ? 'text-emerald-400' : isNext ? 'text-violet-500' : 'text-slate-300'
+                    }`} />
                   </button>
                 )
               })}
@@ -673,26 +732,26 @@ export default function MembersPage() {
           </div>
         )}
 
-        {/* BONUSES TAB */}
+        {/* ==================== BONUSES TAB ==================== */}
         {activeTab === 'bonuses' && (
-          <div className="space-y-4 animate-fadeIn">
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-white text-lg font-bold">Bonuses</h2>
-              <span className="text-emerald-400 text-xs font-bold bg-emerald-500/20 px-3 py-1 rounded-full">
+              <h2 className="text-2xl font-black text-slate-900">Your Bonuses</h2>
+              <span className="rounded-full bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-600">
                 {BONUSES.filter(i => downloaded.includes(i.id)).length}/{BONUSES.length} Claimed
               </span>
             </div>
 
             {/* Filter Pills */}
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+            <div className="flex gap-2 overflow-x-auto pb-2">
               {(['all', 'tool', 'template', 'training'] as const).map((f) => (
                 <button
                   key={f}
-                  onClick={() => { setFilter(f); vibrate(10) }}
-                  className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 ${
+                  onClick={() => setFilter(f)}
+                  className={`whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-bold transition-all ${
                     filter === f
-                      ? 'bg-[#d4af37] text-black shadow-lg shadow-[#d4af37]/20'
-                      : 'bg-white/5 text-white/50 border border-white/10'
+                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-200'
+                      : 'border border-slate-200 bg-white text-slate-600 hover:border-violet-300'
                   }`}
                 >
                   {f === 'all' ? `All (${BONUSES.length})` :
@@ -703,37 +762,35 @@ export default function MembersPage() {
               ))}
             </div>
 
-            {/* Bonus Grid */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Bonuses Grid */}
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
               {filteredBonuses.map((item) => {
                 const done = downloaded.includes(item.id)
-                const isJustCompleted = justCompleted === item.id
                 return (
                   <button
                     key={item.id}
                     onClick={() => openItem(item as any)}
-                    className={`rounded-2xl overflow-hidden border-2 transition-all duration-300 active:scale-[0.95] ${
-                      isJustCompleted ? 'border-emerald-400 ring-4 ring-emerald-400/30 scale-[1.02]' :
-                      done ? 'border-emerald-500/50' : 'border-white/10 hover:border-white/20'
+                    className={`group overflow-hidden rounded-2xl border-2 transition-all hover:shadow-xl ${
+                      done ? 'border-emerald-300' : 'border-slate-200 hover:border-violet-300'
                     }`}
                   >
-                    <div className="aspect-[4/3] relative bg-white/5">
-                      <Image src={item.image} alt={item.name} fill className="object-cover" />
+                    <div className="relative aspect-[4/3] bg-slate-100">
+                      <Image src={item.image} alt={item.name} fill className="object-cover transition-transform group-hover:scale-105" />
                       {done && (
-                        <div className="absolute inset-0 bg-emerald-500/40 flex items-center justify-center">
-                          <CheckCircle className="w-10 h-10 text-emerald-400" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-emerald-500/40">
+                          <CheckCircle className="h-10 w-10 text-emerald-500" />
                         </div>
                       )}
                       {item.type === 'link' && !done && (
-                        <div className="absolute top-2 right-2 bg-black/70 p-2 rounded-lg backdrop-blur-sm">
-                          <ExternalLink className="w-4 h-4 text-white" />
+                        <div className="absolute right-2 top-2 rounded-lg bg-white/90 p-2 shadow">
+                          <ExternalLink className="h-4 w-4 text-violet-600" />
                         </div>
                       )}
                     </div>
-                    <div className="p-3 bg-[#0a0a0a]">
-                      <p className="text-white text-xs font-bold truncate">{item.name}</p>
-                      <p className="text-white/40 text-[10px] truncate mt-0.5">{item.description}</p>
-                      <p className={`text-[10px] font-bold mt-1.5 ${done ? 'text-emerald-400' : 'text-[#d4af37]'}`}>
+                    <div className="bg-white p-4">
+                      <p className="truncate font-bold text-slate-900">{item.name}</p>
+                      <p className="mt-1 truncate text-sm text-slate-500">{item.description}</p>
+                      <p className={`mt-2 text-sm font-bold ${done ? 'text-emerald-500' : 'text-violet-600'}`}>
                         {done ? '✓ Claimed' : 'Included Free'}
                       </p>
                     </div>
@@ -744,33 +801,33 @@ export default function MembersPage() {
           </div>
         )}
 
-        {/* HELP TAB */}
+        {/* ==================== HELP TAB ==================== */}
         {activeTab === 'help' && (
-          <div className="space-y-4 animate-fadeIn">
-            <h2 className="text-white text-lg font-bold">Need Help?</h2>
+          <div className="mx-auto max-w-3xl space-y-6">
+            <h2 className="text-2xl font-black text-slate-900">Need Help?</h2>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {[
                 { q: 'How do I create my first AI video?', a: 'Go to Course tab → Watch "Core Training" video. It walks you through everything step-by-step!' },
                 { q: 'Where are my downloads saved?', a: 'On iPhone: Check the Files app. On Android: Check Downloads folder. On Desktop: Your browser\'s download location.' },
                 { q: 'Can I access this on multiple devices?', a: 'Yes! Just bookmark this page and use the same password on any device.' },
                 { q: 'How do I use the AI Mentor?', a: 'Go to Bonuses → Click "Marcus AI Mentor" → It opens ChatGPT where Marcus will answer all your questions 24/7.' },
               ].map((f, i) => (
-                <div key={i} className="bg-white/5 rounded-2xl p-4 border border-white/10">
-                  <p className="text-white text-sm font-bold mb-2">{f.q}</p>
-                  <p className="text-white/60 text-xs leading-relaxed">{f.a}</p>
+                <div key={i} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <p className="mb-2 font-bold text-slate-900">{f.q}</p>
+                  <p className="text-slate-600">{f.a}</p>
                 </div>
               ))}
             </div>
 
-            <div className="bg-gradient-to-br from-[#d4af37]/20 to-[#d4af37]/5 border border-[#d4af37]/30 rounded-2xl p-5">
-              <h3 className="text-white font-bold text-base mb-2">Still stuck?</h3>
-              <p className="text-white/60 text-sm mb-4">Our support team typically responds within 24 hours.</p>
+            <div className="overflow-hidden rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-indigo-50 p-6 lg:p-8">
+              <h3 className="mb-2 text-xl font-bold text-slate-900">Still stuck?</h3>
+              <p className="mb-5 text-slate-600">Our support team typically responds within 24 hours.</p>
               <a
                 href="mailto:support@aifastscale.com"
-                className="block w-full bg-gradient-to-r from-[#d4af37] to-[#f4d03f] text-black py-3.5 rounded-xl text-sm font-bold text-center active:scale-[0.97] transition-transform shadow-lg shadow-[#d4af37]/20"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 font-bold text-white shadow-lg shadow-violet-200 transition-all hover:shadow-xl"
               >
-                <MessageCircle className="w-4 h-4 inline mr-2" />
+                <MessageCircle className="h-5 w-5" />
                 Email Support
               </a>
             </div>
@@ -778,8 +835,8 @@ export default function MembersPage() {
         )}
       </main>
 
-      {/* Bottom Nav - Premium */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-[#0a0a0a]/98 backdrop-blur-md border-t border-white/10 z-50" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      {/* Bottom Nav - Mobile Only */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/95 backdrop-blur-xl lg:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         <div className="flex items-center justify-around py-2">
           {[
             { id: 'home', icon: Home, label: 'Home' },
@@ -791,18 +848,30 @@ export default function MembersPage() {
             return (
               <button
                 key={tab.id}
-                onClick={() => switchTab(tab.id as typeof activeTab)}
-                className={`flex flex-col items-center gap-1 py-2 px-5 rounded-2xl transition-all duration-200 ${
-                  isActive ? 'text-[#d4af37] bg-[#d4af37]/10' : 'text-white/30'
+                onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                className={`flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all ${
+                  isActive ? 'bg-violet-100 text-violet-600' : 'text-slate-400'
                 }`}
               >
-                <tab.icon className={`w-5 h-5 transition-transform ${isActive ? 'stroke-[2.5] scale-110' : ''}`} />
+                <tab.icon className={`h-5 w-5 ${isActive ? 'stroke-[2.5]' : ''}`} />
                 <span className="text-[10px] font-bold">{tab.label}</span>
               </button>
             )
           })}
         </div>
       </nav>
+
+      {/* Global Animations */}
+      <style jsx global>{`
+        @keyframes glow { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+        @keyframes glow-delayed { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.08); } }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @keyframes confetti { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+        .animate-glow { animation: glow 8s ease-in-out infinite; }
+        .animate-glow-delayed { animation: glow-delayed 10s ease-in-out infinite 2s; }
+        .animate-shimmer { animation: shimmer 2s infinite; }
+        .animate-confetti { animation: confetti 3s ease-out forwards; }
+      `}</style>
     </div>
   )
 }

@@ -3217,3 +3217,287 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
 .delay-600 { animation-delay: 600ms; transition-delay: 600ms; }
 .delay-700 { animation-delay: 700ms; transition-delay: 700ms; }
 .delay-800 { animation-delay: 800ms; transition-delay: 800ms; }
+
+/* ============================================================================
+   DENTIST LP - MODERN DYNAMIC ANIMATIONS (Performance Optimized)
+   Uses GPU-accelerated properties: transform, opacity
+   60fps guaranteed with will-change and containment
+   ============================================================================ */
+
+/* Animated gradient background for sections */
+.dentist-section-animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.dentist-section-animated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(20, 184, 166, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(6, 182, 212, 0.02) 0%, transparent 50%);
+  animation: dentistBgShift 20s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes dentistBgShift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -10px) scale(1.02); }
+  66% { transform: translate(-15px, 15px) scale(0.98); }
+}
+
+/* Modern scroll reveal animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 100ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 300ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 500ms; opacity: 1; transform: translateY(0); }
+
+/* Floating orb animations for background */
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-10px, 30px) scale(0.95); }
+  75% { transform: translate(-25px, -15px) scale(1.02); }
+}
+
+.float-orb {
+  animation: floatOrb 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+.float-orb-slow {
+  animation: floatOrb 30s ease-in-out infinite;
+}
+
+.float-orb-fast {
+  animation: floatOrb 15s ease-in-out infinite;
+}
+
+/* AnimatedBackground keyframes - GPU accelerated */
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  25% { transform: translate3d(50px, 30px, 0) scale(1.05); }
+  50% { transform: translate3d(20px, 60px, 0) scale(0.95); }
+  75% { transform: translate3d(-30px, 20px, 0) scale(1.02); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(-40px, 40px, 0) scale(1.03); }
+  66% { transform: translate3d(30px, -30px, 0) scale(0.97); }
+}
+
+@keyframes floatOrb3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(40px, -40px, 0) scale(1.05); }
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.3; }
+  25% { transform: translate3d(10px, -20px, 0); opacity: 0.5; }
+  50% { transform: translate3d(-5px, -10px, 0); opacity: 0.3; }
+  75% { transform: translate3d(15px, -30px, 0); opacity: 0.4; }
+}
+
+/* Subtle parallax on scroll */
+.parallax-subtle {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* Glow pulse for CTA buttons */
+@keyframes glowPulseCTA {
+  0%, 100% { box-shadow: 0 0 20px rgba(20, 184, 166, 0.3), 0 4px 15px rgba(20, 184, 166, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(20, 184, 166, 0.5), 0 8px 25px rgba(20, 184, 166, 0.3); }
+}
+
+.glow-pulse-cta {
+  animation: glowPulseCTA 2s ease-in-out infinite;
+}
+
+/* Text reveal animation */
+@keyframes textRevealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.text-reveal-up {
+  animation: textRevealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Counter/number animation */
+@keyframes countPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.count-pop {
+  animation: countPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Card hover with 3D effect */
+.card-3d-hover {
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-hover:hover {
+  transform: translateY(-8px) rotateX(2deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth section transitions */
+.section-transition {
+  position: relative;
+}
+
+.section-transition::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, currentColor);
+  opacity: 0.02;
+  pointer-events: none;
+}
+
+/* Performance: Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .float-orb,
+  .float-orb-slow,
+  .float-orb-fast,
+  .glow-pulse-cta,
+  .dentist-section-animated::before {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Performance: Disable complex animations on low-power devices */
+@media (max-width: 768px) {
+  .float-orb,
+  .float-orb-slow,
+  .float-orb-fast {
+    animation-duration: 30s;
+  }
+
+  .dentist-section-animated::before {
+    animation-duration: 40s;
+  }
+
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right {
+    transform: translateY(20px);
+  }
+}
+
+/* Content visibility for better rendering performance */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* GPU layer promotion for animated elements */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Lazy load animations below fold */
+.lazy-animate {
+  opacity: 1;
+  transform: none;
+}
+
+.lazy-animate:not(.visible) {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.lazy-animate.visible {
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}

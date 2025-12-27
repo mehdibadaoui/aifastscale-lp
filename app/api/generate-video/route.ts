@@ -1,4 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { saveVideo } from '@/lib/db'
+import { shouldBlock } from '@/app/config/blocklist'
+
+// Helper to get client IP from Vercel/Cloudflare headers
+function getClientIp(request: NextRequest): string {
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim()
+  }
+  const realIp = request.headers.get('x-real-ip')
+  if (realIp) return realIp
+  const cfIp = request.headers.get('cf-connecting-ip')
+  if (cfIp) return cfIp
+  return 'unknown'
+}
 
 // Development logger - only logs in development mode
 const devLog = (...args: any[]) => {
@@ -8,78 +23,67 @@ const devLog = (...args: any[]) => {
 }
 
 // Google Veo 3.1 API integration via Gemini API
-// Standard prompt that gets applied to all generations for better realistic results
-const STANDARD_PROMPT = `A professional real estate agent speaking directly to camera in natural indoor lighting. The person maintains the exact same appearance as the reference image with no filters, effects, or color changes. Natural lighting and human features are preserved perfectly.
+// Ultra-realism prompt for talking video generation
+const STANDARD_PROMPT = `You are generating an ultra-realistic talking video from the reference image.
+The video MUST look like the original photo came to life with ZERO visual changes.
+
+IDENTITY LOCK:
+Preserve the person's exact face, proportions, skin texture, hair, eyes, eyebrows, nose,
+mouth, beard/makeup, clothing, lighting, shadows, background, posture, and body shape.
+Do not modify ANYTHING. No enhancements, no color shifts, no smoothing, no filters,
+no contrast/saturation changes, no AI beautification.
+
+CAMERA:
+Use the same framing, angle, lens feel, and distance as the original image.
+Camera must stay perfectly still. No zoom, no pan, no reframing.
+
+MOVEMENT (Universal Human Motion Map):
+0–2s: natural blink, small micro-smile, subtle breathing.
+2–5s: tiny head movement (1–3 cm), realistic micro-expressions.
+If hands are visible → allow one minimal natural gesture.
+If hands are not visible → keep upper body stable.
+5–7s: relaxed confident expression, natural blink.
+7–8s: return to a neutral pose and hold for continuity.
+
+VOICE:
+Voice must be natural, warm, and human—not robotic.
+Lip sync must be frame-perfect.
+Natural speaking pace with appropriate pauses.
+
+BACKGROUND AUDIO:
+Add subtle ambient sound that matches the environment in the photo
+(office hum, restaurant murmur, room tone, outdoor air, etc.).
+No music.
 
 REALISM REQUIREMENTS:
-- 10000% realistic human movement - if it looks AI-generated, it fails
-- Natural micro-expressions: subtle smiles, natural blinks, relaxed posture
-- Realistic gestures: occasionally touch hair, slight head tilts, natural hand movements
-- Direct eye contact with camera, creating personal connection
-- Smooth, continuous movement throughout the 8-second clip
+– Skin texture and lighting must never change.
+– Avoid floating heads or unnatural mouth shapes.
+– Avoid over-animated movement; keep it subtle and human.
+– Final video must feel like a REAL person speaking, not AI.
+– Every blink, breath, and micro-expression must be naturally human.
 
-TIMING BREAKDOWN (8 seconds):
-- Seconds 0-2: Establish eye contact, subtle welcoming smile, natural breathing
-- Seconds 2-5: Primary message delivery with appropriate facial expressions matching the tone, slight hand gesture if natural
-- Seconds 5-8: Conclude with confident nod, maintain eye contact, hold calm professional posture
+If the output looks even slightly modified compared to the original image, regenerate.`
 
-TECHNICAL SPECS:
-- Clear English accent with natural speaking pace
-- Perfect lip sync matching the script exactly
-- Consistent voice tone and quality
-- No AI artifacts, no added effects, no extra colors or filters
-- Camera stays steady, person moves naturally within frame
+// Helper function to try generating video with a single image
+async function tryGenerateWithImage(
+  imageBase64: string,
+  enhancedScript: string,
+  aspectRatio: string,
+  apiKey: string,
+  imageIndex: number,
+  totalImages: number
+): Promise<{ success: boolean; videoUrl?: string; error?: string; isFilterError?: boolean }> {
 
-The person should feel completely authentic - like a real human filmed on a smartphone, not AI-generated. Every blink, pause, and micro-gesture must feel naturally human.`
+  devLog(`🎬 Trying image ${imageIndex + 1}/${totalImages}...`)
 
-export async function POST(req: NextRequest) {
+  // Extract MIME type and convert base64 image
+  const mimeTypeMatch = imageBase64.match(/^data:(image\/\w+);base64,/)
+  const mimeType = mimeTypeMatch ? mimeTypeMatch[1] : 'image/jpeg'
+  const imageData = imageBase64.replace(/^data:image\/\w+;base64,/, '')
+
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning`
+
   try {
-    const { image, images, script, aspectRatio = '9:16' } = await req.json()
-
-    // Accept either single image (backward compatible) or multiple images
-    const imageList = images && Array.isArray(images) ? images : (image ? [image] : [])
-
-    if (imageList.length === 0 || !script) {
-      return NextResponse.json(
-        { error: 'At least one image and script are required' },
-        { status: 400 }
-      )
-    }
-
-    devLog(`📸 Received ${imageList.length} image(s) for video generation`)
-
-    // Try images in order until one succeeds (helps avoid celebrity detection)
-    let selectedImage = imageList[0]
-
-    // Apply standard prompt to enhance the script
-    const enhancedScript = `${STANDARD_PROMPT}\n\n${script}`
-
-    // Get Gemini API key from environment
-    const apiKey = process.env.GOOGLE_GEMINI_API_KEY
-
-    if (!apiKey) {
-      console.error('Missing Google Gemini API key')
-      return NextResponse.json(
-        { error: 'Server configuration error. Please contact support.' },
-        { status: 500 }
-      )
-    }
-
-    // Extract MIME type and convert base64 image
-    const mimeTypeMatch = selectedImage.match(/^data:(image\/\w+);base64,/)
-    const mimeType = mimeTypeMatch ? mimeTypeMatch[1] : 'image/jpeg'
-    const imageData = selectedImage.replace(/^data:image\/\w+;base64,/, '')
-
-    devLog('📸 Generating video with Veo 3.1...')
-    devLog('Script length:', script.length)
-    devLog('Image data length:', imageData.length, 'characters')
-    devLog('MIME type:', mimeType)
-    devLog('Aspect ratio:', aspectRatio)
-
-    // Call Gemini API for Veo 3.1 video generation
-    // Using long-running operation endpoint
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning`
-
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -106,73 +110,34 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('Google Gemini API error:', errorText)
-
-      // Parse error for better user messages
-      let userMessage = 'Video generation failed. Please try again.'
-
-      try {
-        const errorData = JSON.parse(errorText)
-        const apiMessage = errorData?.error?.message || ''
-
-        // Handle specific error cases with helpful messages
-        if (response.status === 401 || response.status === 403) {
-          userMessage = '🔑 API authentication issue. Please contact support.'
-        } else if (response.status === 429) {
-          userMessage = '⏱️ Too many requests right now. Please wait 2-3 minutes and try again!'
-        } else if (apiMessage.includes('quota') || apiMessage.includes('limit')) {
-          userMessage = '📊 Daily limit reached. Please try again tomorrow or contact support for more credits.'
-        } else if (apiMessage.includes('image')) {
-          userMessage = '🖼️ Image format issue. Try a different photo (JPEG or PNG, under 10MB).'
-        } else if (apiMessage.includes('region') || apiMessage.includes('location')) {
-          userMessage = '🌍 Service not available in your region. Please contact support.'
-        }
-      } catch (e) {
-        // Keep default message if parsing fails
-      }
-
-      return NextResponse.json(
-        { error: userMessage },
-        { status: response.status }
-      )
+      console.error(`Image ${imageIndex + 1} - Google API error:`, errorText)
+      return { success: false, error: errorText, isFilterError: false }
     }
 
     const operationData = await response.json()
-    devLog('🔄 Video generation started, operation:', operationData.name)
-
-    // Poll the operation until it's done
-    // Get operation name from response
     const operationName = operationData.name
 
     if (!operationName) {
-      console.error('No operation name in response:', operationData)
-      return NextResponse.json(
-        { error: 'Failed to start video generation' },
-        { status: 500 }
-      )
+      return { success: false, error: 'No operation name', isFilterError: false }
     }
 
-    // Poll the operation with improved timeout handling
+    devLog(`🔄 Image ${imageIndex + 1} - Operation started: ${operationName}`)
+
+    // Poll the operation
     let attempts = 0
-    const maxAttempts = 90 // 7.5 minutes max (5 second intervals)
+    const maxAttempts = 90
     let videoData = null
 
     while (attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 5000)) // Wait 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 5000))
 
       try {
         const pollResponse = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/${operationName}`,
-          {
-            headers: {
-              'X-goog-api-key': apiKey,
-            },
-          }
+          { headers: { 'X-goog-api-key': apiKey } }
         )
 
         if (!pollResponse.ok) {
-          console.error(`Polling error: ${pollResponse.status}`)
-          // Continue polling even if one request fails
           attempts++
           continue
         }
@@ -181,129 +146,180 @@ export async function POST(req: NextRequest) {
 
         if (pollData.done) {
           videoData = pollData.response
-          devLog(`✅ Video ready after ${attempts + 1} polling attempts (${(attempts + 1) * 5} seconds)`)
+          devLog(`✅ Image ${imageIndex + 1} - Video ready after ${attempts + 1} polls`)
           break
         }
 
         if (pollData.error) {
-          console.error('Operation failed:', pollData.error)
-          return NextResponse.json(
-            { error: '❌ Video generation failed. Please try again with a different photo.' },
-            { status: 500 }
-          )
+          console.error(`Image ${imageIndex + 1} - Operation failed:`, pollData.error)
+          return { success: false, error: pollData.error.message, isFilterError: false }
         }
 
         attempts++
-        devLog(`⏳ Polling attempt ${attempts}/${maxAttempts} (~${attempts * 5}s elapsed)`)
       } catch (error) {
-        console.error('Polling request failed:', error)
         attempts++
-        // Continue polling even if one request fails
       }
     }
 
     if (!videoData) {
+      return { success: false, error: 'Timeout', isFilterError: false }
+    }
+
+    // Check for content filtering (celebrity detection, etc.)
+    if (videoData.generateVideoResponse?.raiMediaFilteredCount > 0) {
+      const filterReason = videoData.generateVideoResponse.raiMediaFilteredReasons?.[0] || 'filtered'
+      console.error(`Image ${imageIndex + 1} - Content filtered:`, filterReason)
+      return { success: false, error: filterReason, isFilterError: true }
+    }
+
+    // Extract video URI
+    const videoUri = videoData.generateVideoResponse?.generatedSamples?.[0]?.video?.uri
+
+    if (!videoUri) {
+      return { success: false, error: 'No video URI', isFilterError: false }
+    }
+
+    // Download video
+    devLog(`📥 Image ${imageIndex + 1} - Downloading video...`)
+    let videoBuffer: ArrayBuffer | null = null
+    let downloadAttempts = 0
+
+    while (downloadAttempts < 3 && !videoBuffer) {
+      try {
+        const videoDownloadResponse = await fetch(videoUri, {
+          headers: { 'X-goog-api-key': apiKey },
+        })
+
+        if (videoDownloadResponse.ok) {
+          videoBuffer = await videoDownloadResponse.arrayBuffer()
+        }
+      } catch (error) {
+        downloadAttempts++
+        await new Promise(resolve => setTimeout(resolve, 2000))
+      }
+      downloadAttempts++
+    }
+
+    if (!videoBuffer) {
+      return { success: false, error: 'Download failed', isFilterError: false }
+    }
+
+    const videoBase64 = Buffer.from(videoBuffer).toString('base64')
+    const finalVideoUrl = `data:video/mp4;base64,${videoBase64}`
+
+    devLog(`✅ Image ${imageIndex + 1} - SUCCESS!`)
+    return { success: true, videoUrl: finalVideoUrl }
+
+  } catch (error: any) {
+    console.error(`Image ${imageIndex + 1} - Error:`, error)
+    return { success: false, error: error.message, isFilterError: false }
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { image, images, script, aspectRatio = '9:16', email, agentName, listingAddress } = await req.json()
+    const clientIp = getClientIp(req)
+
+    // Check if email OR IP is blocked - return fake "processing" error to not alert abuser
+    if (shouldBlock(email, clientIp)) {
+      console.log(`🚫 Blocked video generation - Email: ${email || 'none'}, IP: ${clientIp}`)
+      // Return a generic error that looks normal
       return NextResponse.json(
-        { error: '⏱️ Video generation is taking longer than expected. Please try again - it usually works on the second attempt!' },
-        { status: 500 }
+        { error: 'Video generation is temporarily unavailable. Please try again later.' },
+        { status: 503 }
       )
     }
 
-    devLog('✅ Video generated successfully')
-    devLog('Full response:', JSON.stringify(videoData, null, 2))
+    // Accept either single image (backward compatible) or multiple images
+    const imageList = images && Array.isArray(images) ? images : (image ? [image] : [])
 
-    // Check for content filtering
-    if (videoData.generateVideoResponse?.raiMediaFilteredCount > 0) {
-      const filterReason = videoData.generateVideoResponse.raiMediaFilteredReasons?.[0] ||
-        'Content was filtered by safety guidelines'
-      console.error('Content filtered:', filterReason)
-
-      // Provide user-friendly error message
-      let userMessage = filterReason
-      if (filterReason.includes('celebrity')) {
-        userMessage = `⚠️ Google's AI detected this photo as too professional/polished. This is their safety filter being cautious - not a real issue!
-
-TRY THESE TIPS:
-✅ Use a more casual/candid photo
-✅ Natural lighting (not studio quality)
-✅ Relaxed pose (not professional headshot)
-✅ Smartphone selfie style works best
-
-The AI sometimes mistakes professional-looking photos for celebrities. A more casual photo of the same person will work perfectly!`
-      }
-
+    if (imageList.length === 0 || !script) {
       return NextResponse.json(
-        { error: userMessage },
+        { error: 'At least one image and script are required' },
         { status: 400 }
       )
     }
 
-    // Extract video URI from response
-    const generatedSamples = videoData.generateVideoResponse?.generatedSamples
-    devLog('Generated samples:', JSON.stringify(generatedSamples, null, 2))
+    devLog(`📸 Received ${imageList.length} image(s) for video generation`)
 
-    const videoUri = generatedSamples?.[0]?.video?.uri
+    // Get Gemini API key from environment
+    const apiKey = process.env.GOOGLE_GEMINI_API_KEY
 
-    if (!videoUri) {
-      console.error('No video URI found. Full videoData:', JSON.stringify(videoData, null, 2))
+    if (!apiKey) {
+      console.error('Missing Google Gemini API key')
       return NextResponse.json(
-        { error: 'Video generation completed but no video URI received' },
+        { error: 'Server configuration error. Please contact support.' },
         { status: 500 }
       )
     }
 
-    devLog('✅ Video URI extracted:', videoUri)
+    // Apply standard prompt to enhance the script
+    const enhancedScript = `${STANDARD_PROMPT}\n\n${script}`
 
-    // Download the video from Google's servers with retry logic
-    devLog('📥 Downloading video from URI...')
-    let videoBuffer: ArrayBuffer | null = null
-    let downloadAttempts = 0
-    const maxDownloadAttempts = 3
+    // Try each image in sequence until one succeeds
+    let filterErrorCount = 0
+    let lastError = ''
 
-    while (downloadAttempts < maxDownloadAttempts && !videoBuffer) {
-      try {
-        const videoDownloadResponse = await fetch(videoUri, {
-          headers: {
-            'X-goog-api-key': apiKey,
-          },
+    for (let i = 0; i < imageList.length; i++) {
+      const result = await tryGenerateWithImage(
+        imageList[i],
+        enhancedScript,
+        aspectRatio,
+        apiKey,
+        i,
+        imageList.length
+      )
+
+      if (result.success && result.videoUrl) {
+        // Save video to database
+        try {
+          await saveVideo(email || 'anonymous', result.videoUrl, agentName, listingAddress)
+        } catch (dbError) {
+          console.log('Video save to DB failed (optional):', dbError)
+        }
+
+        // SUCCESS! Return the video
+        return NextResponse.json({
+          success: true,
+          videoUrl: result.videoUrl,
+          usedImageIndex: i + 1, // Which image worked (1-indexed for user display)
         })
-
-        if (!videoDownloadResponse.ok) {
-          throw new Error(`Download failed with status ${videoDownloadResponse.status}`)
-        }
-
-        videoBuffer = await videoDownloadResponse.arrayBuffer()
-        devLog('✅ Video downloaded successfully')
-      } catch (error) {
-        downloadAttempts++
-        console.error(`Download attempt ${downloadAttempts}/${maxDownloadAttempts} failed:`, error)
-
-        if (downloadAttempts < maxDownloadAttempts) {
-          // Wait 2 seconds before retry
-          await new Promise(resolve => setTimeout(resolve, 2000))
-        }
       }
+
+      // Track if this was a filter error (celebrity/professional photo detection)
+      if (result.isFilterError) {
+        filterErrorCount++
+      }
+      lastError = result.error || 'Unknown error'
+
+      devLog(`❌ Image ${i + 1} failed, trying next...`)
     }
 
-    if (!videoBuffer) {
-      console.error('Failed to download video after all retries')
+    // All images failed
+    console.error(`All ${imageList.length} images failed. Filter errors: ${filterErrorCount}`)
+
+    // If all images were filtered (celebrity detection), return special flag
+    if (filterErrorCount === imageList.length) {
       return NextResponse.json(
-        { error: '📥 Video generated but download failed. Please try generating again.' },
-        { status: 500 }
+        {
+          error: 'All photos were filtered by our AI safety system. Please upload different photos with more casual poses and natural lighting.',
+          allPhotosFailed: true,
+          photosTried: imageList.length
+        },
+        { status: 400 }
       )
     }
 
-    // Convert to base64
-    const videoBase64 = Buffer.from(videoBuffer).toString('base64')
-    devLog('✅ Video converted to base64, size:', videoBase64.length, 'characters')
-
-    // Return video as base64 data URL
-    const finalVideoUrl = `data:video/mp4;base64,${videoBase64}`
-
-    return NextResponse.json({
-      success: true,
-      videoUrl: finalVideoUrl,
-    })
+    // Mixed errors or other failures
+    return NextResponse.json(
+      {
+        error: 'Video generation failed after trying all photos. Please try again with different images.',
+        allPhotosFailed: true,
+        photosTried: imageList.length
+      },
+      { status: 500 }
+    )
 
   } catch (error: any) {
     console.error('Error generating video:', error)

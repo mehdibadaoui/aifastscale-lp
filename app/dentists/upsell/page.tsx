@@ -1,14 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Clock, CheckCircle, ArrowRight, Gift } from 'lucide-react'
+import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 import { trackTikTokInitiateCheckout } from '../../components/TikTokPixel'
 import { trackMetaEvent } from '../../components/MetaPixel'
 
-// Whop checkout link for Upsell - REPLACE WITH YOUR ACTUAL PLAN LINK
-const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_DENTIST_OTO_10'
+// Whop checkout link for Upsell
+const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_IbsV5qrvMPBgb'
 
 // Save tracking params to localStorage before Whop redirect
 const saveTrackingParams = () => {
@@ -180,75 +180,6 @@ export default function DentistUpsellPage() {
             </div>
           </div>
 
-          {/* Mystery Box */}
-          <div className="bg-gradient-to-r from-violet-600/20 to-purple-600/20 rounded-lg md:rounded-xl p-2.5 md:p-3 border border-violet-500/40 mb-2.5 md:mb-3">
-            <div className="flex items-center gap-2 md:gap-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/30 flex-shrink-0">
-                <Gift className="w-4 h-4 md:w-5 md:h-5 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <span className="text-white font-black text-xs md:text-sm">Mystery Box</span>
-                  <span className="bg-violet-500/30 text-violet-300 px-1 md:px-1.5 py-0.5 rounded text-[8px] md:text-[9px] font-black">SECRET</span>
-                </div>
-                <p className="text-white/50 text-[9px] md:text-[10px]">Exclusive surprise revealed after purchase</p>
-              </div>
-              <span className="text-violet-400 font-black text-xs md:text-sm">$500-$1.5k</span>
-            </div>
-          </div>
-
-          {/* Lifetime Updates */}
-          <div className="bg-gradient-to-r from-teal-500/15 to-cyan-500/15 rounded-lg md:rounded-xl p-2.5 md:p-3 border border-teal-500/40 mb-3 md:mb-4">
-            <div className="flex items-center gap-2 md:gap-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shadow-teal-500/30 flex-shrink-0">
-                <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <span className="text-white font-black text-xs md:text-sm">Lifetime Updates</span>
-                  <span className="bg-teal-500/30 text-teal-300 px-1 md:px-1.5 py-0.5 rounded text-[8px] md:text-[9px] font-black">WEEKLY</span>
-                </div>
-                <p className="text-white/50 text-[9px] md:text-[10px]">New tools & templates added weekly forever</p>
-              </div>
-              <span className="text-teal-400 font-black text-xs md:text-sm">$297</span>
-            </div>
-          </div>
-
-          {/* Dr. Marcus's Guarantee */}
-          <div className="bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/30 rounded-lg md:rounded-xl p-2.5 md:p-3 mb-3 md:mb-4">
-            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-              <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-teal-400 flex-shrink-0">
-                <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" fill className="object-cover" />
-              </div>
-              <div>
-                <p className="text-white font-black text-xs md:text-sm">Dr. Marcus's "You Win Either Way" Guarantee</p>
-                <div className="inline-flex items-center gap-1 bg-teal-500 rounded px-1 md:px-1.5 py-0.5 mt-0.5 md:mt-1">
-                  <CheckCircle className="w-2 h-2 md:w-2.5 md:h-2.5 text-white" />
-                  <span className="text-white text-[8px] md:text-[9px] font-bold">VERIFIED</span>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-1.5 md:space-y-2 text-xs md:text-sm">
-              <div className="flex items-start gap-1.5 md:gap-2">
-                <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                <p className="text-white/80 text-[10px] md:text-sm"><span className="text-white font-bold">30-Day Money-Back:</span> Don't like it? Full refund.</p>
-              </div>
-              <div className="flex items-start gap-1.5 md:gap-2">
-                <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                <p className="text-white/80 text-[10px] md:text-sm"><span className="text-white font-bold">PLUS $50 Bonus:</span> If these don't help, I'll Venmo you $50.</p>
-              </div>
-              <div className="flex items-start gap-1.5 md:gap-2">
-                <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-teal-400 flex-shrink-0 mt-0.5" />
-                <p className="text-white/80 text-[10px] md:text-sm"><span className="text-white font-bold">Keep Everything:</span> Even if you refund, keep all bonuses.</p>
-              </div>
-            </div>
-            <div className="mt-2 md:mt-3 bg-teal-500/10 rounded-lg p-1.5 md:p-2 text-center">
-              <p className="text-teal-400 text-[10px] md:text-xs font-bold">You literally CANNOT lose. Either profit or get paid to try it.</p>
-            </div>
-          </div>
-
           {/* Price Section */}
           <div className="bg-white/5 rounded-lg md:rounded-xl p-3 md:p-4 mb-3 md:mb-4">
             <div className="flex items-center justify-between mb-1.5 md:mb-2">
@@ -267,24 +198,22 @@ export default function DentistUpsellPage() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="space-y-1.5 md:space-y-2">
+          <div className="space-y-2 md:space-y-3">
             <button
               onClick={() => {
                 trackInitiateCheckout('dentist-upsell', 'CloneYourself Dentist - Premium Bundle', upsellPrice)
                 window.location.href = WHOP_UPSELL_LINK
               }}
-              className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"
+              className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"
             >
-              <Gift className="w-4 h-4 md:w-5 md:h-5" />
-              YES! Add All 5 for ${upsellPrice}
-              <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+              Yes, Add to My Order - ${upsellPrice}
             </button>
 
             <button
               onClick={handleDecline}
-              className="w-full text-white/70 text-xs md:text-sm py-2.5 md:py-3 hover:text-white transition-colors underline underline-offset-2"
+              className="w-full bg-white/10 border border-white/20 text-white/80 py-3 md:py-4 rounded-xl font-bold text-sm md:text-base hover:bg-white/20 transition-colors"
             >
-              No thanks, take me to my purchase →
+              No Thanks
             </button>
           </div>
 

@@ -33,17 +33,23 @@ import {
   RefreshCw,
   MessageSquare,
   Calendar,
+  CalendarCheck,
   FileText,
   Stethoscope,
   Phone,
+  Mail,
+  Send,
+  Smile,
 } from 'lucide-react'
 import { DENTIST_BONUS_PRODUCTS, getDentistTotalBonusValue } from '../config/dentist-bonus-products'
+import { getMemberStats } from './members/components/config'
 import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
 import { trackMetaEvent } from '../components/MetaPixel'
 import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/ExpertPersona'
+import { AnimatedBackground } from '../components/AnimatedBackground'
 
-// Whop checkout link - REPLACE WITH YOUR ACTUAL DENTIST PRODUCT LINK
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_DENTIST_MAIN_37'
+// Whop checkout link
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_SxMS4HqFxJKNT'
 
 // Save tracking params to localStorage before Whop redirect
 // This preserves fbclid, ttclid, UTMs for thank-you page attribution
@@ -69,10 +75,11 @@ const saveTrackingParams = () => {
   })
 
   // Capture Meta cookies (_fbc, _fbp) if they exist
-  const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1]
-  const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1]
-  if (fbc) trackingData._fbc = fbc
-  if (fbp) trackingData._fbp = fbp
+  // Use substring instead of split to preserve values containing '=' characters
+  const fbcCookie = document.cookie.split('; ').find(row => row.startsWith('_fbc='))
+  const fbpCookie = document.cookie.split('; ').find(row => row.startsWith('_fbp='))
+  if (fbcCookie) trackingData._fbc = fbcCookie.substring(5)
+  if (fbpCookie) trackingData._fbp = fbpCookie.substring(5)
 
   // Save timestamp
   trackingData.checkout_started = new Date().toISOString()
@@ -103,12 +110,20 @@ export default function DentistCleanLandingPage() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [isVideoMuted, setIsVideoMuted] = useState(true)
-  // REMOVED: spotsLeft - fake scarcity kills trust
-  const [viewersNow, setViewersNow] = useState(23)
+  // Dynamic member stats
+  const [memberStats, setMemberStats] = useState(getMemberStats())
   const videoRef = useRef<HTMLVideoElement>(null)
 
   // Animation refs for scroll detection - initialize with hero visible for instant animation
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
+
+  // Update member stats every minute
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMemberStats(getMemberStats())
+    }, 60000)
+    return () => clearInterval(interval)
+  }, [])
 
   const faqs = [
     {
@@ -117,7 +132,7 @@ export default function DentistCleanLandingPage() {
     },
     {
       q: 'Will patients know it\'s AI?',
-      a: 'Most can\'t tell. The lip-sync is incredibly realistic. Your patients care about your message and expertise, not how you made it. 500+ dentists are already using this successfully.',
+      a: `Most can't tell. The lip-sync is incredibly realistic. Your patients care about your message and expertise, not how you made it. ${memberStats.totalMembers.toLocaleString()}+ dentists are already using this successfully.`,
     },
     {
       q: 'I\'m not tech-savvy. Can I do this?',
@@ -129,7 +144,7 @@ export default function DentistCleanLandingPage() {
     },
     {
       q: 'Will this work for my dental practice?',
-      a: 'Yes. 500+ dentists across the US, UK, Canada, and Australia use this daily. Works for general dentistry, cosmetic, ortho, and all specialties.',
+      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ dentists across the US, UK, Canada, and Australia use this daily. Works for general dentistry, cosmetic, ortho, and all specialties.`,
     },
     {
       q: 'When do I get access?',
@@ -249,18 +264,7 @@ export default function DentistCleanLandingPage() {
 
   // REMOVED: Fake scarcity that resets - kills trust
   // Real urgency comes from the December 20th bonus deadline
-
-  // Viewers
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setViewersNow(prev => {
-        const change = Math.random() > 0.5 ? 1 : -1
-        const newVal = prev + change
-        return newVal < 15 ? 15 : newVal > 35 ? 35 : newVal
-      })
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
+  // Note: viewersNow replaced by memberStats.activeNow
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -319,7 +323,10 @@ export default function DentistCleanLandingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-premium noise-overlay font-sans">
+    <main className="min-h-screen bg-gradient-premium noise-overlay font-sans relative">
+      {/* Animated Background - Performance Optimized */}
+      <AnimatedBackground variant="dentist" />
+
       {/* ================================================================
           1. HERO SECTION - PREMIUM ANIMATED GRADIENT
           ================================================================ */}
@@ -386,7 +393,7 @@ export default function DentistCleanLandingPage() {
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift">
                 <Image
-                  src="/images/dentist/course-demo-new.webp"
+                  src="/images/dentist/dentist-vdc-hero.webp"
                   alt="AI Video System for Dentists Showcase"
                   width={1365}
                   height={768}
@@ -401,7 +408,14 @@ export default function DentistCleanLandingPage() {
             <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
                 <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
-                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">500+</span> dentists</span>
+                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> dentists</span>
+              </div>
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
+                <div className="relative">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                  <div className="absolute inset-0 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
+                </div>
+                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-emerald-400 font-bold">{memberStats.activeNow.toLocaleString()}</span> active now</span>
               </div>
               <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full">
                 {[...Array(5)].map((_, i) => (
@@ -418,7 +432,7 @@ export default function DentistCleanLandingPage() {
             {/* CTA - Premium Button with Glow */}
             <a
               href={WHOP_CHECKOUT_LINK}
-              onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+              onClick={() => trackInitiateCheckout('cloneyourself-dentist', 47)}
               className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -431,8 +445,8 @@ export default function DentistCleanLandingPage() {
             {/* PRICE TEASER - Premium Glass Style */}
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
-                <span className="text-gray-500 text-sm line-through">${getDentistTotalBonusValue() + 37}</span>
-                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$37</span>
+                <span className="text-gray-500 text-sm line-through">${getDentistTotalBonusValue() + 47}</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
@@ -469,67 +483,6 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          REASONS WHY - Why Is This Only $37? (Hormozi Principle)
-          ================================================================ */}
-      <section
-        id="reasons-why"
-        data-animate
-        className="py-8 sm:py-16 bg-gradient-to-b from-black to-slate-950"
-      >
-        <div className="w-full px-3 sm:px-6">
-          <div className="max-w-3xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
-              <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
-                Why Is This Only <span className="text-gradient-premium">$37</span>?
-              </h2>
-              <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
-            </div>
-
-            <div className={`space-y-4 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              {[
-                {
-                  num: '1',
-                  title: 'I Use This Every Day',
-                  desc: 'I built this system for my own practice first. I use it to create 3-5 videos weekly. This works because it solves MY problem before it solves yours.',
-                },
-                {
-                  num: '2',
-                  title: 'I Don\'t Need To Charge You A Lot',
-                  desc: 'Unlike software companies that need recurring revenue, my success comes from helping dentists succeed. When you win, I win. So I price based on value delivered, not what I can get away with.',
-                },
-                {
-                  num: '3',
-                  title: 'High Volume = Better For Both Of Us',
-                  desc: 'At $37, I can reach 500+ dentists. Even if only 10% create videos and 5% get results, that\'s 25 dentists getting new patients. That\'s 25 success stories. That\'s worth more to me than charging $497 to 50 dentists.',
-                },
-                {
-                  num: '4',
-                  title: 'I\'m Betting On You',
-                  desc: 'The $50 guarantee isn\'t a loss leader. It\'s me saying: "I\'m confident this works. I\'ll literally pay you $50 if it doesn\'t." That confidence only works if the price is low enough that you\'ll actually TRY it.',
-                },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4 bg-white/5 border border-teal-500/20 rounded-xl p-4 sm:p-5">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-teal-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-teal-400 font-black text-sm sm:text-base">{item.num}</span>
-                  </div>
-                  <div>
-                    <h3 className="text-white font-bold text-sm sm:text-base mb-1">{item.title}</h3>
-                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className={`mt-6 text-center ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-              <p className="text-teal-400 font-bold text-sm sm:text-base">
-                Bottom line: This is priced to be tried, not priced to be expensive.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================
           2. CASE STUDY #1 - DR. SARAH - LIGHT CREAM SECTION (Alternating)
           "She booked 23 new patients in 3 weeks"
           ================================================================ */}
@@ -554,12 +507,12 @@ export default function DentistCleanLandingPage() {
                 <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dentist</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                This is Dr. Sarah. She Got <span className="text-teal-600">23 New Patients</span>...
+                This is Dr. Marcus. He Got <span className="text-teal-600">31 New Patients</span>...
               </h2>
               <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Recording a Single Video.</p>
             </div>
 
-            {/* Dr. Sarah Case Study Card - Premium Modern Design */}
+            {/* Dr. Marcus Case Study Card - Premium Modern Design */}
             <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Glow Effect */}
@@ -569,24 +522,25 @@ export default function DentistCleanLandingPage() {
               <div className="relative p-4 sm:p-8">
                 {/* The Hook Text */}
                 <div className="text-center mb-6">
-                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see her talking on camera...</p>
+                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see him talking on camera...</p>
                   <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
-                    She Never Filmed Anything.
+                    He Never Filmed Anything.
                   </p>
                   <p className="text-teal-400 text-base sm:text-lg font-medium">
-                    She just uploaded her photo, and the AI created a ready-to-post video for her.
+                    He just uploaded his photo, and the AI created a ready-to-post video for him.
                   </p>
                 </div>
 
-                {/* Big Before/After Image - Full Width */}
-                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black">
-                  <Image
-                    src="/images/dentist/dr-marcus.webp"
-                    alt="Dr. Sarah Mitchell - AI Video Transformation"
-                    width={1365}
-                    height={768}
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
+                {/* Video - Autoplay, Loop, Muted - Mobile-optimized (183KB) */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black aspect-square max-w-md mx-auto">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                    src="/videos/dentist-case-study-mobile.mp4"
                   />
                 </div>
 
@@ -603,7 +557,7 @@ export default function DentistCleanLandingPage() {
               <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-4 px-4 sm:px-8">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   {[
-                    { number: '23', label: 'New Patients', sub: 'in 3 weeks' },
+                    { number: '31', label: 'New Patients', sub: 'in 4 weeks' },
                     { number: '7', label: 'Minutes', sub: 'per video' },
                     { number: '$0', label: 'Ad Spend', sub: 'organic only' },
                   ].map((stat, i) => (
@@ -627,12 +581,12 @@ export default function DentistCleanLandingPage() {
                 {/* Timeline - improved mobile layout */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Day 1', event: 'Created her first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 3', event: '15,000 views on first 3 videos combined', icon: Eye, color: 'gray' },
-                    { time: 'Week 1', event: '6 new patient calls from Instagram', icon: Phone, color: 'teal' },
-                    { time: 'Week 2', event: '12 more inquiries • 8 appointments booked', icon: Calendar, color: 'teal' },
-                    { time: 'Week 3', event: '23 total new patients • Schedule full', icon: FileText, color: 'teal' },
-                    { time: 'Month 2', event: '$47,000 in new patient revenue', icon: DollarSign, color: 'green' },
+                    { time: 'Day 1', event: 'Created his first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
+                    { time: 'Day 2', event: 'Posted on Instagram & TikTok', icon: Eye, color: 'gray' },
+                    { time: 'Week 1', event: '8 new patient calls from social media', icon: Phone, color: 'teal' },
+                    { time: 'Week 2', event: '14 more inquiries • 11 appointments booked', icon: Calendar, color: 'teal' },
+                    { time: 'Week 4', event: '31 total new patients • Hygiene fully booked', icon: FileText, color: 'teal' },
+                    { time: 'Month 2', event: '$62,000 in new patient revenue', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -665,17 +619,17 @@ export default function DentistCleanLandingPage() {
                   <div className="text-teal-400 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      I went from <span className="text-teal-400 font-bold">invisible to fully booked</span> in 3 weeks.
-                      Patients find ME now. My phone rings daily.
-                      This system gave me my practice back AND filled my schedule.
+                      I was skeptical at first. <span className="text-teal-400 font-bold">31 new patients in 4 weeks</span> changed my mind.
+                      No filming. No editing. Just results.
+                      Best $47 I ever spent on my practice.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
-                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Sarah" width={40} height={40} className="object-cover" />
+                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" />
                       </div>
                       <div>
-                        <p className="text-white font-bold">Dr. Sarah Mitchell</p>
-                        <p className="text-gray-400 text-sm">2 months after joining</p>
+                        <p className="text-white font-bold">Dr. Marcus Bennett</p>
+                        <p className="text-gray-400 text-sm">General Dentist, Austin TX</p>
                       </div>
                       <div className="ml-auto flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -690,9 +644,9 @@ export default function DentistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
                 {[
-                  { value: '$37', label: 'Investment', sub: 'One-time' },
-                  { value: '23', label: 'New Patients', sub: '3 weeks' },
-                  { value: '$47K', label: 'Revenue', sub: '2 months' },
+                  { value: '$47', label: 'Investment', sub: 'One-time' },
+                  { value: '31', label: 'New Patients', sub: '4 weeks' },
+                  { value: '$62K', label: 'Revenue', sub: '2 months' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-teal-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
@@ -847,7 +801,7 @@ export default function DentistCleanLandingPage() {
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
                 <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$37</span>
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -859,7 +813,7 @@ export default function DentistCleanLandingPage() {
               {/* CTA Button */}
               <Link
                 href={WHOP_CHECKOUT_LINK}
-                onClick={() => trackInitiateCheckout('dentist-main', 37)}
+                onClick={() => trackInitiateCheckout('dentist-main', 47)}
                 className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -907,79 +861,246 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          4. HOW IT WORKS - WHITE SECTION
+          4. HOW IT WORKS - WHITE SECTION - 4 STEPS CREATIVE
           ================================================================ */}
       <section
         id="how-it-works"
         data-animate
-        className="py-10 sm:py-20 bg-white"
+        className="py-10 sm:py-20 bg-white relative overflow-hidden"
       >
-        <div className="w-full px-3 sm:px-6">
+        {/* Decorative background elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-teal-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl" />
+
+        <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
-                <Zap className="w-3.5 h-3.5 text-teal-500" />
-                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Simple Process</span>
+            {/* Header */}
+            <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/30 px-4 py-2 rounded-full mb-4">
+                <Zap className="w-4 h-4 text-teal-500 animate-pulse" />
+                <span className="text-teal-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
+                <span className="text-gray-400 text-xs">•</span>
+                <span className="text-cyan-600 font-bold text-xs">~20 min total</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                Create Videos in <span className="text-teal-500">3 Easy Steps</span>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
+                From Zero to <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-500">AI Video</span> in Minutes
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg">No filming. No editing. No experience needed.</p>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
+                Even if you've never touched AI before. Works <span className="font-bold text-gray-800">only for dentists</span>.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
-              {[
-                { step: 1, icon: Upload, title: 'Upload Your Photo', time: '1 min', desc: 'Any headshot works - selfie, professional shot, or even your website photo. The AI does the rest.' },
-                { step: 2, icon: Video, title: 'Type Your Script', time: '2 min', desc: 'Write your message or pick from 100+ ready-made templates designed for dental practices.' },
-                { step: 3, icon: TrendingUp, title: 'Get Your Video', time: '4 min', desc: 'AI generates your video with perfect lip-sync. Download, post, watch new patients call.' },
-              ].map((item, i) => (
-                <div
-                  key={item.step}
-                  className={`relative bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-gray-200 hover:border-teal-500/50 transition-all hover:shadow-xl ${
-                    visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''
-                  }`}
-                  style={{ animationDelay: `${i * 150}ms` }}
-                >
-                  <div className="absolute -top-3 sm:-top-5 left-4 sm:left-8 w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
-                    <span className="text-white font-black text-sm sm:text-xl">{item.step}</span>
+            {/* 4 Steps - Creative Timeline */}
+            <div className="relative">
+              {/* Connecting line - desktop */}
+              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-green-500 -translate-y-1/2 rounded-full opacity-20" />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                {/* Step 1 - Generate Script */}
+                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '0ms' }}>
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 h-full">
+                    {/* Step number - floating */}
+                    <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
+                      <div className="relative">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform">
+                          <span className="text-white font-black text-lg sm:text-xl">1</span>
+                        </div>
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
+                          <Zap className="w-2.5 h-2.5 text-white" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Time badge */}
+                    <div className="flex justify-end mb-4 mt-2">
+                      <span className="bg-teal-500/10 text-teal-600 px-3 py-1 rounded-full text-xs font-bold border border-teal-500/20">
+                        5 min
+                      </span>
+                    </div>
+
+                    {/* Icon */}
+                    <div className="w-14 h-14 bg-gradient-to-br from-teal-500/20 to-cyan-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <MessageSquare className="w-7 h-7 text-teal-500" />
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Generate Script</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      Use our <span className="text-teal-600 font-semibold">ChatGPT specialist</span> built for dental practices. Just describe your topic.
+                    </p>
+
+                    {/* Mini feature */}
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                        <span>100+ ready templates included</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-teal-500/10 text-teal-600 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-bold border border-teal-500/30">
-                    {item.time}
-                  </div>
-                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-teal-500/10 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-5 mt-3 sm:mt-4">
-                    <item.icon className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
-                  </div>
-                  <h3 className="text-base sm:text-xl font-black text-gray-900 mb-1.5 sm:mb-3">{item.title}</h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.desc}</p>
                 </div>
-              ))}
-            </div>
 
-            <div className={`flex justify-center mt-6 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
-              <div className="flex items-center gap-3 sm:gap-6 bg-teal-500/5 border border-teal-500/30 rounded-full px-4 sm:px-8 py-2.5 sm:py-4">
-                <Clock className="w-5 h-5 sm:w-8 sm:h-8 text-teal-500" />
-                <div>
-                  <span className="text-teal-500 font-black text-xl sm:text-3xl">7 minutes</span>
-                  <span className="text-gray-600 text-sm sm:text-lg ml-1.5 sm:ml-2">total time</span>
+                {/* Step 2 - Select Image / Create AI Model */}
+                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '100ms' }}>
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 h-full">
+                    {/* Step number */}
+                    <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
+                      <div className="relative">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform">
+                          <span className="text-white font-black text-lg sm:text-xl">2</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Time badge */}
+                    <div className="flex justify-end mb-4 mt-2">
+                      <span className="bg-cyan-500/10 text-cyan-600 px-3 py-1 rounded-full text-xs font-bold border border-cyan-500/20">
+                        3 min
+                      </span>
+                    </div>
+
+                    {/* Icon */}
+                    <div className="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-teal-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <Upload className="w-7 h-7 text-cyan-500" />
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Pick Your Image</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      Upload a selfie <span className="text-cyan-600 font-semibold">OR</span> generate your personalized AI model from scratch.
+                    </p>
+
+                    {/* Mini feature */}
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                        <span>Works with any headshot</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 3 - Make It Talk */}
+                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '200ms' }}>
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 h-full">
+                    {/* Step number */}
+                    <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
+                      <div className="relative">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform">
+                          <span className="text-white font-black text-lg sm:text-xl">3</span>
+                        </div>
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full flex items-center justify-center">
+                          <Play className="w-2.5 h-2.5 text-white ml-0.5" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Time badge */}
+                    <div className="flex justify-end mb-4 mt-2">
+                      <span className="bg-teal-500/10 text-teal-600 px-3 py-1 rounded-full text-xs font-bold border border-teal-500/20">
+                        5 min
+                      </span>
+                    </div>
+
+                    {/* Icon */}
+                    <div className="w-14 h-14 bg-gradient-to-br from-teal-500/20 to-green-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <Video className="w-7 h-7 text-teal-500" />
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Make It Talk</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      AI generates a <span className="text-teal-600 font-semibold">realistic talking video</span> with perfect lip-sync. Like magic.
+                    </p>
+
+                    {/* Mini feature */}
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                        <span>Ultra-realistic results</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 4 - Edit & Post */}
+                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '300ms' }}>
+                  <div className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-green-100 hover:border-green-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 h-full relative overflow-hidden">
+                    {/* Success glow */}
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/10 rounded-full blur-2xl" />
+
+                    {/* Step number */}
+                    <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
+                      <div className="relative">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/30 group-hover:scale-110 transition-transform">
+                          <span className="text-white font-black text-lg sm:text-xl">4</span>
+                        </div>
+                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center animate-bounce">
+                          <Star className="w-3 h-3 text-white" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Time badge */}
+                    <div className="flex justify-end mb-4 mt-2">
+                      <span className="bg-green-500/10 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-500/20">
+                        7 min
+                      </span>
+                    </div>
+
+                    {/* Icon */}
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-500/20 to-emerald-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <TrendingUp className="w-7 h-7 text-green-500" />
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Edit & Post</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      Quick edit, add captions, post to <span className="text-green-600 font-semibold">Instagram/TikTok</span>. Watch patients call.
+                    </p>
+
+                    {/* Mini feature */}
+                    <div className="mt-4 pt-3 border-t border-green-100">
+                      <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                        <span>Your calendar fills up!</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* CTA - After How It Works */}
+            {/* Total time banner */}
+            <div className={`flex justify-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full blur-xl opacity-20 animate-pulse" />
+                <div className="relative flex items-center gap-4 sm:gap-6 bg-gradient-to-r from-gray-900 to-gray-800 rounded-full px-6 sm:px-10 py-3 sm:py-4 shadow-2xl">
+                  <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-teal-400" />
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 font-black text-2xl sm:text-4xl">~20</span>
+                    <span className="text-gray-400 text-sm sm:text-lg font-medium">minutes total</span>
+                  </div>
+                  <div className="hidden sm:block w-px h-8 bg-gray-700" />
+                  <span className="hidden sm:block text-gray-500 text-sm">That's it. Done.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                 href={WHOP_CHECKOUT_LINK}
-                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 47)}
                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <span className="sm:hidden">Create My First Video</span>
-                  <span className="hidden sm:inline">Create My First AI Video in 7 Minutes</span>
+                  <span className="sm:hidden">Start Creating Now</span>
+                  <span className="hidden sm:inline">Start Creating My AI Videos</span>
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
-              <p className="text-gray-500 text-xs sm:text-sm mt-3">Join 500+ dentists who made the switch</p>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">73% off today • 100% refund if not satisfied</p>
             </div>
           </div>
         </div>
@@ -1148,7 +1269,7 @@ export default function DentistCleanLandingPage() {
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       One week of AI videos. <span className="text-teal-600 font-bold">$47,000 in implant cases</span>.
-                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $37 and
+                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $47 and
                       I had 5 cases in a week. The ROI is unreal.
                     </p>
                     <div className="flex items-center gap-3">
@@ -1172,7 +1293,7 @@ export default function DentistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
-                  { value: '$37', label: 'Investment', sub: 'One-time' },
+                  { value: '$47', label: 'Investment', sub: 'One-time' },
                   { value: '$47K', label: 'Revenue', sub: '2 weeks' },
                   { value: '810x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
@@ -1222,7 +1343,7 @@ export default function DentistCleanLandingPage() {
               <div key={`first-${t.id}`} className="testimonial-card-dentist">
                 {/* Quote Icon */}
                 <div className="testimonial-quote-icon-dentist">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 8H6C4.89543 8 4 8.89543 4 10V14C4 15.1046 4.89543 16 6 16H8C9.10457 16 10 15.1046 10 14V8ZM10 8C10 5.79086 8.20914 4 6 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                     <path d="M20 8H16C14.8954 8 14 8.89543 14 10V14C14 15.1046 14.8954 16 16 16H18C19.1046 16 20 15.1046 20 14V8ZM20 8C20 5.79086 18.2091 4 16 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                   </svg>
@@ -1256,7 +1377,7 @@ export default function DentistCleanLandingPage() {
               <div key={`second-${t.id}`} className="testimonial-card-dentist">
                 {/* Quote Icon */}
                 <div className="testimonial-quote-icon-dentist">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 8H6C4.89543 8 4 8.89543 4 10V14C4 15.1046 4.89543 16 6 16H8C9.10457 16 10 15.1046 10 14V8ZM10 8C10 5.79086 8.20914 4 6 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                     <path d="M20 8H16C14.8954 8 14 8.89543 14 10V14C14 15.1046 14.8954 16 16 16H18C19.1046 16 20 15.1046 20 14V8ZM20 8C20 5.79086 18.2091 4 16 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                   </svg>
@@ -1289,7 +1410,7 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          6. GUARANTEE #1 - WHITE SECTION
+          6. GUARANTEE #1 - WHITE SECTION - FILL YOUR CALENDAR
           ================================================================ */}
       <section
         id="guarantee1"
@@ -1298,80 +1419,74 @@ export default function DentistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-teal-500/10 to-white border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 ${
+            <div className={`bg-gradient-to-br from-teal-500/10 to-white border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
               visibleSections.has('guarantee1') ? 'animate-fade-in-up' : ''
             }`}>
-              <div className="text-center mb-5 sm:mb-8">
-                <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-500" />
-                  <span className="text-teal-600 font-bold text-xs sm:text-sm uppercase">Iron-Clad Guarantee</span>
-                </div>
-                <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                  30-Day Money Back + <span className="text-teal-500">$50 Cash</span>
-                </h2>
-                <p className="text-gray-600 text-sm sm:text-base">You literally cannot lose.</p>
-              </div>
+              {/* Animated background pulse */}
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-cyan-500/10 to-teal-500/5 animate-pulse" />
 
-              <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
-                {/* Guarantee Badge - Instantly Recognizable */}
-                <div className="relative flex-shrink-0">
-                  {/* Modern Guarantee Seal */}
-                  <div className="w-28 h-28 sm:w-40 sm:h-40 relative">
-                    {/* Outer rotating ring */}
-                    <div className="absolute inset-0 rounded-full border-4 border-dashed border-teal-500/40 animate-spin-slow" />
-                    {/* Main badge */}
-                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500 shadow-2xl shadow-teal-500/30 flex flex-col items-center justify-center">
-                      {/* Inner circle with text */}
-                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-2">
-                        <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-teal-400 mb-1" />
-                        <span className="text-teal-400 font-black text-lg sm:text-2xl leading-none">30</span>
-                        <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Day Money</span>
-                        <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Back</span>
-                        <span className="text-teal-400 font-black text-[10px] sm:text-sm mt-0.5">+$50</span>
+              <div className="relative z-10">
+                <div className="text-center mb-5 sm:mb-8">
+                  <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4 animate-bounce">
+                    <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
+                    <span className="text-green-600 font-bold text-xs sm:text-sm uppercase">Calendar Guarantee</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
+                    Fill Your Calendar or <span className="text-teal-500">100% Refund</span>
+                  </h2>
+                  <p className="text-gray-600 text-sm sm:text-base">No questions. No hassle. Period.</p>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
+                  {/* Animated Calendar Badge */}
+                  <div className="relative flex-shrink-0">
+                    <div className="w-28 h-28 sm:w-40 sm:h-40 relative">
+                      {/* Outer pulsing ring */}
+                      <div className="absolute inset-0 rounded-full border-4 border-dashed border-green-500/40 animate-spin-slow" />
+                      {/* Glowing effect */}
+                      <div className="absolute inset-0 rounded-full bg-green-500/20 animate-ping opacity-30" />
+                      {/* Main badge */}
+                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-green-500 via-teal-500 to-green-500 shadow-2xl shadow-green-500/30 flex flex-col items-center justify-center">
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-2">
+                          <CalendarCheck className="w-6 h-6 sm:w-8 sm:h-8 text-green-400 mb-1" />
+                          <span className="text-green-400 font-black text-lg sm:text-2xl leading-none">100%</span>
+                          <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Money</span>
+                          <span className="text-white font-bold text-[8px] sm:text-xs uppercase tracking-wider">Back</span>
+                        </div>
+                      </div>
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[8px] sm:text-xs px-3 py-0.5 rounded-full shadow-lg">
+                        GUARANTEED
                       </div>
                     </div>
-                    {/* Ribbon accent */}
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[8px] sm:text-xs px-3 py-0.5 rounded-full shadow-lg">
-                      GUARANTEED
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-teal-500/20 shadow-lg">
+                      <p className="text-gray-800 text-sm sm:text-lg leading-relaxed font-medium">
+                        If you don't fill your next month's calendar with new patients using this system,
+                        I'll refund <span className="text-teal-500 font-black">every single penny</span> — no questions asked.
+                      </p>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <p className="text-gray-600 text-xs sm:text-sm">
+                          Use the scripts, create the videos, follow the system. If it doesn't work for you, you pay nothing.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-gray-700 text-sm sm:text-lg leading-relaxed mb-3 sm:mb-4 italic">
-                    "If you can't create professional videos in 7 minutes or less, or if this system doesn't work for you for ANY reason —
-                    I'll refund every penny AND send you $50 for wasting your time. No questions asked. No hoops to jump through."
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-teal-500 flex-shrink-0 bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-                      <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+
+                <div className="grid grid-cols-2 gap-2 sm:gap-4 mt-6 sm:mt-8">
+                  {[
+                    { icon: CalendarCheck, title: 'More Patients', desc: 'Or your money back' },
+                    { icon: Shield, title: '30-Day Trial', desc: 'Full refund anytime' },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white rounded-xl p-3 sm:p-4 text-center border border-teal-500/20 shadow-lg hover:shadow-xl transition-shadow hover:scale-[1.02] transform duration-200">
+                      <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-teal-500 mx-auto mb-1.5 sm:mb-2" />
+                      <p className="text-gray-900 font-bold text-xs sm:text-base">{item.title}</p>
+                      <p className="text-gray-500 text-[10px] sm:text-sm">{item.desc}</p>
                     </div>
-                    <div>
-                      <p className="text-teal-600 font-bold text-sm sm:text-lg">— Dr. Alexander Voss, DDS</p>
-                      <p className="text-gray-500 text-[10px] sm:text-xs">Aesthetic & Restorative Dentistry Specialist</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              </div>
-
-              {/* Expert credibility reinforcement */}
-              <div className="mt-4 pt-4 border-t border-gray-200 text-center">
-                <p className="text-gray-500 text-xs sm:text-sm">
-                  This content is designed based on 12+ years of real-world clinical experience and patient communication challenges.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-6 sm:mt-8">
-                {[
-                  { icon: CheckCircle, title: 'Full Refund', desc: 'Every penny back' },
-                  { icon: DollarSign, title: '+$50 Cash', desc: 'For your time' },
-                  { icon: Clock, title: '30 Days', desc: 'To try everything' },
-                ].map((item, i) => (
-                  <div key={i} className="bg-white rounded-xl p-3 sm:p-4 text-center border border-teal-500/20 shadow-lg">
-                    <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-teal-500 mx-auto mb-1.5 sm:mb-2" />
-                    <p className="text-gray-900 font-bold text-xs sm:text-base">{item.title}</p>
-                    <p className="text-gray-500 text-[10px] sm:text-sm">{item.desc}</p>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -1436,7 +1551,7 @@ export default function DentistCleanLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$37<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
                   <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
                 </div>
               </div>
@@ -1446,7 +1561,7 @@ export default function DentistCleanLandingPage() {
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-teal-500/30 mb-6 ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
-              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $37 Actually Includes:</h3>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47 Actually Includes:</h3>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 {/* Main Course */}
@@ -1494,12 +1609,12 @@ export default function DentistCleanLandingPage() {
                 </div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-teal-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$37</span>
+                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-green-400 font-black text-lg sm:text-xl">${(497 + totalBonusValue + 494 - 37).toLocaleString()}</span>
+                    <span className="text-green-400 font-black text-lg sm:text-xl">${(497 + totalBonusValue + 494 - 47).toLocaleString()}</span>
                     <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">98% OFF</span>
                   </div>
                 </div>
@@ -1511,7 +1626,7 @@ export default function DentistCleanLandingPage() {
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-teal-400">$37</span>
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
@@ -1521,7 +1636,7 @@ export default function DentistCleanLandingPage() {
 
               <Link
                 href={WHOP_CHECKOUT_LINK}
-                onClick={() => trackInitiateCheckout('dentist-main', 37)}
+                onClick={() => trackInitiateCheckout('dentist-main', 47)}
                 className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1590,7 +1705,7 @@ export default function DentistCleanLandingPage() {
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                 href={WHOP_CHECKOUT_LINK}
-                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 47)}
                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -1607,79 +1722,119 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          9. GUARANTEE #2 - BLACK SECTION
+          9. GUARANTEE #2 - BLACK SECTION - SUPER EASY REFUND STEPS
           ================================================================ */}
       <section
         id="guarantee2"
         data-animate
-        className="py-10 sm:py-20 bg-black"
+        className="py-10 sm:py-20 bg-black relative overflow-hidden"
       >
-        <div className="w-full px-3 sm:px-6">
+        {/* Animated background particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-10 left-10 w-2 h-2 bg-teal-500/30 rounded-full animate-ping" />
+          <div className="absolute top-1/3 right-20 w-3 h-3 bg-cyan-500/20 rounded-full animate-pulse" />
+          <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-teal-400/30 rounded-full animate-bounce" />
+          <div className="absolute top-1/2 right-10 w-2 h-2 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
+        </div>
+
+        <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 ${
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
               visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''
             }`}>
-              <div className="text-center mb-5 sm:mb-8">
-                {/* Modern Guarantee Badge - Instantly Recognizable */}
-                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 relative">
-                  {/* Outer rotating ring */}
-                  <div className="absolute inset-0 rounded-full border-4 border-dashed border-teal-500/40 animate-spin-slow" />
-                  {/* Main badge */}
-                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500 shadow-2xl shadow-teal-500/40 flex flex-col items-center justify-center">
-                    {/* Inner circle with text */}
-                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-1">
-                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-teal-400 mb-0.5" />
-                      <span className="text-teal-400 font-black text-base sm:text-xl leading-none">30</span>
-                      <span className="text-white font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Day Money</span>
-                      <span className="text-white font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Back</span>
-                    </div>
-                  </div>
-                  {/* Ribbon accent */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
-                    100% RISK FREE
-                  </div>
+              <div className="text-center mb-6 sm:mb-10">
+                <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 animate-bounce" />
+                  <span className="text-teal-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
-                  Try It Risk-Free for 30 Days
+                  Need a Refund? <span className="text-teal-400">It's THIS Easy</span>
                 </h2>
                 <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
-                  I'm so confident this will work for you that I'm taking ALL the risk.
-                  If you're not 100% satisfied, you get every penny back — PLUS $50 for trying.
+                  We made the refund process so simple, you can do it in 30 seconds.
+                  No phone calls. No guilt trips. No waiting.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 mb-5 sm:mb-8">
-                {[
-                  {
-                    icon: ThumbsUp,
-                    title: 'Love It?',
-                    desc: 'Keep everything and start getting new patients with AI videos.',
-                  },
-                  {
-                    icon: Heart,
-                    title: 'Not Sure?',
-                    desc: 'Take the full 30 days to test everything. No rush.',
-                  },
-                  {
-                    icon: DollarSign,
-                    title: 'Don\'t Like It?',
-                    desc: 'Get a full refund + $50 cash. Keep the bonuses.',
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="bg-black/50 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center border border-teal-500/20">
-                    <div className="w-10 h-10 sm:w-14 sm:h-14 mx-auto rounded-full flex items-center justify-center mb-2 sm:mb-4 bg-teal-500/20">
-                      <item.icon className="w-5 h-5 sm:w-7 sm:h-7 text-teal-400" />
+              {/* Creative Animated Steps - Timeline Style */}
+              <div className="relative">
+                {/* Connecting Line */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-cyan-500 to-green-500 -translate-x-1/2 hidden md:block" />
+
+                {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
+                <div className="space-y-4">
+                  {/* Step 1 */}
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''}`}>
+                    {/* Icon - shown first on mobile */}
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-500/40 md:order-2">
+                      <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-teal-600 font-black text-xs sm:text-sm">1</span>
+                      </div>
                     </div>
-                    <h3 className="font-black text-white text-base sm:text-lg mb-1 sm:mb-2">{item.title}</h3>
-                    <p className="text-gray-400 text-xs sm:text-sm">{item.desc}</p>
+                    {/* Content */}
+                    <div className="w-full md:flex-1 md:text-right md:order-1">
+                      <div className="bg-gradient-to-r from-teal-500/20 to-transparent rounded-xl p-4 border border-teal-500/30">
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
+                      </div>
+                    </div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block md:flex-1 md:order-3" />
                   </div>
-                ))}
+
+                  {/* Step 2 */}
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/40 md:order-2">
+                      <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-cyan-600 font-black text-xs sm:text-sm">2</span>
+                      </div>
+                    </div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block md:flex-1 md:order-1" />
+                    {/* Content */}
+                    <div className="w-full md:flex-1 md:order-3">
+                      <div className="bg-gradient-to-l from-cyan-500/20 to-transparent rounded-xl p-4 border border-cyan-500/30">
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">We Process Instantly</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">No questions, no forms, no waiting period</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/40 md:order-2">
+                      <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-green-600 font-black text-xs sm:text-sm">3</span>
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className="w-full md:flex-1 md:text-right md:order-1">
+                      <div className="bg-gradient-to-r from-green-500/20 to-transparent rounded-xl p-4 border border-green-500/30">
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Money Back in Your Account</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">Full refund within 24-48 hours. Done!</p>
+                      </div>
+                    </div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block md:flex-1 md:order-3" />
+                  </div>
+                </div>
               </div>
 
-              <div className="text-center">
-                <p className="text-teal-400 font-bold text-sm sm:text-lg">
-                  You literally have NOTHING to lose and everything to gain.
-                </p>
+              {/* Bottom Message */}
+              <div className="mt-6 sm:mt-10 text-center">
+                <div className="inline-block bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
+                  <p className="text-white font-bold text-sm sm:text-lg mb-2">
+                    That's it. <span className="text-teal-400">3 simple steps.</span>
+                  </p>
+                  <p className="text-gray-400 text-xs sm:text-sm">
+                    We respect your decision and value your trust. No hard feelings, ever.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -1713,52 +1868,165 @@ export default function DentistCleanLandingPage() {
               <ExpertPersona {...DR_VOSS_DATA} />
             </div>
 
-            {/* Dr. Voss Photo Gallery - Speaking, At Work, With Team */}
-            <div className={`mt-8 sm:mt-12 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-              <p className="text-center text-gray-500 text-xs sm:text-sm uppercase tracking-wide font-bold mb-4">
-                Dr. Voss in Action
-              </p>
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto">
-                {/* Photo 1 - Clinical */}
-                <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg group">
-                  <Image
-                    src="/images/dentist/dr-voss-1.webp"
-                    alt="Dr. Voss in his dental practice"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <span className="absolute bottom-2 left-2 text-white text-[10px] sm:text-xs font-bold">In Practice</span>
-                </div>
-                {/* Photo 2 - Conference/Speaking */}
-                <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg group">
-                  <Image
-                    src="/images/dentist/dr-voss-conference.webp"
-                    alt="Dr. Voss speaking at dental conference"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <span className="absolute bottom-2 left-2 text-white text-[10px] sm:text-xs font-bold">Speaking</span>
-                </div>
-                {/* Photo 3 - With Team */}
-                <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg group">
-                  <Image
-                    src="/images/dentist/dr-voss-team.webp"
-                    alt="Dr. Voss with his dental team"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <span className="absolute bottom-2 left-2 text-white text-[10px] sm:text-xs font-bold">With Team</span>
-                </div>
-              </div>
-            </div>
 
             {/* SEO-friendly expert description */}
             <p className="sr-only">
               Dr. Alexander Voss is an aesthetic and restorative dentist with over 12 years of experience in veneers, smile makeovers, dental implants, and full mouth rehabilitation. He has helped dentists across 15+ countries attract high-value cosmetic patients.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          REASONS WHY - Why Is This Only $47? (Hormozi Principle)
+          ================================================================ */}
+      <section
+        id="reasons-why"
+        data-animate
+        className="py-8 sm:py-16 bg-gradient-to-b from-black to-slate-950"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-3xl mx-auto">
+            <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
+              <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
+                Why Is This Only <span className="text-gradient-premium">$47</span>?
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
+            </div>
+
+            <div className={`space-y-4 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              {[
+                {
+                  num: '1',
+                  title: 'I Use This Every Day',
+                  desc: 'I built this system for my own practice first. I use it to create 3-5 videos weekly. This works because it solves MY problem before it solves yours.',
+                },
+                {
+                  num: '2',
+                  title: 'I Don\'t Need To Charge You A Lot',
+                  desc: 'Unlike software companies that need recurring revenue, my success comes from helping dentists succeed. When you win, I win. So I price based on value delivered, not what I can get away with.',
+                },
+                {
+                  num: '3',
+                  title: 'High Volume = Better For Both Of Us',
+                  desc: `At $47, I can reach ${memberStats.totalMembers.toLocaleString()}+ dentists. Even if only 10% create videos and 5% get results, that's hundreds of dentists getting new patients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 dentists.`,
+                },
+                {
+                  num: '4',
+                  title: 'I\'m Betting On You',
+                  desc: 'The $50 guarantee isn\'t a loss leader. It\'s me saying: "I\'m confident this works. I\'ll literally pay you $50 if it doesn\'t." That confidence only works if the price is low enough that you\'ll actually TRY it.',
+                },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4 bg-white/5 border border-teal-500/20 rounded-xl p-4 sm:p-5">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-teal-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-teal-400 font-black text-sm sm:text-base">{item.num}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-sm sm:text-base mb-1">{item.title}</h3>
+                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className={`mt-6 text-center ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+              <p className="text-teal-400 font-bold text-sm sm:text-base">
+                Bottom line: This is priced to be tried, not priced to be expensive.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          10.5 GUARANTEE #3 - WHITE SECTION - NO QUESTIONS ASKED
+          ================================================================ */}
+      <section
+        id="guarantee3"
+        data-animate
+        className="py-10 sm:py-20 bg-white"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className={`bg-gradient-to-br from-teal-500/5 via-white to-cyan-500/5 border-2 border-teal-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
+              visibleSections.has('guarantee3') ? 'animate-fade-in-up' : ''
+            }`}>
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+              <div className="relative z-10">
+                <div className="text-center mb-5 sm:mb-8">
+                  <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-teal-500 animate-pulse" />
+                    <span className="text-teal-600 font-bold text-xs sm:text-sm uppercase">Zero Risk Promise</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
+                    Don't Love It? <span className="text-teal-500">Full Refund.</span>
+                  </h2>
+                  <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto">
+                    If you feel it doesn't work for you, seems complicated, or simply isn't what you expected — you get every penny back.
+                  </p>
+                </div>
+
+                {/* Main content card */}
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-xl border border-gray-100">
+                  <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
+                    {/* Badge */}
+                    <div className="relative flex-shrink-0">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 relative">
+                        <div className="absolute inset-0 rounded-full border-4 border-dashed border-teal-500/40 animate-spin-slow" />
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-500 via-cyan-500 to-teal-500 shadow-2xl shadow-teal-500/30 flex flex-col items-center justify-center">
+                          <div className="absolute inset-2 rounded-full bg-white flex flex-col items-center justify-center text-center p-2">
+                            <Heart className="w-5 h-5 sm:w-7 sm:h-7 text-teal-500 mb-1" />
+                            <span className="text-teal-600 font-black text-xs sm:text-sm leading-none">NO</span>
+                            <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Questions</span>
+                            <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Asked</span>
+                          </div>
+                        </div>
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
+                          30 DAYS
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Text */}
+                    <div className="flex-1 text-center md:text-left">
+                      <div className="space-y-3 sm:space-y-4">
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                          <p className="text-gray-700 text-sm sm:text-base">
+                            <span className="font-bold text-gray-900">Think it's too complicated?</span> Refund.
+                          </p>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                          <p className="text-gray-700 text-sm sm:text-base">
+                            <span className="font-bold text-gray-900">Doesn't fit your practice?</span> Refund.
+                          </p>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                          <p className="text-gray-700 text-sm sm:text-base">
+                            <span className="font-bold text-gray-900">Changed your mind?</span> Still a refund.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom highlight */}
+                  <div className="mt-5 sm:mt-8 pt-5 sm:pt-6 border-t border-gray-100 text-center">
+                    <p className="text-gray-900 font-bold text-sm sm:text-lg">
+                      We only want happy customers. <span className="text-teal-500">Period.</span>
+                    </p>
+                    <p className="text-gray-500 text-xs sm:text-sm mt-1">
+                      Try the entire system for 30 days. If it's not for you, one email and you're refunded.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1816,7 +2084,7 @@ export default function DentistCleanLandingPage() {
                   <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-teal-200">
-                  <p className="text-teal-700 font-bold text-xs">Cost: $37 one-time. Worst case: refund + $50</p>
+                  <p className="text-teal-700 font-bold text-xs">Cost: $47 one-time. Worst case: refund + $50</p>
                 </div>
               </div>
             </div>
@@ -1825,8 +2093,8 @@ export default function DentistCleanLandingPage() {
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
               <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $37 investment.</p>
-                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $37.</p>
+                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $47 investment.</p>
+                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $47.</p>
                 <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you're up $50</span> and lost nothing.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
@@ -1835,7 +2103,7 @@ export default function DentistCleanLandingPage() {
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-teal-400">$37</span>
+                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -1845,7 +2113,7 @@ export default function DentistCleanLandingPage() {
               {/* CTA Button */}
               <Link
                 href={WHOP_CHECKOUT_LINK}
-                onClick={() => trackInitiateCheckout('dentist-main', 37)}
+                onClick={() => trackInitiateCheckout('dentist-main', 47)}
                 className="group relative w-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -1865,7 +2133,7 @@ export default function DentistCleanLandingPage() {
 
             {/* Final Reassurance */}
             <p className="text-black/60 text-xs sm:text-sm">
-              Join 500+ dentists • Instant access • No risk
+              Join {memberStats.totalMembers.toLocaleString()}+ dentists • Instant access • No risk
             </p>
           </div>
         </div>
@@ -1899,7 +2167,7 @@ export default function DentistCleanLandingPage() {
                 <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-teal-400 font-black text-lg sm:text-xl">$37</p>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$47</p>
                     <p className="text-gray-500 text-xs">Cost</p>
                   </div>
                   <div>
@@ -1919,7 +2187,7 @@ export default function DentistCleanLandingPage() {
 
               <a
                 href={WHOP_CHECKOUT_LINK}
-                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 37)}
+                onClick={() => trackInitiateCheckout('cloneyourself-dentist', 47)}
                 className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
@@ -1972,11 +2240,11 @@ export default function DentistCleanLandingPage() {
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
             href={WHOP_CHECKOUT_LINK}
-            onClick={() => trackInitiateCheckout('cloneyourself-dentist-sticky', 37)}
+            onClick={() => trackInitiateCheckout('cloneyourself-dentist-sticky', 47)}
             className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
-            <span className="text-teal-200 font-bold">$37</span>
+            <span className="text-teal-200 font-bold">$47</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>
@@ -2036,6 +2304,14 @@ export default function DentistCleanLandingPage() {
           width: 20px;
           height: 20px;
           opacity: 0.3;
+          overflow: hidden;
+        }
+
+        .testimonial-quote-icon-dentist svg {
+          width: 100%;
+          height: 100%;
+          max-width: 20px;
+          max-height: 20px;
         }
 
         @keyframes scroll-dentist {

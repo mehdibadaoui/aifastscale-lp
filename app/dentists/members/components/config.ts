@@ -1,0 +1,388 @@
+// ============================================
+// COURSE CONFIGURATION
+// ============================================
+
+import {
+  PlayCircle, Target, Trophy, Zap, Gift, Flame, Crown, StickyNote, Bookmark,
+  FileText, Calendar, Rocket, TrendingUp, Headphones, Users, Brain, Star,
+  Megaphone, Search, MessageSquare, DollarSign, Video, Bell
+} from 'lucide-react'
+
+// Dynamic member count calculation
+const MEMBER_STATS_CONFIG = {
+  baseMembers: 1750,           // Starting count
+  startDate: new Date('2024-12-01'), // When we "started" counting
+  dailyGrowthMin: 40,          // Min new members per day
+  dailyGrowthMax: 70,          // Max new members per day
+  activePercentMin: 15,        // Min % of active users
+  activePercentMax: 35,        // Max % of active users
+}
+
+// Seeded random for consistent daily values
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000
+  return x - Math.floor(x)
+}
+
+// Get dynamic member stats
+export function getMemberStats() {
+  const now = new Date()
+  const daysSinceStart = Math.floor((now.getTime() - MEMBER_STATS_CONFIG.startDate.getTime()) / (1000 * 60 * 60 * 24))
+
+  // Calculate total members (base + daily growth)
+  let totalMembers = MEMBER_STATS_CONFIG.baseMembers
+  for (let i = 0; i < daysSinceStart; i++) {
+    const daySeed = i + 1000 // Seed for this day
+    const dailyGrowth = Math.floor(
+      MEMBER_STATS_CONFIG.dailyGrowthMin +
+      seededRandom(daySeed) * (MEMBER_STATS_CONFIG.dailyGrowthMax - MEMBER_STATS_CONFIG.dailyGrowthMin)
+    )
+    totalMembers += dailyGrowth
+  }
+
+  // Calculate active users (changes throughout the day based on hour)
+  const hourSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate() + now.getHours()
+  const activePercent = MEMBER_STATS_CONFIG.activePercentMin +
+    seededRandom(hourSeed) * (MEMBER_STATS_CONFIG.activePercentMax - MEMBER_STATS_CONFIG.activePercentMin)
+  const activeNow = Math.floor(totalMembers * (activePercent / 100))
+
+  // Today's new members (partial day)
+  const todaySeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
+  const todayFullGrowth = Math.floor(
+    MEMBER_STATS_CONFIG.dailyGrowthMin +
+    seededRandom(todaySeed) * (MEMBER_STATS_CONFIG.dailyGrowthMax - MEMBER_STATS_CONFIG.dailyGrowthMin)
+  )
+  const hourProgress = now.getHours() / 24
+  const todayNewMembers = Math.floor(todayFullGrowth * hourProgress)
+
+  return {
+    totalMembers: totalMembers + todayNewMembers,
+    activeNow,
+    todayNewMembers,
+    activePercent: Math.round(activePercent),
+  }
+}
+
+export const COURSE_CONFIG = {
+  title: "CloneYourself",
+  subtitle: "for Dentists",
+  password: "dentist2026",
+  supportEmail: "support@aifastscale.com",
+  welcomeVideo: {
+    wistiaId: "myh13ayp9d", // Dr. Voss welcome video
+    title: "Welcome from Dr. Voss",
+    duration: "2 min",
+  },
+  drVoss: {
+    name: "Dr. Alexander Voss",
+    title: "DDS, MClinDent",
+    image: "/images/dentist/dr-voss.webp",
+    quote: "I created this system because I was YOU. Spending thousands on marketing with unpredictable results. Now I want to help you achieve the same transformation.",
+  },
+  socialProof: {
+    studentCount: 847, // Fallback, use getMemberStats() for dynamic
+    rating: 4.9,
+    reviewCount: 156,
+    countriesServed: 23,
+  },
+}
+
+export const DEV_AUTO_LOGIN = false
+
+// VIP Guests - personalized login
+export const VIP_GUESTS = [
+  {
+    id: 'matias-gaete',
+    name: 'Matías Gaete',
+    email: 'mngaetemomberg@gmail.com',
+    password: 'matias-vip-2025',
+    welcomeMessage: 'Welcome back, Dr. Matías! Enjoy your exclusive access.',
+    badge: 'VIP Guest',
+  },
+]
+
+// Blocked users - will be auto-logged out
+export const BLOCKED_USERS = [
+  'sukvinder-sidhu',
+]
+
+// Course modules
+export const COURSE_MODULES = [
+  {
+    id: 'module-1',
+    number: 1,
+    title: 'Scriptwriting with Your Dentist AI Mentor',
+    description: "Learn how to use your personalized Dentist AI mentor to generate high-quality short-form video scripts, story ideas, and content plans in minutes.",
+    duration: '3 min',
+    durationMinutes: 3,
+    wistiaId: 'myh13ayp9d',
+    lessons: ['Write video scripts in minutes', 'Using Dentist Expert Copywriter AI', 'Get scripts for trust & bookings'],
+    resources: [
+      { name: 'Dentist Expert Copywriter GPT', url: 'https://chatgpt.com/g/g-693ff08b15208191b94265efd521f783-dentist-expert-copywriter', type: 'link' as const },
+    ],
+  },
+  {
+    id: 'module-2',
+    number: 2,
+    title: 'Accounts You Need to Get Started',
+    description: "Set up the essential tools. I'll show you exactly where to register, which plan to choose, and how to avoid mistakes.",
+    duration: '5 min',
+    durationMinutes: 5,
+    wistiaId: 'lpkrdgr19e',
+    lessons: ['Where to register', 'Which plan to choose', 'Avoiding common mistakes'],
+    resources: [
+      { name: 'Google AI Pro (1-month free trial)', url: 'https://one.google.com/about/google-ai-plans/', type: 'link' as const },
+      { name: 'Google Flow (AI Video Tool)', url: 'https://labs.google/flow/about', type: 'link' as const },
+    ],
+  },
+  {
+    id: 'module-3',
+    number: 3,
+    title: 'How to Make Any Photo Talk',
+    description: "Turn a single photo into a realistic talking video. The exact process, right settings, and how to avoid common errors.",
+    duration: '6 min',
+    durationMinutes: 6,
+    wistiaId: 'n4lx79ecbo',
+    lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
+    resources: [
+      { name: 'Dentist AI Talking Video Prompt', url: '/products/dentist/Dentist_AI_Talking_Video_Prompt_Universal.pdf', type: 'file' as const },
+    ],
+  },
+  {
+    id: 'module-4',
+    number: 4,
+    title: 'Edit Your AI Video in Minutes',
+    description: "Edit your AI videos quickly using simple tools like CapCut. No experience required.",
+    duration: '4 min',
+    durationMinutes: 4,
+    wistiaId: 'j2reo83n4z',
+    lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
+    resources: [
+      { name: 'Background Music Collection', url: '/products/dentist/Background music/', type: 'folder' as const },
+    ],
+  },
+  {
+    id: 'module-5',
+    number: 5,
+    title: 'Create Multiple Realistic Images',
+    description: "Generate multiple realistic images of yourself using one reference photo. Different styles, locations, outfits.",
+    duration: '5 min',
+    durationMinutes: 5,
+    wistiaId: '0a48x7ur8z',
+    lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
+    resources: [],
+  },
+  {
+    id: 'module-6',
+    number: 6,
+    title: 'Scaling & Automation',
+    description: 'Build a content machine that runs on autopilot. Batch create videos and scale your production.',
+    duration: '5 min',
+    durationMinutes: 5,
+    wistiaId: null,
+    lessons: ['Batch creation', 'Content calendar', 'Scale without burnout'],
+    comingSoon: true,
+    resources: [],
+  },
+]
+
+export const TOTAL_RUNTIME = COURSE_MODULES.filter(m => !m.comingSoon).reduce((acc, m) => acc + m.durationMinutes, 0)
+
+// Bonuses
+export const BONUSES = [
+  { id: 'bonus-1', name: '100 Viral Dental Scripts', value: 297, icon: FileText, description: 'Copy-paste scripts that go viral on social media', category: 'Content', url: '/products/dentist/bonuses/100-viral-scripts.pdf', image: '/images/dentist/viral-scripts.webp' },
+  { id: 'bonus-2', name: '365-Day Content Calendar', value: 197, icon: Calendar, description: 'Never run out of content ideas for a whole year', category: 'Planning', url: '/products/dentist/bonuses/365-content-calendar.pdf', image: '/images/dentist/social-templates.webp' },
+  { id: 'bonus-3', name: 'Website Template (Canva)', value: 397, icon: Rocket, description: 'Professional dental website template for Canva', category: 'Website', url: '/products/dentist/bonuses/website-template-canva.pdf', image: '/images/dentist/website-template.webp' },
+  { id: 'bonus-3b', name: 'FREE BONUS: Elementor Template', value: 0, icon: Rocket, description: 'Extra free WordPress Elementor theme - EverBright', category: 'Website', url: '/products/dentist/bonuses/website-template-elementor.zip', image: '/images/dentist/website-template.webp', isFreeBonus: true },
+  { id: 'bonus-4', name: 'Profit Calculator Spreadsheet', value: 247, icon: TrendingUp, description: 'Find hidden profits in your practice instantly', category: 'Tools', url: '/products/dentist/bonuses/profit-calculator.xlsx', image: '/images/dentist/profit-simulator.webp' },
+  { id: 'bonus-5', name: 'Front Desk Phone Scripts', value: 297, icon: Headphones, description: 'Convert more phone calls into booked appointments', category: 'Scripts', url: '/products/dentist/bonuses/front-desk-scripts.pdf', image: '/images/dentist/front-desk-scripts.webp' },
+  { id: 'bonus-6', name: 'Patient Forms Bundle', value: 147, icon: FileText, description: 'Professional intake forms that save hours', category: 'Forms', url: '/products/dentist/bonuses/patient-forms.zip', image: '/images/dentist/patient-forms.webp' },
+  { id: 'bonus-7', name: 'Referral Machine System', value: 347, icon: Users, description: 'Turn happy patients into your best referral source', category: 'Marketing', url: '/products/dentist/bonuses/referral-system.pdf', image: '/images/dentist/referral-machine.webp' },
+  { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 197, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-693ff08b15208191b94265efd521f783-dentist-expert-copywriter', image: '/images/dentist/ai-generator.webp' },
+  { id: 'bonus-9', name: '5-Star Review System', value: 297, icon: Star, description: 'Get 15+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/dentist/bonuses/review-system.pdf', image: '/images/dentist/review-explosion.webp' },
+]
+
+export const BONUS_CATEGORIES = ['All', ...Array.from(new Set(BONUSES.map(b => b.category)))]
+export const TOTAL_BONUS_VALUE = BONUSES.reduce((acc, b) => acc + b.value, 0)
+
+// Achievements
+export const ACHIEVEMENTS = [
+  { id: 'first-video', name: 'First Steps', description: 'Complete your first module', icon: PlayCircle, tier: 'bronze', points: 50 },
+  { id: 'halfway', name: 'Halfway Hero', description: 'Complete 50% of the course', icon: Target, tier: 'silver', points: 100 },
+  { id: 'completed', name: 'AI Video Master', description: 'Complete all modules', icon: Trophy, tier: 'gold', points: 250 },
+  { id: 'fast-learner', name: 'Fast Learner', description: 'Complete 3 modules in one session', icon: Zap, tier: 'silver', points: 100 },
+  { id: 'bonus-collector', name: 'Bonus Collector', description: 'Download 5 bonuses', icon: Gift, tier: 'bronze', points: 50 },
+  { id: 'streak-3', name: '3-Day Streak', description: 'Learn 3 days in a row', icon: Flame, tier: 'bronze', points: 75 },
+  { id: 'streak-7', name: 'Week Warrior', description: 'Learn 7 days in a row', icon: Crown, tier: 'gold', points: 200 },
+  { id: 'note-taker', name: 'Note Taker', description: 'Write your first note', icon: StickyNote, tier: 'bronze', points: 25 },
+  { id: 'bookworm', name: 'Bookworm', description: 'Bookmark 3 modules', icon: Bookmark, tier: 'bronze', points: 50 },
+]
+
+// Coming Soon Courses
+export const COMING_SOON_COURSES = [
+  {
+    id: 'course-meta-ads',
+    title: 'Meta Ads Mastery',
+    subtitle: 'for Dentists',
+    description: 'Run profitable Facebook & Instagram ads that fill your appointment book. From $0 to your first 50 patients.',
+    icon: Megaphone,
+    color: 'from-blue-500 to-indigo-600',
+    features: ['Facebook & Instagram Ads', 'Targeting local patients', 'Ad creatives that convert', 'Budget optimization'],
+    estimatedLaunch: 'Q1 2025',
+    waitlistCount: 312,
+    price: 297,
+  },
+  {
+    id: 'course-google-ads',
+    title: 'Google Ads Domination',
+    subtitle: 'for Dentists',
+    description: 'Show up first when patients search "dentist near me". Capture high-intent leads ready to book.',
+    icon: Search,
+    color: 'from-emerald-500 to-teal-600',
+    features: ['Search ads setup', 'Local service ads', 'Keyword research', 'Landing page secrets'],
+    estimatedLaunch: 'Q1 2025',
+    waitlistCount: 287,
+    price: 297,
+  },
+  {
+    id: 'course-reviews',
+    title: '5-Star Review Machine',
+    subtitle: 'for Dentists',
+    description: 'Get 20+ Google reviews every month on autopilot. Build unstoppable social proof.',
+    icon: Star,
+    color: 'from-amber-500 to-orange-600',
+    features: ['Automated review requests', 'Response templates', 'Handling negative reviews', 'Review generation scripts'],
+    estimatedLaunch: 'Q2 2025',
+    waitlistCount: 456,
+    price: 197,
+  },
+  {
+    id: 'course-case-acceptance',
+    title: 'High-Ticket Case Acceptance',
+    subtitle: 'for Dentists',
+    description: 'Close more implants, veneers, and Invisalign cases. Turn consultations into $10K+ treatments.',
+    icon: DollarSign,
+    color: 'from-green-500 to-emerald-600',
+    features: ['Case presentation mastery', 'Overcoming objections', 'Payment plan scripts', 'Follow-up sequences'],
+    estimatedLaunch: 'Q2 2025',
+    waitlistCount: 523,
+    price: 397,
+  },
+  {
+    id: 'course-tiktok-reels',
+    title: 'TikTok & Reels Viral System',
+    subtitle: 'for Dentists',
+    description: 'Go viral with short-form content. Turn views into booked appointments.',
+    icon: Video,
+    color: 'from-pink-500 to-rose-600',
+    features: ['Viral content formulas', 'Trending sounds & hooks', 'Before/after showcases', 'Building your brand'],
+    estimatedLaunch: 'Q2 2025',
+    waitlistCount: 389,
+    price: 247,
+  },
+  {
+    id: 'course-patient-reactivation',
+    title: 'Patient Reactivation System',
+    subtitle: 'for Dentists',
+    description: 'Bring back inactive patients and unlock hidden revenue sitting in your database.',
+    icon: MessageSquare,
+    color: 'from-violet-500 to-purple-600',
+    features: ['Email sequences', 'SMS campaigns', 'Recall scripts', 'Re-engagement offers'],
+    estimatedLaunch: 'Q3 2025',
+    waitlistCount: 234,
+    price: 197,
+  },
+]
+
+export interface ComingSoonCourse {
+  id: string
+  title: string
+  subtitle: string
+  description: string
+  icon: any
+  color: string
+  features: string[]
+  estimatedLaunch: string
+  waitlistCount: number
+  price: number
+}
+
+// Keyboard shortcuts
+export const KEYBOARD_SHORTCUTS = [
+  { key: '←', action: 'Previous module' },
+  { key: '→', action: 'Next module' },
+  { key: 'Space', action: 'Play/Pause video' },
+  { key: 'M', action: 'Mark module complete' },
+  { key: 'N', action: 'Open notes' },
+  { key: 'B', action: 'Toggle bookmark' },
+  { key: 'D', action: 'Toggle dark mode' },
+  { key: '?', action: 'Show shortcuts' },
+  { key: 'Esc', action: 'Close modal' },
+]
+
+// Types
+export interface CourseModule {
+  id: string
+  number: number
+  title: string
+  description: string
+  duration: string
+  durationMinutes: number
+  wistiaId: string | null
+  lessons: string[]
+  resources: { name: string; url: string; type: 'link' | 'file' | 'folder' }[]
+  comingSoon?: boolean
+}
+
+export interface Bonus {
+  id: string
+  name: string
+  value: number
+  icon: any
+  description: string
+  category: string
+  url: string
+  image: string
+}
+
+export interface Achievement {
+  id: string
+  name: string
+  description: string
+  icon: any
+  tier: 'bronze' | 'silver' | 'gold'
+  points: number
+}
+
+export interface VideoProgress {
+  percent: number
+  seconds: number
+}
+
+export interface PlatformState {
+  // Auth
+  isAuthenticated: boolean
+  // Navigation
+  activeSection: 'dashboard' | 'course' | 'bonuses' | 'achievements'
+  currentModuleIndex: number
+  // Progress
+  completedModules: string[]
+  downloadedBonuses: string[]
+  videoProgress: Record<string, VideoProgress>
+  completionTimestamps: Record<string, string>
+  // Gamification
+  totalPoints: number
+  streak: number
+  unlockedAchievementIds: string[]
+  sessionCompletedCount: number
+  totalWatchTimeMinutes: number
+  // User features
+  moduleNotes: Record<string, string>
+  bookmarkedModules: string[]
+  // Settings
+  darkMode: boolean
+  autoPlayNext: boolean
+  showCompletedBadge: boolean
+  studentName: string
+  reducedMotion: boolean
+}

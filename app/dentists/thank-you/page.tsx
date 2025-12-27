@@ -46,31 +46,27 @@ function ThankYouContent() {
   // CRITICAL: Prevent double-firing from React StrictMode
   const hasTrackedPurchase = useRef(false)
 
-  const password = "im the best dentist in the world"
+  const password = "dentist2026"
 
-  // Fire purchase tracking for TikTok
+  // Fire purchase tracking - ONLY for $47 main course (not upsell/downsell)
   useEffect(() => {
     if (hasTrackedPurchase.current) return
     hasTrackedPurchase.current = true
 
-    // Determine product and value based on purchase type
-    let productName = 'CloneYourself Dentist'
-    let value = 37
-
-    if (purchased === 'oto-premium') {
-      productName = 'CloneYourself Dentist - Premium Bundle'
-      value = 565
-    } else if (purchased === 'oto-starter') {
-      productName = 'CloneYourself Dentist - Starter Bundle'
-      value = 295
-    } else if (purchased === 'downsell') {
-      productName = 'CloneYourself Dentist - Downsell'
-      value = 195
+    // ONLY track Purchase for main course ($47)
+    // Skip tracking for upsell/downsell to keep ad attribution clean
+    if (purchased === 'oto-premium' || purchased === 'oto-starter' || purchased === 'downsell') {
+      console.log('Skipping Purchase tracking for upsell/downsell:', purchased)
+      return
     }
+
+    // Main course values only
+    const productName = 'CloneYourself Dentist'
+    const value = 47
 
     // Track TikTok CompletePayment (browser pixel)
     trackTikTokEvent('CompletePayment', {
-      content_id: `dentist-${purchased || 'main'}`,
+      content_id: 'dentist-main',
       content_name: productName,
       value: value,
       currency: 'USD'
@@ -83,7 +79,7 @@ function ThankYouContent() {
         value: value,
         currency: 'USD',
         items: [{
-          item_id: `dentist-${purchased || 'main'}`,
+          item_id: 'dentist-main',
           item_name: productName,
           price: value,
           quantity: 1
@@ -94,7 +90,7 @@ function ThankYouContent() {
     // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
     // Uses retry logic to ensure fbq is loaded before tracking
     trackMetaPurchase({
-      content_ids: [`dentist-${purchased || 'main'}`],
+      content_ids: ['dentist-main'],
       content_name: productName,
       content_type: 'product',
       value: value,
@@ -123,7 +119,7 @@ function ThankYouContent() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         event_name: 'CompletePayment',
-        content_id: `dentist-${purchased || 'main'}`,
+        content_id: 'dentist-main',
         content_name: productName,
         value: value,
         currency: 'USD',
@@ -134,8 +130,11 @@ function ThankYouContent() {
     }).catch(console.error)
 
     // Get fbc/fbp from cookies OR localStorage (localStorage has pre-redirect values)
-    const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || savedTracking._fbc || ''
-    const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || savedTracking._fbp || ''
+    // Use substring instead of split to preserve values containing '=' characters
+    const fbcCookie = document.cookie.split('; ').find(row => row.startsWith('_fbc='))
+    const fbc = fbcCookie ? fbcCookie.substring(5) : (savedTracking._fbc || '')
+    const fbpCookie = document.cookie.split('; ').find(row => row.startsWith('_fbp='))
+    const fbp = fbpCookie ? fbpCookie.substring(5) : (savedTracking._fbp || '')
 
     // Send server-side event via DENTIST-SPECIFIC Meta CAPI (Pixel: 834713712860127)
     // This goes to the separate dentist ad account for clean attribution
@@ -151,7 +150,7 @@ function ThankYouContent() {
         currency: 'USD',
         contentName: productName,
         contentType: 'product',
-        contentIds: [`dentist-${purchased || 'main'}`]
+        contentIds: ['dentist-main']
       })
     }).catch(console.error)
   }, [purchased, searchParams])

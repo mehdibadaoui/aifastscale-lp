@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
-  title: 'CloneYourself for Dentists | AI Video Marketing System | $37',
+  title: 'CloneYourself for Dentists | AI Video Marketing System | $47',
   description:
     'Dentists: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic patients. No filming needed. Created by Dr. Alexander Voss.',
   keywords:
@@ -33,10 +33,11 @@ export default function DentistLayout({
 }) {
   return (
     <>
-      {/* DENTIST-SPECIFIC META PIXEL - Separate from real estate pixel */}
-      {/* Pixel ID: 834713712860127 */}
+      {/* DENTIST META PIXELS - BOTH pixels for maximum tracking */}
+      {/* Pixel 1: 834713712860127 (Dentists Clone account) */}
+      {/* Pixel 2: 1176362697938270 (ad3 account) */}
       <Script
-        id="dentist-meta-pixel"
+        id="dentist-meta-pixels"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
@@ -48,7 +49,12 @@ export default function DentistLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
+
+            // Initialize BOTH dentist pixels
             fbq('init', '834713712860127');
+            fbq('init', '1176362697938270');
+
+            // Track PageView on both
             fbq('track', 'PageView');
           `,
         }}
@@ -59,6 +65,13 @@ export default function DentistLayout({
           width="1"
           style={{ display: 'none' }}
           src="https://www.facebook.com/tr?id=834713712860127&ev=PageView&noscript=1"
+          alt=""
+        />
+        <img
+          height="1"
+          width="1"
+          style={{ display: 'none' }}
+          src="https://www.facebook.com/tr?id=1176362697938270&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>

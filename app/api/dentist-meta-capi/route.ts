@@ -2,9 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 
 // DENTIST Meta Conversions API Configuration
-// This is separate from the real estate pixel for clean attribution
-const DENTIST_PIXEL_ID = '834713712860127'
-const DENTIST_ACCESS_TOKEN = process.env.DENTIST_META_CAPI_TOKEN || ''
+// BOTH pixels for maximum tracking coverage
+const PIXELS = [
+  {
+    id: '834713712860127',
+    token: process.env.DENTIST_META_CAPI_TOKEN || '',
+    name: 'Dentist Pixel 1'
+  },
+  {
+    id: '1176362697938270',
+    token: process.env.DENTIST_PIXEL2_CAPI_TOKEN || '',
+    name: 'Dentist Pixel 2'
+  }
+]
+
 const API_VERSION = 'v18.0'
 
 // Hash function for PII (required by Meta)
@@ -23,14 +34,14 @@ interface EventData {
   event_source_url: string
   action_source: 'website'
   user_data: {
-    em?: string // hashed email
-    ph?: string // hashed phone
-    fn?: string // hashed first name
-    ln?: string // hashed last name
+    em?: string
+    ph?: string
+    fn?: string
+    ln?: string
     client_ip_address?: string
     client_user_agent?: string
-    fbc?: string // click ID
-    fbp?: string // browser ID
+    fbc?: string
+    fbp?: string
     external_id?: string
   }
   custom_data?: {
@@ -75,26 +86,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if CAPI token is configured
-    if (!DENTIST_ACCESS_TOKEN) {
-      console.warn('DENTIST_META_CAPI_TOKEN not configured - skipping CAPI')
-      return NextResponse.json({
-        success: false,
-        message: 'CAPI not configured'
-      })
-    }
-
     // Get client info from headers
     const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0] ||
                      request.headers.get('x-real-ip') ||
                      ''
     const userAgent = request.headers.get('user-agent') || ''
 
+    // Generate unique event ID
+    const uniqueEventId = eventId || `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
     // Build event data
     const eventData: EventData = {
       event_name: eventName,
       event_time: Math.floor(Date.now() / 1000),
-      event_id: eventId || `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      event_id: uniqueEventId,
       event_source_url: sourceUrl || 'https://aifastscale.com/dentists',
       action_source: 'website',
       user_data: {
@@ -123,36 +128,46 @@ export async function POST(request: NextRequest) {
       if (contentIds) eventData.custom_data.content_ids = contentIds
     }
 
-    // Send to Meta Conversions API (DENTIST PIXEL)
-    const response = await fetch(
-      `https://graph.facebook.com/${API_VERSION}/${DENTIST_PIXEL_ID}/events?access_token=${DENTIST_ACCESS_TOKEN}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          data: [eventData],
-        }),
-      }
+    // Send to BOTH Meta pixels in parallel
+    const results = await Promise.allSettled(
+      PIXELS.filter(pixel => pixel.token).map(async (pixel) => {
+        const response = await fetch(
+          `https://graph.facebook.com/${API_VERSION}/${pixel.id}/events?access_token=${pixel.token}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              data: [eventData],
+            }),
+          }
+        )
+
+        const result = await response.json()
+
+        if (!response.ok) {
+          console.error(`${pixel.name} CAPI Error:`, result)
+          return { pixel: pixel.name, success: false, error: result }
+        }
+
+        console.log(`${pixel.name} CAPI ${eventName} sent:`, result)
+        return { pixel: pixel.name, success: true, events_received: result.events_received }
+      })
     )
 
-    const result = await response.json()
+    // Check results
+    const successful = results.filter(r => r.status === 'fulfilled' && (r.value as any).success)
+    const failed = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && !(r.value as any).success))
 
-    if (!response.ok) {
-      console.error('Dentist Meta CAPI Error:', result)
-      return NextResponse.json(
-        { success: false, error: result },
-        { status: response.status }
-      )
-    }
-
-    console.log(`Dentist Meta CAPI ${eventName} sent:`, result)
+    console.log(`Dentist CAPI: ${successful.length}/${PIXELS.length} pixels received ${eventName}`)
 
     return NextResponse.json({
-      success: true,
-      event_id: eventData.event_id,
-      events_received: result.events_received,
+      success: successful.length > 0,
+      event_id: uniqueEventId,
+      pixels_sent: successful.length,
+      pixels_total: PIXELS.filter(p => p.token).length,
+      results: results.map(r => r.status === 'fulfilled' ? r.value : { error: 'failed' })
     })
 
   } catch (error) {

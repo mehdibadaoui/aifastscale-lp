@@ -1,209 +1,163 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Play, Download, AlertCircle, X, Share2 } from 'lucide-react'
+import { Upload, Sparkles, Video, ArrowRight, CheckCircle, Loader, Download, AlertCircle, X, Shield, Clock, Zap, ChevronRight, Home, TrendingUp, Lightbulb, PenLine, Smartphone, Monitor, Star, Plus, Users, Play, ChevronLeft } from 'lucide-react'
 import Image from 'next/image'
 import DemoEmailCaptureModal from './DemoEmailCaptureModal'
-import { SITE_CONFIG, ROUTES } from '../config/constants'
+import FullSalesContent from './FullSalesContent'
 
 export default function TryDemoPage() {
+  // Step wizard state
+  const [currentStep, setCurrentStep] = useState(1)
   const [uploadedImages, setUploadedImages] = useState<string[]>([])
-  const [selectedScript, setSelectedScript] = useState('listing')
+  const [selectedScript, setSelectedScript] = useState<string | null>(null)
   const [customScript, setCustomScript] = useState('')
-  const [scriptMode, setScriptMode] = useState<'preset' | 'custom'>('preset')
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9'>('9:16')
+
+  // Common state
   const [isGenerating, setIsGenerating] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null)
   const [showEmailModal, setShowEmailModal] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [hasAttemptedGeneration, setHasAttemptedGeneration] = useState(false)
   const [progress, setProgress] = useState(0)
-  const [showShareModal, setShowShareModal] = useState(false)
-  const [showExitIntent, setShowExitIntent] = useState(false)
-  const [socialProofCount, setSocialProofCount] = useState(247)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Dynamic social proof counter
+  // Live counter
+  const [liveCount, setLiveCount] = useState(2847)
+
+  // Update live count periodically
   useEffect(() => {
     const interval = setInterval(() => {
-      setSocialProofCount(prev => prev + Math.floor(Math.random() * 3))
-    }, 45000) // Increment every 45 seconds
+      setLiveCount(prev => prev + 1)
+    }, 45000)
     return () => clearInterval(interval)
   }, [])
 
-  // Exit intent detection
+  // Clear error when step changes
   useEffect(() => {
-    let hasShownExitIntent = false
+    setError('')
+    setHasAttemptedGeneration(false)
+  }, [currentStep])
 
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !hasShownExitIntent && userEmail && !showExitIntent) {
-        hasShownExitIntent = true
-        setShowExitIntent(true)
-      }
-    }
+  const scripts = [
+    { id: 'intro', icon: Sparkles, iconColor: 'text-violet-500', iconBg: 'bg-gradient-to-br from-violet-100 to-indigo-100', name: 'Quick Test Video', text: "Hey! I'm a real estate agent testing out AI videos. Pretty cool, right? This took seconds!", badge: 'Most Popular', badgeColor: 'bg-violet-500' },
+    { id: 'listing', icon: Home, iconColor: 'text-emerald-500', iconBg: 'bg-gradient-to-br from-emerald-100 to-green-100', name: 'Property Teaser', text: "Just found an amazing property! Want to see how I showcase listings? Stay tuned for more!", badge: 'Try This', badgeColor: 'bg-emerald-500' },
+  ]
 
-    document.addEventListener('mouseleave', handleMouseLeave)
-    return () => document.removeEventListener('mouseleave', handleMouseLeave)
-  }, [userEmail, showExitIntent])
-
-  const scripts = {
-    listing: {
-      name: 'New Listing Announcement',
-      text: 'Just listed this stunning home in a prime location. Modern kitchen, spacious backyard, move-in ready. Schedule your showing today!',
-    },
-    market: {
-      name: 'Market Update',
-      text: 'Interest rates are favorable and inventory is moving fast. Now is the perfect time to buy or sell. Let\'s chat!',
-    },
-    tips: {
-      name: 'Home Buying Tips',
-      text: 'Top tip for buyers: Get pre-approved before house hunting. It shows you\'re serious and helps you move fast. Reach out anytime!',
-    },
-  }
-
-  // Word count for custom script (max ~16 words for 8 seconds)
   const customScriptWordCount = customScript.trim().split(/\s+/).filter(Boolean).length
-  const maxWords = 25
+  const maxWords = 15
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-
-    // Validate minimum 2 images
-    if (files.length < 2) {
-      setError('📸 Please upload at least 2 images (helps AI avoid celebrity detection)')
-      return
-    }
-
-    // Validate maximum 3 images
-    if (files.length > 3) {
-      setError('📸 Maximum 3 images allowed')
-      return
-    }
-
-    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
-    const newImages: string[] = []
-    let processedCount = 0
-
-    Array.from(files).forEach((file) => {
-      // Validate file size
-      if (file.size > 10 * 1024 * 1024) {
-        setError(`📦 "${file.name}" is too large. Please use photos under 10MB.`)
-        return
-      }
-
-      // Validate file type
-      if (!validTypes.includes(file.type)) {
-        setError(`📷 "${file.name}" is not a valid image file (JPEG, PNG, or WebP)`)
-        return
-      }
-
-      // Validate minimum size
-      if (file.size < 10 * 1024) {
-        setError(`📏 "${file.name}" is too small. Please use higher quality photos (at least 10KB).`)
-        return
-      }
-
+  // Compress image
+  const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.7): Promise<string> => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader()
-      reader.onloadend = () => {
-        newImages.push(reader.result as string)
-        processedCount++
-
-        if (processedCount === files.length) {
-          setUploadedImages(newImages)
-          setError('')
+      reader.onload = (e) => {
+        const img = document.createElement('img')
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          let width = img.width
+          let height = img.height
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width
+            width = maxWidth
+          }
+          canvas.width = width
+          canvas.height = height
+          const ctx = canvas.getContext('2d')
+          if (!ctx) { reject(new Error('Failed to get canvas context')); return }
+          ctx.drawImage(img, 0, 0, width, height)
+          resolve(canvas.toDataURL('image/jpeg', quality))
         }
+        img.onerror = () => reject(new Error('Failed to load image'))
+        img.src = e.target?.result as string
       }
-      reader.onerror = () => {
-        setError(`❌ Failed to read "${file.name}". Please try a different photo.`)
-      }
+      reader.onerror = () => reject(new Error('Failed to read file'))
       reader.readAsDataURL(file)
     })
   }
 
-  const handleGenerate = async () => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+    if (file.size > 10 * 1024 * 1024) { setError('Photo is too large. Please use one under 10MB.'); return }
+    if (!validTypes.includes(file.type)) { setError('Please use a JPEG, PNG, or WebP image.'); return }
+    if (uploadedImages.length >= 3) { setError('Maximum 3 photos allowed.'); return }
+
+    setIsUploading(true)
+    try {
+      const compressedImage = await compressImage(file, 800, 0.7)
+      setUploadedImages(prev => [...prev, compressedImage])
+      setError('')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    } catch (err) {
+      setError('Failed to process image. Please try again.')
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  const removeImage = (index: number) => {
+    setUploadedImages(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const handleScriptSelect = (scriptId: string) => {
+    setSelectedScript(scriptId)
+    setError('')
+    if (scriptId !== 'custom') {
+      setTimeout(() => setCurrentStep(3), 300)
+    }
+  }
+
+  // Generate video
+  const handleGenerateVideo = async () => {
     if (uploadedImages.length === 0) {
-      setError('Please upload at least 2 images first')
+      setError('Please upload at least 2 photos')
+      setCurrentStep(1)
       return
     }
 
-    if (uploadedImages.length < 2) {
-      setError('Please upload at least 2 images (helps AI avoid celebrity detection)')
-      return
-    }
+    const scriptText = selectedScript === 'custom' ? customScript : scripts.find(s => s.id === selectedScript)?.text || ''
 
-    // Validate custom script
-    if (scriptMode === 'custom') {
-      if (!customScript.trim()) {
-        setError('Please write a script or choose a preset')
-        return
-      }
-      if (customScriptWordCount > maxWords) {
-        setError(`Script is too long. Maximum ${maxWords} words allowed (currently ${customScriptWordCount} words)`)
-        return
-      }
+    if (!scriptText) {
+      setError('Please select or write a script')
+      return
     }
 
     setIsGenerating(true)
+    setHasAttemptedGeneration(true)
     setError('')
     setProgress(0)
 
-    // Simulate progress
     const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(progressInterval)
-          return 90
-        }
-        return prev + 10
-      })
-    }, 3000)
+      setProgress(prev => prev >= 90 ? 90 : prev + Math.random() * 15)
+    }, 2000)
 
     try {
-      // Get the script to use
-      const scriptText = scriptMode === 'custom'
-        ? customScript
-        : scripts[selectedScript as keyof typeof scripts].text
-
       const response = await fetch('/api/generate-video', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          images: uploadedImages, // Send all images - API will select best one
-          script: scriptText,
-          aspectRatio: aspectRatio,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ images: uploadedImages, script: scriptText, aspectRatio }),
       })
 
       clearInterval(progressInterval)
       setProgress(100)
 
       const data = await response.json()
-
       if (!response.ok) {
+        if (data.allPhotosFailed) {
+          throw new Error('Our AI needs different photos. Try casual selfies with natural lighting!')
+        }
         throw new Error(data.error || 'Failed to generate video')
       }
 
       setGeneratedVideo(data.videoUrl)
-      // Show email modal instead of video immediately
       setShowEmailModal(true)
     } catch (err: any) {
-      // Provide helpful error messages based on error type
-      let errorMessage = err.message || 'Something went wrong. Please try again.'
-
-      // Handle network errors
-      if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        errorMessage = '🌐 Network connection issue. Please check your internet and try again.'
-      }
-
-      // Handle timeout errors
-      if (errorMessage.includes('timeout') || errorMessage.includes('timed out')) {
-        errorMessage = '⏱️ Request took too long. Please try again - it usually works on the second attempt!'
-      }
-
-      setError(errorMessage)
+      setError(err.message || 'Something went wrong')
     } finally {
       clearInterval(progressInterval)
       setIsGenerating(false)
@@ -213,696 +167,698 @@ export default function TryDemoPage() {
   const handleEmailSubmit = (email: string) => {
     setUserEmail(email)
     setShowEmailModal(false)
-    // Video is now visible
+    // Video stays in state (generatedVideo) - no redirect needed
+    // The page will show the success view with full sales content
   }
 
-  const handleShare = (platform: string) => {
-    const url = `${SITE_CONFIG.url}${ROUTES.tryDemo}`
-    const text = 'Check out this amazing AI video tool! Create professional talking videos in 7 minutes 🚀'
+  // Progress tips
+  const progressTips = [
+    { threshold: 0, text: 'Analyzing your photo...' },
+    { threshold: 20, text: 'Creating facial movements...' },
+    { threshold: 40, text: 'Syncing lip movements...' },
+    { threshold: 60, text: 'Adding natural expressions...' },
+    { threshold: 80, text: 'Finalizing your video...' },
+  ]
+  const currentTip = progressTips.filter(t => progress >= t.threshold).pop()
 
-    const shareUrls: Record<string, string> = {
-      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-      copy: url
+  // Get CTA text based on step
+  const getStepCTA = () => {
+    if (currentStep === 1) {
+      if (uploadedImages.length < 2) return { text: `Upload ${2 - uploadedImages.length} more photo${uploadedImages.length === 1 ? '' : 's'}`, disabled: true }
+      return { text: `Continue with ${uploadedImages.length} photos`, disabled: false, action: () => setCurrentStep(2) }
     }
-
-    if (platform === 'copy') {
-      navigator.clipboard.writeText(url)
-      alert('✅ Link copied! Share it to unlock 50% off ($18.50 instead of $37)')
-    } else {
-      window.open(shareUrls[platform], '_blank', 'width=600,height=400')
-      setTimeout(() => {
-        alert('🎉 Thanks for sharing!')
-      }, 2000)
+    if (currentStep === 2) {
+      if (!selectedScript) return { text: 'Select a script', disabled: true }
+      if (selectedScript === 'custom' && !customScript.trim()) return { text: 'Write your script', disabled: true }
+      if (selectedScript === 'custom' && customScriptWordCount > maxWords) return { text: 'Script too long', disabled: true }
+      return { text: 'Continue to preview', disabled: false, action: () => setCurrentStep(3) }
     }
-    setShowShareModal(false)
+    // Step 3 - Check for error state
+    if (error && hasAttemptedGeneration) {
+      return {
+        text: 'Upload New Photos',
+        disabled: false,
+        action: () => {
+          setUploadedImages([])
+          setError('')
+          setHasAttemptedGeneration(false)
+          setCurrentStep(1)
+        },
+        isError: true
+      }
+    }
+    return { text: 'Create My Video', disabled: false, action: handleGenerateVideo }
   }
 
-  const handleReset = () => {
-    setUploadedImages([])
-    setGeneratedVideo(null)
-    setUserEmail(null)
-    setError('')
-    setProgress(0)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-  }
+  const ctaInfo = getStepCTA()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
-      {/* Header */}
-      <header className="border-b border-gray-800 bg-black/50 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 py-4">
+    <div className="relative min-h-screen overflow-hidden bg-[#fafafa]">
+      {/* Modern Gradient Background */}
+      <div className="pointer-events-none fixed inset-0" style={{ zIndex: 1 }}>
+        {/* Soft top gradient glow */}
+        <div className="absolute inset-x-0 top-0 h-[500px] bg-gradient-to-b from-violet-100/80 via-indigo-50/40 to-transparent" />
+
+        {/* Animated gradient orb - top right */}
+        <div className="absolute -right-32 -top-32 h-[500px] w-[500px] animate-glow rounded-full bg-gradient-to-br from-violet-200/50 via-indigo-200/30 to-transparent blur-[80px]" />
+
+        {/* Animated gradient orb - bottom left */}
+        <div className="absolute -bottom-32 -left-32 h-[400px] w-[400px] animate-glow-delayed rounded-full bg-gradient-to-tr from-blue-200/40 via-cyan-100/20 to-transparent blur-[80px]" />
+
+        {/* Subtle center glow */}
+        <div className="absolute left-1/2 top-1/3 h-[300px] w-[600px] -translate-x-1/2 animate-pulse-slow rounded-full bg-gradient-to-r from-purple-100/30 via-violet-100/40 to-indigo-100/30 blur-[100px]" />
+
+        {/* Dot pattern overlay */}
+        <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(139,92,246,0.15) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+      </div>
+      {/* Header - Optimized for all devices */}
+      <header className="relative z-10 sticky top-0 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+        <div className="mx-auto max-w-6xl px-3 py-2.5 sm:px-4 sm:py-3">
           <div className="flex items-center justify-between">
-            <a href="/" className="text-2xl font-black text-white">
-              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                AgentClone™
+            {/* Back button on mobile when not on step 1 */}
+            {currentStep > 1 && !generatedVideo && !isGenerating ? (
+              <button
+                onClick={() => setCurrentStep(currentStep - 1)}
+                className="flex items-center gap-1 rounded-lg px-2 py-1.5 text-slate-600 hover:bg-slate-100 sm:hidden"
+              >
+                <ChevronLeft className="h-5 w-5" />
+                <span className="text-sm font-medium">Back</span>
+              </button>
+            ) : (
+              <a href="/" className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 sm:h-9 sm:w-9">
+                  <Sparkles className="h-4 w-4 text-white sm:h-5 sm:w-5" />
+                </div>
+                <span className="text-lg font-bold text-slate-900 sm:text-xl">AgentClone</span>
+              </a>
+            )}
+
+            {/* Live counter - Always visible */}
+            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 sm:gap-2 sm:px-4 sm:py-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
               </span>
-            </a>
-            <a
-              href="/"
-              className="rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-2 text-sm font-bold text-black transition-all hover:scale-105"
-            >
-              Back to Home
+              <span className="text-xs font-semibold text-emerald-700 sm:text-sm">{liveCount.toLocaleString()} created</span>
+            </div>
+
+            {/* Desktop back link */}
+            <a href="/" className="hidden rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 sm:block">
+              Home
             </a>
           </div>
         </div>
       </header>
 
+      
       {/* Main Content */}
-      <main className="mx-auto max-w-6xl px-4 py-12">
-        {/* Hero Section */}
-        <div className="mb-12 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-4 py-2">
-            <Sparkles className="h-5 w-5 text-yellow-400" />
-            <span className="text-sm font-bold text-yellow-400">FREE DEMO - TRY IT NOW</span>
-          </div>
-          <h1 className="mb-4 text-4xl font-black md:text-6xl">
-            Turn Your Photo Into
-            <br />
-            <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-              AI Talking Video
-            </span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-400">
-            See how AgentClone™ works in real-time. Upload your photo, choose a script, and watch AI create a professional talking video in minutes.
-          </p>
-        </div>
+      <main className="relative z-10 mx-auto max-w-4xl px-3 py-6 pb-36 sm:px-4 sm:py-8 sm:pb-12 md:py-12 lg:pb-12">
+        {!generatedVideo || !userEmail ? (
+          <>
+            {/* Hero - Responsive sizing */}
+            <div className="mb-6 text-center sm:mb-8 md:mb-12">
+              {/* FREE Badge */}
+              <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg shadow-emerald-200 sm:mb-4 sm:px-4 sm:py-1.5 sm:text-sm">
+                <Zap className="h-3 w-3 sm:h-4 sm:w-4" />
+                100% FREE - No Credit Card
+              </div>
+              <h1 className="mb-2 text-2xl font-black text-slate-900 sm:mb-3 sm:text-4xl md:text-5xl">
+                Create Your AI Video
+                <span className="block bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">in 3 Minutes</span>
+              </h1>
+              <p className="mx-auto max-w-xl text-sm text-slate-600 sm:text-base md:text-lg">
+                Upload a photo, pick a script, and watch AI create a professional talking video.
+              </p>
+            </div>
 
-        {!generatedVideo ? (
-          <div className="grid gap-8 lg:grid-cols-2">
-            {/* Left Column - Upload & Settings */}
-            <div className="space-y-6">
-              {/* Upload Image */}
-              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6">
-                <h3 className="mb-4 flex items-center gap-2 text-xl font-bold">
-                  <Upload className="h-6 w-6 text-yellow-400" />
-                  Step 1: Upload Your Photo
-                </h3>
+            {/* Progress Steps - Clean and clear */}
+            <div className="mb-6 sm:mb-8">
+              <div className="flex items-center justify-center">
+                {[1, 2, 3].map((step) => (
+                  <React.Fragment key={step}>
+                    <div className="flex flex-col items-center">
+                      <button
+                        onClick={() => step < currentStep && setCurrentStep(step)}
+                        disabled={step > currentStep}
+                        className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all sm:h-11 sm:w-11 md:h-12 md:w-12 ${
+                          currentStep === step
+                            ? 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-200'
+                            : currentStep > step
+                            ? 'bg-emerald-500 text-white'
+                            : 'bg-slate-200 text-slate-500'
+                        }`}
+                      >
+                        {currentStep > step ? (
+                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : step}
+                      </button>
+                      <span className={`mt-1.5 text-xs font-medium sm:mt-2 sm:text-sm ${
+                        currentStep === step ? 'text-violet-600 font-semibold' : currentStep > step ? 'text-emerald-600' : 'text-slate-400'
+                      }`}>
+                        {step === 1 ? 'Upload' : step === 2 ? 'Script' : 'Create'}
+                      </span>
+                    </div>
+                    {step < 3 && (
+                      <div className={`mx-2 h-0.5 w-8 rounded-full sm:mx-3 sm:w-12 md:w-16 ${currentStep > step ? 'bg-emerald-500' : 'bg-slate-200'}`} />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
 
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageUpload}
-                  className="hidden"
-                  id="image-upload"
-                />
+            <div className="mx-auto max-w-2xl">
+              {/* Step 1: Upload Photos */}
+              {currentStep === 1 && (
+                <div className="animate-fade-in rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/50 sm:rounded-3xl sm:p-6 md:p-8">
+                  <div className="mb-5 text-center sm:mb-6">
+                    <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 sm:mb-3 sm:h-14 sm:w-14 sm:rounded-2xl">
+                      <Upload className="h-6 w-6 text-violet-600 sm:h-7 sm:w-7" />
+                    </div>
+                    <h2 className="text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">Upload Your Selfie</h2>
+                    <p className="mt-1 text-sm text-slate-500">Upload 2-3 photos of yourself (not listings)</p>
+                    <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                      <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                      100% FREE - No credit card needed
+                    </div>
+                  </div>
 
-                {uploadedImages.length === 0 ? (
-                  <label
-                    htmlFor="image-upload"
-                    className="group flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-700 bg-gray-800/50 p-12 transition-all hover:border-yellow-500 hover:bg-gray-800"
-                  >
-                    <Upload className="mb-4 h-12 w-12 text-gray-500 transition-colors group-hover:text-yellow-400" />
-                    <p className="mb-2 text-lg font-semibold text-gray-300">Click to upload 2-3 photos</p>
-                    <p className="text-sm text-gray-500">PNG, JPG up to 10MB each • Select 2-3 images</p>
-                  </label>
-                ) : (
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-3 gap-2">
-                      {uploadedImages.map((image, index) => (
-                        <div key={index} className="relative overflow-hidden rounded-lg border border-yellow-500/30">
-                          <Image
-                            src={image}
-                            alt={`Uploaded ${index + 1}`}
-                            width={200}
-                            height={200}
-                            className="h-32 w-full object-cover"
-                          />
-                          {index === 0 && (
-                            <div className="absolute bottom-1 left-1 rounded bg-yellow-500 px-2 py-0.5 text-xs font-bold text-black">
-                              Primary
-                            </div>
+                  {/* Photo counter - Clearer on mobile */}
+                  <div className="mb-4 flex items-center justify-center gap-2 sm:gap-3">
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition-all sm:h-10 sm:w-10 ${
+                        uploadedImages.length > i
+                          ? 'bg-emerald-500 text-white'
+                          : i < 2
+                          ? 'border-2 border-dashed border-violet-300 text-violet-400'
+                          : 'border-2 border-dashed border-slate-200 text-slate-300'
+                      }`}>
+                        {uploadedImages.length > i ? <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" /> : i + 1}
+                      </div>
+                    ))}
+                    <span className="ml-1 text-sm text-slate-500 sm:ml-2">
+                      {uploadedImages.length}/3 {uploadedImages.length < 2 && <span className="font-medium text-violet-600">(need {2 - uploadedImages.length})</span>}
+                    </span>
+                  </div>
+
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="image-upload" />
+
+                  {/* Uploaded images grid - Better mobile layout */}
+                  {uploadedImages.length > 0 && (
+                    <div className="mb-4 grid grid-cols-3 gap-2 sm:gap-3">
+                      {uploadedImages.map((img, index) => (
+                        <div key={index} className="group relative">
+                          <div className="relative aspect-square overflow-hidden rounded-xl border-2 border-emerald-500 sm:rounded-2xl">
+                            <Image src={img} alt={`Photo ${index + 1}`} fill className="object-cover" />
+                            <div className="absolute left-1 top-1 rounded-full bg-emerald-500 px-1.5 py-0.5 text-[10px] font-bold text-white sm:px-2 sm:text-xs">#{index + 1}</div>
+                          </div>
+                          {/* Delete button - Always visible on mobile */}
+                          <button
+                            onClick={() => removeImage(index)}
+                            className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md transition-transform active:scale-95 sm:-right-2 sm:-top-2 sm:h-7 sm:w-7 sm:opacity-0 sm:group-hover:opacity-100"
+                          >
+                            <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          </button>
+                        </div>
+                      ))}
+                      {uploadedImages.length < 3 && (
+                        <label
+                          htmlFor="image-upload"
+                          className={`flex aspect-square cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed transition-all sm:rounded-2xl ${isUploading ? 'border-violet-400 bg-violet-50' : 'border-slate-300 bg-slate-50 hover:border-violet-400 hover:bg-violet-50 active:bg-violet-100'}`}
+                        >
+                          {isUploading ? (
+                            <Loader className="h-6 w-6 animate-spin text-violet-500" />
+                          ) : (
+                            <>
+                              <Plus className="h-6 w-6 text-slate-400" />
+                              <span className="mt-1 text-xs text-slate-500">Add</span>
+                            </>
                           )}
+                        </label>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Empty upload state */}
+                  {uploadedImages.length === 0 && (
+                    <label
+                      htmlFor="image-upload"
+                      className={`group flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 transition-all sm:rounded-2xl sm:p-8 md:p-12 ${isUploading ? 'border-violet-400 bg-violet-50' : 'border-slate-300 bg-slate-50 hover:border-violet-400 hover:bg-violet-50 active:bg-violet-100'}`}
+                    >
+                      {isUploading ? (
+                        <>
+                          <Loader className="mb-3 h-10 w-10 animate-spin text-violet-500" />
+                          <p className="text-base font-semibold text-violet-600">Processing photo...</p>
+                        </>
+                      ) : (
+                        <>
+                          <div className="mb-3 rounded-xl bg-white p-3 shadow-sm transition-transform group-hover:scale-110 group-active:scale-105 sm:mb-4 sm:rounded-2xl sm:p-4">
+                            <Upload className="h-7 w-7 text-slate-400 transition-colors group-hover:text-violet-500 sm:h-8 sm:w-8" />
+                          </div>
+                          <p className="mb-1 text-base font-semibold text-slate-700 sm:text-lg">Tap to upload your selfie</p>
+                          <p className="text-xs text-slate-500 sm:text-sm">Your face photos only - PNG, JPG</p>
+                        </>
+                      )}
+                    </label>
+                  )}
+
+                  {error && (
+                    <div className="mt-3 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-2.5 text-sm text-red-600 sm:mt-4 sm:p-3">
+                      <AlertCircle className="h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5" />{error}
+                    </div>
+                  )}
+
+                  {/* Desktop continue button */}
+                  {uploadedImages.length >= 2 && (
+                    <button
+                      onClick={() => setCurrentStep(2)}
+                      className="mt-4 hidden w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-sm font-semibold text-white hover:shadow-lg hover:shadow-violet-200 sm:flex"
+                    >
+                      Continue with {uploadedImages.length} photos <ChevronRight className="h-4 w-4" />
+                    </button>
+                  )}
+
+                  {/* Tips - Collapsible on very small screens */}
+                  <div className="mt-4 rounded-xl bg-blue-50 p-3 sm:mt-6 sm:p-4">
+                    <p className="mb-2 text-sm font-semibold text-blue-900">Tips for best results:</p>
+                    <ul className="space-y-1.5 text-xs text-blue-700 sm:space-y-1">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="mt-0.5 h-3 w-3 flex-shrink-0 text-blue-500" />
+                        <span>Casual selfies work better than professional headshots</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="mt-0.5 h-3 w-3 flex-shrink-0 text-blue-500" />
+                        <span>Natural lighting, relaxed expressions</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="mt-0.5 h-3 w-3 flex-shrink-0 text-blue-500" />
+                        <span>Different angles increase success rate</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-center gap-3 text-xs text-slate-500 sm:mt-4 sm:gap-4">
+                    <span className="flex items-center gap-1"><Shield className="h-3.5 w-3.5 text-emerald-500 sm:h-4 sm:w-4" />Photos never stored</span>
+                    <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 text-violet-500 sm:h-4 sm:w-4" />Ready in 3 min</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Mini Testimonial - Shows below upload card */}
+              {currentStep === 1 && (
+                <div className="mx-auto mt-4 max-w-md sm:mt-6">
+                  <div className="flex items-center justify-center gap-2 rounded-xl bg-slate-50 px-3 py-2 sm:px-4 sm:py-2.5">
+                    <div className="flex -space-x-1.5">
+                      {['S', 'M', 'J'].map((letter, i) => (
+                        <div key={i} className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-violet-400 to-indigo-400 text-[10px] font-bold text-white sm:h-7 sm:w-7 sm:text-xs">
+                          {letter}
                         </div>
                       ))}
                     </div>
-                    <p className="text-center text-sm text-green-400">
-                      ✅ {uploadedImages.length} images uploaded • AI will select the best one
-                    </p>
-                    <button
-                      onClick={handleReset}
-                      className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:bg-gray-700"
-                    >
-                      Change Photos
-                    </button>
+                    <div className="flex items-center gap-1">
+                      {[1,2,3,4,5].map(i => <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400 sm:h-3.5 sm:w-3.5" />)}
+                    </div>
+                    <span className="text-xs text-slate-600 sm:text-sm">"Saved me hours!" - <span className="font-medium">Sarah M.</span></span>
                   </div>
-                )}
+                </div>
+              )}
 
-                {/* Photo Tips */}
-                {uploadedImages.length === 0 && (
-                  <div className="mt-4 rounded-lg border border-green-500/30 bg-green-500/10 p-3">
-                    <p className="mb-2 text-xs font-bold text-green-300">✨ BEST RESULTS:</p>
-                    <ul className="space-y-1 text-xs text-green-300">
-                      <li>✅ Upload 2-3 different angles of same person</li>
-                      <li>✅ Use casual, natural photos (not professional headshots)</li>
-                      <li>✅ Clear face, good lighting, relaxed expression</li>
-                      <li>✅ Smartphone photos work great!</li>
-                      <li>❌ Avoid heavily edited or filtered images</li>
-                    </ul>
+              {/* Step 2: Script Selection */}
+              {currentStep === 2 && (
+                <div className="animate-fade-in rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/50 sm:rounded-3xl sm:p-6 md:p-8">
+                  <div className="mb-5 text-center sm:mb-6">
+                    <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 sm:mb-3 sm:h-14 sm:w-14 sm:rounded-2xl">
+                      <Video className="h-6 w-6 text-violet-600 sm:h-7 sm:w-7" />
+                    </div>
+                    <h2 className="text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">Choose Your Script</h2>
+                    <p className="mt-1 text-sm text-slate-500">What should you say in the video?</p>
                   </div>
-                )}
 
-                {/* Privacy Note */}
-                <div className="mt-4 rounded-lg border border-blue-500/30 bg-blue-500/10 p-3">
-                  <p className="text-xs text-blue-300">
-                    🔒 <strong>Privacy:</strong> Your image is processed securely and never stored on our servers. It's only used to generate your video.
-                  </p>
-                </div>
-              </div>
+                  {/* Pre-made Scripts */}
+                  <div className="mb-4">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400 sm:mb-3">Ready-to-use Scripts</p>
+                    <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3">
+                      {scripts.map((script) => {
+                        const IconComponent = script.icon
+                        const isSelected = selectedScript === script.id
+                        return (
+                          <button
+                            key={script.id}
+                            onClick={() => handleScriptSelect(script.id)}
+                            className={`relative w-full rounded-xl border-2 p-3 text-left transition-all sm:rounded-2xl sm:p-4 ${
+                              isSelected
+                                ? 'border-violet-500 bg-gradient-to-br from-violet-50 to-indigo-50 shadow-lg shadow-violet-100'
+                                : 'border-slate-200 bg-white hover:border-violet-300 hover:shadow-md active:bg-slate-50'
+                            }`}
+                          >
+                            {/* Badge */}
+                            <div className={`absolute -top-2 right-3 ${script.badgeColor} rounded-full px-2 py-0.5 text-[10px] font-bold text-white shadow-sm sm:px-2.5 sm:text-xs`}>
+                              {script.badge}
+                            </div>
 
-              {/* Choose Format */}
-              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6">
-                <h3 className="mb-4 flex items-center gap-2 text-xl font-bold">
-                  <Video className="h-6 w-6 text-yellow-400" />
-                  Step 2: Choose Format
-                </h3>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => setAspectRatio('9:16')}
-                    className={`rounded-lg border-2 p-4 transition-all ${
-                      aspectRatio === '9:16'
-                        ? 'border-yellow-500 bg-yellow-500/10'
-                        : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
-                    }`}
-                  >
-                    <div className="mb-2 text-2xl">📱</div>
-                    <p className="font-bold text-white">Portrait (9:16)</p>
-                    <p className="text-xs text-gray-400">Instagram, TikTok, Reels</p>
-                  </button>
-                  <button
-                    onClick={() => setAspectRatio('16:9')}
-                    className={`rounded-lg border-2 p-4 transition-all ${
-                      aspectRatio === '16:9'
-                        ? 'border-yellow-500 bg-yellow-500/10'
-                        : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
-                    }`}
-                  >
-                    <div className="mb-2 text-2xl">🖥️</div>
-                    <p className="font-bold text-white">Landscape (16:9)</p>
-                    <p className="text-xs text-gray-400">YouTube, Facebook</p>
-                  </button>
-                </div>
-              </div>
-
-              {/* Choose Script */}
-              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6">
-                <h3 className="mb-4 flex items-center gap-2 text-xl font-bold">
-                  <Video className="h-6 w-6 text-yellow-400" />
-                  Step 3: Choose Your Script
-                </h3>
-
-                {/* Script Mode Selector */}
-                <div className="mb-4 grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setScriptMode('preset')}
-                    className={`rounded-lg border-2 px-4 py-2 font-semibold transition-all ${
-                      scriptMode === 'preset'
-                        ? 'border-yellow-500 bg-yellow-500/10 text-yellow-400'
-                        : 'border-gray-700 bg-gray-800/50 text-gray-400 hover:border-gray-600'
-                    }`}
-                  >
-                    Use Preset Script
-                  </button>
-                  <button
-                    onClick={() => setScriptMode('custom')}
-                    className={`rounded-lg border-2 px-4 py-2 font-semibold transition-all ${
-                      scriptMode === 'custom'
-                        ? 'border-yellow-500 bg-yellow-500/10 text-yellow-400'
-                        : 'border-gray-700 bg-gray-800/50 text-gray-400 hover:border-gray-600'
-                    }`}
-                  >
-                    Write Custom Script
-                  </button>
-                </div>
-
-                {scriptMode === 'preset' ? (
-                  <div className="space-y-3">
-                    {Object.entries(scripts).map(([key, script]) => (
-                      <label
-                        key={key}
-                        className={`flex cursor-pointer items-start gap-3 rounded-lg border-2 p-4 transition-all ${
-                          selectedScript === key
-                            ? 'border-yellow-500 bg-yellow-500/10'
-                            : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="script"
-                          value={key}
-                          checked={selectedScript === key}
-                          onChange={(e) => setSelectedScript(e.target.value)}
-                          className="mt-1"
-                        />
-                        <div className="flex-1">
-                          <p className="mb-1 font-bold text-white">{script.name}</p>
-                          <p className="text-sm text-gray-400">{script.text}</p>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-                ) : (
-                  <div>
-                    <textarea
-                      value={customScript}
-                      onChange={(e) => setCustomScript(e.target.value)}
-                      placeholder="Write your custom script here... Keep it short for best results!"
-                      className="w-full rounded-lg border border-gray-700 bg-gray-800 p-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none"
-                      rows={4}
-                    />
-                    <div className="mt-2 flex items-center justify-between text-sm">
-                      <p className={customScriptWordCount > maxWords ? 'text-red-400' : 'text-gray-400'}>
-                        {customScriptWordCount} / {maxWords} words
-                      </p>
-                      <p className="text-gray-500">~8 seconds max</p>
+                            <div className="flex items-start gap-3">
+                              <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl shadow-sm sm:h-11 sm:w-11 ${script.iconBg}`}>
+                                <IconComponent className={`h-5 w-5 sm:h-6 sm:w-6 ${script.iconColor}`} />
+                              </div>
+                              <div className="flex-1 min-w-0 pt-1">
+                                <div className="flex items-center gap-2">
+                                  <p className="font-bold text-slate-900 text-sm sm:text-base">{script.name}</p>
+                                  {isSelected && <CheckCircle className="h-4 w-4 text-violet-500" />}
+                                </div>
+                              </div>
+                            </div>
+                            <p className={`mt-2 text-xs text-slate-600 leading-relaxed sm:text-sm ${isSelected ? '' : 'line-clamp-2'}`}>
+                              "{script.text}"
+                            </p>
+                          </button>
+                        )
+                      })}
                     </div>
                   </div>
-                )}
-              </div>
 
-              {/* Generate Button */}
-              <button
-                onClick={handleGenerate}
-                disabled={uploadedImages.length < 2 || isGenerating}
-                className="group relative w-full overflow-hidden rounded-xl p-[2px] transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 opacity-75 blur transition-opacity group-hover:opacity-100"></div>
-                <div className="relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-5 text-xl font-black text-black">
-                  {isGenerating ? (
-                    <>
-                      <Loader className="h-6 w-6 animate-spin" />
-                      <span>Generating Video...</span>
-                    </>
+                  {/* Divider */}
+                  <div className="relative my-5 sm:my-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-slate-200"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                      <span className="bg-white px-3 text-xs font-medium text-slate-400 sm:text-sm">or write your own</span>
+                    </div>
+                  </div>
+
+                  {/* Custom Script Option */}
+                  <div>
+                    <button
+                      onClick={() => { setSelectedScript('custom'); setError('') }}
+                      className={`w-full rounded-xl border-2 border-dashed p-4 text-left transition-all sm:rounded-2xl sm:p-5 ${
+                        selectedScript === 'custom'
+                          ? 'border-violet-400 bg-violet-50'
+                          : 'border-slate-300 bg-slate-50 hover:border-violet-300 hover:bg-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 sm:h-11 sm:w-11">
+                          <PenLine className="h-5 w-5 text-slate-500 sm:h-6 sm:w-6" />
+                        </div>
+                        <div>
+                          <p className="font-bold text-slate-900 text-sm sm:text-base">Custom Script</p>
+                          <p className="text-xs text-slate-500">Write exactly what you want to say</p>
+                        </div>
+                        {selectedScript === 'custom' && <CheckCircle className="ml-auto h-5 w-5 text-violet-500" />}
+                      </div>
+                    </button>
+
+                    {selectedScript === 'custom' && (
+                      <div className="mt-3 animate-fade-in">
+                        <textarea
+                          value={customScript}
+                          onChange={(e) => {
+                            const words = e.target.value.trim().split(/\s+/).filter(Boolean).length
+                            // Allow typing but stop if over limit (20 words max buffer)
+                            if (words <= 20 || e.target.value.length < customScript.length) {
+                              setCustomScript(e.target.value)
+                            }
+                          }}
+                          placeholder="Example: Hi! I'm [Name], your local real estate expert. Looking to buy or sell? Let's chat!"
+                          className={`w-full rounded-xl border-2 ${customScriptWordCount > maxWords ? 'border-red-300 bg-red-50' : 'border-violet-200 bg-white'} p-3 text-sm text-slate-900 placeholder-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100 sm:p-4 sm:text-base`}
+                          rows={3}
+                          maxLength={300}
+                          autoFocus
+                        />
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className={`text-xs sm:text-sm ${customScriptWordCount > maxWords ? 'text-red-500 font-medium' : 'text-slate-500'}`}>
+                            {customScriptWordCount}/{maxWords} words
+                          </span>
+                          <button
+                            onClick={() => setCurrentStep(3)}
+                            disabled={!customScript.trim() || customScriptWordCount > maxWords}
+                            className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-200 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                          >
+                            Continue →
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Desktop back button */}
+                  <button onClick={() => setCurrentStep(1)} className="mt-4 hidden w-full py-2 text-sm font-medium text-slate-500 hover:text-slate-700 sm:block">
+                    ← Back to photos
+                  </button>
+                </div>
+              )}
+
+              {/* Step 3: Format & Generate */}
+              {currentStep === 3 && !isGenerating && (
+                <div className="animate-fade-in rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/50 sm:rounded-3xl sm:p-6 md:p-8">
+                  <div className="mb-5 text-center sm:mb-6">
+                    <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 sm:mb-3 sm:h-14 sm:w-14 sm:rounded-2xl">
+                      <Sparkles className="h-6 w-6 text-violet-600 sm:h-7 sm:w-7" />
+                    </div>
+                    <h2 className="text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">Almost Ready!</h2>
+                    <p className="mt-1 text-sm text-slate-500">Choose format and create your video</p>
+                  </div>
+
+                  {/* Format Selection - Larger touch targets */}
+                  <div className="mb-5 sm:mb-6">
+                    <p className="mb-2 text-sm font-medium text-slate-700 sm:mb-3">Video Format</p>
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                      <button
+                        onClick={() => setAspectRatio('9:16')}
+                        className={`rounded-xl border-2 p-3 transition-all sm:rounded-2xl sm:p-4 ${aspectRatio === '9:16' ? 'border-violet-500 bg-violet-50' : 'border-slate-200 hover:border-violet-300 active:bg-slate-50'}`}
+                      >
+                        <Smartphone className={`mx-auto mb-2 h-6 w-6 sm:mb-3 sm:h-7 sm:w-7 ${aspectRatio === '9:16' ? 'text-violet-600' : 'text-slate-400'}`} />
+                        <p className="font-semibold text-slate-900 text-sm sm:text-base">Portrait</p>
+                        <p className="text-xs text-slate-500">TikTok, Reels</p>
+                      </button>
+                      <button
+                        onClick={() => setAspectRatio('16:9')}
+                        className={`rounded-xl border-2 p-3 transition-all sm:rounded-2xl sm:p-4 ${aspectRatio === '16:9' ? 'border-violet-500 bg-violet-50' : 'border-slate-200 hover:border-violet-300 active:bg-slate-50'}`}
+                      >
+                        <Monitor className={`mx-auto mb-2 h-6 w-6 sm:mb-3 sm:h-7 sm:w-7 ${aspectRatio === '16:9' ? 'text-violet-600' : 'text-slate-400'}`} />
+                        <p className="font-semibold text-slate-900 text-sm sm:text-base">Landscape</p>
+                        <p className="text-xs text-slate-500">YouTube, FB</p>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Summary */}
+                  <div className="mb-5 rounded-xl bg-slate-50 p-3 sm:mb-6 sm:rounded-2xl sm:p-4">
+                    <p className="mb-2 text-xs font-medium text-slate-500 sm:text-sm">Your video summary</p>
+                    <div className="flex items-center gap-3">
+                      <div className="flex -space-x-2">
+                        {uploadedImages.slice(0, 3).map((img, i) => (
+                          <Image key={i} src={img} alt={`Photo ${i + 1}`} width={36} height={36} className="h-9 w-9 rounded-lg border-2 border-white object-cover sm:h-10 sm:w-10" />
+                        ))}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-slate-900 text-sm truncate sm:text-base">{scripts.find(s => s.id === selectedScript)?.name || 'Custom Script'}</p>
+                        <p className="text-xs text-slate-500 sm:text-sm">{aspectRatio === '9:16' ? 'Portrait' : 'Landscape'} • {uploadedImages.length} photos • 8 sec</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {error && hasAttemptedGeneration ? (
+                    /* Error State - Show helpful message with action */
+                    <div className="space-y-4">
+                      <div className="rounded-2xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 sm:p-5">
+                        <div className="mb-3 flex items-start gap-3">
+                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-amber-100">
+                            <AlertCircle className="h-5 w-5 text-amber-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-slate-900">Let's try different photos</h3>
+                            <p className="mt-1 text-sm text-slate-600">
+                              Our AI works best with casual, natural photos. Professional headshots and certain poses can be tricky.
+                            </p>
+                          </div>
+                        </div>
+                        <div className="rounded-xl bg-white/80 p-3">
+                          <p className="mb-2 text-xs font-medium text-slate-500">For best results, try:</p>
+                          <ul className="space-y-1 text-xs text-slate-600">
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="h-3 w-3 text-emerald-500" />
+                              Casual selfies with natural lighting
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="h-3 w-3 text-emerald-500" />
+                              Relaxed, everyday expressions
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="h-3 w-3 text-emerald-500" />
+                              Photos taken with your phone camera
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Upload New Photos Button - Desktop */}
+                      <button
+                        onClick={() => {
+                          setUploadedImages([])
+                          setError('')
+                          setHasAttemptedGeneration(false)
+                          setCurrentStep(1)
+                        }}
+                        className="hidden w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 p-4 text-base font-bold text-white shadow-xl shadow-violet-200 hover:shadow-2xl sm:flex sm:rounded-2xl sm:p-5 sm:text-lg"
+                      >
+                        <Upload className="h-5 w-5" />
+                        Upload New Photos
+                      </button>
+                    </div>
                   ) : (
                     <>
-                      <Sparkles className="h-6 w-6" />
-                      <span>Generate My Video</span>
-                      <ArrowRight className="h-6 w-6" />
+                      {/* Desktop generate button */}
+                      <button
+                        onClick={handleGenerateVideo}
+                        className="group relative hidden w-full overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 p-4 text-base font-bold text-white shadow-xl shadow-violet-200 hover:shadow-2xl sm:block sm:rounded-2xl sm:p-5 sm:text-lg"
+                      >
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                          <Sparkles className="h-5 w-5" />
+                          Create My Video
+                          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        </span>
+                      </button>
+
+                      {/* Desktop back button */}
+                      <button onClick={() => setCurrentStep(2)} className="mt-4 hidden w-full py-2 text-sm font-medium text-slate-500 hover:text-slate-700 sm:block">
+                        ← Back to script
+                      </button>
                     </>
                   )}
                 </div>
-              </button>
+              )}
 
-              {error && (
-                <div className="flex items-center gap-3 rounded-lg border border-red-500/50 bg-red-500/10 p-4">
-                  <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-400" />
-                  <p className="text-sm text-red-400">{error}</p>
+              {/* Generating State */}
+              {isGenerating && (
+                <div className="animate-fade-in rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xl sm:rounded-3xl sm:p-8 md:p-12">
+                  <div className="mb-5 sm:mb-6">
+                    <div className="relative mx-auto h-20 w-20 sm:h-24 sm:w-24">
+                      <div className="absolute inset-0 animate-ping rounded-full bg-violet-200 opacity-75" />
+                      <div className="relative flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500">
+                        <Loader className="h-8 w-8 animate-spin text-white sm:h-10 sm:w-10" />
+                      </div>
+                    </div>
+                  </div>
+                  <h2 className="mb-2 text-xl font-bold text-slate-900 sm:text-2xl">Creating Your Video</h2>
+                  <p className="mb-5 text-sm text-slate-500 sm:mb-6 sm:text-base">{currentTip?.text}</p>
+                  <div className="mx-auto mb-3 max-w-xs sm:mb-4">
+                    <div className="h-2.5 overflow-hidden rounded-full bg-slate-100 sm:h-3">
+                      <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-slate-600">{Math.round(progress)}% complete</p>
+                  </div>
+                  <p className="text-xs text-slate-400 sm:text-sm">This usually takes 2-3 minutes</p>
                 </div>
               )}
             </div>
 
-            {/* Right Column - Preview & Info */}
-            <div className="space-y-6">
-              {/* Preview */}
-              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6">
-                <h3 className="mb-4 text-xl font-bold">Preview</h3>
-
-                {isGenerating ? (
-                  <div className="flex flex-col items-center justify-center rounded-xl bg-gray-800 p-12">
-                    <Loader className="mb-4 h-12 w-12 animate-spin text-yellow-400" />
-                    <p className="mb-2 text-lg font-semibold">Creating your AI video...</p>
-                    <div className="mb-4 h-2 w-64 overflow-hidden rounded-full bg-gray-700">
-                      <div
-                        className="h-full bg-gradient-to-r from-yellow-500 to-orange-500 transition-all duration-300"
-                        style={{ width: `${progress}%` }}
-                      ></div>
-                    </div>
-                    <p className="text-sm text-gray-400">{progress}% complete</p>
+            {/* Trust Section - Better grid for small screens */}
+            {!isGenerating && (
+              <div className="mx-auto mt-8 max-w-2xl sm:mt-12">
+                <div className="grid grid-cols-3 gap-2 text-center sm:gap-4">
+                  <div className="rounded-xl bg-white p-3 shadow-sm sm:rounded-2xl sm:p-4">
+                    <Users className="mx-auto mb-1 h-4 w-4 text-violet-400 sm:h-5 sm:w-5" />
+                    <div className="text-lg font-black text-violet-600 sm:text-2xl md:text-3xl">{liveCount.toLocaleString()}</div>
+                    <p className="text-[10px] text-slate-500 sm:text-xs md:text-sm">Videos made</p>
                   </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center rounded-xl bg-gray-800 p-12">
-                    <Video className="mb-4 h-16 w-16 text-gray-600" />
-                    <p className="text-gray-500">Your video will appear here</p>
+                  <div className="rounded-xl bg-white p-3 shadow-sm sm:rounded-2xl sm:p-4">
+                    <Star className="mx-auto mb-1 h-4 w-4 fill-amber-400 text-amber-400 sm:h-5 sm:w-5" />
+                    <div className="text-lg font-black text-emerald-600 sm:text-2xl md:text-3xl">4.9</div>
+                    <p className="text-[10px] text-slate-500 sm:text-xs md:text-sm">Rating</p>
                   </div>
-                )}
-              </div>
-
-              {/* What You'll Get */}
-              <div className="rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-6">
-                <h3 className="mb-4 text-xl font-bold">What You'll Get:</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 flex-shrink-0 text-yellow-400" />
-                    <span className="text-gray-300">Realistic AI talking video</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 flex-shrink-0 text-yellow-400" />
-                    <span className="text-gray-300">Natural voice & lip sync</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 flex-shrink-0 text-yellow-400" />
-                    <span className="text-gray-300">HD quality output</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 flex-shrink-0 text-yellow-400" />
-                    <span className="text-gray-300">Ready to share on social media</span>
+                  <div className="rounded-xl bg-white p-3 shadow-sm sm:rounded-2xl sm:p-4">
+                    <Clock className="mx-auto mb-1 h-4 w-4 text-indigo-400 sm:h-5 sm:w-5" />
+                    <div className="text-lg font-black text-indigo-600 sm:text-2xl md:text-3xl">3min</div>
+                    <p className="text-[10px] text-slate-500 sm:text-xs md:text-sm">Avg time</p>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ) : userEmail ? (
-          /* Success View - Only shown after email submitted */
-          <div className="space-y-8">
-            {/* Generated Video */}
-            <div className="rounded-2xl border border-yellow-500/30 bg-gray-900/50 p-6">
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className="flex items-center gap-2 text-2xl font-bold">
-                  <CheckCircle className="h-8 w-8 text-green-400" />
-                  Your Video is Ready!
-                </h3>
-                <button
-                  onClick={handleReset}
-                  className="rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:bg-gray-700"
-                >
-                  Create Another
-                </button>
-              </div>
-
-              {/* Video with Watermark Overlay */}
-              <div className="relative overflow-hidden rounded-xl">
-                <video
-                  src={generatedVideo}
-                  controls
-                  className="w-full"
-                  autoPlay
-                >
-                  Your browser does not support video playback.
-                </video>
-                {/* Watermark Overlay */}
-                <div className="pointer-events-none absolute bottom-4 right-4 rounded-lg bg-black/70 px-3 py-2 backdrop-blur-sm">
-                  <p className="text-xs font-bold text-white">Made with AgentClone.com</p>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="mt-4 grid gap-3 md:grid-cols-3">
-                <a
-                  href={generatedVideo}
-                  download
-                  className="flex items-center justify-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-6 py-3 font-semibold transition-colors hover:bg-gray-700"
-                >
-                  <Download className="h-5 w-5" />
-                  Download
-                </a>
-                <button
-                  onClick={() => setShowShareModal(true)}
-                  className="flex items-center justify-center gap-2 rounded-lg border-2 border-green-500 bg-green-500/10 px-6 py-3 font-bold text-green-400 transition-all hover:bg-green-500/20"
-                >
-                  <Share2 className="h-5 w-5" />
-                  Share for 50% Off
-                </button>
-                <button
-                  className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-3 font-bold text-black transition-all hover:scale-105"
-                  onClick={() => window.location.href = '/#pricing'}
-                >
-                  <Sparkles className="h-5 w-5" />
-                  Get Course - $37
-                </button>
-              </div>
-            </div>
-
-            {/* HIGH-CONVERTING CTA SECTION */}
-            <div className="space-y-6">
-              {/* Dynamic Social Proof Counter */}
-              <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4 text-center">
-                <p className="text-lg font-bold text-green-400">
-                  🎉 <span className="text-white">{socialProofCount} agents</span> created videos this week • Join them!
-                </p>
-              </div>
-
-              {/* Main CTA Card */}
-              <div className="rounded-2xl border-2 border-yellow-500/50 bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-yellow-500/10 p-8 text-center shadow-2xl">
-                {/* Urgency Badge */}
-                <div className="mb-4 flex justify-center">
-                  <div className="rounded-full border border-red-500/50 bg-red-500/10 px-4 py-2">
-                    <p className="text-sm font-bold text-red-400">
-                      ⚠️ Price increases to $197 in 48 hours
-                    </p>
-                  </div>
-                </div>
-
-                <h3 className="mb-3 text-4xl font-black">
-                  Loved the Demo?
-                  <br />
-                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                    Get Unlimited Access
-                  </span>
-                </h3>
-                <p className="mx-auto mb-6 max-w-2xl text-lg text-gray-300">
-                  Stop wasting time and money on video production. Create unlimited professional AI videos in 7 minutes each.
-                </p>
-
-                {/* Value Props */}
-                <div className="mb-6 grid gap-3 text-left md:grid-cols-2">
-                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
-                    <div>
-                      <p className="font-bold text-white">Unlimited Videos</p>
-                      <p className="text-sm text-gray-400">No monthly limits, create as many as you need</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
-                    <div>
-                      <p className="font-bold text-white">20+ Templates</p>
-                      <p className="text-sm text-gray-400">Listing, market updates, tips & more</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
-                    <div>
-                      <p className="font-bold text-white">Step-by-Step Training</p>
-                      <p className="text-sm text-gray-400">Complete video walkthroughs</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                    <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
-                    <div>
-                      <p className="font-bold text-white">Lifetime Updates</p>
-                      <p className="text-sm text-gray-400">New templates added monthly, free forever</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Pricing Comparison */}
-                <div className="mb-6 grid gap-4 md:grid-cols-3">
-                  <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-4">
-                    <p className="mb-1 text-sm text-gray-500 line-through">Regular Price</p>
-                    <p className="mb-1 text-2xl font-black text-gray-500">$1,691</p>
-                  </div>
-                  <div className="relative rounded-xl border-2 border-green-500 bg-gradient-to-br from-green-500/20 to-green-500/10 p-4">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-green-500 px-3 py-1">
-                      <p className="text-xs font-bold text-black">98% OFF</p>
-                    </div>
-                    <p className="mb-1 text-sm text-green-400">Today Only</p>
-                    <p className="mb-1 text-4xl font-black text-green-400">$37</p>
-                  </div>
-                  <div className="rounded-xl border border-red-500/50 bg-red-500/10 p-4">
-                    <p className="mb-1 text-sm text-red-400">In 48 Hours</p>
-                    <p className="mb-1 text-2xl font-black text-red-400">$197</p>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <a
-                  href="/#pricing"
-                  className="group relative mb-4 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl p-[3px] transition-all hover:scale-105 md:w-auto"
-                >
-                  <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-500 opacity-75 blur"></div>
-                  <div className="relative flex items-center gap-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 px-12 py-6 text-2xl font-black text-black shadow-2xl">
-                    <Sparkles className="h-7 w-7" />
-                    Get Full Access - $37
-                    <ArrowRight className="h-7 w-7 transition-transform group-hover:translate-x-2" />
-                  </div>
-                </a>
-
-                {/* Trust Badges */}
-                <div className="flex flex-col items-center gap-2 text-sm text-gray-400">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span>30-Day Money-Back Guarantee</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span>Instant Access • No Monthly Fees</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Testimonial Snippet */}
-              <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-6">
-                <div className="mb-3 flex items-center gap-2">
-                  <div className="text-yellow-400">⭐⭐⭐⭐⭐</div>
-                  <span className="text-sm font-semibold text-gray-400">5.0/5 from 247 agents</span>
-                </div>
-                <p className="mb-3 text-gray-300">
-                  "I was skeptical at first but this is a game-changer. Created 15 videos in my first week and got 3 new leads already!"
-                </p>
-                <p className="text-sm font-semibold text-gray-400">— Sarah M., Real Estate Agent</p>
-              </div>
-            </div>
-          </div>
+            )}
+          </>
         ) : (
-          /* Video generated but waiting for email - Show placeholder */
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 animate-pulse">
-              <CheckCircle className="h-10 w-10 text-black" />
-            </div>
-            <h2 className="mb-3 text-3xl font-bold text-white">
-              Video Generated Successfully! 🎉
-            </h2>
-            <p className="text-lg text-gray-400">
-              Please enter your email to watch your video...
-            </p>
-          </div>
+          /* Full Sales Page After Email - Everything in One Place */
+          <FullSalesContent generatedVideo={generatedVideo!} />
         )}
       </main>
 
-      {/* Email Capture Modal */}
-      <DemoEmailCaptureModal
-        isOpen={showEmailModal}
-        onEmailSubmit={handleEmailSubmit}
-      />
-
-      {/* Share Modal */}
-      {showShareModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="relative w-full max-w-md rounded-2xl border border-green-500/30 bg-gradient-to-br from-gray-900 to-black p-8 shadow-2xl">
-            <button
-              onClick={() => setShowShareModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white"
-            >
-              <X className="h-6 w-6" />
-            </button>
-
-            <div className="mb-6 flex justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-emerald-500">
-                <Share2 className="h-8 w-8 text-black" />
-              </div>
-            </div>
-
-            <h2 className="mb-3 text-center text-3xl font-black text-white">
-              Share & Get 50% OFF! 🎉
-            </h2>
-            <p className="mb-6 text-center text-lg text-gray-300">
-              Share this demo with your network and unlock an exclusive discount code
-            </p>
-
-            <div className="mb-6 rounded-lg border border-green-500/30 bg-green-500/10 p-4">
-              <p className="text-center text-2xl font-black text-green-400">
-                Save $18.50
-              </p>
-              <p className="text-center text-sm text-gray-400">
-                Get the course for just $18.50 instead of $37
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <button
-                onClick={() => handleShare('twitter')}
-                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#1DA1F2] px-6 py-3 font-bold text-white transition-all hover:scale-105"
-              >
-                <span>Share on Twitter</span>
-                <ArrowRight className="h-5 w-5" />
-              </button>
-              <button
-                onClick={() => handleShare('facebook')}
-                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#4267B2] px-6 py-3 font-bold text-white transition-all hover:scale-105"
-              >
-                <span>Share on Facebook</span>
-                <ArrowRight className="h-5 w-5" />
-              </button>
-              <button
-                onClick={() => handleShare('linkedin')}
-                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#0077B5] px-6 py-3 font-bold text-white transition-all hover:scale-105"
-              >
-                <span>Share on LinkedIn</span>
-                <ArrowRight className="h-5 w-5" />
-              </button>
-              <button
-                onClick={() => handleShare('copy')}
-                className="flex w-full items-center justify-center gap-3 rounded-lg border-2 border-green-500 bg-green-500/10 px-6 py-3 font-bold text-green-400 transition-all hover:bg-green-500/20"
-              >
-                <span>Copy Link</span>
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
+      {/* Sticky Mobile CTA - Shows for all steps */}
+      {!generatedVideo && !isGenerating && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 bg-white/95 p-3 backdrop-blur-lg sm:hidden">
+          <button
+            onClick={ctaInfo.action}
+            disabled={ctaInfo.disabled}
+            className={`flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-base font-bold shadow-lg transition-all ${
+              ctaInfo.disabled
+                ? 'bg-slate-200 text-slate-500'
+                : 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white active:opacity-90'
+            }`}
+          >
+            {/* Show appropriate icon based on state */}
+            {(ctaInfo as any).isError ? (
+              <Upload className="h-5 w-5" />
+            ) : currentStep === 3 ? (
+              <Sparkles className="h-5 w-5" />
+            ) : null}
+            {ctaInfo.text}
+            {!ctaInfo.disabled && currentStep < 3 && !((ctaInfo as any).isError) && <ChevronRight className="h-5 w-5" />}
+          </button>
+          {/* Safety text */}
+          <p className="mt-2 text-center text-[10px] text-slate-400">
+            <Shield className="mr-1 inline h-3 w-3" />Your photos are never stored
+          </p>
         </div>
       )}
 
-      {/* Exit Intent Modal */}
-      {showExitIntent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
-          <div className="relative w-full max-w-2xl rounded-2xl border-2 border-red-500/50 bg-gradient-to-br from-gray-900 to-black p-8 shadow-2xl">
-            <button
-              onClick={() => setShowExitIntent(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white"
-            >
-              <X className="h-6 w-6" />
-            </button>
+      {/* Email Modal */}
+      <DemoEmailCaptureModal isOpen={showEmailModal} onEmailSubmit={handleEmailSubmit} />
 
-            <div className="mb-6 text-center">
-              <p className="mb-2 text-5xl">⚠️</p>
-              <h2 className="mb-3 text-4xl font-black text-white">
-                Wait! Don't Leave Yet...
-              </h2>
-              <p className="text-xl text-gray-300">
-                You're about to miss out on an exclusive one-time offer
-              </p>
-            </div>
+      <style jsx global>{`
+        @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fade-in 0.4s ease-out; }
 
-            <div className="mb-6 rounded-xl border-2 border-red-500 bg-red-500/10 p-6 text-center">
-              <p className="mb-2 text-sm font-bold text-red-400">SPECIAL EXIT OFFER</p>
-              <p className="mb-2 text-5xl font-black text-white">$27</p>
-              <p className="mb-1 text-sm text-gray-400 line-through">Regular: $37</p>
-              <p className="text-lg font-bold text-red-400">Save $10 • Today Only</p>
-            </div>
+        /* Smooth glow animations */
+        @keyframes glow {
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        @keyframes glow-delayed {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.08); }
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.5; }
+        }
+        .animate-glow { animation: glow 8s ease-in-out infinite; }
+        .animate-glow-delayed { animation: glow-delayed 10s ease-in-out infinite 2s; }
+        .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
 
-            <div className="mb-6 space-y-3">
-              <div className="flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-400" />
-                <p className="text-white">Lifetime access to all course materials</p>
-              </div>
-              <div className="flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-400" />
-                <p className="text-white">20+ video templates & scripts</p>
-              </div>
-              <div className="flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
-                <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-400" />
-                <p className="text-white">30-day money-back guarantee</p>
-              </div>
-            </div>
+        /* Better touch targets */
+        @media (pointer: coarse) {
+          button, a, label[for] {
+            min-height: 44px;
+          }
+        }
 
-            <div className="space-y-3">
-              <a
-                href="/#pricing"
-                className="group relative block w-full overflow-hidden rounded-xl p-[2px]"
-              >
-                <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-red-500 via-orange-500 to-red-500 opacity-75 blur"></div>
-                <div className="relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-8 py-5 text-xl font-black text-white">
-                  <Sparkles className="h-6 w-6" />
-                  Claim $27 Offer Now
-                  <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
-                </div>
-              </a>
-              <button
-                onClick={() => setShowExitIntent(false)}
-                className="w-full py-3 text-sm text-gray-500 hover:text-gray-300"
-              >
-                No thanks, I'll pay full price later
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        /* Prevent zoom on input focus (iOS) */
+        input, textarea, select {
+          font-size: 16px !important;
+        }
+
+        /* Safe area for notched phones */
+        .pb-36 {
+          padding-bottom: max(9rem, env(safe-area-inset-bottom) + 7rem);
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-glow, .animate-glow-delayed, .animate-pulse-slow {
+            animation: none;
+          }
+        }
+      `}</style>
     </div>
   )
 }

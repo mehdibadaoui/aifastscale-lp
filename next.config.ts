@@ -71,6 +71,26 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Cache JS chunks aggressively
+      {
+        source: '/_next/:path*.js',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Cache CSS
+      {
+        source: '/_next/:path*.css',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [
@@ -101,7 +121,14 @@ const nextConfig: NextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react', 'react', 'react-dom', 'canvas-confetti'],
+    optimizePackageImports: ['lucide-react', 'react', 'react-dom', 'canvas-confetti', '@upstash/redis', 'resend'],
+  },
+
+  // Modular imports for lucide-react to reduce bundle size
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    },
   },
 
   // Turbopack configuration (Next.js 16+ default bundler)

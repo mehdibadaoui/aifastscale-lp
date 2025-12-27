@@ -16,11 +16,13 @@ function TikTokPixelInner() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // Initialize TikTok Pixel
+  // Initialize TikTok Pixel - deferred for performance
   useEffect(() => {
-    // Load TikTok Pixel script
-    if (typeof window !== 'undefined' && !window.ttq) {
-      (function(w: any, d: Document, t: string) {
+    // Delay loading to not block initial render
+    const timer = setTimeout(() => {
+      // Load TikTok Pixel script
+      if (typeof window !== 'undefined' && !window.ttq) {
+        (function(w: any, d: Document, t: string) {
         w.TiktokAnalyticsObject = t
         const ttq = w[t] = w[t] || []
         ttq.methods = ['page', 'track', 'identify', 'instances', 'debug', 'on', 'off', 'once', 'ready', 'alias', 'group', 'enableCookie', 'disableCookie', 'holdConsent', 'revokeConsent', 'grantConsent']
@@ -59,7 +61,10 @@ function TikTokPixelInner() {
         ttq.load(TIKTOK_PIXEL_ID)
         ttq.page()
       })(window, document, 'ttq')
-    }
+      }
+    }, 3000) // Delay 3 seconds for better performance
+
+    return () => clearTimeout(timer)
   }, [])
 
   // Track page views on route change

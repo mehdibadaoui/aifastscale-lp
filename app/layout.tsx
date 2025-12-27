@@ -2,23 +2,24 @@ import type { Metadata } from 'next'
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import LazyTrackingPixels from './components/LazyTrackingPixels'
+import RootLayoutPixels from './components/RootLayoutPixels'
 import { SITE_CONFIG } from './config/constants'
 
-// Premium font: Inter for body text - clean, modern, highly readable
+// Premium font: Inter for body text - only essential weights for performance
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600', '700'], // Reduced from 4 to 3 weights
   display: 'swap',
   preload: true,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
 })
 
-// Premium font: Plus Jakarta Sans for headings - modern, bold, premium feel
+// Premium font: Plus Jakarta Sans for headings - only bold weights
 const plusJakarta = Plus_Jakarta_Sans({
   variable: '--font-plus-jakarta',
   subsets: ['latin'],
-  weight: ['600', '700', '800'],
+  weight: ['700', '800'], // Reduced from 3 to 2 weights
   display: 'swap',
   preload: true,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
@@ -102,42 +103,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* META PIXELS - CRITICAL: Must be in head for proper detection by Meta Events Manager */}
-        {/* Pixel 1: Real Estate Original (806502898408304) */}
-        {/* Pixel 2: Real Estate 2 from Dentists Clone account (1897880187469286) */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '806502898408304');
-              fbq('init', '1897880187469286');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
-        <noscript>
-          <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=806502898408304&ev=PageView&noscript=1" alt="" />
-        </noscript>
-        <noscript>
-          <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1897880187469286&ev=PageView&noscript=1" alt="" />
-        </noscript>
+        {/* META PIXELS: Now loaded via RootLayoutPixels client component */}
+        {/* This allows path-aware loading (not on /dentists pages) */}
 
-        {/* Google Analytics 4 (GA4) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7JM9NRV7Z"></script>
+        {/* Google Analytics 4 (GA4) - Deferred loading */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-Q7JM9NRV7Z');
+              window.addEventListener('load', function() {
+                setTimeout(function() {
+                  var s = document.createElement('script');
+                  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-Q7JM9NRV7Z';
+                  s.async = true;
+                  document.head.appendChild(s);
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  window.gtag = gtag;
+                  gtag('js', new Date());
+                  gtag('config', 'G-Q7JM9NRV7Z');
+                }, 2500);
+              });
             `,
           }}
         />
@@ -147,39 +132,35 @@ export default function RootLayout({
           /* Critical above-fold styles - inlined for instant paint */
           *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
           html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-          body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a1128}
-          .bg-navy-deep{background:#0a1128}.text-white{color:#fff}
-          .bg-gold-premium{background:#d4af37}.text-gold-premium{color:#d4af37}
-          .font-black{font-weight:900}.text-center{text-align:center}
+          body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafafa}
+          .min-h-screen{min-height:100vh}.bg-\\[\\#fafafa\\]{background:#fafafa}
+          .text-slate-900{color:#0f172a}.text-violet-600{color:#7c3aed}
+          .font-black{font-weight:900}.font-bold{font-weight:700}.text-center{text-align:center}
           .flex{display:flex}.items-center{align-items:center}.justify-center{justify-content:center}
-          .rounded-full{border-radius:9999px}.overflow-hidden{overflow:hidden}
+          .rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}
           .relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}
-          .inset-0{inset:0}.z-50{z-index:50}.min-h-screen{min-height:100vh}
+          .inset-0{inset:0}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}
+          .overflow-hidden{overflow:hidden}.border-b{border-bottom-width:1px}
+          .bg-white{background:#fff}.bg-white\\/80{background:rgba(255,255,255,0.8)}
+          .backdrop-blur-xl{backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+          .max-w-4xl{max-width:56rem}.mx-auto{margin-left:auto;margin-right:auto}
+          .px-3{padding-left:0.75rem;padding-right:0.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+          .mb-6{margin-bottom:1.5rem}.gap-2{gap:0.5rem}
+          .text-2xl{font-size:1.5rem;line-height:2rem}.text-sm{font-size:0.875rem}
+          .bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}
+          .from-violet-600{--tw-gradient-from:#7c3aed;--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+          .to-indigo-600{--tw-gradient-to:#4f46e5}.bg-clip-text{background-clip:text;-webkit-background-clip:text}
+          .text-transparent{color:transparent}
         `}} />
 
-        {/* Critical preconnects for faster DNS resolution */}
-        <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
-        <link rel="preconnect" href="https://analytics.tiktok.com" crossOrigin="anonymous" />
+        {/* CRITICAL: Preconnect to fonts FIRST for fastest font loading */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-        {/* HERO OPTIMIZATION: Preload critical above-fold images for faster LCP */}
-        {/* Mobile-first: preload smaller mobile image */}
-        <link
-          rel="preload"
-          href="/images/hero-showcase-mobile.webp"
-          as="image"
-          type="image/webp"
-          media="(max-width: 768px)"
-        />
-        <link
-          rel="preload"
-          href="/images/hero-showcase.webp"
-          as="image"
-          type="image/webp"
-          media="(min-width: 769px)"
-        />
+        {/* DNS prefetch for tracking (loaded later, so just prefetch) */}
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
@@ -357,7 +338,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${plusJakarta.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
-        {/* Lazy load tracking pixels after window load + 10s for maximum performance */}
+        {/* Real Estate Meta Pixels - Only loads on non-dentist pages */}
+        <RootLayoutPixels />
+        {/* Lazy load tracking pixels (TikTok + Meta) - path-aware */}
         <LazyTrackingPixels />
         {children}
       </body>
