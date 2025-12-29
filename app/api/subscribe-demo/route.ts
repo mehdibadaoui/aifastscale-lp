@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     // Send notification email to you (includes IP for blocking if needed)
     await resend.emails.send({
-      from: 'AI FastScale Demo <onboarding@resend.dev>',
+      from: 'AI FastScale <hello@mail.aifastscale.com>',
       to: 'badaoui577@gmail.com',
       subject: '🎬 New Demo Lead - AI FastScale',
       html: `

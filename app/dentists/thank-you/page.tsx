@@ -3,38 +3,7 @@
 import { CheckCircle, Copy, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useState, useEffect, useRef } from 'react'
-import { trackTikTokEvent } from '../../components/TikTokPixel'
-
-// Declare gtag and fbq for TypeScript
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void
-    fbq?: (...args: any[]) => void
-  }
-}
-
-// CRITICAL: Track Meta Purchase with retry logic to ensure fbq is ready
-function trackMetaPurchase(params: {
-  content_ids: string[]
-  content_name: string
-  content_type: string
-  value: number
-  currency: string
-}) {
-  const attemptTrack = (retries: number) => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Purchase', params)
-      console.log('Meta Purchase tracked:', params)
-    } else if (retries > 0) {
-      // Retry after 500ms if fbq not ready
-      setTimeout(() => attemptTrack(retries - 1), 500)
-    } else {
-      console.warn('Meta fbq not available after retries')
-    }
-  }
-  attemptTrack(5) // Try up to 5 times (2.5 seconds total)
-}
+import { Suspense, useState, useEffect } from 'react'
 
 function ThankYouContent() {
   const searchParams = useSearchParams()
@@ -43,117 +12,17 @@ function ThankYouContent() {
   const [hasCopied, setHasCopied] = useState(false)
   const [showCopyWarning, setShowCopyWarning] = useState(false)
 
-  // CRITICAL: Prevent double-firing from React StrictMode
-  const hasTrackedPurchase = useRef(false)
-
   const password = "dentist2026"
 
-  // Fire purchase tracking - ONLY for $47 main course (not upsell/downsell)
+  // PURCHASE TRACKING MOVED TO OTO PAGE
+  // Main course Purchase is now tracked when user lands on /dentists/oto after Whop checkout
+  // This prevents the issue where upsell/downsell buyers would skip tracking
+  // DO NOT track Purchase here - it would cause duplicates
   useEffect(() => {
-    if (hasTrackedPurchase.current) return
-    hasTrackedPurchase.current = true
-
-    // ONLY track Purchase for main course ($47)
-    // Skip tracking for upsell/downsell to keep ad attribution clean
-    if (purchased === 'oto-premium' || purchased === 'oto-starter' || purchased === 'downsell') {
-      console.log('Skipping Purchase tracking for upsell/downsell:', purchased)
-      return
-    }
-
-    // Main course values only
-    const productName = 'CloneYourself Dentist'
-    const value = 47
-
-    // Track TikTok CompletePayment (browser pixel)
-    trackTikTokEvent('CompletePayment', {
-      content_id: 'dentist-main',
-      content_name: productName,
-      value: value,
-      currency: 'USD'
-    })
-
-    // Track GA4 Purchase Event (for Google Ads conversions)
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'purchase', {
-        transaction_id: `dentist_order_${Date.now()}`,
-        value: value,
-        currency: 'USD',
-        items: [{
-          item_id: 'dentist-main',
-          item_name: productName,
-          price: value,
-          quantity: 1
-        }]
-      })
-    }
-
-    // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
-    // Uses retry logic to ensure fbq is loaded before tracking
-    trackMetaPurchase({
-      content_ids: ['dentist-main'],
-      content_name: productName,
-      content_type: 'product',
-      value: value,
-      currency: 'USD'
-    })
-
-    // Retrieve saved tracking params from localStorage (saved before Whop redirect)
-    let savedTracking: Record<string, string> = {}
-    try {
-      const stored = localStorage.getItem('aifastscale_tracking')
-      if (stored) {
-        savedTracking = JSON.parse(stored)
-        // Clear after reading to prevent duplicate attributions
-        localStorage.removeItem('aifastscale_tracking')
-      }
-    } catch (e) {
-      console.error('Error reading tracking data:', e)
-    }
-
-    // Get ttclid from URL params OR localStorage
-    const ttclid = searchParams.get('ttclid') || savedTracking.ttclid || ''
-
-    // Send server-side event via TikTok CAPI
-    fetch('/api/tiktok-capi', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_name: 'CompletePayment',
-        content_id: 'dentist-main',
-        content_name: productName,
-        value: value,
-        currency: 'USD',
-        ttclid: ttclid,
-        url: window.location.href,
-        referrer: document.referrer
-      })
-    }).catch(console.error)
-
-    // Get fbc/fbp from cookies OR localStorage (localStorage has pre-redirect values)
-    // Use substring instead of split to preserve values containing '=' characters
-    const fbcCookie = document.cookie.split('; ').find(row => row.startsWith('_fbc='))
-    const fbc = fbcCookie ? fbcCookie.substring(5) : (savedTracking._fbc || '')
-    const fbpCookie = document.cookie.split('; ').find(row => row.startsWith('_fbp='))
-    const fbp = fbpCookie ? fbpCookie.substring(5) : (savedTracking._fbp || '')
-
-    // Send server-side event via DENTIST-SPECIFIC Meta CAPI (Pixel: 834713712860127)
-    // This goes to the separate dentist ad account for clean attribution
-    fetch('/api/dentist-meta-capi', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventName: 'Purchase',
-        sourceUrl: window.location.href,
-        fbc: fbc,
-        fbp: fbp,
-        value: value,
-        currency: 'USD',
-        contentName: productName,
-        contentType: 'product',
-        contentIds: ['dentist-main']
-      })
-    }).catch(console.error)
-  }, [purchased, searchParams])
+    // Log for debugging
+    console.log('Thank-you page loaded. purchased param:', purchased)
+    console.log('Purchase tracking happens on OTO page, not here.')
+  }, [purchased])
 
   const copyPassword = () => {
     navigator.clipboard.writeText(password)

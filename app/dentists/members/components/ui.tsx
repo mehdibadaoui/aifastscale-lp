@@ -12,8 +12,8 @@ export function ThemeStyles() {
   return (
     <style dangerouslySetInnerHTML={{ __html: `
       :root {
-        --color-primary: 20 184 166;
-        --color-primary-light: 45 212 191;
+        --color-primary: 45 212 191;
+        --color-primary-light: 94 234 212;
         --color-accent: 6 182 212;
         --color-success: 16 185 129;
         --color-warning: 245 158 11;
@@ -24,24 +24,31 @@ export function ThemeStyles() {
         --shadow-glow-lg: 0 0 40px rgba(20, 184, 166, 0.4);
       }
 
-      .dark {
-        --color-primary: 45 212 191;
-        --color-primary-light: 94 234 212;
-        --bg-dark: #0a0f1a;
-        --bg-dark-card: rgba(15, 23, 42, 0.8);
-      }
-
-      /* Premium Dark Mode Background */
-      .dark-premium-bg {
+      /* Premium Background - Dark by default */
+      .bg-gradient-premium {
         background: linear-gradient(135deg, #0a0f1a 0%, #0d1525 25%, #0f172a 50%, #0d1525 75%, #0a0f1a 100%);
-        background-size: 400% 400%;
-        animation: gradient-shift-bg 15s ease infinite;
+        transition: background 0.3s ease;
+      }
+      /* Light mode background */
+      html:not(.dark) .bg-gradient-premium {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%);
       }
 
-      @keyframes gradient-shift-bg {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-      }
+      /* Light mode text color overrides */
+      html:not(.dark) .text-white { color: #0f172a !important; }
+      html:not(.dark) .text-slate-200 { color: #334155 !important; }
+      html:not(.dark) .text-slate-300 { color: #475569 !important; }
+      html:not(.dark) .text-slate-400 { color: #64748b !important; }
+      html:not(.dark) .text-slate-500 { color: #64748b !important; }
+      html:not(.dark) .text-slate-600 { color: #475569 !important; }
+      html:not(.dark) .bg-slate-700 { background-color: #cbd5e1 !important; }
+      html:not(.dark) .bg-slate-800 { background-color: #e2e8f0 !important; }
+      html:not(.dark) .bg-slate-900 { background-color: #f1f5f9 !important; }
+      html:not(.dark) .border-slate-700 { border-color: #cbd5e1 !important; }
+      html:not(.dark) .border-slate-800 { border-color: #e2e8f0 !important; }
+      html:not(.dark) .border-slate-600 { border-color: #94a3b8 !important; }
+      html:not(.dark) .hover\\:bg-white\\/10:hover { background-color: rgba(0, 0, 0, 0.05) !important; }
+      html:not(.dark) .hover\\:bg-white\\/5:hover { background-color: rgba(0, 0, 0, 0.03) !important; }
 
       /* Floating Orbs Animation */
       .floating-orb {
@@ -51,7 +58,10 @@ export function ThemeStyles() {
         opacity: 0.5;
         animation: float-orb 20s ease-in-out infinite;
         pointer-events: none;
+        transition: opacity 0.3s ease;
       }
+      /* Light mode - reduce orb opacity */
+      html:not(.dark) .floating-orb { opacity: 0.3; }
 
       .floating-orb-1 {
         width: 600px;
@@ -106,19 +116,44 @@ export function ThemeStyles() {
         100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
       }
 
-      /* Premium Glass Card */
+      /* Premium Glass Card - Dark Theme */
       .glass-premium {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(15, 23, 42, 0.6);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      }
-
-      .dark .glass-premium {
-        background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(45, 212, 191, 0.1);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      /* Light mode glass-premium */
+      html:not(.dark) .glass-premium {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(20, 184, 166, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      /* Glass Dark */
+      .glass-dark {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background 0.3s ease, border-color 0.3s ease;
+      }
+      /* Light mode glass-dark */
+      html:not(.dark) .glass-dark {
+        background: rgba(241, 245, 249, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      /* Glass Teal */
+      .glass-teal {
+        background: rgba(13, 148, 136, 0.1);
+        border: 1px solid rgba(45, 212, 191, 0.2);
+        transition: background 0.3s ease, border-color 0.3s ease;
+      }
+      /* Light mode glass-teal */
+      html:not(.dark) .glass-teal {
+        background: rgba(13, 148, 136, 0.08);
+        border: 1px solid rgba(13, 148, 136, 0.3);
       }
 
       /* Neon Glow Effect */
@@ -576,7 +611,7 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-slate-200 dark:text-slate-700"
+          className="text-slate-700"
         />
         {/* Progress circle */}
         <circle
@@ -600,7 +635,7 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
         </defs>
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-black text-slate-900 dark:text-white">{Math.round(progress)}%</span>
+        <span className="text-2xl font-black text-white">{Math.round(progress)}%</span>
       </div>
     </div>
   )
@@ -611,7 +646,7 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
 // ============================================
 
 export function Skeleton({ className = '', variant = 'rect' }: { className?: string; variant?: 'rect' | 'circle' | 'text' }) {
-  const baseClass = 'bg-slate-200 dark:bg-slate-700 animate-skeleton relative overflow-hidden'
+  const baseClass = 'bg-slate-800 animate-skeleton relative overflow-hidden'
   const variantClass = variant === 'circle' ? 'rounded-full' : variant === 'text' ? 'rounded h-4' : 'rounded-xl'
   return (
     <div className={`${baseClass} ${variantClass} ${className}`} aria-hidden="true">
@@ -653,6 +688,25 @@ export function Modal({ isOpen, onClose, title, icon, children, size = 'md', sho
   const modalRef = useRef<HTMLDivElement>(null)
   const previousFocus = useRef<HTMLElement | null>(null)
   const haptic = useHaptic()
+
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflow = 'hidden'
+
+      return () => {
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.body.style.overflow = ''
+        window.scrollTo(0, scrollY)
+      }
+    }
+  }, [isOpen])
 
   useEffect(() => {
     if (isOpen) {
@@ -701,7 +755,7 @@ export function Modal({ isOpen, onClose, title, icon, children, size = 'md', sho
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -709,23 +763,23 @@ export function Modal({ isOpen, onClose, title, icon, children, size = 'md', sho
     >
       <div
         ref={modalRef}
-        className={`bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl shadow-2xl w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-auto animate-slide-up sm:animate-scale-in glass-1 pb-safe`}
+        className={`glass-premium rounded-t-2xl sm:rounded-2xl shadow-2xl w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-auto animate-slide-up sm:animate-scale-in border border-teal-500/20 pb-safe`}
         onClick={e => e.stopPropagation()}
       >
         {/* Mobile drag handle */}
         <div className="sm:hidden flex justify-center pt-2 pb-1">
-          <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <div className="w-10 h-1 rounded-full bg-slate-600" />
         </div>
-        <div className="p-3 sm:p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm z-10">
-          <h2 id="modal-title" className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+        <div className="p-3 sm:p-4 border-b border-teal-500/20 flex items-center justify-between sticky top-0 glass-premium backdrop-blur-sm z-10">
+          <h2 id="modal-title" className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
             {icon} {title}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 transition-all focus-ring touch-manipulation"
+            className="p-2 rounded-xl hover:bg-white/10 active:bg-white/20 transition-all focus-ring touch-manipulation"
             aria-label="Close modal"
           >
-            <X className="w-5 h-5 text-slate-500" />
+            <X className="w-5 h-5 text-slate-400" />
           </button>
         </div>
         <div className={showPrint ? 'print-area' : ''}>
@@ -832,38 +886,38 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
 
   if (hasError) {
     return (
-      <div className="aspect-video rounded-2xl bg-slate-100 dark:bg-slate-700/80 flex items-center justify-center glass-2 border border-slate-200/50 dark:border-slate-600" role="alert">
+      <div className="aspect-video rounded-2xl glass-premium flex items-center justify-center border border-red-500/20" role="alert">
         <div className="text-center p-6">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
-          <p className="text-slate-900 dark:text-white font-bold mb-2">Video failed to load</p>
-          <p className="text-slate-500 dark:text-slate-400 text-sm">Please refresh the page</p>
+          <p className="text-white font-bold mb-2">Video failed to load</p>
+          <p className="text-slate-400 text-sm">Please refresh the page</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-teal-400/20 ring-1 ring-black/5 glow-hover">
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-teal-500/20 ring-1 ring-teal-500/10">
       {isLoading && (
-        <div className="absolute inset-0 bg-slate-100 dark:bg-slate-700/80 flex items-center justify-center z-10 rounded-2xl">
+        <div className="absolute inset-0 glass-premium flex items-center justify-center z-10 rounded-2xl">
           <div className="text-center">
-            <Loader2 className={`w-10 h-10 text-teal-500 mx-auto mb-3 ${reducedMotion ? '' : 'animate-spin'}`} />
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Loading video...</p>
+            <Loader2 className={`w-10 h-10 text-teal-400 mx-auto mb-3 ${reducedMotion ? '' : 'animate-spin'}`} />
+            <p className="text-slate-400 text-sm">Loading video...</p>
             {resumeTime > 0 && (
-              <p className="text-teal-500 text-xs mt-2">Resuming from {Math.floor(resumeTime / 60)}:{String(Math.floor(resumeTime % 60)).padStart(2, '0')}</p>
+              <p className="text-teal-400 text-xs mt-2">Resuming from {Math.floor(resumeTime / 60)}:{String(Math.floor(resumeTime % 60)).padStart(2, '0')}</p>
             )}
           </div>
         </div>
       )}
       <div ref={containerRef} />
 
-      {/* Speed Controls */}
+      {/* Speed Controls - LP Glass Style */}
       {showSpeedControls && !isLoading && (
         <div className="absolute bottom-4 right-4 z-20">
           <div className="relative">
             <button
               onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/70 hover:bg-black/80 text-white text-sm font-medium transition-all backdrop-blur-sm"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-dark hover:bg-white/20 text-white text-sm font-medium transition-all border border-teal-500/30"
               aria-label="Playback speed"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -873,15 +927,15 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
             </button>
 
             {showSpeedMenu && (
-              <div className="absolute bottom-full right-0 mb-2 bg-white dark:bg-slate-700/95 rounded-xl shadow-xl border border-slate-200 dark:border-slate-600 overflow-hidden animate-scale-in">
+              <div className="absolute bottom-full right-0 mb-2 glass-premium rounded-xl shadow-xl border border-teal-500/30 overflow-hidden animate-scale-in">
                 {PLAYBACK_SPEEDS.map((speed) => (
                   <button
                     key={speed}
                     onClick={() => changeSpeed(speed)}
-                    className={`w-full px-4 py-2 text-sm font-medium text-left transition-all hover:bg-slate-100 dark:hover:bg-slate-700 ${
+                    className={`w-full px-4 py-2 text-sm font-medium text-left transition-all hover:bg-white/10 ${
                       playbackSpeed === speed
-                        ? 'bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400'
-                        : 'text-slate-700 dark:text-slate-300'
+                        ? 'bg-teal-500/20 text-teal-400'
+                        : 'text-slate-300'
                     }`}
                   >
                     {speed}x {speed === 1 && '(Normal)'}
@@ -1053,7 +1107,7 @@ export function FloatingActionButton({ actions }: FABProps) {
           <button
             key={i}
             onClick={() => { action.onClick(); setIsOpen(false); haptic.medium(); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-700/90 shadow-lg border border-slate-200 dark:border-slate-600 text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap animate-scale-in"
+            className="flex items-center gap-2 px-4 py-2 rounded-full glass-premium shadow-lg border border-teal-500/20 text-sm font-medium text-white whitespace-nowrap animate-scale-in"
             style={{ animationDelay: `${i * 50}ms` }}
           >
             {action.icon}
@@ -1065,7 +1119,7 @@ export function FloatingActionButton({ actions }: FABProps) {
       {/* Main FAB */}
       <button
         onClick={toggleOpen}
-        className={`w-14 h-14 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-400/30 flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
+        className={`w-14 h-14 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-glow-teal flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
         aria-label="Quick actions"
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1106,20 +1160,20 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Notes" icon={<StickyNote className="w-5 h-5 text-amber-500" />}>
       <div className="p-4">
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{moduleTitle}</p>
+        <p className="text-sm text-slate-400 mb-4">{moduleTitle}</p>
         <textarea
           value={noteText}
           onChange={(e) => setNoteText(e.target.value)}
           placeholder="Write your notes here... What did you learn? Key takeaways?"
-          className="w-full h-48 p-4 rounded-xl bg-white dark:bg-slate-800/90 border-2 border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-teal-500 dark:focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all resize-none"
+          className="w-full h-48 p-4 rounded-xl glass-premium border-2 border-teal-500/20 text-white placeholder-slate-500 focus:border-teal-500/50 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all resize-none"
           aria-label="Module notes"
         />
       </div>
-      <div className="p-4 border-t border-slate-200 dark:border-slate-700 flex gap-3 justify-end">
-        <button onClick={onClose} className="px-4 py-2 rounded-xl font-bold bg-white dark:bg-slate-700/80 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 transition-all focus-ring">
+      <div className="p-4 border-t border-teal-500/20 flex gap-3 justify-end">
+        <button onClick={onClose} className="px-4 py-2 rounded-xl font-bold glass-premium text-slate-300 border border-teal-500/20 hover:bg-white/10 transition-all focus-ring">
           Cancel
         </button>
-        <button onClick={handleSave} className="px-4 py-2 rounded-xl font-bold bg-teal-500 text-white hover:bg-teal-600 transition-all btn-press focus-ring">
+        <button onClick={handleSave} className="btn-premium px-4 py-2 rounded-xl font-bold text-white shadow-glow-teal transition-all btn-press focus-ring">
           Save Notes
         </button>
       </div>
@@ -1133,12 +1187,12 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
 
 export function KeyboardShortcutsModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Keyboard Shortcuts" icon={<Keyboard className="w-5 h-5 text-teal-500" />} size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Keyboard Shortcuts" icon={<Keyboard className="w-5 h-5 text-teal-400" />} size="sm">
       <div className="p-4 space-y-2">
         {KEYBOARD_SHORTCUTS.map((shortcut, i) => (
-          <div key={i} className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-            <span className="text-slate-600 dark:text-slate-400">{shortcut.action}</span>
-            <kbd className="px-3 py-1 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white font-mono text-sm border border-slate-200 dark:border-slate-600 shadow-sm">
+          <div key={i} className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-white/5 transition-all">
+            <span className="text-slate-400">{shortcut.action}</span>
+            <kbd className="px-3 py-1 rounded-lg glass-premium text-white font-mono text-sm border border-teal-500/20 shadow-sm">
               {shortcut.key}
             </kbd>
           </div>
@@ -1171,25 +1225,25 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={<Settings className="w-5 h-5 text-teal-500" />} size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={<Settings className="w-5 h-5 text-teal-400" />} size="sm">
       <div className="p-4 space-y-3">
         {/* Dark Mode */}
         <button
           onClick={() => toggle('darkMode', darkMode)}
-          className="w-full flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-500 transition-all focus-ring shadow-sm"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={darkMode}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-teal-500/10' : 'bg-amber-500/10'}`}>
-              {darkMode ? <Moon className="w-5 h-5 text-teal-500" /> : <Sun className="w-5 h-5 text-amber-500" />}
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-teal-500/20' : 'bg-amber-500/20'}`}>
+              {darkMode ? <Moon className="w-5 h-5 text-teal-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
             </div>
             <div className="text-left">
-              <p className="font-bold text-slate-900 dark:text-white">Dark Mode</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Easier on the eyes</p>
+              <p className="font-bold text-white">Dark Mode</p>
+              <p className="text-sm text-slate-400">Easier on the eyes</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${darkMode ? 'bg-teal-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${darkMode ? 'bg-teal-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${darkMode ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1197,20 +1251,20 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Auto-play Next */}
         <button
           onClick={() => toggle('autoPlayNext', autoPlayNext)}
-          className="w-full flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-500 transition-all focus-ring shadow-sm"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={autoPlayNext}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-teal-500/10">
-              <SkipForward className="w-5 h-5 text-teal-500" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-teal-500/20">
+              <SkipForward className="w-5 h-5 text-teal-400" />
             </div>
             <div className="text-left">
-              <p className="font-bold text-slate-900 dark:text-white">Auto-play Next</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Play next module automatically</p>
+              <p className="font-bold text-white">Auto-play Next</p>
+              <p className="text-sm text-slate-400">Play next module automatically</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${autoPlayNext ? 'bg-teal-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${autoPlayNext ? 'bg-teal-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${autoPlayNext ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1218,20 +1272,20 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Sound Effects */}
         <button
           onClick={() => toggle('soundEnabled', soundEnabled)}
-          className="w-full flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-500 transition-all focus-ring shadow-sm"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={soundEnabled}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${soundEnabled ? 'bg-emerald-500/10' : 'bg-slate-200 dark:bg-slate-700'}`}>
-              {soundEnabled ? <Volume2 className="w-5 h-5 text-emerald-500" /> : <VolumeX className="w-5 h-5 text-slate-400" />}
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${soundEnabled ? 'bg-emerald-500/20' : 'bg-slate-700'}`}>
+              {soundEnabled ? <Volume2 className="w-5 h-5 text-emerald-400" /> : <VolumeX className="w-5 h-5 text-slate-400" />}
             </div>
             <div className="text-left">
-              <p className="font-bold text-slate-900 dark:text-white">Sound Effects</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Play sounds for achievements</p>
+              <p className="font-bold text-white">Sound Effects</p>
+              <p className="text-sm text-slate-400">Play sounds for achievements</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${soundEnabled ? 'bg-teal-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${soundEnabled ? 'bg-teal-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${soundEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1239,25 +1293,25 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Show Completed Badge */}
         <button
           onClick={() => toggle('showCompletedBadge', showCompletedBadge)}
-          className="w-full flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-500 transition-all focus-ring shadow-sm"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={showCompletedBadge}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-500/10">
-              <CheckCircle className="w-5 h-5 text-emerald-500" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-500/20">
+              <CheckCircle className="w-5 h-5 text-emerald-400" />
             </div>
             <div className="text-left">
-              <p className="font-bold text-slate-900 dark:text-white">Completed Badges</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Show completion status</p>
+              <p className="font-bold text-white">Completed Badges</p>
+              <p className="text-sm text-slate-400">Show completion status</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${showCompletedBadge ? 'bg-teal-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${showCompletedBadge ? 'bg-teal-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${showCompletedBadge ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
       </div>
-      <div className="p-4 border-t border-slate-200 dark:border-slate-700 text-center text-sm text-slate-500 dark:text-slate-400">
+      <div className="p-4 border-t border-teal-500/20 text-center text-sm text-slate-400">
         Settings auto-save when changed
       </div>
     </Modal>
@@ -1293,32 +1347,32 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Your Certificate" size="lg" showPrint>
       <div className="p-8">
-        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-800/20 dark:to-cyan-800/20 rounded-2xl p-8 border-4 border-teal-200 dark:border-teal-600 text-center relative overflow-hidden">
+        <div className="bg-gradient-to-br from-teal-900/40 to-cyan-900/40 rounded-2xl p-8 border-4 border-teal-500/30 text-center relative overflow-hidden glass-premium">
           {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-teal-200/50 to-transparent rounded-br-full" />
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-200/50 to-transparent rounded-tl-full" />
-          <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-teal-300/30 to-transparent -translate-y-1/2" />
-          <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-cyan-300/30 to-transparent -translate-y-1/2" />
+          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-teal-500/20 to-transparent rounded-br-full" />
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-500/20 to-transparent rounded-tl-full" />
+          <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-teal-500/20 to-transparent -translate-y-1/2" />
+          <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-cyan-500/20 to-transparent -translate-y-1/2" />
 
           <div className="relative z-10">
             <Trophy className="w-16 h-16 text-amber-500 mx-auto mb-4 animate-float" />
-            <h3 className="text-lg font-medium text-teal-500 dark:text-teal-300 mb-2">Certificate of Completion</h3>
+            <h3 className="text-lg font-medium text-teal-400 mb-2">Certificate of Completion</h3>
             <h1 className="text-4xl font-black gradient-text-animated mb-2">{COURSE_CONFIG.title}</h1>
-            <p className="text-xl text-teal-500 dark:text-teal-300 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
+            <p className="text-xl text-teal-400 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
 
-            <div className="bg-white/50 dark:bg-white/10 rounded-xl p-6 mb-6 inline-block glass-2">
-              <p className="text-slate-600 dark:text-slate-300 mb-2">This certifies that</p>
-              <p className="text-3xl font-black text-slate-900 dark:text-white">{studentName || 'Student'}</p>
-              <p className="text-slate-600 dark:text-slate-300 mt-2">has successfully completed all modules</p>
+            <div className="bg-white/10 rounded-xl p-6 mb-6 inline-block glass-premium border border-teal-500/20">
+              <p className="text-slate-400 mb-2">This certifies that</p>
+              <p className="text-3xl font-black text-white">{studentName || 'Student'}</p>
+              <p className="text-slate-400 mt-2">has successfully completed all modules</p>
             </div>
 
-            <div className="flex items-center justify-center gap-8 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex items-center justify-center gap-8 text-sm text-slate-400">
               <div>
-                <p className="font-bold">Date Completed</p>
+                <p className="font-bold text-white">Date Completed</p>
                 <p>{completionDate}</p>
               </div>
               <div>
-                <p className="font-bold">Total Duration</p>
+                <p className="font-bold text-white">Total Duration</p>
                 <p>{TOTAL_RUNTIME} minutes</p>
               </div>
             </div>
@@ -1326,8 +1380,8 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
         </div>
       </div>
 
-      <div className="p-6 border-t border-slate-200 dark:border-slate-700 flex flex-wrap gap-3 justify-center">
-        <button onClick={handlePrint} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-500 text-white font-bold hover:bg-teal-600 transition-all btn-press focus-ring">
+      <div className="p-6 border-t border-teal-500/20 flex flex-wrap gap-3 justify-center">
+        <button onClick={handlePrint} className="btn-premium flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold shadow-glow-teal transition-all btn-press focus-ring">
           <Printer className="w-4 h-4" /> Print
         </button>
         <button onClick={() => handleShare('twitter')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1DA1F2] text-white font-bold hover:opacity-90 transition-all btn-press focus-ring">
@@ -1342,7 +1396,7 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
 }
 
 // ============================================
-// ONBOARDING TOUR
+// ONBOARDING TOUR - PREMIUM REDESIGN
 // ============================================
 
 interface OnboardingProps {
@@ -1350,71 +1404,361 @@ interface OnboardingProps {
   onComplete: () => void
 }
 
+// Premium SVG Icons for each step
+const OnboardingIcons = {
+  welcome: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 sm:w-10 sm:h-10">
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#star-gradient)" />
+      <defs>
+        <linearGradient id="star-gradient" x1="2" y1="2" x2="22" y2="22">
+          <stop stopColor="#fbbf24" />
+          <stop offset="1" stopColor="#f59e0b" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+  video: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 sm:w-10 sm:h-10">
+      <rect x="2" y="4" width="20" height="16" rx="3" fill="url(#video-gradient)" />
+      <path d="M10 8.5V15.5L16 12L10 8.5Z" fill="white" />
+      <defs>
+        <linearGradient id="video-gradient" x1="2" y1="4" x2="22" y2="20">
+          <stop stopColor="#6366f1" />
+          <stop offset="1" stopColor="#8b5cf6" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+  bonus: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 sm:w-10 sm:h-10">
+      <path d="M20 12V22H4V12" fill="url(#gift-gradient)" />
+      <path d="M22 7H2V12H22V7Z" fill="url(#gift-gradient-2)" />
+      <path d="M12 22V7" stroke="white" strokeWidth="2" />
+      <path d="M12 7H7.5C6.12 7 5 5.88 5 4.5C5 3.12 6.12 2 7.5 2C10 2 12 7 12 7Z" fill="#fbbf24" />
+      <path d="M12 7H16.5C17.88 7 19 5.88 19 4.5C19 3.12 17.88 2 16.5 2C14 2 12 7 12 7Z" fill="#f59e0b" />
+      <defs>
+        <linearGradient id="gift-gradient" x1="4" y1="12" x2="20" y2="22">
+          <stop stopColor="#14b8a6" />
+          <stop offset="1" stopColor="#06b6d4" />
+        </linearGradient>
+        <linearGradient id="gift-gradient-2" x1="2" y1="7" x2="22" y2="12">
+          <stop stopColor="#2dd4bf" />
+          <stop offset="1" stopColor="#22d3ee" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+  trophy: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 sm:w-10 sm:h-10">
+      <path d="M12 15C15.31 15 18 12.31 18 9V3H6V9C6 12.31 8.69 15 12 15Z" fill="url(#trophy-gradient)" />
+      <path d="M6 3H3V6C3 7.66 4.34 9 6 9V3Z" fill="#fbbf24" />
+      <path d="M18 3H21V6C21 7.66 19.66 9 18 9V3Z" fill="#fbbf24" />
+      <path d="M9 18H15V21H9V18Z" fill="#d97706" />
+      <path d="M12 15V18" stroke="#d97706" strokeWidth="3" />
+      <path d="M7 21H17" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
+      <defs>
+        <linearGradient id="trophy-gradient" x1="6" y1="3" x2="18" y2="15">
+          <stop stopColor="#fbbf24" />
+          <stop offset="1" stopColor="#f59e0b" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+  rocket: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 sm:w-10 sm:h-10">
+      <path d="M12 2C12 2 8 6 8 12C8 14 9 16 10 17L8 22L12 20L16 22L14 17C15 16 16 14 16 12C16 6 12 2 12 2Z" fill="url(#rocket-gradient)" />
+      <circle cx="12" cy="10" r="2" fill="white" />
+      <path d="M5 15L8 12L6 17L5 15Z" fill="#f59e0b" />
+      <path d="M19 15L16 12L18 17L19 15Z" fill="#f59e0b" />
+      <defs>
+        <linearGradient id="rocket-gradient" x1="8" y1="2" x2="16" y2="22">
+          <stop stopColor="#a855f7" />
+          <stop offset="1" stopColor="#ec4899" />
+        </linearGradient>
+      </defs>
+    </svg>
+  ),
+}
+
 export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
   const [step, setStep] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(true)
   const haptic = useHaptic()
 
+  // Lock body scroll when popup is open
+  useEffect(() => {
+    if (isOpen) {
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflow = 'hidden'
+
+      return () => {
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.body.style.overflow = ''
+        window.scrollTo(0, scrollY)
+      }
+    }
+  }, [isOpen])
+
+  // Different premium colors for each step - visual variety
   const steps = [
-    { title: "Welcome!", description: "Let's take a quick tour to help you get started.", icon: "🎉", color: 'from-teal-500 to-cyan-500' },
-    { title: "Video Lessons", description: "Watch training videos in the Course tab. Progress saves automatically.", icon: "🎬", color: 'from-blue-500 to-indigo-500' },
-    { title: "Download Bonuses", description: "Access $2,000+ in exclusive resources in the Bonuses tab.", icon: "🎁", color: 'from-cyan-500 to-teal-500' },
-    { title: "Earn Badges", description: "Complete modules and collect achievements to track progress.", icon: "🏆", color: 'from-amber-500 to-orange-500' },
-    { title: "Pro Tips", description: "Press '?' for shortcuts. Use arrows to navigate modules.", icon: "⌨️", color: 'from-purple-500 to-pink-500' },
+    {
+      title: "You're In!",
+      subtitle: "Welcome to Your Premium Training",
+      description: "You've just unlocked exclusive access to the most comprehensive AI course for dental practices.",
+      icon: 'welcome',
+      accent: 'from-teal-400 to-cyan-500'
+    },
+    {
+      title: "Master the Content",
+      subtitle: "HD Video Training",
+      description: "Dive into our expert-led video modules. Your progress saves automatically — pick up right where you left off.",
+      icon: 'video',
+      accent: 'from-violet-500 to-purple-600'
+    },
+    {
+      title: "Claim Your Bonuses",
+      subtitle: "$2,000+ in Resources",
+      description: "Download templates, scripts, and tools designed to accelerate your results. They're all yours.",
+      icon: 'bonus',
+      accent: 'from-emerald-400 to-teal-500'
+    },
+    {
+      title: "Track Your Wins",
+      subtitle: "Achievements & Badges",
+      description: "Complete modules to unlock achievements and earn your certificate of completion.",
+      icon: 'trophy',
+      accent: 'from-amber-400 to-orange-500'
+    },
+    {
+      title: "Ready to Transform?",
+      subtitle: "Let's Get Started",
+      description: "Your journey to AI-powered practice growth begins now. Let's make it happen.",
+      icon: 'rocket',
+      accent: 'from-rose-400 to-pink-500'
+    },
   ]
 
   const handleNext = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
     haptic.light()
-    if (step < steps.length - 1) {
-      setStep(step + 1)
-    } else {
-      haptic.success()
-      onComplete()
-    }
+
+    setTimeout(() => {
+      if (step < steps.length - 1) {
+        setStep(step + 1)
+        setShowConfetti(false)
+      } else {
+        haptic.success()
+        onComplete()
+      }
+      setIsAnimating(false)
+    }, 150)
+  }
+
+  const handleSkip = () => {
+    haptic.light()
+    onComplete()
   }
 
   if (!isOpen) return null
 
+  const currentStep = steps[step]
+  const iconKey = currentStep.icon as keyof typeof OnboardingIcons
+
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 text-center animate-slide-up sm:animate-scale-in border-t sm:border border-slate-200 dark:border-slate-700 pb-safe">
-        {/* Mobile drag handle */}
-        <div className="sm:hidden flex justify-center mb-4">
-          <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
-        </div>
-
-        {/* Icon with gradient background */}
-        <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-gradient-to-br ${steps[step].color} flex items-center justify-center shadow-lg mb-4 sm:mb-6`}>
-          <span className="text-3xl sm:text-4xl">{steps[step].icon}</span>
-        </div>
-
-        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-2 sm:mb-3">{steps[step].title}</h2>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-6 sm:mb-8 leading-relaxed">{steps[step].description}</p>
-
-        {/* Progress dots */}
-        <div className="flex justify-center gap-1.5 sm:gap-2 mb-5 sm:mb-6">
-          {steps.map((_, i) => (
-            <button
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+      {/* Confetti celebration on first step */}
+      {showConfetti && step === 0 && (
+        <div className="fixed inset-0 pointer-events-none z-[60]" aria-hidden="true">
+          {[...Array(50)].map((_, i) => (
+            <div
               key={i}
-              onClick={() => setStep(i)}
-              className={`h-2 rounded-full transition-all duration-300 touch-manipulation ${i === step ? 'w-6 sm:w-8 bg-teal-500' : 'w-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600'}`}
-              aria-label={`Go to step ${i + 1}`}
-            />
+              className="absolute animate-confetti"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: '-20px',
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2.5 + Math.random() * 2}s`,
+              }}
+            >
+              <div
+                className="w-2 h-2 sm:w-3 sm:h-3"
+                style={{
+                  backgroundColor: ['#14b8a6', '#06b6d4', '#2dd4bf', '#22d3ee', '#0d9488', '#0891b2'][Math.floor(Math.random() * 6)],
+                  transform: `rotate(${Math.random() * 360}deg)`,
+                  borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+                }}
+              />
+            </div>
           ))}
         </div>
+      )}
 
-        <div className="flex gap-3">
-          <button
-            onClick={() => { haptic.light(); onComplete(); }}
-            className="flex-1 py-3 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base bg-white dark:bg-slate-700/80 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 active:scale-[0.98] transition-all focus-ring touch-manipulation border border-slate-200 dark:border-slate-600"
-          >
-            Skip
-          </button>
-          <button
-            onClick={handleNext}
-            className="flex-1 py-3 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:shadow-lg active:scale-[0.98] transition-all btn-press focus-ring touch-manipulation"
-          >
-            {step < steps.length - 1 ? 'Next' : "Let's Go!"}
-          </button>
+      {/* Main Modal */}
+      <div
+        className="relative w-full max-w-md mx-4 sm:mx-0 animate-slide-up sm:animate-scale-in"
+        style={{ animationDuration: '0.4s', animationTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+      >
+        {/* Glow effect behind modal */}
+        <div className={`absolute -inset-4 bg-gradient-to-r ${currentStep.accent} rounded-3xl blur-2xl opacity-20 animate-pulse`} />
+
+        {/* Modal content */}
+        <div className="relative glass-premium rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 overflow-hidden">
+          {/* Animated gradient border */}
+          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-teal-500/50 via-cyan-500/50 to-teal-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
+
+          {/* Inner content */}
+          <div className="relative p-6 sm:p-8 pb-safe">
+            {/* Subtle drag handle for mobile */}
+            <div className="sm:hidden flex justify-center mb-6">
+              <div className="w-8 h-1 rounded-full bg-white/20" />
+            </div>
+
+            {/* Floating particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1 h-1 bg-teal-400/40 rounded-full"
+                  style={{
+                    left: `${20 + Math.random() * 60}%`,
+                    top: `${20 + Math.random() * 60}%`,
+                    animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 2}s`,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Icon with glow */}
+            <div className="relative mb-6 sm:mb-8">
+              {/* Glow ring */}
+              <div className={`absolute inset-0 mx-auto w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r ${currentStep.accent} rounded-2xl blur-xl opacity-40 animate-pulse`} />
+
+              {/* Icon container */}
+              <div
+                className={`relative mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br ${currentStep.accent} flex items-center justify-center shadow-2xl transform transition-all duration-500`}
+                style={{
+                  animation: isAnimating ? 'none' : 'float 3s ease-in-out infinite',
+                  boxShadow: `0 20px 40px -10px rgba(20, 184, 166, 0.4)`,
+                }}
+                key={step}
+              >
+                {/* Sparkle accents */}
+                <div className="absolute -top-1 -right-1 w-3 h-3">
+                  <svg viewBox="0 0 24 24" fill="white" className="w-full h-full animate-pulse">
+                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+                  </svg>
+                </div>
+                <div className="absolute -bottom-1 -left-1 w-2 h-2">
+                  <svg viewBox="0 0 24 24" fill="white" className="w-full h-full animate-pulse" style={{ animationDelay: '0.5s' }}>
+                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+                  </svg>
+                </div>
+
+                {OnboardingIcons[iconKey]}
+              </div>
+            </div>
+
+            {/* Text content with stagger animation */}
+            <div className="text-center mb-6 sm:mb-8" key={`content-${step}`}>
+              {/* Subtitle badge */}
+              <div
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-3"
+                style={{ animation: 'fade-in 0.4s ease-out forwards', animationDelay: '0.1s', opacity: 0 }}
+              >
+                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${currentStep.accent}`} />
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{currentStep.subtitle}</span>
+              </div>
+
+              {/* Title */}
+              <h2
+                className="text-2xl sm:text-3xl font-black mb-3 bg-gradient-to-r from-white via-white to-slate-300 bg-clip-text text-transparent"
+                style={{ animation: 'fade-in 0.4s ease-out forwards', animationDelay: '0.2s', opacity: 0 }}
+              >
+                {currentStep.title}
+              </h2>
+
+              {/* Description */}
+              <p
+                className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-sm mx-auto"
+                style={{ animation: 'fade-in 0.4s ease-out forwards', animationDelay: '0.3s', opacity: 0 }}
+              >
+                {currentStep.description}
+              </p>
+            </div>
+
+            {/* Premium progress indicator */}
+            <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+              <div className="flex items-center gap-1">
+                {steps.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => !isAnimating && setStep(i)}
+                    className="group relative p-1 touch-manipulation"
+                    aria-label={`Go to step ${i + 1}`}
+                  >
+                    <div
+                      className={`h-1 rounded-full transition-all duration-500 ${
+                        i === step
+                          ? `w-6 bg-gradient-to-r ${currentStep.accent}`
+                          : i < step
+                            ? 'w-2 bg-teal-500/60'
+                            : 'w-2 bg-white/20 group-hover:bg-white/30'
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <span className="text-xs text-slate-500 ml-2">{step + 1}/{steps.length}</span>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex items-center gap-4">
+              {/* Skip - subtle text button */}
+              <button
+                onClick={handleSkip}
+                className="px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-300 transition-colors touch-manipulation"
+              >
+                Skip tour
+              </button>
+
+              {/* Next - premium button */}
+              <button
+                onClick={handleNext}
+                disabled={isAnimating}
+                className={`flex-1 relative py-3.5 sm:py-4 rounded-xl font-bold text-white overflow-hidden transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] touch-manipulation disabled:opacity-70 bg-gradient-to-r ${currentStep.accent} shadow-lg`}
+                style={{ boxShadow: `0 10px 30px -5px rgba(20, 184, 166, 0.4)` }}
+              >
+                {/* Shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+
+                <span className="relative flex items-center justify-center gap-2">
+                  {step < steps.length - 1 ? (
+                    <>
+                      Continue
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </>
+                  ) : (
+                    <>
+                      Start Learning
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </>
+                  )}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1447,16 +1791,20 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950">
-          <div className="text-center max-w-md animate-fade-in">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-premium noise-overlay section-premium relative overflow-hidden">
+          {/* Floating Gradient Orbs */}
+          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-cyan-500/10 to-teal-500/5 rounded-full blur-3xl floating" />
+
+          <div className="text-center max-w-md animate-fade-in glass-premium p-8 rounded-2xl border border-teal-500/20">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Something went wrong</h1>
-            <p className="text-slate-600 dark:text-slate-400 mb-6">
+            <h1 className="text-2xl font-black text-white mb-2">Something went wrong</h1>
+            <p className="text-slate-400 mb-6">
               Please refresh the page to try again. If the problem persists, contact support.
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-3 rounded-xl font-bold bg-teal-500 text-white hover:bg-teal-600 transition-all btn-press"
+              className="btn-premium px-6 py-3 rounded-xl font-bold text-white shadow-glow-teal transition-all btn-press"
             >
               Refresh Page
             </button>
@@ -1559,7 +1907,7 @@ interface PremiumNavProps {
 
 export function PremiumNav({ tabs, activeTab, onTabChange, darkMode }: PremiumNavProps) {
   return (
-    <nav className="flex items-center gap-1 p-1 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
+    <nav className="flex items-center gap-1 p-1 rounded-2xl glass-premium backdrop-blur-xl border border-teal-500/20 shadow-lg">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -1567,7 +1915,7 @@ export function PremiumNav({ tabs, activeTab, onTabChange, darkMode }: PremiumNa
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-300 ${
             activeTab === tab.id
               ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-500/30 scale-105'
-              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-teal-500'
+              : 'text-slate-400 hover:bg-white/10 hover:text-teal-400'
           }`}
         >
           {tab.icon}

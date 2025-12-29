@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
-import { COURSE_MODULES, ACHIEVEMENTS, PlatformState, DEV_AUTO_LOGIN, VIP_GUESTS, BLOCKED_USERS } from './config'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { COURSE_MODULES, ACHIEVEMENTS, PlatformState, DEV_AUTO_LOGIN, BLOCKED_USERS } from './config'
 
 const STORAGE_PREFIX = 'dentist_v4_'
 
@@ -43,8 +43,20 @@ export function usePlatformState() {
   const [isBlocked, setIsBlocked] = useState(false)
 
   // Navigation
-  const [activeSection, setActiveSection] = useState<PlatformState['activeSection']>('dashboard')
-  const [currentModuleIndex, setCurrentModuleIndex] = useState(0)
+  const [activeSection, setActiveSectionRaw] = useState<PlatformState['activeSection']>('dashboard')
+  const [currentModuleIndex, setCurrentModuleIndexRaw] = useState(0)
+
+  // Wrapper to scroll to top when changing sections
+  const setActiveSection = useCallback((section: PlatformState['activeSection']) => {
+    setActiveSectionRaw(section)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  // Wrapper to scroll to top when changing modules
+  const setCurrentModuleIndex = useCallback((index: number) => {
+    setCurrentModuleIndexRaw(index)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   // Progress - using custom localStorage hook
   const [completedModules, setCompletedModules] = useLocalStorage<string[]>('completed', [])
@@ -72,7 +84,7 @@ export function usePlatformState() {
   const [vipGuest, setVipGuest] = useLocalStorage<{ id: string; name: string; badge: string; welcomeMessage: string } | null>('vip_guest', null)
 
   // Settings
-  const [darkMode, setDarkMode] = useLocalStorage<boolean>('dark_mode', false)
+  const [darkMode, setDarkMode] = useLocalStorage<boolean>('dark_mode', true)
   const [autoPlayNext, setAutoPlayNext] = useLocalStorage<boolean>('autoplay', false)
   const [showCompletedBadge, setShowCompletedBadge] = useLocalStorage<boolean>('show_badge', true)
   const [soundEnabled, setSoundEnabled] = useLocalStorage<boolean>('sound_enabled', true)
@@ -109,8 +121,14 @@ export function usePlatformState() {
   const timeRemaining = COURSE_MODULES.filter(m => !m.comingSoon && !completedModules.includes(m.id))
     .reduce((acc, m) => acc + m.durationMinutes, 0)
 
-  // Achievement conditions
-  const achievementConditions: Record<string, boolean> = {
+  // Memoize note-taker check to avoid recalculating on every render
+  const hasAnyNotes = useMemo(() =>
+    Object.values(moduleNotes).some(note => note && note.length > 0),
+    [moduleNotes]
+  )
+
+  // Achievement conditions - memoized to prevent unnecessary re-renders
+  const achievementConditions: Record<string, boolean> = useMemo(() => ({
     'first-video': completedCount >= 1,
     'halfway': progressPercent >= 50,
     'completed': progressPercent >= 100,
@@ -118,9 +136,9 @@ export function usePlatformState() {
     'bonus-collector': downloadedBonuses.length >= 5,
     'streak-3': streak >= 3,
     'streak-7': streak >= 7,
-    'note-taker': Object.values(moduleNotes).some(note => note && note.length > 0),
+    'note-taker': hasAnyNotes,
     'bookworm': bookmarkedModules.length >= 3,
-  }
+  }), [completedCount, progressPercent, sessionCompletedCount, downloadedBonuses.length, streak, hasAnyNotes, bookmarkedModules.length])
 
   // Check for newly unlocked achievements
   useEffect(() => {
@@ -249,33 +267,57 @@ export function usePlatformState() {
     localStorage.setItem(STORAGE_PREFIX + 'session_count', sessionCompletedCount.toString())
   }, [sessionCompletedCount])
 
-  // Actions
-  const handleLogin = useCallback((password: string): boolean => {
-    const trimmedPassword = password.trim()
+  // Login state for async handling
+  const [loginError, setLoginError] = useState<string | null>(null)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
 
-    // Check for VIP guest login first (case-insensitive)
-    const vipGuestMatch = VIP_GUESTS.find(g => g.password.toLowerCase() === trimmedPassword.toLowerCase())
-    if (vipGuestMatch) {
-      setIsAuthenticated(true)
-      setVipGuest({
-        id: vipGuestMatch.id,
-        name: vipGuestMatch.name,
-        badge: vipGuestMatch.badge,
-        welcomeMessage: vipGuestMatch.welcomeMessage,
+  // Actions - now uses API route for secure password verification
+  // Supports both personalized login (email+password) and VIP/legacy (password only)
+  const handleLogin = useCallback(async (email: string, password: string): Promise<boolean> => {
+    setIsLoggingIn(true)
+    setLoginError(null)
+
+    try {
+      const response = await fetch('/api/dentist-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       })
-      setStudentName(vipGuestMatch.name)
-      localStorage.setItem('dentistMemberAuth', 'true')
-      return true
-    }
 
-    // Regular password check
-    if (trimmedPassword.toLowerCase() === 'dentist2026') {
-      setIsAuthenticated(true)
-      setVipGuest(null) // Clear any VIP status
-      localStorage.setItem('dentistMemberAuth', 'true')
-      return true
+      const data = await response.json()
+
+      if (data.success) {
+        setIsAuthenticated(true)
+        localStorage.setItem('dentistMemberAuth', 'true')
+
+        if (data.isVip && data.vipGuest) {
+          // VIP Guest login
+          setVipGuest(data.vipGuest)
+          setStudentName(data.vipGuest.name)
+        } else if (data.user) {
+          // Personalized login - set user's name
+          setVipGuest(null)
+          if (data.user.name) {
+            setStudentName(data.user.name)
+          }
+          // Store user email for reference
+          localStorage.setItem('dentistMemberEmail', data.user.email)
+        } else {
+          setVipGuest(null)
+        }
+
+        setIsLoggingIn(false)
+        return true
+      } else {
+        setLoginError(data.error || 'Invalid credentials')
+        setIsLoggingIn(false)
+        return false
+      }
+    } catch (error) {
+      setLoginError('Connection error. Please try again.')
+      setIsLoggingIn(false)
+      return false
     }
-    return false
   }, [])
 
   const handleLogout = useCallback(() => {
@@ -292,6 +334,8 @@ export function usePlatformState() {
   const completeOnboarding = useCallback(() => {
     setShowOnboarding(false)
     localStorage.setItem(STORAGE_PREFIX + 'onboarded', 'true')
+    // Scroll to top after completing/skipping onboarding
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   const markComplete = useCallback(() => {
@@ -401,6 +445,8 @@ export function usePlatformState() {
     isLoading,
     isAuthenticated,
     isBlocked,
+    isLoggingIn,
+    loginError,
     activeSection,
     currentModuleIndex,
     currentModule,

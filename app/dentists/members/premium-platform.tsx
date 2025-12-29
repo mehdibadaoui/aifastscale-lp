@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import {
   GraduationCap, Home, Video, Gift, Trophy, Star, Flame, Moon, Sun,
   Settings, LogOut, Sparkles, ArrowRight, HelpCircle, Crown, ChevronUp
@@ -21,24 +21,22 @@ import { DashboardSection, CourseSection, BonusesSection, AchievementsSection } 
 // ============================================
 
 interface LoginScreenProps {
-  onLogin: (password: string) => boolean
-  darkMode: boolean
-  setDarkMode: (v: boolean | ((prev: boolean) => boolean)) => void
+  onLogin: (email: string, password: string) => Promise<boolean>
+  isLoggingIn: boolean
+  loginError: string | null
 }
 
-const LoginScreen = memo(function LoginScreen({ onLogin, darkMode, setDarkMode }: LoginScreenProps) {
+const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError }: LoginScreenProps) {
+  const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [error, setError] = React.useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!onLogin(password)) {
-      setError('Incorrect password. Check your thank-you page or contact support.')
-    }
+    await onLogin(email.trim(), password)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium noise-overlay section-premium">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-cyan-500/8 to-teal-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
@@ -54,35 +52,56 @@ const LoginScreen = memo(function LoginScreen({ onLogin, darkMode, setDarkMode }
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block text-slate-300 text-sm font-semibold mb-2">
+                Email Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                autoComplete="email"
+                className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-dark border-2 border-teal-500/30 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all text-base"
+              />
+            </div>
+
+            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-slate-300 text-sm font-semibold mb-2">
-                Enter Your Password
+                Password
               </label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="From your welcome email"
+                autoComplete="current-password"
                 className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-dark border-2 border-teal-500/30 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all text-base"
-                aria-describedby={error ? 'password-error' : undefined}
+                aria-describedby={loginError ? 'login-error' : undefined}
               />
             </div>
-            {error && (
-              <div id="password-error" className="p-3 sm:p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm text-center font-medium" role="alert">
-                {error}
+
+            {loginError && (
+              <div id="login-error" className="p-3 sm:p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm text-center font-medium" role="alert">
+                {loginError}
               </div>
             )}
+
             <button
               type="submit"
-              className="btn-premium w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white shadow-glow-teal animate-pulse-glow focus-ring touch-manipulation"
+              disabled={isLoggingIn || !password}
+              className="btn-premium w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white shadow-glow-teal animate-pulse-glow focus-ring touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Access My Course
+              {isLoggingIn ? 'Verifying...' : 'Access My Course'}
             </button>
           </form>
 
           <p className="mt-5 sm:mt-6 text-center text-slate-500 text-xs sm:text-sm">
-            Your password was shown on the thank-you page after purchase
+            Check your welcome email for your login details
           </p>
         </div>
       </div>
@@ -96,14 +115,9 @@ const LoginScreen = memo(function LoginScreen({ onLogin, darkMode, setDarkMode }
 
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_SxMS4HqFxJKNT'
 
-interface BlockedScreenProps {
-  darkMode: boolean
-  setDarkMode: (v: boolean | ((prev: boolean) => boolean)) => void
-}
-
-const BlockedScreen = memo(function BlockedScreen({ darkMode, setDarkMode }: BlockedScreenProps) {
+const BlockedScreen = memo(function BlockedScreen() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium noise-overlay section-premium">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-red-500/10 to-orange-500/5 rounded-full blur-3xl floating-slow" />
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-orange-500/8 to-red-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
@@ -167,7 +181,7 @@ const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStu
   ]
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:p-4 bg-gradient-premium noise-overlay section-premium relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:p-4 bg-gradient-premium relative overflow-hidden">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-teal-500/15 to-cyan-500/10 rounded-full blur-3xl ${reducedMotion ? '' : 'floating-slow'}`} />
@@ -422,19 +436,56 @@ const LogoutModal = memo(function LogoutModal({ isOpen, onClose, onConfirm }: Lo
 // MAIN PLATFORM COMPONENT
 // ============================================
 
+// Simple achievement sound using Web Audio API
+function playAchievementSound() {
+  try {
+    const audioContext = new (window.AudioContext || (window as typeof window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext)()
+
+    // Create a pleasant chime/bell sound
+    const frequencies = [523.25, 659.25, 783.99] // C5, E5, G5 - major chord
+
+    frequencies.forEach((freq, index) => {
+      const oscillator = audioContext.createOscillator()
+      const gainNode = audioContext.createGain()
+
+      oscillator.connect(gainNode)
+      gainNode.connect(audioContext.destination)
+
+      oscillator.frequency.value = freq
+      oscillator.type = 'sine'
+
+      const startTime = audioContext.currentTime + (index * 0.1)
+      const duration = 0.3
+
+      gainNode.gain.setValueAtTime(0, startTime)
+      gainNode.gain.linearRampToValueAtTime(0.15, startTime + 0.02)
+      gainNode.gain.linearRampToValueAtTime(0, startTime + duration)
+
+      oscillator.start(startTime)
+      oscillator.stop(startTime + duration)
+    })
+  } catch (e) {
+    // Audio not supported, silently fail
+  }
+}
+
 function PremiumCoursePlatformInner() {
   const state = usePlatformState()
   useKeyboardShortcuts(state)
+
+  // Memoized sound callback that respects user settings
+  const handleAchievementSound = useCallback(() => {
+    if (state.soundEnabled) {
+      playAchievementSound()
+    }
+  }, [state.soundEnabled])
 
   // Blocked user screen (refunded users)
   if (state.isBlocked) {
     return (
       <>
         <ThemeStyles />
-        <BlockedScreen
-          darkMode={state.darkMode}
-          setDarkMode={state.setDarkMode}
-        />
+        <BlockedScreen />
       </>
     )
   }
@@ -446,8 +497,8 @@ function PremiumCoursePlatformInner() {
         <ThemeStyles />
         <LoginScreen
           onLogin={state.handleLogin}
-          darkMode={state.darkMode}
-          setDarkMode={state.setDarkMode}
+          isLoggingIn={state.isLoggingIn}
+          loginError={state.loginError}
         />
       </>
     )
@@ -471,7 +522,7 @@ function PremiumCoursePlatformInner() {
 
   // Main platform - LP Premium Theme
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-premium noise-overlay section-premium">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-premium transition-colors duration-300">
       <ThemeStyles />
 
       {/* Floating Gradient Orbs - LP Style */}
@@ -488,7 +539,7 @@ function PremiumCoursePlatformInner() {
 
       {/* Effects */}
       <Confetti active={state.showConfetti} reducedMotion={state.reducedMotion} />
-      <AchievementToast name={state.showAchievementToast} />
+      <AchievementToast name={state.showAchievementToast} onPlaySound={handleAchievementSound} />
 
       {/* Modals */}
       <OnboardingTour isOpen={state.showOnboarding} onComplete={state.completeOnboarding} />
@@ -552,5 +603,3 @@ export default function PremiumCoursePlatform() {
   )
 }
 
-// Need React for useState in LoginScreen
-import React from 'react'

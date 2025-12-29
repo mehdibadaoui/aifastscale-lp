@@ -31,13 +31,12 @@ interface DashboardProps {
 
 export const DashboardSection = memo(function DashboardSection({ state }: DashboardProps) {
   const [showWelcomeVideo, setShowWelcomeVideo] = useState(false)
-  const [globalSearch, setGlobalSearch] = useState('')
   const [memberStats, setMemberStats] = useState(getMemberStats())
 
   useEffect(() => {
     const interval = setInterval(() => {
       setMemberStats(getMemberStats())
-    }, 60000)
+    }, 30000) // Update every 30 seconds for live feel
     return () => clearInterval(interval)
   }, [])
 
@@ -803,37 +802,99 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
           )}
         </div>
 
-        {/* Module List Sidebar - LP Glass Style */}
+        {/* Module List Sidebar - Premium Cards */}
         <div className="space-y-4">
-          <div className="glass-premium rounded-2xl p-6 border border-teal-500/20">
-            <h2 className="text-xl font-black text-white mb-4">All Modules</h2>
-            <div className="space-y-2">
-              {COURSE_MODULES.filter(m => !m.comingSoon).map((module) => {
+          <div className="glass-premium rounded-2xl p-5 border border-teal-500/20">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-black text-white">All Modules</h2>
+              <span className="text-xs text-slate-400 font-medium">{state.completedCount}/{COURSE_MODULES.filter(m => !m.comingSoon).length}</span>
+            </div>
+            <div className="space-y-3">
+              {COURSE_MODULES.filter(m => !m.comingSoon).map((module, index) => {
                 const moduleCompleted = state.completedModules.includes(module.id)
-                const isCurrent = state.currentModuleIndex === COURSE_MODULES.findIndex(m => m.id === module.id)
+                const moduleIndex = COURSE_MODULES.findIndex(m => m.id === module.id)
+                const isCurrent = state.currentModuleIndex === moduleIndex
+                const savedProgress = state.videoProgress[module.id]
+                const watchPercent = savedProgress?.percent || 0
+
+                const gradients = [
+                  'from-teal-500 to-cyan-600',
+                  'from-blue-500 to-indigo-600',
+                  'from-purple-500 to-pink-600',
+                  'from-amber-500 to-orange-600',
+                  'from-emerald-500 to-teal-600',
+                ]
+                const gradientClass = gradients[index % gradients.length]
+
                 return (
                   <button
                     key={module.id}
-                    onClick={() => state.setCurrentModuleIndex(COURSE_MODULES.findIndex(m => m.id === module.id))}
-                    className={`w-full p-4 rounded-xl text-left transition-all hover-lift ${
+                    onClick={() => state.setCurrentModuleIndex(moduleIndex)}
+                    className={`w-full text-left transition-all duration-300 group rounded-xl overflow-hidden ${
                       isCurrent
-                        ? 'glass-teal border-2 border-teal-400'
-                        : moduleCompleted
-                          ? 'glass-teal border border-emerald-500/30'
-                          : 'glass-dark hover:border-teal-500/50'
+                        ? 'ring-2 ring-teal-400 shadow-lg shadow-teal-500/20'
+                        : 'hover:ring-1 hover:ring-teal-500/30'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                        moduleCompleted ? 'bg-emerald-500 text-white' : isCurrent ? 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white' : 'glass-dark text-slate-400'
-                      }`}>
-                        {moduleCompleted ? <Check className="w-4 h-4" /> : module.number}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className={`text-sm font-bold truncate ${isCurrent ? 'text-teal-400' : 'text-white'}`}>
-                          {module.title}
+                    <div className={`relative ${
+                      isCurrent
+                        ? 'glass-premium border-transparent'
+                        : moduleCompleted
+                          ? 'glass-dark border border-emerald-500/20'
+                          : 'glass-dark border border-transparent hover:border-teal-500/20'
+                    }`}>
+                      {/* Mini thumbnail header */}
+                      <div className={`relative h-16 bg-gradient-to-br ${gradientClass} overflow-hidden`}>
+                        {/* Module number watermark */}
+                        <div className="absolute top-1 left-2 text-3xl font-black text-white/20 leading-none">
+                          {module.number}
                         </div>
-                        <div className="text-xs text-slate-500">{module.duration}</div>
+
+                        {/* Play button */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                            isCurrent ? 'bg-white' : 'bg-white/80 group-hover:bg-white'
+                          }`}>
+                            {moduleCompleted ? (
+                              <CheckCircle className="w-5 h-5 text-emerald-500" />
+                            ) : (
+                              <Play className={`w-5 h-5 ${isCurrent ? 'text-teal-500' : 'text-slate-600'}`} fill={isCurrent ? '#14b8a6' : '#475569'} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Duration */}
+                        <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-black/40 backdrop-blur-sm">
+                          <span className="text-[10px] font-bold text-white">{module.duration}</span>
+                        </div>
+
+                        {/* Progress bar */}
+                        {watchPercent > 0 && watchPercent < 100 && (
+                          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/30">
+                            <div className="h-full bg-white" style={{ width: `${watchPercent}%` }} />
+                          </div>
+                        )}
+
+                        {/* Status badge */}
+                        {moduleCompleted && (
+                          <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-emerald-500 text-[10px] font-bold text-white">
+                            Done
+                          </div>
+                        )}
+                        {isCurrent && !moduleCompleted && (
+                          <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-teal-500 text-[10px] font-bold text-white animate-pulse">
+                            Playing
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Title */}
+                      <div className="p-3">
+                        <h4 className={`text-sm font-bold leading-tight line-clamp-2 ${
+                          isCurrent ? 'text-teal-400' : 'text-white'
+                        }`}>
+                          {module.title}
+                        </h4>
                       </div>
                     </div>
                   </button>
@@ -844,48 +905,160 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
         </div>
       </div>
 
-      {/* MOBILE: Module List (collapsible) - LP Glass Style */}
-      <div className="sm:hidden">
-        <details className="group">
-          <summary className="flex items-center justify-between p-4 rounded-2xl glass-premium border border-teal-500/20 cursor-pointer list-none">
-            <span className="font-bold text-white">All Modules</span>
-            <ChevronRight className="w-5 h-5 text-teal-400 transition-transform group-open:rotate-90" />
-          </summary>
-          <div className="mt-2 space-y-2">
-            {COURSE_MODULES.filter(m => !m.comingSoon).map((module) => {
-              const moduleCompleted = state.completedModules.includes(module.id)
-              const isCurrent = state.currentModuleIndex === COURSE_MODULES.findIndex(m => m.id === module.id)
-              return (
-                <button
-                  key={module.id}
-                  onClick={() => state.setCurrentModuleIndex(COURSE_MODULES.findIndex(m => m.id === module.id))}
-                  className={`w-full p-4 rounded-xl text-left transition-all ${
-                    isCurrent
-                      ? 'glass-teal border-2 border-teal-400'
-                      : moduleCompleted
-                        ? 'glass-teal border border-emerald-500/30'
-                        : 'glass-dark'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
-                      moduleCompleted ? 'bg-emerald-500 text-white' : isCurrent ? 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white shadow-glow-teal' : 'glass-dark text-slate-400'
-                    }`}>
-                      {moduleCompleted ? <Check className="w-5 h-5" /> : module.number}
+      {/* MOBILE: Premium Module Cards - Full Redesign */}
+      <div className="sm:hidden space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-black text-white">Up Next</h3>
+          <span className="text-xs text-slate-400">{state.completedCount}/{COURSE_MODULES.filter(m => !m.comingSoon).length} completed</span>
+        </div>
+
+        <div className="space-y-4">
+          {/* Show all modules EXCEPT the current one, including coming soon */}
+          {COURSE_MODULES.filter(m => {
+            const moduleIndex = COURSE_MODULES.findIndex(mod => mod.id === m.id)
+            return moduleIndex !== state.currentModuleIndex // Exclude current module
+          }).map((module, index) => {
+            const moduleCompleted = state.completedModules.includes(module.id)
+            const moduleIndex = COURSE_MODULES.findIndex(m => m.id === module.id)
+            const savedProgress = state.videoProgress[module.id]
+            const watchPercent = savedProgress?.percent || 0
+            const isComingSoon = module.comingSoon
+
+            return (
+              <button
+                key={module.id}
+                onClick={() => {
+                  if (!isComingSoon) {
+                    state.setCurrentModuleIndex(moduleIndex)
+                    state.setActiveSection('course')
+                  }
+                }}
+                disabled={isComingSoon}
+                className={`w-full text-left transition-all duration-300 group ${
+                  isComingSoon ? 'opacity-80' : 'hover:scale-[1.01]'
+                }`}
+              >
+                <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  isComingSoon
+                    ? 'glass-dark border-slate-700/50'
+                    : moduleCompleted
+                      ? 'glass-premium border-emerald-500/30'
+                      : 'glass-dark border-slate-700/50 hover:border-teal-500/30'
+                }`}>
+                  {/* Thumbnail/Visual Header - Now with actual image */}
+                  <div className="relative h-32 overflow-hidden">
+                    {/* Actual thumbnail image */}
+                    {module.thumbnail ? (
+                      <Image
+                        src={module.thumbnail}
+                        alt={module.title}
+                        fill
+                        className={`object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-cyan-600" />
+                    )}
+
+                    {/* Dark overlay for readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+                    {/* Module number - large watermark */}
+                    <div className="absolute top-2 left-3 text-[4rem] font-black text-white/30 leading-none">
+                      {module.number}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className={`text-sm font-bold ${isCurrent ? 'text-teal-400' : 'text-white'}`}>
-                        {module.title}
+
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isComingSoon
+                          ? 'bg-slate-800/80'
+                          : 'bg-white/90 group-hover:bg-white group-hover:scale-110'
+                      }`}>
+                        {isComingSoon ? (
+                          <Lock className="w-6 h-6 text-slate-400" />
+                        ) : moduleCompleted ? (
+                          <CheckCircle className="w-7 h-7 text-emerald-500" />
+                        ) : (
+                          <Play className="w-7 h-7 text-slate-700" fill="#334155" />
+                        )}
                       </div>
-                      <div className="text-xs text-slate-500">{module.duration}</div>
                     </div>
-                    {isCurrent && <Play className="w-4 h-4 text-teal-400" />}
+
+                    {/* Duration badge */}
+                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/40 backdrop-blur-sm">
+                      <span className="text-xs font-bold text-white flex items-center gap-1">
+                        <Clock className="w-3 h-3" /> {module.duration}
+                      </span>
+                    </div>
+
+                    {/* Progress bar at bottom of thumbnail */}
+                    {watchPercent > 0 && watchPercent < 100 && !isComingSoon && (
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30">
+                        <div
+                          className="h-full bg-teal-400 transition-all duration-300"
+                          style={{ width: `${watchPercent}%` }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Completed overlay */}
+                    {moduleCompleted && !isComingSoon && (
+                      <div className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-emerald-500 shadow-lg">
+                        <span className="text-xs font-bold text-white flex items-center gap-1">
+                          <Check className="w-3 h-3" /> Done
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Coming soon badge */}
+                    {isComingSoon && (
+                      <div className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-amber-500/90 shadow-lg">
+                        <span className="text-xs font-bold text-white flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> Coming Soon
+                        </span>
+                      </div>
+                    )}
                   </div>
-                </button>
-              )
-            })}
-          </div>
-        </details>
+
+                  {/* Content */}
+                  <div className="p-4">
+                    {/* Title */}
+                    <h4 className={`font-bold text-base mb-2 leading-tight ${
+                      isComingSoon ? 'text-slate-400' : 'text-white'
+                    }`}>
+                      {module.title}
+                    </h4>
+
+                    {/* What you'll learn - show first 2 lessons */}
+                    <div className="space-y-1.5">
+                      {module.lessons.slice(0, 2).map((lesson, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                            moduleCompleted ? 'bg-emerald-400' : 'bg-teal-400'
+                          }`} />
+                          <span className="text-xs text-slate-400 line-clamp-1">{lesson}</span>
+                        </div>
+                      ))}
+                      {module.lessons.length > 2 && (
+                        <span className="text-xs text-slate-500">+{module.lessons.length - 2} more</span>
+                      )}
+                    </div>
+
+                    {/* Resume indicator */}
+                    {savedProgress?.seconds > 0 && !moduleCompleted && (
+                      <div className="mt-3 pt-3 border-t border-white/10">
+                        <span className="text-xs text-amber-400 font-medium flex items-center gap-1">
+                          <Play className="w-3 h-3" />
+                          Resume at {Math.floor(savedProgress.seconds / 60)}:{String(Math.floor(savedProgress.seconds % 60)).padStart(2, '0')}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
@@ -938,7 +1111,7 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
 
       {/* MOBILE: Category Pills - LP Glass Style */}
       <div className="sm:hidden flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-        {['All', ...BONUS_CATEGORIES].map((cat) => (
+        {BONUS_CATEGORIES.map((cat) => (
           <button
             key={cat}
             onClick={() => { setCategoryFilter(cat); haptic.light() }}
@@ -966,7 +1139,7 @@ export const BonusesSection = memo(function BonusesSection({ state }: BonusesPro
           />
         </div>
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {['All', ...BONUS_CATEGORIES].map((cat) => (
+          {BONUS_CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setCategoryFilter(cat)}
@@ -1084,54 +1257,77 @@ export const AchievementsSection = memo(function AchievementsSection({ state }: 
         ))}
       </div>
 
-      {/* Achievements Grid - LP Glass Style */}
+      {/* Achievements Grid - Premium Redesign */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {ACHIEVEMENTS.map((achievement) => {
           const isUnlocked = state.unlockedAchievements[achievement.id]
           const Icon = achievement.icon
+
+          // Tier colors
+          const tierColors = {
+            gold: { bg: 'from-amber-500 to-orange-500', text: 'text-amber-400', border: 'border-amber-500/30', badge: 'bg-amber-500/20' },
+            silver: { bg: 'from-slate-400 to-slate-500', text: 'text-slate-300', border: 'border-slate-500/30', badge: 'bg-slate-500/20' },
+            bronze: { bg: 'from-orange-600 to-amber-700', text: 'text-orange-400', border: 'border-orange-500/30', badge: 'bg-orange-500/20' },
+          }
+          const tierStyle = tierColors[achievement.tier as keyof typeof tierColors] || tierColors.bronze
+
           return (
             <div
               key={achievement.id}
-              className={`relative overflow-hidden rounded-2xl border p-4 transition-all hover-lift ${
+              className={`relative overflow-hidden rounded-2xl border p-5 transition-all duration-300 ${
                 isUnlocked
-                  ? 'glass-premium border-amber-500/30'
-                  : 'glass-dark border-slate-700/50 opacity-60'
+                  ? `glass-premium ${tierStyle.border} hover-lift`
+                  : 'glass-premium border-slate-700/30 hover:border-slate-600/50'
               }`}
             >
               {/* Glow for unlocked */}
               {isUnlocked && (
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl floating" />
+                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${tierStyle.bg} opacity-20 rounded-full blur-3xl`} />
               )}
 
               <div className="relative z-10">
-                <div className="flex items-start gap-4">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
+                {/* Header with icon and lock status */}
+                <div className="flex items-start gap-4 mb-3">
+                  <div className={`relative w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 ${
                     isUnlocked
-                      ? 'bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/30'
-                      : 'glass-dark'
+                      ? `bg-gradient-to-br ${tierStyle.bg} shadow-lg`
+                      : 'bg-slate-800/80 border border-slate-700'
                   }`}>
                     <Icon className={`w-7 h-7 ${isUnlocked ? 'text-white' : 'text-slate-500'}`} />
+                    {!isUnlocked && (
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-slate-700 border-2 border-slate-800 flex items-center justify-center">
+                        <Lock className="w-2.5 h-2.5 text-slate-400" />
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`font-bold text-base ${isUnlocked ? 'text-white' : 'text-slate-500'}`}>
+                    <h3 className={`font-bold text-base leading-tight ${isUnlocked ? 'text-white' : 'text-slate-300'}`}>
                       {achievement.name}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-2">{achievement.description}</p>
+                    <p className={`text-xs mt-1 line-clamp-2 ${isUnlocked ? 'text-slate-400' : 'text-slate-500'}`}>
+                      {achievement.description}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/10">
-                  <span className={`text-xs font-bold uppercase px-2 py-1 rounded-full ${
-                    achievement.tier === 'gold' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
-                    achievement.tier === 'silver' ? 'glass-dark text-slate-400' :
-                    'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-                  }`}>
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                  <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tierStyle.badge} ${tierStyle.text} border ${tierStyle.border}`}>
                     {achievement.tier}
                   </span>
                   <span className={`text-sm font-bold ${isUnlocked ? 'text-teal-400' : 'text-slate-500'}`}>
                     +{achievement.points} pts
                   </span>
                 </div>
+
+                {/* Unlocked checkmark */}
+                {isUnlocked && (
+                  <div className="absolute top-3 right-3">
+                    <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shadow-lg">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )
