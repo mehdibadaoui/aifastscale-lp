@@ -167,10 +167,6 @@ function generateWelcomeEmail(
                               </td>
                             </tr>
                           </table>
-
-                          <p style="margin: 16px 0 0 0; color: ${textMuted}; font-size: 11px;">
-                            This password is unique to you. Do not share it.
-                          </p>
                         </td>
                       </tr>
                     </table>
@@ -254,30 +250,6 @@ function generateWelcomeEmail(
                 </tr>
 
               </table>
-            </td>
-          </tr>
-
-          <!-- Laptop Recommendation -->
-          <tr>
-            <td style="padding: 28px 0 0 0; text-align: center;">
-              <table cellpadding="0" cellspacing="0" style="margin: 0 auto; background-color: ${cardBg}; border-radius: 8px; border: 1px solid ${cardBorder};">
-                <tr>
-                  <td style="padding: 12px 20px;">
-                    <p style="margin: 0; color: ${textGray}; font-size: 12px;">
-                      💻 <span style="color: ${textMuted};">For best experience, we recommend using a laptop or desktop</span>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Spam Note -->
-          <tr>
-            <td style="padding: 16px 0 0 0; text-align: center;">
-              <p style="margin: 0; color: ${textMuted}; font-size: 11px;">
-                📧 Can't find this email later? Check your <strong style="color: ${textGray};">Spam</strong> or <strong style="color: ${textGray};">Promotions</strong> folder
-              </p>
             </td>
           </tr>
 
