@@ -148,8 +148,8 @@ function generateWelcomeEmail(
                             <tr>
                               <td style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 10px; padding: 14px 16px; text-align: left;">
                                 <p style="margin: 0 0 4px 0; color: ${textMuted}; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Email</p>
-                                <p style="margin: 0; color: ${textWhite}; font-size: 15px; font-weight: 600;">
-                                  ${userEmail}
+                                <p style="margin: 0; color: ${textWhite}; font-size: 15px; font-weight: 600; text-decoration: none;">
+                                  <span style="color: ${textWhite}; text-decoration: none;">${userEmail}</span>
                                 </p>
                               </td>
                             </tr>
@@ -160,7 +160,7 @@ function generateWelcomeEmail(
                             <tr>
                               <td style="background-color: ${cardBg}; border: 2px solid ${accent}; border-radius: 12px; padding: 16px; text-align: center;">
                                 <p style="margin: 0 0 8px 0; color: ${textMuted}; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Password</p>
-                                <p style="margin: 0; color: ${textWhite}; font-size: 28px; font-weight: 800; font-family: 'SF Mono', 'Consolas', 'Courier New', monospace; letter-spacing: 3px;">
+                                <p style="margin: 0; color: ${textWhite}; font-size: 24px; font-weight: 800; font-family: 'SF Mono', 'Consolas', 'Courier New', monospace; letter-spacing: 1px; white-space: nowrap;">
                                   ${userPassword}
                                 </p>
                               </td>
