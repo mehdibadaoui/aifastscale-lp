@@ -158,9 +158,9 @@ function generateWelcomeEmail(
                           <!-- Password -->
                           <table width="100%" cellpadding="0" cellspacing="0">
                             <tr>
-                              <td style="background-color: ${cardBg}; border: 2px solid ${accent}; border-radius: 12px; padding: 16px; text-align: center;">
-                                <p style="margin: 0 0 8px 0; color: ${textMuted}; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Password</p>
-                                <p style="margin: 0; color: ${textWhite}; font-size: 24px; font-weight: 800; font-family: 'SF Mono', 'Consolas', 'Courier New', monospace; letter-spacing: 1px; white-space: nowrap;">
+                              <td style="background-color: ${cardBg}; border: 2px solid ${accent}; border-radius: 12px; padding: 20px; text-align: center;">
+                                <p style="margin: 0 0 10px 0; color: ${textMuted}; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Password</p>
+                                <p style="margin: 0; color: ${textWhite}; font-size: 20px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
                                   ${userPassword}
                                 </p>
                               </td>
@@ -246,28 +246,6 @@ function generateWelcomeEmail(
                       <tr>
                         <td style="padding: 8px 0; color: ${textGray}; font-size: 14px;">
                           <span style="color: ${accent};">✦</span><span style="margin-left: 12px;">All future updates included free</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-
-                <!-- Order Details -->
-                <tr>
-                  <td style="padding: 0 32px 32px 32px;">
-                    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0f0f11; border-radius: 10px;">
-                      <tr>
-                        <td style="padding: 16px;">
-                          <table width="100%" cellpadding="0" cellspacing="0">
-                            <tr>
-                              <td style="color: ${textMuted}; font-size: 12px;">Order #${orderNumber}</td>
-                              <td style="color: ${textMuted}; font-size: 12px; text-align: right;">${orderDate}</td>
-                            </tr>
-                            <tr>
-                              <td style="color: ${textGray}; font-size: 13px; padding-top: 8px;">${product.productName}</td>
-                              <td style="color: ${textWhite}; font-size: 13px; font-weight: 600; text-align: right; padding-top: 8px;">$${product.price}</td>
-                            </tr>
-                          </table>
                         </td>
                       </tr>
                     </table>
