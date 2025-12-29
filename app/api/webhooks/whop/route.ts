@@ -60,8 +60,6 @@ function generateWelcomeEmail(
   buyerName?: string
 ) {
   const firstName = buyerName ? buyerName.split(' ')[0] : ''
-  const orderNumber = `CY-${Date.now().toString().slice(-8)}`
-  const orderDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
 
   // Premium color palette - matching dentist LP
   const accent = '#14b8a6'
@@ -160,15 +158,18 @@ function generateWelcomeEmail(
                             <tr>
                               <td style="background-color: ${cardBg}; border: 2px solid ${accent}; border-radius: 12px; padding: 20px; text-align: center;">
                                 <p style="margin: 0 0 10px 0; color: ${textMuted}; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Password</p>
-                                <p style="margin: 0; color: ${textWhite}; font-size: 20px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                                <p style="margin: 0; color: ${textWhite}; font-size: 22px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; letter-spacing: 0.5px;">
                                   ${userPassword}
+                                </p>
+                                <p style="margin: 12px 0 0 0; color: ${textMuted}; font-size: 11px;">
+                                  📋 Hold to copy on mobile
                                 </p>
                               </td>
                             </tr>
                           </table>
 
-                          <p style="margin: 16px 0 0 0; color: ${textMuted}; font-size: 12px;">
-                            ⚠️ This password is unique to you. Do not share it.
+                          <p style="margin: 16px 0 0 0; color: ${textMuted}; font-size: 11px;">
+                            This password is unique to you. Do not share it.
                           </p>
                         </td>
                       </tr>
