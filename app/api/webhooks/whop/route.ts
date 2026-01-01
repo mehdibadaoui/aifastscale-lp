@@ -1,6 +1,102 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { createUser } from '@/lib/user-db'
+import { Redis } from '@upstash/redis'
+import { createUser, recordPurchase } from '@/lib/user-db'
+
+// Store user_id -> email mapping in Redis (for lookups when email not in webhook)
+async function storeUserIdEmailMapping(userId: string, email: string): Promise<void> {
+  try {
+    const redis = getRedis()
+    await redis.set(`whop:user:${userId}`, email, { ex: 60 * 60 * 24 * 30 }) // 30 days
+    console.log(`📝 Stored user mapping: ${userId} -> ${email}`)
+  } catch (e) {
+    console.error('Failed to store user mapping:', e)
+  }
+}
+
+// Look up email from our stored mapping
+async function lookupStoredEmail(userId: string): Promise<string | null> {
+  try {
+    const redis = getRedis()
+    const email = await redis.get<string>(`whop:user:${userId}`)
+    if (email) {
+      console.log(`✅ Found stored email for ${userId}: ${email}`)
+    }
+    return email
+  } catch (e) {
+    console.error('Failed to lookup stored email:', e)
+    return null
+  }
+}
+
+// Fetch user email - try our stored mapping first, then Whop API as fallback
+async function fetchWhopUserEmail(userId: string): Promise<string | null> {
+  if (!userId) {
+    console.log('❌ Cannot fetch Whop user: missing user ID')
+    return null
+  }
+
+  // First, try our stored mapping (from previous payment.succeeded events)
+  const storedEmail = await lookupStoredEmail(userId)
+  if (storedEmail) {
+    return storedEmail
+  }
+
+  // Fallback: Try Whop API v1 (only endpoint that works with Bot API key)
+  // Note: v1 endpoint doesn't return email, but try anyway in case it changes
+  const apiKey = process.env.WHOP_API_KEY
+  if (!apiKey) {
+    console.log('❌ No Whop API key configured')
+    return null
+  }
+
+  try {
+    console.log(`🔍 Fetching from Whop API for user: ${userId}`)
+    const response = await fetch(`https://api.whop.com/api/v1/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (response.ok) {
+      const userData = await response.json()
+      if (userData.email) {
+        // Store for future lookups
+        await storeUserIdEmailMapping(userId, userData.email)
+        return userData.email
+      }
+    }
+  } catch (error) {
+    console.error('❌ Whop API error:', error)
+  }
+
+  return null
+}
+
+// Redis for webhook logging
+function getRedis(): Redis {
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN
+  if (!url || !token) throw new Error('Redis not configured')
+  return new Redis({ url, token })
+}
+
+// Log webhook to Redis for debugging
+async function logWebhook(data: any, status: string) {
+  try {
+    const redis = getRedis()
+    const logEntry = {
+      timestamp: new Date().toISOString(),
+      status,
+      payload: data
+    }
+    await redis.lpush('webhook:logs', JSON.stringify(logEntry))
+    await redis.ltrim('webhook:logs', 0, 49)
+  } catch (e) {
+    console.error('Failed to log webhook:', e)
+  }
+}
 
 // Initialize Resend
 const getResend = () => new Resend(process.env.RESEND_API_KEY)
@@ -19,36 +115,98 @@ const PRODUCTS = {
   }
 }
 
-// MAIN COURSE plan IDs only - no upsells/downsells
-const DENTIST_MAIN_PLAN = 'plan_SxMS4HqFxJKNT'
+// Plan IDs and prices
+const PLANS = {
+  // Dentist products
+  DENTIST_MAIN: { id: 'plan_SxMS4HqFxJKNT', price: 47, type: 'main' as const },
+  DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const },
+  DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const },
+}
 
-// Upsell/Downsell plan IDs - skip these (no email for add-ons)
-const UPSELL_DOWNSELL_PLANS = [
-  'plan_IbsV5qrvMPBgb',  // Dentist upsell ($9.95)
-  'plan_C2l5ZPXSWCxQu',  // Dentist downsell ($4.95)
-]
+// Get plan info from plan ID
+function getPlanInfo(planId: string): { product: 'dentist' | 'realestate', type: 'main' | 'upsell' | 'downsell', price: number } | null {
+  if (planId === PLANS.DENTIST_MAIN.id) return { product: 'dentist', type: 'main', price: PLANS.DENTIST_MAIN.price }
+  if (planId === PLANS.DENTIST_UPSELL.id) return { product: 'dentist', type: 'upsell', price: PLANS.DENTIST_UPSELL.price }
+  if (planId === PLANS.DENTIST_DOWNSELL.id) return { product: 'dentist', type: 'downsell', price: PLANS.DENTIST_DOWNSELL.price }
+  return null
+}
 
-// Determine product type from webhook data
-function getProductType(productData: any): 'dentist' | 'realestate' | null {
-  const productName = productData?.name?.toLowerCase() || ''
-  const planId = productData?.plan_id || productData?.id || ''
+// Determine product type from webhook data (for main course only - backward compatibility)
+// ROBUST VERSION - checks multiple paths and patterns
+function getProductType(fullData: any, productData: any): 'dentist' | 'realestate' | null {
+  // Collect ALL possible name sources from the webhook
+  const possibleNames = [
+    productData?.name,
+    productData?.title,
+    fullData?.product?.name,
+    fullData?.product?.title,
+    fullData?.plan?.name,
+    fullData?.plan?.title,
+    fullData?.membership?.product?.name,
+    fullData?.name,
+    fullData?.title,
+  ].filter(Boolean).map(n => n.toLowerCase())
 
-  // Skip upsells and downsells
-  if (UPSELL_DOWNSELL_PLANS.includes(planId)) {
-    console.log('Skipping upsell/downsell:', planId)
-    return null
+  // Collect ALL possible plan IDs
+  const possiblePlanIds = [
+    productData?.plan_id,
+    productData?.id,
+    fullData?.plan?.id,
+    fullData?.product?.plan_id,
+    fullData?.plan_id,
+    fullData?.membership?.plan_id,
+  ].filter(Boolean)
+
+  // Get price for detection fallback
+  const price = productData?.price || fullData?.price || fullData?.amount || 0
+  const priceNum = typeof price === 'string' ? parseFloat(price) : price
+
+  console.log(`🔍 Product detection - Names found: ${JSON.stringify(possibleNames)}`)
+  console.log(`🔍 Product detection - Plan IDs found: ${JSON.stringify(possiblePlanIds)}`)
+  console.log(`🔍 Product detection - Price: ${priceNum}`)
+
+  // Check known plan IDs first
+  for (const planId of possiblePlanIds) {
+    const planInfo = getPlanInfo(planId)
+    if (planInfo) {
+      console.log(`✅ Matched plan ID: ${planId} -> ${planInfo.product} (${planInfo.type})`)
+      return planInfo.type === 'main' ? planInfo.product : null
+    }
   }
 
-  // Dentist main course
-  if (planId === DENTIST_MAIN_PLAN || productName.includes('dentist')) {
+  // Check names for dentist keywords
+  const dentistKeywords = ['dentist', 'clone yourself - dentist', 'dental', 'dr.', 'doctor']
+  for (const name of possibleNames) {
+    for (const keyword of dentistKeywords) {
+      if (name.includes(keyword)) {
+        console.log(`✅ Matched dentist by name: "${name}" contains "${keyword}"`)
+        return 'dentist'
+      }
+    }
+  }
+
+  // Check names for real estate keywords
+  const realEstateKeywords = ['agent', 'real estate', 'realestate', 'realtor', 'property']
+  for (const name of possibleNames) {
+    for (const keyword of realEstateKeywords) {
+      if (name.includes(keyword)) {
+        console.log(`✅ Matched realestate by name: "${name}" contains "${keyword}"`)
+        return 'realestate'
+      }
+    }
+  }
+
+  // Price-based fallback detection
+  if (priceNum >= 45 && priceNum <= 50) {
+    console.log(`✅ Matched dentist by price: $${priceNum} (in $45-50 range)`)
     return 'dentist'
   }
-
-  // Real estate products
-  if (productName.includes('agent') || productName.includes('real estate') || productName.includes('realestate')) {
+  if (priceNum >= 35 && priceNum <= 40) {
+    console.log(`✅ Matched realestate by price: $${priceNum} (in $35-40 range)`)
     return 'realestate'
   }
 
+  console.log(`❌ No product match found`)
   return null
 }
 
@@ -286,42 +444,114 @@ function generateWelcomeEmail(
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    console.log('Whop webhook received:', JSON.stringify(body, null, 2))
+    const timestamp = new Date().toISOString()
 
-    const action = body.action || body.event || ''
+    // LOG TO REDIS FOR DEBUGGING
+    await logWebhook(body, 'RECEIVED')
+
+    // DETAILED LOGGING FOR DEBUGGING
+    console.log('═══════════════════════════════════════════════════════════')
+    console.log(`🔔 WHOP WEBHOOK RECEIVED @ ${timestamp}`)
+    console.log('═══════════════════════════════════════════════════════════')
+    console.log('Full payload:', JSON.stringify(body, null, 2))
+
+    const action = body.action || body.event || body.type || ''
     const data = body.data || body
 
-    // Only process successful payments
-    if (!action.includes('payment') && !action.includes('membership') && !action.includes('sale')) {
-      console.log('Ignoring non-payment webhook:', action)
-      return NextResponse.json({ received: true, processed: false })
+    console.log(`📋 Action/Type: ${action || '(none - Whop sends event type via endpoint)'}`)
+
+    // Check if this looks like a valid purchase webhook
+    // Whop sends event type as the endpoint itself, not always in payload
+    // So we check: if there's user.email, it's likely a real purchase
+    const hasUserEmail = data?.user?.email || data?.customer?.email || data?.email || data?.buyer?.email
+
+    // If there's an action/type field, validate it
+    if (action) {
+      const validActions = ['payment', 'membership', 'sale', 'invoice_paid', 'invoice_created', 'succeeded', 'created']
+      const isValidAction = validActions.some(valid => action.toLowerCase().includes(valid))
+
+      // Skip clearly non-payment events (like membership.canceled, etc.)
+      const skipActions = ['canceled', 'cancelled', 'deleted', 'failed', 'refund']
+      const shouldSkip = skipActions.some(skip => action.toLowerCase().includes(skip))
+
+      if (shouldSkip) {
+        console.log(`⏭️ SKIPPED: Non-payment action "${action}"`)
+        await logWebhook({ action, reason: 'non-payment action' }, 'SKIPPED')
+        return NextResponse.json({ received: true, processed: false })
+      }
     }
 
-    // Extract buyer info
-    const buyerEmail = data?.user?.email ||
-                       data?.customer?.email ||
-                       data?.email ||
-                       data?.buyer?.email
+    // Extract buyer info with logging
+    let buyerEmail = data?.user?.email ||
+                     data?.customer?.email ||
+                     data?.email ||
+                     data?.buyer?.email
 
     const buyerName = data?.user?.name ||
                       data?.customer?.name ||
                       data?.buyer?.name ||
                       data?.user?.username || ''
 
-    if (!buyerEmail) {
-      console.error('No buyer email found in webhook:', body)
-      return NextResponse.json({ error: 'No email found' }, { status: 400 })
+    // Get user ID for mapping storage
+    const userId = data?.user?.id || data?.customer?.id || data?.member?.user_id
+
+    // If we have email AND user_id, store the mapping for future lookups
+    if (buyerEmail && userId) {
+      await storeUserIdEmailMapping(userId, buyerEmail)
     }
 
-    // Get plan ID
-    const planId = data?.plan?.id || data?.product?.plan_id || data?.plan_id || ''
+    // If no email in payload, try to fetch from our stored mapping or Whop API
+    if (!buyerEmail && userId) {
+      console.log(`⚠️ No email in payload, looking up for user: ${userId}`)
+      const fetchedEmail = await fetchWhopUserEmail(userId)
+      if (fetchedEmail) {
+        buyerEmail = fetchedEmail
+        console.log(`✅ Successfully found email: ${buyerEmail}`)
+      }
+    }
 
-    // Determine product type
-    const productType = getProductType(data?.product || data?.plan || data)
+    console.log(`👤 Buyer Email: ${buyerEmail || 'NOT FOUND'}`)
+    console.log(`👤 Buyer Name: ${buyerName || 'NOT FOUND'}`)
+
+    if (!buyerEmail) {
+      console.error('❌ ERROR: No buyer email found in webhook or via Whop API')
+      await logWebhook({ reason: 'no user email (even after API lookup)' }, 'SKIPPED')
+      return NextResponse.json({ received: true, processed: false, reason: 'No email found' })
+    }
+
+    // Get plan ID with detailed logging
+    const planId = data?.plan?.id || data?.product?.plan_id || data?.plan_id || ''
+    console.log(`📦 Plan ID: ${planId || 'NOT FOUND'}`)
+    console.log(`📦 Plan paths checked: data.plan.id="${data?.plan?.id}", data.product.plan_id="${data?.product?.plan_id}", data.plan_id="${data?.plan_id}"`)
+
+    // Check if this is an upsell/downsell (no email, just record purchase)
+    const planInfo = getPlanInfo(planId)
+    console.log(`📊 Plan Info: ${planInfo ? JSON.stringify(planInfo) : 'NO MATCH - will check product name'}`)
+    if (planInfo && (planInfo.type === 'upsell' || planInfo.type === 'downsell')) {
+      // Record the upsell/downsell purchase
+      await recordPurchase(buyerEmail, planInfo.type, planInfo.price, planId)
+      console.log(`✅ Recorded ${planInfo.type} ($${planInfo.price}) for ${buyerEmail}`)
+      return NextResponse.json({
+        success: true,
+        type: planInfo.type,
+        amount: planInfo.price,
+        email: buyerEmail,
+        purchase_recorded: true
+      })
+    }
+
+    // Determine product type (main course only)
+    const productData = data?.product || data?.plan || data
+    console.log(`🔍 Product data for type detection:`, JSON.stringify(productData, null, 2))
+
+    const productType = getProductType(data, productData)
+    console.log(`🏷️ Determined product type: ${productType || 'UNKNOWN'}`)
 
     if (!productType) {
-      console.log('Unknown product or upsell/downsell, skipping')
-      return NextResponse.json({ received: true, processed: false })
+      console.log('⚠️ WARNING: Unknown product type - user NOT created')
+      console.log('Product name checked:', productData?.name?.toLowerCase() || 'NO NAME')
+      console.log('This purchase will NOT receive login credentials!')
+      return NextResponse.json({ received: true, processed: false, warning: 'Unknown product type' })
     }
 
     const product = PRODUCTS[productType]
@@ -336,8 +566,6 @@ export async function POST(request: NextRequest) {
 
     if (!createResult.success || !createResult.password) {
       console.error('Failed to create user:', createResult.error)
-      // Even if user creation fails, we should not block the webhook
-      // Log the error but continue (user can contact support)
       return NextResponse.json({
         received: true,
         warning: 'User creation failed, manual setup may be needed',
@@ -347,11 +575,38 @@ export async function POST(request: NextRequest) {
 
     const userPassword = createResult.password
 
+    // Store credentials in Redis for thank-you page instant lookup
+    // This allows the thank-you page to show credentials without waiting for email
+    try {
+      const redis = getRedis()
+      const credentialsData = JSON.stringify({
+        email: buyerEmail,
+        password: userPassword,
+        name: buyerName || '',
+        product: productType,
+        created: Date.now()
+      })
+      // Store by email (primary lookup) - 2 hour TTL
+      await redis.set(`thankyou:${buyerEmail.toLowerCase()}`, credentialsData, { ex: 7200 })
+      // Store by user_id if available (backup lookup)
+      if (userId) {
+        await redis.set(`thankyou:user:${userId}`, credentialsData, { ex: 7200 })
+      }
+      console.log(`📝 Stored thank-you credentials for ${buyerEmail}`)
+    } catch (e) {
+      console.error('Failed to store thank-you credentials (non-blocking):', e)
+    }
+
+    // Record main course purchase with revenue
+    const mainPrice = productType === 'dentist' ? 47 : 37
+    await recordPurchase(buyerEmail, 'main', mainPrice, planId)
+
     // Send welcome email with personalized credentials
     const resend = getResend()
 
-    const emailResult = await resend.emails.send({
+    await resend.emails.send({
       from: 'CloneYourself <hello@mail.aifastscale.com>',
+      replyTo: 'support@aifastscale.com',
       to: buyerEmail,
       subject: `🎉 Your ${product.productName} Login Details - Save This Email!`,
       html: generateWelcomeEmail(product, userPassword, buyerEmail, buyerName),
@@ -359,16 +614,81 @@ export async function POST(request: NextRequest) {
 
     console.log(`✅ Welcome email sent to ${buyerEmail} with unique password`)
 
+    // Track Purchase via Meta CAPI (server-side only - guaranteed real purchases)
+    if (productType === 'dentist') {
+      const eventId = `Purchase_webhook_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+      // CRITICAL: Retrieve browser tracking data (fbc/fbp) from Redis
+      // This was synced by the upsell/downsell pages when user returned from Whop
+      let trackingData: { fbc?: string; fbp?: string; _fbc?: string; _fbp?: string } = {}
+      try {
+        const redis = getRedis()
+        const trackingKey = `dentist:tracking:${buyerEmail.toLowerCase().trim()}`
+        const storedData = await redis.get<string>(trackingKey)
+        if (storedData) {
+          trackingData = typeof storedData === 'string' ? JSON.parse(storedData) : storedData
+          console.log(`✅ Retrieved tracking data for ${buyerEmail}:`, {
+            hasFbc: !!(trackingData.fbc || trackingData._fbc),
+            hasFbp: !!(trackingData.fbp || trackingData._fbp)
+          })
+        } else {
+          console.log(`⚠️ No tracking data found in Redis for ${buyerEmail}`)
+        }
+      } catch (trackingError) {
+        console.error('Failed to retrieve tracking data (non-blocking):', trackingError)
+      }
+
+      try {
+        const capiResponse = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://aifastscale.com'}/api/dentist-meta-capi`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            eventName: 'Purchase',
+            eventId: eventId,
+            sourceUrl: 'https://aifastscale.com/dentists',
+            email: buyerEmail,
+            firstName: buyerName?.split(' ')[0] || '',
+            lastName: buyerName?.split(' ').slice(1).join(' ') || '',
+            // Include fbc/fbp for proper attribution
+            fbc: trackingData.fbc || trackingData._fbc || undefined,
+            fbp: trackingData.fbp || trackingData._fbp || undefined,
+            externalId: buyerEmail, // Consistent external_id for cross-device tracking
+            value: mainPrice,
+            currency: 'USD',
+            contentName: product.productName,
+            contentType: 'product',
+            contentIds: ['dentist-main']
+          })
+        })
+        const capiResult = await capiResponse.json()
+        console.log(`✅ Meta CAPI Purchase tracked for ${buyerEmail}:`, capiResult)
+      } catch (capiError) {
+        console.error('Meta CAPI error (non-blocking):', capiError)
+      }
+    }
+
+    console.log('═══════════════════════════════════════════════════════════')
+    console.log(`✅ SUCCESS: ${buyerEmail} - User created & email sent!`)
+    console.log(`💰 Revenue: $${mainPrice} | Product: ${productType}`)
+    console.log('═══════════════════════════════════════════════════════════')
+
+    await logWebhook({ email: buyerEmail, product: productType, revenue: mainPrice }, 'SUCCESS')
+
     return NextResponse.json({
       success: true,
       email_sent: true,
       recipient: buyerEmail,
-      user_created: true
+      user_created: true,
+      purchase_tracked: true,
+      revenue_recorded: mainPrice
     })
 
   } catch (error: any) {
-    console.error('Whop webhook error:', error)
-    // Return 200 to prevent Whop from retrying (we log the error for debugging)
+    console.error('═══════════════════════════════════════════════════════════')
+    console.error('❌ WEBHOOK ERROR:', error.message || error)
+    console.error('Stack:', error.stack)
+    console.error('═══════════════════════════════════════════════════════════')
+    await logWebhook({ error: error.message, stack: error.stack }, 'ERROR')
     return NextResponse.json({
       received: true,
       error: error.message || 'Webhook processing failed'

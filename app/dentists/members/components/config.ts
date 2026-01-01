@@ -147,7 +147,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/dentist/module-3-photo-talk.webp',
     lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
     resources: [
-      { name: 'Dentist AI Talking Video Prompt', url: '/products/dentist/Dentist_AI_Talking_Video_Prompt_Universal.pdf', type: 'file' as const },
+      { name: 'Dentist AI Talking Video Prompt (for ChatGPT)', url: '/products/dentist/Dentist_AI_Video_Prompt.txt', type: 'file' as const },
     ],
   },
   {

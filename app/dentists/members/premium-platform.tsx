@@ -3,7 +3,8 @@
 import React, { memo, useCallback } from 'react'
 import {
   GraduationCap, Home, Video, Gift, Trophy, Star, Flame, Moon, Sun,
-  Settings, LogOut, Sparkles, ArrowRight, HelpCircle, Crown, ChevronUp
+  Settings, LogOut, Sparkles, ArrowRight, HelpCircle, Crown, ChevronUp,
+  Eye, EyeOff, Mail
 } from 'lucide-react'
 import {
   COURSE_CONFIG, COURSE_MODULES, ACHIEVEMENTS, BONUSES, TOTAL_RUNTIME
@@ -21,7 +22,7 @@ import { DashboardSection, CourseSection, BonusesSection, AchievementsSection } 
 // ============================================
 
 interface LoginScreenProps {
-  onLogin: (email: string, password: string) => Promise<boolean>
+  onLogin: (email: string, password: string, rememberMe: boolean) => Promise<boolean>
   isLoggingIn: boolean
   loginError: string | null
 }
@@ -29,11 +30,17 @@ interface LoginScreenProps {
 const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError }: LoginScreenProps) {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [showPassword, setShowPassword] = React.useState(false)
+  const [rememberMe, setRememberMe] = React.useState(true)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await onLogin(email.trim(), password)
+    await onLogin(email.trim(), password, rememberMe)
   }
+
+  // Pre-filled support email for password help
+  const supportEmail = COURSE_CONFIG.supportEmail || 'hello@aifastscale.com'
+  const forgotPasswordMailto = `mailto:${supportEmail}?subject=Password%20Help%20-%20CloneYourself%20for%20Dentists&body=Hi%2C%0A%0AI%20need%20help%20with%20my%20login.%0A%0AMy%20email%3A%20${encodeURIComponent(email || '[your email]')}%0A%0APlease%20resend%20my%20password.%0A%0AThank%20you!`
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
@@ -42,6 +49,15 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-cyan-500/8 to-teal-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10 w-full max-w-md">
+        {/* VIP Badge */}
+        <div className="flex justify-center mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border border-teal-500/30 shadow-lg shadow-teal-500/10">
+            <Star className="w-4 h-4 text-teal-400" />
+            <span className="text-xs font-bold text-teal-400 tracking-wider uppercase">VIP Member Access</span>
+            <Star className="w-4 h-4 text-teal-400" />
+          </div>
+        </div>
+
         <div className="glass-premium backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-teal-500/20 border border-teal-500/20 p-6 sm:p-8">
           <div className="text-center mb-6 sm:mb-8">
             <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-glow-teal mb-4 sm:mb-6">
@@ -68,22 +84,63 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
               />
             </div>
 
-            {/* Password Field */}
+            {/* Password Field with Show/Hide Toggle */}
             <div>
               <label htmlFor="password" className="block text-slate-300 text-sm font-semibold mb-2">
                 Password
               </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="From your welcome email"
-                autoComplete="current-password"
-                className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-dark border-2 border-teal-500/30 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all text-base"
-                aria-describedby={loginError ? 'login-error' : undefined}
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="From your welcome email"
+                  autoComplete="current-password"
+                  className="w-full px-4 sm:px-5 py-3.5 sm:py-4 pr-12 rounded-xl glass-dark border-2 border-teal-500/30 text-white placeholder-slate-500 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all text-base"
+                  aria-describedby={loginError ? 'login-error' : undefined}
+                />
+                {/* Eye Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-teal-400 transition-colors"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+              {/* Paste hint */}
+              <p className="mt-1.5 text-slate-500 text-xs">
+                Tip: Paste your password and click the eye to verify it
+              </p>
             </div>
+
+            {/* Remember Me Checkbox */}
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-5 h-5 rounded border-2 border-teal-500/40 bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
+                  {rememberMe && (
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+              <span className="text-sm text-slate-300 group-hover:text-white transition-colors">
+                Remember me for 30 days
+              </span>
+            </label>
 
             {loginError && (
               <div id="login-error" className="p-3 sm:p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm text-center font-medium" role="alert">
@@ -94,15 +151,25 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
             <button
               type="submit"
               disabled={isLoggingIn || !password}
-              className="btn-premium w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white shadow-glow-teal animate-pulse-glow focus-ring touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-premium w-full py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white shadow-glow-teal animate-pulse-glow focus-ring touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed disabled:animate-none"
             >
               {isLoggingIn ? 'Verifying...' : 'Access My Course'}
             </button>
           </form>
 
-          <p className="mt-5 sm:mt-6 text-center text-slate-500 text-xs sm:text-sm">
-            Check your welcome email for your login details
+          {/* Help Text */}
+          <p className="mt-5 sm:mt-6 text-center text-slate-300 text-xs sm:text-sm">
+            Tip: Paste your password and click the eye to verify it
           </p>
+
+          {/* Forgot Password Link - Opens Email */}
+          <a
+            href={forgotPasswordMailto}
+            className="mt-3 flex items-center justify-center gap-1.5 text-teal-400/80 text-xs hover:text-teal-300 transition-colors"
+          >
+            <Mail className="w-3.5 h-3.5" />
+            <span>Forgot password? Check your welcome email or contact support</span>
+          </a>
         </div>
       </div>
     </div>

@@ -2,21 +2,21 @@ import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 
 // DENTIST Meta Conversions API Configuration
-// BOTH pixels for maximum tracking coverage
+// Both ad account pixels for maximum tracking coverage
 const PIXELS = [
   {
-    id: '834713712860127',
-    token: process.env.DENTIST_META_CAPI_TOKEN || '',
+    id: process.env.DENTIST_PIXEL1_ID || '1176362697938270',
+    token: process.env.DENTIST_PIXEL1_TOKEN || '',
     name: 'Dentist Pixel 1'
   },
   {
-    id: '1176362697938270',
-    token: process.env.DENTIST_PIXEL2_CAPI_TOKEN || '',
+    id: process.env.DENTIST_PIXEL2_ID || '834713712860127',
+    token: process.env.DENTIST_PIXEL2_TOKEN || '',
     name: 'Dentist Pixel 2'
   }
 ]
 
-const API_VERSION = 'v18.0'
+const API_VERSION = 'v21.0'
 
 // Hash function for PII (required by Meta)
 function hashSHA256(value: string): string {
@@ -86,6 +86,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if any pixel has a token configured
+    const configuredPixels = PIXELS.filter(pixel => pixel.token)
+    if (configuredPixels.length === 0) {
+      console.log('No Meta CAPI tokens configured')
+      return NextResponse.json({
+        success: false,
+        message: 'Meta CAPI not configured - no tokens found',
+        configured: false,
+      })
+    }
+
     // Get client info from headers
     const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0] ||
                      request.headers.get('x-real-ip') ||
@@ -128,9 +139,9 @@ export async function POST(request: NextRequest) {
       if (contentIds) eventData.custom_data.content_ids = contentIds
     }
 
-    // Send to BOTH Meta pixels in parallel
+    // Send to ALL configured Meta pixels in parallel
     const results = await Promise.allSettled(
-      PIXELS.filter(pixel => pixel.token).map(async (pixel) => {
+      configuredPixels.map(async (pixel) => {
         const response = await fetch(
           `https://graph.facebook.com/${API_VERSION}/${pixel.id}/events?access_token=${pixel.token}`,
           {
@@ -148,11 +159,11 @@ export async function POST(request: NextRequest) {
 
         if (!response.ok) {
           console.error(`${pixel.name} CAPI Error:`, result)
-          return { pixel: pixel.name, success: false, error: result }
+          return { pixel: pixel.name, pixelId: pixel.id, success: false, error: result }
         }
 
         console.log(`${pixel.name} CAPI ${eventName} sent:`, result)
-        return { pixel: pixel.name, success: true, events_received: result.events_received }
+        return { pixel: pixel.name, pixelId: pixel.id, success: true, events_received: result.events_received }
       })
     )
 
@@ -160,13 +171,14 @@ export async function POST(request: NextRequest) {
     const successful = results.filter(r => r.status === 'fulfilled' && (r.value as any).success)
     const failed = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && !(r.value as any).success))
 
-    console.log(`Dentist CAPI: ${successful.length}/${PIXELS.length} pixels received ${eventName}`)
+    console.log(`Dentist CAPI: ${successful.length}/${configuredPixels.length} pixels received ${eventName}`)
 
     return NextResponse.json({
       success: successful.length > 0,
       event_id: uniqueEventId,
+      event_name: eventName,
       pixels_sent: successful.length,
-      pixels_total: PIXELS.filter(p => p.token).length,
+      pixels_total: configuredPixels.length,
       results: results.map(r => r.status === 'fulfilled' ? r.value : { error: 'failed' })
     })
 

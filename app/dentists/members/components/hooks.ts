@@ -216,11 +216,11 @@ export function usePlatformState() {
       localStorage.setItem(STORAGE_PREFIX + 'session_count', '0')
     }
 
-    // Check auth
+    // Check auth with expiry
     if (DEV_AUTO_LOGIN) {
       setIsAuthenticated(true)
     } else {
-      const savedAuth = localStorage.getItem('dentistMemberAuth')
+      const savedAuthData = localStorage.getItem('dentistMemberAuth')
       const savedVipGuest = localStorage.getItem(STORAGE_PREFIX + 'vip_guest')
 
       // Check if user is blocked (e.g., refunded)
@@ -239,7 +239,35 @@ export function usePlatformState() {
         }
       }
 
-      if (savedAuth === 'true') setIsAuthenticated(true)
+      // Check auth with expiry support
+      let isValidAuth = false
+
+      if (savedAuthData) {
+        try {
+          const authData = JSON.parse(savedAuthData)
+          if (authData.expiry && Date.now() < authData.expiry) {
+            // Still valid (remember me)
+            isValidAuth = true
+          } else if (authData === true || savedAuthData === 'true') {
+            // Legacy format (no expiry) - keep authenticated
+            isValidAuth = true
+          } else if (authData.expiry) {
+            // Expired - clear auth
+            localStorage.removeItem('dentistMemberAuth')
+          }
+        } catch {
+          // Old format "true" string - keep authenticated
+          if (savedAuthData === 'true') isValidAuth = true
+        }
+      }
+
+      // Also check sessionStorage (for non-remember-me sessions)
+      if (!isValidAuth) {
+        const sessionAuth = sessionStorage.getItem('dentistMemberAuth')
+        if (sessionAuth === 'true') isValidAuth = true
+      }
+
+      if (isValidAuth) setIsAuthenticated(true)
     }
 
     // Check if first visit for onboarding
@@ -273,7 +301,8 @@ export function usePlatformState() {
 
   // Actions - now uses API route for secure password verification
   // Supports both personalized login (email+password) and VIP/legacy (password only)
-  const handleLogin = useCallback(async (email: string, password: string): Promise<boolean> => {
+  // rememberMe: if true, stays logged in for 30 days
+  const handleLogin = useCallback(async (email: string, password: string, rememberMe: boolean = true): Promise<boolean> => {
     setIsLoggingIn(true)
     setLoginError(null)
 
@@ -288,7 +317,19 @@ export function usePlatformState() {
 
       if (data.success) {
         setIsAuthenticated(true)
-        localStorage.setItem('dentistMemberAuth', 'true')
+
+        // Store auth with expiry if "Remember me" is checked
+        if (rememberMe) {
+          const thirtyDaysFromNow = Date.now() + (30 * 24 * 60 * 60 * 1000)
+          localStorage.setItem('dentistMemberAuth', JSON.stringify({
+            authenticated: true,
+            expiry: thirtyDaysFromNow
+          }))
+        } else {
+          // Session only - use sessionStorage (cleared when browser closes)
+          sessionStorage.setItem('dentistMemberAuth', 'true')
+          localStorage.removeItem('dentistMemberAuth')
+        }
 
         if (data.isVip && data.vipGuest) {
           // VIP Guest login
@@ -324,6 +365,7 @@ export function usePlatformState() {
     setIsAuthenticated(false)
     setVipGuest(null)
     localStorage.removeItem('dentistMemberAuth')
+    sessionStorage.removeItem('dentistMemberAuth')
     setShowLogoutConfirm(false)
   }, [])
 

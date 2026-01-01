@@ -30,6 +30,19 @@ export interface User {
   product: 'dentist' | 'realestate'
   lastLogin?: string
   loginCount?: number
+  // Extended fields for admin
+  notes?: string
+  tags?: string[]
+  loginHistory?: string[] // Array of ISO date strings
+  revenue?: {
+    main: number
+    upsell?: number
+    oto?: number
+    total: number
+  }
+  refunded?: boolean
+  refundDate?: string
+  source?: string // utm_source or referrer
 }
 
 // Generate a unique, readable password
@@ -124,9 +137,16 @@ export async function verifyUser(email: string, password: string): Promise<{
       return { success: false, error: 'Invalid password' }
     }
 
-    // Update last login and login count
-    user.lastLogin = new Date().toISOString()
+    // Update last login, login count, and login history
+    const now = new Date().toISOString()
+    user.lastLogin = now
     user.loginCount = (user.loginCount || 0) + 1
+    // Keep last 50 logins in history
+    user.loginHistory = user.loginHistory || []
+    user.loginHistory.unshift(now)
+    if (user.loginHistory.length > 50) {
+      user.loginHistory = user.loginHistory.slice(0, 50)
+    }
     await redis.set(userKey, user)
 
     return { success: true, user }
@@ -180,5 +200,150 @@ export async function getUsersCount(product?: 'dentist' | 'realestate'): Promise
   } catch (error) {
     console.error('Error getting users count:', error)
     return 0
+  }
+}
+
+// Get all users (for admin dashboard)
+export async function getAllUsers(product?: 'dentist' | 'realestate'): Promise<User[]> {
+  try {
+    const redis = getRedis()
+    if (!redis) return []
+
+    const key = product ? `users:${product}` : 'users:all'
+    const emails = await redis.smembers(key)
+
+    if (!emails || emails.length === 0) return []
+
+    // Fetch all user data
+    const users: User[] = []
+    for (const email of emails) {
+      const user = await redis.get<User>(`user:${email}`)
+      if (user) {
+        users.push(user)
+      }
+    }
+
+    // Sort by purchase date (newest first)
+    users.sort((a, b) => new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime())
+
+    return users
+
+  } catch (error) {
+    console.error('Error getting all users:', error)
+    return []
+  }
+}
+
+// Update user (for admin)
+export async function updateUser(email: string, updates: Partial<User>): Promise<{ success: boolean; error?: string }> {
+  try {
+    const redis = getRedis()
+    if (!redis) {
+      return { success: false, error: 'Database not available' }
+    }
+
+    const normalizedEmail = email.toLowerCase().trim()
+    const userKey = `user:${normalizedEmail}`
+
+    const user = await redis.get<User>(userKey)
+    if (!user) {
+      return { success: false, error: 'User not found' }
+    }
+
+    // Merge updates
+    const updatedUser = { ...user, ...updates }
+    await redis.set(userKey, updatedUser)
+
+    return { success: true }
+
+  } catch (error) {
+    console.error('Error updating user:', error)
+    return { success: false, error: 'Failed to update user' }
+  }
+}
+
+// Record a purchase for a user (main, upsell, or downsell)
+export async function recordPurchase(
+  email: string,
+  purchaseType: 'main' | 'upsell' | 'downsell',
+  amount: number,
+  planId?: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const redis = getRedis()
+    if (!redis) {
+      return { success: false, error: 'Database not available' }
+    }
+
+    const normalizedEmail = email.toLowerCase().trim()
+    const userKey = `user:${normalizedEmail}`
+
+    const user = await redis.get<User>(userKey)
+    if (!user) {
+      // User doesn't exist yet - they might be buying upsell before main course is processed
+      console.log(`User ${email} not found for ${purchaseType} purchase - will be linked later`)
+      return { success: false, error: 'User not found' }
+    }
+
+    // Initialize revenue object if not exists
+    const revenue = user.revenue || { main: 0, total: 0 }
+
+    if (purchaseType === 'main') {
+      revenue.main = amount
+    } else if (purchaseType === 'upsell') {
+      revenue.upsell = (revenue.upsell || 0) + amount
+    } else if (purchaseType === 'downsell') {
+      // Store downsell in oto field (upsell and downsell are mutually exclusive offers)
+      revenue.oto = (revenue.oto || 0) + amount
+    }
+
+    // Recalculate total
+    revenue.total = revenue.main + (revenue.upsell || 0) + (revenue.oto || 0)
+
+    // Update user
+    user.revenue = revenue
+    if (planId) {
+      user.planId = planId
+    }
+
+    await redis.set(userKey, user)
+    console.log(`Recorded ${purchaseType} purchase ($${amount}) for ${email}`)
+
+    return { success: true }
+
+  } catch (error) {
+    console.error('Error recording purchase:', error)
+    return { success: false, error: 'Failed to record purchase' }
+  }
+}
+
+// Delete user (for admin)
+export async function deleteUser(email: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const redis = getRedis()
+    if (!redis) {
+      return { success: false, error: 'Database not available' }
+    }
+
+    const normalizedEmail = email.toLowerCase().trim()
+    const userKey = `user:${normalizedEmail}`
+
+    // Get user first to know which product set to remove from
+    const user = await redis.get<User>(userKey)
+    if (!user) {
+      return { success: false, error: 'User not found' }
+    }
+
+    // Remove from Redis
+    await redis.del(userKey)
+    await redis.srem('users:all', normalizedEmail)
+    await redis.srem(`users:${user.product}`, normalizedEmail)
+
+    console.log(`Deleted user: ${normalizedEmail}`)
+    return { success: true }
+
+  } catch (error) {
+    console.error('Error deleting user:', error)
+    return { success: false, error: 'Failed to delete user' }
   }
 }

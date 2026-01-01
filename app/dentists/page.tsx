@@ -43,13 +43,28 @@ import {
 } from 'lucide-react'
 import { DENTIST_BONUS_PRODUCTS, getDentistTotalBonusValue } from '../config/dentist-bonus-products'
 import { getMemberStats } from './members/components/config'
-import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
 import { trackMetaEvent } from '../components/MetaPixel'
 import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Whop checkout link
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_SxMS4HqFxJKNT'
+
+// Generate unique event ID for deduplication
+const generateEventId = (eventName: string) => {
+  return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+}
+
+// Get tracking data from localStorage
+const getStoredTrackingData = () => {
+  if (typeof window === 'undefined') return null
+  try {
+    const stored = localStorage.getItem('aifastscale_tracking')
+    return stored ? JSON.parse(stored) : null
+  } catch {
+    return null
+  }
+}
 
 // Save tracking params to localStorage before Whop redirect
 // This preserves fbclid, ttclid, UTMs for thank-you page attribution
@@ -62,10 +77,6 @@ const saveTrackingParams = () => {
   // Capture Meta fbclid
   const fbclid = params.get('fbclid')
   if (fbclid) trackingData.fbclid = fbclid
-
-  // Capture TikTok ttclid
-  const ttclid = params.get('ttclid')
-  if (ttclid) trackingData.ttclid = ttclid
 
   // Capture UTM params
   const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
@@ -88,21 +99,58 @@ const saveTrackingParams = () => {
   localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
 }
 
-// Combined tracking function for all platforms
-const trackInitiateCheckout = (contentId: string, value: number) => {
+// Fire CAPI event with matching event_id
+const fireCAPIEvent = async (
+  eventName: string,
+  eventId: string,
+  value: number,
+  contentId: string,
+  contentName: string
+) => {
+  const trackingData = getStoredTrackingData()
+
+  try {
+    await fetch('/api/dentist-meta-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName,
+        eventId,
+        sourceUrl: window.location.href,
+        fbc: trackingData?._fbc || trackingData?.fbc,
+        fbp: trackingData?._fbp || trackingData?.fbp,
+        value,
+        currency: 'USD',
+        contentName,
+        contentType: 'product',
+        contentIds: [contentId]
+      })
+    })
+  } catch (e) {
+    console.error('CAPI error:', e)
+  }
+}
+
+// Meta tracking function for InitiateCheckout (browser + CAPI with matching event_id)
+const trackInitiateCheckout = async (contentId: string, value: number) => {
   // Save tracking params BEFORE redirect
   saveTrackingParams()
 
-  // TikTok tracking
-  trackTikTokInitiateCheckout(contentId, value)
-  // Meta Pixel tracking
+  // Generate shared event_id for deduplication
+  const eventId = generateEventId('InitiateCheckout')
+
+  // Browser Pixel tracking with event_id
   trackMetaEvent('InitiateCheckout', {
     content_ids: [contentId],
     content_name: 'CloneYourself Dentist System',
     content_type: 'product',
     value: value,
-    currency: 'USD'
+    currency: 'USD',
+    eventID: eventId
   })
+
+  // Server CAPI tracking with same event_id (for redundancy + better matching)
+  await fireCAPIEvent('InitiateCheckout', eventId, value, contentId, 'CloneYourself Dentist System')
 }
 
 export default function DentistCleanLandingPage() {
@@ -123,6 +171,24 @@ export default function DentistCleanLandingPage() {
       setMemberStats(getMemberStats())
     }, 60000)
     return () => clearInterval(interval)
+  }, [])
+
+  // Track ViewContent on landing page load (browser + CAPI with matching event_id)
+  useEffect(() => {
+    const eventId = generateEventId('ViewContent')
+
+    // Browser Pixel
+    trackMetaEvent('ViewContent', {
+      content_ids: ['dentist-main'],
+      content_name: 'CloneYourself for Dentists',
+      content_type: 'product',
+      value: 47,
+      currency: 'USD',
+      eventID: eventId
+    })
+
+    // Server CAPI with matching event_id
+    fireCAPIEvent('ViewContent', eventId, 47, 'dentist-main', 'CloneYourself for Dentists')
   }, [])
 
   const faqs = [
@@ -531,14 +597,14 @@ export default function DentistCleanLandingPage() {
                   </p>
                 </div>
 
-                {/* Video - Autoplay, Loop, Muted - Mobile-optimized (183KB) */}
+                {/* Video - Autoplay, Loop, Muted - Mobile-optimized (183KB) - preload="none" for faster LCP */}
                 <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black aspect-square max-w-md mx-auto">
                   <video
                     autoPlay
                     loop
                     muted
                     playsInline
-                    preload="metadata"
+                    preload="none"
                     className="w-full h-full object-cover"
                     src="/videos/dentist-case-study-mobile.mp4"
                   />
@@ -625,7 +691,7 @@ export default function DentistCleanLandingPage() {
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
-                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" />
+                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" loading="lazy" />
                       </div>
                       <div>
                         <p className="text-white font-bold">Dr. Marcus Bennett</p>
@@ -746,7 +812,7 @@ export default function DentistCleanLandingPage() {
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" />
+                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -1138,7 +1204,7 @@ export default function DentistCleanLandingPage() {
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-teal-500 shadow-lg">
-                        <Image src="/images/dentist/review-5.webp" alt="Dr. David Kim" width={96} height={96} className="object-cover w-full h-full" />
+                        <Image src="/images/dentist/review-5.webp" alt="Dr. David Kim" width={96} height={96} className="object-cover w-full h-full" loading="lazy" />
                       </div>
                       <div className="absolute -bottom-1 -right-1 bg-teal-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
                         VERIFIED
@@ -1274,7 +1340,7 @@ export default function DentistCleanLandingPage() {
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-500">
-                        <Image src="/images/dentist/review-5.webp" alt="Dr. David" width={40} height={40} className="object-cover" />
+                        <Image src="/images/dentist/review-5.webp" alt="Dr. David" width={40} height={40} className="object-cover" loading="lazy" />
                       </div>
                       <div>
                         <p className="text-gray-900 font-bold">Dr. David Kim</p>
@@ -1362,7 +1428,7 @@ export default function DentistCleanLandingPage() {
                 {/* Author - Larger image */}
                 <div className="flex items-center gap-3">
                   <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-teal-500/40 shadow-lg">
-                    <Image src={t.image} alt={t.name} fill className="object-cover" />
+                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
@@ -1396,7 +1462,7 @@ export default function DentistCleanLandingPage() {
                 {/* Author - Larger image */}
                 <div className="flex items-center gap-3">
                   <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-teal-500/40 shadow-lg">
-                    <Image src={t.image} alt={t.name} fill className="object-cover" />
+                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>

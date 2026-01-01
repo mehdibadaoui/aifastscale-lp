@@ -14,18 +14,31 @@ declare global {
   }
 }
 
-// CRITICAL: Track Meta Purchase with retry logic to ensure fbq is ready
+// Generate unique event ID for deduplication between browser pixel and CAPI
+function generateEventId(eventName: string): string {
+  return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+}
+
+// CRITICAL: Track Meta Purchase with retry logic and EVENT_ID for deduplication
 function trackMetaPurchase(params: {
   content_ids: string[]
   content_name: string
   content_type: string
   value: number
   currency: string
+  eventID: string  // REQUIRED for deduplication with CAPI
 }) {
   const attemptTrack = (retries: number) => {
     if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Purchase', params)
-      console.log('Meta Purchase tracked:', params)
+      // Pass eventID as 4th parameter for deduplication
+      window.fbq('track', 'Purchase', {
+        content_ids: params.content_ids,
+        content_name: params.content_name,
+        content_type: params.content_type,
+        value: params.value,
+        currency: params.currency
+      }, { eventID: params.eventID })
+      console.log('Meta Purchase tracked with eventID:', params.eventID)
     } else if (retries > 0) {
       // Retry after 500ms if fbq not ready
       setTimeout(() => attemptTrack(retries - 1), 500)
@@ -91,14 +104,19 @@ function ThankYouContent() {
       })
     }
 
+    // CRITICAL: Generate ONE event ID for DEDUPLICATION
+    // Same ID goes to browser pixel AND both CAPI endpoints so Meta deduplicates them
+    const eventId = generateEventId('Purchase')
+
     // Track Meta Pixel Purchase Event (for Facebook Ads conversions)
-    // Uses retry logic to ensure fbq is loaded before tracking
+    // Uses retry logic and eventID for deduplication with CAPI
     trackMetaPurchase({
       content_ids: [purchased || 'main'],
       content_name: productName,
       content_type: 'product',
       value: value,
-      currency: 'USD'
+      currency: 'USD',
+      eventID: eventId  // SAME ID as CAPI
     })
 
     // Retrieve saved tracking params from localStorage (saved before Whop redirect)
@@ -138,12 +156,13 @@ function ThankYouContent() {
     const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || savedTracking._fbp || ''
 
     // Send server-side event via Meta CAPI (for better iOS 14.5+ tracking)
-    // PIXEL 1: Original Real Estate pixel
+    // PIXEL 1: Original Real Estate pixel - uses SAME eventId for deduplication
     fetch('/api/meta-capi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         eventName: 'Purchase',
+        eventId: eventId,  // SAME ID as browser pixel - CRITICAL for dedup
         sourceUrl: window.location.href,
         fbc: fbc,
         fbp: fbp,
@@ -155,12 +174,13 @@ function ThankYouContent() {
       })
     }).catch(console.error)
 
-    // PIXEL 2: Real Estate 2 from Dentists Clone account
+    // PIXEL 2: Real Estate 2 from Dentists Clone account - uses SAME eventId
     fetch('/api/realestate2-meta-capi', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         eventName: 'Purchase',
+        eventId: eventId,  // SAME ID as browser pixel - CRITICAL for dedup
         sourceUrl: window.location.href,
         fbc: fbc,
         fbp: fbp,
@@ -171,6 +191,8 @@ function ThankYouContent() {
         contentIds: [purchased || 'main']
       })
     }).catch(console.error)
+
+    console.log('Purchase tracked with eventId:', eventId)
   }, [purchased, searchParams])
 
   const copyPassword = () => {

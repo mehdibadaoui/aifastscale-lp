@@ -4,40 +4,86 @@ import { useState, useEffect, useRef } from 'react'
 import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
-import { trackTikTokInitiateCheckout, trackTikTokEvent } from '../../components/TikTokPixel'
 import { trackMetaEvent } from '../../components/MetaPixel'
 
-// Declare fbq and gtag for TypeScript
-declare global {
-  interface Window {
-    fbq?: (...args: any[]) => void
-    gtag?: (...args: any[]) => void
-  }
-}
-
-// CRITICAL: Track Meta Purchase with retry logic to ensure fbq is ready
-function trackMetaPurchase(params: {
-  content_ids: string[]
-  content_name: string
-  content_type: string
-  value: number
-  currency: string
-}) {
-  const attemptTrack = (retries: number) => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Purchase', params)
-      console.log('Meta Purchase tracked on OTO page:', params)
-    } else if (retries > 0) {
-      setTimeout(() => attemptTrack(retries - 1), 500)
-    } else {
-      console.warn('Meta fbq not available after retries')
-    }
-  }
-  attemptTrack(5)
-}
+// NOTE: Purchase tracking is handled by the Whop webhook (server-side CAPI only)
+// This prevents fake purchases from bots, direct URL access, or page refreshes
 
 // Whop checkout link for OTO
 const WHOP_OTO_LINK = 'https://whop.com/checkout/plan_IbsV5qrvMPBgb'
+
+// Generate unique event ID for deduplication
+const generateEventId = (eventName: string) => {
+  return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+}
+
+// Get tracking data from localStorage
+const getStoredTrackingData = () => {
+  if (typeof window === 'undefined') return null
+  try {
+    const stored = localStorage.getItem('aifastscale_tracking')
+    return stored ? JSON.parse(stored) : null
+  } catch {
+    return null
+  }
+}
+
+// Sync tracking data to Redis (server-side storage for webhook access)
+const syncTrackingToServer = async (email: string) => {
+  if (!email) return
+
+  const trackingData = getStoredTrackingData()
+  if (!trackingData) return
+
+  try {
+    await fetch('/api/dentist-tracking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email.toLowerCase().trim(),
+        trackingData
+      })
+    })
+    console.log('Tracking data synced to server for:', email)
+  } catch (e) {
+    console.error('Failed to sync tracking:', e)
+  }
+}
+
+// Fire CAPI event with matching event_id
+const fireCAPIEvent = async (
+  eventName: string,
+  eventId: string,
+  email: string | null,
+  value: number,
+  contentId: string,
+  contentName: string
+) => {
+  const trackingData = getStoredTrackingData()
+
+  try {
+    await fetch('/api/dentist-meta-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventName,
+        eventId,
+        sourceUrl: window.location.href,
+        email: email || undefined,
+        fbc: trackingData?.fbc || trackingData?._fbc,
+        fbp: trackingData?.fbp || trackingData?._fbp,
+        externalId: email || undefined,
+        value,
+        currency: 'USD',
+        contentName,
+        contentType: 'product',
+        contentIds: [contentId]
+      })
+    })
+  } catch (e) {
+    console.error('CAPI error:', e)
+  }
+}
 
 // Save tracking params to localStorage before Whop redirect
 const saveTrackingParams = () => {
@@ -49,10 +95,6 @@ const saveTrackingParams = () => {
   // Capture Meta fbclid
   const fbclid = params.get('fbclid')
   if (fbclid) trackingData.fbclid = fbclid
-
-  // Capture TikTok ttclid
-  const ttclid = params.get('ttclid')
-  if (ttclid) trackingData.ttclid = ttclid
 
   // Capture UTM params
   const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
@@ -70,140 +112,106 @@ const saveTrackingParams = () => {
   // Save timestamp
   trackingData.checkout_started = new Date().toISOString()
 
-  // Store in localStorage (persists across redirect to Whop and back)
+  // Store in localStorage
   localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
 }
 
-// Combined tracking function for all platforms
-const trackInitiateCheckout = (contentId: string, contentName: string, value: number) => {
+// Meta tracking function for InitiateCheckout (browser + CAPI)
+const trackInitiateCheckout = async (
+  contentId: string,
+  contentName: string,
+  value: number,
+  email: string | null
+) => {
   // Save tracking params BEFORE redirect
   saveTrackingParams()
 
-  // TikTok tracking
-  trackTikTokInitiateCheckout(contentId, value)
-  // Meta Pixel tracking
+  // Generate shared event_id for deduplication
+  const eventId = generateEventId('InitiateCheckout')
+
+  // Browser Pixel tracking with event_id
   trackMetaEvent('InitiateCheckout', {
     content_ids: [contentId],
     content_name: contentName,
     content_type: 'product',
     value: value,
-    currency: 'USD'
+    currency: 'USD',
+    eventID: eventId
   })
+
+  // Server CAPI tracking with same event_id
+  await fireCAPIEvent('InitiateCheckout', eventId, email, value, contentId, contentName)
 }
 
 export default function DentistOtoPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
-
-  // CRITICAL: Prevent double-firing from React StrictMode
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+  const hasTrackedView = useRef(false)
   const hasTrackedPurchase = useRef(false)
 
-  // CRITICAL: Track MAIN COURSE Purchase when landing on OTO page
-  // User just bought the $47 main course and was redirected here
+  // Capture user info from URL params and sync tracking data
   useEffect(() => {
     if (hasTrackedPurchase.current) return
     hasTrackedPurchase.current = true
 
-    const productName = 'CloneYourself Dentist'
-    const value = 47
+    const params = new URLSearchParams(window.location.search)
 
-    // Track Meta Pixel Purchase Event (browser - goes to BOTH pixels)
-    trackMetaPurchase({
-      content_ids: ['dentist-main'],
-      content_name: productName,
-      content_type: 'product',
-      value: value,
-      currency: 'USD'
-    })
+    // Whop may pass email or user_id after checkout
+    const email = params.get('email')
+    const userId = params.get('user_id') || params.get('whop_user_id')
 
-    // Track TikTok CompletePayment (browser pixel)
-    trackTikTokEvent('CompletePayment', {
-      content_id: 'dentist-main',
-      content_name: productName,
-      value: value,
-      currency: 'USD'
-    })
+    // Store for thank-you page to use
+    if (email) {
+      const normalizedEmail = email.toLowerCase().trim()
+      setUserEmail(normalizedEmail)
+      sessionStorage.setItem('dentist_purchase_email', normalizedEmail)
 
-    // Track GA4 Purchase Event (for Google Ads conversions)
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'purchase', {
-        transaction_id: `dentist_order_${Date.now()}`,
-        value: value,
-        currency: 'USD',
-        items: [{
-          item_id: 'dentist-main',
-          item_name: productName,
-          price: value,
-          quantity: 1
-        }]
-      })
-      console.log('GA4 Purchase tracked for Google Ads')
+      // CRITICAL: Sync browser tracking data to server for webhook access
+      syncTrackingToServer(normalizedEmail)
+    }
+    if (userId) {
+      sessionStorage.setItem('dentist_purchase_user_id', userId)
     }
 
-    // Get tracking params from localStorage (saved before Whop redirect)
-    let savedTracking: Record<string, string> = {}
+    // Clean up tracking params (no longer needed since webhook handles tracking)
     try {
-      const stored = localStorage.getItem('aifastscale_tracking')
-      if (stored) {
-        savedTracking = JSON.parse(stored)
-        localStorage.removeItem('aifastscale_tracking')
-      }
+      localStorage.removeItem('aifastscale_tracking')
     } catch (e) {
-      console.error('Error reading tracking data:', e)
+      // Ignore errors
     }
 
-    // Get fbc/fbp from cookies OR localStorage
-    const fbcCookie = document.cookie.split('; ').find(row => row.startsWith('_fbc='))
-    const fbc = fbcCookie ? fbcCookie.substring(5) : (savedTracking._fbc || '')
-    const fbpCookie = document.cookie.split('; ').find(row => row.startsWith('_fbp='))
-    const fbp = fbpCookie ? fbpCookie.substring(5) : (savedTracking._fbp || '')
-    const ttclid = savedTracking.ttclid || ''
-
-    // Send server-side event via Meta CAPI (to BOTH pixels)
-    fetch('/api/dentist-meta-capi', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventName: 'Purchase',
-        sourceUrl: window.location.href,
-        fbc: fbc,
-        fbp: fbp,
-        value: value,
-        currency: 'USD',
-        contentName: productName,
-        contentType: 'product',
-        contentIds: ['dentist-main']
-      })
-    }).catch(console.error)
-
-    // Send server-side event via TikTok CAPI
-    fetch('/api/tiktok-capi', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_name: 'CompletePayment',
-        content_id: 'dentist-main',
-        content_name: productName,
-        value: value,
-        currency: 'USD',
-        ttclid: ttclid,
-        url: window.location.href,
-        referrer: document.referrer
-      })
-    }).catch(console.error)
-
-    console.log('MAIN COURSE Purchase tracked on OTO page - $47')
+    console.log('OTO page loaded - Purchase tracking handled by webhook')
   }, [])
 
-  // Track ViewContent for upsell offer
+  // Track ViewContent for upsell offer (browser + CAPI with matching event_id)
   useEffect(() => {
+    if (hasTrackedView.current) return
+    hasTrackedView.current = true
+
+    const eventId = generateEventId('ViewContent')
+
+    // Browser Pixel
     trackMetaEvent('ViewContent', {
       content_ids: ['dentist-oto'],
       content_name: 'CloneYourself Dentist - Premium Bundle',
       content_type: 'product',
       value: 9.95,
-      currency: 'USD'
+      currency: 'USD',
+      eventID: eventId
     })
-  }, [])
+
+    // Server CAPI (delayed slightly to get email if available)
+    setTimeout(() => {
+      fireCAPIEvent(
+        'ViewContent',
+        eventId,
+        userEmail,
+        9.95,
+        'dentist-oto',
+        'CloneYourself Dentist - Premium Bundle'
+      )
+    }, 500)
+  }, [userEmail])
 
   // Get the 5 upsell products (last 5 from bonus products)
   const upsellProducts = DENTIST_BONUS_PRODUCTS.slice(5, 10)
@@ -329,7 +337,7 @@ export default function DentistOtoPage() {
           <div className="space-y-2 md:space-y-3">
             <button
               onClick={() => {
-                trackInitiateCheckout('dentist-oto', 'CloneYourself Dentist - Premium Bundle', upsellPrice)
+                trackInitiateCheckout('dentist-oto', 'CloneYourself Dentist - Premium Bundle', upsellPrice, userEmail)
                 window.location.href = WHOP_OTO_LINK
               }}
               className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"

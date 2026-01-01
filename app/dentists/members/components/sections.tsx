@@ -140,7 +140,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
       <div className="hidden sm:grid grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="glass-premium rounded-2xl p-6 hover-lift col-span-1 border border-teal-500/20">
           <div className="flex items-center gap-4">
-            <ProgressRing progress={state.progressPercent} size={48} strokeWidth={4} />
+            <ProgressRing progress={state.progressPercent} size={48} strokeWidth={4} showLabel={false} />
             <div>
               <div className="text-sm text-slate-400">Progress</div>
               <div className="text-2xl font-black text-white">{Math.round(state.progressPercent)}%</div>
@@ -844,9 +844,22 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                           : 'glass-dark border border-transparent hover:border-teal-500/20'
                     }`}>
                       {/* Mini thumbnail header */}
-                      <div className={`relative h-16 bg-gradient-to-br ${gradientClass} overflow-hidden`}>
+                      <div className={`relative aspect-video bg-gradient-to-br ${gradientClass} overflow-hidden`}>
+                        {/* Actual thumbnail image */}
+                        {module.thumbnail && (
+                          <Image
+                            src={module.thumbnail}
+                            alt={module.title}
+                            fill
+                            className="object-contain"
+                          />
+                        )}
+
+                        {/* Gradient overlay for readability */}
+                        <div className="absolute inset-0 bg-black/30" />
+
                         {/* Module number watermark */}
-                        <div className="absolute top-1 left-2 text-3xl font-black text-white/20 leading-none">
+                        <div className="absolute top-1 left-2 text-3xl font-black text-white/30 leading-none">
                           {module.number}
                         </div>
 

@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 
+// Preconnect to external domains for faster loading
 export const metadata: Metadata = {
+  other: {
+    'dns-prefetch': '//connect.facebook.net',
+  },
   title: 'CloneYourself for Dentists | AI Video Marketing System | $47',
   description:
     'Dentists: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic patients. No filming needed. Created by Dr. Alexander Voss.',
@@ -33,12 +37,25 @@ export default function DentistLayout({
 }) {
   return (
     <>
-      {/* DENTIST META PIXELS - BOTH pixels for maximum tracking */}
-      {/* Pixel 1: 834713712860127 (Dentists Clone account) */}
-      {/* Pixel 2: 1176362697938270 (ad3 account) */}
+      {/* Preload hero image for faster LCP */}
+      <link
+        rel="preload"
+        href="/images/dentist/dentist-vdc-hero.webp"
+        as="image"
+        type="image/webp"
+        fetchPriority="high"
+      />
+
+      {/* Preconnect to critical third-party origins */}
+      <link rel="preconnect" href="https://connect.facebook.net" />
+      <link rel="dns-prefetch" href="https://connect.facebook.net" />
+
+      {/* DENTIST META PIXELS - Deferred to not block rendering */}
+      {/* Pixel 1: 1176362697938270 (Ad Account 1) */}
+      {/* Pixel 2: 834713712860127 (Ad Account 2) */}
       <Script
         id="dentist-meta-pixels"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
@@ -51,8 +68,8 @@ export default function DentistLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
 
             // Initialize BOTH dentist pixels
-            fbq('init', '834713712860127');
             fbq('init', '1176362697938270');
+            fbq('init', '834713712860127');
 
             // Track PageView on both
             fbq('track', 'PageView');
@@ -64,14 +81,14 @@ export default function DentistLayout({
           height="1"
           width="1"
           style={{ display: 'none' }}
-          src="https://www.facebook.com/tr?id=834713712860127&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=1176362697938270&ev=PageView&noscript=1"
           alt=""
         />
         <img
           height="1"
           width="1"
           style={{ display: 'none' }}
-          src="https://www.facebook.com/tr?id=1176362697938270&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=834713712860127&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>

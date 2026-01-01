@@ -593,9 +593,10 @@ interface ProgressRingProps {
   size?: number
   strokeWidth?: number
   className?: string
+  showLabel?: boolean
 }
 
-export function ProgressRing({ progress, size = 120, strokeWidth = 8, className = '' }: ProgressRingProps) {
+export function ProgressRing({ progress, size = 120, strokeWidth = 8, className = '', showLabel = true }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2
   const circumference = radius * 2 * Math.PI
   const offset = circumference - (progress / 100) * circumference
@@ -634,9 +635,11 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
           </linearGradient>
         </defs>
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-black text-white">{Math.round(progress)}%</span>
-      </div>
+      {showLabel && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-2xl font-black text-white">{Math.round(progress)}%</span>
+        </div>
+      )}
     </div>
   )
 }
