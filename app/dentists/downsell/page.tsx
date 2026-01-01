@@ -1,201 +1,29 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { Clock, ArrowRight, Gift, AlertTriangle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
-import { trackMetaEvent } from '../../components/MetaPixel'
 
 // Whop checkout link for Downsell
 const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_C2l5ZPXSWCxQu'
 
-// Generate unique event ID for deduplication
-const generateEventId = (eventName: string) => {
-  return `${eventName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-}
-
-// Get tracking data from localStorage
-const getStoredTrackingData = () => {
-  if (typeof window === 'undefined') return null
-  try {
-    const stored = localStorage.getItem('aifastscale_tracking')
-    return stored ? JSON.parse(stored) : null
-  } catch {
-    return null
-  }
-}
-
-// Sync tracking data to Redis (server-side storage for webhook access)
-const syncTrackingToServer = async (email: string) => {
-  if (!email) return
-
-  const trackingData = getStoredTrackingData()
-  if (!trackingData) return
-
-  try {
-    await fetch('/api/dentist-tracking', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.toLowerCase().trim(),
-        trackingData
-      })
-    })
-    console.log('Tracking data synced to server for:', email)
-  } catch (e) {
-    console.error('Failed to sync tracking:', e)
-  }
-}
-
-// Fire CAPI event with matching event_id
-const fireCAPIEvent = async (
-  eventName: string,
-  eventId: string,
-  email: string | null,
-  value: number,
-  contentId: string,
-  contentName: string
-) => {
-  const trackingData = getStoredTrackingData()
-
-  try {
-    await fetch('/api/dentist-meta-capi', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventName,
-        eventId,
-        sourceUrl: window.location.href,
-        email: email || undefined,
-        fbc: trackingData?.fbc || trackingData?._fbc,
-        fbp: trackingData?.fbp || trackingData?._fbp,
-        externalId: email || undefined,
-        value,
-        currency: 'USD',
-        contentName,
-        contentType: 'product',
-        contentIds: [contentId]
-      })
-    })
-  } catch (e) {
-    console.error('CAPI error:', e)
-  }
-}
-
-// Save tracking params to localStorage before Whop redirect
-const saveTrackingParams = () => {
-  if (typeof window === 'undefined') return
-
-  const params = new URLSearchParams(window.location.search)
-  const trackingData: Record<string, string> = {}
-
-  // Capture Meta fbclid
-  const fbclid = params.get('fbclid')
-  if (fbclid) trackingData.fbclid = fbclid
-
-  // Capture UTM params
-  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
-  utmParams.forEach(param => {
-    const value = params.get(param)
-    if (value) trackingData[param] = value
-  })
-
-  // Capture Meta cookies (_fbc, _fbp) if they exist
-  const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1]
-  const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1]
-  if (fbc) trackingData._fbc = fbc
-  if (fbp) trackingData._fbp = fbp
-
-  // Save timestamp
-  trackingData.checkout_started = new Date().toISOString()
-
-  // Store in localStorage
-  localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
-}
-
-// Meta tracking function for InitiateCheckout (browser + CAPI)
-const trackInitiateCheckout = async (
-  contentId: string,
-  contentName: string,
-  value: number,
-  email: string | null
-) => {
-  // Save tracking params BEFORE redirect
-  saveTrackingParams()
-
-  // Generate shared event_id for deduplication
-  const eventId = generateEventId('InitiateCheckout')
-
-  // Browser Pixel tracking with event_id
-  trackMetaEvent('InitiateCheckout', {
-    content_ids: [contentId],
-    content_name: contentName,
-    content_type: 'product',
-    value: value,
-    currency: 'USD',
-    eventID: eventId
-  })
-
-  // Server CAPI tracking with same event_id
-  await fireCAPIEvent('InitiateCheckout', eventId, email, value, contentId, contentName)
-}
-
 export default function DentistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
-  const [userEmail, setUserEmail] = useState<string | null>(null)
-  const hasTrackedView = useRef(false)
 
-  // Capture user info from URL params and sync tracking data
+  // Capture user info from URL params for thank-you page
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-
-    // Whop may pass email or user_id after checkout
     const email = params.get('email')
     const userId = params.get('user_id') || params.get('whop_user_id')
 
-    // Store for thank-you page to use
     if (email) {
-      const normalizedEmail = email.toLowerCase().trim()
-      setUserEmail(normalizedEmail)
-      sessionStorage.setItem('dentist_purchase_email', normalizedEmail)
-
-      // CRITICAL: Sync browser tracking data to server for webhook access
-      syncTrackingToServer(normalizedEmail)
+      sessionStorage.setItem('dentist_purchase_email', email.toLowerCase().trim())
     }
     if (userId) {
       sessionStorage.setItem('dentist_purchase_user_id', userId)
     }
   }, [])
-
-  // Track ViewContent for downsell page (browser + CAPI with matching event_id)
-  useEffect(() => {
-    if (hasTrackedView.current) return
-    hasTrackedView.current = true
-
-    const eventId = generateEventId('ViewContent')
-
-    // Browser Pixel
-    trackMetaEvent('ViewContent', {
-      content_ids: ['dentist-downsell'],
-      content_name: 'CloneYourself Dentist - Value Bundle',
-      content_type: 'product',
-      value: 4.97,
-      currency: 'USD',
-      eventID: eventId
-    })
-
-    // Server CAPI (delayed slightly to get email if available)
-    setTimeout(() => {
-      fireCAPIEvent(
-        'ViewContent',
-        eventId,
-        userEmail,
-        4.97,
-        'dentist-downsell',
-        'CloneYourself Dentist - Value Bundle'
-      )
-    }, 500)
-  }, [userEmail])
 
   // Get the 5 upsell products (same as upsell - user declined those)
   const downsellProducts = DENTIST_BONUS_PRODUCTS.slice(5, 10)
@@ -341,15 +169,12 @@ export default function DentistDownsellPage() {
 
           {/* CTA Buttons */}
           <div className="space-y-2 md:space-y-3">
-            <button
-              onClick={() => {
-                trackInitiateCheckout('dentist-downsell', 'CloneYourself Dentist - Value Bundle', downsellPrice, userEmail)
-                window.location.href = WHOP_DOWNSELL_LINK
-              }}
+            <a
+              href={WHOP_DOWNSELL_LINK}
               className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-orange-500/30"
             >
               Yes, Add to My Order - ${downsellPrice}
-            </button>
+            </a>
 
             <button
               onClick={handleFinalDecline}

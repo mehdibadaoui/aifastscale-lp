@@ -614,59 +614,6 @@ export async function POST(request: NextRequest) {
 
     console.log(`✅ Welcome email sent to ${buyerEmail} with unique password`)
 
-    // Track Purchase via Meta CAPI (server-side only - guaranteed real purchases)
-    if (productType === 'dentist') {
-      const eventId = `Purchase_webhook_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-      // CRITICAL: Retrieve browser tracking data (fbc/fbp) from Redis
-      // This was synced by the upsell/downsell pages when user returned from Whop
-      let trackingData: { fbc?: string; fbp?: string; _fbc?: string; _fbp?: string } = {}
-      try {
-        const redis = getRedis()
-        const trackingKey = `dentist:tracking:${buyerEmail.toLowerCase().trim()}`
-        const storedData = await redis.get<string>(trackingKey)
-        if (storedData) {
-          trackingData = typeof storedData === 'string' ? JSON.parse(storedData) : storedData
-          console.log(`✅ Retrieved tracking data for ${buyerEmail}:`, {
-            hasFbc: !!(trackingData.fbc || trackingData._fbc),
-            hasFbp: !!(trackingData.fbp || trackingData._fbp)
-          })
-        } else {
-          console.log(`⚠️ No tracking data found in Redis for ${buyerEmail}`)
-        }
-      } catch (trackingError) {
-        console.error('Failed to retrieve tracking data (non-blocking):', trackingError)
-      }
-
-      try {
-        const capiResponse = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://aifastscale.com'}/api/dentist-meta-capi`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            eventName: 'Purchase',
-            eventId: eventId,
-            sourceUrl: 'https://aifastscale.com/dentists',
-            email: buyerEmail,
-            firstName: buyerName?.split(' ')[0] || '',
-            lastName: buyerName?.split(' ').slice(1).join(' ') || '',
-            // Include fbc/fbp for proper attribution
-            fbc: trackingData.fbc || trackingData._fbc || undefined,
-            fbp: trackingData.fbp || trackingData._fbp || undefined,
-            externalId: buyerEmail, // Consistent external_id for cross-device tracking
-            value: mainPrice,
-            currency: 'USD',
-            contentName: product.productName,
-            contentType: 'product',
-            contentIds: ['dentist-main']
-          })
-        })
-        const capiResult = await capiResponse.json()
-        console.log(`✅ Meta CAPI Purchase tracked for ${buyerEmail}:`, capiResult)
-      } catch (capiError) {
-        console.error('Meta CAPI error (non-blocking):', capiError)
-      }
-    }
-
     console.log('═══════════════════════════════════════════════════════════')
     console.log(`✅ SUCCESS: ${buyerEmail} - User created & email sent!`)
     console.log(`💰 Revenue: $${mainPrice} | Product: ${productType}`)
