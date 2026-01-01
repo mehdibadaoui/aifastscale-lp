@@ -597,18 +597,11 @@ export async function POST(request: NextRequest) {
     const planInfo = getPlanInfo(planId)
     console.log(`📊 Plan Info: ${planInfo ? JSON.stringify(planInfo) : 'NO MATCH - will check product name'}`)
     if (planInfo && (planInfo.type === 'upsell' || planInfo.type === 'downsell')) {
-      // Record the upsell/downsell purchase
+      // Record the upsell/downsell purchase (for internal tracking only, NOT Meta)
       await recordPurchase(buyerEmail, planInfo.type, planInfo.price, planId)
       console.log(`✅ Recorded ${planInfo.type} ($${planInfo.price}) for ${buyerEmail}`)
 
-      // Fire Meta CAPI Purchase for dentist upsell/downsell
-      if (planInfo.product === 'dentist') {
-        await fireDentistPurchaseCAPI({
-          email: buyerEmail,
-          value: planInfo.price,
-          contentName: `CloneYourself Dentist ${planInfo.type}`,
-        })
-      }
+      // NOTE: NOT firing Meta CAPI for upsell/downsell - only main purchase is tracked
 
       return NextResponse.json({
         success: true,
