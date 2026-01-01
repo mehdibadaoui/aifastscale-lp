@@ -1,0 +1,134 @@
+================================================================================
+                    DENTIST AI IMAGE GENERATION PROMPT
+                    Generate Multiple Realistic Images
+================================================================================
+                         CloneYourself for Dentists
+                              Module 5 Resource
+================================================================================
+
+
+INSTRUCTIONS
+------------
+Copy this entire prompt into ChatGPT, Claude, or any AI assistant.
+Then upload your reference photo and let the AI generate 3 unique prompts.
+Use those prompts in Leonardo AI, Midjourney, or Flux with your same photo.
+
+
+================================================================================
+                              THE PROMPT
+================================================================================
+
+You are an expert AI image director and realism specialist. Your task is to
+generate THREE completely different image prompts for the SAME real person
+(dentist), based on the reference image I upload.
+
+
+ABSOLUTE RULES (NON-NEGOTIABLE)
+-------------------------------
+- Use the uploaded image as the absolute identity reference
+- The face MUST remain 100% identical in all variations
+- Do NOT change: facial features, bone structure, age, skin texture, ethnicity
+- No beautification
+- No model look
+- No AI / plastic skin
+- No filters
+- No cinematic exaggeration
+- If the face looks even slightly different, the result is WRONG
+
+
+OBJECTIVE
+---------
+Create ultra-realistic images that look like a real dentist photographed in
+different real-life situations. The images must look so real that no one can
+tell they are AI-generated.
+
+
+VARIATION RULES (VERY IMPORTANT)
+--------------------------------
+You must generate 3 TOTALLY DIFFERENT PROMPTS, not small tweaks.
+
+Each variation must change:
+  - Location
+  - Outfit
+  - Vibe / context
+
+But always keep:
+  - Same face
+  - Same identity
+  - Same realism level
+
+
+DENTIST-SPECIFIC STYLE
+----------------------
+Each image must feel:
+  - Professional
+  - Trustworthy
+  - Calm
+  - Human
+  - Natural
+
+NOT influencer. NOT fashion model. NOT cinematic movie scene.
+
+
+CAMERA & REALISM RULES
+----------------------
+For EACH variation, clearly describe:
+
+  - Camera type: smartphone / natural camera
+  - Framing: chest-up or shoulders-up
+  - Lighting: natural, soft, real shadows
+  - Background: realistic environment
+  - Micro-details: natural pores, slight imperfections, realistic shadows,
+    natural posture
+
+No studio lighting. No dramatic angles. No AI art styles.
+
+
+OUTPUT FORMAT (STRICT)
+----------------------
+Respond with ONLY this structure:
+
+  Variation 1: (full detailed image prompt)
+
+  Variation 2: (full detailed image prompt)
+
+  Variation 3: (full detailed image prompt)
+
+Do NOT add explanations. Do NOT add tips. Do NOT repeat prompts.
+Each prompt must be ready to paste directly into an AI image generator
+with the same reference image uploaded.
+
+
+FINAL CHECK BEFORE SENDING
+--------------------------
+Before answering, verify:
+  1. All 3 prompts are clearly different
+  2. All look realistic as real photography
+  3. All keep the same exact face
+
+If not, regenerate internally before replying.
+
+
+================================================================================
+                              HOW TO USE
+================================================================================
+
+STEP 1: Copy this entire prompt into ChatGPT or Claude
+
+STEP 2: Upload your professional headshot photo
+
+STEP 3: The AI will generate 3 different image prompts
+
+STEP 4: Go to Leonardo AI (or Midjourney/Flux)
+
+STEP 5: Upload the SAME reference photo
+
+STEP 6: Paste each prompt one at a time
+
+STEP 7: Generate and download your realistic images
+
+
+================================================================================
+                    CloneYourself for Dentists
+                    www.aifastscale.com/dentists
+================================================================================

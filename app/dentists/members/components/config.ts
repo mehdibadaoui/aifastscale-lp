@@ -174,7 +174,9 @@ export const COURSE_MODULES = [
     wistiaId: '0a48x7ur8z',
     thumbnail: '/images/dentist/module-5-realistic-images.webp',
     lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
-    resources: [],
+    resources: [
+      { name: 'Dentist AI Image Generation Prompt', url: '/products/dentist/Dentist_AI_Image_Prompt.txt', type: 'file' as const },
+    ],
   },
   {
     id: 'module-6',
