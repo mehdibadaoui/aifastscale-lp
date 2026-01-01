@@ -686,14 +686,8 @@ export async function POST(request: NextRequest) {
 
     console.log(`✅ Welcome email sent to ${buyerEmail} with unique password`)
 
-    // Fire Meta CAPI Purchase for dentist main purchase
-    if (productType === 'dentist') {
-      await fireDentistPurchaseCAPI({
-        email: buyerEmail,
-        value: mainPrice,
-        contentName: 'CloneYourself for Dentists',
-      })
-    }
+    // NOTE: Meta Purchase tracking moved to browser-side (thank-you page)
+    // to avoid duplicate events with CAPI
 
     console.log('═══════════════════════════════════════════════════════════')
     console.log(`✅ SUCCESS: ${buyerEmail} - User created & email sent!`)
