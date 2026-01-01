@@ -1,7 +1,76 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { Redis } from '@upstash/redis'
+import crypto from 'crypto'
 import { createUser, recordPurchase } from '@/lib/user-db'
+
+// Dentist Meta CAPI Configuration
+const DENTIST_PIXEL_ID = '1176362697938270'
+const DENTIST_CAPI_TOKEN = process.env.DENTIST_META_CAPI_TOKEN || ''
+
+// Hash function for PII (required by Meta)
+function hashSHA256(value: string): string {
+  if (!value) return ''
+  return crypto
+    .createHash('sha256')
+    .update(value.toLowerCase().trim())
+    .digest('hex')
+}
+
+// Fire Purchase event to Meta CAPI for dentist purchases
+async function fireDentistPurchaseCAPI(params: {
+  email: string
+  value: number
+  currency?: string
+  contentName: string
+  contentType?: string
+  eventId?: string
+}) {
+  if (!DENTIST_CAPI_TOKEN) {
+    console.log('⚠️ DENTIST_META_CAPI_TOKEN not configured - skipping CAPI')
+    return
+  }
+
+  const eventId = params.eventId || `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  const eventData = {
+    event_name: 'Purchase',
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: eventId,
+    event_source_url: 'https://aifastscale.com/dentists',
+    action_source: 'website',
+    user_data: {
+      em: hashSHA256(params.email),
+    },
+    custom_data: {
+      value: params.value,
+      currency: params.currency || 'USD',
+      content_name: params.contentName,
+      content_type: params.contentType || 'product',
+      content_ids: ['dentist-purchase'],
+    },
+  }
+
+  try {
+    const response = await fetch(
+      `https://graph.facebook.com/v18.0/${DENTIST_PIXEL_ID}/events?access_token=${DENTIST_CAPI_TOKEN}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [eventData] }),
+      }
+    )
+
+    const result = await response.json()
+    if (response.ok) {
+      console.log(`✅ Meta CAPI Purchase fired: $${params.value} - ${params.contentName}`, result)
+    } else {
+      console.error('❌ Meta CAPI Error:', result)
+    }
+  } catch (error) {
+    console.error('❌ Meta CAPI fetch error:', error)
+  }
+}
 
 // Store user_id -> email mapping in Redis (for lookups when email not in webhook)
 async function storeUserIdEmailMapping(userId: string, email: string): Promise<void> {
@@ -531,6 +600,16 @@ export async function POST(request: NextRequest) {
       // Record the upsell/downsell purchase
       await recordPurchase(buyerEmail, planInfo.type, planInfo.price, planId)
       console.log(`✅ Recorded ${planInfo.type} ($${planInfo.price}) for ${buyerEmail}`)
+
+      // Fire Meta CAPI Purchase for dentist upsell/downsell
+      if (planInfo.product === 'dentist') {
+        await fireDentistPurchaseCAPI({
+          email: buyerEmail,
+          value: planInfo.price,
+          contentName: `CloneYourself Dentist ${planInfo.type}`,
+        })
+      }
+
       return NextResponse.json({
         success: true,
         type: planInfo.type,
@@ -613,6 +692,15 @@ export async function POST(request: NextRequest) {
     })
 
     console.log(`✅ Welcome email sent to ${buyerEmail} with unique password`)
+
+    // Fire Meta CAPI Purchase for dentist main purchase
+    if (productType === 'dentist') {
+      await fireDentistPurchaseCAPI({
+        email: buyerEmail,
+        value: mainPrice,
+        contentName: 'CloneYourself for Dentists',
+      })
+    }
 
     console.log('═══════════════════════════════════════════════════════════')
     console.log(`✅ SUCCESS: ${buyerEmail} - User created & email sent!`)
