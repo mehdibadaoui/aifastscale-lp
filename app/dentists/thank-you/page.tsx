@@ -2,14 +2,7 @@
 
 import { CheckCircle, Copy, ArrowRight, Mail, Loader2, Gift, Lock, Zap, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { Suspense, useEffect, useState, useCallback, useRef } from 'react'
-
-// Declare fbq for TypeScript
-declare global {
-  interface Window {
-    fbq?: (...args: any[]) => void
-  }
-}
+import { Suspense, useEffect, useState, useCallback } from 'react'
 
 interface Credentials {
   email: string
@@ -24,7 +17,6 @@ function ThankYouContent() {
   const [isLoading, setIsLoading] = useState(true)
   const [showFallback, setShowFallback] = useState(false)
   const [hasVisited, setHasVisited] = useState(false)
-  const hasFiredPurchase = useRef(false)
 
   // Check if already visited (prevent double view)
   useEffect(() => {
@@ -32,26 +24,6 @@ function ThankYouContent() {
     if (visited) {
       setHasVisited(true)
     }
-  }, [])
-
-  // Fire Meta Pixel Purchase event (browser-side only)
-  useEffect(() => {
-    if (hasFiredPurchase.current) return
-    hasFiredPurchase.current = true
-
-    // Small delay to ensure pixel is loaded
-    setTimeout(() => {
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'Purchase', {
-          value: 47.00,
-          currency: 'USD',
-          content_name: 'CloneYourself for Dentists',
-          content_type: 'product',
-          content_ids: ['dentist-main']
-        })
-        console.log('✅ Meta Pixel Purchase fired: $47')
-      }
-    }, 500)
   }, [])
 
   const fetchCredentials = useCallback(async (email?: string, userId?: string) => {
