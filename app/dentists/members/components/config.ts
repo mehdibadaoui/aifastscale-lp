@@ -103,6 +103,8 @@ export const DEV_AUTO_LOGIN = false
 // Blocked users - will be auto-logged out
 export const BLOCKED_USERS = [
   'sukvinder-sidhu',
+  'finerhospice',
+  'begumoder@gmail.com',
 ]
 
 // Course modules
