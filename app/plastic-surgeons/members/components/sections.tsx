@@ -210,7 +210,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-amber-500/50 shadow-lg">
                 <Image
-                  src={COURSE_CONFIG.drVoss?.image || '/images/dentist/dr-voss.webp'}
+                  src={COURSE_CONFIG.drVoss?.image || '/images/plastic-surgeon/dr-voss.webp'}
                   alt={COURSE_CONFIG.drVoss?.name || 'Dr. Voss'}
                   width={64}
                   height={64}
@@ -238,7 +238,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
           <div className="flex items-center gap-6">
             <div className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 shadow-xl ring-4 ring-amber-500/30">
               <Image
-                src={COURSE_CONFIG.drVoss?.image || '/images/dentist/dr-voss.webp'}
+                src={COURSE_CONFIG.drVoss?.image || '/images/plastic-surgeon/dr-voss.webp'}
                 alt={COURSE_CONFIG.drVoss?.name || 'Dr. Voss'}
                 width={96}
                 height={96}
@@ -266,7 +266,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl overflow-hidden">
                 <Image
-                  src={COURSE_CONFIG.drVoss?.image || '/images/dentist/dr-voss.webp'}
+                  src={COURSE_CONFIG.drVoss?.image || '/images/plastic-surgeon/dr-voss.webp'}
                   alt={COURSE_CONFIG.drVoss?.name || 'Dr. Voss'}
                   width={40}
                   height={40}
@@ -483,7 +483,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 <Sparkles className="w-6 h-6 text-amber-400" />
                 Coming Soon
               </h2>
-              <p className="text-slate-400 mt-1">New courses for dentists. Join the waitlist!</p>
+              <p className="text-slate-400 mt-1">New courses for plastic surgeons. Join the waitlist!</p>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-teal border border-amber-500/30">
               <Bell className="w-4 h-4 text-amber-400" />

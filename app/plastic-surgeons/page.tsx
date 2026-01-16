@@ -87,8 +87,8 @@ export default function PlasticSurgeonLandingPage() {
       a: 'No. Everything is included. The system shows you exactly which free/cheap tools to use. No hidden costs.',
     },
     {
-      q: 'Will this work for my dental practice?',
-      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ plastic surgeons across the US, UK, Canada, and Australia use this daily. Works for general dentistry, cosmetic, ortho, and all specialties.`,
+      q: 'Will this work for my plastic surgery practice?',
+      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ plastic surgeons across the US, UK, Canada, and Australia use this daily. Works for cosmetic, reconstructive, facial, body contouring, and all specialties.`,
     },
     {
       q: 'When do I get access?',
@@ -100,55 +100,55 @@ export default function PlasticSurgeonLandingPage() {
     {
       id: 1,
       name: 'Dr. Sarah Mitchell',
-      role: 'Cosmetic Dentist',
+      role: 'Facial Plastic Surgeon',
       location: 'Los Angeles, CA',
-      image: '/images/dentist/review-1.webp',
-      review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 12 new patient inquiries that same week.",
-      results: '12 new patients in first week',
+      image: '/images/plastic-surgeon/review-1.webp',
+      review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 12 new consultation inquiries that same week.",
+      results: '12 new consults in first week',
     },
     {
       id: 2,
       name: 'Dr. James Rodriguez',
-      role: 'Family Dentistry',
+      role: 'Cosmetic Surgeon',
       location: 'Houston, TX',
-      image: '/images/dentist/review-2.webp',
-      review: "After 20 years in dentistry, I thought I'd seen it all. My hygiene schedule is now booked 6 weeks out - all from AI video leads.",
+      image: '/images/plastic-surgeon/review-2.webp',
+      review: "After 20 years in plastic surgery, I thought I'd seen it all. My consultation calendar is now booked 6 weeks out - all from AI video leads.",
       results: 'Booked 6 weeks out',
     },
     {
       id: 3,
       name: 'Dr. Emily Chen',
-      role: 'Orthodontist',
+      role: 'Body Contouring Specialist',
       location: 'San Francisco, CA',
-      image: '/images/dentist/review-3.webp',
-      review: "As a Bay Area orthodontist, I need to stand out. These AI videos make my practice look like a premium brand. Went from 2-3 consults to 15+ per week.",
+      image: '/images/plastic-surgeon/review-3.webp',
+      review: "As a Bay Area surgeon, I need to stand out. These AI videos make my practice look like a premium brand. Went from 2-3 consults to 15+ per week.",
       results: '15+ consults/week',
     },
     {
       id: 4,
       name: 'Dr. Michael Thompson',
-      role: 'Implant Specialist',
+      role: 'Breast Augmentation Specialist',
       location: 'Chicago, IL',
-      image: '/images/dentist/review-5.webp',
+      image: '/images/plastic-surgeon/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
       results: '50x ROI',
     },
     {
       id: 5,
       name: 'Dr. Lisa Park',
-      role: 'Pediatric Dentist',
+      role: 'Rhinoplasty Specialist',
       location: 'Seattle, WA',
-      image: '/images/dentist/review-9.webp',
-      review: "My TikTok video got 89K views. Booked 23 new pediatric patients that month. This system pays for itself daily.",
-      results: '23 new patients from 1 video',
+      image: '/images/plastic-surgeon/review-9.webp',
+      review: "My TikTok video got 89K views. Booked 23 new rhinoplasty consultations that month. This system pays for itself daily.",
+      results: '23 consults from 1 video',
     },
     {
       id: 6,
       name: 'Dr. Robert Johnson',
-      role: 'General Dentist',
+      role: 'Aesthetic Plastic Surgeon',
       location: 'Phoenix, AZ',
-      image: '/images/dentist/review-11.webp',
-      review: "25 years in dentistry and I wish I had this sooner. 8 new patients last month from social media alone.",
+      image: '/images/plastic-surgeon/review-11.webp',
+      review: "25 years in plastic surgery and I wish I had this sooner. 8 new patients last month from social media alone.",
       results: '8 patients from social',
     },
   ]
@@ -269,7 +269,7 @@ export default function PlasticSurgeonLandingPage() {
   return (
     <main className="min-h-screen bg-gradient-premium noise-overlay font-sans relative">
       {/* Animated Background - Performance Optimized */}
-      <AnimatedBackground variant="dentist" />
+      <AnimatedBackground variant="plastic-surgeon" />
 
       {/* ================================================================
           1. HERO SECTION - PREMIUM ANIMATED GRADIENT
@@ -337,7 +337,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift">
                 <Image
-                  src="/images/dentist/dentist-vdc-hero.webp"
+                  src="/images/plastic-surgeon/surgeon-hero.webp"
                   alt="AI Video System for Plastic Surgeons Showcase"
                   width={1365}
                   height={768}
@@ -447,7 +447,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-500/40 px-4 py-2 rounded-full mb-4">
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-                <span className="text-purple-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dentist</span>
+                <span className="text-purple-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Surgeon</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
                 This is Dr. Marcus. He Got <span className="text-purple-600">31 New Patients</span>...
@@ -483,7 +483,7 @@ export default function PlasticSurgeonLandingPage() {
                     playsInline
                     preload="none"
                     className="w-full h-full object-cover"
-                    src="/videos/dentist-case-study-mobile.mp4"
+                    src="/videos/plastic-surgeon-case-study.mp4"
                   />
                 </div>
 
@@ -491,7 +491,7 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="flex justify-center mt-4">
                   <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-4 py-2 rounded-full">
                     <Check className="w-4 h-4 text-purple-400" />
-                    <span className="text-white text-sm font-medium">Real dentist • Verified results</span>
+                    <span className="text-white text-sm font-medium">Real surgeon • Verified results</span>
                   </div>
                 </div>
               </div>
@@ -568,11 +568,11 @@ export default function PlasticSurgeonLandingPage() {
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-400">
-                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" loading="lazy" />
+                        <Image src="/images/plastic-surgeon/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" loading="lazy" />
                       </div>
                       <div>
                         <p className="text-white font-bold">Dr. Marcus Bennett</p>
-                        <p className="text-gray-400 text-sm">General Dentist, Austin TX</p>
+                        <p className="text-gray-400 text-sm">Plastic Surgeon, Austin TX</p>
                       </div>
                       <div className="ml-auto flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -627,7 +627,7 @@ export default function PlasticSurgeonLandingPage() {
               {/* Large Course Thumbnail */}
               <div className="relative w-full aspect-video">
                 <Image
-                  src="/images/dentist/course-demo-new.webp"
+                  src="/images/plastic-surgeon/course-demo.webp"
                   alt="CloneYourself 7-Minute Video System for Plastic Surgeons"
                   fill
                   className="object-cover"
@@ -670,7 +670,7 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
                     <Award className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>Clinically-structured lessons and examples created with input from <span className="text-purple-400 font-medium">Dr. Alexander Voss</span>, Aesthetic and Restorative Dentist</span>
+                    <span>Clinically-structured lessons and examples created with input from <span className="text-purple-400 font-medium">Dr. Alexander Voss</span>, Board-Certified Plastic Surgeon</span>
                   </p>
                 </div>
               </div>
@@ -689,7 +689,7 @@ export default function PlasticSurgeonLandingPage() {
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-purple-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" />
+                    <Image src={bonus.image || '/images/plastic-surgeon/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -1064,7 +1064,7 @@ export default function PlasticSurgeonLandingPage() {
                 <span className="text-purple-600 font-bold text-xs uppercase tracking-wide">Implant Specialist Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-purple-500">$97.82,000</span> in Implant Cases
+                His First AI Video Generated <span className="text-purple-500">$127,000</span> in Implant Cases
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From spending $2,000/month on marketing to getting patients for free</p>
             </div>
@@ -1079,7 +1079,7 @@ export default function PlasticSurgeonLandingPage() {
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-purple-500 shadow-lg">
-                        <Image src="/images/dentist/review-5.webp" alt="Dr. David Kim" width={96} height={96} className="object-cover w-full h-full" loading="lazy" />
+                        <Image src="/images/plastic-surgeon/review-5.webp" alt="Dr. David Kim" width={96} height={96} className="object-cover w-full h-full" loading="lazy" />
                       </div>
                       <div className="absolute -bottom-1 -right-1 bg-purple-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
                         VERIFIED
@@ -1118,7 +1118,7 @@ export default function PlasticSurgeonLandingPage() {
 
                 <div className="relative rounded-xl overflow-hidden border-2 border-purple-500/40 shadow-2xl">
                   <Image
-                    src="/images/dentist/review-5.webp"
+                    src="/images/plastic-surgeon/review-5.webp"
                     alt="Dr. David Kim - AI Video Success"
                     width={1365}
                     height={768}
@@ -1175,7 +1175,7 @@ export default function PlasticSurgeonLandingPage() {
                     { time: 'Day 1', event: 'Posted his first AI video about implant benefits (took 7 minutes)', icon: Upload, color: 'gray' },
                     { time: 'Day 2', event: 'Instagram inquiry: "I need procedures, are you accepting patients?"', icon: MessageSquare, color: 'teal' },
                     { time: 'Day 5', event: '3 implant consultations scheduled', icon: Calendar, color: 'teal' },
-                    { time: 'Week 2', event: '5 procedures accepted • $97.82,000 in treatment plans', icon: FileText, color: 'teal' },
+                    { time: 'Week 2', event: '5 procedures accepted • $127,000 in treatment plans', icon: FileText, color: 'teal' },
                     { time: 'Month 2', event: 'All 5 cases completed • Cancelled marketing agency', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -1209,13 +1209,13 @@ export default function PlasticSurgeonLandingPage() {
                   <div className="text-purple-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      One week of AI videos. <span className="text-purple-600 font-bold">$97.82,000 in procedures</span>.
+                      One week of AI videos. <span className="text-purple-600 font-bold">$127,000 in procedures</span>.
                       I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $97.82 and
                       I had 5 cases in a week. The ROI is unreal.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500">
-                        <Image src="/images/dentist/review-5.webp" alt="Dr. David" width={40} height={40} className="object-cover" loading="lazy" />
+                        <Image src="/images/plastic-surgeon/review-5.webp" alt="Dr. David" width={40} height={40} className="object-cover" loading="lazy" />
                       </div>
                       <div>
                         <p className="text-gray-900 font-bold">Dr. David Kim</p>
@@ -1810,7 +1810,7 @@ export default function PlasticSurgeonLandingPage() {
 
             {/* SEO-friendly expert description */}
             <p className="sr-only">
-              Dr. Alexander Voss is an aesthetic and restorative dentist with over 12 years of experience in veneers, smile makeovers, rhinoplastys, and full mouth rehabilitation. He has helped plastic surgeons across 15+ countries attract high-value cosmetic patients.
+              Dr. Alexander Voss is an board-certified plastic surgeon with over 12 years of experience in facial rejuvenation, rhinoplasty, body contouring, and aesthetic procedures. He has helped plastic surgeons across 15+ countries attract high-value cosmetic patients.
             </p>
           </div>
         </div>

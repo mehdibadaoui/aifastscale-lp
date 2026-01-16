@@ -1337,7 +1337,7 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
 
   const handleShare = (platform: 'twitter' | 'linkedin') => {
     const text = `I just completed the ${COURSE_CONFIG.title} ${COURSE_CONFIG.subtitle} course! 🎓`
-    const url = 'https://aifastscale.com/dentists'
+    const url = 'https://aifastscale.com/plastic-surgeons'
 
     const urls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
