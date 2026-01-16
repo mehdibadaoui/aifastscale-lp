@@ -1,0 +1,84 @@
+================================================================================
+                    PLASTIC SURGEON AI TALKING VIDEO PROMPT
+                    Make Any Photo Talk in Minutes
+================================================================================
+                         CloneYourself for Plastic Surgeons
+                              Module 3 Resource
+================================================================================
+
+
+INSTRUCTIONS
+------------
+Copy this entire prompt into Google AI Flow (or similar AI video tool).
+Then upload your reference photo.
+The AI will generate a realistic talking video of you.
+
+
+================================================================================
+                              THE PROMPT
+================================================================================
+
+Create a professional, realistic talking head video of a plastic surgeon.
+
+IDENTITY PRESERVATION (CRITICAL)
+--------------------------------
+- The face MUST remain 100% identical to the reference image
+- Preserve exact facial features, bone structure, skin texture, age, ethnicity
+- No beautification, no filters, no AI-smoothing
+- Natural human imperfections must be visible
+
+
+PROFESSIONAL AESTHETIC
+----------------------
+- Setting: Modern, clean clinic or professional office
+- Attire: Professional medical attire (scrubs or white coat)
+- Lighting: Soft, natural lighting - no harsh shadows
+- Background: Subtle, non-distracting (blurred clinic interior)
+
+
+SPEAKING STYLE
+--------------
+- Direct eye contact with camera
+- Confident but approachable demeanor
+- Natural head movements and micro-expressions
+- Professional yet warm communication style
+- Speaking to a potential patient, not reading a script
+
+
+TECHNICAL REQUIREMENTS
+----------------------
+- 4K resolution or highest available
+- 16:9 aspect ratio
+- Natural lip sync with audio
+- Subtle natural movements (blinks, micro-expressions)
+- Duration: Match audio length exactly
+
+
+WHAT TO AVOID
+-------------
+- Uncanny valley effects
+- Robotic or artificial movements
+- Over-smooth skin (plastic look)
+- Exaggerated expressions
+- Stiff or frozen body language
+
+
+================================================================================
+                              HOW TO USE
+================================================================================
+
+STEP 1: Copy this prompt into your AI video tool
+
+STEP 2: Upload your professional headshot photo
+
+STEP 3: Add your script or audio file
+
+STEP 4: Generate the video
+
+STEP 5: Download and edit in CapCut (see Module 4)
+
+
+================================================================================
+                    CloneYourself for Plastic Surgeons
+                    www.aifastscale.com/plastic-surgeons
+================================================================================

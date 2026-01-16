@@ -27,7 +27,7 @@ export interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate'
+  product: 'dentist' | 'realestate' | 'plastic-surgeon'
   lastLogin?: string
   loginCount?: number
   // Extended fields for admin
@@ -47,8 +47,8 @@ export interface User {
 
 // Generate a unique, readable password
 // Format: product-random6chars (e.g., "dental-x7k9m2")
-export function generateUniquePassword(product: 'dentist' | 'realestate' = 'dentist'): string {
-  const prefix = product === 'dentist' ? 'dental' : 'agent'
+export function generateUniquePassword(product: 'dentist' | 'realestate' | 'plastic-surgeon' = 'dentist'): string {
+  const prefix = product === 'dentist' ? 'dental' : product === 'plastic-surgeon' ? 'surgeon' : 'agent'
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789' // No confusing chars (0,o,1,l,i)
   let randomPart = ''
 
@@ -64,7 +64,7 @@ export async function createUser(userData: {
   email: string
   name: string
   planId: string
-  product: 'dentist' | 'realestate'
+  product: 'dentist' | 'realestate' | 'plastic-surgeon'
 }): Promise<{ success: boolean; password?: string; error?: string }> {
   try {
     const redis = getRedis()
@@ -189,7 +189,7 @@ export async function userExists(email: string): Promise<boolean> {
 }
 
 // Get all users count (for admin)
-export async function getUsersCount(product?: 'dentist' | 'realestate'): Promise<number> {
+export async function getUsersCount(product?: 'dentist' | 'realestate' | 'plastic-surgeon'): Promise<number> {
   try {
     const redis = getRedis()
     if (!redis) return 0
@@ -204,7 +204,7 @@ export async function getUsersCount(product?: 'dentist' | 'realestate'): Promise
 }
 
 // Get all users (for admin dashboard)
-export async function getAllUsers(product?: 'dentist' | 'realestate'): Promise<User[]> {
+export async function getAllUsers(product?: 'dentist' | 'realestate' | 'plastic-surgeon'): Promise<User[]> {
   try {
     const redis = getRedis()
     if (!redis) return []

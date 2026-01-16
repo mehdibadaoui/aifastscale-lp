@@ -175,34 +175,51 @@ const PRODUCTS = {
   dentist: {
     membersUrl: 'https://aifastscale.com/dentists/members',
     productName: 'CloneYourself for Dentists',
-    price: '47.00'
+    price: '47.00',
+    accentColor: '#14b8a6' // Teal
   },
   realestate: {
     membersUrl: 'https://aifastscale.com/members',
     productName: '7-Minute AgentClone',
-    price: '37.00'
+    price: '37.00',
+    accentColor: '#14b8a6'
+  },
+  'plastic-surgeon': {
+    membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
+    productName: 'CloneYourself for Plastic Surgeons',
+    price: '97.82',
+    accentColor: '#9333ea' // Purple
   }
 }
 
 // Plan IDs and prices
 const PLANS = {
   // Dentist products
-  DENTIST_MAIN: { id: 'plan_SxMS4HqFxJKNT', price: 47, type: 'main' as const },
-  DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const },
-  DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const },
+  DENTIST_MAIN: { id: 'plan_SxMS4HqFxJKNT', price: 47, type: 'main' as const, product: 'dentist' as const },
+  DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
+  DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
+  // Plastic Surgeon products - PLACEHOLDER IDs (user will provide real ones)
+  PLASTIC_SURGEON_MAIN: { id: 'PLACEHOLDER_MAIN_PLAN_ID', price: 97.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'PLACEHOLDER_UPSELL_PLAN_ID', price: 47.82, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'PLACEHOLDER_DOWNSELL_PLAN_ID', price: 19.82, type: 'downsell' as const, product: 'plastic-surgeon' as const },
 }
 
 // Get plan info from plan ID
-function getPlanInfo(planId: string): { product: 'dentist' | 'realestate', type: 'main' | 'upsell' | 'downsell', price: number } | null {
+function getPlanInfo(planId: string): { product: 'dentist' | 'realestate' | 'plastic-surgeon', type: 'main' | 'upsell' | 'downsell', price: number } | null {
+  // Dentist plans
   if (planId === PLANS.DENTIST_MAIN.id) return { product: 'dentist', type: 'main', price: PLANS.DENTIST_MAIN.price }
   if (planId === PLANS.DENTIST_UPSELL.id) return { product: 'dentist', type: 'upsell', price: PLANS.DENTIST_UPSELL.price }
   if (planId === PLANS.DENTIST_DOWNSELL.id) return { product: 'dentist', type: 'downsell', price: PLANS.DENTIST_DOWNSELL.price }
+  // Plastic Surgeon plans
+  if (planId === PLANS.PLASTIC_SURGEON_MAIN.id) return { product: 'plastic-surgeon', type: 'main', price: PLANS.PLASTIC_SURGEON_MAIN.price }
+  if (planId === PLANS.PLASTIC_SURGEON_UPSELL.id) return { product: 'plastic-surgeon', type: 'upsell', price: PLANS.PLASTIC_SURGEON_UPSELL.price }
+  if (planId === PLANS.PLASTIC_SURGEON_DOWNSELL.id) return { product: 'plastic-surgeon', type: 'downsell', price: PLANS.PLASTIC_SURGEON_DOWNSELL.price }
   return null
 }
 
 // Determine product type from webhook data (for main course only - backward compatibility)
 // ROBUST VERSION - checks multiple paths and patterns
-function getProductType(fullData: any, productData: any): 'dentist' | 'realestate' | null {
+function getProductType(fullData: any, productData: any): 'dentist' | 'realestate' | 'plastic-surgeon' | null {
   // Collect ALL possible name sources from the webhook
   const possibleNames = [
     productData?.name,
@@ -243,6 +260,17 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
     }
   }
 
+  // Check names for plastic surgeon keywords (check first, most specific)
+  const plasticSurgeonKeywords = ['plastic surgeon', 'plastic surgery', 'cosmetic surgeon', 'aesthetic surgeon', 'cosmetic surgery']
+  for (const name of possibleNames) {
+    for (const keyword of plasticSurgeonKeywords) {
+      if (name.includes(keyword)) {
+        console.log(`✅ Matched plastic-surgeon by name: "${name}" contains "${keyword}"`)
+        return 'plastic-surgeon'
+      }
+    }
+  }
+
   // Check names for dentist keywords
   const dentistKeywords = ['dentist', 'clone yourself - dentist', 'dental', 'dr.', 'doctor']
   for (const name of possibleNames) {
@@ -266,6 +294,10 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
   }
 
   // Price-based fallback detection
+  if (priceNum >= 95 && priceNum <= 100) {
+    console.log(`✅ Matched plastic-surgeon by price: $${priceNum} (in $95-100 range)`)
+    return 'plastic-surgeon'
+  }
   if (priceNum >= 45 && priceNum <= 50) {
     console.log(`✅ Matched dentist by price: $${priceNum} (in $45-50 range)`)
     return 'dentist'
@@ -670,7 +702,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Record main course purchase with revenue
-    const mainPrice = productType === 'dentist' ? 47 : 37
+    const mainPrice = productType === 'plastic-surgeon' ? 97.82 : (productType === 'dentist' ? 47 : 37)
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
     // Send welcome email with personalized credentials
