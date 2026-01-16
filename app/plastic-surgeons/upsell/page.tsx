@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getPlasticSurgeonUpsellBonuses } from '../../config/plastic-surgeon-bonus-products'
 
 // Whop checkout link for Upsell - PLACEHOLDER
-const WHOP_UPSELL_LINK = 'PLACEHOLDER_UPSELL_CHECKOUT_LINK'
+const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_36teZixh7eUoG'
 
 export default function PlasticSurgeonUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

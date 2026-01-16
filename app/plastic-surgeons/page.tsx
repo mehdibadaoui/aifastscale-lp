@@ -47,7 +47,7 @@ import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/Expert
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Whop checkout link
-const WHOP_CHECKOUT_LINK = 'PLACEHOLDER_CHECKOUT_LINK'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_9AqdDmQnJC2J5'
 
 export default function PlasticSurgeonLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })

@@ -198,10 +198,10 @@ const PLANS = {
   DENTIST_MAIN: { id: 'plan_SxMS4HqFxJKNT', price: 47, type: 'main' as const, product: 'dentist' as const },
   DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
   DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
-  // Plastic Surgeon products - PLACEHOLDER IDs (user will provide real ones)
-  PLASTIC_SURGEON_MAIN: { id: 'PLACEHOLDER_MAIN_PLAN_ID', price: 97.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'PLACEHOLDER_UPSELL_PLAN_ID', price: 47.82, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'PLACEHOLDER_DOWNSELL_PLAN_ID', price: 19.82, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  // Plastic Surgeon products
+  PLASTIC_SURGEON_MAIN: { id: 'plan_9AqdDmQnJC2J5', price: 97.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 47.82, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 19.82, type: 'downsell' as const, product: 'plastic-surgeon' as const },
 }
 
 // Get plan info from plan ID

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getPlasticSurgeonUpsellBonuses } from '../../config/plastic-surgeon-bonus-products'
 
 // Whop checkout link for Downsell - PLACEHOLDER
-const WHOP_DOWNSELL_LINK = 'PLACEHOLDER_DOWNSELL_CHECKOUT_LINK'
+const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_VoeIeisqOW6nT'
 
 export default function PlasticSurgeonDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
