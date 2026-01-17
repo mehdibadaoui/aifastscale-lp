@@ -383,7 +383,7 @@ export default function PlasticSurgeonLandingPage() {
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-purple-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
-                <span className="text-purple-300 font-semibold text-xs sm:text-sm">Dr. Alexander Voss, DDS, MClinDent</span>
+                <span className="text-purple-300 font-semibold text-xs sm:text-sm">Dr. Alexander Voss, Board-Certified Plastic Surgeon</span>
               </div>
             </div>
 
@@ -2242,7 +2242,41 @@ export default function PlasticSurgeonLandingPage() {
 
       {/* Animation Styles - Modern, smooth, GPU-accelerated */}
       <style jsx global>{`
-        /* Dentist-specific background gradient */
+        /* Override global text-gradient-premium for plastic surgeon (purple theme) */
+        .text-gradient-premium {
+          background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #9333ea 100%) !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+        }
+
+        .text-shadow-glow {
+          text-shadow: 0 0 30px rgba(147, 51, 234, 0.5) !important;
+        }
+
+        /* Override btn-premium for purple theme */
+        .btn-premium {
+          background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%) !important;
+        }
+
+        .btn-premium:hover {
+          box-shadow:
+            0 8px 25px rgba(147, 51, 234, 0.4),
+            0 4px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Override glass-teal for purple theme */
+        .glass-teal {
+          background: rgba(147, 51, 234, 0.08) !important;
+          border: 1px solid rgba(168, 85, 247, 0.2) !important;
+        }
+
+        /* Override shadow-glow-teal for purple theme */
+        .shadow-glow-teal {
+          box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1) !important;
+        }
+
+        /* Plastic Surgeon background gradient */
         .bg-animated-gradient-plastic-surgeon {
           background: linear-gradient(135deg, #000000 0%, #0f172a 50%, #000000 100%);
         }
@@ -2256,7 +2290,7 @@ export default function PlasticSurgeonLandingPage() {
           pointer-events: none;
           z-index: 0;
           opacity: 0.3;
-          background-image: radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0);
+          background-image: radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.15) 1px, transparent 0);
           background-size: 50px 50px;
         }
 
