@@ -339,7 +339,7 @@ export default function PlasticSurgeonLandingPage() {
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 opacity-[0.07]">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.5) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.5) 1px, transparent 0)',
             backgroundSize: '48px 48px'
           }} />
         </div>
@@ -491,7 +491,7 @@ export default function PlasticSurgeonLandingPage() {
         {/* Subtle pattern overlay */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.15) 1px, transparent 0)',
             backgroundSize: '32px 32px'
           }} />
         </div>
