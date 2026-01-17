@@ -49,6 +49,50 @@ import { AnimatedBackground } from '../components/AnimatedBackground'
 // Whop checkout link
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_9AqdDmQnJC2J5'
 
+// Meta Pixel tracking helper (fires InitiateCheckout on CTA click)
+const trackInitiateCheckout = () => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'InitiateCheckout', {
+      value: 97.82,
+      currency: 'USD',
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      content_ids: ['plastic-surgeon-main'],
+    })
+    console.log('📊 InitiateCheckout event fired')
+  }
+}
+
+// Capture fbclid from Facebook ads and store as _fbc cookie (CRITICAL for attribution)
+const captureFbclid = () => {
+  if (typeof window === 'undefined') return
+
+  const params = new URLSearchParams(window.location.search)
+  const fbclid = params.get('fbclid')
+
+  if (fbclid) {
+    // Standard _fbc format: fb.1.{timestamp}.{fbclid}
+    const fbc = `fb.1.${Date.now()}.${fbclid}`
+    // Set cookie for 90 days (standard Meta attribution window)
+    document.cookie = `_fbc=${fbc}; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax`
+    console.log('📊 fbclid captured and stored as _fbc cookie')
+  }
+}
+
+// Fire ViewContent event (helps Meta build retargeting audiences)
+const trackViewContent = () => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'ViewContent', {
+      value: 97.82,
+      currency: 'USD',
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      content_ids: ['plastic-surgeon-main'],
+    })
+    console.log('📊 ViewContent event fired')
+  }
+}
+
 export default function PlasticSurgeonLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
@@ -67,6 +111,16 @@ export default function PlasticSurgeonLandingPage() {
       setMemberStats(getMemberStats())
     }, 60000)
     return () => clearInterval(interval)
+  }, [])
+
+  // Meta tracking on page load - capture fbclid and fire ViewContent
+  useEffect(() => {
+    captureFbclid()
+    // Small delay to ensure pixel is loaded
+    const timer = setTimeout(() => {
+      trackViewContent()
+    }, 500)
+    return () => clearTimeout(timer)
   }, [])
 
   const faqs = [
@@ -375,7 +429,7 @@ export default function PlasticSurgeonLandingPage() {
 
             {/* CTA - Premium Button with Glow */}
             <a
-              href={WHOP_CHECKOUT_LINK}
+              onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                             className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -388,7 +442,7 @@ export default function PlasticSurgeonLandingPage() {
             {/* PRICE TEASER - Premium Glass Style */}
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
-                <span className="text-gray-500 text-sm line-through">${getPlasticSurgeonTotalBonusValue() + 47}</span>
+                <span className="text-gray-500 text-sm line-through">${getPlasticSurgeonTotalBonusValue() + 98}</span>
                 <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$97.82</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
@@ -755,7 +809,7 @@ export default function PlasticSurgeonLandingPage() {
 
               {/* CTA Button */}
               <Link
-                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                                 className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1031,7 +1085,7 @@ export default function PlasticSurgeonLandingPage() {
             {/* CTA */}
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
-                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-purple-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -1555,7 +1609,7 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-green-400 font-black text-lg sm:text-xl">${(497 + totalBonusValue + 494 - 47).toLocaleString()}</span>
+                    <span className="text-green-400 font-black text-lg sm:text-xl">${(497 + totalBonusValue + 494 - 98).toLocaleString()}</span>
                     <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">98% OFF</span>
                   </div>
                 </div>
@@ -1576,7 +1630,7 @@ export default function PlasticSurgeonLandingPage() {
               <p className="text-purple-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
 
               <Link
-                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                                 className="w-full max-w-md mx-auto bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1644,7 +1698,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
-                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-purple-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -2051,7 +2105,7 @@ export default function PlasticSurgeonLandingPage() {
 
               {/* CTA Button */}
               <Link
-                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                                 className="group relative w-full bg-gradient-to-r from-purple-400 via-amber-400 to-purple-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -2124,7 +2178,7 @@ export default function PlasticSurgeonLandingPage() {
               </p>
 
               <a
-                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                                 className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
@@ -2176,7 +2230,7 @@ export default function PlasticSurgeonLandingPage() {
       <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-safe">
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
-            href={WHOP_CHECKOUT_LINK}
+            onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
                         className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-purple-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
@@ -2226,8 +2280,8 @@ export default function PlasticSurgeonLandingPage() {
         .testimonial-card-plastic-surgeon {
           flex-shrink: 0;
           width: 280px;
-          background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-          border: 1px solid rgba(20, 184, 166, 0.2);
+          background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+          border: 1px solid rgba(147, 51, 234, 0.2);
           border-radius: 1rem;
           padding: 1.25rem;
           position: relative;

@@ -120,7 +120,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
       {/* MOBILE: Quick Stats Grid - LP Glass Style */}
       <div className="sm:hidden grid grid-cols-2 gap-3">
         {[
-          { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-purple-500 to-amber-500', iconColor: '#14b8a6' },
+          { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-purple-500 to-amber-500', iconColor: '#9333ea' },
           { icon: Star, label: 'Points', value: state.totalPoints.toString(), color: 'from-amber-500 to-orange-500', iconColor: '#f59e0b' },
           { icon: Flame, label: 'Day Streak', value: `${state.streak}`, color: 'from-rose-500 to-pink-500', iconColor: '#f43f5e' },
           { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'from-emerald-500 to-purple-500', iconColor: '#10b981' },
@@ -871,7 +871,7 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                             {moduleCompleted ? (
                               <CheckCircle className="w-5 h-5 text-emerald-500" />
                             ) : (
-                              <Play className={`w-5 h-5 ${isCurrent ? 'text-purple-500' : 'text-slate-600'}`} fill={isCurrent ? '#14b8a6' : '#475569'} />
+                              <Play className={`w-5 h-5 ${isCurrent ? 'text-purple-500' : 'text-slate-600'}`} fill={isCurrent ? '#9333ea' : '#475569'} />
                             )}
                           </div>
                         </div>

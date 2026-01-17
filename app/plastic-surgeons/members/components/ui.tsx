@@ -12,16 +12,16 @@ export function ThemeStyles() {
   return (
     <style dangerouslySetInnerHTML={{ __html: `
       :root {
-        --color-primary: 45 212 191;
-        --color-primary-light: 94 234 212;
-        --color-accent: 6 182 212;
+        --color-primary: 147 51 234;
+        --color-primary-light: 168 85 247;
+        --color-accent: 245 158 11;
         --color-success: 16 185 129;
         --color-warning: 245 158 11;
         --color-error: 239 68 68;
         --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
         --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
-        --shadow-glow: 0 0 20px rgba(20, 184, 166, 0.3);
-        --shadow-glow-lg: 0 0 40px rgba(20, 184, 166, 0.4);
+        --shadow-glow: 0 0 20px rgba(147, 51, 234, 0.3);
+        --shadow-glow-lg: 0 0 40px rgba(147, 51, 234, 0.4);
       }
 
       /* Premium Background - Dark by default */
@@ -144,37 +144,37 @@ export function ThemeStyles() {
         border: 1px solid rgba(0, 0, 0, 0.05);
       }
 
-      /* Glass Teal */
+      /* Glass Purple (Plastic Surgeon Theme) */
       .glass-teal {
-        background: rgba(13, 148, 136, 0.1);
-        border: 1px solid rgba(45, 212, 191, 0.2);
+        background: rgba(147, 51, 234, 0.1);
+        border: 1px solid rgba(168, 85, 247, 0.2);
         transition: background 0.3s ease, border-color 0.3s ease;
       }
-      /* Light mode glass-teal */
+      /* Light mode glass */
       html:not(.dark) .glass-teal {
-        background: rgba(13, 148, 136, 0.08);
-        border: 1px solid rgba(13, 148, 136, 0.3);
+        background: rgba(147, 51, 234, 0.08);
+        border: 1px solid rgba(147, 51, 234, 0.3);
       }
 
       /* Neon Glow Effect */
       .neon-glow {
-        box-shadow: 0 0 20px rgba(20, 184, 166, 0.3), 0 0 40px rgba(20, 184, 166, 0.1);
+        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1);
       }
 
       .neon-glow-hover:hover {
-        box-shadow: 0 0 30px rgba(20, 184, 166, 0.5), 0 0 60px rgba(20, 184, 166, 0.2);
+        box-shadow: 0 0 30px rgba(147, 51, 234, 0.5), 0 0 60px rgba(147, 51, 234, 0.2);
       }
 
       /* Gradient Text Premium */
       .gradient-text-premium {
-        background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #8b5cf6 100%);
+        background: linear-gradient(135deg, #9333ea 0%, #f59e0b 50%, #a855f7 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .gradient-text-animated-premium {
-        background: linear-gradient(90deg, #14b8a6, #06b6d4, #8b5cf6, #06b6d4, #14b8a6);
+        background: linear-gradient(90deg, #9333ea, #f59e0b, #a855f7, #f59e0b, #9333ea);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -255,7 +255,7 @@ export function ThemeStyles() {
         content: '';
         position: absolute;
         inset: -2px;
-        background: linear-gradient(45deg, #14b8a6, #06b6d4, #14b8a6);
+        background: linear-gradient(45deg, #9333ea, #f59e0b, #9333ea);
         border-radius: inherit;
         opacity: 0;
         transition: opacity 0.3s;
@@ -273,7 +273,7 @@ export function ThemeStyles() {
 
       /* Gradient text animation */
       .gradient-text-animated {
-        background: linear-gradient(90deg, #14b8a6, #06b6d4, #0ea5e9, #14b8a6);
+        background: linear-gradient(90deg, #9333ea, #f59e0b, #a855f7, #9333ea);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -630,8 +630,8 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
         />
         <defs>
           <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#14b8a6" />
-            <stop offset="100%" stopColor="#06b6d4" />
+            <stop offset="0%" stopColor="#9333ea" />
+            <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
         </defs>
       </svg>
@@ -966,7 +966,7 @@ interface ConfettiProps {
 export function Confetti({ active, reducedMotion, variant = 'default' }: ConfettiProps) {
   if (!active || reducedMotion) return null
 
-  const colors = ['#14b8a6', '#06b6d4', '#f59e0b', '#10b981', '#0ea5e9', '#22d3ee']
+  const colors = ['#9333ea', '#a855f7', '#f59e0b', '#d946ef', '#c084fc', '#fbbf24']
 
   if (variant === 'stars') {
     return (
@@ -1441,12 +1441,12 @@ const OnboardingIcons = {
       <path d="M12 7H16.5C17.88 7 19 5.88 19 4.5C19 3.12 17.88 2 16.5 2C14 2 12 7 12 7Z" fill="#f59e0b" />
       <defs>
         <linearGradient id="gift-gradient" x1="4" y1="12" x2="20" y2="22">
-          <stop stopColor="#14b8a6" />
-          <stop offset="1" stopColor="#06b6d4" />
+          <stop stopColor="#9333ea" />
+          <stop offset="1" stopColor="#f59e0b" />
         </linearGradient>
         <linearGradient id="gift-gradient-2" x1="2" y1="7" x2="22" y2="12">
-          <stop stopColor="#2dd4bf" />
-          <stop offset="1" stopColor="#22d3ee" />
+          <stop stopColor="#a855f7" />
+          <stop offset="1" stopColor="#fbbf24" />
         </linearGradient>
       </defs>
     </svg>
@@ -1593,7 +1593,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
               <div
                 className="w-2 h-2 sm:w-3 sm:h-3"
                 style={{
-                  backgroundColor: ['#14b8a6', '#06b6d4', '#2dd4bf', '#22d3ee', '#0d9488', '#0891b2'][Math.floor(Math.random() * 6)],
+                  backgroundColor: ['#9333ea', '#a855f7', '#f59e0b', '#fbbf24', '#c084fc', '#d946ef'][Math.floor(Math.random() * 6)],
                   transform: `rotate(${Math.random() * 360}deg)`,
                   borderRadius: Math.random() > 0.5 ? '50%' : '2px',
                 }}

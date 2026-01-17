@@ -8,6 +8,10 @@ import { createUser, recordPurchase } from '@/lib/user-db'
 const DENTIST_PIXEL_ID = '1176362697938270'
 const DENTIST_CAPI_TOKEN = process.env.DENTIST_META_CAPI_TOKEN || ''
 
+// Plastic Surgeon Meta CAPI Configuration
+const PLASTIC_SURGEON_PIXEL_ID = '1526841625273321'
+const PLASTIC_SURGEON_CAPI_TOKEN = process.env.PLASTIC_SURGEON_META_CAPI_TOKEN || ''
+
 // Hash function for PII (required by Meta)
 function hashSHA256(value: string): string {
   if (!value) return ''
@@ -69,6 +73,61 @@ async function fireDentistPurchaseCAPI(params: {
     }
   } catch (error) {
     console.error('❌ Meta CAPI fetch error:', error)
+  }
+}
+
+// Fire Purchase event to Meta CAPI for plastic surgeon purchases (MAIN ONLY - no upsell/downsell)
+async function firePlasticSurgeonPurchaseCAPI(params: {
+  email: string
+  value: number
+  currency?: string
+  contentName: string
+  contentType?: string
+  eventId?: string
+}) {
+  if (!PLASTIC_SURGEON_CAPI_TOKEN) {
+    console.log('⚠️ PLASTIC_SURGEON_META_CAPI_TOKEN not configured - skipping CAPI')
+    return
+  }
+
+  const eventId = params.eventId || `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  const eventData = {
+    event_name: 'Purchase',
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: eventId,
+    event_source_url: 'https://aifastscale.com/plastic-surgeons',
+    action_source: 'website',
+    user_data: {
+      em: [hashSHA256(params.email)],
+    },
+    custom_data: {
+      value: params.value,
+      currency: params.currency || 'USD',
+      content_name: params.contentName,
+      content_type: params.contentType || 'product',
+      content_ids: ['plastic-surgeon-main'],
+    },
+  }
+
+  try {
+    const response = await fetch(
+      `https://graph.facebook.com/v18.0/${PLASTIC_SURGEON_PIXEL_ID}/events?access_token=${PLASTIC_SURGEON_CAPI_TOKEN}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [eventData] }),
+      }
+    )
+
+    const result = await response.json()
+    if (response.ok) {
+      console.log(`✅ Plastic Surgeon CAPI Purchase fired: $${params.value} - ${params.contentName}`, result)
+    } else {
+      console.error('❌ Plastic Surgeon CAPI Error:', result)
+    }
+  } catch (error) {
+    console.error('❌ Plastic Surgeon CAPI fetch error:', error)
   }
 }
 
@@ -705,6 +764,21 @@ export async function POST(request: NextRequest) {
     const mainPrice = productType === 'plastic-surgeon' ? 97.82 : (productType === 'dentist' ? 47 : 37)
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
+    // Fire Meta CAPI Purchase event (server-side - can't be blocked by browsers/iOS)
+    if (productType === 'plastic-surgeon') {
+      await firePlasticSurgeonPurchaseCAPI({
+        email: buyerEmail,
+        value: mainPrice,
+        contentName: 'CloneYourself for Plastic Surgeons - Main Course',
+      })
+    } else if (productType === 'dentist') {
+      await fireDentistPurchaseCAPI({
+        email: buyerEmail,
+        value: mainPrice,
+        contentName: 'CloneYourself for Dentists - Main Course',
+      })
+    }
+
     // Send welcome email with personalized credentials
     const resend = getResend()
 
@@ -718,8 +792,8 @@ export async function POST(request: NextRequest) {
 
     console.log(`✅ Welcome email sent to ${buyerEmail} with unique password`)
 
-    // NOTE: Meta Purchase tracking moved to browser-side (thank-you page)
-    // to avoid duplicate events with CAPI
+    // NOTE: Meta Purchase CAPI is now fired above (server-side for main course only)
+    // Browser pixel still fires PageView/ViewContent/InitiateCheckout on landing page
 
     console.log('═══════════════════════════════════════════════════════════')
     console.log(`✅ SUCCESS: ${buyerEmail} - User created & email sent!`)
