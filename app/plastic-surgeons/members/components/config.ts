@@ -107,7 +107,7 @@ export const COURSE_MODULES = [
     description: "Learn how to use your personalized Surgeon AI mentor to generate high-quality short-form video scripts, story ideas, and content plans in minutes.",
     duration: '3 min',
     durationMinutes: 3,
-    wistiaId: 'myh13ayp9d',
+    wistiaId: 'fnjt6devuy',
     thumbnail: '/images/plastic-surgeon/module-1.webp',
     lessons: ['Write video scripts in minutes', 'Using Surgeon Expert Copywriter AI', 'Get scripts for trust & consultations'],
     resources: [
@@ -121,7 +121,7 @@ export const COURSE_MODULES = [
     description: "Set up the essential tools. I'll show you exactly where to register, which plan to choose, and how to avoid mistakes.",
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: 'lpkrdgr19e',
+    wistiaId: '511b44q25r',
     thumbnail: '/images/plastic-surgeon/module-2.webp',
     lessons: ['Where to register', 'Which plan to choose', 'Avoiding common mistakes'],
     resources: [
@@ -136,7 +136,7 @@ export const COURSE_MODULES = [
     description: "Turn a single photo into a realistic talking video. The exact process, right settings, and how to avoid common errors.",
     duration: '6 min',
     durationMinutes: 6,
-    wistiaId: 'n4lx79ecbo',
+    wistiaId: '7jtqmnymc5',
     thumbnail: '/images/plastic-surgeon/module-3.webp',
     lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
     resources: [
@@ -150,7 +150,7 @@ export const COURSE_MODULES = [
     description: "Edit your AI videos quickly using simple tools like CapCut. No experience required.",
     duration: '4 min',
     durationMinutes: 4,
-    wistiaId: 'j2reo83n4z',
+    wistiaId: '9waf0llex7',
     thumbnail: '/images/plastic-surgeon/module-4.webp',
     lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
     resources: [
@@ -164,7 +164,7 @@ export const COURSE_MODULES = [
     description: "Generate multiple realistic images of yourself using one reference photo. Different styles, locations, outfits.",
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: '0a48x7ur8z',
+    wistiaId: '9f7os4xklp',
     thumbnail: '/images/plastic-surgeon/module-5.webp',
     lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
     resources: [
