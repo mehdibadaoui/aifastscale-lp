@@ -24,6 +24,19 @@ export function ThemeStyles() {
         --shadow-glow-lg: 0 0 40px rgba(147, 51, 234, 0.4);
       }
 
+      /* Override global btn-premium for purple theme */
+      .btn-premium {
+        background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%) !important;
+      }
+      .btn-premium:hover {
+        box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Override shadow-glow-teal for purple theme */
+      .shadow-glow-teal {
+        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1) !important;
+      }
+
       /* Premium Background - Dark by default */
       .bg-gradient-premium {
         background: linear-gradient(135deg, #0a0f1a 0%, #0d1525 25%, #0f172a 50%, #0d1525 75%, #0a0f1a 100%);
@@ -66,7 +79,7 @@ export function ThemeStyles() {
       .floating-orb-1 {
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, transparent 70%);
         top: -200px;
         right: -200px;
         animation-delay: 0s;
@@ -75,7 +88,7 @@ export function ThemeStyles() {
       .floating-orb-2 {
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%);
         bottom: -150px;
         left: -150px;
         animation-delay: -5s;
@@ -103,7 +116,7 @@ export function ThemeStyles() {
         position: absolute;
         width: 4px;
         height: 4px;
-        background: rgba(20, 184, 166, 0.6);
+        background: rgba(147, 51, 234, 0.6);
         border-radius: 50%;
         animation: particle-float 10s ease-in-out infinite;
         pointer-events: none;
@@ -128,7 +141,7 @@ export function ThemeStyles() {
       /* Light mode glass-premium */
       html:not(.dark) .glass-premium {
         background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(20, 184, 166, 0.2);
+        border: 1px solid rgba(147, 51, 234, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
       }
 
@@ -197,9 +210,9 @@ export function ThemeStyles() {
         height: 200%;
         background: conic-gradient(from 0deg at 50% 50%,
           transparent 0deg,
-          rgba(20, 184, 166, 0.1) 60deg,
+          rgba(147, 51, 234, 0.1) 60deg,
           transparent 120deg,
-          rgba(6, 182, 212, 0.1) 180deg,
+          rgba(245, 158, 11, 0.1) 180deg,
           transparent 240deg,
           rgba(139, 92, 246, 0.1) 300deg,
           transparent 360deg
@@ -216,11 +229,11 @@ export function ThemeStyles() {
       /* Mesh Gradient */
       .mesh-gradient {
         background:
-          radial-gradient(at 40% 20%, rgba(20, 184, 166, 0.15) 0px, transparent 50%),
-          radial-gradient(at 80% 0%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
+          radial-gradient(at 40% 20%, rgba(147, 51, 234, 0.15) 0px, transparent 50%),
+          radial-gradient(at 80% 0%, rgba(245, 158, 11, 0.1) 0px, transparent 50%),
           radial-gradient(at 0% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
-          radial-gradient(at 80% 50%, rgba(20, 184, 166, 0.1) 0px, transparent 50%),
-          radial-gradient(at 0% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+          radial-gradient(at 80% 50%, rgba(147, 51, 234, 0.1) 0px, transparent 50%),
+          radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
       }
 
       /* Premium micro-interactions */
@@ -1649,7 +1662,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                 className={`relative mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br ${currentStep.accent} flex items-center justify-center shadow-2xl transform transition-all duration-500`}
                 style={{
                   animation: isAnimating ? 'none' : 'float 3s ease-in-out infinite',
-                  boxShadow: `0 20px 40px -10px rgba(20, 184, 166, 0.4)`,
+                  boxShadow: `0 20px 40px -10px rgba(147, 51, 234, 0.4)`,
                 }}
                 key={step}
               >
@@ -1737,7 +1750,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                 onClick={handleNext}
                 disabled={isAnimating}
                 className={`flex-1 relative py-3.5 sm:py-4 rounded-xl font-bold text-white overflow-hidden transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] touch-manipulation disabled:opacity-70 bg-gradient-to-r ${currentStep.accent} shadow-lg`}
-                style={{ boxShadow: `0 10px 30px -5px rgba(20, 184, 166, 0.4)` }}
+                style={{ boxShadow: `0 10px 30px -5px rgba(147, 51, 234, 0.4)` }}
               >
                 {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
@@ -1873,7 +1886,7 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
             height: `${2 + Math.random() * 4}px`,
             background: darkMode
               ? `rgba(${Math.random() > 0.5 ? '45, 212, 191' : '139, 92, 246'}, ${0.3 + Math.random() * 0.4})`
-              : `rgba(20, 184, 166, ${0.3 + Math.random() * 0.4})`,
+              : `rgba(147, 51, 234, ${0.3 + Math.random() * 0.4})`,
           }}
         />
       ))}
@@ -1882,8 +1895,8 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `linear-gradient(rgba(20, 184, 166, 0.5) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(20, 184, 166, 0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(147, 51, 234, 0.5) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(147, 51, 234, 0.5) 1px, transparent 1px)`,
           backgroundSize: '50px 50px',
         }}
       />
