@@ -93,7 +93,7 @@ export const COURSE_CONFIG = {
   },
 }
 
-export const DEV_AUTO_LOGIN = true
+export const DEV_AUTO_LOGIN = false
 
 // Blocked users - will be auto-logged out
 export const BLOCKED_USERS: string[] = []

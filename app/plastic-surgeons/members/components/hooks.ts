@@ -46,17 +46,22 @@ export function usePlatformState() {
   const [activeSection, setActiveSectionRaw] = useState<PlatformState['activeSection']>('dashboard')
   const [currentModuleIndex, setCurrentModuleIndexRaw] = useState(0)
 
+  // Check if mobile for scroll behavior optimization
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
   // Wrapper to scroll to top when changing sections
   const setActiveSection = useCallback((section: PlatformState['activeSection']) => {
     setActiveSectionRaw(section)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+    // Use instant scroll on mobile to prevent jank, smooth on desktop
+    window.scrollTo({ top: 0, behavior: isMobile ? 'instant' : 'smooth' })
+  }, [isMobile])
 
   // Wrapper to scroll to top when changing modules
   const setCurrentModuleIndex = useCallback((index: number) => {
     setCurrentModuleIndexRaw(index)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+    // Use instant scroll on mobile to prevent jank, smooth on desktop
+    window.scrollTo({ top: 0, behavior: isMobile ? 'instant' : 'smooth' })
+  }, [isMobile])
 
   // Progress - using custom localStorage hook
   const [completedModules, setCompletedModules] = useLocalStorage<string[]>('completed', [])

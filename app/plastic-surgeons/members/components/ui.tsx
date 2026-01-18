@@ -517,6 +517,113 @@ export function ThemeStyles() {
           opacity: 0.9;
         }
       }
+
+      /* ========================================
+         MOBILE PERFORMANCE OPTIMIZATIONS
+         ======================================== */
+
+      /* Disable expensive backdrop-filter on mobile */
+      @media (max-width: 768px) {
+        .glass-premium,
+        .glass-dark,
+        .glass-teal {
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+        }
+
+        /* Use solid backgrounds instead on mobile */
+        .glass-premium {
+          background: rgba(15, 23, 42, 0.95) !important;
+        }
+        .glass-dark {
+          background: rgba(15, 23, 42, 0.9) !important;
+        }
+        .glass-teal {
+          background: rgba(88, 28, 135, 0.25) !important;
+        }
+
+        /* Disable floating orb animations on mobile */
+        .floating,
+        .floating-slow,
+        .floating-orb,
+        .floating-orb-1,
+        .floating-orb-2,
+        .floating-orb-3 {
+          animation: none !important;
+          opacity: 0.3 !important;
+        }
+
+        /* Reduce blur on orbs for mobile performance */
+        .floating-orb,
+        .floating-orb-1,
+        .floating-orb-2,
+        .floating-orb-3,
+        [class*="blur-3xl"] {
+          filter: blur(40px) !important;
+        }
+
+        /* Disable aurora rotation on mobile */
+        .aurora-bg::before {
+          animation: none !important;
+          opacity: 0.5;
+        }
+
+        /* Disable continuous glow animations on mobile */
+        .animate-pulse-glow {
+          animation: none !important;
+          box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+        }
+
+        /* Disable gradient text animation on mobile */
+        .gradient-text-animated,
+        .gradient-text-animated-premium {
+          animation: none !important;
+          background-position: 0% 50% !important;
+        }
+
+        /* Disable hover-lift transforms on mobile (causes jank) */
+        .hover-lift:hover,
+        .card-lift:hover {
+          transform: none !important;
+        }
+
+        /* Add CSS containment for better performance */
+        .glass-premium,
+        .glass-teal,
+        section {
+          contain: layout style paint;
+        }
+      }
+
+      /* GPU acceleration hints for animations */
+      .floating,
+      .floating-slow,
+      .floating-orb,
+      .animate-confetti,
+      .animate-bounce-slow,
+      .animate-float {
+        will-change: transform;
+        transform: translateZ(0);
+      }
+
+      /* Optimize nav for mobile scrolling */
+      @media (max-width: 768px) {
+        nav {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+
+        /* Prevent scroll anchoring issues */
+        main {
+          overflow-anchor: none;
+        }
+
+        /* Smoother scrolling container */
+        .scrollbar-hide {
+          -webkit-overflow-scrolling: touch;
+          scroll-behavior: auto;
+        }
+      }
     `}} />
   )
 }
