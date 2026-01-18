@@ -111,7 +111,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/plastic-surgeon/module-1.webp',
     lessons: ['Write video scripts in minutes', 'Using Surgeon Expert Copywriter AI', 'Get scripts for trust & consultations'],
     resources: [
-      { name: 'Plastic Surgeon Expert Copywriter GPT', url: 'https://chatgpt.com/g/g-693ff08b15208191b94265efd521f783-dentist-expert-copywriter', type: 'link' as const },
+      { name: 'Sofia - Plastic Surgeon Growth Mentor', url: 'https://chatgpt.com/g/g-696c9259205481918b40891cd3bf2d83-sofia-the-plastic-surgeon-growth-mentor', type: 'link' as const },
     ],
   },
   {
@@ -262,7 +262,7 @@ export const BONUSES = [
   { id: 'bonus-5', name: 'Patient Coordinator Phone Scripts', value: 397, icon: Headphones, description: 'Convert more phone calls into booked consultations', category: 'Operations', url: '/products/plastic-surgeon/bonuses/phone-scripts.pdf', image: '/images/plastic-surgeon/phone-scripts.webp' },
   { id: 'bonus-6', name: 'Patient Financing Scripts', value: 347, icon: FileText, description: 'Turn "I can\'t afford it" into "Yes, let\'s do it"', category: 'Sales', url: '/products/plastic-surgeon/bonuses/financing-scripts.pdf', image: '/images/plastic-surgeon/financing-scripts.webp' },
   { id: 'bonus-7', name: 'Referral Machine System', value: 447, icon: Users, description: 'Turn happy patients into your best referral source', category: 'Marketing', url: '/products/plastic-surgeon/bonuses/referral-system.pdf', image: '/images/plastic-surgeon/referral-machine.webp' },
-  { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 297, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-693ff08b15208191b94265efd521f783-dentist-expert-copywriter', image: '/images/plastic-surgeon/ai-generator.webp' },
+  { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 297, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-696c9259205481918b40891cd3bf2d83-sofia-the-plastic-surgeon-growth-mentor', image: '/images/plastic-surgeon/ai-generator.webp' },
   { id: 'bonus-9', name: '5-Star Review System', value: 397, icon: Star, description: 'Get 20+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/plastic-surgeon/bonuses/review-system.pdf', image: '/images/plastic-surgeon/review-explosion.webp' },
   { id: 'bonus-10', name: 'VIP Concierge Patient System', value: 497, icon: Crown, description: 'Premium experience = premium prices', category: 'Operations', url: '/products/plastic-surgeon/bonuses/vip-concierge.pdf', image: '/images/plastic-surgeon/vip-concierge.webp' },
 ]
