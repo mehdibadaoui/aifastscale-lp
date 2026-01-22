@@ -12,7 +12,7 @@ import crypto from 'crypto'
  */
 
 const PIXEL_ID = '1176362697938270'
-const ACCESS_TOKEN = process.env.DENTIST_META_CAPI_TOKEN || ''
+const ACCESS_TOKEN = process.env.DENTIST_PIXEL1_TOKEN || ''
 
 // Hash function for PII (required by Meta)
 function hashSHA256(value: string): string {
