@@ -21,7 +21,7 @@ export default function MembersLayout({
       {/* Preload critical assets for faster LCP */}
       <link
         rel="preload"
-        href="/images/plastic-surgeon/dr-voss.webp"
+        href="/images/plastic-surgeon/dr-sofia.webp"
         as="image"
         type="image/webp"
       />

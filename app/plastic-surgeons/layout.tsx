@@ -7,7 +7,7 @@ const PLASTIC_SURGEON_PIXEL_ID = '1526841625273321'
 export const metadata: Metadata = {
   title: 'CloneYourself for Plastic Surgeons | AI Video Marketing System | $97',
   description:
-    'Plastic Surgeons: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic patients. No filming needed. Created by Dr. Alexander Voss.',
+    'Plastic Surgeons: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic patients. No filming needed. Created by Dr. Sofia Martinez, MD, FACS.',
   keywords:
     'plastic surgeon marketing, cosmetic surgery AI videos, aesthetic practice marketing, patient acquisition, plastic surgery practice growth, AI video marketing',
   openGraph: {
@@ -36,14 +36,26 @@ export default function PlasticSurgeonLayout({
 }) {
   return (
     <>
-      {/* Preload hero image for faster LCP */}
+      {/* Preload hero images - Mobile and Desktop separately for optimal LCP */}
       <link
         rel="preload"
-        href="/images/plastic-surgeon/hero.webp"
+        href="/images/plastic-surgeon/surgeon-hero-mobile.webp"
         as="image"
         type="image/webp"
         fetchPriority="high"
+        media="(max-width: 639px)"
       />
+      <link
+        rel="preload"
+        href="/images/plastic-surgeon/surgeon-hero.webp"
+        as="image"
+        type="image/webp"
+        fetchPriority="high"
+        media="(min-width: 640px)"
+      />
+      {/* Preconnect to external domains for faster loading */}
+      <link rel="preconnect" href="https://connect.facebook.net" />
+      <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
       {/* Meta Pixel for Plastic Surgeon LP */}
       <Script

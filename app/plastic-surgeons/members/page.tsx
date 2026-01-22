@@ -1,5 +1,5 @@
 // Main Plastic Surgeon Members Page - Using the premium platform with all features:
-// - Dr. Voss welcome video
+// - Dr. Sofia welcome video
 // - Global search across modules and bonuses
 // - Video speed controls (0.5x - 2x)
 // - Resume from last position

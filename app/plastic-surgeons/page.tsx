@@ -40,27 +40,29 @@ import {
   Mail,
   Send,
   Smile,
+  Search,
+  Globe,
+  Languages,
+  BadgeCheck,
+  Mic,
 } from 'lucide-react'
 import { PLASTIC_SURGEON_BONUS_PRODUCTS, getPlasticSurgeonTotalBonusValue } from '../config/plastic-surgeon-bonus-products'
 import { getMemberStats } from './members/components/config'
-import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/ExpertPersona'
+import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Whop checkout link
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_9AqdDmQnJC2J5'
 
-// Meta Pixel tracking helper (fires InitiateCheckout on CTA click)
-const trackInitiateCheckout = () => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('track', 'InitiateCheckout', {
-      value: 97.82,
-      currency: 'USD',
-      content_name: 'CloneYourself for Plastic Surgeons',
-      content_type: 'product',
-      content_ids: ['plastic-surgeon-main'],
-    })
-    console.log('📊 InitiateCheckout event fired')
-  }
+// ===========================================
+// META TRACKING - Browser Pixel + CAPI
+// ===========================================
+
+// Helper to get cookies
+const getCookie = (name: string) => {
+  if (typeof document === 'undefined') return undefined
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
+  return match ? match[2] : undefined
 }
 
 // Capture fbclid from Facebook ads and store as _fbc cookie (CRITICAL for attribution)
@@ -75,23 +77,207 @@ const captureFbclid = () => {
     const fbc = `fb.1.${Date.now()}.${fbclid}`
     // Set cookie for 90 days (standard Meta attribution window)
     document.cookie = `_fbc=${fbc}; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax`
+    // Also store in sessionStorage for thank-you page
+    sessionStorage.setItem('plastic_surgeon_fbc', fbc)
     console.log('📊 fbclid captured and stored as _fbc cookie')
   }
 }
 
-// Fire ViewContent event (helps Meta build retargeting audiences)
+// Fire ViewContent event (Browser + CAPI)
 const trackViewContent = () => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
+  if (typeof window === 'undefined') return
+
+  const eventId = `ViewContent_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  // 1. Browser Pixel
+  if ((window as any).fbq) {
     (window as any).fbq('track', 'ViewContent', {
       value: 97.82,
       currency: 'USD',
       content_name: 'CloneYourself for Plastic Surgeons',
       content_type: 'product',
       content_ids: ['plastic-surgeon-main'],
-    })
-    console.log('📊 ViewContent event fired')
+    }, { eventID: eventId })
+    console.log('📊 ViewContent pixel fired')
   }
+
+  // 2. Server-side CAPI (backup - can't be blocked by iOS/ad blockers)
+  fetch('/api/plastic-surgeon-meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      eventName: 'ViewContent',
+      value: 97.82,
+      currency: 'USD',
+      contentName: 'CloneYourself for Plastic Surgeons',
+      contentIds: ['plastic-surgeon-main'],
+      sourceUrl: window.location.href,
+      eventId: eventId,
+      fbc: getCookie('_fbc'),
+      fbp: getCookie('_fbp'),
+      userAgent: navigator.userAgent,
+    }),
+  }).catch(err => console.error('📊 ViewContent CAPI error:', err))
 }
+
+// Fire InitiateCheckout event (Browser + CAPI)
+const trackInitiateCheckout = () => {
+  if (typeof window === 'undefined') return
+
+  const eventId = `InitiateCheckout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  // 1. Browser Pixel
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'InitiateCheckout', {
+      value: 97.82,
+      currency: 'USD',
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      content_ids: ['plastic-surgeon-main'],
+    }, { eventID: eventId })
+    console.log('📊 InitiateCheckout pixel fired')
+  }
+
+  // 2. Server-side CAPI
+  fetch('/api/plastic-surgeon-meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      eventName: 'InitiateCheckout',
+      value: 97.82,
+      currency: 'USD',
+      contentName: 'CloneYourself for Plastic Surgeons',
+      contentIds: ['plastic-surgeon-main'],
+      sourceUrl: window.location.href,
+      eventId: eventId,
+      fbc: getCookie('_fbc'),
+      fbp: getCookie('_fbp'),
+      userAgent: navigator.userAgent,
+    }),
+  }).catch(err => console.error('📊 InitiateCheckout CAPI error:', err))
+}
+
+// 100+ World Languages - With comprehensive country aliases
+// Users can search by language name OR country name
+const SUPPORTED_LANGUAGES = [
+  // === TIER 1: Most Common Languages ===
+  { code: 'en', name: 'English', flag: '🇺🇸', aliases: [
+    'usa', 'america', 'united states', 'uk', 'united kingdom', 'britain', 'england', 'scotland', 'wales', 'ireland',
+    'australia', 'new zealand', 'canada', 'singapore', 'south africa', 'nigeria', 'kenya', 'ghana', 'uganda',
+    'jamaica', 'bahamas', 'barbados', 'trinidad', 'guyana', 'belize', 'bermuda', 'virgin islands', 'puerto rico',
+    'philippines', 'india', 'pakistan', 'hong kong', 'malta', 'cyprus', 'fiji', 'papua new guinea', 'liberia', 'sierra leone'
+  ]},
+  { code: 'es', name: 'Spanish', flag: '🇪🇸', aliases: [
+    'spain', 'espana', 'mexico', 'argentina', 'colombia', 'peru', 'venezuela', 'chile', 'ecuador', 'guatemala',
+    'cuba', 'dominican republic', 'honduras', 'bolivia', 'el salvador', 'nicaragua', 'costa rica', 'panama',
+    'uruguay', 'paraguay', 'puerto rico', 'equatorial guinea', 'espanol', 'castellano', 'latino', 'latin america'
+  ]},
+  { code: 'fr', name: 'French', flag: '🇫🇷', aliases: [
+    'france', 'belgium', 'switzerland', 'canada', 'quebec', 'morocco', 'algeria', 'tunisia', 'senegal', 'ivory coast',
+    'cameroon', 'madagascar', 'mali', 'burkina faso', 'niger', 'benin', 'togo', 'guinea', 'chad', 'congo',
+    'gabon', 'djibouti', 'comoros', 'seychelles', 'mauritius', 'haiti', 'luxembourg', 'monaco', 'francais', 'francophone'
+  ]},
+  { code: 'ar', name: 'Arabic', flag: '🇸🇦', aliases: [
+    'saudi arabia', 'saudi', 'egypt', 'morocco', 'algeria', 'tunisia', 'libya', 'sudan', 'iraq', 'syria',
+    'jordan', 'lebanon', 'palestine', 'yemen', 'oman', 'uae', 'dubai', 'abu dhabi', 'qatar', 'bahrain', 'kuwait',
+    'mauritania', 'somalia', 'djibouti', 'comoros', 'middle east', 'arab', 'gulf', 'maghreb', 'levant', 'arabie'
+  ]},
+  { code: 'pt', name: 'Portuguese', flag: '🇧🇷', aliases: [
+    'brazil', 'brasil', 'portugal', 'angola', 'mozambique', 'cape verde', 'guinea bissau', 'sao tome',
+    'east timor', 'timor leste', 'macau', 'goa', 'brasileiro', 'portugues', 'lusophone'
+  ]},
+  { code: 'de', name: 'German', flag: '🇩🇪', aliases: [
+    'germany', 'deutschland', 'austria', 'switzerland', 'liechtenstein', 'luxembourg', 'belgium',
+    'south tyrol', 'alsace', 'deutsch', 'german speaking'
+  ]},
+  { code: 'zh', name: 'Mandarin Chinese', flag: '🇨🇳', aliases: [
+    'china', 'taiwan', 'singapore', 'malaysia', 'chinese', 'zhongwen', 'putonghua', 'beijing', 'shanghai',
+    'hong kong', 'macau', 'prc', 'mainland china', 'zhongguo'
+  ]},
+  { code: 'hi', name: 'Hindi', flag: '🇮🇳', aliases: [
+    'india', 'indian', 'bharat', 'hindustan', 'delhi', 'mumbai', 'bollywood', 'hindi belt', 'uttar pradesh',
+    'madhya pradesh', 'rajasthan', 'bihar', 'jharkhand', 'uttarakhand', 'himachal', 'haryana', 'fiji hindi'
+  ]},
+  { code: 'ru', name: 'Russian', flag: '🇷🇺', aliases: [
+    'russia', 'belarus', 'kazakhstan', 'kyrgyzstan', 'ukraine', 'moldova', 'estonia', 'latvia', 'lithuania',
+    'uzbekistan', 'tajikistan', 'turkmenistan', 'georgia', 'armenia', 'azerbaijan', 'rossiya', 'russkiy', 'soviet'
+  ]},
+  { code: 'ja', name: 'Japanese', flag: '🇯🇵', aliases: ['japan', 'nihon', 'nippon', 'tokyo', 'osaka', 'nihongo'] },
+  { code: 'ko', name: 'Korean', flag: '🇰🇷', aliases: ['korea', 'south korea', 'north korea', 'seoul', 'hangul', 'hangugeo', 'joseon'] },
+  { code: 'it', name: 'Italian', flag: '🇮🇹', aliases: [
+    'italy', 'italia', 'switzerland', 'san marino', 'vatican', 'italiano', 'rome', 'milan', 'sicily', 'sardinia'
+  ]},
+  // === TIER 2: Major Regional Languages ===
+  { code: 'tr', name: 'Turkish', flag: '🇹🇷', aliases: ['turkey', 'turkiye', 'cyprus', 'turkish republic', 'istanbul', 'ankara', 'turk'] },
+  { code: 'nl', name: 'Dutch', flag: '🇳🇱', aliases: [
+    'netherlands', 'holland', 'belgium', 'suriname', 'aruba', 'curacao', 'sint maarten', 'flemish', 'nederland', 'vlaams'
+  ]},
+  { code: 'pl', name: 'Polish', flag: '🇵🇱', aliases: ['poland', 'polska', 'polski', 'warsaw', 'krakow'] },
+  { code: 'vi', name: 'Vietnamese', flag: '🇻🇳', aliases: ['vietnam', 'viet nam', 'hanoi', 'ho chi minh', 'saigon', 'tieng viet'] },
+  { code: 'th', name: 'Thai', flag: '🇹🇭', aliases: ['thailand', 'bangkok', 'siam', 'thai', 'phasa thai'] },
+  { code: 'id', name: 'Indonesian', flag: '🇮🇩', aliases: ['indonesia', 'jakarta', 'bali', 'java', 'sumatra', 'bahasa indonesia'] },
+  { code: 'ms', name: 'Malay', flag: '🇲🇾', aliases: ['malaysia', 'brunei', 'singapore', 'kuala lumpur', 'melayu', 'bahasa melayu'] },
+  { code: 'tl', name: 'Filipino/Tagalog', flag: '🇵🇭', aliases: ['philippines', 'manila', 'tagalog', 'pinoy', 'pilipino', 'cebuano'] },
+  { code: 'fa', name: 'Persian/Farsi', flag: '🇮🇷', aliases: ['iran', 'afghanistan', 'tajikistan', 'iranian', 'farsi', 'dari', 'tehran'] },
+  { code: 'ur', name: 'Urdu', flag: '🇵🇰', aliases: ['pakistan', 'pakistani', 'karachi', 'lahore', 'islamabad', 'urdu'] },
+  { code: 'bn', name: 'Bengali', flag: '🇧🇩', aliases: ['bangladesh', 'india', 'dhaka', 'kolkata', 'west bengal', 'bangla', 'bangladeshi'] },
+  { code: 'he', name: 'Hebrew', flag: '🇮🇱', aliases: ['israel', 'israeli', 'jerusalem', 'tel aviv', 'ivrit', 'jewish'] },
+  // === TIER 3: European Languages ===
+  { code: 'sv', name: 'Swedish', flag: '🇸🇪', aliases: ['sweden', 'sverige', 'stockholm', 'svenska', 'finnish swedish'] },
+  { code: 'no', name: 'Norwegian', flag: '🇳🇴', aliases: ['norway', 'norge', 'oslo', 'norsk', 'bokmal', 'nynorsk'] },
+  { code: 'da', name: 'Danish', flag: '🇩🇰', aliases: ['denmark', 'danmark', 'copenhagen', 'dansk', 'greenland', 'faroe'] },
+  { code: 'fi', name: 'Finnish', flag: '🇫🇮', aliases: ['finland', 'suomi', 'helsinki', 'finnish', 'suomalainen'] },
+  { code: 'el', name: 'Greek', flag: '🇬🇷', aliases: ['greece', 'cyprus', 'athens', 'greek', 'ellada', 'hellas', 'ellinika'] },
+  { code: 'cs', name: 'Czech', flag: '🇨🇿', aliases: ['czech republic', 'czechia', 'prague', 'cesko', 'cesky', 'bohemia', 'moravia'] },
+  { code: 'hu', name: 'Hungarian', flag: '🇭🇺', aliases: ['hungary', 'budapest', 'magyar', 'magyarorszag'] },
+  { code: 'ro', name: 'Romanian', flag: '🇷🇴', aliases: ['romania', 'moldova', 'bucharest', 'romana', 'moldovan'] },
+  { code: 'uk', name: 'Ukrainian', flag: '🇺🇦', aliases: ['ukraine', 'kyiv', 'kiev', 'ukraina', 'ukrainska'] },
+  { code: 'bg', name: 'Bulgarian', flag: '🇧🇬', aliases: ['bulgaria', 'sofia', 'balgaria', 'balgarski'] },
+  { code: 'hr', name: 'Croatian', flag: '🇭🇷', aliases: ['croatia', 'zagreb', 'hrvatska', 'hrvatski'] },
+  { code: 'sr', name: 'Serbian', flag: '🇷🇸', aliases: ['serbia', 'belgrade', 'srbija', 'srpski', 'montenegro'] },
+  { code: 'sk', name: 'Slovak', flag: '🇸🇰', aliases: ['slovakia', 'bratislava', 'slovensko', 'slovensky'] },
+  { code: 'sl', name: 'Slovenian', flag: '🇸🇮', aliases: ['slovenia', 'ljubljana', 'slovenija', 'slovenscina'] },
+  { code: 'lt', name: 'Lithuanian', flag: '🇱🇹', aliases: ['lithuania', 'vilnius', 'lietuva', 'lietuviu'] },
+  { code: 'lv', name: 'Latvian', flag: '🇱🇻', aliases: ['latvia', 'riga', 'latvija', 'latviesu'] },
+  { code: 'et', name: 'Estonian', flag: '🇪🇪', aliases: ['estonia', 'tallinn', 'eesti', 'estonian'] },
+  { code: 'is', name: 'Icelandic', flag: '🇮🇸', aliases: ['iceland', 'reykjavik', 'island', 'islenska'] },
+  // === TIER 4: African & Middle Eastern ===
+  { code: 'sw', name: 'Swahili', flag: '🇰🇪', aliases: [
+    'kenya', 'tanzania', 'uganda', 'rwanda', 'burundi', 'congo', 'mozambique', 'nairobi', 'dar es salaam', 'kiswahili'
+  ]},
+  { code: 'am', name: 'Amharic', flag: '🇪🇹', aliases: ['ethiopia', 'addis ababa', 'ethiopian', 'amarinya'] },
+  { code: 'ha', name: 'Hausa', flag: '🇳🇬', aliases: ['nigeria', 'niger', 'ghana', 'cameroon', 'west africa', 'haoussa'] },
+  { code: 'yo', name: 'Yoruba', flag: '🇳🇬', aliases: ['nigeria', 'benin', 'togo', 'lagos', 'west africa'] },
+  { code: 'ig', name: 'Igbo', flag: '🇳🇬', aliases: ['nigeria', 'biafra', 'igboland', 'enugu'] },
+  { code: 'zu', name: 'Zulu', flag: '🇿🇦', aliases: ['south africa', 'kwazulu natal', 'durban', 'isizulu'] },
+  { code: 'af', name: 'Afrikaans', flag: '🇿🇦', aliases: ['south africa', 'namibia', 'cape town', 'pretoria', 'boer'] },
+  // === TIER 5: Asian Languages ===
+  { code: 'zh-yue', name: 'Cantonese', flag: '🇭🇰', aliases: ['hong kong', 'macau', 'guangdong', 'guangzhou', 'hk', 'yue'] },
+  { code: 'ta', name: 'Tamil', flag: '🇮🇳', aliases: ['india', 'sri lanka', 'singapore', 'malaysia', 'tamil nadu', 'chennai'] },
+  { code: 'te', name: 'Telugu', flag: '🇮🇳', aliases: ['india', 'andhra pradesh', 'telangana', 'hyderabad'] },
+  { code: 'mr', name: 'Marathi', flag: '🇮🇳', aliases: ['india', 'maharashtra', 'mumbai', 'pune'] },
+  { code: 'gu', name: 'Gujarati', flag: '🇮🇳', aliases: ['india', 'gujarat', 'ahmedabad', 'surat'] },
+  { code: 'kn', name: 'Kannada', flag: '🇮🇳', aliases: ['india', 'karnataka', 'bangalore', 'bengaluru'] },
+  { code: 'ml', name: 'Malayalam', flag: '🇮🇳', aliases: ['india', 'kerala', 'kochi', 'trivandrum'] },
+  { code: 'pa', name: 'Punjabi', flag: '🇮🇳', aliases: ['india', 'pakistan', 'punjab', 'amritsar', 'lahore', 'sikh'] },
+  { code: 'ne', name: 'Nepali', flag: '🇳🇵', aliases: ['nepal', 'kathmandu', 'bhutan', 'sikkim', 'darjeeling'] },
+  { code: 'si', name: 'Sinhala', flag: '🇱🇰', aliases: ['sri lanka', 'colombo', 'sinhalese', 'ceylon'] },
+  { code: 'my', name: 'Burmese', flag: '🇲🇲', aliases: ['myanmar', 'burma', 'yangon', 'rangoon', 'mandalay'] },
+  { code: 'km', name: 'Khmer', flag: '🇰🇭', aliases: ['cambodia', 'phnom penh', 'cambodian', 'kampuchea'] },
+  { code: 'lo', name: 'Lao', flag: '🇱🇦', aliases: ['laos', 'vientiane', 'laotian'] },
+  { code: 'mn', name: 'Mongolian', flag: '🇲🇳', aliases: ['mongolia', 'ulaanbaatar', 'inner mongolia'] },
+  // === TIER 6: Central Asian & Caucasus ===
+  { code: 'kk', name: 'Kazakh', flag: '🇰🇿', aliases: ['kazakhstan', 'astana', 'almaty', 'qazaq'] },
+  { code: 'uz', name: 'Uzbek', flag: '🇺🇿', aliases: ['uzbekistan', 'tashkent', 'samarkand', 'ozbek'] },
+  { code: 'az', name: 'Azerbaijani', flag: '🇦🇿', aliases: ['azerbaijan', 'baku', 'azeri'] },
+  { code: 'ka', name: 'Georgian', flag: '🇬🇪', aliases: ['georgia', 'tbilisi', 'sakartvelo', 'kartuli'] },
+  { code: 'hy', name: 'Armenian', flag: '🇦🇲', aliases: ['armenia', 'yerevan', 'hayastan', 'armenian diaspora'] },
+  { code: 'ku', name: 'Kurdish', flag: '🇮🇶', aliases: ['iraq', 'iran', 'turkey', 'syria', 'kurdistan', 'erbil'] },
+  { code: 'ps', name: 'Pashto', flag: '🇦🇫', aliases: ['afghanistan', 'pakistan', 'kabul', 'peshawar', 'pashtun'] },
+]
+
+// Number of languages to show initially
+const INITIAL_LANGUAGES_COUNT = 24
 
 export default function PlasticSurgeonLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -101,9 +287,42 @@ export default function PlasticSurgeonLandingPage() {
   // Dynamic member stats
   const [memberStats, setMemberStats] = useState(getMemberStats())
   const videoRef = useRef<HTMLVideoElement>(null)
+  // Language search filter
+  const [languageSearch, setLanguageSearch] = useState('')
+  const [showAllLanguages, setShowAllLanguages] = useState(false)
 
   // Animation refs for scroll detection - initialize with hero visible for instant animation
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
+
+  // Sticky mobile CTA - shows after scrolling past hero
+  const [showStickyCTA, setShowStickyCTA] = useState(false)
+
+  // Exit intent popup
+  const [showExitPopup, setShowExitPopup] = useState(false)
+  const [exitPopupShown, setExitPopupShown] = useState(false)
+
+  // Live viewers count for urgency (realistic range)
+  const [liveViewers, setLiveViewers] = useState(0)
+
+  // Filter languages based on search (searches name AND country aliases)
+  const filteredLanguages = SUPPORTED_LANGUAGES.filter(lang => {
+    const searchTerm = languageSearch.toLowerCase().trim()
+    if (!searchTerm) return true
+    // Search in language name
+    if (lang.name.toLowerCase().includes(searchTerm)) return true
+    // Search in country/region aliases
+    if (lang.aliases?.some(alias => alias.toLowerCase().includes(searchTerm))) return true
+    return false
+  })
+
+  // Determine which languages to display (limited or all)
+  const displayedLanguages = languageSearch
+    ? filteredLanguages // Show all matches when searching
+    : showAllLanguages
+      ? filteredLanguages
+      : filteredLanguages.slice(0, INITIAL_LANGUAGES_COUNT)
+
+  const hiddenCount = filteredLanguages.length - INITIAL_LANGUAGES_COUNT
 
   // Update member stats every minute
   useEffect(() => {
@@ -121,6 +340,56 @@ export default function PlasticSurgeonLandingPage() {
       trackViewContent()
     }, 500)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Sticky mobile CTA - show after scrolling past 600px
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowStickyCTA(window.scrollY > 600)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Exit intent popup - show when mouse leaves viewport (desktop only)
+  useEffect(() => {
+    // Check if already shown in this session
+    if (sessionStorage.getItem('ps_exit_popup_shown')) {
+      setExitPopupShown(true)
+      return
+    }
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      // Only trigger when mouse leaves from the top
+      if (e.clientY <= 0 && !exitPopupShown) {
+        setShowExitPopup(true)
+        setExitPopupShown(true)
+        sessionStorage.setItem('ps_exit_popup_shown', 'true')
+      }
+    }
+
+    // Only add on desktop (no touch device)
+    if (window.matchMedia('(hover: hover)').matches) {
+      document.addEventListener('mouseleave', handleMouseLeave)
+      return () => document.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [exitPopupShown])
+
+  // Live viewers count - realistic fluctuation
+  useEffect(() => {
+    // Start with realistic number
+    setLiveViewers(Math.floor(Math.random() * 8) + 12) // 12-19
+
+    // Update every 5-15 seconds with small changes
+    const interval = setInterval(() => {
+      setLiveViewers(prev => {
+        const change = Math.floor(Math.random() * 5) - 2 // -2 to +2
+        const newValue = prev + change
+        return Math.max(8, Math.min(24, newValue)) // Keep between 8-24
+      })
+    }, Math.random() * 10000 + 5000)
+
+    return () => clearInterval(interval)
   }, [])
 
   const faqs = [
@@ -207,45 +476,85 @@ export default function PlasticSurgeonLandingPage() {
     },
   ]
 
-  // Scroll animation observer - trigger animations as sections come into view
+  // Scroll animation observer - optimized for mobile performance
   useEffect(() => {
+    // Track already-triggered sections to avoid duplicate state updates
+    const triggeredSections = new Set<string>()
+
     const observer = new IntersectionObserver(
       (entries) => {
+        // Batch DOM updates
+        const sectionsToAdd: string[] = []
+
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible')
-            if (entry.target.id) {
-              setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+            const id = entry.target.id
+            if (id && !triggeredSections.has(id)) {
+              triggeredSections.add(id)
+              sectionsToAdd.push(id)
+              // Unobserve after triggering to reduce overhead
+              observer.unobserve(entry.target)
             }
           }
         })
+
+        // Single state update for all new sections
+        if (sectionsToAdd.length > 0) {
+          setVisibleSections((prev) => {
+            const next = new Set(prev)
+            sectionsToAdd.forEach(id => next.add(id))
+            return next
+          })
+        }
       },
-      { threshold: 0, rootMargin: '50px 0px 200px 0px' } // Trigger 200px before entering viewport
+      {
+        threshold: 0.1, // Slightly higher threshold for better triggering
+        rootMargin: '0px 0px 100px 0px' // Reduced margin for mobile
+      }
     )
 
-    // Small delay to ensure DOM is ready
-    const initTimer = setTimeout(() => {
+    // Use requestIdleCallback for non-critical initialization
+    const initObserver = () => {
       const animatedElements = document.querySelectorAll('[data-animate]')
       animatedElements.forEach((el) => observer.observe(el))
-    }, 100)
-
-    return () => {
-      observer.disconnect()
-      clearTimeout(initTimer)
     }
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(initObserver, { timeout: 200 })
+    } else {
+      setTimeout(initObserver, 100)
+    }
+
+    return () => observer.disconnect()
   }, [])
 
-  // Countdown timer - REAL deadline: December 20th for Premium Bundle bonus
-  const BONUS_DEADLINE = new Date('2024-12-20T23:59:59')
-
+  // Countdown timer - Dynamic deadline: 3 days from first visit (stored in localStorage)
   useEffect(() => {
+    // Get or set deadline for this user
+    const getDeadline = () => {
+      const storedDeadline = localStorage.getItem('ps_bonus_deadline')
+      if (storedDeadline) {
+        return new Date(storedDeadline)
+      }
+      // Set deadline to 3 days from now
+      const deadline = new Date()
+      deadline.setDate(deadline.getDate() + 3)
+      deadline.setHours(23, 59, 59, 999)
+      localStorage.setItem('ps_bonus_deadline', deadline.toISOString())
+      return deadline
+    }
+
+    const BONUS_DEADLINE = getDeadline()
+
     const calculateTimeLeft = () => {
       const now = new Date()
       const diff = BONUS_DEADLINE.getTime() - now.getTime()
 
-      // If deadline passed, show zeros
+      // If deadline passed, reset to 3 days from now
       if (diff <= 0) {
-        return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+        localStorage.removeItem('ps_bonus_deadline')
+        return { days: 2, hours: 23, minutes: 59, seconds: 59 }
       }
 
       return {
@@ -321,7 +630,47 @@ export default function PlasticSurgeonLandingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-premium noise-overlay font-sans relative">
+    <main
+      className="min-h-screen noise-overlay font-sans relative plastic-surgeon-theme"
+      style={{
+        background: `
+          radial-gradient(ellipse at 20% 0%, rgba(147, 51, 234, 0.12) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+          linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 50%, #1a0f2e 100%)
+        `
+      }}
+    >
+      {/* Plastic Surgeon Theme Overrides - Purple/Amber instead of Teal */}
+      <style jsx global>{`
+        .plastic-surgeon-theme .text-gradient-premium {
+          background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #9333ea 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .plastic-surgeon-theme .btn-premium {
+          background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+        }
+        .plastic-surgeon-theme .btn-premium:hover {
+          box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .plastic-surgeon-theme .shadow-glow-teal {
+          box-shadow: 0 0 30px rgba(147, 51, 234, 0.3), 0 0 60px rgba(147, 51, 234, 0.15);
+        }
+        .plastic-surgeon-theme .glass-teal {
+          background: rgba(147, 51, 234, 0.1);
+          border: 1px solid rgba(147, 51, 234, 0.2);
+          backdrop-filter: blur(8px);
+        }
+        .plastic-surgeon-theme .animate-pulse-glow {
+          animation: pulse-glow-purple 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow-purple {
+          0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.4), 0 0 40px rgba(147, 51, 234, 0.2); }
+          50% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), 0 0 60px rgba(147, 51, 234, 0.3); }
+        }
+      `}</style>
+
       {/* Animated Background - Performance Optimized */}
       <AnimatedBackground variant="plastic-surgeon" />
 
@@ -331,23 +680,34 @@ export default function PlasticSurgeonLandingPage() {
       <section
         id="hero"
         data-animate
-        className="relative bg-gradient-hero text-white py-8 sm:py-16 md:py-20 overflow-hidden section-premium"
+        className="relative text-white py-8 sm:py-16 md:py-20 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 25%, #1a0f2e 50%, #0f0a1a 75%, #0a0a0f 100%)',
+          backgroundSize: '200% 200%',
+          animation: 'gradient-shift 20s ease infinite'
+        }}
       >
-        {/* Premium animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-amber-500/5 animate-gradient-xy" style={{ backgroundSize: '400% 400%' }} />
+        {/* Premium animated purple/amber gradient overlay */}
+        <div
+          className="absolute inset-0 animate-gradient-xy"
+          style={{
+            background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.15) 0%, rgba(168, 85, 247, 0.08) 25%, transparent 50%, rgba(245, 158, 11, 0.08) 75%, rgba(217, 119, 6, 0.12) 100%)',
+            backgroundSize: '400% 400%'
+          }}
+        />
 
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-[0.07]">
+        {/* Subtle grid pattern - purple themed */}
+        <div className="absolute inset-0 opacity-[0.08]">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.5) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.6) 1px, transparent 0)',
             backgroundSize: '48px 48px'
           }} />
         </div>
 
-        {/* Premium floating orbs */}
-        <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
-        <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-500/8 to-purple-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/3 rounded-full blur-3xl" />
+        {/* Premium floating orbs - larger and more visible */}
+        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/20 to-violet-500/10 rounded-full blur-[100px] floating-slow" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-amber-500/15 to-orange-500/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-purple-500/10 to-fuchsia-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
 
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
@@ -383,54 +743,71 @@ export default function PlasticSurgeonLandingPage() {
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-purple-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
-                <span className="text-purple-300 font-semibold text-xs sm:text-sm">Dr. Alexander Voss, Board-Certified Plastic Surgeon</span>
+                <span className="text-purple-300 font-semibold text-xs sm:text-sm">Dr. Sofia Martinez, MD, FACS — Board-Certified Plastic Surgeon</span>
               </div>
             </div>
 
-            {/* Hero Image - Premium Glass Container */}
-            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift">
+            {/* Hero Image - Premium Glass Container - Mobile Optimized */}
+            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-scale-in animation-delay-300' : ''}`}>
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift img-zoom">
+                {/* Mobile: 22KB optimized hero */}
+                <Image
+                  src="/images/plastic-surgeon/surgeon-hero-mobile.webp"
+                  alt="AI Video System for Plastic Surgeons Showcase"
+                  width={640}
+                  height={358}
+                  className="w-full h-auto sm:hidden"
+                  priority
+                />
+                {/* Desktop: Full quality hero */}
                 <Image
                   src="/images/plastic-surgeon/surgeon-hero.webp"
                   alt="AI Video System for Plastic Surgeons Showcase"
                   width={1365}
                   height={768}
-                  className="w-full h-auto"
+                  className="w-full h-auto hidden sm:block"
                   priority
-                  fetchPriority="high"
+                  sizes="(max-width: 1024px) 80vw, 800px"
                 />
               </div>
             </div>
 
             {/* Trust badges - Premium Glass Cards */}
-            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
+            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 stagger-fast ${visibleSections.has('hero') ? 'visible' : ''}`}>
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
                 <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> plastic surgeons</span>
               </div>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 <div className="relative">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                   <div className="absolute inset-0 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
                 </div>
                 <span className="text-gray-300 text-xs sm:text-sm"><span className="text-emerald-400 font-bold">{memberStats.activeNow.toLocaleString()}</span> active now</span>
               </div>
-              <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full">
+              <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-purple-400 text-purple-400" />
                 ))}
                 <span className="ml-1 text-white font-bold text-xs sm:text-sm">4.9/5</span>
               </div>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
+              </div>
+              {/* Countdown Badge */}
+              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                <span className="text-red-300 text-xs sm:text-sm font-bold">
+                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
+                </span>
               </div>
             </div>
 
             {/* CTA - Premium Button with Glow */}
             <a
               onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                            className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
+                            className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                 <span className="sm:hidden">Get Instant Access</span>
@@ -480,8 +857,293 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
-          2. CASE STUDY #1 - DR. SARAH - LIGHT CREAM SECTION (Alternating)
-          "She booked 23 new patients in 3 weeks"
+          LANGUAGE SUPPORT - PREMIUM HIGH-CVR SECTION
+          Global coverage with search, stats & social proof
+          ================================================================ */}
+      <section
+        id="languages"
+        className="py-12 sm:py-20 bg-black relative"
+      >
+        {/* Background glow effects - hidden on mobile for performance */}
+        <div className="absolute inset-0 pointer-events-none hidden sm:block">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="w-full px-3 sm:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            {/* Header with impressive stats */}
+            <div className="text-center mb-6 sm:mb-12">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-amber-500/20 border border-purple-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
+                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
+                <span className="text-white font-bold text-xs sm:text-sm">Used by 3,247+ Surgeons in 100+ Countries</span>
+              </div>
+              <h2 className="text-xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-3 leading-tight">
+                Works in <span className="bg-gradient-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent">Your Language</span>
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
+                AI generates videos with <span className="text-white font-semibold">perfect native pronunciation</span> in 100+ languages.
+              </p>
+            </div>
+
+            {/* Live stats bar */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
+              <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
+                <div className="text-lg sm:text-3xl font-black text-purple-400">3,247+</div>
+                <div className="text-gray-400 text-[10px] sm:text-sm">Surgeons Worldwide</div>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
+                <div className="text-lg sm:text-3xl font-black text-amber-400">100+</div>
+                <div className="text-gray-400 text-[10px] sm:text-sm">Languages</div>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
+                <div className="text-lg sm:text-3xl font-black text-green-400">127K+</div>
+                <div className="text-gray-400 text-[10px] sm:text-sm">Videos Created</div>
+              </div>
+            </div>
+
+            {/* Search Bar */}
+            <div className="mb-5 sm:mb-6">
+              <div className="relative max-w-md mx-auto">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                <input
+                  type="text"
+                  placeholder="Search your language..."
+                  value={languageSearch}
+                  onChange={(e) => setLanguageSearch(e.target.value)}
+                  className="w-full bg-white/10 border border-white/20 rounded-full pl-11 sm:pl-12 pr-4 py-2.5 sm:py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-all"
+                />
+                {languageSearch && (
+                  <button
+                    onClick={() => setLanguageSearch('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+              {languageSearch && (
+                <p className="text-center text-gray-500 text-xs sm:text-sm mt-2">
+                  Found {filteredLanguages.length} language{filteredLanguages.length !== 1 ? 's' : ''}
+                </p>
+              )}
+            </div>
+
+            {/* Languages Grid - Mobile optimized */}
+            <div className="bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-6 mb-5 sm:mb-6">
+              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 sm:gap-3">
+                {displayedLanguages.map((lang) => (
+                  <div
+                    key={lang.code}
+                    className="text-center"
+                  >
+                    <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 sm:p-3 hover:bg-white/10 hover:border-purple-500/30 transition-all">
+                      <span className="text-xl sm:text-3xl block">{lang.flag}</span>
+                      <p className="text-white text-[8px] sm:text-xs font-medium truncate mt-0.5 sm:mt-1">{lang.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* No results message */}
+              {filteredLanguages.length === 0 && (
+                <div className="text-center py-6">
+                  <p className="text-gray-400 text-sm">No languages found for "{languageSearch}"</p>
+                  <p className="text-gray-500 text-xs mt-1">Try searching by country name (e.g., "Brazil", "Japan")</p>
+                  <button
+                    onClick={() => setLanguageSearch('')}
+                    className="text-purple-400 hover:text-purple-300 text-sm mt-3 underline"
+                  >
+                    Clear search
+                  </button>
+                </div>
+              )}
+
+              {/* Show more/less button */}
+              {!languageSearch && hiddenCount > 0 && (
+                <div className="text-center mt-4 pt-4 border-t border-white/10">
+                  <button
+                    onClick={() => setShowAllLanguages(!showAllLanguages)}
+                    className="inline-flex items-center gap-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 px-4 py-2 rounded-full text-sm font-medium transition-all"
+                  >
+                    {showAllLanguages ? (
+                      <>
+                        <ChevronDown className="w-4 h-4 rotate-180" />
+                        Show Less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="w-4 h-4" />
+                        Show {hiddenCount} More Languages
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Testimonial from international surgeon */}
+            <div className="bg-gradient-to-r from-purple-500/10 to-amber-500/10 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center text-white text-sm sm:text-xl font-bold">
+                    CS
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400 fill-amber-400" />
+                      ))}
+                    </div>
+                    <span className="text-gray-500 text-[10px] sm:text-xs">Verified</span>
+                  </div>
+                  <p className="text-white text-xs sm:text-base leading-relaxed mb-2 sm:mb-3">
+                    "The Portuguese accent is <span className="text-purple-400 font-semibold">perfect</span> — my patients can't tell it's AI. Consultation requests tripled. <span className="text-amber-400 font-semibold">Worth every penny.</span>"
+                  </p>
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    <span className="text-white font-semibold text-xs sm:text-sm">Dr. Carolina Santos</span>
+                    <span className="text-gray-500 text-[10px] sm:text-xs">• São Paulo 🇧🇷</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom note */}
+            <div className="text-center mt-4 sm:mt-6">
+              <p className="text-gray-500 text-[10px] sm:text-sm">
+                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 inline-block mr-1 text-green-400" />
+                New languages added monthly • <a href="mailto:support@aifastscale.com" className="text-purple-400 hover:underline">Request yours</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          NO HASSLE REFUND POLICY - AFTER LANGUAGES (DUPLICATE)
+          ================================================================ */}
+      <section
+        id="refund-policy-top"
+        data-animate
+        className="py-10 sm:py-20 bg-black relative overflow-hidden"
+      >
+        {/* Animated background particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-10 left-10 w-2 h-2 bg-purple-500/30 rounded-full animate-ping" />
+          <div className="absolute top-1/3 right-20 w-3 h-3 bg-amber-500/20 rounded-full animate-pulse" />
+          <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-bounce" />
+          <div className="absolute top-1/2 right-10 w-2 h-2 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
+        </div>
+
+        <div className="w-full px-3 sm:px-6 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-purple-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
+              visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''
+            }`}>
+              <div className="text-center mb-6 sm:mb-10">
+                <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 animate-bounce" />
+                  <span className="text-purple-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
+                  Need a Refund? <span className="text-purple-400">It's THIS Easy</span>
+                </h2>
+                <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
+                  We made the refund process so simple, you can do it in 30 seconds.
+                  No phone calls. No guilt trips. No waiting.
+                </p>
+              </div>
+
+              {/* Creative Animated Steps - Timeline Style */}
+              <div className="relative">
+                {/* Connecting Line */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
+
+                {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
+                <div className="space-y-4">
+                  {/* Step 1 */}
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''}`}>
+                    {/* Icon - shown first on mobile */}
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/40 md:order-2">
+                      <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-purple-600 font-black text-xs sm:text-sm">1</span>
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className="w-full md:flex-1 md:text-right md:order-1">
+                      <div className="bg-gradient-to-r from-purple-500/20 to-transparent rounded-xl p-4 border border-purple-500/30">
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
+                      </div>
+                    </div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block md:flex-1 md:order-3" />
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
+                      <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-amber-600 font-black text-xs sm:text-sm">2</span>
+                      </div>
+                    </div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block md:flex-1 md:order-1" />
+                    {/* Content */}
+                    <div className="w-full md:flex-1 md:order-3">
+                      <div className="bg-gradient-to-l from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">We Process Instantly</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">No questions, no forms, no waiting period</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/40 md:order-2">
+                      <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
+                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-green-600 font-black text-xs sm:text-sm">3</span>
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className="w-full md:flex-1 md:text-right md:order-1">
+                      <div className="bg-gradient-to-r from-green-500/20 to-transparent rounded-xl p-4 border border-green-500/30">
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Money Back in Your Account</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">Full refund within 24-48 hours. Done!</p>
+                      </div>
+                    </div>
+                    {/* Desktop spacer */}
+                    <div className="hidden md:block md:flex-1 md:order-3" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Message */}
+              <div className="mt-6 sm:mt-10 text-center">
+                <div className="inline-block bg-gradient-to-r from-purple-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
+                  <p className="text-white font-bold text-sm sm:text-lg mb-2">
+                    That's it. <span className="text-purple-400">3 simple steps.</span>
+                  </p>
+                  <p className="text-gray-400 text-xs sm:text-sm">
+                    We respect your decision and value your trust. No hard feelings, ever.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          2. CASE STUDY #1 - DR. DANIEL - LIGHT CREAM SECTION
+          "He booked $156K in procedures in 8 weeks"
           ================================================================ */}
       <section
         id="case-study"
@@ -498,19 +1160,19 @@ export default function PlasticSurgeonLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header - Attention Grabbing */}
-            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-500/40 px-4 py-2 rounded-full mb-4">
+            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-down' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-500/40 px-4 py-2 rounded-full mb-4 hover-scale">
                 <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-                <span className="text-purple-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Surgeon</span>
+                <span className="text-purple-700 font-bold text-xs uppercase tracking-wide">Real Results • Board-Certified Surgeon</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                This is Dr. Marcus. He Got <span className="text-purple-600">31 New Patients</span>...
+                Dr. Daniel Booked <span className="text-purple-600">$156K in Procedures</span>...
               </h2>
-              <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Recording a Single Video.</p>
+              <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Filming a Single Video Himself.</p>
             </div>
 
-            {/* Dr. Marcus Case Study Card - Premium Modern Design */}
-            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-purple-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            {/* Dr. Daniel Case Study Card - Premium Modern Design */}
+            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-purple-500/20 rounded-2xl sm:rounded-3xl overflow-hidden card-hover ${visibleSections.has('case-study') ? 'animate-scale-in animation-delay-200' : ''}`}>
 
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-purple-500/5 pointer-events-none" />
@@ -519,33 +1181,56 @@ export default function PlasticSurgeonLandingPage() {
               <div className="relative p-4 sm:p-8">
                 {/* The Hook Text */}
                 <div className="text-center mb-6">
-                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see him talking on camera...</p>
+                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, that's him talking on camera. But here's the thing...</p>
                   <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
-                    He Never Filmed Anything.
+                    He Never Stepped in Front of a Camera.
                   </p>
                   <p className="text-purple-400 text-base sm:text-lg font-medium">
-                    He just uploaded his photo, and the AI created a ready-to-post video for him.
+                    He uploaded one photo. The AI cloned his voice and face. Now his OR is booked 6 weeks out.
                   </p>
                 </div>
 
-                {/* Video - Autoplay, Loop, Muted - Mobile-optimized (183KB) - preload="none" for faster LCP */}
+                {/* Video - Lazy loaded, Autoplay when visible, Mobile optimized */}
                 <div className="relative w-full rounded-2xl overflow-hidden border-2 border-purple-500/30 shadow-2xl shadow-purple-500/10 bg-black aspect-square max-w-md mx-auto">
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="none"
-                    className="w-full h-full object-cover"
-                    src="/videos/plastic-surgeon-case-study.mp4"
-                  />
+                  {visibleSections.has('case-study') ? (
+                    <>
+                      {/* Mobile: 315KB video */}
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster="/images/plastic-surgeon/dr-sofia.webp"
+                        className="w-full h-full object-contain sm:hidden"
+                        src="/videos/plastic-surgeon-daniel-mobile.mp4"
+                      />
+                      {/* Desktop: Full quality video */}
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster="/images/plastic-surgeon/dr-sofia.webp"
+                        className="w-full h-full object-contain hidden sm:block"
+                        src="/videos/plastic-surgeon-daniel.mp4"
+                      />
+                    </>
+                  ) : (
+                    <Image
+                      src="/images/plastic-surgeon/dr-sofia.webp"
+                      alt="Dr. Daniel - AI Video Example"
+                      fill
+                      className="object-contain"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
 
                 {/* Verified Badge */}
                 <div className="flex justify-center mt-4">
                   <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-4 py-2 rounded-full">
                     <Check className="w-4 h-4 text-purple-400" />
-                    <span className="text-white text-sm font-medium">Real surgeon • Verified results</span>
+                    <span className="text-white text-sm font-medium">Board-Certified Surgeon • Verified Results</span>
                   </div>
                 </div>
               </div>
@@ -554,9 +1239,9 @@ export default function PlasticSurgeonLandingPage() {
               <div className="bg-gradient-to-r from-purple-500/20 via-amber-500/20 to-purple-500/20 border-y border-purple-500/30 py-4 px-4 sm:px-8">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   {[
-                    { number: '31', label: 'New Patients', sub: 'in 4 weeks' },
+                    { number: '28', label: 'Consultations', sub: 'in 4 weeks' },
                     { number: '7', label: 'Minutes', sub: 'per video' },
-                    { number: '$0', label: 'Ad Spend', sub: 'organic only' },
+                    { number: '$0', label: 'Ad Spend', sub: '100% organic' },
                   ].map((stat, i) => (
                     <div key={i}>
                       <div className="text-purple-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
@@ -571,19 +1256,19 @@ export default function PlasticSurgeonLandingPage() {
               <div className="p-4 sm:p-8 border-t border-white/10">
                 <div className="text-center mb-4 sm:mb-6">
                   <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full">
-                    <span className="text-purple-400 text-xs font-bold">WHAT HAPPENED NEXT</span>
+                    <span className="text-purple-400 text-xs font-bold">FROM SKEPTIC TO BELIEVER</span>
                   </div>
                 </div>
 
                 {/* Timeline - improved mobile layout */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Day 1', event: 'Created his first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 2', event: 'Posted on Instagram & TikTok', icon: Eye, color: 'gray' },
-                    { time: 'Week 1', event: '8 new patient calls from social media', icon: Phone, color: 'teal' },
-                    { time: 'Week 2', event: '14 more inquiries • 11 appointments booked', icon: Calendar, color: 'teal' },
-                    { time: 'Week 4', event: '31 total new patients • Hygiene fully booked', icon: FileText, color: 'teal' },
-                    { time: 'Month 2', event: '$62,000 in new patient revenue', icon: DollarSign, color: 'green' },
+                    { time: 'Day 1', event: 'Created first AI video explaining rhinoplasty recovery (7 min)', icon: Upload, color: 'gray' },
+                    { time: 'Day 3', event: 'Posted on Instagram Reels & TikTok', icon: Eye, color: 'gray' },
+                    { time: 'Week 1', event: 'Video hit 47K views • 12 consultation requests', icon: Phone, color: 'teal' },
+                    { time: 'Week 2', event: '3 rhinoplasties booked ($24K avg each = $72K)', icon: Calendar, color: 'teal' },
+                    { time: 'Week 4', event: '28 total consultations • 9 surgeries scheduled', icon: FileText, color: 'teal' },
+                    { time: 'Week 8', event: '$156,000 in new procedure revenue', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -616,17 +1301,17 @@ export default function PlasticSurgeonLandingPage() {
                   <div className="text-purple-400 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      I was skeptical at first. <span className="text-purple-400 font-bold">31 new patients in 4 weeks</span> changed my mind.
-                      No filming. No editing. Just results.
-                      Best $97.82 I ever spent on my practice.
+                      I've spent <span className="text-gray-400">$50,000+</span> on marketing agencies over the years. Nothing worked like this.
+                      <span className="text-purple-400 font-bold"> 28 qualified consultations in 4 weeks</span> — patients who already trusted me before walking in.
+                      My OR is now booked 6 weeks out.
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-400">
-                        <Image src="/images/plastic-surgeon/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" loading="lazy" />
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-400 bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">DR</span>
                       </div>
                       <div>
-                        <p className="text-white font-bold">Dr. Marcus Bennett</p>
-                        <p className="text-gray-400 text-sm">Plastic Surgeon, Austin TX</p>
+                        <p className="text-white font-bold">Dr. Daniel Rivera</p>
+                        <p className="text-gray-400 text-sm">Facial Plastic Surgeon, Miami FL</p>
                       </div>
                       <div className="ml-auto flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -642,8 +1327,8 @@ export default function PlasticSurgeonLandingPage() {
               <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
                 {[
                   { value: '$97.82', label: 'Investment', sub: 'One-time' },
-                  { value: '31', label: 'New Patients', sub: '4 weeks' },
-                  { value: '$62K', label: 'Revenue', sub: '2 months' },
+                  { value: '28', label: 'Consultations', sub: '4 weeks' },
+                  { value: '$156K', label: 'Revenue', sub: '8 weeks' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-purple-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
@@ -667,7 +1352,7 @@ export default function PlasticSurgeonLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-blur-in' : ''}`}>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Here's What You Get <span className="text-purple-400">Today</span>
               </h2>
@@ -675,8 +1360,8 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
-            <div className={`bg-gradient-to-br from-purple-500/15 to-purple-500/5 border-2 border-purple-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
+            <div className={`bg-gradient-to-br from-purple-500/15 to-purple-500/5 border-2 border-purple-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 card-hover img-zoom ${
+              visibleSections.has('whats-inside') ? 'animate-fade-in-left animation-delay-200' : ''
             }`}>
               {/* Large Course Thumbnail */}
               <div className="relative w-full aspect-video">
@@ -686,6 +1371,7 @@ export default function PlasticSurgeonLandingPage() {
                   fill
                   className="object-cover"
                   loading="lazy"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
                 />
               </div>
 
@@ -724,7 +1410,7 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
                     <Award className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>Clinically-structured lessons and examples created with input from <span className="text-purple-400 font-medium">Dr. Alexander Voss</span>, Board-Certified Plastic Surgeon</span>
+                    <span>Clinically-structured lessons and examples created with input from <span className="text-purple-400 font-medium">Dr. Sofia Martinez</span>, Board-Certified Plastic Surgeon, MD, FACS</span>
                   </p>
                 </div>
               </div>
@@ -743,7 +1429,7 @@ export default function PlasticSurgeonLandingPage() {
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-purple-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/plastic-surgeon/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" />
+                    <Image src={bonus.image || '/images/plastic-surgeon/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" sizes="(max-width: 640px) 100vw, 400px" />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -871,8 +1557,8 @@ export default function PlasticSurgeonLandingPage() {
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
-            <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-amber-500/10 border border-purple-500/30 px-4 py-2 rounded-full mb-4">
+            <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-zoom-in' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-amber-500/10 border border-purple-500/30 px-4 py-2 rounded-full mb-4 hover-scale">
                 <Zap className="w-4 h-4 text-purple-500 animate-pulse" />
                 <span className="text-purple-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
                 <span className="text-gray-400 text-xs">•</span>
@@ -891,10 +1577,10 @@ export default function PlasticSurgeonLandingPage() {
               {/* Connecting line - desktop */}
               <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-amber-500 to-green-500 -translate-y-1/2 rounded-full opacity-20" />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+              <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 stagger-children ${visibleSections.has('how-it-works') ? 'visible' : ''}`}>
                 {/* Step 1 - Generate Script */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '0ms' }}>
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 h-full">
+                <div className="group relative">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 h-full hover-lift">
                     {/* Step number - floating */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
@@ -922,7 +1608,7 @@ export default function PlasticSurgeonLandingPage() {
                     {/* Content */}
                     <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Generate Script</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Use our <span className="text-purple-600 font-semibold">ChatGPT specialist</span> built for dental practices. Just describe your topic.
+                      Use our <span className="text-purple-600 font-semibold">ChatGPT specialist</span> built for plastic surgery practices. Just describe your topic.
                     </p>
 
                     {/* Mini feature */}
@@ -936,8 +1622,8 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 {/* Step 2 - Select Image / Create AI Model */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '100ms' }}>
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-amber-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 h-full">
+                <div className="group relative">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-amber-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 h-full hover-lift">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
@@ -976,8 +1662,8 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 {/* Step 3 - Make It Talk */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '200ms' }}>
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 h-full">
+                <div className="group relative">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 h-full hover-lift">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
@@ -1019,8 +1705,8 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 {/* Step 4 - Edit & Post */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '300ms' }}>
-                  <div className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-green-100 hover:border-green-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 h-full relative overflow-hidden">
+                <div className="group relative">
+                  <div className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-green-100 hover:border-green-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 h-full relative overflow-hidden hover-lift">
                     {/* Success glow */}
                     <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/10 rounded-full blur-2xl" />
 
@@ -1102,10 +1788,10 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
-          5. CASE STUDY #2 - DR. DAVID - CREAM/WHITE SECTION (Implant Specialist)
+          5. CASE STUDY #2 - DR. MICHAEL - CREAM/WHITE SECTION (Facelift Specialist)
           ================================================================ */}
       <section
-        id="case-study-david"
+        id="case-study-michael"
         data-animate
         className="py-10 sm:py-24 bg-gradient-to-b from-purple-50 to-white"
       >
@@ -1115,15 +1801,15 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-purple-500" />
-                <span className="text-purple-600 font-bold text-xs uppercase tracking-wide">Implant Specialist Success</span>
+                <span className="text-purple-600 font-bold text-xs uppercase tracking-wide">Facial Rejuvenation Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-purple-500">$127,000</span> in Implant Cases
+                His First AI Video Generated <span className="text-purple-500">$189,000</span> in Facelift Cases
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From spending $2,000/month on marketing to getting patients for free</p>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From struggling with content creation to dominating local social media</p>
             </div>
 
-            {/* Dr. David Case Study Card - Light Theme */}
+            {/* Dr. Michael Case Study Card - Light Theme */}
             <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Top: Profile + Before Situation */}
@@ -1132,19 +1818,19 @@ export default function PlasticSurgeonLandingPage() {
                   {/* Profile */}
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-purple-500 shadow-lg">
-                        <Image src="/images/plastic-surgeon/review-5.webp" alt="Dr. David Kim" width={96} height={96} className="object-cover w-full h-full" loading="lazy" />
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-purple-500 shadow-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl">MC</span>
                       </div>
                       <div className="absolute -bottom-1 -right-1 bg-purple-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
                         VERIFIED
                       </div>
                     </div>
                     <div className="sm:mt-2">
-                      <h3 className="text-gray-900 font-black text-lg">Dr. David Kim</h3>
-                      <p className="text-purple-600 text-sm font-medium">Implant Specialist</p>
+                      <h3 className="text-gray-900 font-black text-lg">Dr. Michael Chen</h3>
+                      <p className="text-purple-600 text-sm font-medium">Facial Plastic Surgeon</p>
                       <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
                         <MapPin className="w-3 h-3" />
-                        <span>Chicago, IL</span>
+                        <span>Los Angeles, CA</span>
                       </div>
                     </div>
                   </div>
@@ -1155,10 +1841,10 @@ export default function PlasticSurgeonLandingPage() {
                       <span className="text-red-600 text-xs font-bold">THE PROBLEM</span>
                     </div>
                     <p className="text-gray-700 leading-relaxed">
-                      "I was spending <span className="text-gray-900 font-bold">$2,000 every month</span> on dental marketing agencies.
-                      After 6 months, I had <span className="text-gray-900 font-bold">$12,000 spent</span> and
-                      <span className="text-red-600 font-bold"> only 3 implant consultations</span>. Meanwhile, younger plastic surgeons were
-                      getting all the attention on social media. I felt outdated..."
+                      "I was spending <span className="text-gray-900 font-bold">$3,500 every month</span> on a marketing agency.
+                      After 8 months, I had <span className="text-gray-900 font-bold">$28,000 spent</span> and
+                      <span className="text-red-600 font-bold"> only 4 facelift consultations</span>. Meanwhile, younger surgeons were
+                      going viral on TikTok and filling their schedules. I felt invisible..."
                     </p>
                   </div>
                 </div>
@@ -1171,24 +1857,25 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 <div className="relative rounded-xl overflow-hidden border-2 border-purple-500/40 shadow-2xl">
+                  {/* Mobile: 27KB optimized image */}
                   <Image
-                    src="/images/plastic-surgeon/review-5.webp"
-                    alt="Dr. David Kim - AI Video Success"
-                    width={1365}
-                    height={768}
-                    className="w-full h-auto object-cover"
+                    src="/images/plastic-surgeon/case-study-facelift-mobile.webp"
+                    alt="Dr. Michael Chen - AI Video Success"
+                    width={480}
+                    height={270}
+                    className="w-full h-auto object-cover sm:hidden"
                     loading="lazy"
                   />
-
-                  {/* Play Overlay - like Lucas video */}
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer group">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-purple-400 to-amber-500 rounded-full flex items-center justify-center shadow-2xl shadow-purple-500/50 group-hover:scale-110 transition-transform">
-                      <Play className="w-10 h-10 sm:w-12 sm:h-12 text-white fill-white ml-1" />
-                    </div>
-                    <div className="absolute bottom-3 left-3 bg-black/80 text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-purple-500/30">
-                      ▶ Watch His First AI Video
-                    </div>
-                  </div>
+                  {/* Desktop: Full quality image */}
+                  <Image
+                    src="/images/plastic-surgeon/case-study-facelift.webp"
+                    alt="Dr. Michael Chen - AI Video Success"
+                    width={1376}
+                    height={768}
+                    className="w-full h-auto object-cover hidden sm:block"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 90vw, 700px"
+                  />
                 </div>
 
                 <p className="text-gray-500 text-sm mt-3 text-center">
@@ -1204,9 +1891,9 @@ export default function PlasticSurgeonLandingPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    { number: '48', label: 'Hours to First Lead', sub: 'not weeks' },
-                    { number: '$0', label: 'Marketing Cost', sub: 'vs $2,000/mo before' },
-                    { number: '5', label: 'Implant Cases', sub: 'from 1 week of videos' },
+                    { number: '72', label: 'Hours to First Lead', sub: 'not weeks' },
+                    { number: '$0', label: 'Marketing Cost', sub: 'vs $3,500/mo before' },
+                    { number: '6', label: 'Facelift Cases', sub: 'from 2 weeks of videos' },
                   ].map((stat, i) => (
                     <div key={i} className="bg-gradient-to-br from-purple-50 to-white border border-purple-500/30 rounded-xl p-4 text-center">
                       <div className="text-purple-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
@@ -1226,11 +1913,11 @@ export default function PlasticSurgeonLandingPage() {
                 {/* Timeline - improved mobile layout */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Day 1', event: 'Posted his first AI video about implant benefits (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 2', event: 'Instagram inquiry: "I need procedures, are you accepting patients?"', icon: MessageSquare, color: 'teal' },
-                    { time: 'Day 5', event: '3 implant consultations scheduled', icon: Calendar, color: 'teal' },
-                    { time: 'Week 2', event: '5 procedures accepted • $127,000 in treatment plans', icon: FileText, color: 'teal' },
-                    { time: 'Month 2', event: 'All 5 cases completed • Cancelled marketing agency', icon: DollarSign, color: 'green' },
+                    { time: 'Day 1', event: 'Posted his first AI video about facelift recovery (took 7 minutes)', icon: Upload, color: 'gray' },
+                    { time: 'Day 3', event: 'Instagram DM: "I\'ve been researching facelifts for months. Your video answered all my questions."', icon: MessageSquare, color: 'teal' },
+                    { time: 'Day 7', event: '4 facelift consultations scheduled ($18K-$32K each)', icon: Calendar, color: 'teal' },
+                    { time: 'Week 2', event: '6 procedures booked • $189,000 in surgical fees', icon: FileText, color: 'teal' },
+                    { time: 'Month 2', event: 'OR booked 8 weeks out • Fired marketing agency', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -1263,16 +1950,16 @@ export default function PlasticSurgeonLandingPage() {
                   <div className="text-purple-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      One week of AI videos. <span className="text-purple-600 font-bold">$127,000 in procedures</span>.
-                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $97.82 and
-                      I had 5 cases in a week. The ROI is unreal.
+                      Two weeks of AI videos. <span className="text-purple-600 font-bold">$189,000 in facelift procedures</span>.
+                      I spent $28,000 on marketing agencies over 8 months and got 4 consultations. This system cost me $97.82 and
+                      I booked 6 surgeries in two weeks. My only regret is not starting sooner.
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500">
-                        <Image src="/images/plastic-surgeon/review-5.webp" alt="Dr. David" width={40} height={40} className="object-cover" loading="lazy" />
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500 bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">MC</span>
                       </div>
                       <div>
-                        <p className="text-gray-900 font-bold">Dr. David Kim</p>
+                        <p className="text-gray-900 font-bold">Dr. Michael Chen</p>
                         <p className="text-gray-500 text-sm">2 months after joining</p>
                       </div>
                       <div className="ml-auto flex items-center gap-1">
@@ -1289,8 +1976,8 @@ export default function PlasticSurgeonLandingPage() {
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
                   { value: '$97.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$97.82K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '810x', label: 'ROI', sub: 'Return' },
+                  { value: '$189K', label: 'Revenue', sub: '2 weeks' },
+                  { value: '1,932x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-purple-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -1305,17 +1992,114 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
+          CASE STUDY #3 - DR. LISA PARK - RHINOPLASTY SPECIALIST (Compact)
+          ================================================================ */}
+      <section
+        id="case-study-lisa"
+        data-animate
+        className="py-10 sm:py-16 bg-black"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            {/* Section Header */}
+            <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('case-study-lisa') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full mb-3">
+                <TrendingUp className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-amber-400 font-bold text-xs uppercase tracking-wide">Rhinoplasty Success Story</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
+                One Video. <span className="text-amber-400">23 Rhinoplasty Consultations.</span>
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-lg">From skeptic to booked solid in 30 days</p>
+            </div>
+
+            {/* Dr. Lisa Case Study Card */}
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border border-amber-500/30 rounded-xl sm:rounded-2xl overflow-hidden ${visibleSections.has('case-study-lisa') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                {/* Left: Image - Mobile optimized */}
+                <div className="relative aspect-video lg:aspect-auto">
+                  {/* Mobile: 22KB optimized image */}
+                  <Image
+                    src="/images/plastic-surgeon/case-study-rhinoplasty-mobile.webp"
+                    alt="Dr. Lisa Park - Rhinoplasty Consultation AI Video"
+                    fill
+                    className="object-cover sm:hidden"
+                    loading="lazy"
+                  />
+                  {/* Desktop: Full quality image */}
+                  <Image
+                    src="/images/plastic-surgeon/case-study-rhinoplasty.webp"
+                    alt="Dr. Lisa Park - Rhinoplasty Consultation AI Video"
+                    fill
+                    className="object-cover hidden sm:block"
+                    loading="lazy"
+                    sizes="(max-width: 1024px) 50vw, 500px"
+                  />
+                  <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-lg">
+                    <span className="text-amber-400 text-xs font-bold">89K Views on TikTok</span>
+                  </div>
+                </div>
+
+                {/* Right: Content */}
+                <div className="p-5 sm:p-8 flex flex-col justify-center">
+                  {/* Profile */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">LP</span>
+                    </div>
+                    <div>
+                      <h3 className="text-white font-bold text-lg">Dr. Lisa Park</h3>
+                      <p className="text-amber-400 text-sm">Rhinoplasty Specialist • Seattle, WA</p>
+                    </div>
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4 italic">
+                    "My TikTok video explaining what to expect during rhinoplasty recovery got 89K views.
+                    I booked <span className="text-amber-400 font-bold">23 new consultations</span> that month.
+                    This system pays for itself daily."
+                  </p>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    {[
+                      { value: '89K', label: 'Views' },
+                      { value: '23', label: 'Consults' },
+                      { value: '$276K', label: 'Revenue' },
+                    ].map((stat, i) => (
+                      <div key={i} className="bg-black/40 rounded-lg p-3 text-center border border-white/10">
+                        <div className={`text-lg sm:text-xl font-black ${i === 2 ? 'text-green-400' : 'text-amber-400'}`}>{stat.value}</div>
+                        <div className="text-gray-500 text-xs">{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Stars */}
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    ))}
+                    <span className="text-gray-500 text-xs ml-2">Verified Member</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
           6. TESTIMONIALS - DARK ANIMATED CAROUSEL
           ================================================================ */}
       <section
         id="testimonials"
         data-animate
-        className="py-8 sm:py-16 bg-black"
+        className="py-8 sm:py-16 bg-gradient-to-b from-black to-zinc-900"
       >
         {/* Header */}
         <div className="max-w-6xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
-          <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-up' : ''}`}>
-            <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full mb-3">
+          <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-down' : ''}`}>
+            <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale sparkle">
               <Sparkles className="w-3.5 h-3.5 text-purple-400" />
               <span className="text-purple-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
             </div>
@@ -1357,7 +2141,7 @@ export default function PlasticSurgeonLandingPage() {
                 {/* Author - Larger image */}
                 <div className="flex items-center gap-3">
                   <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-purple-500/40 shadow-lg">
-                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" />
+                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" sizes="64px" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
@@ -1391,7 +2175,7 @@ export default function PlasticSurgeonLandingPage() {
                 {/* Author - Larger image */}
                 <div className="flex items-center gap-3">
                   <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-purple-500/40 shadow-lg">
-                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" />
+                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" sizes="64px" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
@@ -1400,6 +2184,91 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          WHO THIS IS FOR / NOT FOR - QUALIFICATION SECTION
+          ================================================================ */}
+      <section
+        id="who-is-this-for"
+        data-animate
+        className="py-10 sm:py-16 bg-gradient-to-b from-zinc-900 to-black"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className={`text-center mb-8 sm:mb-12 ${visibleSections.has('who-is-this-for') ? 'animate-blur-in' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale">
+                <Users className="w-3.5 h-3.5 text-purple-400" />
+                <span className="text-purple-400 font-bold text-xs uppercase tracking-wide">Is This Right For You?</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
+                This System Is <span className="text-purple-400">NOT</span> For Everyone
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-base">Be honest with yourself before you invest</p>
+            </div>
+
+            {/* Two Columns */}
+            <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 ${visibleSections.has('who-is-this-for') ? '' : ''}`}>
+              {/* This IS For You */}
+              <div className={`bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-8 card-hover ${visibleSections.has('who-is-this-for') ? 'animate-fade-in-left animation-delay-200' : ''}`}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-emerald-400">This IS For You If...</h3>
+                </div>
+                <ul className="space-y-3">
+                  {[
+                    "You want more high-value cosmetic patients",
+                    "You're willing to spend 7 minutes creating content",
+                    "You understand social media drives consultations",
+                    "You're ready to stand out from competitors",
+                    "You want to stop paying agencies $3,000+/month",
+                    "You believe in taking action, not just learning",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-300 text-sm sm:text-base">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* This is NOT For You */}
+              <div className={`bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-8 card-hover ${visibleSections.has('who-is-this-for') ? 'animate-fade-in-right animation-delay-400' : ''}`}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
+                    <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-400" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-red-400">This is NOT For You If...</h3>
+                </div>
+                <ul className="space-y-3">
+                  {[
+                    "You expect results without creating any content",
+                    "You think AI is \"beneath\" your practice",
+                    "You're not willing to post on social media",
+                    "You want someone else to do everything for you",
+                    "You're looking for a magic pill with zero effort",
+                    "You'll buy this and let it collect digital dust",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-300 text-sm sm:text-base">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom Note */}
+            <div className={`text-center mt-6 sm:mt-8 ${visibleSections.has('who-is-this-for') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+              <p className="text-gray-400 text-sm sm:text-base">
+                If you checked more boxes on the <span className="text-emerald-400 font-bold">left side</span>, you're exactly who we built this for.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -1489,6 +2358,95 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
+          COMPARISON TABLE - Why CloneYourself Wins
+          ================================================================ */}
+      <section
+        id="comparison"
+        data-animate
+        className="py-10 sm:py-16 bg-gradient-to-b from-white to-gray-50"
+      >
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className={`text-center mb-8 sm:mb-10 ${visibleSections.has('comparison') ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full mb-3">
+                <TrendingUp className="w-3.5 h-3.5 text-purple-600" />
+                <span className="text-purple-600 font-bold text-xs uppercase tracking-wide">Compare Your Options</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
+                Why <span className="text-purple-500">CloneYourself</span> Beats Everything Else
+              </h2>
+              <p className="text-gray-500 text-sm sm:text-base">See the difference for yourself</p>
+            </div>
+
+            {/* Comparison Table */}
+            <div className={`overflow-x-auto -mx-3 px-3 sm:mx-0 sm:px-0 ${visibleSections.has('comparison') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              <table className="w-full min-w-[600px] bg-white rounded-xl sm:rounded-2xl border border-gray-200 overflow-hidden shadow-xl">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="text-left py-4 px-4 sm:px-6 text-gray-500 text-sm font-semibold">Feature</th>
+                    <th className="text-center py-4 px-3 sm:px-4 border-x border-gray-200">
+                      <div className="text-red-500 font-bold text-sm">Marketing Agency</div>
+                      <div className="text-gray-400 text-xs">$3,000+/mo</div>
+                    </th>
+                    <th className="text-center py-4 px-3 sm:px-4 border-r border-gray-200">
+                      <div className="text-gray-500 font-bold text-sm">DIY Video Editing</div>
+                      <div className="text-gray-400 text-xs">100+ hours</div>
+                    </th>
+                    <th className="text-center py-4 px-3 sm:px-4 bg-purple-50">
+                      <div className="text-purple-600 font-bold text-sm">CloneYourself</div>
+                      <div className="text-purple-400 text-xs">$97.82 one-time</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {[
+                    { feature: 'Time to create 1 video', agency: '1-2 weeks', diy: '4-8 hours', us: '7 minutes', winner: true },
+                    { feature: 'Monthly cost', agency: '$3,000+', diy: '$0 (your time)', us: '$0', winner: true },
+                    { feature: 'Upfront investment', agency: '$3,000+', diy: '$500+ software', us: '$97.82', winner: true },
+                    { feature: 'Videos per month', agency: '4-8', diy: '2-4', us: 'Unlimited', winner: true },
+                    { feature: 'Need to be on camera', agency: 'Yes', diy: 'Yes', us: 'No', winner: true },
+                    { feature: 'Learning curve', agency: 'None', diy: 'Steep', us: 'None', winner: true },
+                    { feature: 'Control over content', agency: 'Low', diy: 'High', us: 'High', winner: true },
+                    { feature: 'Available 24/7', agency: 'No', diy: 'Yes', us: 'Yes', winner: true },
+                  ].map((row, i) => (
+                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>
+                      <td className="py-3 px-4 sm:px-6 text-gray-700 text-sm font-medium">{row.feature}</td>
+                      <td className="py-3 px-3 sm:px-4 text-center border-x border-gray-100">
+                        <span className="text-red-500 text-sm">{row.agency}</span>
+                      </td>
+                      <td className="py-3 px-3 sm:px-4 text-center border-r border-gray-100">
+                        <span className="text-gray-500 text-sm">{row.diy}</span>
+                      </td>
+                      <td className="py-3 px-3 sm:px-4 text-center bg-purple-50/50">
+                        <span className="text-purple-600 font-bold text-sm flex items-center justify-center gap-1">
+                          {row.us}
+                          {row.winner && <CheckCircle className="w-4 h-4 text-emerald-500" />}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bottom CTA */}
+            <div className={`text-center mt-8 ${visibleSections.has('comparison') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+              <a
+                href={WHOP_CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-purple-500/25"
+              >
+                <Zap className="w-5 h-5" />
+                Get CloneYourself Now
+                <ArrowRight className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
           7. PRICING - BLACK SECTION (Reveal price!)
           ================================================================ */}
       <section
@@ -1498,10 +2456,10 @@ export default function PlasticSurgeonLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4">
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-zoom-in' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4 hover-scale animate-pulse-soft">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires December 20th</span>
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires in {timeLeft.days}d {timeLeft.hours}h</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Get Everything Today For
@@ -1509,10 +2467,10 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* Price Comparison - horizontal scroll on mobile */}
-            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              <div className="flex gap-3 sm:grid sm:grid-cols-3 sm:gap-4" style={{ minWidth: 'max-content' }}>
+            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${visibleSections.has('pricing') ? '' : ''}`}>
+              <div className={`flex gap-3 sm:grid sm:grid-cols-3 sm:gap-4 stagger-fast ${visibleSections.has('pricing') ? 'visible' : ''}`} style={{ minWidth: 'max-content' }}>
                 {/* Old Way */}
-                <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-red-500/30 relative flex-shrink-0 w-[200px] sm:w-auto">
+                <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-red-500/30 relative flex-shrink-0 w-[200px] sm:w-auto hover-lift">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
                     Expensive
                   </div>
@@ -1525,7 +2483,7 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 {/* DIY */}
-                <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-gray-600 relative flex-shrink-0 w-[200px] sm:w-auto">
+                <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-gray-600 relative flex-shrink-0 w-[200px] sm:w-auto hover-lift">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-gray-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
                     Time Sink
                   </div>
@@ -1538,7 +2496,7 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 {/* Smart Way */}
-                <div className="bg-gradient-to-br from-purple-500 to-amber-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto">
+                <div className="bg-gradient-to-br from-purple-500 to-amber-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto hover-lift hover-glow">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-black text-purple-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black">
                     Best Value
                   </div>
@@ -1553,7 +2511,7 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* VISUAL VALUE STACK - Hormozi Style */}
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-purple-500/30 mb-6 ${
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-purple-500/30 mb-6 card-hover ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
               <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $97.82 Actually Includes:</h3>
@@ -1617,8 +2575,8 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* Main Price Box - Compact on mobile */}
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-purple-500/50 shadow-2xl ${
-              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-purple-500/50 shadow-2xl hover-glow ${
+              visibleSections.has('pricing') ? 'animate-bounce-in animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
                 <span className="text-4xl sm:text-6xl font-black text-purple-400">$97.82</span>
@@ -1631,11 +2589,11 @@ export default function PlasticSurgeonLandingPage() {
 
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full max-w-md mx-auto bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                                className="w-full max-w-md mx-auto bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-gray-400 text-[10px] sm:text-sm">
@@ -1663,24 +2621,21 @@ export default function PlasticSurgeonLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-3xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-down' : ''}`}>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2 sm:mb-4">
                 Common <span className="text-purple-500">Questions</span>
               </h2>
             </div>
 
-            <div className="space-y-2 sm:space-y-3">
+            <div className={`space-y-2 sm:space-y-3 stagger-children ${visibleSections.has('faq') ? 'visible' : ''}`}>
               {faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className={`bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden ${
-                    visibleSections.has('faq') ? 'animate-fade-in-up' : ''
-                  }`}
-                  style={{ animationDelay: `${i * 100}ms` }}
+                  className="bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
                 >
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left"
+                    className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left hover:bg-purple-50/50 transition-colors"
                   >
                     <span className="font-semibold pr-3 text-gray-900 text-sm sm:text-base">{faq.q}</span>
                     <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-purple-500 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
@@ -1695,11 +2650,11 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* CTA - After FAQ */}
-            <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+            <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-bounce-in animation-delay-500' : ''}`}>
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-purple-500/30"
+                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-purple-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1835,7 +2790,7 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
-          10. MEET YOUR EXPERT - WHITE SECTION (Dr. Alexander Voss)
+          10. MEET YOUR EXPERT - WHITE SECTION (Dr. Sofia Martinez)
           ================================================================ */}
       <section
         id="meet-instructor"
@@ -1858,13 +2813,13 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             <div className={`${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              <ExpertPersona {...DR_VOSS_DATA} />
+              <ExpertPersona {...DR_SOFIA_DATA} />
             </div>
 
 
             {/* SEO-friendly expert description */}
             <p className="sr-only">
-              Dr. Alexander Voss is an board-certified plastic surgeon with over 12 years of experience in facial rejuvenation, rhinoplasty, body contouring, and aesthetic procedures. He has helped plastic surgeons across 15+ countries attract high-value cosmetic patients.
+              Dr. Sofia Martinez is a board-certified plastic surgeon (MD, FACS) with over 15 years of experience in facial rejuvenation, rhinoplasty, breast augmentation, body contouring, and aesthetic procedures. She has helped plastic surgeons across 20+ countries attract high-value cosmetic patients using AI video marketing.
             </p>
           </div>
         </div>
@@ -2439,7 +3394,292 @@ export default function PlasticSurgeonLandingPage() {
             transform: none;
           }
         }
+
+        /* ================================================================
+           MOBILE PERFORMANCE OPTIMIZATIONS
+           Fixes: scroll jank, blank screens, slow performance
+           ================================================================ */
+
+        /* GPU acceleration for carousel - CRITICAL */
+        .testimonial-scroll-track-plastic-surgeon {
+          will-change: transform;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+
+        /* Contain sections to isolate paint areas */
+        section {
+          contain: layout style;
+        }
+
+        /* Mobile-specific performance fixes */
+        @media (max-width: 768px) {
+          /* CRITICAL: Disable backdrop-blur on mobile - causes major jank */
+          .backdrop-blur-sm,
+          .backdrop-blur,
+          .backdrop-blur-md,
+          .backdrop-blur-lg,
+          [class*="backdrop-blur"] {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
+
+          /* Replace blurred backgrounds with solid ones on mobile */
+          .bg-white\\/10,
+          .bg-white\\/5,
+          .bg-black\\/80 {
+            background-color: rgba(0, 0, 0, 0.95) !important;
+          }
+
+          /* Reduce animation complexity on mobile */
+          .animate-fade-in-up {
+            animation-duration: 0.4s !important;
+          }
+
+          .animate-scale-up,
+          .animate-scale-in {
+            animation-duration: 0.3s !important;
+          }
+
+          /* Disable will-change on mobile to save memory */
+          .animate-fade-in-up,
+          .animate-scale-up,
+          .animate-scale-in {
+            will-change: auto !important;
+          }
+
+          /* Slow down carousel on mobile for smoother performance */
+          .testimonial-scroll-track-plastic-surgeon {
+            animation-duration: 45s !important;
+          }
+
+          /* Disable complex shadows on mobile */
+          .shadow-2xl {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+          }
+
+          .shadow-xl {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+          }
+
+          /* Simplify gradients on mobile */
+          .bg-gradient-to-br,
+          .bg-gradient-to-r,
+          .bg-gradient-to-b {
+            background-attachment: scroll !important;
+          }
+
+          /* Disable hover transitions on mobile (saves CPU) */
+          .transition-all,
+          .transition-colors,
+          .transition-transform,
+          .transition-opacity {
+            transition-duration: 0.15s !important;
+          }
+
+          /* Hide decorative animated elements on mobile */
+          .animate-pulse:not(button):not(a),
+          .animate-bounce:not(button):not(a),
+          .animate-spin-slow {
+            animation: none !important;
+          }
+
+          /* Optimize font rendering */
+          * {
+            text-rendering: optimizeSpeed;
+            -webkit-font-smoothing: antialiased;
+          }
+
+          /* Contain paint for cards */
+          .testimonial-card-plastic-surgeon {
+            contain: layout style paint;
+          }
+
+          /* Optimize images for mobile rendering */
+          img {
+            content-visibility: auto;
+          }
+
+          /* Hardware acceleration for sticky elements */
+          .sticky, .fixed {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+          }
+        }
+
+        /* Very small screens - further optimizations */
+        @media (max-width: 480px) {
+          /* Even simpler animations */
+          .animate-fade-in-up,
+          .animate-scale-up,
+          .animate-scale-in {
+            animation-duration: 0.25s !important;
+            transform: none !important;
+          }
+
+          /* Pause carousel when not visible */
+          .testimonial-scroll-track-plastic-surgeon {
+            animation-play-state: paused;
+          }
+
+          .testimonial-carousel-wrapper-plastic-surgeon:hover .testimonial-scroll-track-plastic-surgeon,
+          .testimonial-carousel-wrapper-plastic-surgeon:focus-within .testimonial-scroll-track-plastic-surgeon {
+            animation-play-state: running;
+          }
+
+          /* Reduce border radius calculations */
+          .rounded-2xl, .rounded-3xl {
+            border-radius: 1rem !important;
+          }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+          /* Disable hover effects on touch devices */
+          .hover\\:scale-105:hover,
+          .hover\\:scale-\\[1\\.02\\]:hover {
+            transform: none !important;
+          }
+
+          /* Faster touch response */
+          button, a, [role="button"] {
+            touch-action: manipulation;
+          }
+
+          /* Optimize scroll on touch */
+          .overflow-x-auto,
+          .overflow-y-auto {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: auto !important;
+          }
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+
+        /* Force GPU layers only when needed */
+        .force-gpu {
+          transform: translateZ(0);
+          will-change: transform;
+        }
       `}</style>
+
+      {/* ================================================================
+          STICKY MOBILE CTA - Shows after scrolling
+          ================================================================ */}
+      <div className={`fixed bottom-0 left-0 right-0 z-50 sm:hidden transition-all duration-300 ${
+        showStickyCTA ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+      }`}>
+        <div className="bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-4 px-4">
+          <a
+            href={WHOP_CHECKOUT_LINK}
+            onClick={trackInitiateCheckout}
+            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-purple-500/30 animate-pulse"
+          >
+            <Zap className="w-5 h-5" />
+            Get Instant Access — $97.82
+            <ArrowRight className="w-5 h-5" />
+          </a>
+          <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">
+            <span className="flex items-center gap-1">
+              <Shield className="w-3 h-3" />
+              30-Day Guarantee
+            </span>
+            <span>•</span>
+            <span className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+              {liveViewers} viewing now
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* ================================================================
+          EXIT INTENT POPUP - Shows when leaving (desktop)
+          ================================================================ */}
+      {showExitPopup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade-in">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowExitPopup(false)}
+          />
+
+          {/* Popup */}
+          <div className="relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border-2 border-purple-500/50 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl shadow-purple-500/20 animate-scale-in">
+            {/* Close button */}
+            <button
+              onClick={() => setShowExitPopup(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Content */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                <Gift className="w-8 h-8 text-white" />
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-black text-white mb-2">
+                Wait! Don't Leave Empty-Handed
+              </h3>
+
+              <p className="text-gray-400 mb-4">
+                Get the complete AI video system + all 10 bonuses for just <span className="text-purple-400 font-bold">$97.82</span> (98% off)
+              </p>
+
+              {/* Urgency */}
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4">
+                <p className="text-red-400 text-sm font-bold flex items-center justify-center gap-2">
+                  <AlertTriangle className="w-4 h-4" />
+                  {liveViewers} plastic surgeons viewing this page right now
+                </p>
+              </div>
+
+              {/* CTA */}
+              <a
+                href={WHOP_CHECKOUT_LINK}
+                onClick={() => {
+                  trackInitiateCheckout()
+                  setShowExitPopup(false)
+                }}
+                className="block w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-lg hover:scale-[1.02] transition-transform mb-3"
+              >
+                Yes, I Want This Deal!
+              </a>
+
+              <button
+                onClick={() => setShowExitPopup(false)}
+                className="text-gray-500 text-sm hover:text-gray-400 transition-colors"
+              >
+                No thanks, I'll pass on this opportunity
+              </button>
+
+              {/* Trust */}
+              <div className="flex items-center justify-center gap-4 mt-4 text-xs text-gray-500">
+                <span className="flex items-center gap-1">
+                  <Shield className="w-3 h-3 text-purple-400" />
+                  30-Day Guarantee
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3 text-purple-400" />
+                  Instant Access
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

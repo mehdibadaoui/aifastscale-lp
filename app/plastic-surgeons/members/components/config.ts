@@ -75,15 +75,15 @@ export const COURSE_CONFIG = {
   subtitle: "for Plastic Surgeons",
   supportEmail: "support@aifastscale.com",
   welcomeVideo: {
-    wistiaId: "myh13ayp9d", // Same as dentist (Dr. Voss welcome video)
-    title: "Welcome from Dr. Voss",
+    wistiaId: "myh13ayp9d",
+    title: "Welcome from Dr. Sofia",
     duration: "2 min",
   },
   drVoss: {
-    name: "Dr. Alexander Voss",
-    title: "Aesthetic & Reconstructive Surgery Consultant",
-    image: "/images/plastic-surgeon/dr-voss.webp",
-    quote: "I created this system because I was YOU. Spending thousands on marketing with unpredictable results. Now I want to help you achieve the same transformation.",
+    name: "Dr. Sofia Martinez",
+    title: "Board-Certified Plastic Surgeon, MD, FACS",
+    image: "/images/plastic-surgeon/dr-sofia.webp",
+    quote: "After 15 years of performing thousands of procedures, I discovered that the surgeons who thrive aren't just skilled — they're visible. I built this system to help you attract the patients you deserve.",
   },
   socialProof: {
     studentCount: 847, // Fallback, use getMemberStats() for dynamic

@@ -2,12 +2,84 @@
 
 import { CheckCircle, Copy, ArrowRight, Mail, Loader2, Gift, Lock, Zap, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { Suspense, useEffect, useState, useCallback } from 'react'
+import { Suspense, useEffect, useState, useCallback, useRef } from 'react'
 
 interface Credentials {
   email: string
   password: string
   name: string
+}
+
+// ============================================================================
+// PURCHASE TRACKING - Main course only ($47)
+// ============================================================================
+
+// Get stored FB identifiers for CAPI
+const getFbIdentifiers = () => {
+  if (typeof window === 'undefined') return { fbc: '', fbp: '' }
+
+  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split('=')
+    acc[key] = value
+    return acc
+  }, {} as Record<string, string>)
+
+  return {
+    fbc: cookies['_fbc'] || sessionStorage.getItem('dentist_fbc') || '',
+    fbp: cookies['_fbp'] || '',
+  }
+}
+
+// Fire Purchase event (CRITICAL for conversion tracking)
+const trackPurchase = (email?: string) => {
+  // Prevent duplicate fires
+  if (typeof window !== 'undefined' && sessionStorage.getItem('dentist_purchase_tracked')) {
+    console.log('⚠️ Dentist Purchase already tracked, skipping')
+    return
+  }
+
+  const purchaseValue = 47.00 // Main course price only
+  const eventId = `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  // Browser pixel
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'Purchase', {
+      value: purchaseValue,
+      currency: 'USD',
+      content_name: 'CloneYourself Dentist',
+      content_type: 'product',
+      content_ids: ['dentist-main'],
+    }, { eventID: eventId })
+    console.log('💰 Dentist Purchase (browser) fired: $' + purchaseValue)
+  }
+
+  // Mark as tracked
+  if (typeof window !== 'undefined') {
+    sessionStorage.setItem('dentist_purchase_tracked', 'true')
+  }
+
+  // Server-side CAPI (critical backup for iOS 14+)
+  const { fbc, fbp } = getFbIdentifiers()
+  fetch('/api/dentist-meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      eventName: 'Purchase',
+      eventId, // Same ID for deduplication
+      value: purchaseValue,
+      currency: 'USD',
+      contentName: 'CloneYourself Dentist',
+      contentType: 'product',
+      contentIds: ['dentist-main'],
+      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://aifastscale.com/dentists/thank-you',
+      email: email || '',
+      fbc,
+      fbp,
+    }),
+  })
+    .then(res => res.json())
+    .then(data => console.log('💰 Dentist Purchase (CAPI) response:', data))
+    .catch(err => console.error('CAPI Purchase error:', err))
 }
 
 function ThankYouContent() {
@@ -25,6 +97,17 @@ function ThankYouContent() {
       setHasVisited(true)
     }
   }, [])
+
+  // Fire Purchase event when credentials are confirmed (proves purchase completed)
+  useEffect(() => {
+    if (credentials && credentials.email) {
+      // Small delay to ensure pixel is loaded
+      const timer = setTimeout(() => {
+        trackPurchase(credentials.email)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [credentials])
 
   const fetchCredentials = useCallback(async (email?: string, userId?: string) => {
     try {
@@ -61,6 +144,8 @@ function ThankYouContent() {
       if (!email && !userId) {
         setIsLoading(false)
         setShowFallback(true)
+        // Still track purchase even without email (they completed checkout)
+        setTimeout(() => trackPurchase(), 500)
         return
       }
 

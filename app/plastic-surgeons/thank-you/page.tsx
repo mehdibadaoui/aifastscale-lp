@@ -10,6 +10,63 @@ interface Credentials {
   name: string
 }
 
+// ===========================================
+// PURCHASE TRACKING - Browser Pixel + CAPI
+// ===========================================
+const trackPurchase = (email?: string) => {
+  if (typeof window === 'undefined') return
+
+  // Prevent duplicate tracking
+  if (sessionStorage.getItem('plastic_surgeon_purchase_tracked')) {
+    console.log('📊 Purchase already tracked, skipping duplicate')
+    return
+  }
+
+  const purchaseValue = 97.82 // Main course price
+  const eventId = `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  // 1. Browser Pixel
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'Purchase', {
+      value: purchaseValue,
+      currency: 'USD',
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      content_ids: ['plastic-surgeon-main'],
+    }, { eventID: eventId })
+    console.log('📊 Purchase pixel fired:', purchaseValue)
+  }
+
+  // Mark as tracked IMMEDIATELY to prevent duplicates
+  sessionStorage.setItem('plastic_surgeon_purchase_tracked', 'true')
+
+  // 2. Server-side CAPI (backup - can't be blocked)
+  const getCookie = (name: string) => {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
+    return match ? match[2] : undefined
+  }
+
+  fetch('/api/plastic-surgeon-meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      eventName: 'Purchase',
+      value: purchaseValue,
+      currency: 'USD',
+      contentName: 'CloneYourself for Plastic Surgeons',
+      contentIds: ['plastic-surgeon-main'],
+      sourceUrl: window.location.href,
+      eventId: eventId,
+      email: email,
+      fbc: getCookie('_fbc') || sessionStorage.getItem('plastic_surgeon_fbc'),
+      fbp: getCookie('_fbp'),
+      userAgent: navigator.userAgent,
+    }),
+  }).then(res => res.json())
+    .then(data => console.log('📊 Purchase CAPI response:', data))
+    .catch(err => console.error('📊 Purchase CAPI error:', err))
+}
+
 function ThankYouContent() {
   const router = useRouter()
   const [copiedPassword, setCopiedPassword] = useState(false)
@@ -61,6 +118,8 @@ function ThankYouContent() {
       if (!email && !userId) {
         setIsLoading(false)
         setShowFallback(true)
+        // Still track purchase even without email (they completed checkout)
+        setTimeout(() => trackPurchase(), 500)
         return
       }
 
@@ -112,6 +171,14 @@ function ThankYouContent() {
       router.replace('/plastic-surgeons/members')
     }
   }, [hasVisited, router])
+
+  // Track Purchase when credentials are confirmed
+  useEffect(() => {
+    if (credentials && credentials.email) {
+      // Small delay to ensure page is fully loaded
+      setTimeout(() => trackPurchase(credentials.email), 500)
+    }
+  }, [credentials])
 
   if (hasVisited) {
     return (

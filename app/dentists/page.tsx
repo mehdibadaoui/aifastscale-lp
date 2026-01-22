@@ -49,6 +49,115 @@ import { AnimatedBackground } from '../components/AnimatedBackground'
 // Whop checkout link
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_SxMS4HqFxJKNT'
 
+// ============================================================================
+// META PIXEL TRACKING FUNCTIONS
+// ============================================================================
+
+// Capture fbclid from Facebook ads and store as _fbc cookie (CRITICAL for attribution)
+const captureFbclid = () => {
+  if (typeof window === 'undefined') return
+
+  const params = new URLSearchParams(window.location.search)
+  const fbclid = params.get('fbclid')
+
+  if (fbclid) {
+    // Store in cookie for 90 days (Meta standard)
+    const fbc = `fb.1.${Date.now()}.${fbclid}`
+    document.cookie = `_fbc=${fbc}; max-age=${90 * 24 * 60 * 60}; path=/; SameSite=Lax`
+    // Also store in sessionStorage for thank-you page
+    sessionStorage.setItem('dentist_fbc', fbc)
+    sessionStorage.setItem('dentist_fbclid', fbclid)
+    console.log('🔗 Dentist fbclid captured:', fbclid)
+  }
+}
+
+// Get stored FB identifiers for CAPI
+const getFbIdentifiers = () => {
+  if (typeof window === 'undefined') return { fbc: '', fbp: '' }
+
+  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split('=')
+    acc[key] = value
+    return acc
+  }, {} as Record<string, string>)
+
+  return {
+    fbc: cookies['_fbc'] || sessionStorage.getItem('dentist_fbc') || '',
+    fbp: cookies['_fbp'] || '',
+  }
+}
+
+// Fire ViewContent event (helps Meta build retargeting audiences)
+const trackViewContent = () => {
+  // Browser pixel
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'ViewContent', {
+      value: 47.00,
+      currency: 'USD',
+      content_name: 'CloneYourself Dentist',
+      content_type: 'product',
+      content_ids: ['dentist-main'],
+    })
+    console.log('👁️ Dentist ViewContent (browser) fired')
+  }
+
+  // Server-side CAPI (backup)
+  const { fbc, fbp } = getFbIdentifiers()
+  fetch('/api/dentist-meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      eventName: 'ViewContent',
+      value: 47.00,
+      currency: 'USD',
+      contentName: 'CloneYourself Dentist',
+      contentType: 'product',
+      contentIds: ['dentist-main'],
+      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://aifastscale.com/dentists',
+      fbc,
+      fbp,
+    }),
+  }).catch(err => console.error('CAPI ViewContent error:', err))
+}
+
+// Fire InitiateCheckout event (tracks CTA clicks)
+const trackInitiateCheckout = () => {
+  // Browser pixel
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'InitiateCheckout', {
+      value: 47.00,
+      currency: 'USD',
+      content_name: 'CloneYourself Dentist',
+      content_type: 'product',
+      content_ids: ['dentist-main'],
+    })
+    console.log('🛒 Dentist InitiateCheckout (browser) fired')
+  }
+
+  // Store checkout timestamp for conversion tracking
+  if (typeof window !== 'undefined') {
+    sessionStorage.setItem('dentist_checkout_started', Date.now().toString())
+  }
+
+  // Server-side CAPI (backup)
+  const { fbc, fbp } = getFbIdentifiers()
+  fetch('/api/dentist-meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      eventName: 'InitiateCheckout',
+      value: 47.00,
+      currency: 'USD',
+      contentName: 'CloneYourself Dentist',
+      contentType: 'product',
+      contentIds: ['dentist-main'],
+      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://aifastscale.com/dentists',
+      fbc,
+      fbp,
+    }),
+  }).catch(err => console.error('CAPI InitiateCheckout error:', err))
+}
+
 export default function DentistCleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
@@ -67,6 +176,16 @@ export default function DentistCleanLandingPage() {
       setMemberStats(getMemberStats())
     }, 60000)
     return () => clearInterval(interval)
+  }, [])
+
+  // Meta tracking on page load - capture fbclid and fire ViewContent
+  useEffect(() => {
+    captureFbclid()
+    // Small delay to ensure pixel is loaded
+    const timer = setTimeout(() => {
+      trackViewContent()
+    }, 500)
+    return () => clearTimeout(timer)
   }, [])
 
   const faqs = [
@@ -375,8 +494,9 @@ export default function DentistCleanLandingPage() {
 
             {/* CTA - Premium Button with Glow */}
             <a
+              onClick={trackInitiateCheckout}
               href={WHOP_CHECKOUT_LINK}
-                            className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
+              className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                 <span className="sm:hidden">Get Instant Access</span>
@@ -755,8 +875,9 @@ export default function DentistCleanLandingPage() {
 
               {/* CTA Button */}
               <Link
+                onClick={trackInitiateCheckout}
                 href={WHOP_CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -1031,8 +1152,9 @@ export default function DentistCleanLandingPage() {
             {/* CTA */}
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
+                onClick={trackInitiateCheckout}
                 href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1576,8 +1698,9 @@ export default function DentistCleanLandingPage() {
               <p className="text-teal-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
 
               <Link
+                onClick={trackInitiateCheckout}
                 href={WHOP_CHECKOUT_LINK}
-                                className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -1644,8 +1767,9 @@ export default function DentistCleanLandingPage() {
             <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
+                onClick={trackInitiateCheckout}
                 href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2051,8 +2175,9 @@ export default function DentistCleanLandingPage() {
 
               {/* CTA Button */}
               <Link
+                onClick={trackInitiateCheckout}
                 href={WHOP_CHECKOUT_LINK}
-                                className="group relative w-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
+                className="group relative w-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
@@ -2124,8 +2249,9 @@ export default function DentistCleanLandingPage() {
               </p>
 
               <a
+                onClick={trackInitiateCheckout}
                 href={WHOP_CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
                 Get Instant Access Now
@@ -2176,8 +2302,9 @@ export default function DentistCleanLandingPage() {
       <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-safe">
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
+            onClick={trackInitiateCheckout}
             href={WHOP_CHECKOUT_LINK}
-                        className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
+            className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
             <span className="text-teal-200 font-bold">$47</span>

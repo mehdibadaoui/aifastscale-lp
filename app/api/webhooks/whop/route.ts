@@ -259,8 +259,8 @@ const PLANS = {
   DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
   PLASTIC_SURGEON_MAIN: { id: 'plan_9AqdDmQnJC2J5', price: 97.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 47.82, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 19.82, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 47.72, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 19.72, type: 'downsell' as const, product: 'plastic-surgeon' as const },
 }
 
 // Get plan info from plan ID
@@ -371,17 +371,29 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
 }
 
 // Generate VIP welcome email with personalized password
+// Supports both dentist (teal) and plastic surgeon (purple) branding
 function generateWelcomeEmail(
   product: typeof PRODUCTS.dentist,
   userPassword: string,
   userEmail: string,
-  buyerName?: string
+  buyerName?: string,
+  productType?: 'dentist' | 'realestate' | 'plastic-surgeon'
 ) {
   const firstName = buyerName ? buyerName.split(' ')[0] : ''
 
-  // Premium color palette - matching dentist LP
-  const accent = '#14b8a6'
-  const teal = '#14b8a6'
+  // Product-specific branding
+  const isPlasticSurgeon = productType === 'plastic-surgeon'
+
+  // Color palette - purple for plastic surgeons, teal for others
+  const accent = isPlasticSurgeon ? '#9333ea' : '#14b8a6' // Purple vs Teal
+  const buttonColor = isPlasticSurgeon ? '#9333ea' : '#14b8a6'
+  const glowColor = isPlasticSurgeon ? 'rgba(147, 51, 234, 0.08)' : 'rgba(20, 184, 166, 0.08)'
+
+  // Social proof text
+  const socialProof = isPlasticSurgeon
+    ? 'Trusted by <strong style="color: ' + accent + ';">+850 plastic surgeons</strong> worldwide'
+    : 'Trusted by <strong style="color: ' + accent + ';">+21,000 dentists</strong> worldwide'
+
   const darkBg = '#09090b'
   const cardBg = '#18181b'
   const cardBorder = '#27272a'
@@ -425,7 +437,7 @@ function generateWelcomeEmail(
           <!-- Main Card -->
           <tr>
             <td>
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: ${cardBg}; border-radius: 20px; border: 1px solid ${cardBorder}; box-shadow: 0 0 60px rgba(20, 184, 166, 0.08);">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: ${cardBg}; border-radius: 20px; border: 1px solid ${cardBorder}; box-shadow: 0 0 60px ${glowColor};">
 
                 <!-- Welcome Header -->
                 <tr>
@@ -496,7 +508,7 @@ function generateWelcomeEmail(
                   <td style="padding: 0 32px 32px 32px;">
                     <table width="100%" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td style="background-color: ${teal}; border-radius: 12px; text-align: center;">
+                        <td style="background-color: ${buttonColor}; border-radius: 12px; text-align: center;">
                           <a href="${product.membersUrl}" style="display: block; padding: 20px 24px; color: ${textWhite}; text-decoration: none; font-size: 16px; font-weight: 700; letter-spacing: 0.5px;">
                             ENTER MEMBERS AREA →
                           </a>
@@ -575,7 +587,7 @@ function generateWelcomeEmail(
           <tr>
             <td style="padding: 24px 0; text-align: center;">
               <p style="margin: 0; color: ${textMuted}; font-size: 13px;">
-                Trusted by <strong style="color: ${accent};">+21,000 dentists</strong> worldwide
+                ${socialProof}
               </p>
             </td>
           </tr>
@@ -787,7 +799,7 @@ export async function POST(request: NextRequest) {
       replyTo: 'support@aifastscale.com',
       to: buyerEmail,
       subject: `🎉 Your ${product.productName} Login Details - Save This Email!`,
-      html: generateWelcomeEmail(product, userPassword, buyerEmail, buyerName),
+      html: generateWelcomeEmail(product, userPassword, buyerEmail, buyerName, productType),
     })
 
     console.log(`✅ Welcome email sent to ${buyerEmail} with unique password`)

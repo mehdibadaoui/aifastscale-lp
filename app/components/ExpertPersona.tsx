@@ -16,10 +16,10 @@ export interface ExpertPersonaProps {
     value: string
     label: string
   }[]
-  accentColor?: 'teal' | 'gold'
+  accentColor?: 'teal' | 'gold' | 'purple'
 }
 
-// Default expert data for Dr. Alexander Voss
+// Default expert data for Dr. Alexander Voss (Dentists)
 export const DR_VOSS_DATA: ExpertPersonaProps = {
   name: 'Dr. Alexander Voss',
   title: 'Aesthetic and Restorative Dentistry Specialist',
@@ -42,6 +42,31 @@ export const DR_VOSS_DATA: ExpertPersonaProps = {
     { value: '25+', label: 'Leads/Month' },
   ],
   accentColor: 'teal',
+}
+
+// Expert data for Dr. Sofia Martinez (Plastic Surgeons)
+export const DR_SOFIA_DATA: ExpertPersonaProps = {
+  name: 'Dr. Sofia Martinez',
+  title: 'Board-Certified Plastic Surgeon',
+  credentials: 'MD, FACS',
+  imageUrl: '/images/plastic-surgeon/dr-sofia.webp',
+  positioningStatement: 'After 15 years of performing thousands of procedures — facelifts, rhinoplasties, breast augmentations — I realized the surgeons who thrived weren\'t just skilled. They were visible. I spent $4,000+/month on marketing, hired expensive videographers, and still struggled to attract ideal patients. Then I built this AI system. Now I get 30+ qualified consult requests monthly, my OR schedule is booked 3 months out, and I\'m teaching plastic surgeons worldwide to do the same.',
+  bulletPoints: [
+    'Built this for my OWN practice first — I use it daily',
+    'Went from 6-8 consults/month to 30+ qualified requests/month',
+    'Cut marketing costs from $4,000/month to $0 (organic only)',
+    'High-value cosmetic cases increased from 45% to 70% of practice revenue',
+    'Now helping 400+ plastic surgeons across 20+ countries replicate results',
+  ],
+  philosophy: 'I created this system because I was YOU. Spending thousands on marketing, watching younger surgeons on social media fill their ORs while you relied on word-of-mouth. Patients don\'t book based on your board certifications — they book because they trust you. This framework uses AI to build that trust instantly with professional videos that showcase your expertise. If it didn\'t work for my own practice, I wouldn\'t be teaching it.',
+  trustElement: 'My practice went from 2-3 consults/week to 10-12/week after using this system',
+  stats: [
+    { value: '15+', label: 'Years Clinical' },
+    { value: '$0', label: 'Marketing Now' },
+    { value: '400+', label: 'Surgeons Taught' },
+    { value: '30+', label: 'Leads/Month' },
+  ],
+  accentColor: 'purple',
 }
 
 export function ExpertPersona({
@@ -73,6 +98,14 @@ export function ExpertPersona({
       icon: 'text-amber-500',
       ring: 'ring-amber-500/30',
     },
+    purple: {
+      badge: 'bg-purple-500/10 border-purple-500/30 text-purple-600',
+      accent: 'text-purple-500',
+      border: 'border-purple-500/50',
+      stat: 'text-purple-500',
+      icon: 'text-purple-500',
+      ring: 'ring-purple-500/30',
+    },
   }
 
   const colors = colorClasses[accentColor]
@@ -88,7 +121,7 @@ export function ExpertPersona({
                 src={imageUrl}
                 alt={`${name} - ${title}`}
                 fill
-                className="object-cover"
+                className="object-cover object-top"
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
