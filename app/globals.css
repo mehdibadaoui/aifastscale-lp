@@ -4063,11 +4063,25 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
     animation-duration: 0.4s !important;
   }
 
-  /* Disable scale animation on hero image for faster paint */
-  #hero .animate-scale-in {
+  /* CRITICAL: Make ALL hero content visible instantly on mobile */
+  /* This prevents the "blank hero" bug where animations hide content */
+  #hero .animate-fade-in-up,
+  #hero .animate-fade-in,
+  #hero .animate-scale-in,
+  #hero .animate-bounce-in,
+  #hero .animate-blur-in,
+  #hero .animate-zoom-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* Also ensure stagger children in hero are visible */
+  #hero .stagger-fast > *,
+  #hero .stagger-children > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
