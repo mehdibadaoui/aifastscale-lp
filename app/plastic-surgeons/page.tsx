@@ -687,7 +687,7 @@ export default function PlasticSurgeonLandingPage() {
           animation: 'gradient-shift 20s ease infinite'
         }}
       >
-        {/* Premium animated purple/fuchsia gradient overlay */}
+        {/* Premium animated purple/amber gradient overlay */}
         <div
           className="absolute inset-0 animate-gradient-xy"
           style={{
@@ -706,7 +706,7 @@ export default function PlasticSurgeonLandingPage() {
 
         {/* Premium floating orbs - larger and more visible */}
         <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/20 to-violet-500/10 rounded-full blur-[100px] floating-slow" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-fuchsia-500/15 to-fuchsia-600/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-amber-500/15 to-orange-500/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-purple-500/10 to-fuchsia-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
 
         <div className="w-full px-4 sm:px-6 relative z-10">
@@ -796,7 +796,7 @@ export default function PlasticSurgeonLandingPage() {
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
               </div>
               {/* Countdown Badge */}
-              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-fuchsia-600/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
                 <span className="text-red-300 text-xs sm:text-sm font-bold">
                   {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
@@ -867,19 +867,19 @@ export default function PlasticSurgeonLandingPage() {
         {/* Background glow effects - hidden on mobile for performance */}
         <div className="absolute inset-0 pointer-events-none hidden sm:block">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-fuchsia-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
         </div>
 
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
             {/* Header with impressive stats */}
             <div className="text-center mb-6 sm:mb-12">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 border border-purple-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-amber-500/20 border border-purple-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
                 <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
                 <span className="text-white font-bold text-xs sm:text-sm">Used by 3,247+ Surgeons in 100+ Countries</span>
               </div>
               <h2 className="text-xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-3 leading-tight">
-                Works in <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">Your Language</span>
+                Works in <span className="bg-gradient-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent">Your Language</span>
               </h2>
               <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
                 AI generates videos with <span className="text-white font-semibold">perfect native pronunciation</span> in 100+ languages.
@@ -893,7 +893,7 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="text-gray-400 text-[10px] sm:text-sm">Surgeons Worldwide</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
-                <div className="text-lg sm:text-3xl font-black text-purple-400">100+</div>
+                <div className="text-lg sm:text-3xl font-black text-amber-400">100+</div>
                 <div className="text-gray-400 text-[10px] sm:text-sm">Languages</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
@@ -983,10 +983,10 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* Testimonial from international surgeon */}
-            <div className="bg-gradient-to-r from-purple-500/10 to-fuchsia-500/10 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+            <div className="bg-gradient-to-r from-purple-500/10 to-amber-500/10 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
               <div className="flex items-start gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center text-white text-sm sm:text-xl font-bold">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center text-white text-sm sm:text-xl font-bold">
                     CS
                   </div>
                 </div>
@@ -994,13 +994,13 @@ export default function PlasticSurgeonLandingPage() {
                   <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400 fill-purple-400" />
+                        <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400 fill-amber-400" />
                       ))}
                     </div>
                     <span className="text-gray-500 text-[10px] sm:text-xs">Verified</span>
                   </div>
                   <p className="text-white text-xs sm:text-base leading-relaxed mb-2 sm:mb-3">
-                    "The Portuguese accent is <span className="text-purple-400 font-semibold">perfect</span> — my patients can't tell it's AI. Consultation requests tripled. <span className="text-purple-400 font-semibold">Worth every penny.</span>"
+                    "The Portuguese accent is <span className="text-purple-400 font-semibold">perfect</span> — my patients can't tell it's AI. Consultation requests tripled. <span className="text-amber-400 font-semibold">Worth every penny.</span>"
                   </p>
                   <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                     <span className="text-white font-semibold text-xs sm:text-sm">Dr. Carolina Santos</span>
@@ -1032,7 +1032,7 @@ export default function PlasticSurgeonLandingPage() {
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-10 left-10 w-2 h-2 bg-purple-500/30 rounded-full animate-ping" />
-          <div className="absolute top-1/3 right-20 w-3 h-3 bg-fuchsia-500/20 rounded-full animate-pulse" />
+          <div className="absolute top-1/3 right-20 w-3 h-3 bg-amber-500/20 rounded-full animate-pulse" />
           <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-bounce" />
           <div className="absolute top-1/2 right-10 w-2 h-2 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
         </div>
@@ -1059,14 +1059,14 @@ export default function PlasticSurgeonLandingPage() {
               {/* Creative Animated Steps - Timeline Style */}
               <div className="relative">
                 {/* Connecting Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-fuchsia-500 to-green-500 -translate-x-1/2 hidden md:block" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
 
                 {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
                 <div className="space-y-4">
                   {/* Step 1 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''}`}>
                     {/* Icon - shown first on mobile */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-fuchsia-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/40 md:order-2">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
                         <span className="text-purple-600 font-black text-xs sm:text-sm">1</span>
@@ -1086,17 +1086,17 @@ export default function PlasticSurgeonLandingPage() {
                   {/* Step 2 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                     {/* Icon */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-fuchsia-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-fuchsia-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
                       <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-purple-600 font-black text-xs sm:text-sm">2</span>
+                        <span className="text-amber-600 font-black text-xs sm:text-sm">2</span>
                       </div>
                     </div>
                     {/* Desktop spacer */}
                     <div className="hidden md:block md:flex-1 md:order-1" />
                     {/* Content */}
                     <div className="w-full md:flex-1 md:order-3">
-                      <div className="bg-gradient-to-l from-fuchsia-500/20 to-transparent rounded-xl p-4 border border-fuchsia-500/30">
+                      <div className="bg-gradient-to-l from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">We Process Instantly</h3>
                         <p className="text-gray-400 text-xs sm:text-sm">No questions, no forms, no waiting period</p>
                       </div>
@@ -1127,7 +1127,7 @@ export default function PlasticSurgeonLandingPage() {
 
               {/* Bottom Message */}
               <div className="mt-6 sm:mt-10 text-center">
-                <div className="inline-block bg-gradient-to-r from-purple-500/20 via-fuchsia-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
+                <div className="inline-block bg-gradient-to-r from-purple-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
                   <p className="text-white font-bold text-sm sm:text-lg mb-2">
                     That's it. <span className="text-purple-400">3 simple steps.</span>
                   </p>
@@ -1236,7 +1236,7 @@ export default function PlasticSurgeonLandingPage() {
               </div>
 
               {/* Results Strip */}
-              <div className="bg-gradient-to-r from-purple-500/20 via-fuchsia-500/20 to-purple-500/20 border-y border-purple-500/30 py-4 px-4 sm:px-8">
+              <div className="bg-gradient-to-r from-purple-500/20 via-amber-500/20 to-purple-500/20 border-y border-purple-500/30 py-4 px-4 sm:px-8">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   {[
                     { number: '28', label: 'Consultations', sub: 'in 4 weeks' },
@@ -1496,7 +1496,7 @@ export default function PlasticSurgeonLandingPage() {
               {/* CTA Button */}
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                                className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -1552,20 +1552,20 @@ export default function PlasticSurgeonLandingPage() {
       >
         {/* Decorative background elements */}
         <div className="absolute top-20 left-10 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-fuchsia-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl" />
 
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-zoom-in' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-fuchsia-500/10 border border-purple-500/30 px-4 py-2 rounded-full mb-4 hover-scale">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-amber-500/10 border border-purple-500/30 px-4 py-2 rounded-full mb-4 hover-scale">
                 <Zap className="w-4 h-4 text-purple-500 animate-pulse" />
                 <span className="text-purple-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
                 <span className="text-gray-400 text-xs">•</span>
-                <span className="text-purple-600 font-bold text-xs">~20 min total</span>
+                <span className="text-amber-600 font-bold text-xs">~20 min total</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
-                From Zero to <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-fuchsia-500">AI Video</span> in Minutes
+                From Zero to <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-amber-500">AI Video</span> in Minutes
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
                 Even if you've never touched AI before. Works <span className="font-bold text-gray-800">only for plastic surgeons</span>.
@@ -1575,7 +1575,7 @@ export default function PlasticSurgeonLandingPage() {
             {/* 4 Steps - Creative Timeline */}
             <div className="relative">
               {/* Connecting line - desktop */}
-              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-green-500 -translate-y-1/2 rounded-full opacity-20" />
+              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-amber-500 to-green-500 -translate-y-1/2 rounded-full opacity-20" />
 
               <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 stagger-children ${visibleSections.has('how-it-works') ? 'visible' : ''}`}>
                 {/* Step 1 - Generate Script */}
@@ -1584,7 +1584,7 @@ export default function PlasticSurgeonLandingPage() {
                     {/* Step number - floating */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-fuchsia-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">1</span>
                         </div>
                         <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
@@ -1601,7 +1601,7 @@ export default function PlasticSurgeonLandingPage() {
                     </div>
 
                     {/* Icon */}
-                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500/20 to-fuchsia-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500/20 to-amber-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                       <MessageSquare className="w-7 h-7 text-purple-500" />
                     </div>
 
@@ -1623,11 +1623,11 @@ export default function PlasticSurgeonLandingPage() {
 
                 {/* Step 2 - Select Image / Create AI Model */}
                 <div className="group relative">
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-fuchsia-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-fuchsia-500/10 h-full hover-lift">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-amber-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 h-full hover-lift">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-fuchsia-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg shadow-fuchsia-500/30 group-hover:scale-110 transition-transform">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">2</span>
                         </div>
                       </div>
@@ -1635,20 +1635,20 @@ export default function PlasticSurgeonLandingPage() {
 
                     {/* Time badge */}
                     <div className="flex justify-end mb-4 mt-2">
-                      <span className="bg-fuchsia-500/10 text-purple-600 px-3 py-1 rounded-full text-xs font-bold border border-fuchsia-500/20">
+                      <span className="bg-amber-500/10 text-amber-600 px-3 py-1 rounded-full text-xs font-bold border border-amber-500/20">
                         3 min
                       </span>
                     </div>
 
                     {/* Icon */}
-                    <div className="w-14 h-14 bg-gradient-to-br from-fuchsia-500/20 to-purple-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                      <Upload className="w-7 h-7 text-purple-500" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500/20 to-purple-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <Upload className="w-7 h-7 text-amber-500" />
                     </div>
 
                     {/* Content */}
                     <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Pick Your Image</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Upload a selfie <span className="text-purple-600 font-semibold">OR</span> generate your personalized AI model from scratch.
+                      Upload a selfie <span className="text-amber-600 font-semibold">OR</span> generate your personalized AI model from scratch.
                     </p>
 
                     {/* Mini feature */}
@@ -1670,7 +1670,7 @@ export default function PlasticSurgeonLandingPage() {
                         <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">3</span>
                         </div>
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-purple-500 to-fuchsia-500 rounded-full flex items-center justify-center">
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-purple-500 to-amber-500 rounded-full flex items-center justify-center">
                           <Play className="w-2.5 h-2.5 text-white ml-0.5" />
                         </div>
                       </div>
@@ -1716,7 +1716,7 @@ export default function PlasticSurgeonLandingPage() {
                         <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">4</span>
                         </div>
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-purple-400 rounded-full flex items-center justify-center animate-bounce">
+                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center animate-bounce">
                           <Star className="w-3 h-3 text-white" />
                         </div>
                       </div>
@@ -1755,11 +1755,11 @@ export default function PlasticSurgeonLandingPage() {
             {/* Total time banner */}
             <div className={`flex justify-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-fuchsia-500 rounded-full blur-xl opacity-20 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-amber-500 rounded-full blur-xl opacity-20 animate-pulse" />
                 <div className="relative flex items-center gap-4 sm:gap-6 bg-gradient-to-r from-gray-900 to-gray-800 rounded-full px-6 sm:px-10 py-3 sm:py-4 shadow-2xl">
                   <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
                   <div className="flex items-baseline gap-2">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400 font-black text-2xl sm:text-4xl">~20</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-400 font-black text-2xl sm:text-4xl">~20</span>
                     <span className="text-gray-400 text-sm sm:text-lg font-medium">minutes total</span>
                   </div>
                   <div className="hidden sm:block w-px h-8 bg-gray-700" />
@@ -1772,7 +1772,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-purple-500/30"
+                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-purple-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2003,18 +2003,18 @@ export default function PlasticSurgeonLandingPage() {
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('case-study-lisa') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-full mb-3">
-                <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
-                <span className="text-purple-400 font-bold text-xs uppercase tracking-wide">Rhinoplasty Success Story</span>
+              <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full mb-3">
+                <TrendingUp className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-amber-400 font-bold text-xs uppercase tracking-wide">Rhinoplasty Success Story</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
-                One Video. <span className="text-purple-400">23 Rhinoplasty Consultations.</span>
+                One Video. <span className="text-amber-400">23 Rhinoplasty Consultations.</span>
               </h2>
               <p className="text-gray-400 text-sm sm:text-lg">From skeptic to booked solid in 30 days</p>
             </div>
 
             {/* Dr. Lisa Case Study Card */}
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 border border-purple-500/30 rounded-xl sm:rounded-2xl overflow-hidden ${visibleSections.has('case-study-lisa') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border border-amber-500/30 rounded-xl sm:rounded-2xl overflow-hidden ${visibleSections.has('case-study-lisa') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: Image - Mobile optimized */}
                 <div className="relative aspect-video lg:aspect-auto">
@@ -2036,7 +2036,7 @@ export default function PlasticSurgeonLandingPage() {
                     sizes="(max-width: 1024px) 50vw, 500px"
                   />
                   <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-                    <span className="text-purple-400 text-xs font-bold">89K Views on TikTok</span>
+                    <span className="text-amber-400 text-xs font-bold">89K Views on TikTok</span>
                   </div>
                 </div>
 
@@ -2044,19 +2044,19 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="p-5 sm:p-8 flex flex-col justify-center">
                   {/* Profile */}
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-purple-500 bg-gradient-to-br from-purple-500 to-fuchsia-600 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
                       <span className="text-white font-bold text-sm">LP</span>
                     </div>
                     <div>
                       <h3 className="text-white font-bold text-lg">Dr. Lisa Park</h3>
-                      <p className="text-purple-400 text-sm">Rhinoplasty Specialist • Seattle, WA</p>
+                      <p className="text-amber-400 text-sm">Rhinoplasty Specialist • Seattle, WA</p>
                     </div>
                   </div>
 
                   {/* Quote */}
                   <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4 italic">
                     "My TikTok video explaining what to expect during rhinoplasty recovery got 89K views.
-                    I booked <span className="text-purple-400 font-bold">23 new consultations</span> that month.
+                    I booked <span className="text-amber-400 font-bold">23 new consultations</span> that month.
                     This system pays for itself daily."
                   </p>
 
@@ -2068,7 +2068,7 @@ export default function PlasticSurgeonLandingPage() {
                       { value: '$276K', label: 'Revenue' },
                     ].map((stat, i) => (
                       <div key={i} className="bg-black/40 rounded-lg p-3 text-center border border-white/10">
-                        <div className={`text-lg sm:text-xl font-black ${i === 2 ? 'text-green-400' : 'text-purple-400'}`}>{stat.value}</div>
+                        <div className={`text-lg sm:text-xl font-black ${i === 2 ? 'text-green-400' : 'text-amber-400'}`}>{stat.value}</div>
                         <div className="text-gray-500 text-xs">{stat.label}</div>
                       </div>
                     ))}
@@ -2077,7 +2077,7 @@ export default function PlasticSurgeonLandingPage() {
                   {/* Stars */}
                   <div className="flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-purple-400 text-purple-400" />
+                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                     ))}
                     <span className="text-gray-500 text-xs ml-2">Verified Member</span>
                   </div>
@@ -2287,7 +2287,7 @@ export default function PlasticSurgeonLandingPage() {
               visibleSections.has('guarantee1') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Animated background pulse */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-fuchsia-500/10 to-purple-500/5 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-amber-500/10 to-purple-500/5 animate-pulse" />
 
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
@@ -2435,7 +2435,7 @@ export default function PlasticSurgeonLandingPage() {
               <a
                 href={WHOP_CHECKOUT_LINK}
                 onClick={trackInitiateCheckout}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-purple-500/25"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-purple-500/25"
               >
                 <Zap className="w-5 h-5" />
                 Get CloneYourself Now
@@ -2496,7 +2496,7 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
 
                 {/* Smart Way */}
-                <div className="bg-gradient-to-br from-purple-500 to-fuchsia-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto hover-lift hover-glow">
+                <div className="bg-gradient-to-br from-purple-500 to-amber-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto hover-lift hover-glow">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-black text-purple-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black">
                     Best Value
                   </div>
@@ -2589,7 +2589,7 @@ export default function PlasticSurgeonLandingPage() {
 
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full max-w-md mx-auto bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
+                                className="w-full max-w-md mx-auto bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -2654,7 +2654,7 @@ export default function PlasticSurgeonLandingPage() {
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-purple-500/30"
+                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-purple-500 via-amber-500 to-purple-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-purple-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2680,7 +2680,7 @@ export default function PlasticSurgeonLandingPage() {
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-10 left-10 w-2 h-2 bg-purple-500/30 rounded-full animate-ping" />
-          <div className="absolute top-1/3 right-20 w-3 h-3 bg-fuchsia-500/20 rounded-full animate-pulse" />
+          <div className="absolute top-1/3 right-20 w-3 h-3 bg-amber-500/20 rounded-full animate-pulse" />
           <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-bounce" />
           <div className="absolute top-1/2 right-10 w-2 h-2 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
         </div>
@@ -2707,14 +2707,14 @@ export default function PlasticSurgeonLandingPage() {
               {/* Creative Animated Steps - Timeline Style */}
               <div className="relative">
                 {/* Connecting Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-fuchsia-500 to-green-500 -translate-x-1/2 hidden md:block" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
 
                 {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
                 <div className="space-y-4">
                   {/* Step 1 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''}`}>
                     {/* Icon - shown first on mobile */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-fuchsia-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/40 md:order-2">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
                         <span className="text-purple-600 font-black text-xs sm:text-sm">1</span>
@@ -2734,17 +2734,17 @@ export default function PlasticSurgeonLandingPage() {
                   {/* Step 2 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                     {/* Icon */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-fuchsia-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-fuchsia-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
                       <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-purple-600 font-black text-xs sm:text-sm">2</span>
+                        <span className="text-amber-600 font-black text-xs sm:text-sm">2</span>
                       </div>
                     </div>
                     {/* Desktop spacer */}
                     <div className="hidden md:block md:flex-1 md:order-1" />
                     {/* Content */}
                     <div className="w-full md:flex-1 md:order-3">
-                      <div className="bg-gradient-to-l from-fuchsia-500/20 to-transparent rounded-xl p-4 border border-fuchsia-500/30">
+                      <div className="bg-gradient-to-l from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">We Process Instantly</h3>
                         <p className="text-gray-400 text-xs sm:text-sm">No questions, no forms, no waiting period</p>
                       </div>
@@ -2775,7 +2775,7 @@ export default function PlasticSurgeonLandingPage() {
 
               {/* Bottom Message */}
               <div className="mt-6 sm:mt-10 text-center">
-                <div className="inline-block bg-gradient-to-r from-purple-500/20 via-fuchsia-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
+                <div className="inline-block bg-gradient-to-r from-purple-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
                   <p className="text-white font-bold text-sm sm:text-lg mb-2">
                     That's it. <span className="text-purple-400">3 simple steps.</span>
                   </p>
@@ -2896,12 +2896,12 @@ export default function PlasticSurgeonLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-purple-500/5 via-white to-fuchsia-500/5 border-2 border-purple-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
+            <div className={`bg-gradient-to-br from-purple-500/5 via-white to-amber-500/5 border-2 border-purple-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
               visibleSections.has('guarantee3') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-40 h-40 bg-fuchsia-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
@@ -2924,7 +2924,7 @@ export default function PlasticSurgeonLandingPage() {
                     <div className="relative flex-shrink-0">
                       <div className="w-24 h-24 sm:w-32 sm:h-32 relative">
                         <div className="absolute inset-0 rounded-full border-4 border-dashed border-purple-500/40 animate-spin-slow" />
-                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-purple-500 shadow-2xl shadow-purple-500/30 flex flex-col items-center justify-center">
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-500 via-amber-500 to-purple-500 shadow-2xl shadow-purple-500/30 flex flex-col items-center justify-center">
                           <div className="absolute inset-2 rounded-full bg-white flex flex-col items-center justify-center text-center p-2">
                             <Heart className="w-5 h-5 sm:w-7 sm:h-7 text-purple-500 mb-1" />
                             <span className="text-purple-600 font-black text-xs sm:text-sm leading-none">NO</span>
@@ -2932,7 +2932,7 @@ export default function PlasticSurgeonLandingPage() {
                             <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Asked</span>
                           </div>
                         </div>
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-amber-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
                           30 DAYS
                         </div>
                       </div>
@@ -3061,7 +3061,7 @@ export default function PlasticSurgeonLandingPage() {
               {/* CTA Button */}
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative w-full bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
+                                className="group relative w-full bg-gradient-to-r from-purple-400 via-amber-400 to-purple-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
@@ -3134,7 +3134,7 @@ export default function PlasticSurgeonLandingPage() {
 
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                                className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
                 Get Instant Access Now
@@ -3186,7 +3186,7 @@ export default function PlasticSurgeonLandingPage() {
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
             onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                        className="w-full bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-purple-500/30 active:scale-[0.98] transition-transform"
+                        className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-purple-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
             <span className="text-purple-200 font-bold">$97.82</span>
@@ -3583,7 +3583,7 @@ export default function PlasticSurgeonLandingPage() {
           <a
             href={WHOP_CHECKOUT_LINK}
             onClick={trackInitiateCheckout}
-            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-purple-500/30 animate-pulse"
+            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-purple-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />
             Get Instant Access — $97.82
@@ -3626,7 +3626,7 @@ export default function PlasticSurgeonLandingPage() {
 
             {/* Content */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-fuchsia-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                 <Gift className="w-8 h-8 text-white" />
               </div>
 
@@ -3653,7 +3653,7 @@ export default function PlasticSurgeonLandingPage() {
                   trackInitiateCheckout()
                   setShowExitPopup(false)
                 }}
-                className="block w-full bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white py-4 rounded-xl font-black text-lg hover:scale-[1.02] transition-transform mb-3"
+                className="block w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-lg hover:scale-[1.02] transition-transform mb-3"
               >
                 Yes, I Want This Deal!
               </a>
