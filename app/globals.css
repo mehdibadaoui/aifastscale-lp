@@ -4070,10 +4070,12 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
   #hero .animate-scale-in,
   #hero .animate-bounce-in,
   #hero .animate-blur-in,
-  #hero .animate-zoom-in {
+  #hero .animate-zoom-in,
+  #hero [class*="animate-"] {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+    visibility: visible !important;
   }
 
   /* Also ensure stagger children in hero are visible */
@@ -4082,6 +4084,23 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+    visibility: visible !important;
+  }
+
+  /* Nuclear option: Make ALL hero descendants visible */
+  #hero * {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Ensure hero h1 and p are visible */
+  #hero h1,
+  #hero p,
+  #hero span,
+  #hero div {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
 
