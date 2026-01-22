@@ -297,10 +297,6 @@ export default function PlasticSurgeonLandingPage() {
   // Sticky mobile CTA - shows after scrolling past hero
   const [showStickyCTA, setShowStickyCTA] = useState(false)
 
-  // Exit intent popup
-  const [showExitPopup, setShowExitPopup] = useState(false)
-  const [exitPopupShown, setExitPopupShown] = useState(false)
-
   // Live viewers count for urgency (realistic range)
   const [liveViewers, setLiveViewers] = useState(0)
 
@@ -350,30 +346,6 @@ export default function PlasticSurgeonLandingPage() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  // Exit intent popup - show when mouse leaves viewport (desktop only)
-  useEffect(() => {
-    // Check if already shown in this session
-    if (sessionStorage.getItem('ps_exit_popup_shown')) {
-      setExitPopupShown(true)
-      return
-    }
-
-    const handleMouseLeave = (e: MouseEvent) => {
-      // Only trigger when mouse leaves from the top
-      if (e.clientY <= 0 && !exitPopupShown) {
-        setShowExitPopup(true)
-        setExitPopupShown(true)
-        sessionStorage.setItem('ps_exit_popup_shown', 'true')
-      }
-    }
-
-    // Only add on desktop (no touch device)
-    if (window.matchMedia('(hover: hover)').matches) {
-      document.addEventListener('mouseleave', handleMouseLeave)
-      return () => document.removeEventListener('mouseleave', handleMouseLeave)
-    }
-  }, [exitPopupShown])
 
   // Live viewers count - realistic fluctuation
   useEffect(() => {
@@ -3602,84 +3574,6 @@ export default function PlasticSurgeonLandingPage() {
           </div>
         </div>
       </div>
-
-      {/* ================================================================
-          EXIT INTENT POPUP - Shows when leaving (desktop)
-          ================================================================ */}
-      {showExitPopup && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade-in">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-            onClick={() => setShowExitPopup(false)}
-          />
-
-          {/* Popup */}
-          <div className="relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border-2 border-purple-500/50 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl shadow-purple-500/20 animate-scale-in">
-            {/* Close button */}
-            <button
-              onClick={() => setShowExitPopup(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            {/* Content */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
-                <Gift className="w-8 h-8 text-white" />
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-black text-white mb-2">
-                Wait! Don't Leave Empty-Handed
-              </h3>
-
-              <p className="text-gray-400 mb-4">
-                Get the complete AI video system + all 10 bonuses for just <span className="text-purple-400 font-bold">$97.82</span> (98% off)
-              </p>
-
-              {/* Urgency */}
-              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4">
-                <p className="text-red-400 text-sm font-bold flex items-center justify-center gap-2">
-                  <AlertTriangle className="w-4 h-4" />
-                  {liveViewers} plastic surgeons viewing this page right now
-                </p>
-              </div>
-
-              {/* CTA */}
-              <a
-                href={WHOP_CHECKOUT_LINK}
-                onClick={() => {
-                  trackInitiateCheckout()
-                  setShowExitPopup(false)
-                }}
-                className="block w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-lg hover:scale-[1.02] transition-transform mb-3"
-              >
-                Yes, I Want This Deal!
-              </a>
-
-              <button
-                onClick={() => setShowExitPopup(false)}
-                className="text-gray-500 text-sm hover:text-gray-400 transition-colors"
-              >
-                No thanks, I'll pass on this opportunity
-              </button>
-
-              {/* Trust */}
-              <div className="flex items-center justify-center gap-4 mt-4 text-xs text-gray-500">
-                <span className="flex items-center gap-1">
-                  <Shield className="w-3 h-3 text-purple-400" />
-                  30-Day Guarantee
-                </span>
-                <span className="flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-purple-400" />
-                  Instant Access
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   )
 }
