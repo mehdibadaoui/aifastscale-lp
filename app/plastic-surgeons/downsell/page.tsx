@@ -28,7 +28,7 @@ export default function PlasticSurgeonDownsellPage() {
   // Get the 5 downsell products (same as upsell - user declined those)
   const downsellProducts = getPlasticSurgeonUpsellBonuses()
   const totalOriginalValue = downsellProducts.reduce((sum, b) => sum + b.value, 0)
-  const downsellPrice = 19.72
+  const downsellPrice = 4.95
   const pricePerItem = 3.96
 
   // Timer countdown
@@ -91,7 +91,7 @@ export default function PlasticSurgeonDownsellPage() {
             <div className="flex items-center justify-center gap-3 md:gap-4">
               <div className="text-center">
                 <p className="text-white/50 text-[9px] md:text-[10px]">Was</p>
-                <p className="text-white/40 line-through text-sm md:text-base">$47.72</p>
+                <p className="text-white/40 line-through text-sm md:text-base">$9.95</p>
               </div>
               <ArrowRight className="w-4 h-4 text-orange-400" />
               <div className="text-center">

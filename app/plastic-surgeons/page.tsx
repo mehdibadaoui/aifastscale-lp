@@ -92,7 +92,7 @@ const trackViewContent = () => {
   // 1. Browser Pixel
   if ((window as any).fbq) {
     (window as any).fbq('track', 'ViewContent', {
-      value: 97.82,
+      value: 47.82,
       currency: 'USD',
       content_name: 'CloneYourself for Plastic Surgeons',
       content_type: 'product',
@@ -107,7 +107,7 @@ const trackViewContent = () => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       eventName: 'ViewContent',
-      value: 97.82,
+      value: 47.82,
       currency: 'USD',
       contentName: 'CloneYourself for Plastic Surgeons',
       contentIds: ['plastic-surgeon-main'],
@@ -129,7 +129,7 @@ const trackInitiateCheckout = () => {
   // 1. Browser Pixel
   if ((window as any).fbq) {
     (window as any).fbq('track', 'InitiateCheckout', {
-      value: 97.82,
+      value: 47.82,
       currency: 'USD',
       content_name: 'CloneYourself for Plastic Surgeons',
       content_type: 'product',
@@ -144,7 +144,7 @@ const trackInitiateCheckout = () => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       eventName: 'InitiateCheckout',
-      value: 97.82,
+      value: 47.82,
       currency: 'USD',
       contentName: 'CloneYourself for Plastic Surgeons',
       contentIds: ['plastic-surgeon-main'],
@@ -792,7 +792,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getPlasticSurgeonTotalBonusValue() + 98}</span>
-                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$97.82</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
@@ -1298,7 +1298,7 @@ export default function PlasticSurgeonLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
                 {[
-                  { value: '$97.82', label: 'Investment', sub: 'One-time' },
+                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
                   { value: '28', label: 'Consultations', sub: '4 weeks' },
                   { value: '$156K', label: 'Revenue', sub: '8 weeks' },
                 ].map((stat, i) => (
@@ -1456,7 +1456,7 @@ export default function PlasticSurgeonLandingPage() {
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-purple-500/30">
                 <p className="text-purple-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-purple-400">$97.82</span>
+                  <span className="text-4xl sm:text-6xl font-black text-purple-400">$47.82</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -1923,7 +1923,7 @@ export default function PlasticSurgeonLandingPage() {
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       Two weeks of AI videos. <span className="text-purple-600 font-bold">$189,000 in facelift procedures</span>.
-                      I spent $28,000 on marketing agencies over 8 months and got 4 consultations. This system cost me $97.82 and
+                      I spent $28,000 on marketing agencies over 8 months and got 4 consultations. This system cost me $47.82 and
                       I booked 6 surgeries in two weeks. My only regret is not starting sooner.
                     </p>
                     <div className="flex items-center gap-3">
@@ -1947,7 +1947,7 @@ export default function PlasticSurgeonLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
-                  { value: '$97.82', label: 'Investment', sub: 'One-time' },
+                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
                   { value: '$189K', label: 'Revenue', sub: '2 weeks' },
                   { value: '1,932x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
@@ -2367,7 +2367,7 @@ export default function PlasticSurgeonLandingPage() {
                     </th>
                     <th className="text-center py-4 px-3 sm:px-4 bg-purple-50">
                       <div className="text-purple-600 font-bold text-sm">CloneYourself</div>
-                      <div className="text-purple-400 text-xs">$97.82 one-time</div>
+                      <div className="text-purple-400 text-xs">$47.82 one-time</div>
                     </th>
                   </tr>
                 </thead>
@@ -2375,7 +2375,7 @@ export default function PlasticSurgeonLandingPage() {
                   {[
                     { feature: 'Time to create 1 video', agency: '1-2 weeks', diy: '4-8 hours', us: '7 minutes', winner: true },
                     { feature: 'Monthly cost', agency: '$3,000+', diy: '$0 (your time)', us: '$0', winner: true },
-                    { feature: 'Upfront investment', agency: '$3,000+', diy: '$500+ software', us: '$97.82', winner: true },
+                    { feature: 'Upfront investment', agency: '$3,000+', diy: '$500+ software', us: '$47.82', winner: true },
                     { feature: 'Videos per month', agency: '4-8', diy: '2-4', us: 'Unlimited', winner: true },
                     { feature: 'Need to be on camera', agency: 'Yes', diy: 'Yes', us: 'No', winner: true },
                     { feature: 'Learning curve', agency: 'None', diy: 'Steep', us: 'None', winner: true },
@@ -2476,7 +2476,7 @@ export default function PlasticSurgeonLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$97.82<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.82<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
                   <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
                 </div>
               </div>
@@ -2486,7 +2486,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-purple-500/30 mb-6 card-hover ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
-              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $97.82 Actually Includes:</h3>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.82 Actually Includes:</h3>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 {/* Main Course */}
@@ -2534,7 +2534,7 @@ export default function PlasticSurgeonLandingPage() {
                 </div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-purple-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-purple-400 font-black text-2xl sm:text-3xl">$97.82</span>
+                  <span className="text-purple-400 font-black text-2xl sm:text-3xl">$47.82</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
@@ -2551,7 +2551,7 @@ export default function PlasticSurgeonLandingPage() {
               visibleSections.has('pricing') ? 'animate-bounce-in animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-purple-400">$97.82</span>
+                <span className="text-4xl sm:text-6xl font-black text-purple-400">$47.82</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
@@ -2798,7 +2798,7 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
-          REASONS WHY - Why Is This Only $97.82? (Hormozi Principle)
+          REASONS WHY - Why Is This Only $47.82? (Hormozi Principle)
           ================================================================ */}
       <section
         id="reasons-why"
@@ -2809,7 +2809,7 @@ export default function PlasticSurgeonLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
-                Why Is This Only <span className="text-gradient-premium">$97.82</span>?
+                Why Is This Only <span className="text-gradient-premium">$47.82</span>?
               </h2>
               <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
             </div>
@@ -2829,7 +2829,7 @@ export default function PlasticSurgeonLandingPage() {
                 {
                   num: '3',
                   title: 'High Volume = Better For Both Of Us',
-                  desc: `At $97.82, I can reach ${memberStats.totalMembers.toLocaleString()}+ plastic surgeons. Even if only 10% create videos and 5% get results, that's hundreds of plastic surgeons getting new patients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 plastic surgeons.`,
+                  desc: `At $47.82, I can reach ${memberStats.totalMembers.toLocaleString()}+ plastic surgeons. Even if only 10% create videos and 5% get results, that's hundreds of plastic surgeons getting new patients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 plastic surgeons.`,
                 },
                 {
                   num: '4',
@@ -3004,7 +3004,7 @@ export default function PlasticSurgeonLandingPage() {
                   <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-purple-200">
-                  <p className="text-purple-700 font-bold text-xs">Cost: $97.82 one-time. Worst case: refund + $50</p>
+                  <p className="text-purple-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: refund + $50</p>
                 </div>
               </div>
             </div>
@@ -3013,8 +3013,8 @@ export default function PlasticSurgeonLandingPage() {
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
               <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-purple-600 font-bold">$2,000-5,000</span> from a $97.82 investment.</p>
-                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-purple-600 font-bold">$10,000-25,000</span> from $97.82.</p>
+                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-purple-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
+                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-purple-600 font-bold">$10,000-25,000</span> from $47.82.</p>
                 <p>• Even if you try it for 30 days and ask for a refund... <span className="text-purple-600 font-bold">you're up $50</span> and lost nothing.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
@@ -3023,7 +3023,7 @@ export default function PlasticSurgeonLandingPage() {
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-purple-400">$97.82</span>
+                <span className="text-3xl sm:text-5xl font-black text-purple-400">$47.82</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -3086,7 +3086,7 @@ export default function PlasticSurgeonLandingPage() {
                 <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-purple-400 font-black text-lg sm:text-xl">$97.82</p>
+                    <p className="text-purple-400 font-black text-lg sm:text-xl">$47.82</p>
                     <p className="text-gray-500 text-xs">Cost</p>
                   </div>
                   <div>
@@ -3161,7 +3161,7 @@ export default function PlasticSurgeonLandingPage() {
                         className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-purple-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
-            <span className="text-purple-200 font-bold">$97.82</span>
+            <span className="text-purple-200 font-bold">$47.82</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>
@@ -3558,7 +3558,7 @@ export default function PlasticSurgeonLandingPage() {
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-purple-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />
-            Get Instant Access — $97.82
+            Get Instant Access — $47.82
             <ArrowRight className="w-5 h-5" />
           </a>
           <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">

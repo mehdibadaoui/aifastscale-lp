@@ -10,7 +10,7 @@ import { NextResponse } from 'next/server'
 const product = {
   membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
   productName: 'CloneYourself for Plastic Surgeons',
-  price: '97.82',
+  price: '47.82',
   accentColor: '#9333ea'
 }
 

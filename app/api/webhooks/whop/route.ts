@@ -246,7 +246,7 @@ const PRODUCTS = {
   'plastic-surgeon': {
     membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
     productName: 'CloneYourself for Plastic Surgeons',
-    price: '97.82',
+    price: '47.82',
     accentColor: '#9333ea' // Purple
   }
 }
@@ -258,9 +258,9 @@ const PLANS = {
   DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
   DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
-  PLASTIC_SURGEON_MAIN: { id: 'plan_9AqdDmQnJC2J5', price: 97.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 47.72, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 19.72, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_MAIN: { id: 'plan_9AqdDmQnJC2J5', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
 }
 
 // Get plan info from plan ID
@@ -773,7 +773,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Record main course purchase with revenue
-    const mainPrice = productType === 'plastic-surgeon' ? 97.82 : (productType === 'dentist' ? 47 : 37)
+    const mainPrice = productType === 'plastic-surgeon' ? 47.82 : (productType === 'dentist' ? 47 : 37)
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
     // Fire Meta CAPI Purchase event (server-side - can't be blocked by browsers/iOS)

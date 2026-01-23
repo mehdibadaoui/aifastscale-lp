@@ -28,7 +28,7 @@ export default function PlasticSurgeonUpsellPage() {
   // Get the 5 upsell products
   const upsellProducts = getPlasticSurgeonUpsellBonuses()
   const totalOriginalValue = upsellProducts.reduce((sum, b) => sum + b.value, 0)
-  const upsellPrice = 47.72
+  const upsellPrice = 9.95
   const pricePerItem = 9.56
 
   // Timer countdown

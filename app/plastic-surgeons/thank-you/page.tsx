@@ -22,7 +22,7 @@ const trackPurchase = (email?: string) => {
     return
   }
 
-  const purchaseValue = 97.82 // Main course price
+  const purchaseValue = 47.82 // Main course price
   const eventId = `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
   // 1. Browser Pixel
