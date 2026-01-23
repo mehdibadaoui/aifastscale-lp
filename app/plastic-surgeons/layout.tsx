@@ -5,7 +5,7 @@ import Script from 'next/script'
 const PLASTIC_SURGEON_PIXEL_ID = '1526841625273321'
 
 export const metadata: Metadata = {
-  title: 'CloneYourself for Plastic Surgeons | AI Video Marketing System | $97',
+  title: 'CloneYourself for Plastic Surgeons | AI Video Marketing System | $47',
   description:
     'Plastic Surgeons: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic patients. No filming needed. Created by Dr. Sofia Martinez, MD, FACS.',
   keywords:
