@@ -343,9 +343,9 @@ function ThankYouContent() {
               </div>
 
               {/* Free Updates */}
-              <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl p-4 border border-amber-500/20 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <Gift className="w-5 h-5 text-amber-400" />
+              <div className="bg-gradient-to-r from-cyan-500/10 to-orange-500/10 rounded-xl p-4 border border-cyan-500/20 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                  <Gift className="w-5 h-5 text-cyan-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Stay Tuned — Free Updates</p>
@@ -387,7 +387,7 @@ function ThankYouContent() {
               <div className="bg-white/5 rounded-lg p-4 border border-white/10 mb-6 text-left">
                 <p className="text-white/50 text-xs mb-1">Look for email from:</p>
                 <p className="text-white font-semibold">hello@mail.aifastscale.com</p>
-                <p className="text-amber-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
+                <p className="text-cyan-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
               </div>
 
               <button

@@ -1192,7 +1192,7 @@ export function AchievementToast({ name, onPlaySound }: { name: string | null; o
 
   return (
     <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-slide-down" role="alert" aria-live="polite">
-      <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-4 rounded-2xl shadow-2xl shadow-amber-500/30 flex items-center gap-4 glass-2">
+      <div className="bg-gradient-to-r from-cyan-500 to-orange-500 text-white px-6 py-4 rounded-2xl shadow-2xl shadow-cyan-500/30 flex items-center gap-4 glass-2">
         <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center animate-celebrate">
           <Trophy className="w-6 h-6" />
         </div>
@@ -1242,7 +1242,7 @@ export function FloatingActionButton({ actions }: FABProps) {
       {/* Main FAB */}
       <button
         onClick={toggleOpen}
-        className={`w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-amber-500 text-white shadow-glow-teal flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
+        className={`w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-cyan-500 text-white shadow-glow-teal flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
         aria-label="Quick actions"
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1281,7 +1281,7 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Notes" icon={<StickyNote className="w-5 h-5 text-amber-500" />}>
+    <Modal isOpen={isOpen} onClose={onClose} title="Notes" icon={<StickyNote className="w-5 h-5 text-cyan-500" />}>
       <div className="p-4">
         <p className="text-sm text-slate-400 mb-4">{moduleTitle}</p>
         <textarea
@@ -1358,8 +1358,8 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
           aria-checked={darkMode}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-cyan-500/20' : 'bg-amber-500/20'}`}>
-              {darkMode ? <Moon className="w-5 h-5 text-cyan-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-cyan-500/20' : 'bg-cyan-500/20'}`}>
+              {darkMode ? <Moon className="w-5 h-5 text-cyan-400" /> : <Sun className="w-5 h-5 text-cyan-400" />}
             </div>
             <div className="text-left">
               <p className="font-bold text-white">Dark Mode</p>
@@ -1473,12 +1473,12 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
         <div className="bg-gradient-to-br from-purple-900/40 to-amber-900/40 rounded-2xl p-8 border-4 border-cyan-500/30 text-center relative overflow-hidden glass-premium">
           {/* Decorative elements */}
           <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-br-full" />
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-amber-500/20 to-transparent rounded-tl-full" />
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-500/20 to-transparent rounded-tl-full" />
           <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-cyan-500/20 to-transparent -translate-y-1/2" />
-          <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-amber-500/20 to-transparent -translate-y-1/2" />
+          <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-cyan-500/20 to-transparent -translate-y-1/2" />
 
           <div className="relative z-10">
-            <Trophy className="w-16 h-16 text-amber-500 mx-auto mb-4 animate-float" />
+            <Trophy className="w-16 h-16 text-cyan-500 mx-auto mb-4 animate-float" />
             <h3 className="text-lg font-medium text-cyan-400 mb-2">Certificate of Completion</h3>
             <h1 className="text-4xl font-black gradient-text-animated mb-2">{COURSE_CONFIG.title}</h1>
             <p className="text-xl text-cyan-400 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
@@ -1635,7 +1635,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
       subtitle: "Welcome to Your Premium Training",
       description: "You've just unlocked exclusive access to the most comprehensive AI course for dental practices.",
       icon: 'welcome',
-      accent: 'from-cyan-400 to-amber-500'
+      accent: 'from-cyan-400 to-cyan-500'
     },
     {
       title: "Master the Content",
@@ -1656,7 +1656,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
       subtitle: "Achievements & Badges",
       description: "Complete modules to unlock achievements and earn your certificate of completion.",
       icon: 'trophy',
-      accent: 'from-amber-400 to-orange-500'
+      accent: 'from-cyan-400 to-orange-500'
     },
     {
       title: "Ready to Transform?",
@@ -1734,7 +1734,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
         {/* Modal content */}
         <div className="relative glass-premium rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 overflow-hidden">
           {/* Animated gradient border */}
-          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-cyan-500/50 via-amber-500/50 to-cyan-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
+          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-cyan-500/50 via-cyan-500/50 to-cyan-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
 
           {/* Inner content */}
           <div className="relative p-6 sm:p-8 pb-safe">
@@ -1916,8 +1916,8 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-premium noise-overlay section-premium relative overflow-hidden">
           {/* Floating Gradient Orbs */}
-          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-amber-500/10 to-cyan-500/5 rounded-full blur-3xl floating" />
+          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-cyan-500/10 to-cyan-500/5 rounded-full blur-3xl floating" />
 
           <div className="text-center max-w-md animate-fade-in glass-premium p-8 rounded-2xl border border-cyan-500/20">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
@@ -1966,8 +1966,8 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
     return (
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         {/* Single subtle gradient orb for mobile */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-500/10 to-amber-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-amber-500/10 to-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-500/10 to-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-cyan-500/10 to-cyan-500/10 rounded-full blur-3xl" />
       </div>
     )
   }
@@ -2037,7 +2037,7 @@ export function PremiumNav({ tabs, activeTab, onTabChange, darkMode }: PremiumNa
           onClick={() => onTabChange(tab.id)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-300 ${
             activeTab === tab.id
-              ? 'bg-gradient-to-r from-cyan-500 to-amber-500 text-white shadow-lg shadow-cyan-500/30 scale-105'
+              ? 'bg-gradient-to-r from-cyan-500 to-cyan-500 text-white shadow-lg shadow-cyan-500/30 scale-105'
               : 'text-slate-400 hover:bg-white/10 hover:text-cyan-400'
           }`}
         >

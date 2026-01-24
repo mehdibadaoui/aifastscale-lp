@@ -45,8 +45,8 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
       {/* Floating Gradient Orbs - LP Style */}
-      <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
-      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-500/8 to-cyan-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
+      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-cyan-500/8 to-cyan-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10 w-full max-w-md">
         {/* VIP Badge */}
@@ -60,7 +60,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
 
         <div className="glass-premium backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-cyan-500/20 border border-cyan-500/20 p-6 sm:p-8">
           <div className="text-center mb-6 sm:mb-8">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-500 to-amber-500 flex items-center justify-center shadow-glow-teal mb-4 sm:mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-500 to-cyan-500 flex items-center justify-center shadow-glow-teal mb-4 sm:mb-6">
               <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white">{COURSE_CONFIG.title}</h1>
@@ -241,29 +241,29 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStudentName, darkMode, reducedMotion }: WelcomeScreenProps) {
   const statCards = [
-    { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-cyan-500 to-amber-500' },
-    { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-amber-500 to-blue-500' },
+    { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-cyan-500 to-cyan-500' },
+    { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-cyan-500 to-blue-500' },
     { icon: Star, label: 'Total Value', value: `$${BONUSES.reduce((acc, b) => acc + b.value, 0)}`, gradient: 'from-emerald-500 to-cyan-500' },
-    { icon: Trophy, label: 'Achievements', value: ACHIEVEMENTS.length, gradient: 'from-amber-500 to-orange-500' },
+    { icon: Trophy, label: 'Achievements', value: ACHIEVEMENTS.length, gradient: 'from-cyan-500 to-orange-500' },
   ]
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:p-4 bg-gradient-premium relative overflow-hidden">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-cyan-500/15 to-amber-500/10 rounded-full blur-3xl ${reducedMotion ? '' : 'floating-slow'}`} />
-        <div className={`absolute bottom-1/4 left-0 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-gradient-to-br from-amber-500/10 to-cyan-500/5 rounded-full blur-3xl ${reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
+        <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-cyan-500/15 to-cyan-500/10 rounded-full blur-3xl ${reducedMotion ? '' : 'floating-slow'}`} />
+        <div className={`absolute bottom-1/4 left-0 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 rounded-full blur-3xl ${reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
       </div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto w-full">
         <div className="mb-6 sm:mb-8">
-          <div className={`w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500 to-amber-500 flex items-center justify-center shadow-glow-teal ${reducedMotion ? '' : 'animate-bounce-slow'}`}>
+          <div className={`w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500 to-cyan-500 flex items-center justify-center shadow-glow-teal ${reducedMotion ? '' : 'animate-bounce-slow'}`}>
             <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
           </div>
         </div>
 
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 text-white leading-tight drop-shadow-lg">
-          Welcome to Your <span className={`text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-amber-400 ${reducedMotion ? '' : 'gradient-text-animated'}`}>Premium Course</span>
+          Welcome to Your <span className={`text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-400 ${reducedMotion ? '' : 'gradient-text-animated'}`}>Premium Course</span>
         </h1>
 
         <p className="text-base sm:text-xl text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
@@ -348,7 +348,7 @@ const Navigation = memo(function Navigation({
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-amber-500 flex items-center justify-center shadow-glow-teal">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-500 flex items-center justify-center shadow-glow-teal">
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">
@@ -382,8 +382,8 @@ const Navigation = memo(function Navigation({
           <div className="flex items-center gap-2">
             {/* Points */}
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 glass-teal rounded-full">
-              <Star className="w-4 h-4 text-amber-400" aria-hidden="true" />
-              <span className="text-sm font-bold text-amber-400" aria-label={`${totalPoints} points`}>{totalPoints}</span>
+              <Star className="w-4 h-4 text-cyan-400" aria-hidden="true" />
+              <span className="text-sm font-bold text-cyan-400" aria-label={`${totalPoints} points`}>{totalPoints}</span>
             </div>
 
             {/* Streak */}
@@ -452,8 +452,8 @@ const Navigation = memo(function Navigation({
         {/* Integrated mini stats in nav */}
         <div className="flex items-center justify-center gap-2 px-2 border-l border-cyan-500/20">
           <div className="flex items-center gap-0.5">
-            <Star className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-[10px] font-bold text-amber-400">{totalPoints}</span>
+            <Star className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-[10px] font-bold text-cyan-400">{totalPoints}</span>
           </div>
           <div className="flex items-center gap-0.5">
             <Flame className="w-3.5 h-3.5 text-orange-400" />
@@ -594,8 +594,8 @@ function PremiumCoursePlatformInner() {
 
       {/* Floating Gradient Orbs - LP Style */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className={`absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-br from-cyan-500/10 to-amber-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating-slow'}`} />
-        <div className={`absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-gradient-to-br from-amber-500/8 to-cyan-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
+        <div className={`absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating-slow'}`} />
+        <div className={`absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-gradient-to-br from-cyan-500/8 to-cyan-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
         <div className={`absolute top-1/2 left-1/3 w-[200px] h-[200px] bg-gradient-to-br from-cyan-500/5 to-transparent rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '4s' }} />
       </div>
 
