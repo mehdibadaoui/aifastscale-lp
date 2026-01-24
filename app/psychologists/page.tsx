@@ -51,13 +51,13 @@ import { getMemberStats } from './members/components/config'
 import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
-// Adapt Dr. Sofia data for psychologists - use Dr. Maya Thompson
-const DR_MAYA_DATA = {
+// Dr. Marcus Rivers - Expert Psychologist Persona
+const DR_MARCUS_DATA = {
   ...DR_SOFIA_DATA,
-  name: 'Dr. Maya Thompson',
+  name: 'Dr. Marcus Rivers',
   title: 'Licensed Clinical Psychologist, PhD',
-  image: '/images/psychologist/dr-maya.webp',
-  bio: 'After 18 years helping thousands of clients, I discovered that the therapists who thrive aren\'t just skilled — they\'re visible. I built this system to help you reach the people who need you most.',
+  image: '/images/psychologist/dr-marcus.webp',
+  bio: 'After 15 years in private practice and helping thousands of clients overcome anxiety and depression, I realized the therapists who thrive aren\'t just skilled — they\'re visible. I built this system to help you reach the people who desperately need your help.',
 }
 
 // Whop checkout link
@@ -392,7 +392,7 @@ export default function PlasticTherapistLandingPage() {
     },
     {
       q: 'Will this work for my plastic therapy practice?',
-      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ psychologists across the US, UK, Canada, and Australia use this daily. Works for mental health, reconstructive, facial, body contouring, and all specialties.`,
+      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ psychologists across the US, UK, Canada, and Australia use this daily. Works for mental health, reconstructive, facial, stress management, and all specialties.`,
     },
     {
       q: 'When do I get access?',
@@ -404,7 +404,7 @@ export default function PlasticTherapistLandingPage() {
     {
       id: 1,
       name: 'Dr. Sarah Mitchell',
-      role: 'Facial Psychologist',
+      role: 'CBT Specialist',
       location: 'Los Angeles, CA',
       image: '/images/psychologist/review-1.webp',
       review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 12 new session inquiries that same week.",
@@ -422,7 +422,7 @@ export default function PlasticTherapistLandingPage() {
     {
       id: 3,
       name: 'Dr. Emily Chen',
-      role: 'Body Contouring Specialist',
+      role: 'Anxiety & Depression Specialist',
       location: 'San Francisco, CA',
       image: '/images/psychologist/review-3.webp',
       review: "As a Bay Area therapist, I need to stand out. These AI videos make my practice look like a premium brand. Went from 2-3 consults to 15+ per week.",
@@ -431,7 +431,7 @@ export default function PlasticTherapistLandingPage() {
     {
       id: 4,
       name: 'Dr. Michael Thompson',
-      role: 'Breast Augmentation Specialist',
+      role: 'Trauma Recovery Specialist',
       location: 'Chicago, IL',
       image: '/images/psychologist/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
@@ -440,10 +440,10 @@ export default function PlasticTherapistLandingPage() {
     {
       id: 5,
       name: 'Dr. Lisa Park',
-      role: 'Rhinoplasty Specialist',
+      role: 'Relationship & Family Therapist',
       location: 'Seattle, WA',
       image: '/images/psychologist/review-9.webp',
-      review: "My TikTok video got 89K views. Booked 23 new rhinoplasty sessions that month. This system pays for itself daily.",
+      review: "My TikTok video got 89K views. Booked 23 new therapy sessions that month. This system pays for itself daily.",
       results: '23 consults from 1 video',
     },
     {
@@ -724,7 +724,7 @@ export default function PlasticTherapistLandingPage() {
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
-                <span className="text-teal-300 font-semibold text-xs sm:text-sm">Dr. Maya Martinez, MD, FACS — Board-Certified Psychologist</span>
+                <span className="text-teal-300 font-semibold text-xs sm:text-sm">Dr. Marcus Rivers, PhD — Licensed Clinical Psychologist</span>
               </div>
             </div>
 
@@ -1181,7 +1181,7 @@ export default function PlasticTherapistLandingPage() {
                         loop
                         muted
                         playsInline
-                        poster="/images/psychologist/dr-maya.webp"
+                        poster="/images/psychologist/dr-marcus.webp"
                         className="w-full h-full object-contain sm:hidden"
                         src="/videos/psychologist-daniel-mobile.mp4"
                       />
@@ -1191,14 +1191,14 @@ export default function PlasticTherapistLandingPage() {
                         loop
                         muted
                         playsInline
-                        poster="/images/psychologist/dr-maya.webp"
+                        poster="/images/psychologist/dr-marcus.webp"
                         className="w-full h-full object-contain hidden sm:block"
                         src="/videos/psychologist-daniel.mp4"
                       />
                     </>
                   ) : (
                     <Image
-                      src="/images/psychologist/dr-maya.webp"
+                      src="/images/psychologist/dr-marcus.webp"
                       alt="Dr. Daniel - AI Video Example"
                       fill
                       className="object-contain"
@@ -1244,7 +1244,7 @@ export default function PlasticTherapistLandingPage() {
                 {/* Timeline - improved mobile layout */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Day 1', event: 'Created first AI video explaining rhinoplasty recovery (7 min)', icon: Upload, color: 'gray' },
+                    { time: 'Day 1', event: 'Created first AI video explaining anxiety management techniques (7 min)', icon: Upload, color: 'gray' },
                     { time: 'Day 3', event: 'Posted on Instagram Reels & TikTok', icon: Eye, color: 'gray' },
                     { time: 'Week 1', event: 'Video hit 47K views • 12 session requests', icon: Phone, color: 'teal' },
                     { time: 'Week 2', event: '3 rhinoplasties booked ($24K avg each = $72K)', icon: Calendar, color: 'teal' },
@@ -1292,7 +1292,7 @@ export default function PlasticTherapistLandingPage() {
                       </div>
                       <div>
                         <p className="text-white font-bold">Dr. Daniel Rivera</p>
-                        <p className="text-gray-400 text-sm">Facial Psychologist, Miami FL</p>
+                        <p className="text-gray-400 text-sm">CBT Specialist, Miami FL</p>
                       </div>
                       <div className="ml-auto flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -1391,7 +1391,7 @@ export default function PlasticTherapistLandingPage() {
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
                     <Award className="w-4 h-4 text-teal-400 flex-shrink-0" />
-                    <span>Clinically-structured lessons and examples created with input from <span className="text-teal-400 font-medium">Dr. Maya Martinez</span>, Board-Certified Psychologist, MD, FACS</span>
+                    <span>Clinically-structured lessons and examples created with input from <span className="text-teal-400 font-medium">Dr. Marcus Rivers</span>, Licensed Clinical Psychologist, PhD</span>
                   </p>
                 </div>
               </div>
@@ -1769,7 +1769,7 @@ export default function PlasticTherapistLandingPage() {
       </section>
 
       {/* ================================================================
-          5. CASE STUDY #2 - DR. MICHAEL - CREAM/WHITE SECTION (Facelift Specialist)
+          5. CASE STUDY #2 - DR. MICHAEL - CREAM/WHITE SECTION (CBT Specialist)
           ================================================================ */}
       <section
         id="case-study-michael"
@@ -1782,10 +1782,10 @@ export default function PlasticTherapistLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-teal-500" />
-                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Facial Rejuvenation Success</span>
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Anxiety Treatment Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-teal-500">$189,000</span> in Facelift Cases
+                His First AI Video Generated <span className="text-teal-500">$47,000</span> in New Clients
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From struggling with content creation to dominating local social media</p>
             </div>
@@ -1808,7 +1808,7 @@ export default function PlasticTherapistLandingPage() {
                     </div>
                     <div className="sm:mt-2">
                       <h3 className="text-gray-900 font-black text-lg">Dr. Michael Chen</h3>
-                      <p className="text-teal-600 text-sm font-medium">Facial Psychologist</p>
+                      <p className="text-teal-600 text-sm font-medium">CBT Specialist</p>
                       <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
                         <MapPin className="w-3 h-3" />
                         <span>Los Angeles, CA</span>
@@ -1824,7 +1824,7 @@ export default function PlasticTherapistLandingPage() {
                     <p className="text-gray-700 leading-relaxed">
                       "I was spending <span className="text-gray-900 font-bold">$3,500 every month</span> on a marketing agency.
                       After 8 months, I had <span className="text-gray-900 font-bold">$28,000 spent</span> and
-                      <span className="text-red-600 font-bold"> only 4 facelift sessions</span>. Meanwhile, younger therapists were
+                      <span className="text-red-600 font-bold"> only 4 premium therapy packages</span>. Meanwhile, younger therapists were
                       going viral on TikTok and filling their schedules. I felt invisible..."
                     </p>
                   </div>
@@ -1840,7 +1840,7 @@ export default function PlasticTherapistLandingPage() {
                 <div className="relative rounded-xl overflow-hidden border-2 border-teal-500/40 shadow-2xl">
                   {/* Mobile: 27KB optimized image */}
                   <Image
-                    src="/images/psychologist/case-study-facelift-mobile.webp"
+                    src="/images/psychologist/case-study-therapy-mobile.webp"
                     alt="Dr. Michael Chen - AI Video Success"
                     width={480}
                     height={270}
@@ -1849,7 +1849,7 @@ export default function PlasticTherapistLandingPage() {
                   />
                   {/* Desktop: Full quality image */}
                   <Image
-                    src="/images/psychologist/case-study-facelift.webp"
+                    src="/images/psychologist/case-study-therapy.webp"
                     alt="Dr. Michael Chen - AI Video Success"
                     width={1376}
                     height={768}
@@ -1874,7 +1874,7 @@ export default function PlasticTherapistLandingPage() {
                   {[
                     { number: '72', label: 'Hours to First Lead', sub: 'not weeks' },
                     { number: '$0', label: 'Marketing Cost', sub: 'vs $3,500/mo before' },
-                    { number: '6', label: 'Facelift Cases', sub: 'from 2 weeks of videos' },
+                    { number: '6', label: 'New Clients', sub: 'from 2 weeks of videos' },
                   ].map((stat, i) => (
                     <div key={i} className="bg-gradient-to-br from-teal-50 to-white border border-teal-500/30 rounded-xl p-4 text-center">
                       <div className="text-teal-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
@@ -1894,10 +1894,10 @@ export default function PlasticTherapistLandingPage() {
                 {/* Timeline - improved mobile layout */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Day 1', event: 'Posted his first AI video about facelift recovery (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 3', event: 'Instagram DM: "I\'ve been researching facelifts for months. Your video answered all my questions."', icon: MessageSquare, color: 'teal' },
-                    { time: 'Day 7', event: '4 facelift sessions scheduled ($18K-$32K each)', icon: Calendar, color: 'teal' },
-                    { time: 'Week 2', event: '6 sessions booked • $189,000 in surgical fees', icon: FileText, color: 'teal' },
+                    { time: 'Day 1', event: 'Posted his first AI video about managing anxiety naturally (took 7 minutes)', icon: Upload, color: 'gray' },
+                    { time: 'Day 3', event: 'Instagram DM: "I\'ve been researching therapy for months. Your video answered all my questions."', icon: MessageSquare, color: 'teal' },
+                    { time: 'Day 7', event: '4 premium therapy packages scheduled ($2,500-$4,000 each)', icon: Calendar, color: 'teal' },
+                    { time: 'Week 2', event: '18 clients booked • $47,000 in new clients', icon: FileText, color: 'teal' },
                     { time: 'Month 2', event: 'OR booked 8 weeks out • Fired marketing agency', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -1931,7 +1931,7 @@ export default function PlasticTherapistLandingPage() {
                   <div className="text-teal-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      Two weeks of AI videos. <span className="text-teal-600 font-bold">$189,000 in facelift sessions</span>.
+                      Two weeks of AI videos. <span className="text-teal-600 font-bold">$47,000 in new clients</span>.
                       I spent $28,000 on marketing agencies over 8 months and got 4 sessions. This system cost me $47.82 and
                       I booked 6 surgeries in two weeks. My only regret is not starting sooner.
                     </p>
@@ -1989,7 +1989,7 @@ export default function PlasticTherapistLandingPage() {
                 <span className="text-cyan-400 font-bold text-xs uppercase tracking-wide">Rhinoplasty Success Story</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
-                One Video. <span className="text-cyan-400">23 Rhinoplasty Sessions.</span>
+                One Video. <span className="text-cyan-400">23 Therapy Sessions.</span>
               </h2>
               <p className="text-gray-400 text-sm sm:text-lg">From skeptic to booked solid in 30 days</p>
             </div>
@@ -2030,13 +2030,13 @@ export default function PlasticTherapistLandingPage() {
                     </div>
                     <div>
                       <h3 className="text-white font-bold text-lg">Dr. Lisa Park</h3>
-                      <p className="text-cyan-400 text-sm">Rhinoplasty Specialist • Seattle, WA</p>
+                      <p className="text-cyan-400 text-sm">Relationship & Family Therapist • Seattle, WA</p>
                     </div>
                   </div>
 
                   {/* Quote */}
                   <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4 italic">
-                    "My TikTok video explaining what to expect during rhinoplasty recovery got 89K views.
+                    "My TikTok video explaining what to expect during anxiety management techniques got 89K views.
                     I booked <span className="text-cyan-400 font-bold">23 new sessions</span> that month.
                     This system pays for itself daily."
                   </p>
@@ -2771,7 +2771,7 @@ export default function PlasticTherapistLandingPage() {
       </section>
 
       {/* ================================================================
-          10. MEET YOUR EXPERT - WHITE SECTION (Dr. Maya Martinez)
+          10. MEET YOUR EXPERT - WHITE SECTION (Dr. Marcus Rivers)
           ================================================================ */}
       <section
         id="meet-instructor"
@@ -2794,13 +2794,13 @@ export default function PlasticTherapistLandingPage() {
             </div>
 
             <div className={`${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              <ExpertPersona {...DR_MAYA_DATA} />
+              <ExpertPersona {...DR_MARCUS_DATA} />
             </div>
 
 
             {/* SEO-friendly expert description */}
             <p className="sr-only">
-              Dr. Maya Martinez is a board-certified psychologist (MD, FACS) with over 15 years of experience in facial rejuvenation, rhinoplasty, breast augmentation, body contouring, and wellness sessions. She has helped psychologists across 20+ countries attract high-value mental health clients using AI video marketing.
+              Dr. Marcus Rivers is a Licensed Clinical Psychologist (PhD) with over 15 years of private practice experience, specializing in anxiety disorders, depression, trauma recovery, and relationship counseling. He has helped therapists and psychologists across 20+ countries attract ideal clients and build thriving practices using AI video marketing.
             </p>
           </div>
         </div>

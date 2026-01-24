@@ -76,14 +76,14 @@ export const COURSE_CONFIG = {
   supportEmail: "support@aifastscale.com",
   welcomeVideo: {
     wistiaId: "myh13ayp9d", // Same welcome video
-    title: "Welcome from Dr. Maya",
+    title: "Welcome from Dr. Marcus",
     duration: "2 min",
   },
   drVoss: {
-    name: "Dr. Maya Thompson",
+    name: "Dr. Marcus Rivers",
     title: "Licensed Clinical Psychologist, PhD",
-    image: "/images/psychologist/dr-maya.webp",
-    quote: "After 18 years helping thousands of clients, I discovered that the therapists who thrive aren't just skilled — they're visible. I built this system to help you reach the people who need you most.",
+    image: "/images/psychologist/dr-marcus.webp",
+    quote: "After 15 years in private practice and helping thousands of clients overcome anxiety and depression, I realized the therapists who thrive aren't just skilled — they're visible. I built this system to help you reach the people who desperately need your help.",
   },
   socialProof: {
     studentCount: 750, // Fallback, use getMemberStats() for dynamic
@@ -111,7 +111,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/psychologist/module-1.webp',
     lessons: ['Write video scripts in minutes', 'Using Therapist Expert Copywriter AI', 'Get scripts for trust & appointments'],
     resources: [
-      { name: 'Maya - Psychologist Growth Mentor', url: 'https://chatgpt.com/g/g-psychologist-growth-mentor', type: 'link' as const },
+      { name: 'Marcus - Psychologist Growth Mentor', url: 'https://chatgpt.com/g/g-psychologist-growth-mentor', type: 'link' as const },
     ],
   },
   {

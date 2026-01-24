@@ -7,7 +7,7 @@ const PSYCHOLOGIST_PIXEL_ID = '778800911911121'
 export const metadata: Metadata = {
   title: 'CloneYourself for Psychologists | AI Video Marketing System | $47',
   description:
-    'Psychologists & Therapists: Turn your photo into AI talking videos in 7 minutes. Attract more clients. No filming needed. Created by Dr. Maya Thompson, PhD, Licensed Clinical Psychologist.',
+    'Psychologists & Therapists: Turn your photo into AI talking videos in 7 minutes. Attract more clients. No filming needed. Created by Dr. Marcus Rivers, PhD, Licensed Clinical Psychologist.',
   keywords:
     'psychologist marketing, therapist AI videos, mental health practice marketing, client acquisition, therapy practice growth, AI video marketing',
   openGraph: {
