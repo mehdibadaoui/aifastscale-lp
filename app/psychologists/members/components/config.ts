@@ -107,7 +107,7 @@ export const COURSE_MODULES = [
     description: "Learn how to use your personalized Therapist AI mentor to generate high-quality short-form video scripts, story ideas, and content plans in minutes.",
     duration: '3 min',
     durationMinutes: 3,
-    wistiaId: 'fnjt6devuy',
+    wistiaId: 'myh13ayp9d',
     thumbnail: '/images/psychologist/module-1.webp',
     lessons: ['Write video scripts in minutes', 'Using Therapist Expert Copywriter AI', 'Get scripts for trust & appointments'],
     resources: [
