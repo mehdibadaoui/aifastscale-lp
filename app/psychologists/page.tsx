@@ -1347,7 +1347,7 @@ export default function PlasticTherapistLandingPage() {
               {/* Large Course Thumbnail */}
               <div className="relative w-full aspect-video">
                 <Image
-                  src="/images/psychologist/course-demo.webp"
+                  src="/images/psychologist/video-course-mockup.webp"
                   alt="CloneYourself 7-Minute Video System for Psychologists"
                   fill
                   className="object-cover"
