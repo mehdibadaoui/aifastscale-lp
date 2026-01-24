@@ -40,7 +40,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
 
   // Pre-filled support email for password help
   const supportEmail = COURSE_CONFIG.supportEmail || 'hello@aifastscale.com'
-  const forgotPasswordMailto = `mailto:${supportEmail}?subject=Password%20Help%20-%20CloneYourself%20for%20Plastic Surgeons&body=Hi%2C%0A%0AI%20need%20help%20with%20my%20login.%0A%0AMy%20email%3A%20${encodeURIComponent(email || '[your email]')}%0A%0APlease%20resend%20my%20password.%0A%0AThank%20you!`
+  const forgotPasswordMailto = `mailto:${supportEmail}?subject=Password%20Help%20-%20CloneYourself%20for%20Psychologists&body=Hi%2C%0A%0AI%20need%20help%20with%20my%20login.%0A%0AMy%20email%3A%20${encodeURIComponent(email || '[your email]')}%0A%0APlease%20resend%20my%20password.%0A%0AThank%20you!`
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">

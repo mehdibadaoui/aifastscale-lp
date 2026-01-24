@@ -20,21 +20,21 @@ export function ThemeStyles() {
         --color-error: 239 68 68;
         --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
         --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
-        --shadow-glow: 0 0 20px rgba(147, 51, 234, 0.3);
-        --shadow-glow-lg: 0 0 40px rgba(147, 51, 234, 0.4);
+        --shadow-glow: 0 0 20px rgba(13, 148, 136, 0.3);
+        --shadow-glow-lg: 0 0 40px rgba(13, 148, 136, 0.4);
       }
 
-      /* Override global btn-premium for purple theme */
+      /* Override global btn-premium for teal theme */
       .btn-premium {
         background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%) !important;
       }
       .btn-premium:hover {
-        box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
       }
 
-      /* Override shadow-glow-teal for purple theme */
+      /* Override shadow-glow-teal for teal theme */
       .shadow-glow-teal {
-        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1) !important;
+        box-shadow: 0 0 20px rgba(13, 148, 136, 0.3), 0 0 40px rgba(13, 148, 136, 0.1) !important;
       }
 
       /* Premium Background - Dark by default */
@@ -79,7 +79,7 @@ export function ThemeStyles() {
       .floating-orb-1 {
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(13, 148, 136, 0.4) 0%, transparent 70%);
         top: -200px;
         right: -200px;
         animation-delay: 0s;
@@ -97,7 +97,7 @@ export function ThemeStyles() {
       .floating-orb-3 {
         width: 400px;
         height: 400px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -116,7 +116,7 @@ export function ThemeStyles() {
         position: absolute;
         width: 4px;
         height: 4px;
-        background: rgba(147, 51, 234, 0.6);
+        background: rgba(13, 148, 136, 0.6);
         border-radius: 50%;
         animation: particle-float 10s ease-in-out infinite;
         pointer-events: none;
@@ -141,7 +141,7 @@ export function ThemeStyles() {
       /* Light mode glass-premium */
       html:not(.dark) .glass-premium {
         background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(147, 51, 234, 0.2);
+        border: 1px solid rgba(13, 148, 136, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
       }
 
@@ -157,25 +157,25 @@ export function ThemeStyles() {
         border: 1px solid rgba(0, 0, 0, 0.05);
       }
 
-      /* Glass Purple (Plastic Surgeon Theme) */
+      /* Glass Teal (Psychologist Theme - same as Dentist) */
       .glass-teal {
-        background: rgba(147, 51, 234, 0.1);
-        border: 1px solid rgba(168, 85, 247, 0.2);
+        background: rgba(13, 148, 136, 0.1);
+        border: 1px solid rgba(45, 212, 191, 0.2);
         transition: background 0.3s ease, border-color 0.3s ease;
       }
-      /* Light mode glass */
+      /* Light mode glass-teal */
       html:not(.dark) .glass-teal {
-        background: rgba(147, 51, 234, 0.08);
-        border: 1px solid rgba(147, 51, 234, 0.3);
+        background: rgba(13, 148, 136, 0.08);
+        border: 1px solid rgba(13, 148, 136, 0.3);
       }
 
       /* Neon Glow Effect */
       .neon-glow {
-        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1);
+        box-shadow: 0 0 20px rgba(13, 148, 136, 0.3), 0 0 40px rgba(13, 148, 136, 0.1);
       }
 
       .neon-glow-hover:hover {
-        box-shadow: 0 0 30px rgba(147, 51, 234, 0.5), 0 0 60px rgba(147, 51, 234, 0.2);
+        box-shadow: 0 0 30px rgba(13, 148, 136, 0.5), 0 0 60px rgba(13, 148, 136, 0.2);
       }
 
       /* Gradient Text Premium */
@@ -210,11 +210,11 @@ export function ThemeStyles() {
         height: 200%;
         background: conic-gradient(from 0deg at 50% 50%,
           transparent 0deg,
-          rgba(147, 51, 234, 0.1) 60deg,
+          rgba(13, 148, 136, 0.1) 60deg,
           transparent 120deg,
           rgba(245, 158, 11, 0.1) 180deg,
           transparent 240deg,
-          rgba(139, 92, 246, 0.1) 300deg,
+          rgba(20, 184, 166, 0.1) 300deg,
           transparent 360deg
         );
         animation: aurora-rotate 30s linear infinite;
@@ -229,10 +229,10 @@ export function ThemeStyles() {
       /* Mesh Gradient */
       .mesh-gradient {
         background:
-          radial-gradient(at 40% 20%, rgba(147, 51, 234, 0.15) 0px, transparent 50%),
+          radial-gradient(at 40% 20%, rgba(13, 148, 136, 0.15) 0px, transparent 50%),
           radial-gradient(at 80% 0%, rgba(245, 158, 11, 0.1) 0px, transparent 50%),
-          radial-gradient(at 0% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
-          radial-gradient(at 80% 50%, rgba(147, 51, 234, 0.1) 0px, transparent 50%),
+          radial-gradient(at 0% 50%, rgba(20, 184, 166, 0.1) 0px, transparent 50%),
+          radial-gradient(at 80% 50%, rgba(13, 148, 136, 0.1) 0px, transparent 50%),
           radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
       }
 
@@ -571,7 +571,7 @@ export function ThemeStyles() {
         /* Disable continuous glow animations on mobile */
         .animate-pulse-glow {
           animation: none !important;
-          box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+          box-shadow: 0 0 20px rgba(13, 148, 136, 0.3);
         }
 
         /* Disable gradient text animation on mobile */
@@ -1457,7 +1457,7 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
 
   const handleShare = (platform: 'twitter' | 'linkedin') => {
     const text = `I just completed the ${COURSE_CONFIG.title} ${COURSE_CONFIG.subtitle} course! 🎓`
-    const url = 'https://aifastscale.com/plastic-surgeons'
+    const url = 'https://aifastscale.com/psychologists'
 
     const urls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
@@ -1470,7 +1470,7 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Your Certificate" size="lg" showPrint>
       <div className="p-8">
-        <div className="bg-gradient-to-br from-purple-900/40 to-amber-900/40 rounded-2xl p-8 border-4 border-cyan-500/30 text-center relative overflow-hidden glass-premium">
+        <div className="bg-gradient-to-br from-teal-900/40 to-amber-900/40 rounded-2xl p-8 border-4 border-cyan-500/30 text-center relative overflow-hidden glass-premium">
           {/* Decorative elements */}
           <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-br-full" />
           <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-500/20 to-transparent rounded-tl-full" />
@@ -1642,7 +1642,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
       subtitle: "HD Video Training",
       description: "Dive into our expert-led video modules. Your progress saves automatically — pick up right where you left off.",
       icon: 'video',
-      accent: 'from-teal-500 to-purple-600'
+      accent: 'from-teal-500 to-cyan-600'
     },
     {
       title: "Claim Your Bonuses",
@@ -1769,7 +1769,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                 className={`relative mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br ${currentStep.accent} flex items-center justify-center shadow-2xl transform transition-all duration-500`}
                 style={{
                   animation: isAnimating ? 'none' : 'float 3s ease-in-out infinite',
-                  boxShadow: `0 20px 40px -10px rgba(147, 51, 234, 0.4)`,
+                  boxShadow: `0 20px 40px -10px rgba(13, 148, 136, 0.4)`,
                 }}
                 key={step}
               >
@@ -1857,7 +1857,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                 onClick={handleNext}
                 disabled={isAnimating}
                 className={`flex-1 relative py-3.5 sm:py-4 rounded-xl font-bold text-white overflow-hidden transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] touch-manipulation disabled:opacity-70 bg-gradient-to-r ${currentStep.accent} shadow-lg`}
-                style={{ boxShadow: `0 10px 30px -5px rgba(147, 51, 234, 0.4)` }}
+                style={{ boxShadow: `0 10px 30px -5px rgba(13, 148, 136, 0.4)` }}
               >
                 {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
@@ -1993,7 +1993,7 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
             height: `${2 + Math.random() * 4}px`,
             background: darkMode
               ? `rgba(${Math.random() > 0.5 ? '45, 212, 191' : '139, 92, 246'}, ${0.3 + Math.random() * 0.4})`
-              : `rgba(147, 51, 234, ${0.3 + Math.random() * 0.4})`,
+              : `rgba(13, 148, 136, ${0.3 + Math.random() * 0.4})`,
           }}
         />
       ))}
@@ -2002,8 +2002,8 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `linear-gradient(rgba(147, 51, 234, 0.5) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(147, 51, 234, 0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(13, 148, 136, 0.5) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(13, 148, 136, 0.5) 1px, transparent 1px)`,
           backgroundSize: '50px 50px',
         }}
       />

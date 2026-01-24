@@ -302,7 +302,7 @@ export function usePlatformState() {
     setLoginError(null)
 
     try {
-      const response = await fetch('/api/plastic-surgeon-auth', {
+      const response = await fetch('/api/psychologist-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
