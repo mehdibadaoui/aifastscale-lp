@@ -12,8 +12,8 @@ export function ThemeStyles() {
   return (
     <style dangerouslySetInnerHTML={{ __html: `
       :root {
-        --color-primary: 147 51 234;
-        --color-primary-light: 168 85 247;
+        --color-primary: 20 184 166;
+        --color-primary-light: 45 212 191;
         --color-accent: 245 158 11;
         --color-success: 16 185 129;
         --color-warning: 245 158 11;
@@ -26,7 +26,7 @@ export function ThemeStyles() {
 
       /* Override global btn-premium for teal theme */
       .btn-premium {
-        background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%) !important;
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
       }
       .btn-premium:hover {
         box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
@@ -180,14 +180,14 @@ export function ThemeStyles() {
 
       /* Gradient Text Premium */
       .gradient-text-premium {
-        background: linear-gradient(135deg, #9333ea 0%, #f59e0b 50%, #a855f7 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #f59e0b 50%, #2dd4bf 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .gradient-text-animated-premium {
-        background: linear-gradient(90deg, #9333ea, #f59e0b, #a855f7, #f59e0b, #9333ea);
+        background: linear-gradient(90deg, #14b8a6, #f59e0b, #2dd4bf, #f59e0b, #14b8a6);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -268,7 +268,7 @@ export function ThemeStyles() {
         content: '';
         position: absolute;
         inset: -2px;
-        background: linear-gradient(45deg, #9333ea, #f59e0b, #9333ea);
+        background: linear-gradient(45deg, #14b8a6, #f59e0b, #14b8a6);
         border-radius: inherit;
         opacity: 0;
         transition: opacity 0.3s;
@@ -286,7 +286,7 @@ export function ThemeStyles() {
 
       /* Gradient text animation */
       .gradient-text-animated {
-        background: linear-gradient(90deg, #9333ea, #f59e0b, #a855f7, #9333ea);
+        background: linear-gradient(90deg, #14b8a6, #f59e0b, #2dd4bf, #14b8a6);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -750,7 +750,7 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
         />
         <defs>
           <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#9333ea" />
+            <stop offset="0%" stopColor="#14b8a6" />
             <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
         </defs>
@@ -1086,7 +1086,7 @@ interface ConfettiProps {
 export function Confetti({ active, reducedMotion, variant = 'default' }: ConfettiProps) {
   if (!active || reducedMotion) return null
 
-  const colors = ['#9333ea', '#a855f7', '#f59e0b', '#d946ef', '#c084fc', '#fbbf24']
+  const colors = ['#14b8a6', '#2dd4bf', '#f59e0b', '#06b6d4', '#5eead4', '#fbbf24']
 
   if (variant === 'stars') {
     return (
@@ -1561,11 +1561,11 @@ const OnboardingIcons = {
       <path d="M12 7H16.5C17.88 7 19 5.88 19 4.5C19 3.12 17.88 2 16.5 2C14 2 12 7 12 7Z" fill="#f59e0b" />
       <defs>
         <linearGradient id="gift-gradient" x1="4" y1="12" x2="20" y2="22">
-          <stop stopColor="#9333ea" />
+          <stop stopColor="#14b8a6" />
           <stop offset="1" stopColor="#f59e0b" />
         </linearGradient>
         <linearGradient id="gift-gradient-2" x1="2" y1="7" x2="22" y2="12">
-          <stop stopColor="#a855f7" />
+          <stop stopColor="#2dd4bf" />
           <stop offset="1" stopColor="#fbbf24" />
         </linearGradient>
       </defs>
@@ -1595,7 +1595,7 @@ const OnboardingIcons = {
       <path d="M19 15L16 12L18 17L19 15Z" fill="#f59e0b" />
       <defs>
         <linearGradient id="rocket-gradient" x1="8" y1="2" x2="16" y2="22">
-          <stop stopColor="#a855f7" />
+          <stop stopColor="#2dd4bf" />
           <stop offset="1" stopColor="#ec4899" />
         </linearGradient>
       </defs>
@@ -1713,7 +1713,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
               <div
                 className="w-2 h-2 sm:w-3 sm:h-3"
                 style={{
-                  backgroundColor: ['#9333ea', '#a855f7', '#f59e0b', '#fbbf24', '#c084fc', '#d946ef'][Math.floor(Math.random() * 6)],
+                  backgroundColor: ['#14b8a6', '#2dd4bf', '#f59e0b', '#fbbf24', '#5eead4', '#06b6d4'][Math.floor(Math.random() * 6)],
                   transform: `rotate(${Math.random() * 360}deg)`,
                   borderRadius: Math.random() > 0.5 ? '50%' : '2px',
                 }}
