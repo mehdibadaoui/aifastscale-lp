@@ -203,7 +203,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       )}
 
-      {/* MOBILE: Dr. Sofia Welcome - LP Glass Style */}
+      {/* MOBILE: Dr. Marcus Welcome - LP Glass Style */}
       {state.completedCount === 0 && !showWelcomeVideo && (
         <div className="sm:hidden">
           <div className="rounded-2xl glass-premium p-4 border border-cyan-500/20">
@@ -211,7 +211,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-cyan-500/50 shadow-lg">
                 <Image
                   src={COURSE_CONFIG.drVoss?.image || '/images/psychologist/dr-marcus.webp'}
-                  alt={COURSE_CONFIG.drVoss?.name || 'Dr. Sofia'}
+                  alt={COURSE_CONFIG.drVoss?.name || 'Dr. Marcus'}
                   width={64}
                   height={64}
                   className="object-cover w-full h-full"
@@ -219,7 +219,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               </div>
               <div className="flex-1">
                 <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">Start Here</p>
-                <p className="text-sm font-bold text-white">Message from Dr. Sofia</p>
+                <p className="text-sm font-bold text-white">Message from Dr. Marcus</p>
                 <button
                   onClick={() => setShowWelcomeVideo(true)}
                   className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs bg-gradient-to-r from-cyan-500 to-orange-500 text-white shadow-lg active:scale-95 transition-transform"
@@ -232,14 +232,14 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         </div>
       )}
 
-      {/* DESKTOP: Dr. Sofia Welcome - LP Glass Style */}
+      {/* DESKTOP: Dr. Marcus Welcome - LP Glass Style */}
       {state.completedCount === 0 && !showWelcomeVideo && (
         <div className="hidden sm:block glass-premium rounded-3xl p-6 border border-cyan-500/20">
           <div className="flex items-center gap-6">
             <div className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 shadow-xl ring-4 ring-cyan-500/30">
               <Image
                 src={COURSE_CONFIG.drVoss?.image || '/images/psychologist/dr-marcus.webp'}
-                alt={COURSE_CONFIG.drVoss?.name || 'Dr. Sofia'}
+                alt={COURSE_CONFIG.drVoss?.name || 'Dr. Marcus'}
                 width={96}
                 height={96}
                 className="object-cover w-full h-full"
@@ -247,7 +247,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             </div>
             <div className="flex-1">
               <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-1">Start Here</div>
-              <h3 className="text-xl font-black text-white mb-2">Welcome from {COURSE_CONFIG.drVoss?.name?.split(' ')[1] || 'Dr. Sofia'}</h3>
+              <h3 className="text-xl font-black text-white mb-2">Welcome from {COURSE_CONFIG.drVoss?.name?.split(' ')[1] || 'Dr. Marcus'}</h3>
               <button
                 onClick={() => setShowWelcomeVideo(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-cyan-500 to-orange-500 text-white hover:shadow-lg transition-all btn-press"
@@ -267,7 +267,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               <div className="w-10 h-10 rounded-xl overflow-hidden">
                 <Image
                   src={COURSE_CONFIG.drVoss?.image || '/images/psychologist/dr-marcus.webp'}
-                  alt={COURSE_CONFIG.drVoss?.name || 'Dr. Sofia'}
+                  alt={COURSE_CONFIG.drVoss?.name || 'Dr. Marcus'}
                   width={40}
                   height={40}
                   className="object-cover w-full h-full"
@@ -483,7 +483,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 <Sparkles className="w-6 h-6 text-cyan-400" />
                 Coming Soon
               </h2>
-              <p className="text-slate-400 mt-1">New courses for plastic surgeons. Join the waitlist!</p>
+              <p className="text-slate-400 mt-1">New courses for psychologists. Join the waitlist!</p>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-teal border border-cyan-500/30">
               <Bell className="w-4 h-4 text-cyan-400" />
