@@ -121,7 +121,7 @@ export const COURSE_MODULES = [
     description: "Set up the essential tools. I'll show you exactly where to register, which plan to choose, and how to avoid mistakes.",
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: '511b44q25r',
+    wistiaId: 'lpkrdgr19e',
     thumbnail: '/images/psychologist/module-2.webp',
     lessons: ['Where to register', 'Which plan to choose', 'Avoiding common mistakes'],
     resources: [
@@ -136,7 +136,7 @@ export const COURSE_MODULES = [
     description: "Turn a single photo into a realistic talking video. The exact process, right settings, and how to avoid common errors.",
     duration: '6 min',
     durationMinutes: 6,
-    wistiaId: '7jtqmnymc5',
+    wistiaId: 'n4lx79ecbo',
     thumbnail: '/images/psychologist/module-3.webp',
     lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
     resources: [
@@ -150,7 +150,7 @@ export const COURSE_MODULES = [
     description: "Edit your AI videos quickly using simple tools like CapCut. No experience required.",
     duration: '4 min',
     durationMinutes: 4,
-    wistiaId: '9waf0llex7',
+    wistiaId: 'j2reo83n4z',
     thumbnail: '/images/psychologist/module-4.webp',
     lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
     resources: [
@@ -164,7 +164,7 @@ export const COURSE_MODULES = [
     description: "Generate multiple realistic images of yourself using one reference photo. Different styles, locations, outfits.",
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: '9f7os4xklp',
+    wistiaId: '0a48x7ur8z',
     thumbnail: '/images/psychologist/module-5.webp',
     lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
     resources: [
