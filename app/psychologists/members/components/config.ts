@@ -291,7 +291,7 @@ export const COMING_SOON_COURSES = [
     subtitle: 'for Psychologists',
     description: 'Run profitable Facebook & Instagram ads that fill your appointment calendar. From $0 to your first 50 clients.',
     icon: Megaphone,
-    color: 'from-sky-500 to-cyan-600',
+    color: 'from-violet-500 to-cyan-600',
     features: ['Facebook & Instagram Ads', 'Targeting therapy seekers', 'Ad creatives that convert', 'Budget optimization'],
     estimatedLaunch: 'Q1 2025',
     waitlistCount: 134,
