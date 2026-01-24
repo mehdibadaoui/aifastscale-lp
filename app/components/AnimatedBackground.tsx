@@ -7,7 +7,7 @@ import { useEffect, useState, memo } from 'react'
 // Memoized to prevent unnecessary re-renders
 
 interface AnimatedBackgroundProps {
-  variant?: 'dentist' | 'plastic-surgeon' | 'default'
+  variant?: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'default'
 }
 
 // Memoize the component to prevent re-renders
@@ -28,6 +28,8 @@ export const AnimatedBackground = memo(function AnimatedBackground({ variant = '
   // Color schemes based on variant
   const colors = variant === 'plastic-surgeon'
     ? { orb1: '#9333ea', orb2: '#f59e0b', orb3: '#a855f7', grid: 'rgba(147, 51, 234, 0.3)', particles: ['purple', 'amber', 'violet', 'fuchsia'] }
+    : variant === 'psychologist'
+    ? { orb1: '#0ea5e9', orb2: '#06b6d4', orb3: '#0284c7', grid: 'rgba(14, 165, 233, 0.3)', particles: ['sky', 'cyan', 'sky', 'blue'] }
     : { orb1: '#14b8a6', orb2: '#06b6d4', orb3: '#10b981', grid: 'rgba(20, 184, 166, 0.3)', particles: ['teal', 'cyan', 'teal', 'emerald'] }
 
   return (

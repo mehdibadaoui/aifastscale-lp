@@ -12,6 +12,10 @@ const DENTIST_CAPI_TOKEN = process.env.DENTIST_META_CAPI_TOKEN || ''
 const PLASTIC_SURGEON_PIXEL_ID = '1526841625273321'
 const PLASTIC_SURGEON_CAPI_TOKEN = process.env.PLASTIC_SURGEON_META_CAPI_TOKEN || ''
 
+// Psychologist Meta CAPI Configuration
+const PSYCHOLOGIST_PIXEL_ID = '778800911911121'
+const PSYCHOLOGIST_CAPI_TOKEN = process.env.PSYCHOLOGIST_META_CAPI_TOKEN || ''
+
 // Hash function for PII (required by Meta)
 function hashSHA256(value: string): string {
   if (!value) return ''
@@ -128,6 +132,61 @@ async function firePlasticSurgeonPurchaseCAPI(params: {
     }
   } catch (error) {
     console.error('❌ Plastic Surgeon CAPI fetch error:', error)
+  }
+}
+
+// Fire Purchase event to Meta CAPI for psychologist purchases (MAIN ONLY - no upsell/downsell)
+async function firePsychologistPurchaseCAPI(params: {
+  email: string
+  value: number
+  currency?: string
+  contentName: string
+  contentType?: string
+  eventId?: string
+}) {
+  if (!PSYCHOLOGIST_CAPI_TOKEN) {
+    console.log('⚠️ PSYCHOLOGIST_META_CAPI_TOKEN not configured - skipping CAPI')
+    return
+  }
+
+  const eventId = params.eventId || `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+  const eventData = {
+    event_name: 'Purchase',
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: eventId,
+    event_source_url: 'https://aifastscale.com/psychologists',
+    action_source: 'website',
+    user_data: {
+      em: [hashSHA256(params.email)],
+    },
+    custom_data: {
+      value: params.value,
+      currency: params.currency || 'USD',
+      content_name: params.contentName,
+      content_type: params.contentType || 'product',
+      content_ids: ['psychologist-main'],
+    },
+  }
+
+  try {
+    const response = await fetch(
+      `https://graph.facebook.com/v18.0/${PSYCHOLOGIST_PIXEL_ID}/events?access_token=${PSYCHOLOGIST_CAPI_TOKEN}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [eventData] }),
+      }
+    )
+
+    const result = await response.json()
+    if (response.ok) {
+      console.log(`✅ Psychologist CAPI Purchase fired: $${params.value} - ${params.contentName}`, result)
+    } else {
+      console.error('❌ Psychologist CAPI Error:', result)
+    }
+  } catch (error) {
+    console.error('❌ Psychologist CAPI fetch error:', error)
   }
 }
 
@@ -248,6 +307,12 @@ const PRODUCTS = {
     productName: 'CloneYourself for Plastic Surgeons',
     price: '47.82',
     accentColor: '#9333ea' // Purple
+  },
+  'psychologist': {
+    membersUrl: 'https://aifastscale.com/psychologists/members',
+    productName: 'CloneYourself for Psychologists',
+    price: '47.82',
+    accentColor: '#0ea5e9' // Sky blue
   }
 }
 
@@ -261,10 +326,14 @@ const PLANS = {
   PLASTIC_SURGEON_MAIN: { id: 'plan_9AqdDmQnJC2J5', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
   PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
   PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  // Psychologist products
+  PSYCHOLOGIST_MAIN: { id: 'plan_FwLWO75BETJhr', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_UPSELL: { id: 'plan_YpjtQiZ2d0xI5', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_DOWNSELL: { id: 'plan_PMbFmPQDNbI6A', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
 }
 
 // Get plan info from plan ID
-function getPlanInfo(planId: string): { product: 'dentist' | 'realestate' | 'plastic-surgeon', type: 'main' | 'upsell' | 'downsell', price: number } | null {
+function getPlanInfo(planId: string): { product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist', type: 'main' | 'upsell' | 'downsell', price: number } | null {
   // Dentist plans
   if (planId === PLANS.DENTIST_MAIN.id) return { product: 'dentist', type: 'main', price: PLANS.DENTIST_MAIN.price }
   if (planId === PLANS.DENTIST_UPSELL.id) return { product: 'dentist', type: 'upsell', price: PLANS.DENTIST_UPSELL.price }
@@ -273,12 +342,16 @@ function getPlanInfo(planId: string): { product: 'dentist' | 'realestate' | 'pla
   if (planId === PLANS.PLASTIC_SURGEON_MAIN.id) return { product: 'plastic-surgeon', type: 'main', price: PLANS.PLASTIC_SURGEON_MAIN.price }
   if (planId === PLANS.PLASTIC_SURGEON_UPSELL.id) return { product: 'plastic-surgeon', type: 'upsell', price: PLANS.PLASTIC_SURGEON_UPSELL.price }
   if (planId === PLANS.PLASTIC_SURGEON_DOWNSELL.id) return { product: 'plastic-surgeon', type: 'downsell', price: PLANS.PLASTIC_SURGEON_DOWNSELL.price }
+  // Psychologist plans
+  if (planId === PLANS.PSYCHOLOGIST_MAIN.id) return { product: 'psychologist', type: 'main', price: PLANS.PSYCHOLOGIST_MAIN.price }
+  if (planId === PLANS.PSYCHOLOGIST_UPSELL.id) return { product: 'psychologist', type: 'upsell', price: PLANS.PSYCHOLOGIST_UPSELL.price }
+  if (planId === PLANS.PSYCHOLOGIST_DOWNSELL.id) return { product: 'psychologist', type: 'downsell', price: PLANS.PSYCHOLOGIST_DOWNSELL.price }
   return null
 }
 
 // Determine product type from webhook data (for main course only - backward compatibility)
 // ROBUST VERSION - checks multiple paths and patterns
-function getProductType(fullData: any, productData: any): 'dentist' | 'realestate' | 'plastic-surgeon' | null {
+function getProductType(fullData: any, productData: any): 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | null {
   // Collect ALL possible name sources from the webhook
   const possibleNames = [
     productData?.name,
@@ -319,7 +392,18 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
     }
   }
 
-  // Check names for plastic surgeon keywords (check first, most specific)
+  // Check names for psychologist keywords (check first, most specific)
+  const psychologistKeywords = ['psychologist', 'therapist', 'mental health', 'counselor', 'psychology', 'therapy']
+  for (const name of possibleNames) {
+    for (const keyword of psychologistKeywords) {
+      if (name.includes(keyword)) {
+        console.log(`✅ Matched psychologist by name: "${name}" contains "${keyword}"`)
+        return 'psychologist'
+      }
+    }
+  }
+
+  // Check names for plastic surgeon keywords
   const plasticSurgeonKeywords = ['plastic surgeon', 'plastic surgery', 'cosmetic surgeon', 'aesthetic surgeon', 'cosmetic surgery']
   for (const name of possibleNames) {
     for (const keyword of plasticSurgeonKeywords) {
@@ -377,22 +461,36 @@ function generateWelcomeEmail(
   userPassword: string,
   userEmail: string,
   buyerName?: string,
-  productType?: 'dentist' | 'realestate' | 'plastic-surgeon'
+  productType?: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist'
 ) {
   const firstName = buyerName ? buyerName.split(' ')[0] : ''
 
   // Product-specific branding
   const isPlasticSurgeon = productType === 'plastic-surgeon'
+  const isPsychologist = productType === 'psychologist'
 
-  // Color palette - purple for plastic surgeons, teal for others
-  const accent = isPlasticSurgeon ? '#9333ea' : '#14b8a6' // Purple vs Teal
-  const buttonColor = isPlasticSurgeon ? '#9333ea' : '#14b8a6'
-  const glowColor = isPlasticSurgeon ? 'rgba(147, 51, 234, 0.08)' : 'rgba(20, 184, 166, 0.08)'
+  // Color palette - purple for plastic surgeons, sky blue for psychologists, teal for others
+  let accent = '#14b8a6' // Default teal
+  let buttonColor = '#14b8a6'
+  let glowColor = 'rgba(20, 184, 166, 0.08)'
+
+  if (isPlasticSurgeon) {
+    accent = '#9333ea' // Purple
+    buttonColor = '#9333ea'
+    glowColor = 'rgba(147, 51, 234, 0.08)'
+  } else if (isPsychologist) {
+    accent = '#0ea5e9' // Sky blue
+    buttonColor = '#0ea5e9'
+    glowColor = 'rgba(14, 165, 233, 0.08)'
+  }
 
   // Social proof text
-  const socialProof = isPlasticSurgeon
-    ? 'Trusted by <strong style="color: ' + accent + ';">+850 plastic surgeons</strong> worldwide'
-    : 'Trusted by <strong style="color: ' + accent + ';">+21,000 dentists</strong> worldwide'
+  let socialProof = 'Trusted by <strong style="color: ' + accent + ';">+21,000 dentists</strong> worldwide'
+  if (isPlasticSurgeon) {
+    socialProof = 'Trusted by <strong style="color: ' + accent + ';">+850 plastic surgeons</strong> worldwide'
+  } else if (isPsychologist) {
+    socialProof = 'Trusted by <strong style="color: ' + accent + ';">+750 psychologists & therapists</strong> worldwide'
+  }
 
   const darkBg = '#09090b'
   const cardBg = '#18181b'
@@ -773,7 +871,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Record main course purchase with revenue
-    const mainPrice = productType === 'plastic-surgeon' ? 47.82 : (productType === 'dentist' ? 47 : 37)
+    let mainPrice = 37 // Default for realestate
+    if (productType === 'plastic-surgeon') mainPrice = 47.82
+    else if (productType === 'psychologist') mainPrice = 47.82
+    else if (productType === 'dentist') mainPrice = 47
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
     // Fire Meta CAPI Purchase event (server-side - can't be blocked by browsers/iOS)
@@ -782,6 +883,12 @@ export async function POST(request: NextRequest) {
         email: buyerEmail,
         value: mainPrice,
         contentName: 'CloneYourself for Plastic Surgeons - Main Course',
+      })
+    } else if (productType === 'psychologist') {
+      await firePsychologistPurchaseCAPI({
+        email: buyerEmail,
+        value: mainPrice,
+        contentName: 'CloneYourself for Psychologists - Main Course',
       })
     } else if (productType === 'dentist') {
       await fireDentistPurchaseCAPI({
