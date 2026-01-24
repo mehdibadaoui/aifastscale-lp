@@ -56,7 +56,7 @@ export default function PsychologistUpsellPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-sky-950/20 to-slate-950 flex items-center justify-center p-2 md:p-3">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-teal-950/20 to-slate-950 flex items-center justify-center p-2 md:p-3">
       {/* Modal-style container */}
       <div className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl md:rounded-2xl border border-teal-500/30 shadow-2xl shadow-teal-500/10 overflow-hidden">
 

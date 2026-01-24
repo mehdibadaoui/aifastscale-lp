@@ -165,7 +165,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
           {/* Forgot Password Link - Opens Email */}
           <a
             href={forgotPasswordMailto}
-            className="mt-3 flex items-center justify-center gap-1.5 text-cyan-400/80 text-xs hover:text-purple-300 transition-colors"
+            className="mt-3 flex items-center justify-center gap-1.5 text-cyan-400/80 text-xs hover:text-teal-300 transition-colors"
           >
             <Mail className="w-3.5 h-3.5" />
             <span>Forgot password? Check your welcome email or contact support</span>
@@ -343,7 +343,7 @@ const Navigation = memo(function Navigation({
   ]
 
   return (
-    <nav className="sticky top-0 z-40 glass-premium backdrop-blur-2xl border-b border-cyan-500/20 shadow-lg shadow-purple-900/20" role="navigation" aria-label="Main navigation">
+    <nav className="sticky top-0 z-40 glass-premium backdrop-blur-2xl border-b border-cyan-500/20 shadow-lg shadow-teal-900/20" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

@@ -1144,7 +1144,7 @@ export default function PlasticTherapistLandingPage() {
             <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-down' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4 hover-scale">
                 <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
-                <span className="text-sky-700 font-bold text-xs uppercase tracking-wide">Real Results • Board-Certified Therapist</span>
+                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Board-Certified Therapist</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
                 Dr. Daniel Booked <span className="text-teal-600">$156K in Sessions</span>...
@@ -1774,7 +1774,7 @@ export default function PlasticTherapistLandingPage() {
       <section
         id="case-study-michael"
         data-animate
-        className="py-10 sm:py-24 bg-gradient-to-b from-purple-50 to-white"
+        className="py-10 sm:py-24 bg-gradient-to-b from-teal-50 to-white"
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
@@ -1876,7 +1876,7 @@ export default function PlasticTherapistLandingPage() {
                     { number: '$0', label: 'Marketing Cost', sub: 'vs $3,500/mo before' },
                     { number: '6', label: 'Facelift Cases', sub: 'from 2 weeks of videos' },
                   ].map((stat, i) => (
-                    <div key={i} className="bg-gradient-to-br from-purple-50 to-white border border-teal-500/30 rounded-xl p-4 text-center">
+                    <div key={i} className="bg-gradient-to-br from-teal-50 to-white border border-teal-500/30 rounded-xl p-4 text-center">
                       <div className="text-teal-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
                       <div className="text-gray-900 font-bold text-sm">{stat.label}</div>
                       <div className="text-gray-500 text-xs">{stat.sub}</div>
@@ -1903,7 +1903,7 @@ export default function PlasticTherapistLandingPage() {
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                         item.color === 'green' ? 'bg-green-100 border border-green-300' :
-                        item.color === 'teal' ? 'bg-purple-100 border border-teal-500/40' :
+                        item.color === 'teal' ? 'bg-teal-100 border border-teal-500/40' :
                         'bg-gray-100 border border-gray-300'
                       }`}>
                         <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
@@ -1915,7 +1915,7 @@ export default function PlasticTherapistLandingPage() {
                       <div className="flex-1 min-w-0">
                         <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
                           item.color === 'green' ? 'bg-green-100 text-green-700' :
-                          item.color === 'teal' ? 'bg-purple-100 text-teal-600' :
+                          item.color === 'teal' ? 'bg-teal-100 text-teal-600' :
                           'bg-gray-100 text-gray-600'
                         }`}>{item.time}</span>
                         <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-700 font-bold' : 'text-gray-700'}`}>{item.event}</p>
@@ -1926,7 +1926,7 @@ export default function PlasticTherapistLandingPage() {
               </div>
 
               {/* Final Quote */}
-              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-purple-50 border-t border-teal-500/20">
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-teal-50 border-t border-teal-500/20">
                 <div className="flex items-start gap-4">
                   <div className="text-teal-500 text-4xl font-serif leading-none">"</div>
                   <div>
@@ -2374,7 +2374,7 @@ export default function PlasticTherapistLandingPage() {
                       <div className="text-gray-500 font-bold text-sm">DIY Video Editing</div>
                       <div className="text-gray-400 text-xs">100+ hours</div>
                     </th>
-                    <th className="text-center py-4 px-3 sm:px-4 bg-purple-50">
+                    <th className="text-center py-4 px-3 sm:px-4 bg-teal-50">
                       <div className="text-teal-600 font-bold text-sm">CloneYourself</div>
                       <div className="text-teal-400 text-xs">$47.82 one-time</div>
                     </th>
@@ -2399,7 +2399,7 @@ export default function PlasticTherapistLandingPage() {
                       <td className="py-3 px-3 sm:px-4 text-center border-r border-gray-100">
                         <span className="text-gray-500 text-sm">{row.diy}</span>
                       </td>
-                      <td className="py-3 px-3 sm:px-4 text-center bg-purple-50/50">
+                      <td className="py-3 px-3 sm:px-4 text-center bg-teal-50/50">
                         <span className="text-teal-600 font-bold text-sm flex items-center justify-center gap-1">
                           {row.us}
                           {row.winner && <CheckCircle className="w-4 h-4 text-emerald-500" />}
@@ -2616,7 +2616,7 @@ export default function PlasticTherapistLandingPage() {
                 >
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left hover:bg-purple-50/50 transition-colors"
+                    className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left hover:bg-teal-50/50 transition-colors"
                   >
                     <span className="font-semibold pr-3 text-gray-900 text-sm sm:text-base">{faq.q}</span>
                     <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-teal-500 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
@@ -2998,9 +2998,9 @@ export default function PlasticTherapistLandingPage() {
               </div>
 
               {/* Option 2 - Future */}
-              <div className="bg-purple-50 rounded-xl p-4 sm:p-5 text-left border-2 border-teal-500">
+              <div className="bg-teal-50 rounded-xl p-4 sm:p-5 text-left border-2 border-teal-500">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
                     <Check className="w-5 h-5 text-teal-600" />
                   </div>
                   <span className="font-black text-gray-900 text-base sm:text-lg">Option 2: Get Access</span>
@@ -3012,8 +3012,8 @@ export default function PlasticTherapistLandingPage() {
                   <p>→ By week 2, schedule starts filling up</p>
                   <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
                 </div>
-                <div className="mt-3 pt-3 border-t border-sky-200">
-                  <p className="text-sky-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: refund + $50</p>
+                <div className="mt-3 pt-3 border-t border-teal-200">
+                  <p className="text-teal-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: refund + $50</p>
                 </div>
               </div>
             </div>
@@ -3170,7 +3170,7 @@ export default function PlasticTherapistLandingPage() {
                         className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
-            <span className="text-sky-200 font-bold">$47.82</span>
+            <span className="text-teal-200 font-bold">$47.82</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>
