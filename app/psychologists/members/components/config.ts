@@ -111,7 +111,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/psychologist/module-1.webp',
     lessons: ['Write video scripts in minutes', 'Using Therapist Expert Copywriter AI', 'Get scripts for trust & appointments'],
     resources: [
-      { name: 'Marcus - Psychologist Growth Mentor', url: 'https://chatgpt.com/g/g-psychologist-growth-mentor', type: 'link' as const },
+      { name: 'Marcus - Psychologist Growth Mentor', url: 'https://chatgpt.com/g/g-6974ba45c9b4819183b251cfe6b68c27-marcus-the-psychologist-growth-mentor', type: 'link' as const },
     ],
   },
   {
@@ -262,7 +262,7 @@ export const BONUSES = [
   { id: 'bonus-5', name: 'Intake Coordinator Phone Scripts', value: 397, icon: Headphones, description: 'Convert more phone calls into booked sessions', category: 'Operations', url: '/products/psychologist/bonuses/phone-scripts.pdf', image: '/images/psychologist/phone-scripts.webp' },
   { id: 'bonus-6', name: 'Insurance & Payment Scripts', value: 347, icon: FileText, description: 'Handle insurance questions with confidence', category: 'Sales', url: '/products/psychologist/bonuses/insurance-scripts.pdf', image: '/images/psychologist/insurance-scripts.webp' },
   { id: 'bonus-7', name: 'Referral Machine System', value: 447, icon: Users, description: 'Turn happy clients into your best referral source', category: 'Marketing', url: '/products/psychologist/bonuses/referral-system.pdf', image: '/images/psychologist/referral-machine.webp' },
-  { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 297, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-psychologist-growth-mentor', image: '/images/psychologist/ai-generator.webp' },
+  { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 297, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-6974ba45c9b4819183b251cfe6b68c27-marcus-the-psychologist-growth-mentor', image: '/images/psychologist/ai-generator.webp' },
   { id: 'bonus-9', name: '5-Star Review System', value: 397, icon: Star, description: 'Get 20+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/psychologist/bonuses/review-system.pdf', image: '/images/psychologist/review-explosion.webp' },
   { id: 'bonus-10', name: 'Group Therapy Launch System', value: 497, icon: Users, description: 'Scale your impact and income with groups', category: 'Operations', url: '/products/psychologist/bonuses/group-therapy.pdf', image: '/images/psychologist/group-therapy.webp' },
 ]
