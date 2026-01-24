@@ -686,9 +686,9 @@ export default function PlasticTherapistLandingPage() {
         </div>
 
         {/* Premium floating orbs - larger and more visible */}
-        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-violet-600/20 to-violet-500/10 rounded-full blur-[100px] floating-slow" />
+        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-teal-600/20 to-teal-500/10 rounded-full blur-[100px] floating-slow" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-amber-500/15 to-orange-500/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-violet-500/10 to-fuchsia-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-teal-500/10 to-fuchsia-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
 
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
@@ -722,9 +722,9 @@ export default function PlasticTherapistLandingPage() {
             {/* Expert Trust Line - Premium Badge */}
             <div className={`mb-5 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-250' : ''}`}>
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
-                <Award className="w-4 h-4 text-violet-400" />
+                <Award className="w-4 h-4 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
-                <span className="text-violet-300 font-semibold text-xs sm:text-sm">Dr. Maya Martinez, MD, FACS — Board-Certified Psychologist</span>
+                <span className="text-teal-300 font-semibold text-xs sm:text-sm">Dr. Maya Martinez, MD, FACS — Board-Certified Psychologist</span>
               </div>
             </div>
 
@@ -756,7 +756,7 @@ export default function PlasticTherapistLandingPage() {
             {/* Trust badges - Premium Glass Cards */}
             <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 stagger-fast ${visibleSections.has('hero') ? 'visible' : ''}`}>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> psychologists</span>
               </div>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
@@ -768,12 +768,12 @@ export default function PlasticTherapistLandingPage() {
               </div>
               <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-violet-400 text-violet-400" />
+                  <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-teal-400 text-teal-400" />
                 ))}
                 <span className="ml-1 text-white font-bold text-xs sm:text-sm">4.9/5</span>
               </div>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
-                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400" />
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
               </div>
               {/* Countdown Badge */}
@@ -813,19 +813,19 @@ export default function PlasticTherapistLandingPage() {
                 onClick={() => setExpandedFaq(expandedFaq === -1 ? null : -1)}
                 className="group flex items-center justify-center gap-2 mx-auto text-sm"
               >
-                <span className="text-violet-400 font-medium border-b border-dashed border-violet-400/40 group-hover:border-violet-400 transition-colors">
+                <span className="text-teal-400 font-medium border-b border-dashed border-teal-400/40 group-hover:border-teal-400 transition-colors">
                   What is the CloneYourself System?
                 </span>
-                <ChevronDown className={`w-4 h-4 text-violet-400 transition-transform duration-300 ${expandedFaq === -1 ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-teal-400 transition-transform duration-300 ${expandedFaq === -1 ? 'rotate-180' : ''}`} />
               </button>
 
               <div className={`overflow-hidden transition-all duration-500 ease-out ${expandedFaq === -1 ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
-                <div className="bg-gradient-to-br from-violet-500/10 to-white/5 backdrop-blur-sm border border-violet-500/20 rounded-xl p-5 text-left">
+                <div className="bg-gradient-to-br from-teal-500/10 to-white/5 backdrop-blur-sm border border-teal-500/20 rounded-xl p-5 text-left">
                   <p className="text-white text-sm leading-relaxed mb-3">
-                    You upload <span className="text-violet-400 font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in {new Date().getFullYear()}.
+                    You upload <span className="text-teal-400 font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in {new Date().getFullYear()}.
                   </p>
                   <p className="text-white/80 text-sm leading-relaxed mb-3">
-                    The AI transforms your photo into a <span className="text-violet-400 font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
+                    The AI transforms your photo into a <span className="text-teal-400 font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
                   </p>
                   <p className="text-white/80 text-sm leading-relaxed">
                     Inside the CloneYourself System, you get the <span className="text-white font-bold">complete A-to-Z video course</span> that shows you exactly how to do this — even if you've never touched AI before. Just follow along, copy-paste, and create professional videos that bring in new clients.
@@ -847,7 +847,7 @@ export default function PlasticTherapistLandingPage() {
       >
         {/* Background glow effects - hidden on mobile for performance */}
         <div className="absolute inset-0 pointer-events-none hidden sm:block">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
         </div>
 
@@ -855,12 +855,12 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-5xl mx-auto">
             {/* Header with impressive stats */}
             <div className="text-center mb-6 sm:mb-12">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500/20 to-amber-500/20 border border-violet-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
-                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400" />
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500/20 to-amber-500/20 border border-teal-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
+                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
                 <span className="text-white font-bold text-xs sm:text-sm">Used by 3,247+ Therapists in 100+ Countries</span>
               </div>
               <h2 className="text-xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-3 leading-tight">
-                Works in <span className="bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent">Your Language</span>
+                Works in <span className="bg-gradient-to-r from-teal-400 to-amber-400 bg-clip-text text-transparent">Your Language</span>
               </h2>
               <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
                 AI generates videos with <span className="text-white font-semibold">perfect native pronunciation</span> in 100+ languages.
@@ -870,7 +870,7 @@ export default function PlasticTherapistLandingPage() {
             {/* Live stats bar */}
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
-                <div className="text-lg sm:text-3xl font-black text-violet-400">3,247+</div>
+                <div className="text-lg sm:text-3xl font-black text-teal-400">3,247+</div>
                 <div className="text-gray-400 text-[10px] sm:text-sm">Therapists Worldwide</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
@@ -892,7 +892,7 @@ export default function PlasticTherapistLandingPage() {
                   placeholder="Search your language..."
                   value={languageSearch}
                   onChange={(e) => setLanguageSearch(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-full pl-11 sm:pl-12 pr-4 py-2.5 sm:py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-violet-500/50 transition-all"
+                  className="w-full bg-white/10 border border-white/20 rounded-full pl-11 sm:pl-12 pr-4 py-2.5 sm:py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-teal-500/50 transition-all"
                 />
                 {languageSearch && (
                   <button
@@ -918,7 +918,7 @@ export default function PlasticTherapistLandingPage() {
                     key={lang.code}
                     className="text-center"
                   >
-                    <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 sm:p-3 hover:bg-white/10 hover:border-violet-500/30 transition-all">
+                    <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 sm:p-3 hover:bg-white/10 hover:border-teal-500/30 transition-all">
                       <span className="text-xl sm:text-3xl block">{lang.flag}</span>
                       <p className="text-white text-[8px] sm:text-xs font-medium truncate mt-0.5 sm:mt-1">{lang.name}</p>
                     </div>
@@ -933,7 +933,7 @@ export default function PlasticTherapistLandingPage() {
                   <p className="text-gray-500 text-xs mt-1">Try searching by country name (e.g., "Brazil", "Japan")</p>
                   <button
                     onClick={() => setLanguageSearch('')}
-                    className="text-violet-400 hover:text-violet-300 text-sm mt-3 underline"
+                    className="text-teal-400 hover:text-teal-300 text-sm mt-3 underline"
                   >
                     Clear search
                   </button>
@@ -945,7 +945,7 @@ export default function PlasticTherapistLandingPage() {
                 <div className="text-center mt-4 pt-4 border-t border-white/10">
                   <button
                     onClick={() => setShowAllLanguages(!showAllLanguages)}
-                    className="inline-flex items-center gap-2 bg-violet-500/20 hover:bg-violet-500/30 border border-violet-500/30 text-violet-400 px-4 py-2 rounded-full text-sm font-medium transition-all"
+                    className="inline-flex items-center gap-2 bg-teal-500/20 hover:bg-teal-500/30 border border-teal-500/30 text-teal-400 px-4 py-2 rounded-full text-sm font-medium transition-all"
                   >
                     {showAllLanguages ? (
                       <>
@@ -964,10 +964,10 @@ export default function PlasticTherapistLandingPage() {
             </div>
 
             {/* Testimonial from international therapist */}
-            <div className="bg-gradient-to-r from-violet-500/10 to-amber-500/10 border border-violet-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+            <div className="bg-gradient-to-r from-teal-500/10 to-amber-500/10 border border-teal-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
               <div className="flex items-start gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-violet-500 to-amber-500 flex items-center justify-center text-white text-sm sm:text-xl font-bold">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-teal-500 to-amber-500 flex items-center justify-center text-white text-sm sm:text-xl font-bold">
                     CS
                   </div>
                 </div>
@@ -981,7 +981,7 @@ export default function PlasticTherapistLandingPage() {
                     <span className="text-gray-500 text-[10px] sm:text-xs">Verified</span>
                   </div>
                   <p className="text-white text-xs sm:text-base leading-relaxed mb-2 sm:mb-3">
-                    "The Portuguese accent is <span className="text-violet-400 font-semibold">perfect</span> — my clients can't tell it's AI. Session requests tripled. <span className="text-amber-400 font-semibold">Worth every penny.</span>"
+                    "The Portuguese accent is <span className="text-teal-400 font-semibold">perfect</span> — my clients can't tell it's AI. Session requests tripled. <span className="text-amber-400 font-semibold">Worth every penny.</span>"
                   </p>
                   <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                     <span className="text-white font-semibold text-xs sm:text-sm">Dr. Carolina Santos</span>
@@ -995,7 +995,7 @@ export default function PlasticTherapistLandingPage() {
             <div className="text-center mt-4 sm:mt-6">
               <p className="text-gray-500 text-[10px] sm:text-sm">
                 <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 inline-block mr-1 text-green-400" />
-                New languages added monthly • <a href="mailto:support@aifastscale.com" className="text-violet-400 hover:underline">Request yours</a>
+                New languages added monthly • <a href="mailto:support@aifastscale.com" className="text-teal-400 hover:underline">Request yours</a>
               </p>
             </div>
           </div>
@@ -1012,24 +1012,24 @@ export default function PlasticTherapistLandingPage() {
       >
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 w-2 h-2 bg-violet-500/30 rounded-full animate-ping" />
+          <div className="absolute top-10 left-10 w-2 h-2 bg-teal-500/30 rounded-full animate-ping" />
           <div className="absolute top-1/3 right-20 w-3 h-3 bg-amber-500/20 rounded-full animate-pulse" />
-          <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-violet-400/30 rounded-full animate-bounce" />
+          <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-teal-400/30 rounded-full animate-bounce" />
           <div className="absolute top-1/2 right-10 w-2 h-2 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
         </div>
 
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-violet-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
               visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''
             }`}>
               <div className="text-center mb-6 sm:mb-10">
-                <div className="inline-flex items-center gap-2 bg-violet-500/20 border border-violet-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400 animate-bounce" />
-                  <span className="text-violet-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
+                <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 animate-bounce" />
+                  <span className="text-teal-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
-                  Need a Refund? <span className="text-violet-400">It's THIS Easy</span>
+                  Need a Refund? <span className="text-teal-400">It's THIS Easy</span>
                 </h2>
                 <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
                   We made the refund process so simple, you can do it in 30 seconds.
@@ -1040,22 +1040,22 @@ export default function PlasticTherapistLandingPage() {
               {/* Creative Animated Steps - Timeline Style */}
               <div className="relative">
                 {/* Connecting Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-violet-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
 
                 {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
                 <div className="space-y-4">
                   {/* Step 1 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''}`}>
                     {/* Icon - shown first on mobile */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-violet-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-violet-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-teal-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-500/40 md:order-2">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-violet-600 font-black text-xs sm:text-sm">1</span>
+                        <span className="text-teal-600 font-black text-xs sm:text-sm">1</span>
                       </div>
                     </div>
                     {/* Content */}
                     <div className="w-full md:flex-1 md:text-right md:order-1">
-                      <div className="bg-gradient-to-r from-violet-500/20 to-transparent rounded-xl p-4 border border-violet-500/30">
+                      <div className="bg-gradient-to-r from-teal-500/20 to-transparent rounded-xl p-4 border border-teal-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
                         <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
                       </div>
@@ -1067,7 +1067,7 @@ export default function PlasticTherapistLandingPage() {
                   {/* Step 2 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                     {/* Icon */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-violet-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
                       <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
                         <span className="text-amber-600 font-black text-xs sm:text-sm">2</span>
@@ -1108,9 +1108,9 @@ export default function PlasticTherapistLandingPage() {
 
               {/* Bottom Message */}
               <div className="mt-6 sm:mt-10 text-center">
-                <div className="inline-block bg-gradient-to-r from-violet-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
+                <div className="inline-block bg-gradient-to-r from-teal-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
                   <p className="text-white font-bold text-sm sm:text-lg mb-2">
-                    That's it. <span className="text-violet-400">3 simple steps.</span>
+                    That's it. <span className="text-teal-400">3 simple steps.</span>
                   </p>
                   <p className="text-gray-400 text-xs sm:text-sm">
                     We respect your decision and value your trust. No hard feelings, ever.
@@ -1142,21 +1142,21 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-5xl mx-auto">
             {/* Section Header - Attention Grabbing */}
             <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-down' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-violet-500/20 border border-violet-500/40 px-4 py-2 rounded-full mb-4 hover-scale">
-                <div className="w-2 h-2 bg-violet-500 rounded-full animate-pulse" />
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4 hover-scale">
+                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
                 <span className="text-sky-700 font-bold text-xs uppercase tracking-wide">Real Results • Board-Certified Therapist</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                Dr. Daniel Booked <span className="text-violet-600">$156K in Sessions</span>...
+                Dr. Daniel Booked <span className="text-teal-600">$156K in Sessions</span>...
               </h2>
               <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Filming a Single Video Himself.</p>
             </div>
 
             {/* Dr. Daniel Case Study Card - Premium Modern Design */}
-            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-violet-500/20 rounded-2xl sm:rounded-3xl overflow-hidden card-hover ${visibleSections.has('case-study') ? 'animate-scale-in animation-delay-200' : ''}`}>
+            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden card-hover ${visibleSections.has('case-study') ? 'animate-scale-in animation-delay-200' : ''}`}>
 
               {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-violet-500/5 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
 
               {/* Hero Section - Big Visual */}
               <div className="relative p-4 sm:p-8">
@@ -1166,13 +1166,13 @@ export default function PlasticTherapistLandingPage() {
                   <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
                     He Never Stepped in Front of a Camera.
                   </p>
-                  <p className="text-violet-400 text-base sm:text-lg font-medium">
+                  <p className="text-teal-400 text-base sm:text-lg font-medium">
                     He uploaded one photo. The AI cloned his voice and face. Now his OR is booked 6 weeks out.
                   </p>
                 </div>
 
                 {/* Video - Lazy loaded, Autoplay when visible, Mobile optimized */}
-                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/10 bg-black aspect-square max-w-md mx-auto">
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black aspect-square max-w-md mx-auto">
                   {visibleSections.has('case-study') ? (
                     <>
                       {/* Mobile: 315KB video */}
@@ -1209,15 +1209,15 @@ export default function PlasticTherapistLandingPage() {
 
                 {/* Verified Badge */}
                 <div className="flex justify-center mt-4">
-                  <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-4 py-2 rounded-full">
-                    <Check className="w-4 h-4 text-violet-400" />
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-4 py-2 rounded-full">
+                    <Check className="w-4 h-4 text-teal-400" />
                     <span className="text-white text-sm font-medium">Board-Certified Therapist • Verified Results</span>
                   </div>
                 </div>
               </div>
 
               {/* Results Strip */}
-              <div className="bg-gradient-to-r from-violet-500/20 via-amber-500/20 to-violet-500/20 border-y border-violet-500/30 py-4 px-4 sm:px-8">
+              <div className="bg-gradient-to-r from-teal-500/20 via-amber-500/20 to-teal-500/20 border-y border-teal-500/30 py-4 px-4 sm:px-8">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   {[
                     { number: '28', label: 'Sessions', sub: 'in 4 weeks' },
@@ -1225,7 +1225,7 @@ export default function PlasticTherapistLandingPage() {
                     { number: '$0', label: 'Ad Spend', sub: '100% organic' },
                   ].map((stat, i) => (
                     <div key={i}>
-                      <div className="text-violet-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
+                      <div className="text-teal-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
                       <div className="text-white text-xs sm:text-sm font-bold">{stat.label}</div>
                       <div className="text-gray-500 text-[10px] sm:text-xs">{stat.sub}</div>
                     </div>
@@ -1236,8 +1236,8 @@ export default function PlasticTherapistLandingPage() {
               {/* Timeline / Results */}
               <div className="p-4 sm:p-8 border-t border-white/10">
                 <div className="text-center mb-4 sm:mb-6">
-                  <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full">
-                    <span className="text-violet-400 text-xs font-bold">FROM SKEPTIC TO BELIEVER</span>
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full">
+                    <span className="text-teal-400 text-xs font-bold">FROM SKEPTIC TO BELIEVER</span>
                   </div>
                 </div>
 
@@ -1254,19 +1254,19 @@ export default function PlasticTherapistLandingPage() {
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                         item.color === 'green' ? 'bg-green-500/20 border border-green-500/40' :
-                        item.color === 'teal' ? 'bg-violet-500/20 border border-violet-500/40' :
+                        item.color === 'teal' ? 'bg-teal-500/20 border border-teal-500/40' :
                         'bg-white/5 border border-white/20'
                       }`}>
                         <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
                           item.color === 'green' ? 'text-green-400' :
-                          item.color === 'teal' ? 'text-violet-400' :
+                          item.color === 'teal' ? 'text-teal-400' :
                           'text-gray-400'
                         }`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
                           item.color === 'green' ? 'bg-green-500/20 text-green-400' :
-                          item.color === 'teal' ? 'bg-violet-500/20 text-violet-400' :
+                          item.color === 'teal' ? 'bg-teal-500/20 text-teal-400' :
                           'bg-white/10 text-gray-400'
                         }`}>{item.time}</span>
                         <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
@@ -1277,17 +1277,17 @@ export default function PlasticTherapistLandingPage() {
               </div>
 
               {/* Final Quote */}
-              <div className="p-6 sm:p-8 bg-gradient-to-r from-violet-500/10 to-violet-500/5 border-t border-violet-500/30">
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
                 <div className="flex items-start gap-4">
-                  <div className="text-violet-400 text-4xl font-serif leading-none">"</div>
+                  <div className="text-teal-400 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       I've spent <span className="text-gray-400">$50,000+</span> on marketing agencies over the years. Nothing worked like this.
-                      <span className="text-violet-400 font-bold"> 28 qualified sessions in 4 weeks</span> — clients who already trusted me before walking in.
+                      <span className="text-teal-400 font-bold"> 28 qualified sessions in 4 weeks</span> — clients who already trusted me before walking in.
                       My OR is now booked 6 weeks out.
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-violet-400 bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400 bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
                         <span className="text-white font-bold text-sm">DR</span>
                       </div>
                       <div>
@@ -1296,7 +1296,7 @@ export default function PlasticTherapistLandingPage() {
                       </div>
                       <div className="ml-auto flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-violet-400 text-violet-400" />
+                          <Star key={i} className="w-4 h-4 fill-teal-400 text-teal-400" />
                         ))}
                       </div>
                     </div>
@@ -1312,7 +1312,7 @@ export default function PlasticTherapistLandingPage() {
                   { value: '$156K', label: 'Revenue', sub: '8 weeks' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
-                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-violet-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
+                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-teal-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
                     <div className="text-gray-400 text-xs font-semibold">{stat.label}</div>
                     <div className="text-gray-600 text-[10px]">{stat.sub}</div>
                   </div>
@@ -1335,13 +1335,13 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-4xl mx-auto">
             <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-blur-in' : ''}`}>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-                Here's What You Get <span className="text-violet-400">Today</span>
+                Here's What You Get <span className="text-teal-400">Today</span>
               </h2>
               <p className="text-gray-400 text-sm sm:text-lg">Everything you need to start getting new clients with AI videos</p>
             </div>
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
-            <div className={`bg-gradient-to-br from-violet-500/15 to-violet-500/5 border-2 border-violet-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 card-hover img-zoom ${
+            <div className={`bg-gradient-to-br from-teal-500/15 to-teal-500/5 border-2 border-teal-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 card-hover img-zoom ${
               visibleSections.has('whats-inside') ? 'animate-fade-in-left animation-delay-200' : ''
             }`}>
               {/* Large Course Thumbnail */}
@@ -1359,9 +1359,9 @@ export default function PlasticTherapistLandingPage() {
               {/* Course Details */}
               <div className="p-4 sm:p-8">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <span className="bg-violet-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
+                  <span className="bg-teal-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
                   <span className="text-gray-400 line-through text-xs sm:text-sm">$497</span>
-                  <span className="text-violet-400 font-black text-xs sm:text-base">INCLUDED</span>
+                  <span className="text-teal-400 font-black text-xs sm:text-base">INCLUDED</span>
                 </div>
 
                 <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">CloneYourself 7-Minute Video System</h3>
@@ -1381,7 +1381,7 @@ export default function PlasticTherapistLandingPage() {
                     'Edit videos on your phone in minutes (no experience needed)',
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
-                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400 flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400 flex-shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
@@ -1390,8 +1390,8 @@ export default function PlasticTherapistLandingPage() {
                 {/* Expert credibility line */}
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
-                    <Award className="w-4 h-4 text-violet-400 flex-shrink-0" />
-                    <span>Clinically-structured lessons and examples created with input from <span className="text-violet-400 font-medium">Dr. Maya Martinez</span>, Board-Certified Psychologist, MD, FACS</span>
+                    <Award className="w-4 h-4 text-teal-400 flex-shrink-0" />
+                    <span>Clinically-structured lessons and examples created with input from <span className="text-teal-400 font-medium">Dr. Maya Martinez</span>, Board-Certified Psychologist, MD, FACS</span>
                   </p>
                 </div>
               </div>
@@ -1399,16 +1399,16 @@ export default function PlasticTherapistLandingPage() {
 
             {/* BONUSES HEADER */}
             <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-violet-500/20 border border-violet-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
-                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400" />
-                <span className="text-violet-400 font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
+                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+                <span className="text-teal-400 font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
               </div>
             </div>
 
             {/* ALL 10 BONUS PRODUCTS */}
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {allBonuses.map((bonus, index) => (
-                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-violet-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
                     <Image src={bonus.image || '/images/psychologist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" sizes="(max-width: 640px) 100vw, 400px" />
                   </div>
@@ -1430,42 +1430,42 @@ export default function PlasticTherapistLandingPage() {
 
             {/* EXTRA BONUSES - Support & Updates */}
             <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
-              <div className="bg-gradient-to-br from-violet-500/10 to-transparent border border-violet-500/30 rounded-xl p-5">
+              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-violet-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <Sparkles className="w-7 h-7 text-white" />
                   </div>
                   <div>
                     <h4 className="text-white font-bold">Direct Support</h4>
                     <p className="text-gray-400 text-sm">Email + chat support included</p>
-                    <p className="text-violet-400 font-bold text-sm mt-1">$197 value — FREE</p>
+                    <p className="text-teal-400 font-bold text-sm mt-1">$197 value — FREE</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-violet-500/10 to-transparent border border-violet-500/30 rounded-xl p-5">
+              <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-violet-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <RefreshCw className="w-7 h-7 text-white" />
                   </div>
                   <div>
                     <h4 className="text-white font-bold">Lifetime Updates</h4>
                     <p className="text-gray-400 text-sm">New tools & templates weekly</p>
-                    <p className="text-violet-400 font-bold text-sm mt-1">$297 value — FREE</p>
+                    <p className="text-teal-400 font-bold text-sm mt-1">$297 value — FREE</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* TOTAL VALUE + CTA - Compact on mobile */}
-            <div className={`bg-gradient-to-br from-violet-500/20 to-black rounded-2xl border-2 border-violet-500 p-4 sm:p-8 ${
+            <div className={`bg-gradient-to-br from-teal-500/20 to-black rounded-2xl border-2 border-teal-500 p-4 sm:p-8 ${
               visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Price Box - Compact */}
-              <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-violet-500/30">
-                <p className="text-violet-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
+              <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
+                <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-violet-400">$47.82</span>
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -1477,7 +1477,7 @@ export default function PlasticTherapistLandingPage() {
               {/* CTA Button */}
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-violet-500 to-amber-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                                className="w-full bg-gradient-to-r from-teal-500 to-amber-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -1487,11 +1487,11 @@ export default function PlasticTherapistLandingPage() {
               {/* Trust - Compact */}
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-400 text-xs sm:text-sm">
                 <div className="flex items-center gap-1.5">
-                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400" />
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
                   <span>30-Day Guarantee</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400" />
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
                   <span>SSL Secured</span>
                 </div>
               </div>
@@ -1510,8 +1510,8 @@ export default function PlasticTherapistLandingPage() {
                   { step: '4', title: 'Create & Post', desc: 'Your first AI video today', icon: Video },
                 ].map((item, i) => (
                   <div key={i} className="text-center">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-violet-500/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-violet-400 font-black text-lg sm:text-xl">{item.step}</span>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-500/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-teal-400 font-black text-lg sm:text-xl">{item.step}</span>
                     </div>
                     <h5 className="text-white font-bold text-sm sm:text-base">{item.title}</h5>
                     <p className="text-gray-400 text-xs sm:text-sm">{item.desc}</p>
@@ -1532,21 +1532,21 @@ export default function PlasticTherapistLandingPage() {
         className="py-10 sm:py-20 bg-white relative overflow-hidden"
       >
         {/* Decorative background elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-32 h-32 bg-teal-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl" />
 
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-zoom-in' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500/10 to-amber-500/10 border border-violet-500/30 px-4 py-2 rounded-full mb-4 hover-scale">
-                <Zap className="w-4 h-4 text-violet-500 animate-pulse" />
-                <span className="text-violet-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500/10 to-amber-500/10 border border-teal-500/30 px-4 py-2 rounded-full mb-4 hover-scale">
+                <Zap className="w-4 h-4 text-teal-500 animate-pulse" />
+                <span className="text-teal-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
                 <span className="text-gray-400 text-xs">•</span>
                 <span className="text-amber-600 font-bold text-xs">~20 min total</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
-                From Zero to <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-amber-500">AI Video</span> in Minutes
+                From Zero to <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-amber-500">AI Video</span> in Minutes
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
                 Even if you've never touched AI before. Works <span className="font-bold text-gray-800">only for psychologists</span>.
@@ -1556,16 +1556,16 @@ export default function PlasticTherapistLandingPage() {
             {/* 4 Steps - Creative Timeline */}
             <div className="relative">
               {/* Connecting line - desktop */}
-              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-amber-500 to-green-500 -translate-y-1/2 rounded-full opacity-20" />
+              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-amber-500 to-green-500 -translate-y-1/2 rounded-full opacity-20" />
 
               <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 stagger-children ${visibleSections.has('how-it-works') ? 'visible' : ''}`}>
                 {/* Step 1 - Generate Script */}
                 <div className="group relative">
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-violet-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/10 h-full hover-lift">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 h-full hover-lift">
                     {/* Step number - floating */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-violet-500 to-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:scale-110 transition-transform">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">1</span>
                         </div>
                         <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
@@ -1576,20 +1576,20 @@ export default function PlasticTherapistLandingPage() {
 
                     {/* Time badge */}
                     <div className="flex justify-end mb-4 mt-2">
-                      <span className="bg-violet-500/10 text-violet-600 px-3 py-1 rounded-full text-xs font-bold border border-violet-500/20">
+                      <span className="bg-teal-500/10 text-teal-600 px-3 py-1 rounded-full text-xs font-bold border border-teal-500/20">
                         5 min
                       </span>
                     </div>
 
                     {/* Icon */}
-                    <div className="w-14 h-14 bg-gradient-to-br from-violet-500/20 to-amber-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                      <MessageSquare className="w-7 h-7 text-violet-500" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-teal-500/20 to-amber-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <MessageSquare className="w-7 h-7 text-teal-500" />
                     </div>
 
                     {/* Content */}
                     <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Generate Script</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Use our <span className="text-violet-600 font-semibold">ChatGPT specialist</span> built for plastic therapy practices. Just describe your topic.
+                      Use our <span className="text-teal-600 font-semibold">ChatGPT specialist</span> built for plastic therapy practices. Just describe your topic.
                     </p>
 
                     {/* Mini feature */}
@@ -1608,7 +1608,7 @@ export default function PlasticTherapistLandingPage() {
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-violet-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">2</span>
                         </div>
                       </div>
@@ -1622,7 +1622,7 @@ export default function PlasticTherapistLandingPage() {
                     </div>
 
                     {/* Icon */}
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500/20 to-violet-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500/20 to-teal-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
                       <Upload className="w-7 h-7 text-amber-500" />
                     </div>
 
@@ -1644,14 +1644,14 @@ export default function PlasticTherapistLandingPage() {
 
                 {/* Step 3 - Make It Talk */}
                 <div className="group relative">
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-violet-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/10 h-full hover-lift">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 h-full hover-lift">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
                       <div className="relative">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-violet-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:scale-110 transition-transform">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-500 to-green-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform">
                           <span className="text-white font-black text-lg sm:text-xl">3</span>
                         </div>
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full flex items-center justify-center">
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-teal-500 to-amber-500 rounded-full flex items-center justify-center">
                           <Play className="w-2.5 h-2.5 text-white ml-0.5" />
                         </div>
                       </div>
@@ -1659,20 +1659,20 @@ export default function PlasticTherapistLandingPage() {
 
                     {/* Time badge */}
                     <div className="flex justify-end mb-4 mt-2">
-                      <span className="bg-violet-500/10 text-violet-600 px-3 py-1 rounded-full text-xs font-bold border border-violet-500/20">
+                      <span className="bg-teal-500/10 text-teal-600 px-3 py-1 rounded-full text-xs font-bold border border-teal-500/20">
                         5 min
                       </span>
                     </div>
 
                     {/* Icon */}
-                    <div className="w-14 h-14 bg-gradient-to-br from-violet-500/20 to-green-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                      <Video className="w-7 h-7 text-violet-500" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-teal-500/20 to-green-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <Video className="w-7 h-7 text-teal-500" />
                     </div>
 
                     {/* Content */}
                     <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Make It Talk</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      AI generates a <span className="text-violet-600 font-semibold">realistic talking video</span> with perfect lip-sync. Like magic.
+                      AI generates a <span className="text-teal-600 font-semibold">realistic talking video</span> with perfect lip-sync. Like magic.
                     </p>
 
                     {/* Mini feature */}
@@ -1736,11 +1736,11 @@ export default function PlasticTherapistLandingPage() {
             {/* Total time banner */}
             <div className={`flex justify-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-amber-500 rounded-full blur-xl opacity-20 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-amber-500 rounded-full blur-xl opacity-20 animate-pulse" />
                 <div className="relative flex items-center gap-4 sm:gap-6 bg-gradient-to-r from-gray-900 to-gray-800 rounded-full px-6 sm:px-10 py-3 sm:py-4 shadow-2xl">
-                  <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-violet-400" />
+                  <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-teal-400" />
                   <div className="flex items-baseline gap-2">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-amber-400 font-black text-2xl sm:text-4xl">~20</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-amber-400 font-black text-2xl sm:text-4xl">~20</span>
                     <span className="text-gray-400 text-sm sm:text-lg font-medium">minutes total</span>
                   </div>
                   <div className="hidden sm:block w-px h-8 bg-gray-700" />
@@ -1753,7 +1753,7 @@ export default function PlasticTherapistLandingPage() {
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-violet-500 via-amber-500 to-violet-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-violet-500/30"
+                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-amber-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1780,12 +1780,12 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full mb-3">
-                <Play className="w-3.5 h-3.5 text-violet-500" />
-                <span className="text-violet-600 font-bold text-xs uppercase tracking-wide">Facial Rejuvenation Success</span>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Play className="w-3.5 h-3.5 text-teal-500" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Facial Rejuvenation Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-violet-500">$189,000</span> in Facelift Cases
+                His First AI Video Generated <span className="text-teal-500">$189,000</span> in Facelift Cases
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From struggling with content creation to dominating local social media</p>
             </div>
@@ -1799,16 +1799,16 @@ export default function PlasticTherapistLandingPage() {
                   {/* Profile */}
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-violet-500 shadow-lg bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-teal-500 shadow-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
                         <span className="text-white font-bold text-2xl">MC</span>
                       </div>
-                      <div className="absolute -bottom-1 -right-1 bg-violet-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
+                      <div className="absolute -bottom-1 -right-1 bg-teal-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
                         VERIFIED
                       </div>
                     </div>
                     <div className="sm:mt-2">
                       <h3 className="text-gray-900 font-black text-lg">Dr. Michael Chen</h3>
-                      <p className="text-violet-600 text-sm font-medium">Facial Psychologist</p>
+                      <p className="text-teal-600 text-sm font-medium">Facial Psychologist</p>
                       <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
                         <MapPin className="w-3 h-3" />
                         <span>Los Angeles, CA</span>
@@ -1833,11 +1833,11 @@ export default function PlasticTherapistLandingPage() {
 
               {/* Video Section */}
               <div className="p-6 sm:p-8 bg-gray-50">
-                <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1 rounded-full mb-4">
-                  <span className="text-violet-600 text-xs font-bold">HIS FIRST AI VIDEO</span>
+                <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full mb-4">
+                  <span className="text-teal-600 text-xs font-bold">HIS FIRST AI VIDEO</span>
                 </div>
 
-                <div className="relative rounded-xl overflow-hidden border-2 border-violet-500/40 shadow-2xl">
+                <div className="relative rounded-xl overflow-hidden border-2 border-teal-500/40 shadow-2xl">
                   {/* Mobile: 27KB optimized image */}
                   <Image
                     src="/images/psychologist/case-study-facelift-mobile.webp"
@@ -1860,14 +1860,14 @@ export default function PlasticTherapistLandingPage() {
                 </div>
 
                 <p className="text-gray-500 text-sm mt-3 text-center">
-                  Created in <span className="text-violet-600 font-bold">7 minutes</span> • Posted on Instagram Reels • Day 1 of using the system
+                  Created in <span className="text-teal-600 font-bold">7 minutes</span> • Posted on Instagram Reels • Day 1 of using the system
                 </p>
               </div>
 
               {/* The Speed Stats */}
               <div className="p-6 sm:p-8 bg-white border-t border-gray-100">
-                <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1 rounded-full mb-4">
-                  <span className="text-violet-600 text-xs font-bold">THE SPEED OF AI CONTENT</span>
+                <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full mb-4">
+                  <span className="text-teal-600 text-xs font-bold">THE SPEED OF AI CONTENT</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -1876,8 +1876,8 @@ export default function PlasticTherapistLandingPage() {
                     { number: '$0', label: 'Marketing Cost', sub: 'vs $3,500/mo before' },
                     { number: '6', label: 'Facelift Cases', sub: 'from 2 weeks of videos' },
                   ].map((stat, i) => (
-                    <div key={i} className="bg-gradient-to-br from-purple-50 to-white border border-violet-500/30 rounded-xl p-4 text-center">
-                      <div className="text-violet-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
+                    <div key={i} className="bg-gradient-to-br from-purple-50 to-white border border-teal-500/30 rounded-xl p-4 text-center">
+                      <div className="text-teal-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
                       <div className="text-gray-900 font-bold text-sm">{stat.label}</div>
                       <div className="text-gray-500 text-xs">{stat.sub}</div>
                     </div>
@@ -1887,8 +1887,8 @@ export default function PlasticTherapistLandingPage() {
 
               {/* Timeline / Results */}
               <div className="p-4 sm:p-8 border-t border-gray-100 bg-gray-50">
-                <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1 rounded-full mb-4 sm:mb-6">
-                  <span className="text-violet-600 text-xs font-bold">THE TIMELINE</span>
+                <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full mb-4 sm:mb-6">
+                  <span className="text-teal-600 text-xs font-bold">THE TIMELINE</span>
                 </div>
 
                 {/* Timeline - improved mobile layout */}
@@ -1903,19 +1903,19 @@ export default function PlasticTherapistLandingPage() {
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                         item.color === 'green' ? 'bg-green-100 border border-green-300' :
-                        item.color === 'teal' ? 'bg-purple-100 border border-violet-500/40' :
+                        item.color === 'teal' ? 'bg-purple-100 border border-teal-500/40' :
                         'bg-gray-100 border border-gray-300'
                       }`}>
                         <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
                           item.color === 'green' ? 'text-green-600' :
-                          item.color === 'teal' ? 'text-violet-600' :
+                          item.color === 'teal' ? 'text-teal-600' :
                           'text-gray-500'
                         }`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
                           item.color === 'green' ? 'bg-green-100 text-green-700' :
-                          item.color === 'teal' ? 'bg-purple-100 text-violet-600' :
+                          item.color === 'teal' ? 'bg-purple-100 text-teal-600' :
                           'bg-gray-100 text-gray-600'
                         }`}>{item.time}</span>
                         <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-700 font-bold' : 'text-gray-700'}`}>{item.event}</p>
@@ -1926,17 +1926,17 @@ export default function PlasticTherapistLandingPage() {
               </div>
 
               {/* Final Quote */}
-              <div className="p-6 sm:p-8 bg-gradient-to-r from-violet-500/10 to-purple-50 border-t border-violet-500/20">
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-purple-50 border-t border-teal-500/20">
                 <div className="flex items-start gap-4">
-                  <div className="text-violet-500 text-4xl font-serif leading-none">"</div>
+                  <div className="text-teal-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      Two weeks of AI videos. <span className="text-violet-600 font-bold">$189,000 in facelift sessions</span>.
+                      Two weeks of AI videos. <span className="text-teal-600 font-bold">$189,000 in facelift sessions</span>.
                       I spent $28,000 on marketing agencies over 8 months and got 4 sessions. This system cost me $47.82 and
                       I booked 6 surgeries in two weeks. My only regret is not starting sooner.
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-violet-500 bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-500 bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
                         <span className="text-white font-bold text-sm">MC</span>
                       </div>
                       <div>
@@ -1945,7 +1945,7 @@ export default function PlasticTherapistLandingPage() {
                       </div>
                       <div className="ml-auto flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-violet-500 text-violet-500" />
+                          <Star key={i} className="w-4 h-4 fill-teal-500 text-teal-500" />
                         ))}
                       </div>
                     </div>
@@ -1961,7 +1961,7 @@ export default function PlasticTherapistLandingPage() {
                   { value: '1,932x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
-                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-violet-500' : 'text-gray-900'}`}>{stat.value}</div>
+                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>
                     <div className="text-gray-600 text-xs font-semibold">{stat.label}</div>
                     <div className="text-gray-400 text-[10px]">{stat.sub}</div>
                   </div>
@@ -2080,17 +2080,17 @@ export default function PlasticTherapistLandingPage() {
         {/* Header */}
         <div className="max-w-6xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
           <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-down' : ''}`}>
-            <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale sparkle">
-              <Sparkles className="w-3.5 h-3.5 text-violet-400" />
-              <span className="text-violet-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
+            <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale sparkle">
+              <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+              <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
             </div>
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-              Real Psychologists. <span className="text-violet-400">Real Results.</span>
+              Real Psychologists. <span className="text-teal-400">Real Results.</span>
             </h2>
             <div className="flex items-center justify-center gap-3 sm:gap-6 text-gray-400 text-xs sm:text-base">
-              <span><span className="text-violet-400 font-bold">500+</span> success stories</span>
+              <span><span className="text-teal-400 font-bold">500+</span> success stories</span>
               <span>•</span>
-              <span><span className="text-violet-400 font-bold">20+</span> countries</span>
+              <span><span className="text-teal-400 font-bold">20+</span> countries</span>
             </div>
           </div>
         </div>
@@ -2121,7 +2121,7 @@ export default function PlasticTherapistLandingPage() {
 
                 {/* Author - Larger image */}
                 <div className="flex items-center gap-3">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-violet-500/40 shadow-lg">
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-teal-500/40 shadow-lg">
                     <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" sizes="64px" />
                   </div>
                   <div>
@@ -2155,7 +2155,7 @@ export default function PlasticTherapistLandingPage() {
 
                 {/* Author - Larger image */}
                 <div className="flex items-center gap-3">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-violet-500/40 shadow-lg">
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-teal-500/40 shadow-lg">
                     <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" sizes="64px" />
                   </div>
                   <div>
@@ -2181,12 +2181,12 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className={`text-center mb-8 sm:mb-12 ${visibleSections.has('who-is-this-for') ? 'animate-blur-in' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale">
-                <Users className="w-3.5 h-3.5 text-violet-400" />
-                <span className="text-violet-400 font-bold text-xs uppercase tracking-wide">Is This Right For You?</span>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale">
+                <Users className="w-3.5 h-3.5 text-teal-400" />
+                <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Is This Right For You?</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
-                This System Is <span className="text-violet-400">NOT</span> For Everyone
+                This System Is <span className="text-teal-400">NOT</span> For Everyone
               </h2>
               <p className="text-gray-400 text-sm sm:text-base">Be honest with yourself before you invest</p>
             </div>
@@ -2264,11 +2264,11 @@ export default function PlasticTherapistLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-violet-500/10 to-white border-2 border-violet-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
+            <div className={`bg-gradient-to-br from-teal-500/10 to-white border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
               visibleSections.has('guarantee1') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Animated background pulse */}
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-amber-500/10 to-violet-500/5 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-amber-500/10 to-teal-500/5 animate-pulse" />
 
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
@@ -2277,7 +2277,7 @@ export default function PlasticTherapistLandingPage() {
                     <span className="text-green-600 font-bold text-xs sm:text-sm uppercase">Calendar Guarantee</span>
                   </div>
                   <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                    Fill Your Calendar or <span className="text-violet-500">100% Refund</span>
+                    Fill Your Calendar or <span className="text-teal-500">100% Refund</span>
                   </h2>
                   <p className="text-gray-600 text-sm sm:text-base">No questions. No hassle. Period.</p>
                 </div>
@@ -2291,7 +2291,7 @@ export default function PlasticTherapistLandingPage() {
                       {/* Glowing effect */}
                       <div className="absolute inset-0 rounded-full bg-green-500/20 animate-ping opacity-30" />
                       {/* Main badge */}
-                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-green-500 via-violet-500 to-green-500 shadow-2xl shadow-green-500/30 flex flex-col items-center justify-center">
+                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-green-500 via-teal-500 to-green-500 shadow-2xl shadow-green-500/30 flex flex-col items-center justify-center">
                         <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center text-center p-2">
                           <CalendarCheck className="w-6 h-6 sm:w-8 sm:h-8 text-green-400 mb-1" />
                           <span className="text-green-400 font-black text-lg sm:text-2xl leading-none">100%</span>
@@ -2306,10 +2306,10 @@ export default function PlasticTherapistLandingPage() {
                   </div>
 
                   <div className="flex-1">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-violet-500/20 shadow-lg">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-teal-500/20 shadow-lg">
                       <p className="text-gray-800 text-sm sm:text-lg leading-relaxed font-medium">
                         If you don't fill your next month's calendar with new clients using this system,
-                        I'll refund <span className="text-violet-500 font-black">every single penny</span> — no questions asked.
+                        I'll refund <span className="text-teal-500 font-black">every single penny</span> — no questions asked.
                       </p>
                       <div className="mt-3 pt-3 border-t border-gray-200">
                         <p className="text-gray-600 text-xs sm:text-sm">
@@ -2325,8 +2325,8 @@ export default function PlasticTherapistLandingPage() {
                     { icon: CalendarCheck, title: 'More Clients', desc: 'Or your money back' },
                     { icon: Shield, title: '30-Day Trial', desc: 'Full refund anytime' },
                   ].map((item, i) => (
-                    <div key={i} className="bg-white rounded-xl p-3 sm:p-4 text-center border border-violet-500/20 shadow-lg hover:shadow-xl transition-shadow hover:scale-[1.02] transform duration-200">
-                      <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-violet-500 mx-auto mb-1.5 sm:mb-2" />
+                    <div key={i} className="bg-white rounded-xl p-3 sm:p-4 text-center border border-teal-500/20 shadow-lg hover:shadow-xl transition-shadow hover:scale-[1.02] transform duration-200">
+                      <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-teal-500 mx-auto mb-1.5 sm:mb-2" />
                       <p className="text-gray-900 font-bold text-xs sm:text-base">{item.title}</p>
                       <p className="text-gray-500 text-[10px] sm:text-sm">{item.desc}</p>
                     </div>
@@ -2350,12 +2350,12 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className={`text-center mb-8 sm:mb-10 ${visibleSections.has('comparison') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full mb-3">
-                <TrendingUp className="w-3.5 h-3.5 text-violet-600" />
-                <span className="text-violet-600 font-bold text-xs uppercase tracking-wide">Compare Your Options</span>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <TrendingUp className="w-3.5 h-3.5 text-teal-600" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Compare Your Options</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                Why <span className="text-violet-500">CloneYourself</span> Beats Everything Else
+                Why <span className="text-teal-500">CloneYourself</span> Beats Everything Else
               </h2>
               <p className="text-gray-500 text-sm sm:text-base">See the difference for yourself</p>
             </div>
@@ -2375,8 +2375,8 @@ export default function PlasticTherapistLandingPage() {
                       <div className="text-gray-400 text-xs">100+ hours</div>
                     </th>
                     <th className="text-center py-4 px-3 sm:px-4 bg-purple-50">
-                      <div className="text-violet-600 font-bold text-sm">CloneYourself</div>
-                      <div className="text-violet-400 text-xs">$47.82 one-time</div>
+                      <div className="text-teal-600 font-bold text-sm">CloneYourself</div>
+                      <div className="text-teal-400 text-xs">$47.82 one-time</div>
                     </th>
                   </tr>
                 </thead>
@@ -2400,7 +2400,7 @@ export default function PlasticTherapistLandingPage() {
                         <span className="text-gray-500 text-sm">{row.diy}</span>
                       </td>
                       <td className="py-3 px-3 sm:px-4 text-center bg-purple-50/50">
-                        <span className="text-violet-600 font-bold text-sm flex items-center justify-center gap-1">
+                        <span className="text-teal-600 font-bold text-sm flex items-center justify-center gap-1">
                           {row.us}
                           {row.winner && <CheckCircle className="w-4 h-4 text-emerald-500" />}
                         </span>
@@ -2416,7 +2416,7 @@ export default function PlasticTherapistLandingPage() {
               <a
                 href={WHOP_CHECKOUT_LINK}
                 onClick={trackInitiateCheckout}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-violet-500/25"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-teal-500/25"
               >
                 <Zap className="w-5 h-5" />
                 Get CloneYourself Now
@@ -2477,8 +2477,8 @@ export default function PlasticTherapistLandingPage() {
                 </div>
 
                 {/* Smart Way */}
-                <div className="bg-gradient-to-br from-violet-500 to-amber-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto hover-lift hover-glow">
-                  <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-black text-violet-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black">
+                <div className="bg-gradient-to-br from-teal-500 to-amber-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto hover-lift hover-glow">
+                  <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-black text-teal-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black">
                     Best Value
                   </div>
                   <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
@@ -2492,7 +2492,7 @@ export default function PlasticTherapistLandingPage() {
             </div>
 
             {/* VISUAL VALUE STACK - Hormozi Style */}
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-violet-500/30 mb-6 card-hover ${
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-teal-500/30 mb-6 card-hover ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
               <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.82 Actually Includes:</h3>
@@ -2542,8 +2542,8 @@ export default function PlasticTherapistLandingPage() {
                   <span className="text-white font-black text-xl sm:text-2xl">${(497 + totalBonusValue + 494).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-violet-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-violet-400 font-black text-2xl sm:text-3xl">$47.82</span>
+                  <span className="text-teal-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
+                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.82</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
@@ -2556,21 +2556,21 @@ export default function PlasticTherapistLandingPage() {
             </div>
 
             {/* Main Price Box - Compact on mobile */}
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-violet-500/50 shadow-2xl hover-glow ${
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-teal-500/50 shadow-2xl hover-glow ${
               visibleSections.has('pricing') ? 'animate-bounce-in animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-violet-400">$47.82</span>
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
                 </div>
               </div>
-              <p className="text-violet-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
+              <p className="text-teal-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
 
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full max-w-md mx-auto bg-gradient-to-r from-violet-500 via-amber-500 to-violet-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
+                                className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-amber-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -2579,11 +2579,11 @@ export default function PlasticTherapistLandingPage() {
 
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-gray-400 text-[10px] sm:text-sm">
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-violet-400" />
+                  <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-teal-400" />
                   <span>30-Day Guarantee</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-violet-400" />
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-teal-400" />
                   <span>SSL Secured</span>
                 </div>
               </div>
@@ -2604,7 +2604,7 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-down' : ''}`}>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2 sm:mb-4">
-                Common <span className="text-violet-500">Questions</span>
+                Common <span className="text-teal-500">Questions</span>
               </h2>
             </div>
 
@@ -2612,14 +2612,14 @@ export default function PlasticTherapistLandingPage() {
               {faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden hover:border-violet-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/10"
+                  className="bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden hover:border-teal-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10"
                 >
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
                     className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left hover:bg-purple-50/50 transition-colors"
                   >
                     <span className="font-semibold pr-3 text-gray-900 text-sm sm:text-base">{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-violet-500 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-teal-500 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   {expandedFaq === i && (
                     <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5">
@@ -2635,7 +2635,7 @@ export default function PlasticTherapistLandingPage() {
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-violet-500 via-amber-500 to-violet-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-violet-500/30"
+                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-amber-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2660,24 +2660,24 @@ export default function PlasticTherapistLandingPage() {
       >
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 w-2 h-2 bg-violet-500/30 rounded-full animate-ping" />
+          <div className="absolute top-10 left-10 w-2 h-2 bg-teal-500/30 rounded-full animate-ping" />
           <div className="absolute top-1/3 right-20 w-3 h-3 bg-amber-500/20 rounded-full animate-pulse" />
-          <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-violet-400/30 rounded-full animate-bounce" />
+          <div className="absolute bottom-20 left-1/4 w-2 h-2 bg-teal-400/30 rounded-full animate-bounce" />
           <div className="absolute top-1/2 right-10 w-2 h-2 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
         </div>
 
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-violet-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
+            <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
               visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''
             }`}>
               <div className="text-center mb-6 sm:mb-10">
-                <div className="inline-flex items-center gap-2 bg-violet-500/20 border border-violet-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400 animate-bounce" />
-                  <span className="text-violet-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
+                <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 animate-bounce" />
+                  <span className="text-teal-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
-                  Need a Refund? <span className="text-violet-400">It's THIS Easy</span>
+                  Need a Refund? <span className="text-teal-400">It's THIS Easy</span>
                 </h2>
                 <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
                   We made the refund process so simple, you can do it in 30 seconds.
@@ -2688,22 +2688,22 @@ export default function PlasticTherapistLandingPage() {
               {/* Creative Animated Steps - Timeline Style */}
               <div className="relative">
                 {/* Connecting Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-violet-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-amber-500 to-green-500 -translate-x-1/2 hidden md:block" />
 
                 {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
                 <div className="space-y-4">
                   {/* Step 1 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''}`}>
                     {/* Icon - shown first on mobile */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-violet-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-violet-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-teal-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-500/40 md:order-2">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-violet-600 font-black text-xs sm:text-sm">1</span>
+                        <span className="text-teal-600 font-black text-xs sm:text-sm">1</span>
                       </div>
                     </div>
                     {/* Content */}
                     <div className="w-full md:flex-1 md:text-right md:order-1">
-                      <div className="bg-gradient-to-r from-violet-500/20 to-transparent rounded-xl p-4 border border-violet-500/30">
+                      <div className="bg-gradient-to-r from-teal-500/20 to-transparent rounded-xl p-4 border border-teal-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
                         <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
                       </div>
@@ -2715,7 +2715,7 @@ export default function PlasticTherapistLandingPage() {
                   {/* Step 2 */}
                   <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                     {/* Icon */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-violet-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
                       <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
                       <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
                         <span className="text-amber-600 font-black text-xs sm:text-sm">2</span>
@@ -2756,9 +2756,9 @@ export default function PlasticTherapistLandingPage() {
 
               {/* Bottom Message */}
               <div className="mt-6 sm:mt-10 text-center">
-                <div className="inline-block bg-gradient-to-r from-violet-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
+                <div className="inline-block bg-gradient-to-r from-teal-500/20 via-amber-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
                   <p className="text-white font-bold text-sm sm:text-lg mb-2">
-                    That's it. <span className="text-violet-400">3 simple steps.</span>
+                    That's it. <span className="text-teal-400">3 simple steps.</span>
                   </p>
                   <p className="text-gray-400 text-xs sm:text-sm">
                     We respect your decision and value your trust. No hard feelings, ever.
@@ -2781,12 +2781,12 @@ export default function PlasticTherapistLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full mb-3">
-                <Award className="w-3.5 h-3.5 text-violet-500" />
-                <span className="text-violet-600 font-bold text-xs uppercase tracking-wide">Meet Your Expert</span>
+              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
+                <Award className="w-3.5 h-3.5 text-teal-500" />
+                <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Meet Your Expert</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                The Clinical Mind <span className="text-violet-500">Behind This System</span>
+                The Clinical Mind <span className="text-teal-500">Behind This System</span>
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
                 Learn from an internationally trained specialist who understands both clinical excellence and modern client acquisition.
@@ -2846,9 +2846,9 @@ export default function PlasticTherapistLandingPage() {
                   desc: 'The $50 guarantee isn\'t a loss leader. It\'s me saying: "I\'m confident this works. I\'ll literally pay you $50 if it doesn\'t." That confidence only works if the price is low enough that you\'ll actually TRY it.',
                 },
               ].map((item, i) => (
-                <div key={i} className="flex gap-4 bg-white/5 border border-violet-500/20 rounded-xl p-4 sm:p-5">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-violet-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-violet-400 font-black text-sm sm:text-base">{item.num}</span>
+                <div key={i} className="flex gap-4 bg-white/5 border border-teal-500/20 rounded-xl p-4 sm:p-5">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-teal-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-teal-400 font-black text-sm sm:text-base">{item.num}</span>
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-sm sm:text-base mb-1">{item.title}</h3>
@@ -2859,7 +2859,7 @@ export default function PlasticTherapistLandingPage() {
             </div>
 
             <div className={`mt-6 text-center ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-              <p className="text-violet-400 font-bold text-sm sm:text-base">
+              <p className="text-teal-400 font-bold text-sm sm:text-base">
                 Bottom line: This is priced to be tried, not priced to be expensive.
               </p>
             </div>
@@ -2877,21 +2877,21 @@ export default function PlasticTherapistLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`bg-gradient-to-br from-violet-500/5 via-white to-amber-500/5 border-2 border-violet-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
+            <div className={`bg-gradient-to-br from-teal-500/5 via-white to-amber-500/5 border-2 border-teal-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
               visibleSections.has('guarantee3') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
-                  <div className="inline-flex items-center gap-2 bg-violet-500/20 border border-violet-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-violet-500 animate-pulse" />
-                    <span className="text-violet-600 font-bold text-xs sm:text-sm uppercase">Zero Risk Promise</span>
+                  <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-teal-500 animate-pulse" />
+                    <span className="text-teal-600 font-bold text-xs sm:text-sm uppercase">Zero Risk Promise</span>
                   </div>
                   <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                    Don't Love It? <span className="text-violet-500">Full Refund.</span>
+                    Don't Love It? <span className="text-teal-500">Full Refund.</span>
                   </h2>
                   <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto">
                     If you feel it doesn't work for you, seems complicated, or simply isn't what you expected — you get every penny back.
@@ -2904,16 +2904,16 @@ export default function PlasticTherapistLandingPage() {
                     {/* Badge */}
                     <div className="relative flex-shrink-0">
                       <div className="w-24 h-24 sm:w-32 sm:h-32 relative">
-                        <div className="absolute inset-0 rounded-full border-4 border-dashed border-violet-500/40 animate-spin-slow" />
-                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-violet-500 via-amber-500 to-violet-500 shadow-2xl shadow-violet-500/30 flex flex-col items-center justify-center">
+                        <div className="absolute inset-0 rounded-full border-4 border-dashed border-teal-500/40 animate-spin-slow" />
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-500 via-amber-500 to-teal-500 shadow-2xl shadow-teal-500/30 flex flex-col items-center justify-center">
                           <div className="absolute inset-2 rounded-full bg-white flex flex-col items-center justify-center text-center p-2">
-                            <Heart className="w-5 h-5 sm:w-7 sm:h-7 text-violet-500 mb-1" />
-                            <span className="text-violet-600 font-black text-xs sm:text-sm leading-none">NO</span>
+                            <Heart className="w-5 h-5 sm:w-7 sm:h-7 text-teal-500 mb-1" />
+                            <span className="text-teal-600 font-black text-xs sm:text-sm leading-none">NO</span>
                             <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Questions</span>
                             <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Asked</span>
                           </div>
                         </div>
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-500 to-amber-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-teal-500 to-amber-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
                           30 DAYS
                         </div>
                       </div>
@@ -2947,7 +2947,7 @@ export default function PlasticTherapistLandingPage() {
                   {/* Bottom highlight */}
                   <div className="mt-5 sm:mt-8 pt-5 sm:pt-6 border-t border-gray-100 text-center">
                     <p className="text-gray-900 font-bold text-sm sm:text-lg">
-                      We only want happy customers. <span className="text-violet-500">Period.</span>
+                      We only want happy customers. <span className="text-teal-500">Period.</span>
                     </p>
                     <p className="text-gray-500 text-xs sm:text-sm mt-1">
                       Try the entire system for 30 days. If it's not for you, one email and you're refunded.
@@ -2998,10 +2998,10 @@ export default function PlasticTherapistLandingPage() {
               </div>
 
               {/* Option 2 - Future */}
-              <div className="bg-purple-50 rounded-xl p-4 sm:p-5 text-left border-2 border-violet-500">
+              <div className="bg-purple-50 rounded-xl p-4 sm:p-5 text-left border-2 border-teal-500">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                    <Check className="w-5 h-5 text-violet-600" />
+                    <Check className="w-5 h-5 text-teal-600" />
                   </div>
                   <span className="font-black text-gray-900 text-base sm:text-lg">Option 2: Get Access</span>
                 </div>
@@ -3022,9 +3022,9 @@ export default function PlasticTherapistLandingPage() {
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
               <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new client</span> in month 1... that's <span className="text-violet-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
-                <p>• If you get <span className="font-bold text-gray-900">5 new clients</span> (average result)... that's <span className="text-violet-600 font-bold">$10,000-25,000</span> from $47.82.</p>
-                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-violet-600 font-bold">you're up $50</span> and lost nothing.</p>
+                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new client</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
+                <p>• If you get <span className="font-bold text-gray-900">5 new clients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $47.82.</p>
+                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you're up $50</span> and lost nothing.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
             </div>
@@ -3032,7 +3032,7 @@ export default function PlasticTherapistLandingPage() {
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-violet-400">$47.82</span>
+                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.82</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -3042,7 +3042,7 @@ export default function PlasticTherapistLandingPage() {
               {/* CTA Button */}
               <Link
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="group relative w-full bg-gradient-to-r from-violet-400 via-amber-400 to-violet-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
+                                className="group relative w-full bg-gradient-to-r from-teal-400 via-amber-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
@@ -3077,7 +3077,7 @@ export default function PlasticTherapistLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-2xl mx-auto">
-            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-violet-500/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 ${visibleSections.has('still-thinking') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-teal-500/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 ${visibleSections.has('still-thinking') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-xl sm:text-2xl font-black text-white text-center mb-4 sm:mb-6">
                 Still Thinking About It?
               </h2>
@@ -3088,18 +3088,18 @@ export default function PlasticTherapistLandingPage() {
                 <p>But you get busy. Clients to see. Staff drama. Insurance calls.</p>
                 <p>Two weeks later you forgot about this completely.</p>
                 <p>Three months later you're frustrated your schedule is slow again.</p>
-                <p className="text-violet-400 font-bold">You regret not trying it when you saw it.</p>
+                <p className="text-teal-400 font-bold">You regret not trying it when you saw it.</p>
               </div>
 
               <div className="bg-black/30 rounded-xl p-4 sm:p-5 mb-6">
                 <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-violet-400 font-black text-lg sm:text-xl">$47.82</p>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$47.82</p>
                     <p className="text-gray-500 text-xs">Cost</p>
                   </div>
                   <div>
-                    <p className="text-violet-400 font-black text-lg sm:text-xl">$0</p>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$0</p>
                     <p className="text-gray-500 text-xs">Risk</p>
                   </div>
                   <div>
@@ -3115,7 +3115,7 @@ export default function PlasticTherapistLandingPage() {
 
               <a
                 onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-violet-500 to-amber-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                                className="w-full bg-gradient-to-r from-teal-500 to-amber-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
                 Get Instant Access Now
@@ -3134,15 +3134,15 @@ export default function PlasticTherapistLandingPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 mb-3 sm:mb-6 text-gray-500 text-xs sm:text-sm">
               <div className="flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-violet-400" />
+                <Sparkles className="w-4 h-4 text-teal-400" />
                 <span>500+ Psychologists</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Shield className="w-4 h-4 text-violet-400" />
+                <Shield className="w-4 h-4 text-teal-400" />
                 <span>SSL Secured</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Zap className="w-4 h-4 text-violet-400" />
+                <Zap className="w-4 h-4 text-teal-400" />
                 <span>Instant Access</span>
               </div>
             </div>
@@ -3167,7 +3167,7 @@ export default function PlasticTherapistLandingPage() {
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
             onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
-                        className="w-full bg-gradient-to-r from-violet-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-violet-500/30 active:scale-[0.98] transition-transform"
+                        className="w-full bg-gradient-to-r from-teal-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
             <span className="text-sky-200 font-bold">$47.82</span>
@@ -3564,7 +3564,7 @@ export default function PlasticTherapistLandingPage() {
           <a
             href={WHOP_CHECKOUT_LINK}
             onClick={trackInitiateCheckout}
-            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-violet-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-violet-500/30 animate-pulse"
+            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-teal-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-teal-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />
             Get Instant Access — $47.82

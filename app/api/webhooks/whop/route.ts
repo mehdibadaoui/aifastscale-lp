@@ -312,7 +312,7 @@ const PRODUCTS = {
     membersUrl: 'https://aifastscale.com/psychologists/members',
     productName: 'CloneYourself for Psychologists',
     price: '47.82',
-    accentColor: '#8b5cf6' // Violet
+    accentColor: '#14b8a6' // Teal
   }
 }
 
@@ -479,9 +479,9 @@ function generateWelcomeEmail(
     buttonColor = '#9333ea'
     glowColor = 'rgba(147, 51, 234, 0.08)'
   } else if (isPsychologist) {
-    accent = '#8b5cf6' // Violet
-    buttonColor = '#8b5cf6'
-    glowColor = 'rgba(139, 92, 246, 0.08)'
+    accent = '#14b8a6' // Teal
+    buttonColor = '#14b8a6'
+    glowColor = 'rgba(20, 184, 166, 0.08)'
   }
 
   // Social proof text
