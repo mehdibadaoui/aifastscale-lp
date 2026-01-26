@@ -832,6 +832,8 @@ export default function PlasticSurgeonLandingPage() {
           LANGUAGE SUPPORT - PREMIUM HIGH-CVR SECTION
           Global coverage with search, stats & social proof
           ================================================================ */}
+      {/* HIDDEN FOR NOW - To re-enable, remove the {false && ( wrapper and closing )} */}
+      {false && (
       <section
         id="languages"
         className="py-12 sm:py-20 bg-black relative"
@@ -992,6 +994,8 @@ export default function PlasticSurgeonLandingPage() {
           </div>
         </div>
       </section>
+      )}
+      {/* END HIDDEN LANGUAGE SECTION */}
 
       {/* ================================================================
           NO HASSLE REFUND POLICY - AFTER LANGUAGES (DUPLICATE)

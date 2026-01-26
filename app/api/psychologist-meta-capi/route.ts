@@ -70,6 +70,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get IP and UA from headers if not provided
+    const ip = clientIpAddress ||
+      request.headers.get('x-forwarded-for')?.split(',')[0] ||
+      request.headers.get('x-real-ip') || ''
+    const ua = userAgent || request.headers.get('user-agent') || ''
+
     // Build user data object with hashed PII
     const userData: Record<string, any> = {}
 
@@ -85,8 +91,8 @@ export async function POST(request: NextRequest) {
     // Add client identifiers (not hashed)
     if (fbc) userData.fbc = fbc
     if (fbp) userData.fbp = fbp
-    if (clientIpAddress) userData.client_ip_address = clientIpAddress
-    if (userAgent) userData.client_user_agent = userAgent
+    if (ip) userData.client_ip_address = ip
+    if (ua) userData.client_user_agent = ua
 
     // Build custom data
     const customData: Record<string, any> = {

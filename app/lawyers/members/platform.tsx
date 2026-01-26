@@ -974,7 +974,7 @@ export default function PremiumCoursePlatform() {
                             >
                               <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
                                 resource.type === 'link'
-                                  ? 'bg-blue-500/20 text-blue-500'
+                                  ? 'bg-amber-500/20 text-amber-500'
                                   : resource.type === 'folder'
                                     ? 'bg-amber-500/20 text-amber-500'
                                     : 'bg-amber-500/20 text-amber-500'

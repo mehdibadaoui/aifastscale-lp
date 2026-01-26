@@ -242,7 +242,7 @@ interface WelcomeScreenProps {
 const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStudentName, darkMode, reducedMotion }: WelcomeScreenProps) {
   const statCards = [
     { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-amber-500 to-yellow-500' },
-    { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-yellow-500 to-blue-500' },
+    { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-yellow-500 to-orange-500' },
     { icon: Star, label: 'Total Value', value: `$${BONUSES.reduce((acc, b) => acc + b.value, 0)}`, gradient: 'from-emerald-500 to-amber-500' },
     { icon: Trophy, label: 'Achievements', value: ACHIEVEMENTS.length, gradient: 'from-amber-500 to-orange-500' },
   ]

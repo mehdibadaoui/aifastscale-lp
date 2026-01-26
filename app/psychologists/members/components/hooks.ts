@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { COURSE_MODULES, ACHIEVEMENTS, PlatformState, DEV_AUTO_LOGIN, BLOCKED_USERS } from './config'
 
-const STORAGE_PREFIX = 'plasticsurgeon_v4_'
+const STORAGE_PREFIX = 'psychologist_v4_'
 
 // Custom hook for localStorage with SSR safety
 function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((prev: T) => T)) => void] {
@@ -46,22 +46,17 @@ export function usePlatformState() {
   const [activeSection, setActiveSectionRaw] = useState<PlatformState['activeSection']>('dashboard')
   const [currentModuleIndex, setCurrentModuleIndexRaw] = useState(0)
 
-  // Check if mobile for scroll behavior optimization
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-
   // Wrapper to scroll to top when changing sections
   const setActiveSection = useCallback((section: PlatformState['activeSection']) => {
     setActiveSectionRaw(section)
-    // Use instant scroll on mobile to prevent jank, smooth on desktop
-    window.scrollTo({ top: 0, behavior: isMobile ? 'instant' : 'smooth' })
-  }, [isMobile])
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   // Wrapper to scroll to top when changing modules
   const setCurrentModuleIndex = useCallback((index: number) => {
     setCurrentModuleIndexRaw(index)
-    // Use instant scroll on mobile to prevent jank, smooth on desktop
-    window.scrollTo({ top: 0, behavior: isMobile ? 'instant' : 'smooth' })
-  }, [isMobile])
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   // Progress - using custom localStorage hook
   const [completedModules, setCompletedModules] = useLocalStorage<string[]>('completed', [])
@@ -197,13 +192,16 @@ export function usePlatformState() {
       const diffDays = Math.floor((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24))
 
       if (diffDays === 1) {
+        // Consecutive day - increment streak from stored value
         const newStreak = currentStreak + 1
         setStreak(newStreak)
         localStorage.setItem(STORAGE_PREFIX + 'streak', JSON.stringify(newStreak))
       } else if (diffDays > 1) {
+        // Streak broken - reset to 1
         setStreak(1)
         localStorage.setItem(STORAGE_PREFIX + 'streak', JSON.stringify(1))
       }
+      // diffDays === 0 means same day, keep current streak (already loaded by useLocalStorage)
     }
     localStorage.setItem(STORAGE_PREFIX + 'last_visit', today)
 
@@ -222,7 +220,7 @@ export function usePlatformState() {
     if (DEV_AUTO_LOGIN) {
       setIsAuthenticated(true)
     } else {
-      const savedAuthData = localStorage.getItem('plasticSurgeonMemberAuth')
+      const savedAuthData = localStorage.getItem('psychologistMemberAuth')
       const savedVipGuest = localStorage.getItem(STORAGE_PREFIX + 'vip_guest')
 
       // Check if user is blocked (e.g., refunded)
@@ -230,6 +228,7 @@ export function usePlatformState() {
         try {
           const vipData = JSON.parse(savedVipGuest)
           if (vipData?.id && BLOCKED_USERS.includes(vipData.id)) {
+            // User is blocked - show payment required screen
             setIsBlocked(true)
             setIsAuthenticated(false)
             setIsLoading(false)
@@ -247,20 +246,24 @@ export function usePlatformState() {
         try {
           const authData = JSON.parse(savedAuthData)
           if (authData.expiry && Date.now() < authData.expiry) {
+            // Still valid (remember me)
             isValidAuth = true
           } else if (authData === true || savedAuthData === 'true') {
+            // Legacy format (no expiry) - keep authenticated
             isValidAuth = true
           } else if (authData.expiry) {
-            localStorage.removeItem('plasticSurgeonMemberAuth')
+            // Expired - clear auth
+            localStorage.removeItem('psychologistMemberAuth')
           }
         } catch {
+          // Old format "true" string - keep authenticated
           if (savedAuthData === 'true') isValidAuth = true
         }
       }
 
       // Also check sessionStorage (for non-remember-me sessions)
       if (!isValidAuth) {
-        const sessionAuth = sessionStorage.getItem('plasticSurgeonMemberAuth')
+        const sessionAuth = sessionStorage.getItem('psychologistMemberAuth')
         if (sessionAuth === 'true') isValidAuth = true
       }
 
@@ -297,6 +300,8 @@ export function usePlatformState() {
   const [isLoggingIn, setIsLoggingIn] = useState(false)
 
   // Actions - now uses API route for secure password verification
+  // Supports both personalized login (email+password) and VIP/legacy (password only)
+  // rememberMe: if true, stays logged in for 30 days
   const handleLogin = useCallback(async (email: string, password: string, rememberMe: boolean = true): Promise<boolean> => {
     setIsLoggingIn(true)
     setLoginError(null)
@@ -313,26 +318,31 @@ export function usePlatformState() {
       if (data.success) {
         setIsAuthenticated(true)
 
+        // Store auth with expiry if "Remember me" is checked
         if (rememberMe) {
           const thirtyDaysFromNow = Date.now() + (30 * 24 * 60 * 60 * 1000)
-          localStorage.setItem('plasticSurgeonMemberAuth', JSON.stringify({
+          localStorage.setItem('psychologistMemberAuth', JSON.stringify({
             authenticated: true,
             expiry: thirtyDaysFromNow
           }))
         } else {
-          sessionStorage.setItem('plasticSurgeonMemberAuth', 'true')
-          localStorage.removeItem('plasticSurgeonMemberAuth')
+          // Session only - use sessionStorage (cleared when browser closes)
+          sessionStorage.setItem('psychologistMemberAuth', 'true')
+          localStorage.removeItem('psychologistMemberAuth')
         }
 
         if (data.isVip && data.vipGuest) {
+          // VIP Guest login
           setVipGuest(data.vipGuest)
           setStudentName(data.vipGuest.name)
         } else if (data.user) {
+          // Personalized login - set user's name
           setVipGuest(null)
           if (data.user.name) {
             setStudentName(data.user.name)
           }
-          localStorage.setItem('plasticSurgeonMemberEmail', data.user.email)
+          // Store user email for reference
+          localStorage.setItem('psychologistMemberEmail', data.user.email)
         } else {
           setVipGuest(null)
         }
@@ -354,8 +364,8 @@ export function usePlatformState() {
   const handleLogout = useCallback(() => {
     setIsAuthenticated(false)
     setVipGuest(null)
-    localStorage.removeItem('plasticSurgeonMemberAuth')
-    sessionStorage.removeItem('plasticSurgeonMemberAuth')
+    localStorage.removeItem('psychologistMemberAuth')
+    sessionStorage.removeItem('psychologistMemberAuth')
     setShowLogoutConfirm(false)
   }, [])
 
@@ -366,6 +376,7 @@ export function usePlatformState() {
   const completeOnboarding = useCallback(() => {
     setShowOnboarding(false)
     localStorage.setItem(STORAGE_PREFIX + 'onboarded', 'true')
+    // Scroll to top after completing/skipping onboarding
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
@@ -382,6 +393,7 @@ export function usePlatformState() {
         setTimeout(() => setShowConfetti(false), 4000)
       }
 
+      // Auto-play next if enabled
       if (autoPlayNext && currentModuleIndex < COURSE_MODULES.length - 1 && !COURSE_MODULES[currentModuleIndex + 1]?.comingSoon) {
         setTimeout(() => setCurrentModuleIndex(currentModuleIndex + 1), 2000)
       }
@@ -412,6 +424,7 @@ export function usePlatformState() {
   const addTimestampBookmark = useCallback((moduleId: string, seconds: number, label: string = '') => {
     setVideoTimestampBookmarks(prev => {
       const existing = prev[moduleId] || []
+      // Don't add duplicate timestamps (within 5 seconds)
       if (existing.some(b => Math.abs(b.seconds - seconds) < 5)) return prev
       const bookmarkLabel = label || `Bookmark at ${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`
       return { ...prev, [moduleId]: [...existing, { seconds, label: bookmarkLabel }].sort((a, b) => a.seconds - b.seconds) }
@@ -563,8 +576,10 @@ export function useKeyboardShortcuts(
 ) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if typing in input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
 
+      // Escape to close any modal
       if (e.key === 'Escape') {
         if (state.showNotesModal) state.setShowNotesModal(false)
         if (state.showKeyboardModal) state.setShowKeyboardModal(false)

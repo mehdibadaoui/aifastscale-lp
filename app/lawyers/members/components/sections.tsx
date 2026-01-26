@@ -120,7 +120,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
       {/* MOBILE: Quick Stats Grid - LP Glass Style */}
       <div className="sm:hidden grid grid-cols-2 gap-3">
         {[
-          { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-amber-500 to-yellow-500', iconColor: '#14b8a6' },
+          { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-amber-500 to-yellow-500', iconColor: '#d4af37' },
           { icon: Star, label: 'Points', value: state.totalPoints.toString(), color: 'from-amber-500 to-orange-500', iconColor: '#f59e0b' },
           { icon: Flame, label: 'Day Streak', value: `${state.streak}`, color: 'from-rose-500 to-pink-500', iconColor: '#f43f5e' },
           { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'from-emerald-500 to-amber-500', iconColor: '#10b981' },
@@ -293,7 +293,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider mb-3 px-1">Quick Actions</h3>
         <div className="flex gap-3">
           {[
-            { icon: Gift, label: 'Bonuses', color: 'from-yellow-500 to-blue-500', section: 'bonuses' as const },
+            { icon: Gift, label: 'Bonuses', color: 'from-yellow-500 to-orange-500', section: 'bonuses' as const },
             { icon: Trophy, label: 'Badges', color: 'from-amber-500 to-orange-500', section: 'achievements' as const },
             { icon: MessageCircle, label: 'Support', color: 'from-emerald-500 to-amber-500', section: null },
           ].map((item, i) => (
@@ -379,7 +379,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               onClick={() => state.setActiveSection('bonuses')}
               className="w-full flex items-center gap-3 p-4 rounded-xl glass-gold hover:border-yellow-400/50 transition-all hover-lift"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-blue-500 flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center shadow-lg">
                 <Gift className="w-5 h-5 text-white" />
               </div>
               <span className="font-bold text-white">View Bonuses</span>
@@ -819,7 +819,7 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
 
                 const gradients = [
                   'from-amber-500 to-yellow-600',
-                  'from-blue-500 to-slate-600',
+                  'from-amber-500 to-slate-600',
                   'from-amber-500 to-pink-600',
                   'from-amber-500 to-orange-600',
                   'from-emerald-500 to-amber-600',
@@ -871,7 +871,7 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                             {moduleCompleted ? (
                               <CheckCircle className="w-5 h-5 text-emerald-500" />
                             ) : (
-                              <Play className={`w-5 h-5 ${isCurrent ? 'text-amber-500' : 'text-slate-600'}`} fill={isCurrent ? '#14b8a6' : '#475569'} />
+                              <Play className={`w-5 h-5 ${isCurrent ? 'text-amber-500' : 'text-slate-600'}`} fill={isCurrent ? '#d4af37' : '#475569'} />
                             )}
                           </div>
                         </div>

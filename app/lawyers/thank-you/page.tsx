@@ -183,7 +183,7 @@ function ThankYouContent() {
   if (hasVisited) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0a1a2e] to-[#1a2a3e] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
       </div>
     )
   }
@@ -195,8 +195,8 @@ function ThankYouContent() {
         {/* SUCCESS HEADER */}
         <div className="text-center mb-8">
           <div className="relative inline-block mb-6">
-            <div className="absolute inset-0 rounded-full bg-teal-500/30 blur-xl animate-pulse"></div>
-            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-500/30">
+            <div className="absolute inset-0 rounded-full bg-amber-500/30 blur-xl animate-pulse"></div>
+            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
               <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-white" strokeWidth={2.5} />
             </div>
           </div>
@@ -204,23 +204,23 @@ function ThankYouContent() {
           <h1 className="text-3xl md:text-5xl font-black text-white mb-3">
             You're In!
           </h1>
-          <p className="text-xl md:text-2xl font-bold text-teal-400 mb-4">
+          <p className="text-xl md:text-2xl font-bold text-amber-400 mb-4">
             Payment Successful
           </p>
 
           {/* Social Proof */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-            <Users className="w-4 h-4 text-teal-400" />
+            <Users className="w-4 h-4 text-amber-400" />
             <span className="text-white text-sm font-medium">
-              You joined <span className="text-teal-400 font-bold">750+</span> lawyers & attorneys
+              You joined <span className="text-amber-400 font-bold">750+</span> lawyers & attorneys
             </span>
           </div>
         </div>
 
         {/* LOADING STATE */}
         {isLoading && (
-          <div className="rounded-2xl bg-gradient-to-br from-teal-500/20 via-teal-500/10 to-transparent border border-teal-500/30 p-8 backdrop-blur-sm text-center">
-            <Loader2 className="w-12 h-12 text-teal-400 animate-spin mx-auto mb-4" />
+          <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/30 p-8 backdrop-blur-sm text-center">
+            <Loader2 className="w-12 h-12 text-amber-400 animate-spin mx-auto mb-4" />
             <p className="text-white text-xl font-bold">Setting up your account...</p>
             <p className="text-white/60 mt-2">This only takes a few seconds</p>
           </div>
@@ -230,18 +230,18 @@ function ThankYouContent() {
         {credentials && !isLoading && (
           <>
             {/* Login Card */}
-            <div className="rounded-2xl bg-gradient-to-br from-teal-500/20 via-teal-500/10 to-transparent border border-teal-500 p-6 md:p-8 backdrop-blur-sm mb-6">
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500 p-6 md:p-8 backdrop-blur-sm mb-6">
 
               <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-6">
                 Your Login Details
               </h2>
 
               {/* Credentials Box */}
-              <div className="bg-[#0a0a0a]/80 rounded-xl p-5 mb-6 border border-teal-500/30">
+              <div className="bg-[#0a0a0a]/80 rounded-xl p-5 mb-6 border border-amber-500/30">
 
                 {/* Email */}
                 <div className="mb-4">
-                  <p className="text-teal-400 text-xs font-semibold uppercase tracking-wider mb-2">Email</p>
+                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">Email</p>
                   <div className="bg-white/5 rounded-lg px-4 py-3 border border-white/10">
                     <p className="text-white text-base font-medium">{credentials.email}</p>
                   </div>
@@ -249,15 +249,15 @@ function ThankYouContent() {
 
                 {/* Password */}
                 <div>
-                  <p className="text-teal-400 text-xs font-semibold uppercase tracking-wider mb-2">Password</p>
-                  <div className="bg-white/5 rounded-lg px-4 py-3 border border-teal-500/50 flex items-center justify-between gap-3">
+                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">Password</p>
+                  <div className="bg-white/5 rounded-lg px-4 py-3 border border-amber-500/50 flex items-center justify-between gap-3">
                     <p className="text-white text-base font-medium">{credentials.password}</p>
                     <button
                       onClick={copyPassword}
                       className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
                         copiedPassword
                           ? 'bg-emerald-500 text-white'
-                          : 'bg-teal-500 hover:bg-teal-400 text-white'
+                          : 'bg-amber-500 hover:bg-amber-400 text-white'
                       }`}
                     >
                       {copiedPassword ? (
@@ -276,7 +276,7 @@ function ThankYouContent() {
                 disabled={!copiedPassword}
                 className={`w-full font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${
                   copiedPassword
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-white shadow-lg shadow-teal-500/30 cursor-pointer'
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-white shadow-lg shadow-amber-500/30 cursor-pointer'
                     : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
                 }`}
               >
@@ -316,8 +316,8 @@ function ThankYouContent() {
                   <div key={i} className="flex flex-col items-center text-center flex-1">
                     <div className={`w-11 h-11 rounded-full flex items-center justify-center mb-2 transition-all ${
                       step.active
-                        ? 'bg-teal-500 shadow-lg shadow-teal-500/30'
-                        : i < (copiedPassword ? 2 : 1) ? 'bg-teal-500/70' : 'bg-white/10'
+                        ? 'bg-amber-500 shadow-lg shadow-amber-500/30'
+                        : i < (copiedPassword ? 2 : 1) ? 'bg-amber-500/70' : 'bg-white/10'
                     }`}>
                       <step.icon className={`w-5 h-5 ${step.active ? 'text-white' : 'text-white/70'}`} />
                     </div>
@@ -331,8 +331,8 @@ function ThankYouContent() {
             <div className="space-y-4">
               {/* Email Backup */}
               <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-teal-400" />
+                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-amber-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Login Saved to Your Email</p>
@@ -343,9 +343,9 @@ function ThankYouContent() {
               </div>
 
               {/* Free Updates */}
-              <div className="bg-gradient-to-r from-cyan-500/10 to-orange-500/10 rounded-xl p-4 border border-cyan-500/20 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <Gift className="w-5 h-5 text-cyan-400" />
+              <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-xl p-4 border border-yellow-500/20 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
+                  <Gift className="w-5 h-5 text-yellow-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Stay Tuned — Free Updates</p>
@@ -357,7 +357,7 @@ function ThankYouContent() {
             </div>
 
             {/* Lifetime Access Badge */}
-            <div className="mt-6 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 p-4 text-center">
+            <div className="mt-6 rounded-xl bg-gradient-to-r from-emerald-500/20 to-amber-500/20 border border-emerald-500/30 p-4 text-center">
               <p className="text-white font-semibold flex items-center justify-center gap-2">
                 <CheckCircle className="w-5 h-5 text-emerald-400" />
                 Lifetime Access Activated
@@ -372,8 +372,8 @@ function ThankYouContent() {
         {/* FALLBACK - Check Email */}
         {showFallback && !credentials && !isLoading && (
           <>
-            <div className="rounded-2xl bg-gradient-to-br from-teal-500/20 via-teal-500/10 to-transparent border border-teal-500 p-6 md:p-8 backdrop-blur-sm mb-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500 p-6 md:p-8 backdrop-blur-sm mb-6 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-white" />
               </div>
 
@@ -387,7 +387,7 @@ function ThankYouContent() {
               <div className="bg-white/5 rounded-lg p-4 border border-white/10 mb-6 text-left">
                 <p className="text-white/50 text-xs mb-1">Look for email from:</p>
                 <p className="text-white font-semibold">hello@mail.aifastscale.com</p>
-                <p className="text-cyan-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
+                <p className="text-yellow-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
               </div>
 
               <button
@@ -396,7 +396,7 @@ function ThankYouContent() {
                   window.history.replaceState(null, '', '/lawyers/members')
                   router.push('/lawyers/members')
                 }}
-                className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
               >
                 <Zap className="w-5 h-5" />
                 Go to Login Page
@@ -417,7 +417,7 @@ function ThankYouContent() {
                 ].map((step, i) => (
                   <div key={i} className="flex flex-col items-center text-center flex-1">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-1 ${
-                      i === 0 ? 'bg-teal-500' : i === 1 ? 'bg-teal-500/60' : 'bg-teal-500/30'
+                      i === 0 ? 'bg-amber-500' : i === 1 ? 'bg-amber-500/60' : 'bg-amber-500/30'
                     }`}>
                       <step.icon className="w-4 h-4 text-white" />
                     </div>
@@ -432,7 +432,7 @@ function ThankYouContent() {
         {/* Support */}
         <p className="text-center text-white/40 text-sm mt-8">
           Need help? Email us at{' '}
-          <a href="mailto:support@aifastscale.com" className="text-teal-400 hover:underline">
+          <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:underline">
             support@aifastscale.com
           </a>
         </p>
@@ -446,7 +446,7 @@ export default function LawyerThankYouPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0a1a2e] to-[#1a2a3e] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
       </div>
     }>
       <ThankYouContent />
