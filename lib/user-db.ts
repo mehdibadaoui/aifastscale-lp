@@ -27,7 +27,7 @@ export interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist'
+  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
   lastLogin?: string
   loginCount?: number
   // Extended fields for admin
@@ -47,8 +47,8 @@ export interface User {
 
 // Generate a unique, readable password
 // Format: product-random6chars (e.g., "dental-x7k9m2")
-export function generateUniquePassword(product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' = 'dentist'): string {
-  const prefix = product === 'dentist' ? 'dental' : product === 'plastic-surgeon' ? 'surgeon' : product === 'psychologist' ? 'therapy' : 'agent'
+export function generateUniquePassword(product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer' = 'dentist'): string {
+  const prefix = product === 'dentist' ? 'dental' : product === 'plastic-surgeon' ? 'surgeon' : product === 'psychologist' ? 'therapy' : product === 'lawyer' ? 'legal' : 'agent'
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789' // No confusing chars (0,o,1,l,i)
   let randomPart = ''
 
@@ -64,7 +64,7 @@ export async function createUser(userData: {
   email: string
   name: string
   planId: string
-  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist'
+  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
 }): Promise<{ success: boolean; password?: string; error?: string }> {
   try {
     const redis = getRedis()
