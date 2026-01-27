@@ -60,7 +60,7 @@ export default function PsychologistLayout({
       {/* Meta Pixel for Psychologist LP */}
       <Script
         id="psychologist-meta-pixel"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
