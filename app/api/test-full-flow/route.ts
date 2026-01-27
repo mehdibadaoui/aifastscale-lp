@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
           title: 'Clone Yourself - Dentists'
         },
         plan: {
-          id: 'plan_SxMS4HqFxJKNT'
+          id: 'plan_chOBDoTBxc7NH'
         },
         total: 47.82,
         currency: 'usd'
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
           title: 'Clone Yourself - Dentists'
         },
         plan: {
-          id: 'plan_SxMS4HqFxJKNT'
+          id: 'plan_chOBDoTBxc7NH'
         }
       }
     }

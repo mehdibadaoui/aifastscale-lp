@@ -180,7 +180,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
 // BLOCKED/PAYMENT REQUIRED SCREEN
 // ============================================
 
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_SxMS4HqFxJKNT'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_QBhFmuZAzfDyh'
 
 const BlockedScreen = memo(function BlockedScreen() {
   return (

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getPsychologistUpsellBonuses } from '../../config/psychologist-bonus-products'
 
 // Whop checkout link for Upsell
-const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_YpjtQiZ2d0xI5'
+const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_5fa6gRWmpdn1a'
 
 export default function PsychologistUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getPsychologistUpsellBonuses } from '../../config/psychologist-bonus-products'
 
 // Whop checkout link for Downsell
-const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_PMbFmPQDNbI6A'
+const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_YI0qv3YB6JlC3'
 
 export default function PsychologistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency

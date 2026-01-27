@@ -61,7 +61,7 @@ const ALEX_MORGAN_DATA = {
 }
 
 // Whop checkout link
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_Vb1n9uo2Ldpjz'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'
 
 // ===========================================
 // META TRACKING - Browser Pixel + CAPI

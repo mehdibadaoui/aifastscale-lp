@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getLawyerUpsellBonuses } from '../../config/lawyer-bonus-products'
 
 // Whop checkout link for Upsell
-const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_jMvZk3l8GgMkR'
+const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_97EdLFRTEConC'
 
 export default function LawyerUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

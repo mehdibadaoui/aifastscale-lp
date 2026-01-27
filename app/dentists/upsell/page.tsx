@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 
 // Whop checkout link for Upsell
-const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_IbsV5qrvMPBgb'
+const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_piIlcIeKKia85'
 
 export default function DentistUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { LAWYER_BONUS_PRODUCTS } from '../../config/lawyer-bonus-products'
 
 // Whop checkout link for OTO (upsell)
-const WHOP_OTO_LINK = 'https://whop.com/checkout/plan_jMvZk3l8GgMkR'
+const WHOP_OTO_LINK = 'https://whop.com/checkout/plan_97EdLFRTEConC'
 
 export default function LawyerOtoPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

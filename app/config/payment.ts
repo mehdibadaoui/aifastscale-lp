@@ -42,27 +42,27 @@ export const PAYMENT_CONFIG = {
 export const DENTIST_PAYMENT_CONFIG = {
   plans: {
     mainCourse: {
-      id: 'plan_SxMS4HqFxJKNT',
+      id: 'plan_chOBDoTBxc7NH',
       price: 47.82,
       name: 'CloneYourself Dentist System',
     },
     upsell: {
-      id: 'plan_IbsV5qrvMPBgb',
+      id: 'plan_piIlcIeKKia85',
       price: 9.95,
       name: 'CloneYourself Dentist - Premium Bundle',
     },
     downsell: {
-      id: 'plan_C2l5ZPXSWCxQu',
-      price: 4.97,
+      id: 'plan_fEnYsa70KFAWW',
+      price: 4.95,
       name: 'CloneYourself Dentist - Value Bundle',
     },
   },
 
   // Whop checkout links
   checkoutLinks: {
-    main: 'https://whop.com/checkout/plan_SxMS4HqFxJKNT',
-    upsell: 'https://whop.com/checkout/plan_IbsV5qrvMPBgb',
-    downsell: 'https://whop.com/checkout/plan_C2l5ZPXSWCxQu',
+    main: 'https://whop.com/checkout/plan_chOBDoTBxc7NH',
+    upsell: 'https://whop.com/checkout/plan_piIlcIeKKia85',
+    downsell: 'https://whop.com/checkout/plan_fEnYsa70KFAWW',
   },
 
   redirects: {

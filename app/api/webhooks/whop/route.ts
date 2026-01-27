@@ -288,10 +288,11 @@ async function fetchWhopUserEmail(userId: string): Promise<string | null> {
     return storedEmail
   }
 
-  // Fallback: Try Whop API - try both API keys (original account + Flow account for plastic surgeons)
+  // Fallback: Try Whop API - try all API keys (Flow for plastic surgeons, Ayden for dentist/psychologist/lawyer)
   const apiKeys = [
     process.env.WHOP_API_KEY,
     process.env.WHOP_API_KEY_FLOW,
+    process.env.WHOP_API_KEY_AYDEN,
   ].filter(Boolean)
 
   if (apiKeys.length === 0) {
@@ -389,21 +390,21 @@ const PRODUCTS = {
 // Plan IDs and prices
 const PLANS = {
   // Dentist products
-  DENTIST_MAIN: { id: 'plan_SxMS4HqFxJKNT', price: 47, type: 'main' as const, product: 'dentist' as const },
-  DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
-  DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
+  DENTIST_MAIN: { id: 'plan_chOBDoTBxc7NH', price: 47, type: 'main' as const, product: 'dentist' as const },
+  DENTIST_UPSELL: { id: 'plan_piIlcIeKKia85', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
+  DENTIST_DOWNSELL: { id: 'plan_fEnYsa70KFAWW', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
   PLASTIC_SURGEON_MAIN: { id: 'plan_RrQTpB6oAKIW7', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
   PLASTIC_SURGEON_UPSELL: { id: 'plan_WerHpDW91dbRR', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
   PLASTIC_SURGEON_DOWNSELL: { id: 'plan_BKxSLirxKe3ZW', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
   // Psychologist products
-  PSYCHOLOGIST_MAIN: { id: 'plan_FwLWO75BETJhr', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
-  PSYCHOLOGIST_UPSELL: { id: 'plan_YpjtQiZ2d0xI5', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
-  PSYCHOLOGIST_DOWNSELL: { id: 'plan_PMbFmPQDNbI6A', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_MAIN: { id: 'plan_QBhFmuZAzfDyh', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_UPSELL: { id: 'plan_5fa6gRWmpdn1a', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_DOWNSELL: { id: 'plan_YI0qv3YB6JlC3', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
   // Lawyer products - PLACEHOLDER IDs (user will provide)
-  LAWYER_MAIN: { id: 'plan_LAWYER_MAIN_PLACEHOLDER', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
-  LAWYER_UPSELL: { id: 'plan_LAWYER_UPSELL_PLACEHOLDER', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
-  LAWYER_DOWNSELL: { id: 'plan_LAWYER_DOWNSELL_PLACEHOLDER', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
+  LAWYER_MAIN: { id: 'plan_GpUjd1q7kN6pj', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
+  LAWYER_UPSELL: { id: 'plan_97EdLFRTEConC', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
+  LAWYER_DOWNSELL: { id: 'plan_sdONQXGabaCd0', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
 }
 
 // Get plan info from plan ID

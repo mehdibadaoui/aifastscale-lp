@@ -47,7 +47,7 @@ import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/Expert
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Whop checkout link
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_SxMS4HqFxJKNT'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_chOBDoTBxc7NH'
 
 // ============================================================================
 // META PIXEL TRACKING FUNCTIONS

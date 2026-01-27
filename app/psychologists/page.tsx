@@ -61,7 +61,7 @@ const DR_MARCUS_DATA = {
 }
 
 // Whop checkout link
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_FwLWO75BETJhr'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_QBhFmuZAzfDyh'
 
 // ===========================================
 // META TRACKING - Browser Pixel + CAPI
