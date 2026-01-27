@@ -210,8 +210,8 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-amber-500/50 shadow-lg">
                 <Image
-                  src={COURSE_CONFIG.drVoss?.image || '/images/psychologist/dr-marcus.webp'}
-                  alt={COURSE_CONFIG.drVoss?.name || 'Dr. Marcus'}
+                  src={COURSE_CONFIG.drMarcus?.image || '/images/psychologist/dr-marcus.webp'}
+                  alt={COURSE_CONFIG.drMarcus?.name || 'Dr. Marcus'}
                   width={64}
                   height={64}
                   className="object-cover w-full h-full"
@@ -238,8 +238,8 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
           <div className="flex items-center gap-6">
             <div className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 shadow-xl ring-4 ring-amber-500/30">
               <Image
-                src={COURSE_CONFIG.drVoss?.image || '/images/psychologist/dr-marcus.webp'}
-                alt={COURSE_CONFIG.drVoss?.name || 'Dr. Marcus'}
+                src={COURSE_CONFIG.drMarcus?.image || '/images/psychologist/dr-marcus.webp'}
+                alt={COURSE_CONFIG.drMarcus?.name || 'Dr. Marcus'}
                 width={96}
                 height={96}
                 className="object-cover w-full h-full"
@@ -247,7 +247,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             </div>
             <div className="flex-1">
               <div className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">Start Here</div>
-              <h3 className="text-xl font-black text-white mb-2">Welcome from {COURSE_CONFIG.drVoss?.name?.split(' ')[0] || 'Dr. Marcus'}</h3>
+              <h3 className="text-xl font-black text-white mb-2">Welcome from {COURSE_CONFIG.drMarcus?.name?.split(' ')[0] || 'Dr. Marcus'}</h3>
               <button
                 onClick={() => setShowWelcomeVideo(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:shadow-lg transition-all btn-press"
@@ -266,16 +266,16 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl overflow-hidden">
                 <Image
-                  src={COURSE_CONFIG.drVoss?.image || '/images/psychologist/dr-marcus.webp'}
-                  alt={COURSE_CONFIG.drVoss?.name || 'Dr. Marcus'}
+                  src={COURSE_CONFIG.drMarcus?.image || '/images/psychologist/dr-marcus.webp'}
+                  alt={COURSE_CONFIG.drMarcus?.name || 'Dr. Marcus'}
                   width={40}
                   height={40}
                   className="object-cover w-full h-full"
                 />
               </div>
               <div>
-                <div className="font-bold text-white">{COURSE_CONFIG.drVoss?.name}</div>
-                <div className="text-sm text-slate-400">{COURSE_CONFIG.drVoss?.title}</div>
+                <div className="font-bold text-white">{COURSE_CONFIG.drMarcus?.name}</div>
+                <div className="text-sm text-slate-400">{COURSE_CONFIG.drMarcus?.title}</div>
               </div>
             </div>
             <button onClick={() => setShowWelcomeVideo(false)} className="p-2 rounded-xl hover:bg-white/10 transition-all">

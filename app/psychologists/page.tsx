@@ -21,15 +21,11 @@ import {
   X,
   AlertTriangle,
   Zap,
-  Crown,
   MapPin,
   Award,
   DollarSign,
-  Volume2,
-  VolumeX,
   Eye,
   Heart,
-  ThumbsUp,
   RefreshCw,
   MessageSquare,
   Calendar,
@@ -40,8 +36,6 @@ import {
   Mail,
   Send,
   Smile,
-  BadgeCheck,
-  Mic,
 } from 'lucide-react'
 import { PSYCHOLOGIST_BONUS_PRODUCTS, getPsychologistTotalBonusValue } from '../config/psychologist-bonus-products'
 import { getMemberStats } from './members/components/config'
@@ -1082,7 +1076,7 @@ export default function PsychologistLandingPage() {
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-purple-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/psychologist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" sizes="(max-width: 640px) 100vw, 400px" />
+                    <Image src={bonus.image || '/images/psychologist/viral-scripts.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" sizes="(max-width: 640px) 100vw, 400px" />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">

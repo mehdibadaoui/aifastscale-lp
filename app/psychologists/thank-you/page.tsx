@@ -160,7 +160,7 @@ function ThankYouContent() {
         <div className="text-center mb-8">
           <div className="relative inline-block mb-6">
             <div className="absolute inset-0 rounded-full bg-purple-500/30 blur-xl animate-pulse"></div>
-            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
               <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-white" strokeWidth={2.5} />
             </div>
           </div>
@@ -240,7 +240,7 @@ function ThankYouContent() {
                 disabled={!copiedPassword}
                 className={`w-full font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${
                   copiedPassword
-                    ? 'bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-400 hover:to-cyan-400 text-white shadow-lg shadow-purple-500/30 cursor-pointer'
+                    ? 'bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-400 hover:to-violet-400 text-white shadow-lg shadow-purple-500/30 cursor-pointer'
                     : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
                 }`}
               >
@@ -307,9 +307,9 @@ function ThankYouContent() {
               </div>
 
               {/* Free Updates */}
-              <div className="bg-gradient-to-r from-cyan-500/10 to-orange-500/10 rounded-xl p-4 border border-cyan-500/20 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <Gift className="w-5 h-5 text-cyan-400" />
+              <div className="bg-gradient-to-r from-violet-500/10 to-orange-500/10 rounded-xl p-4 border border-violet-500/20 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                  <Gift className="w-5 h-5 text-violet-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Stay Tuned — Free Updates</p>
@@ -337,7 +337,7 @@ function ThankYouContent() {
         {showFallback && !credentials && !isLoading && (
           <>
             <div className="rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-500/10 to-transparent border border-purple-500 p-6 md:p-8 backdrop-blur-sm mb-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-white" />
               </div>
 
@@ -351,7 +351,7 @@ function ThankYouContent() {
               <div className="bg-white/5 rounded-lg p-4 border border-white/10 mb-6 text-left">
                 <p className="text-white/50 text-xs mb-1">Look for email from:</p>
                 <p className="text-white font-semibold">hello@mail.aifastscale.com</p>
-                <p className="text-cyan-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
+                <p className="text-violet-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
               </div>
 
               <button
@@ -360,7 +360,7 @@ function ThankYouContent() {
                   window.history.replaceState(null, '', '/psychologists/members')
                   router.push('/psychologists/members')
                 }}
-                className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-purple-500 to-violet-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
               >
                 <Zap className="w-5 h-5" />
                 Go to Login Page

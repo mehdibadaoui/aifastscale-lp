@@ -61,7 +61,7 @@ export default function PsychologistUpsellPage() {
       <div className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl md:rounded-2xl border border-purple-500/30 shadow-2xl shadow-purple-500/10 overflow-hidden">
 
         {/* Header - Timer */}
-        <div className="bg-gradient-to-r from-purple-500 to-cyan-500 px-3 md:px-4 py-2 md:py-2.5">
+        <div className="bg-gradient-to-r from-purple-500 to-violet-500 px-3 md:px-4 py-2 md:py-2.5">
           <div className="flex items-center justify-center gap-1.5 md:gap-2">
             <Clock className="w-3 h-3 md:w-4 md:h-4 text-white animate-pulse" />
             <span className="text-white/90 text-[10px] md:text-xs font-bold">ONE-TIME OFFER - EXPIRES IN</span>
@@ -149,7 +149,7 @@ export default function PsychologistUpsellPage() {
           <div className="space-y-2 md:space-y-3">
             <a
               href={WHOP_UPSELL_LINK}
-              className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-purple-500/30"
+              className="w-full bg-gradient-to-r from-purple-500 to-violet-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-purple-500/30"
             >
               Yes, Add to My Order - ${upsellPrice}
             </a>

@@ -79,7 +79,7 @@ export const COURSE_CONFIG = {
     title: "Welcome from Dr. Marcus",
     duration: "2 min",
   },
-  drVoss: {
+  drMarcus: {
     name: "Dr. Marcus Rivers",
     title: "Licensed Clinical Psychologist, PhD",
     image: "/images/psychologist/dr-marcus.webp",
@@ -291,7 +291,7 @@ export const COMING_SOON_COURSES = [
     subtitle: 'for Psychologists',
     description: 'Run profitable Facebook & Instagram ads that fill your appointment calendar. From $0 to your first 50 clients.',
     icon: Megaphone,
-    color: 'from-teal-500 to-cyan-600',
+    color: 'from-purple-500 to-violet-600',
     features: ['Facebook & Instagram Ads', 'Targeting therapy seekers', 'Ad creatives that convert', 'Budget optimization'],
     estimatedLaunch: 'Q1 2025',
     waitlistCount: 134,
@@ -351,7 +351,7 @@ export const COMING_SOON_COURSES = [
     subtitle: 'for Psychologists',
     description: 'Bring back clients who stopped coming and unlock hidden revenue in your database.',
     icon: MessageSquare,
-    color: 'from-teal-500 to-purple-600',
+    color: 'from-violet-500 to-purple-600',
     features: ['Email sequences', 'SMS campaigns', 'Recall scripts', 'Re-engagement offers'],
     estimatedLaunch: 'Q3 2025',
     waitlistCount: 98,
