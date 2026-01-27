@@ -235,7 +235,6 @@ export default function PsychologistLandingPage() {
       name: 'Dr. Sarah Mitchell',
       role: 'CBT Specialist',
       location: 'Los Angeles, CA',
-      image: '/images/psychologist/review-1.webp',
       review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 12 new session inquiries that same week.",
       results: '12 new consults in first week',
     },
@@ -244,7 +243,6 @@ export default function PsychologistLandingPage() {
       name: 'Dr. James Rodriguez',
       role: 'Mental Health Therapist',
       location: 'Houston, TX',
-      image: '/images/psychologist/review-2.webp',
       review: "After 20 years in private practice, I thought I'd seen it all. My session calendar is now booked 6 weeks out - all from AI video leads.",
       results: 'Booked 6 weeks out',
     },
@@ -253,7 +251,6 @@ export default function PsychologistLandingPage() {
       name: 'Dr. Emily Chen',
       role: 'Anxiety & Depression Specialist',
       location: 'San Francisco, CA',
-      image: '/images/psychologist/review-3.webp',
       review: "As a Bay Area therapist, I need to stand out. These AI videos make my practice look like a premium brand. Went from 2-3 consults to 15+ per week.",
       results: '15+ consults/week',
     },
@@ -262,7 +259,6 @@ export default function PsychologistLandingPage() {
       name: 'Dr. Michael Thompson',
       role: 'Trauma Recovery Specialist',
       location: 'Chicago, IL',
-      image: '/images/psychologist/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
       results: '50x ROI',
     },
@@ -271,7 +267,6 @@ export default function PsychologistLandingPage() {
       name: 'Dr. Lisa Park',
       role: 'Relationship & Family Therapist',
       location: 'Seattle, WA',
-      image: '/images/psychologist/review-9.webp',
       review: "My TikTok video got 89K views. Booked 23 new therapy sessions that month. This system pays for itself daily.",
       results: '23 consults from 1 video',
     },
@@ -280,7 +275,6 @@ export default function PsychologistLandingPage() {
       name: 'Dr. Robert Johnson',
       role: 'Wellness Psychologist',
       location: 'Phoenix, AZ',
-      image: '/images/psychologist/review-11.webp',
       review: "25 years in private practice and I wish I had this sooner. 8 new clients last month from social media alone.",
       results: '8 clients from social',
     },
@@ -1797,15 +1791,10 @@ export default function PsychologistLandingPage() {
                   "{t.review}"
                 </p>
 
-                {/* Author - Larger image */}
-                <div className="flex items-center gap-3">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-purple-500/40 shadow-lg">
-                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" sizes="64px" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
-                    <p className="text-gray-500 text-xs sm:text-sm">{t.location}</p>
-                  </div>
+                {/* Author - Text only */}
+                <div className="mt-auto pt-2 border-t border-white/10">
+                  <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">{t.location}</p>
                 </div>
               </div>
             ))}
@@ -1831,15 +1820,10 @@ export default function PsychologistLandingPage() {
                   "{t.review}"
                 </p>
 
-                {/* Author - Larger image */}
-                <div className="flex items-center gap-3">
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-purple-500/40 shadow-lg">
-                    <Image src={t.image} alt={t.name} fill className="object-cover" loading="lazy" sizes="64px" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
-                    <p className="text-gray-500 text-xs sm:text-sm">{t.location}</p>
-                  </div>
+                {/* Author - Text only */}
+                <div className="mt-auto pt-2 border-t border-white/10">
+                  <p className="text-white font-bold text-sm sm:text-base">{t.name}</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">{t.location}</p>
                 </div>
               </div>
             ))}
