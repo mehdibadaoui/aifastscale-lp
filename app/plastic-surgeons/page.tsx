@@ -52,18 +52,11 @@ import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/Exper
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Whop checkout link
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_9AqdDmQnJC2J5'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_RrQTpB6oAKIW7'
 
 // ===========================================
-// META TRACKING - Browser Pixel + CAPI
+// META TRACKING - Browser Pixel Only
 // ===========================================
-
-// Helper to get cookies
-const getCookie = (name: string) => {
-  if (typeof document === 'undefined') return undefined
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-  return match ? match[2] : undefined
-}
 
 // Capture fbclid from Facebook ads and store as _fbc cookie (CRITICAL for attribution)
 const captureFbclid = () => {
@@ -83,13 +76,12 @@ const captureFbclid = () => {
   }
 }
 
-// Fire ViewContent event (Browser + CAPI)
+// Fire ViewContent event (Browser Pixel only)
 const trackViewContent = () => {
   if (typeof window === 'undefined') return
 
   const eventId = `ViewContent_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
-  // 1. Browser Pixel
   if ((window as any).fbq) {
     (window as any).fbq('track', 'ViewContent', {
       value: 47.82,
@@ -100,33 +92,14 @@ const trackViewContent = () => {
     }, { eventID: eventId })
     console.log('📊 ViewContent pixel fired')
   }
-
-  // 2. Server-side CAPI (backup - can't be blocked by iOS/ad blockers)
-  fetch('/api/plastic-surgeon-meta-capi', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      eventName: 'ViewContent',
-      value: 47.82,
-      currency: 'USD',
-      contentName: 'CloneYourself for Plastic Surgeons',
-      contentIds: ['plastic-surgeon-main'],
-      sourceUrl: window.location.href,
-      eventId: eventId,
-      fbc: getCookie('_fbc'),
-      fbp: getCookie('_fbp'),
-      userAgent: navigator.userAgent,
-    }),
-  }).catch(err => console.error('📊 ViewContent CAPI error:', err))
 }
 
-// Fire InitiateCheckout event (Browser + CAPI)
+// Fire InitiateCheckout event (Browser Pixel only)
 const trackInitiateCheckout = () => {
   if (typeof window === 'undefined') return
 
   const eventId = `InitiateCheckout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
-  // 1. Browser Pixel
   if ((window as any).fbq) {
     (window as any).fbq('track', 'InitiateCheckout', {
       value: 47.82,
@@ -137,24 +110,6 @@ const trackInitiateCheckout = () => {
     }, { eventID: eventId })
     console.log('📊 InitiateCheckout pixel fired')
   }
-
-  // 2. Server-side CAPI
-  fetch('/api/plastic-surgeon-meta-capi', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      eventName: 'InitiateCheckout',
-      value: 47.82,
-      currency: 'USD',
-      contentName: 'CloneYourself for Plastic Surgeons',
-      contentIds: ['plastic-surgeon-main'],
-      sourceUrl: window.location.href,
-      eventId: eventId,
-      fbc: getCookie('_fbc'),
-      fbp: getCookie('_fbp'),
-      userAgent: navigator.userAgent,
-    }),
-  }).catch(err => console.error('📊 InitiateCheckout CAPI error:', err))
 }
 
 // 100+ World Languages - With comprehensive country aliases

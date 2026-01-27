@@ -388,9 +388,9 @@ const PLANS = {
   DENTIST_UPSELL: { id: 'plan_IbsV5qrvMPBgb', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
   DENTIST_DOWNSELL: { id: 'plan_C2l5ZPXSWCxQu', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
-  PLASTIC_SURGEON_MAIN: { id: 'plan_9AqdDmQnJC2J5', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'plan_36teZixh7eUoG', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_VoeIeisqOW6nT', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_MAIN: { id: 'plan_RrQTpB6oAKIW7', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'plan_WerHpDW91dbRR', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_BKxSLirxKe3ZW', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
   // Psychologist products
   PSYCHOLOGIST_MAIN: { id: 'plan_FwLWO75BETJhr', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
   PSYCHOLOGIST_UPSELL: { id: 'plan_YpjtQiZ2d0xI5', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
@@ -970,13 +970,8 @@ export async function POST(request: NextRequest) {
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
     // Fire Meta CAPI Purchase event (server-side - can't be blocked by browsers/iOS)
-    if (productType === 'plastic-surgeon') {
-      await firePlasticSurgeonPurchaseCAPI({
-        email: buyerEmail,
-        value: mainPrice,
-        contentName: 'CloneYourself for Plastic Surgeons - Main Course',
-      })
-    } else if (productType === 'psychologist') {
+    // NOTE: Plastic surgeon uses pixel-only (no CAPI)
+    if (productType === 'psychologist') {
       await firePsychologistPurchaseCAPI({
         email: buyerEmail,
         value: mainPrice,
