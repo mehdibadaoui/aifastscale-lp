@@ -853,7 +853,7 @@ export default function PsychologistLandingPage() {
                         loop
                         muted
                         playsInline
-                        poster="/images/psychologist/dr-marcus.webp"
+                        poster="/images/psychologist/daniel-video-poster.webp"
                         className="w-full h-full object-contain sm:hidden"
                         src="/videos/psychologist-daniel-mobile.mp4"
                       />
@@ -863,14 +863,14 @@ export default function PsychologistLandingPage() {
                         loop
                         muted
                         playsInline
-                        poster="/images/psychologist/dr-marcus.webp"
+                        poster="/images/psychologist/daniel-video-poster.webp"
                         className="w-full h-full object-contain hidden sm:block"
                         src="/videos/psychologist-daniel.mp4"
                       />
                     </>
                   ) : (
                     <Image
-                      src="/images/psychologist/dr-marcus.webp"
+                      src="/images/psychologist/daniel-video-poster.webp"
                       alt="Dr. Daniel - AI Video Example"
                       fill
                       className="object-contain"
