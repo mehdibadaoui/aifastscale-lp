@@ -288,33 +288,38 @@ async function fetchWhopUserEmail(userId: string): Promise<string | null> {
     return storedEmail
   }
 
-  // Fallback: Try Whop API v1 (only endpoint that works with Bot API key)
-  // Note: v1 endpoint doesn't return email, but try anyway in case it changes
-  const apiKey = process.env.WHOP_API_KEY
-  if (!apiKey) {
-    console.log('❌ No Whop API key configured')
+  // Fallback: Try Whop API - try both API keys (original account + Flow account for plastic surgeons)
+  const apiKeys = [
+    process.env.WHOP_API_KEY,
+    process.env.WHOP_API_KEY_FLOW,
+  ].filter(Boolean)
+
+  if (apiKeys.length === 0) {
+    console.log('❌ No Whop API keys configured')
     return null
   }
 
-  try {
-    console.log(`🔍 Fetching from Whop API for user: ${userId}`)
-    const response = await fetch(`https://api.whop.com/api/v1/users/${userId}`, {
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      }
-    })
+  for (const apiKey of apiKeys) {
+    try {
+      console.log(`🔍 Fetching from Whop API for user: ${userId}`)
+      const response = await fetch(`https://api.whop.com/api/v1/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      })
 
-    if (response.ok) {
-      const userData = await response.json()
-      if (userData.email) {
-        // Store for future lookups
-        await storeUserIdEmailMapping(userId, userData.email)
-        return userData.email
+      if (response.ok) {
+        const userData = await response.json()
+        if (userData.email) {
+          // Store for future lookups
+          await storeUserIdEmailMapping(userId, userData.email)
+          return userData.email
+        }
       }
+    } catch (error) {
+      console.error('❌ Whop API error:', error)
     }
-  } catch (error) {
-    console.error('❌ Whop API error:', error)
   }
 
   return null
