@@ -126,7 +126,7 @@ const trackInitiateCheckout = () => {
 
 
 export default function PsychologistLandingPage() {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+  const timeLeftRef = useRef({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [isVideoMuted, setIsVideoMuted] = useState(true)
@@ -137,11 +137,11 @@ export default function PsychologistLandingPage() {
   // Animation refs for scroll detection - initialize with hero visible for instant animation
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
 
-  // Sticky mobile CTA - shows after scrolling past hero
-  const [showStickyCTA, setShowStickyCTA] = useState(false)
+  // Sticky mobile CTA - shows after scrolling past hero (DOM-driven, no re-renders)
+  const stickyCTARef = useRef<HTMLDivElement>(null)
 
   // Live viewers count for urgency (realistic range)
-  const [liveViewers, setLiveViewers] = useState(0)
+  const liveViewersRef = useRef(0)
 
 
   // Update member stats every minute
@@ -162,27 +162,41 @@ export default function PsychologistLandingPage() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Sticky mobile CTA - show after scrolling past 600px
+  // Sticky mobile CTA - show after scrolling past 600px (direct DOM, no re-renders)
   useEffect(() => {
+    let ticking = false
     const handleScroll = () => {
-      setShowStickyCTA(window.scrollY > 600)
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(() => {
+          if (stickyCTARef.current) {
+            if (window.scrollY > 600) {
+              stickyCTARef.current.style.transform = 'translateY(0)'
+              stickyCTARef.current.style.opacity = '1'
+            } else {
+              stickyCTARef.current.style.transform = 'translateY(100%)'
+              stickyCTARef.current.style.opacity = '0'
+            }
+          }
+          ticking = false
+        })
+      }
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Live viewers count - realistic fluctuation
+  // Live viewers count - realistic fluctuation (direct DOM, no re-renders)
   useEffect(() => {
-    // Start with realistic number
-    setLiveViewers(Math.floor(Math.random() * 8) + 12) // 12-19
+    liveViewersRef.current = Math.floor(Math.random() * 8) + 12
+    const el = document.querySelector('[data-live-viewers]')
+    if (el) el.textContent = String(liveViewersRef.current)
 
-    // Update every 5-15 seconds with small changes
     const interval = setInterval(() => {
-      setLiveViewers(prev => {
-        const change = Math.floor(Math.random() * 5) - 2 // -2 to +2
-        const newValue = prev + change
-        return Math.max(8, Math.min(24, newValue)) // Keep between 8-24
-      })
+      const change = Math.floor(Math.random() * 5) - 2
+      liveViewersRef.current = Math.max(8, Math.min(24, liveViewersRef.current + change))
+      const el = document.querySelector('[data-live-viewers]')
+      if (el) el.textContent = String(liveViewersRef.current)
     }, Math.random() * 10000 + 5000)
 
     return () => clearInterval(interval)
@@ -360,8 +374,21 @@ export default function PsychologistLandingPage() {
         seconds: Math.floor((diff % (1000 * 60)) / 1000)
       }
     }
-    setTimeLeft(calculateTimeLeft())
-    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
+    const updateDOM = () => {
+      const tl = calculateTimeLeft()
+      timeLeftRef.current = tl
+      // Direct DOM updates - no React re-render
+      const els = document.querySelectorAll('[data-countdown]')
+      els.forEach(el => {
+        const field = el.getAttribute('data-countdown')
+        if (field === 'days') el.textContent = String(tl.days).padStart(2, '0')
+        else if (field === 'hours') el.textContent = String(tl.hours).padStart(2, '0')
+        else if (field === 'minutes') el.textContent = String(tl.minutes).padStart(2, '0')
+        else if (field === 'seconds') el.textContent = String(tl.seconds).padStart(2, '0')
+      })
+    }
+    updateDOM()
+    const timer = setInterval(updateDOM, 1000)
     return () => clearInterval(timer)
   }, [])
 
@@ -595,7 +622,7 @@ export default function PsychologistLandingPage() {
               <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
                 <span className="text-red-300 text-xs sm:text-sm font-bold">
-                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
+                  <span data-countdown="days">00</span>d <span data-countdown="hours">00</span>h <span data-countdown="minutes">00</span>m left
                 </span>
               </div>
             </div>
@@ -2091,7 +2118,7 @@ export default function PsychologistLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-zoom-in' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4 hover-scale animate-pulse-soft">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires in {timeLeft.days}d {timeLeft.hours}h</span>
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires in <span data-countdown="days">00</span>d <span data-countdown="hours">00</span>h</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Get Everything Today For
@@ -3208,9 +3235,11 @@ export default function PsychologistLandingPage() {
       {/* ================================================================
           STICKY MOBILE CTA - Shows after scrolling
           ================================================================ */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 sm:hidden transition-all duration-300 ${
-        showStickyCTA ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-      }`}>
+      <div
+        ref={stickyCTARef}
+        className="fixed bottom-0 left-0 right-0 z-50 sm:hidden transition-all duration-300"
+        style={{ transform: 'translateY(100%)', opacity: 0 }}
+      >
         <div className="bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-4 px-4">
           <a
             href={WHOP_CHECKOUT_LINK}
@@ -3229,7 +3258,7 @@ export default function PsychologistLandingPage() {
             <span>•</span>
             <span className="flex items-center gap-1">
               <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              {liveViewers} viewing now
+              <span data-live-viewers>0</span> viewing now
             </span>
           </div>
         </div>
