@@ -145,13 +145,13 @@ export function ThemeStyles() {
       }
 
       /* Glass Teal */
-      .glass-teal {
+      .glass-purple {
         background: rgba(13, 148, 136, 0.1);
         border: 1px solid rgba(45, 212, 191, 0.2);
         transition: background 0.3s ease, border-color 0.3s ease;
       }
-      /* Light mode glass-teal */
-      html:not(.dark) .glass-teal {
+      /* Light mode glass-purple */
+      html:not(.dark) .glass-purple {
         background: rgba(13, 148, 136, 0.08);
         border: 1px solid rgba(13, 148, 136, 0.3);
       }
@@ -766,14 +766,14 @@ export function Modal({ isOpen, onClose, title, icon, children, size = 'md', sho
     >
       <div
         ref={modalRef}
-        className={`glass-premium rounded-t-2xl sm:rounded-2xl shadow-2xl w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-auto animate-slide-up sm:animate-scale-in border border-teal-500/20 pb-safe`}
+        className={`glass-premium rounded-t-2xl sm:rounded-2xl shadow-2xl w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-auto animate-slide-up sm:animate-scale-in border border-purple-500/20 pb-safe`}
         onClick={e => e.stopPropagation()}
       >
         {/* Mobile drag handle */}
         <div className="sm:hidden flex justify-center pt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-slate-600" />
         </div>
-        <div className="p-3 sm:p-4 border-b border-teal-500/20 flex items-center justify-between sticky top-0 glass-premium backdrop-blur-sm z-10">
+        <div className="p-3 sm:p-4 border-b border-purple-500/20 flex items-center justify-between sticky top-0 glass-premium backdrop-blur-sm z-10">
           <h2 id="modal-title" className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
             {icon} {title}
           </h2>
@@ -900,14 +900,14 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
   }
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-teal-500/20 ring-1 ring-teal-500/10">
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 ring-1 ring-purple-500/10">
       {isLoading && (
         <div className="absolute inset-0 glass-premium flex items-center justify-center z-10 rounded-2xl">
           <div className="text-center">
-            <Loader2 className={`w-10 h-10 text-teal-400 mx-auto mb-3 ${reducedMotion ? '' : 'animate-spin'}`} />
+            <Loader2 className={`w-10 h-10 text-purple-400 mx-auto mb-3 ${reducedMotion ? '' : 'animate-spin'}`} />
             <p className="text-slate-400 text-sm">Loading video...</p>
             {resumeTime > 0 && (
-              <p className="text-teal-400 text-xs mt-2">Resuming from {Math.floor(resumeTime / 60)}:{String(Math.floor(resumeTime % 60)).padStart(2, '0')}</p>
+              <p className="text-purple-400 text-xs mt-2">Resuming from {Math.floor(resumeTime / 60)}:{String(Math.floor(resumeTime % 60)).padStart(2, '0')}</p>
             )}
           </div>
         </div>
@@ -920,7 +920,7 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
           <div className="relative">
             <button
               onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-dark hover:bg-white/20 text-white text-sm font-medium transition-all border border-teal-500/30"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-dark hover:bg-white/20 text-white text-sm font-medium transition-all border border-purple-500/30"
               aria-label="Playback speed"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -930,14 +930,14 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
             </button>
 
             {showSpeedMenu && (
-              <div className="absolute bottom-full right-0 mb-2 glass-premium rounded-xl shadow-xl border border-teal-500/30 overflow-hidden animate-scale-in">
+              <div className="absolute bottom-full right-0 mb-2 glass-premium rounded-xl shadow-xl border border-purple-500/30 overflow-hidden animate-scale-in">
                 {PLAYBACK_SPEEDS.map((speed) => (
                   <button
                     key={speed}
                     onClick={() => changeSpeed(speed)}
                     className={`w-full px-4 py-2 text-sm font-medium text-left transition-all hover:bg-white/10 ${
                       playbackSpeed === speed
-                        ? 'bg-teal-500/20 text-teal-400'
+                        ? 'bg-purple-500/20 text-purple-400'
                         : 'text-slate-300'
                     }`}
                   >
@@ -1110,7 +1110,7 @@ export function FloatingActionButton({ actions }: FABProps) {
           <button
             key={i}
             onClick={() => { action.onClick(); setIsOpen(false); haptic.medium(); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full glass-premium shadow-lg border border-teal-500/20 text-sm font-medium text-white whitespace-nowrap animate-scale-in"
+            className="flex items-center gap-2 px-4 py-2 rounded-full glass-premium shadow-lg border border-purple-500/20 text-sm font-medium text-white whitespace-nowrap animate-scale-in"
             style={{ animationDelay: `${i * 50}ms` }}
           >
             {action.icon}
@@ -1122,7 +1122,7 @@ export function FloatingActionButton({ actions }: FABProps) {
       {/* Main FAB */}
       <button
         onClick={toggleOpen}
-        className={`w-14 h-14 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-glow-teal flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
+        className={`w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-glow-purple flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
         aria-label="Quick actions"
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1168,15 +1168,15 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
           value={noteText}
           onChange={(e) => setNoteText(e.target.value)}
           placeholder="Write your notes here... What did you learn? Key takeaways?"
-          className="w-full h-48 p-4 rounded-xl glass-premium border-2 border-teal-500/20 text-white placeholder-slate-500 focus:border-teal-500/50 focus:outline-none focus:ring-4 focus:ring-teal-500/20 transition-all resize-none"
+          className="w-full h-48 p-4 rounded-xl glass-premium border-2 border-purple-500/20 text-white placeholder-slate-500 focus:border-purple-500/50 focus:outline-none focus:ring-4 focus:ring-purple-500/20 transition-all resize-none"
           aria-label="Module notes"
         />
       </div>
-      <div className="p-4 border-t border-teal-500/20 flex gap-3 justify-end">
-        <button onClick={onClose} className="px-4 py-2 rounded-xl font-bold glass-premium text-slate-300 border border-teal-500/20 hover:bg-white/10 transition-all focus-ring">
+      <div className="p-4 border-t border-purple-500/20 flex gap-3 justify-end">
+        <button onClick={onClose} className="px-4 py-2 rounded-xl font-bold glass-premium text-slate-300 border border-purple-500/20 hover:bg-white/10 transition-all focus-ring">
           Cancel
         </button>
-        <button onClick={handleSave} className="btn-premium px-4 py-2 rounded-xl font-bold text-white shadow-glow-teal transition-all btn-press focus-ring">
+        <button onClick={handleSave} className="btn-premium px-4 py-2 rounded-xl font-bold text-white shadow-glow-purple transition-all btn-press focus-ring">
           Save Notes
         </button>
       </div>
@@ -1190,12 +1190,12 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
 
 export function KeyboardShortcutsModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Keyboard Shortcuts" icon={<Keyboard className="w-5 h-5 text-teal-400" />} size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Keyboard Shortcuts" icon={<Keyboard className="w-5 h-5 text-purple-400" />} size="sm">
       <div className="p-4 space-y-2">
         {KEYBOARD_SHORTCUTS.map((shortcut, i) => (
           <div key={i} className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-white/5 transition-all">
             <span className="text-slate-400">{shortcut.action}</span>
-            <kbd className="px-3 py-1 rounded-lg glass-premium text-white font-mono text-sm border border-teal-500/20 shadow-sm">
+            <kbd className="px-3 py-1 rounded-lg glass-premium text-white font-mono text-sm border border-purple-500/20 shadow-sm">
               {shortcut.key}
             </kbd>
           </div>
@@ -1228,25 +1228,25 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={<Settings className="w-5 h-5 text-teal-400" />} size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={<Settings className="w-5 h-5 text-purple-400" />} size="sm">
       <div className="p-4 space-y-3">
         {/* Dark Mode */}
         <button
           onClick={() => toggle('darkMode', darkMode)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={darkMode}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-teal-500/20' : 'bg-amber-500/20'}`}>
-              {darkMode ? <Moon className="w-5 h-5 text-teal-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-purple-500/20' : 'bg-amber-500/20'}`}>
+              {darkMode ? <Moon className="w-5 h-5 text-purple-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
             </div>
             <div className="text-left">
               <p className="font-bold text-white">Dark Mode</p>
               <p className="text-sm text-slate-400">Easier on the eyes</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${darkMode ? 'bg-teal-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${darkMode ? 'bg-purple-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${darkMode ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1254,20 +1254,20 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Auto-play Next */}
         <button
           onClick={() => toggle('autoPlayNext', autoPlayNext)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={autoPlayNext}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-teal-500/20">
-              <SkipForward className="w-5 h-5 text-teal-400" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-500/20">
+              <SkipForward className="w-5 h-5 text-purple-400" />
             </div>
             <div className="text-left">
               <p className="font-bold text-white">Auto-play Next</p>
               <p className="text-sm text-slate-400">Play next module automatically</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${autoPlayNext ? 'bg-teal-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${autoPlayNext ? 'bg-purple-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${autoPlayNext ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1275,7 +1275,7 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Sound Effects */}
         <button
           onClick={() => toggle('soundEnabled', soundEnabled)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={soundEnabled}
         >
@@ -1288,7 +1288,7 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
               <p className="text-sm text-slate-400">Play sounds for achievements</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${soundEnabled ? 'bg-teal-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${soundEnabled ? 'bg-purple-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${soundEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1296,7 +1296,7 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Show Completed Badge */}
         <button
           onClick={() => toggle('showCompletedBadge', showCompletedBadge)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-teal-500/20 hover:bg-white/10 hover:border-teal-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={showCompletedBadge}
         >
@@ -1309,12 +1309,12 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
               <p className="text-sm text-slate-400">Show completion status</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${showCompletedBadge ? 'bg-teal-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${showCompletedBadge ? 'bg-purple-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${showCompletedBadge ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
       </div>
-      <div className="p-4 border-t border-teal-500/20 text-center text-sm text-slate-400">
+      <div className="p-4 border-t border-purple-500/20 text-center text-sm text-slate-400">
         Settings auto-save when changed
       </div>
     </Modal>
@@ -1350,20 +1350,20 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Your Certificate" size="lg" showPrint>
       <div className="p-8">
-        <div className="bg-gradient-to-br from-teal-900/40 to-cyan-900/40 rounded-2xl p-8 border-4 border-teal-500/30 text-center relative overflow-hidden glass-premium">
+        <div className="bg-gradient-to-br from-purple-900/40 to-violet-900/40 rounded-2xl p-8 border-4 border-purple-500/30 text-center relative overflow-hidden glass-premium">
           {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-teal-500/20 to-transparent rounded-br-full" />
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-500/20 to-transparent rounded-tl-full" />
-          <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-teal-500/20 to-transparent -translate-y-1/2" />
-          <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-cyan-500/20 to-transparent -translate-y-1/2" />
+          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-br-full" />
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-violet-500/20 to-transparent rounded-tl-full" />
+          <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-purple-500/20 to-transparent -translate-y-1/2" />
+          <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-violet-500/20 to-transparent -translate-y-1/2" />
 
           <div className="relative z-10">
             <Trophy className="w-16 h-16 text-amber-500 mx-auto mb-4 animate-float" />
-            <h3 className="text-lg font-medium text-teal-400 mb-2">Certificate of Completion</h3>
+            <h3 className="text-lg font-medium text-purple-400 mb-2">Certificate of Completion</h3>
             <h1 className="text-4xl font-black gradient-text-animated mb-2">{COURSE_CONFIG.title}</h1>
-            <p className="text-xl text-teal-400 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
+            <p className="text-xl text-purple-400 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
 
-            <div className="bg-white/10 rounded-xl p-6 mb-6 inline-block glass-premium border border-teal-500/20">
+            <div className="bg-white/10 rounded-xl p-6 mb-6 inline-block glass-premium border border-purple-500/20">
               <p className="text-slate-400 mb-2">This certifies that</p>
               <p className="text-3xl font-black text-white">{studentName || 'Student'}</p>
               <p className="text-slate-400 mt-2">has successfully completed all modules</p>
@@ -1383,8 +1383,8 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
         </div>
       </div>
 
-      <div className="p-6 border-t border-teal-500/20 flex flex-wrap gap-3 justify-center">
-        <button onClick={handlePrint} className="btn-premium flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold shadow-glow-teal transition-all btn-press focus-ring">
+      <div className="p-6 border-t border-purple-500/20 flex flex-wrap gap-3 justify-center">
+        <button onClick={handlePrint} className="btn-premium flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold shadow-glow-purple transition-all btn-press focus-ring">
           <Printer className="w-4 h-4" /> Print
         </button>
         <button onClick={() => handleShare('twitter')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1DA1F2] text-white font-bold hover:opacity-90 transition-all btn-press focus-ring">
@@ -1513,9 +1513,9 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
     {
       title: "You're In!",
       subtitle: "Welcome to Your Premium Training",
-      description: "You've just unlocked exclusive access to the most comprehensive AI course for dental practices.",
+      description: "You've just unlocked exclusive access to the most comprehensive AI course for psychology practices.",
       icon: 'welcome',
-      accent: 'from-teal-400 to-cyan-500'
+      accent: 'from-purple-400 to-violet-500'
     },
     {
       title: "Master the Content",
@@ -1529,7 +1529,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
       subtitle: "$2,000+ in Resources",
       description: "Download templates, scripts, and tools designed to accelerate your results. They're all yours.",
       icon: 'bonus',
-      accent: 'from-emerald-400 to-teal-500'
+      accent: 'from-emerald-400 to-purple-500'
     },
     {
       title: "Track Your Wins",
@@ -1614,7 +1614,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
         {/* Modal content */}
         <div className="relative glass-premium rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 overflow-hidden">
           {/* Animated gradient border */}
-          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-teal-500/50 via-cyan-500/50 to-teal-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
+          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-purple-500/50 via-violet-500/50 to-purple-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
 
           {/* Inner content */}
           <div className="relative p-6 sm:p-8 pb-safe">
@@ -1628,7 +1628,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
               {[...Array(6)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-1 h-1 bg-teal-400/40 rounded-full"
+                  className="absolute w-1 h-1 bg-purple-400/40 rounded-full"
                   style={{
                     left: `${20 + Math.random() * 60}%`,
                     top: `${20 + Math.random() * 60}%`,
@@ -1712,7 +1712,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                         i === step
                           ? `w-6 bg-gradient-to-r ${currentStep.accent}`
                           : i < step
-                            ? 'w-2 bg-teal-500/60'
+                            ? 'w-2 bg-purple-500/60'
                             : 'w-2 bg-white/20 group-hover:bg-white/30'
                       }`}
                     />
@@ -1796,10 +1796,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-premium noise-overlay section-premium relative overflow-hidden">
           {/* Floating Gradient Orbs */}
-          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-teal-500/10 to-cyan-500/5 rounded-full blur-3xl floating-slow" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-cyan-500/10 to-teal-500/5 rounded-full blur-3xl floating" />
+          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-violet-500/5 rounded-full blur-3xl floating-slow" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-violet-500/10 to-purple-500/5 rounded-full blur-3xl floating" />
 
-          <div className="text-center max-w-md animate-fade-in glass-premium p-8 rounded-2xl border border-teal-500/20">
+          <div className="text-center max-w-md animate-fade-in glass-premium p-8 rounded-2xl border border-purple-500/20">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h1 className="text-2xl font-black text-white mb-2">Something went wrong</h1>
             <p className="text-slate-400 mb-6">
@@ -1807,7 +1807,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="btn-premium px-6 py-3 rounded-xl font-bold text-white shadow-glow-teal transition-all btn-press"
+              className="btn-premium px-6 py-3 rounded-xl font-bold text-white shadow-glow-purple transition-all btn-press"
             >
               Refresh Page
             </button>
@@ -1846,8 +1846,8 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
     return (
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         {/* Single subtle gradient orb for mobile */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-cyan-500/10 to-teal-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-500/10 to-violet-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-violet-500/10 to-purple-500/10 rounded-full blur-3xl" />
       </div>
     )
   }
@@ -1910,15 +1910,15 @@ interface PremiumNavProps {
 
 export function PremiumNav({ tabs, activeTab, onTabChange, darkMode }: PremiumNavProps) {
   return (
-    <nav className="flex items-center gap-1 p-1 rounded-2xl glass-premium backdrop-blur-xl border border-teal-500/20 shadow-lg">
+    <nav className="flex items-center gap-1 p-1 rounded-2xl glass-premium backdrop-blur-xl border border-purple-500/20 shadow-lg">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-300 ${
             activeTab === tab.id
-              ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg shadow-teal-500/30 scale-105'
-              : 'text-slate-400 hover:bg-white/10 hover:text-teal-400'
+              ? 'bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-lg shadow-purple-500/30 scale-105'
+              : 'text-slate-400 hover:bg-white/10 hover:text-purple-400'
           }`}
         >
           {tab.icon}

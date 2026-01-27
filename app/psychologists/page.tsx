@@ -45,16 +45,32 @@ import {
 } from 'lucide-react'
 import { PSYCHOLOGIST_BONUS_PRODUCTS, getPsychologistTotalBonusValue } from '../config/psychologist-bonus-products'
 import { getMemberStats } from './members/components/config'
-import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/ExpertPersona'
+import { ExpertPersona } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Dr. Marcus Rivers - Expert Psychologist Persona
 const DR_MARCUS_DATA = {
-  ...DR_SOFIA_DATA,
   name: 'Dr. Marcus Rivers',
   title: 'Licensed Clinical Psychologist, PhD',
-  image: '/images/psychologist/dr-marcus.webp',
-  bio: 'After 15 years in private practice and helping thousands of clients overcome anxiety and depression, I realized the therapists who thrive aren\'t just skilled — they\'re visible. I built this system to help you reach the people who desperately need your help.',
+  credentials: 'PhD, Licensed Clinical Psychologist',
+  imageUrl: '/images/psychologist/dr-marcus.webp',
+  positioningStatement: 'After 15 years in private practice and helping thousands of clients overcome anxiety and depression, I realized the therapists who thrive aren\'t just skilled — they\'re visible. I spent $3,000/month on marketing and got 3-5 new clients monthly. Then I built this AI system. Now I get 20+ qualified session requests monthly, spend $0 on marketing, and my schedule is booked 6 weeks out. I\'m teaching 500+ psychologists how to do the same.',
+  bulletPoints: [
+    'Built this for my OWN practice first — I use it daily',
+    'Went from 3-5 new clients/month to 20+ session requests/month',
+    'Cut marketing costs from $3,000/month to $0 (organic only)',
+    'Premium therapy packages increased from 30% to 60% of practice revenue',
+    'Now helping 500+ psychologists across 15+ countries replicate results',
+  ],
+  philosophy: 'I created this system because I was YOU. Spending thousands on marketing, getting minimal results, watching younger therapists on social media fill their schedules. Clients don\'t book based on your credentials alone — they book because they trust you. This framework uses AI to build that trust instantly with professional videos that showcase your expertise. If it didn\'t work for my own practice, I wouldn\'t be teaching it.',
+  trustElement: 'My practice went from 2-3 sessions/week to 10-12/week after using this system',
+  stats: [
+    { value: '15+', label: 'Years Clinical' },
+    { value: '$0', label: 'Marketing Now' },
+    { value: '500+', label: 'Therapists Taught' },
+    { value: '20+', label: 'Leads/Month' },
+  ],
+  accentColor: 'purple' as const,
 }
 
 // Whop checkout link
@@ -109,7 +125,7 @@ const trackInitiateCheckout = () => {
 }
 
 
-export default function PlasticTherapistLandingPage() {
+export default function PsychologistLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
@@ -190,8 +206,8 @@ export default function PlasticTherapistLandingPage() {
       a: 'No. Everything is included. The system shows you exactly which free/cheap tools to use. No hidden costs.',
     },
     {
-      q: 'Will this work for my plastic therapy practice?',
-      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ psychologists across the US, UK, Canada, and Australia use this daily. Works for mental health, reconstructive, facial, stress management, and all specialties.`,
+      q: 'Will this work for my therapy practice?',
+      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ psychologists across the US, UK, Canada, and Australia use this daily. Works for anxiety, depression, trauma, couples therapy, CBT, and all specialties.`,
     },
     {
       q: 'When do I get access?',
@@ -215,7 +231,7 @@ export default function PlasticTherapistLandingPage() {
       role: 'Mental Health Therapist',
       location: 'Houston, TX',
       image: '/images/psychologist/review-2.webp',
-      review: "After 20 years in plastic therapy, I thought I'd seen it all. My session calendar is now booked 6 weeks out - all from AI video leads.",
+      review: "After 20 years in private practice, I thought I'd seen it all. My session calendar is now booked 6 weeks out - all from AI video leads.",
       results: 'Booked 6 weeks out',
     },
     {
@@ -251,7 +267,7 @@ export default function PlasticTherapistLandingPage() {
       role: 'Wellness Psychologist',
       location: 'Phoenix, AZ',
       image: '/images/psychologist/review-11.webp',
-      review: "25 years in plastic therapy and I wish I had this sooner. 8 new clients last month from social media alone.",
+      review: "25 years in private practice and I wish I had this sooner. 8 new clients last month from social media alone.",
       results: '8 clients from social',
     },
   ]
@@ -802,7 +818,7 @@ export default function PlasticTherapistLandingPage() {
                     He Never Stepped in Front of a Camera.
                   </p>
                   <p className="text-purple-400 text-base sm:text-lg font-medium">
-                    He uploaded one photo. The AI cloned his voice and face. Now his OR is booked 6 weeks out.
+                    He uploaded one photo. The AI cloned his voice and face. Now his calendar is booked 6 weeks out.
                   </p>
                 </div>
 
@@ -882,9 +898,9 @@ export default function PlasticTherapistLandingPage() {
                     { time: 'Day 1', event: 'Created first AI video explaining anxiety management techniques (7 min)', icon: Upload, color: 'gray' },
                     { time: 'Day 3', event: 'Posted on Instagram Reels & TikTok', icon: Eye, color: 'gray' },
                     { time: 'Week 1', event: 'Video hit 47K views • 12 session requests', icon: Phone, color: 'purple' },
-                    { time: 'Week 2', event: '3 rhinoplasties booked ($24K avg each = $72K)', icon: Calendar, color: 'purple' },
-                    { time: 'Week 4', event: '28 total sessions • 9 surgeries scheduled', icon: FileText, color: 'purple' },
-                    { time: 'Week 8', event: '$156,000 in new session revenue', icon: DollarSign, color: 'green' },
+                    { time: 'Week 2', event: '3 premium therapy packages booked ($2.4K avg each)', icon: Calendar, color: 'purple' },
+                    { time: 'Week 4', event: '28 total sessions • 9 long-term clients signed', icon: FileText, color: 'purple' },
+                    { time: 'Week 8', event: '$47,000 in new session revenue', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -919,7 +935,7 @@ export default function PlasticTherapistLandingPage() {
                     <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       I've spent <span className="text-gray-400">$50,000+</span> on marketing agencies over the years. Nothing worked like this.
                       <span className="text-purple-400 font-bold"> 28 qualified sessions in 4 weeks</span> — clients who already trusted me before walking in.
-                      My OR is now booked 6 weeks out.
+                      My schedule is now booked 6 weeks out.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-400 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
@@ -1224,7 +1240,7 @@ export default function PlasticTherapistLandingPage() {
                     {/* Content */}
                     <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Generate Script</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Use our <span className="text-purple-600 font-semibold">ChatGPT specialist</span> built for plastic therapy practices. Just describe your topic.
+                      Use our <span className="text-purple-600 font-semibold">ChatGPT specialist</span> built for therapy practices. Just describe your topic.
                     </p>
 
                     {/* Mini feature */}
@@ -1533,7 +1549,7 @@ export default function PlasticTherapistLandingPage() {
                     { time: 'Day 3', event: 'Instagram DM: "I\'ve been researching therapy for months. Your video answered all my questions."', icon: MessageSquare, color: 'purple' },
                     { time: 'Day 7', event: '4 premium therapy packages scheduled ($2,500-$4,000 each)', icon: Calendar, color: 'purple' },
                     { time: 'Week 2', event: '18 clients booked • $47,000 in new clients', icon: FileText, color: 'purple' },
-                    { time: 'Month 2', event: 'OR booked 8 weeks out • Fired marketing agency', icon: DollarSign, color: 'green' },
+                    { time: 'Month 2', event: 'Calendar booked 8 weeks out • Fired marketing agency', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -1568,7 +1584,7 @@ export default function PlasticTherapistLandingPage() {
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       Two weeks of AI videos. <span className="text-purple-600 font-bold">$47,000 in new clients</span>.
                       I spent $28,000 on marketing agencies over 8 months and got 4 sessions. This system cost me $47.82 and
-                      I booked 6 surgeries in two weeks. My only regret is not starting sooner.
+                      I booked 6 premium clients in two weeks. My only regret is not starting sooner.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
@@ -1592,8 +1608,8 @@ export default function PlasticTherapistLandingPage() {
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
                   { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$189K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '1,932x', label: 'ROI', sub: 'Return' },
+                  { value: '$47K', label: 'Revenue', sub: '2 months' },
+                  { value: '984x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-purple-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -1608,7 +1624,7 @@ export default function PlasticTherapistLandingPage() {
       </section>
 
       {/* ================================================================
-          CASE STUDY #3 - DR. LISA PARK - RHINOPLASTY SPECIALIST (Compact)
+          CASE STUDY #3 - DR. LISA PARK - RELATIONSHIP & FAMILY THERAPIST (Compact)
           ================================================================ */}
       <section
         id="case-study-lisa"
@@ -1621,7 +1637,7 @@ export default function PlasticTherapistLandingPage() {
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('case-study-lisa') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-full mb-3">
                 <TrendingUp className="w-3.5 h-3.5 text-violet-400" />
-                <span className="text-violet-400 font-bold text-xs uppercase tracking-wide">Rhinoplasty Success Story</span>
+                <span className="text-violet-400 font-bold text-xs uppercase tracking-wide">Therapy Practice Growth Story</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
                 One Video. <span className="text-violet-400">23 Therapy Sessions.</span>
@@ -1636,16 +1652,16 @@ export default function PlasticTherapistLandingPage() {
                 <div className="relative aspect-video lg:aspect-auto">
                   {/* Mobile: 22KB optimized image */}
                   <Image
-                    src="/images/psychologist/case-study-rhinoplasty-mobile.webp"
-                    alt="Dr. Lisa Park - Rhinoplasty Session AI Video"
+                    src="/images/psychologist/case-study-therapy-mobile.webp"
+                    alt="Dr. Lisa Park - Therapy Practice AI Video"
                     fill
                     className="object-cover sm:hidden"
                     loading="lazy"
                   />
                   {/* Desktop: Full quality image */}
                   <Image
-                    src="/images/psychologist/case-study-rhinoplasty.webp"
-                    alt="Dr. Lisa Park - Rhinoplasty Session AI Video"
+                    src="/images/psychologist/case-study-therapy.webp"
+                    alt="Dr. Lisa Park - Therapy Practice AI Video"
                     fill
                     className="object-cover hidden sm:block"
                     loading="lazy"
@@ -1681,7 +1697,7 @@ export default function PlasticTherapistLandingPage() {
                     {[
                       { value: '89K', label: 'Views' },
                       { value: '23', label: 'Consults' },
-                      { value: '$276K', label: 'Revenue' },
+                      { value: '$69K', label: 'Revenue' },
                     ].map((stat, i) => (
                       <div key={i} className="bg-black/40 rounded-lg p-3 text-center border border-white/10">
                         <div className={`text-lg sm:text-xl font-black ${i === 2 ? 'text-green-400' : 'text-violet-400'}`}>{stat.value}</div>
@@ -2141,7 +2157,7 @@ export default function PlasticTherapistLandingPage() {
 
                 {/* Bonuses */}
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Dental Video Scripts</span>
+                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Mental Health Video Scripts</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
@@ -2153,11 +2169,11 @@ export default function PlasticTherapistLandingPage() {
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$397</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">Dental Profit Simulator</span>
+                  <span className="text-gray-300 text-sm sm:text-base">Practice Growth Simulator</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$247</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">Front Desk Conversion Scripts</span>
+                  <span className="text-gray-300 text-sm sm:text-base">Intake Call Conversion Scripts</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
@@ -2865,7 +2881,7 @@ export default function PlasticTherapistLandingPage() {
           background-size: 50px 50px;
         }
 
-        /* Testimonial carousel styles for dentist - MOBILE OPTIMIZED */
+        /* Testimonial carousel styles for psychologist - MOBILE OPTIMIZED */
         .testimonial-carousel-wrapper-psychologist {
           position: relative;
           overflow: hidden;
