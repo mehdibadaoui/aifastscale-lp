@@ -5,7 +5,7 @@ import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { getPlasticSurgeonUpsellBonuses } from '../../config/plastic-surgeon-bonus-products'
 
-// Whop checkout link for Upsell - PLACEHOLDER
+// Whop checkout link for Upsell (Flow account)
 const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_WerHpDW91dbRR'
 
 export default function PlasticSurgeonUpsellPage() {

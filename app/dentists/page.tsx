@@ -71,25 +71,8 @@ const captureFbclid = () => {
   }
 }
 
-// Get stored FB identifiers for CAPI
-const getFbIdentifiers = () => {
-  if (typeof window === 'undefined') return { fbc: '', fbp: '' }
-
-  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-    const [key, value] = cookie.trim().split('=')
-    acc[key] = value
-    return acc
-  }, {} as Record<string, string>)
-
-  return {
-    fbc: cookies['_fbc'] || sessionStorage.getItem('dentist_fbc') || '',
-    fbp: cookies['_fbp'] || '',
-  }
-}
-
 // Fire ViewContent event (helps Meta build retargeting audiences)
 const trackViewContent = () => {
-  // Browser pixel
   if (typeof window !== 'undefined' && (window as any).fbq) {
     (window as any).fbq('track', 'ViewContent', {
       value: 47.00,
@@ -98,31 +81,11 @@ const trackViewContent = () => {
       content_type: 'product',
       content_ids: ['dentist-main'],
     })
-    console.log('👁️ Dentist ViewContent (browser) fired')
   }
-
-  // Server-side CAPI (backup)
-  const { fbc, fbp } = getFbIdentifiers()
-  fetch('/api/dentist-meta-capi', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      eventName: 'ViewContent',
-      value: 47.00,
-      currency: 'USD',
-      contentName: 'CloneYourself Dentist',
-      contentType: 'product',
-      contentIds: ['dentist-main'],
-      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://aifastscale.com/dentists',
-      fbc,
-      fbp,
-    }),
-  }).catch(err => console.error('CAPI ViewContent error:', err))
 }
 
 // Fire InitiateCheckout event (tracks CTA clicks)
 const trackInitiateCheckout = () => {
-  // Browser pixel
   if (typeof window !== 'undefined' && (window as any).fbq) {
     (window as any).fbq('track', 'InitiateCheckout', {
       value: 47.00,
@@ -131,31 +94,7 @@ const trackInitiateCheckout = () => {
       content_type: 'product',
       content_ids: ['dentist-main'],
     })
-    console.log('🛒 Dentist InitiateCheckout (browser) fired')
   }
-
-  // Store checkout timestamp for conversion tracking
-  if (typeof window !== 'undefined') {
-    sessionStorage.setItem('dentist_checkout_started', Date.now().toString())
-  }
-
-  // Server-side CAPI (backup)
-  const { fbc, fbp } = getFbIdentifiers()
-  fetch('/api/dentist-meta-capi', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      eventName: 'InitiateCheckout',
-      value: 47.00,
-      currency: 'USD',
-      contentName: 'CloneYourself Dentist',
-      contentType: 'product',
-      contentIds: ['dentist-main'],
-      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://aifastscale.com/dentists',
-      fbc,
-      fbp,
-    }),
-  }).catch(err => console.error('CAPI InitiateCheckout error:', err))
 }
 
 export default function DentistCleanLandingPage() {

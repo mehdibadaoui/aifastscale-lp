@@ -11,11 +11,13 @@ const TikTokPixel = dynamic(() => import('./TikTokPixel'), { ssr: false })
 export default function LazyTrackingPixels() {
   const pathname = usePathname()
 
-  // Don't load real estate pixels on dentist pages (they have their own pixels)
-  const isDentistPage = pathname?.startsWith('/dentists')
+  // Don't load real estate pixels on product pages (they have their own pixels)
+  const isProductPage = pathname?.startsWith('/dentists') ||
+    pathname?.startsWith('/psychologists') ||
+    pathname?.startsWith('/lawyers') ||
+    pathname?.startsWith('/plastic-surgeons')
 
-  if (isDentistPage) {
-    // Dentist pages use their own pixels from dentists/layout.tsx
+  if (isProductPage) {
     return null
   }
 

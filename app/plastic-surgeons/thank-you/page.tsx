@@ -13,30 +13,21 @@ interface Credentials {
 // ===========================================
 // PURCHASE TRACKING - Browser Pixel Only
 // ===========================================
-const trackPurchase = (email?: string) => {
+const trackPurchase = () => {
   if (typeof window === 'undefined') return
 
-  // Prevent duplicate tracking
-  if (sessionStorage.getItem('plastic_surgeon_purchase_tracked')) {
-    console.log('📊 Purchase already tracked, skipping duplicate')
-    return
-  }
-
-  const purchaseValue = 47.82 // Main course price
-  const eventId = `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+  if (sessionStorage.getItem('plastic_surgeon_purchase_tracked')) return
 
   if ((window as any).fbq) {
     (window as any).fbq('track', 'Purchase', {
-      value: purchaseValue,
+      value: 47.82,
       currency: 'USD',
       content_name: 'CloneYourself for Plastic Surgeons',
       content_type: 'product',
       content_ids: ['plastic-surgeon-main'],
-    }, { eventID: eventId })
-    console.log('📊 Purchase pixel fired:', purchaseValue)
+    })
   }
 
-  // Mark as tracked IMMEDIATELY to prevent duplicates
   sessionStorage.setItem('plastic_surgeon_purchase_tracked', 'true')
 }
 
@@ -149,7 +140,7 @@ function ThankYouContent() {
   useEffect(() => {
     if (credentials && credentials.email) {
       // Small delay to ensure page is fully loaded
-      setTimeout(() => trackPurchase(credentials.email), 500)
+      setTimeout(() => trackPurchase(), 500)
     }
   }, [credentials])
 

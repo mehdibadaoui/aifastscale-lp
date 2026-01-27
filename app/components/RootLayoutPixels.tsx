@@ -3,15 +3,18 @@
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-// Real Estate Meta Pixels - Only loads on non-dentist pages
+// Real Estate Meta Pixels - Only loads on non-product pages
 export default function RootLayoutPixels() {
   const pathname = usePathname()
   const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
-    // Only load on non-dentist pages
-    const isDentistPage = pathname?.startsWith('/dentists')
-    if (!isDentistPage) {
+    // Don't load real estate pixels on product pages (they have their own)
+    const isProductPage = pathname?.startsWith('/dentists') ||
+      pathname?.startsWith('/psychologists') ||
+      pathname?.startsWith('/lawyers') ||
+      pathname?.startsWith('/plastic-surgeons')
+    if (!isProductPage) {
       setShouldLoad(true)
     }
   }, [pathname])

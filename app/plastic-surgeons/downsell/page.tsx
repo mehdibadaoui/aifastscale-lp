@@ -5,7 +5,7 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { getPlasticSurgeonUpsellBonuses } from '../../config/plastic-surgeon-bonus-products'
 
-// Whop checkout link for Downsell - PLACEHOLDER
+// Whop checkout link for Downsell (Flow account)
 const WHOP_DOWNSELL_LINK = 'https://whop.com/checkout/plan_BKxSLirxKe3ZW'
 
 export default function PlasticSurgeonDownsellPage() {

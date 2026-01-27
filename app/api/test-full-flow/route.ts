@@ -146,50 +146,7 @@ export async function GET(request: NextRequest) {
     })
 
     // ═══════════════════════════════════════════════════════════════
-    // STEP 5: Test Meta CAPI directly
-    // ═══════════════════════════════════════════════════════════════
-    const capiPayload = {
-      eventName: 'Purchase',
-      eventId: `Test_${testId}`,
-      sourceUrl: 'https://aifastscale.com/dentists',
-      email: testEmail,
-      firstName: 'Full',
-      lastName: 'Test',
-      value: 47,
-      currency: 'USD',
-      contentName: 'CloneYourself for Dentists',
-      contentType: 'product',
-      contentIds: ['dentist-main']
-    }
-
-    const capiResponse = await fetch(`${baseUrl}/api/dentist-meta-capi`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(capiPayload)
-    })
-
-    const capiResult = await capiResponse.json()
-
-    // Check if pixels received the events (results is an array)
-    const pixelResults = capiResult.results || []
-    const pixel1 = pixelResults.find((r: any) => r.pixel?.includes('Pixel 1'))
-    const pixel2 = pixelResults.find((r: any) => r.pixel?.includes('Pixel 2'))
-    const pixel1Success = pixel1?.events_received === 1
-    const pixel2Success = pixel2?.events_received === 1
-
-    results.push({
-      step: '5. Meta CAPI Tracking',
-      status: pixel1Success && pixel2Success ? 'PASS' : pixel1Success || pixel2Success ? 'PASS' : 'FAIL',
-      details: `Pixel 1: ${pixel1Success ? '✓ sent' : '✗'}, Pixel 2: ${pixel2Success ? '✓ sent' : '✗'}`,
-      data: {
-        pixels_sent: capiResult.pixels_sent,
-        pixel1: pixel1,
-        pixel2: pixel2
-      }
-    })
-
-    // ═══════════════════════════════════════════════════════════════
-    // STEP 6: Check webhook logs captured everything
+    // STEP 5: Check webhook logs captured everything
     // ═══════════════════════════════════════════════════════════════
     const logs = await redis.lrange('webhook:logs', 0, 4)
     const recentLogs = logs.map((log: any) => {

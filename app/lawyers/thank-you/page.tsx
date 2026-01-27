@@ -11,60 +11,24 @@ interface Credentials {
 }
 
 // ===========================================
-// PURCHASE TRACKING - Browser Pixel + CAPI
+// PURCHASE TRACKING - Browser Pixel Only
 // ===========================================
-const trackPurchase = (email?: string) => {
+const trackPurchase = () => {
   if (typeof window === 'undefined') return
 
-  // Prevent duplicate tracking
-  if (sessionStorage.getItem('lawyer_purchase_tracked')) {
-    console.log('📊 Purchase already tracked, skipping duplicate')
-    return
-  }
+  if (sessionStorage.getItem('lawyer_purchase_tracked')) return
 
-  const purchaseValue = 47.82 // Main course price
-  const eventId = `Purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-  // 1. Browser Pixel
   if ((window as any).fbq) {
     (window as any).fbq('track', 'Purchase', {
-      value: purchaseValue,
+      value: 47.82,
       currency: 'USD',
       content_name: 'CloneYourself for Lawyers',
       content_type: 'product',
       content_ids: ['lawyer-main'],
-    }, { eventID: eventId })
-    console.log('📊 Purchase pixel fired:', purchaseValue)
+    })
   }
 
-  // Mark as tracked IMMEDIATELY to prevent duplicates
   sessionStorage.setItem('lawyer_purchase_tracked', 'true')
-
-  // 2. Server-side CAPI (backup - can't be blocked)
-  const getCookie = (name: string) => {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-    return match ? match[2] : undefined
-  }
-
-  fetch('/api/lawyer-meta-capi', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      eventName: 'Purchase',
-      value: purchaseValue,
-      currency: 'USD',
-      contentName: 'CloneYourself for Lawyers',
-      contentIds: ['lawyer-main'],
-      sourceUrl: window.location.href,
-      eventId: eventId,
-      email: email,
-      fbc: getCookie('_fbc') || sessionStorage.getItem('lawyer_fbc'),
-      fbp: getCookie('_fbp'),
-      userAgent: navigator.userAgent,
-    }),
-  }).then(res => res.json())
-    .then(data => console.log('📊 Purchase CAPI response:', data))
-    .catch(err => console.error('📊 Purchase CAPI error:', err))
 }
 
 function ThankYouContent() {
@@ -176,7 +140,7 @@ function ThankYouContent() {
   useEffect(() => {
     if (credentials && credentials.email) {
       // Small delay to ensure page is fully loaded
-      setTimeout(() => trackPurchase(credentials.email), 500)
+      setTimeout(() => trackPurchase(), 500)
     }
   }, [credentials])
 

@@ -13,7 +13,7 @@ import { verifyUser } from '@/lib/user-db'
  */
 
 // Legacy shared password (for backward compatibility during transition)
-const LEGACY_PASSWORD = 'therapy2026'
+const LEGACY_PASSWORD = 'legal2026'
 const LEGACY_ENABLED = true // Set to false to disable legacy login
 
 // VIP Guest accounts (manual special access)
