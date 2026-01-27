@@ -855,7 +855,7 @@ export default function PsychologistLandingPage() {
                         playsInline
                         poster="/images/psychologist/daniel-video-poster.webp"
                         className="w-full h-full object-contain sm:hidden"
-                        src="/videos/psychologist-daniel-mobile.mp4"
+                        src="/videos/plastic-surgeon-daniel-mobile.mp4"
                       />
                       {/* Desktop: Full quality video */}
                       <video
@@ -865,7 +865,7 @@ export default function PsychologistLandingPage() {
                         playsInline
                         poster="/images/psychologist/daniel-video-poster.webp"
                         className="w-full h-full object-contain hidden sm:block"
-                        src="/videos/psychologist-daniel.mp4"
+                        src="/videos/plastic-surgeon-daniel.mp4"
                       />
                     </>
                   ) : (
