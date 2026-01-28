@@ -121,7 +121,7 @@ export const COURSE_MODULES = [
     description: "Set up the essential tools. I'll show you exactly where to register, which plan to choose, and how to avoid mistakes.",
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: 'lpkrdgr19e',
+    wistiaId: 'fnjt6devuy',
     thumbnail: '/images/lawyer/module-2.webp',
     lessons: ['Where to register', 'Which plan to choose', 'Avoiding common mistakes'],
     resources: [
@@ -136,7 +136,7 @@ export const COURSE_MODULES = [
     description: "Turn a single photo into a realistic talking video. The exact process, right settings, and how to avoid common errors.",
     duration: '6 min',
     durationMinutes: 6,
-    wistiaId: 'n4lx79ecbo',
+    wistiaId: '511b44q25r',
     thumbnail: '/images/lawyer/module-3.webp',
     lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
     resources: [
@@ -150,7 +150,7 @@ export const COURSE_MODULES = [
     description: "Edit your AI videos quickly using simple tools like CapCut. No experience required.",
     duration: '4 min',
     durationMinutes: 4,
-    wistiaId: 'j2reo83n4z',
+    wistiaId: '7jtqmnymc5',
     thumbnail: '/images/lawyer/module-4.webp',
     lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
     resources: [
@@ -164,7 +164,7 @@ export const COURSE_MODULES = [
     description: "Generate multiple realistic images of yourself using one reference photo. Different styles, locations, outfits.",
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: '0a48x7ur8z',
+    wistiaId: '9waf0llex7',
     thumbnail: '/images/lawyer/module-5.webp',
     lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
     resources: [
@@ -178,10 +178,9 @@ export const COURSE_MODULES = [
     description: 'Build a content machine that runs on autopilot. Batch create videos and scale your production.',
     duration: '5 min',
     durationMinutes: 5,
-    wistiaId: null,
+    wistiaId: '9f7os4xklp',
     thumbnail: null,
     lessons: ['Batch creation', 'Content calendar', 'Scale without burnout'],
-    comingSoon: true,
     resources: [],
   },
   {
