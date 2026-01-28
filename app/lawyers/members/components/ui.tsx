@@ -167,14 +167,14 @@ export function ThemeStyles() {
 
       /* Gradient Text Premium */
       .gradient-text-premium {
-        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 50%, #8b5cf6 100%);
+        background: linear-gradient(135deg, #d4af37 0%, #f59e0b 50%, #b8860b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .gradient-text-animated-premium {
-        background: linear-gradient(90deg, #d4af37, #f59e0b, #8b5cf6, #f59e0b, #d4af37);
+        background: linear-gradient(90deg, #d4af37, #f59e0b, #b8860b, #f59e0b, #d4af37);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -975,7 +975,7 @@ interface ConfettiProps {
 export function Confetti({ active, reducedMotion, variant = 'default' }: ConfettiProps) {
   if (!active || reducedMotion) return null
 
-  const colors = ['#d4af37', '#f59e0b', '#f59e0b', '#10b981', '#0ea5e9', '#fcd34d']
+  const colors = ['#d4af37', '#f59e0b', '#f59e0b', '#10b981', '#fcd34d', '#b8860b']
 
   if (variant === 'stars') {
     return (
@@ -1435,8 +1435,8 @@ const OnboardingIcons = {
       <path d="M10 8.5V15.5L16 12L10 8.5Z" fill="white" />
       <defs>
         <linearGradient id="video-gradient" x1="2" y1="4" x2="22" y2="20">
-          <stop stopColor="#6366f1" />
-          <stop offset="1" stopColor="#8b5cf6" />
+          <stop stopColor="#f4d03f" />
+          <stop offset="1" stopColor="#d4af37" />
         </linearGradient>
       </defs>
     </svg>
@@ -1484,8 +1484,8 @@ const OnboardingIcons = {
       <path d="M19 15L16 12L18 17L19 15Z" fill="#f59e0b" />
       <defs>
         <linearGradient id="rocket-gradient" x1="8" y1="2" x2="16" y2="22">
-          <stop stopColor="#a855f7" />
-          <stop offset="1" stopColor="#ec4899" />
+          <stop stopColor="#f4d03f" />
+          <stop offset="1" stopColor="#d4af37" />
         </linearGradient>
       </defs>
     </svg>

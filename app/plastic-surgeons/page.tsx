@@ -3137,7 +3137,7 @@ export default function PlasticSurgeonLandingPage() {
       <style jsx global>{`
         /* Override global text-gradient-premium for plastic surgeon (gold theme) */
         .text-gradient-premium {
-          background: linear-gradient(135deg, #c084fc 0%, #f4d03f 50%, #d4af37 100%) !important;
+          background: linear-gradient(135deg, #f4d03f 0%, #d4af37 50%, #b8860b 100%) !important;
           -webkit-background-clip: text !important;
           -webkit-text-fill-color: transparent !important;
           background-clip: text !important;
