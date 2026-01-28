@@ -42,6 +42,7 @@ const COURSE_MODULES = [
     wistiaId: 'myh13ayp9d',
     thumbnail: '/images/lawyer/course-1.webp',
     lessons: ['Course overview', 'Setting expectations', 'Your 7-day action plan'],
+    comingSoon: false,
     resources: [
       { name: 'Alex Morgan Legal Growth Mentor GPT', url: 'https://chatgpt.com/g/g-69777dcea0008191ac576005a41fdeed-alex-morgan-legal-growth-mentor', type: 'link' as const },
     ],
@@ -54,6 +55,7 @@ const COURSE_MODULES = [
     wistiaId: 'fnjt6devuy',
     thumbnail: '/images/lawyer/course-2.webp',
     lessons: ['Google AI Pro setup', 'Google Flow setup', 'Account configuration'],
+    comingSoon: false,
     resources: [
       { name: 'Google AI Pro (1-month free trial)', url: 'https://one.google.com/about/google-ai-plans/', type: 'link' as const },
       { name: 'Google Flow (AI Video Tool)', url: 'https://labs.google/flow/about', type: 'link' as const },
@@ -67,6 +69,7 @@ const COURSE_MODULES = [
     wistiaId: '511b44q25r',
     thumbnail: '/images/lawyer/course-3.webp',
     lessons: ['Writing magnetic scripts', 'Recording your video', 'Export & optimization'],
+    comingSoon: false,
     resources: [
       { name: 'Lawyer AI Talking Video Prompt (Universal)', url: '/products/lawyer/Lawyer_AI_Talking_Video_Prompt_Universal.pdf', type: 'file' as const },
     ],
@@ -79,6 +82,7 @@ const COURSE_MODULES = [
     wistiaId: '7jtqmnymc5',
     thumbnail: '/images/lawyer/course-4.webp',
     lessons: ['Multi-scene videos', 'B-roll integration', 'Professional editing'],
+    comingSoon: false,
     resources: [
       { name: 'Background Music Collection', url: '/products/lawyer/Background music/', type: 'folder' as const },
     ],
@@ -91,6 +95,7 @@ const COURSE_MODULES = [
     wistiaId: '9waf0llex7',
     thumbnail: '/images/lawyer/course-5.webp',
     lessons: ['Video distribution', 'Social media strategy', 'Lead capture funnels'],
+    comingSoon: false,
     resources: [],
   },
   {
@@ -101,6 +106,7 @@ const COURSE_MODULES = [
     wistiaId: '9f7os4xklp',
     thumbnail: '/images/lawyer/course-6.webp',
     lessons: ['Batch creation', 'Content calendar', 'Outsourcing tips'],
+    comingSoon: false,
     resources: [],
   },
 ]
