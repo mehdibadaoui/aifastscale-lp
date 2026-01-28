@@ -43,7 +43,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'Every day you don\'t post, your competitor does - and steals your future clients. This gives you 365 ready-to-post templates specifically for attorneys. Open. Click. Customize in 30 seconds. Post. Done. One family law attorney went from 400 followers to 45,000 in 6 months. His caseload is now fully booked.',
     icon: 'Layout',
     iconColor: '#d4af37', // Gold
-    image: '/images/lawyer/social-templates.webp',
+    image: '/images/lawyer/content-calendar.webp',
     category: 'marketing',
   },
   {
@@ -65,7 +65,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'Educational content positions you as the expert - not just another lawyer. This system shows you exactly how to create content that builds trust AND attracts cases. One immigration attorney\'s visa explainer video got 3.8 million views. She now has a 6-month waitlist for cases.',
     icon: 'Scale',
     iconColor: '#d4af37', // Gold
-    image: '/images/lawyer/authority-content.webp',
+    image: '/images/lawyer/authority-system.webp',
     category: 'marketing',
   },
   {
@@ -101,7 +101,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'Your past clients and attorney network aren\'t referring cases because you never made it easy. This system creates a referral machine that runs on autopilot. One personal injury firm generated 62 referred cases in 90 days. That\'s 62 pre-qualified clients who came pre-sold because someone they trust said "call this attorney."',
     icon: 'Users',
     iconColor: '#d4af37', // Gold
-    image: '/images/lawyer/referral-network.webp',
+    image: '/images/lawyer/referral-machine.webp',
     category: 'revenue',
   },
   {
@@ -123,7 +123,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'When someone Googles "lawyer near me," they click the one with the most reviews. Period. This system floods your Google profile with 5-star reviews - ethically and automatically. One family law firm went from 8 reviews/month to 31/month. Within 90 days, they ranked #1 locally. Now they turn away cases. What would 25 new 5-star reviews do for YOUR firm?',
     icon: 'Star',
     iconColor: '#fbbf24', // Yellow/Gold
-    image: '/images/lawyer/review-explosion.webp',
+    image: '/images/lawyer/review-system.webp',
     category: 'marketing',
   },
   {
@@ -134,7 +134,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'Your case wins are your best marketing asset - but you\'re not using them. This system shows you how to ethically showcase results that attract ideal clients. One medical malpractice attorney turned ONE $2.1M verdict into 14 new high-value cases over 18 months. Your wins should work as hard as you do.',
     icon: 'Trophy',
     iconColor: '#d4af37', // Gold
-    image: '/images/lawyer/case-study.webp',
+    image: '/images/lawyer/case-win-marketing.webp',
     category: 'operations',
   },
 ]
