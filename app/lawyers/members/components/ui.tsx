@@ -12,9 +12,9 @@ export function ThemeStyles() {
   return (
     <style dangerouslySetInnerHTML={{ __html: `
       :root {
-        --color-primary: 45 212 191;
-        --color-primary-light: 94 234 212;
-        --color-accent: 6 182 212;
+        --color-primary: 212 175 55;
+        --color-primary-light: 250 204 21;
+        --color-accent: 245 158 11;
         --color-success: 16 185 129;
         --color-warning: 245 158 11;
         --color-error: 239 68 68;
@@ -121,7 +121,7 @@ export function ThemeStyles() {
         background: rgba(15, 23, 42, 0.6);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(45, 212, 191, 0.1);
+        border: 1px solid rgba(212, 175, 55, 0.1);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       }
@@ -144,16 +144,16 @@ export function ThemeStyles() {
         border: 1px solid rgba(0, 0, 0, 0.05);
       }
 
-      /* Glass Teal */
+      /* Glass Gold */
       .glass-gold {
-        background: rgba(13, 148, 136, 0.1);
-        border: 1px solid rgba(45, 212, 191, 0.2);
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid rgba(212, 175, 55, 0.2);
         transition: background 0.3s ease, border-color 0.3s ease;
       }
       /* Light mode glass-gold */
       html:not(.dark) .glass-gold {
-        background: rgba(13, 148, 136, 0.08);
-        border: 1px solid rgba(13, 148, 136, 0.3);
+        background: rgba(212, 175, 55, 0.08);
+        border: 1px solid rgba(212, 175, 55, 0.3);
       }
 
       /* Neon Glow Effect */
@@ -271,9 +271,9 @@ export function ThemeStyles() {
         to { transform: rotate(360deg); }
       }
 
-      /* Gradient text animation */
+      /* Gradient text animation - Gold only */
       .gradient-text-animated {
-        background: linear-gradient(90deg, #d4af37, #f59e0b, #0ea5e9, #d4af37);
+        background: linear-gradient(90deg, #d4af37, #f59e0b, #fbbf24, #d4af37);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -473,6 +473,15 @@ export function ThemeStyles() {
         body * { visibility: hidden; }
         .print-area, .print-area * { visibility: visible; }
         .print-area { position: absolute; left: 0; top: 0; width: 100%; }
+      }
+
+      /* Lawyer-specific btn-premium override - Gold/Amber instead of Teal */
+      .btn-premium {
+        background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+      }
+      .btn-premium:hover {
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
       }
 
       /* Focus styles */

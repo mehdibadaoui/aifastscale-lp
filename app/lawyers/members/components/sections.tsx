@@ -122,7 +122,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
         {[
           { icon: Clock, label: 'Watch Time', value: `${state.totalWatchTimeMinutes}m`, color: 'from-amber-500 to-yellow-500', iconColor: '#d4af37' },
           { icon: Star, label: 'Points', value: state.totalPoints.toString(), color: 'from-amber-500 to-orange-500', iconColor: '#f59e0b' },
-          { icon: Flame, label: 'Day Streak', value: `${state.streak}`, color: 'from-rose-500 to-pink-500', iconColor: '#f43f5e' },
+          { icon: Flame, label: 'Day Streak', value: `${state.streak}`, color: 'from-orange-500 to-amber-500', iconColor: '#f43f5e' },
           { icon: Trophy, label: 'Badges', value: `${state.unlockedCount}/${ACHIEVEMENTS.length}`, color: 'from-emerald-500 to-amber-500', iconColor: '#10b981' },
         ].map((stat, i) => (
           <div key={i} className="relative overflow-hidden rounded-2xl glass-gold p-4 hover-lift">
@@ -1261,7 +1261,7 @@ export const AchievementsSection = memo(function AchievementsSection({ state }: 
         {[
           { label: 'Unlocked', value: state.unlockedCount, color: 'from-amber-500 to-orange-500' },
           { label: 'Points', value: state.totalPoints, color: 'from-amber-500 to-yellow-500' },
-          { label: 'Streak', value: `${state.streak}d`, color: 'from-rose-500 to-pink-500' },
+          { label: 'Streak', value: `${state.streak}d`, color: 'from-orange-500 to-amber-500' },
         ].map((stat, i) => (
           <div key={i} className="glass-premium rounded-2xl p-4 text-center border border-amber-500/20">
             <p className={`text-2xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>{stat.value}</p>
