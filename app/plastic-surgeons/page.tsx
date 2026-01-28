@@ -562,15 +562,15 @@ export default function PlasticSurgeonLandingPage() {
       style={{
         background: `
           radial-gradient(ellipse at 20% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-          linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 50%, #1a0f2e 100%)
+          radial-gradient(ellipse at 80% 100%, rgba(184, 134, 11, 0.08) 0%, transparent 50%),
+          linear-gradient(135deg, #0a0a0a 0%, #0f0d08 50%, #1a1505 100%)
         `
       }}
     >
-      {/* Plastic Surgeon Theme Overrides - Purple/Amber instead of Teal */}
+      {/* Plastic Surgeon Theme Overrides - Black & Gold */}
       <style jsx global>{`
         .plastic-surgeon-theme .text-gradient-premium {
-          background: linear-gradient(135deg, #c084fc 0%, #f4d03f 50%, #d4af37 100%);
+          background: linear-gradient(135deg, #f4d03f 0%, #d4af37 50%, #b8860b 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -609,16 +609,16 @@ export default function PlasticSurgeonLandingPage() {
         data-animate
         className="relative text-white py-8 sm:py-16 md:py-20 overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 25%, #1a0f2e 50%, #0f0a1a 75%, #0a0a0f 100%)',
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #0f0d08 25%, #1a1505 50%, #0f0d08 75%, #0a0a0a 100%)',
           backgroundSize: '200% 200%',
           animation: 'gradient-shift 20s ease infinite'
         }}
       >
-        {/* Premium animated gold/amber gradient overlay */}
+        {/* Premium animated gold gradient overlay */}
         <div
           className="absolute inset-0 animate-gradient-xy"
           style={{
-            background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(168, 85, 247, 0.08) 25%, transparent 50%, rgba(245, 158, 11, 0.08) 75%, rgba(217, 119, 6, 0.12) 100%)',
+            background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 134, 11, 0.08) 25%, transparent 50%, rgba(245, 158, 11, 0.08) 75%, rgba(217, 119, 6, 0.12) 100%)',
             backgroundSize: '400% 400%'
           }}
         />
@@ -631,10 +631,17 @@ export default function PlasticSurgeonLandingPage() {
           }} />
         </div>
 
-        {/* Premium floating orbs - larger and more visible */}
-        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-amber-600/20 to-violet-500/10 rounded-full blur-[100px] floating-slow" />
+        {/* Premium floating orbs - gold themed */}
+        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-amber-600/20 to-yellow-500/10 rounded-full blur-[100px] floating-slow" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-amber-500/15 to-orange-500/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-amber-500/10 to-fuchsia-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-amber-500/10 to-yellow-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
+
+        {/* Mobile-only animated particles */}
+        <div className="sm:hidden">
+          <div className="absolute top-20 left-10 w-2 h-2 bg-amber-400/40 rounded-full animate-ping" />
+          <div className="absolute top-40 right-8 w-3 h-3 bg-yellow-500/30 rounded-full animate-pulse" />
+          <div className="absolute bottom-32 left-1/4 w-2 h-2 bg-amber-300/40 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }} />
+        </div>
 
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
@@ -1237,7 +1244,7 @@ export default function PlasticSurgeonLandingPage() {
                       My OR is now booked 6 weeks out.
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-400 bg-gradient-to-br from-amber-500 to-violet-600 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-400 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
                         <span className="text-white font-bold text-sm">DR</span>
                       </div>
                       <div>
@@ -1749,7 +1756,7 @@ export default function PlasticSurgeonLandingPage() {
                   {/* Profile */}
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-amber-500 shadow-lg bg-gradient-to-br from-amber-500 to-violet-600 flex items-center justify-center">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-amber-500 shadow-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
                         <span className="text-white font-bold text-2xl">MC</span>
                       </div>
                       <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
@@ -1886,7 +1893,7 @@ export default function PlasticSurgeonLandingPage() {
                       I booked 6 surgeries in two weeks. My only regret is not starting sooner.
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-violet-600 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
                         <span className="text-white font-bold text-sm">MC</span>
                       </div>
                       <div>
