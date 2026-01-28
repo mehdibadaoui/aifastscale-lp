@@ -284,7 +284,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
               </svg>
             </button>
           </div>
-          <WistiaPlayer wistiaId={COURSE_CONFIG.welcomeVideo?.wistiaId || 'myh13ayp9d'} showSpeedControls={false} />
+          <WistiaPlayer wistiaId={COURSE_CONFIG.welcomeVideo?.wistiaId || 'fnjt6devuy'} showSpeedControls={false} />
         </div>
       )}
 

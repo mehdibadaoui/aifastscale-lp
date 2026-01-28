@@ -75,7 +75,7 @@ export const COURSE_CONFIG = {
   subtitle: "for Plastic Surgeons",
   supportEmail: "support@aifastscale.com",
   welcomeVideo: {
-    wistiaId: "myh13ayp9d",
+    wistiaId: "fnjt6devuy",
     title: "Welcome from Dr. Sofia",
     duration: "2 min",
   },
