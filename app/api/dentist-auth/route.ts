@@ -26,6 +26,13 @@ const VIP_GUESTS = [
     welcomeMessage: 'Welcome back, Dr. Matías! Enjoy your exclusive access.',
     badge: 'VIP Guest',
   },
+  {
+    id: 'whop-reviewer',
+    name: 'Whop Reviewer',
+    password: 'whop-review-2025',
+    welcomeMessage: 'Welcome! Thank you for reviewing CloneYourself for Dentists.',
+    badge: 'Reviewer',
+  },
 ]
 
 export async function POST(request: NextRequest) {
