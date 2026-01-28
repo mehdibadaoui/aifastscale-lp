@@ -66,7 +66,7 @@ export const DR_SOFIA_DATA: ExpertPersonaProps = {
     { value: '400+', label: 'Surgeons Taught' },
     { value: '30+', label: 'Leads/Month' },
   ],
-  accentColor: 'purple',
+  accentColor: 'gold',
 }
 
 // Expert data for Alex Morgan (Lawyers)
