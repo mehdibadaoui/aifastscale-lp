@@ -51,7 +51,7 @@ const COURSE_MODULES = [
     title: 'Accounts Setup',
     description: 'Get your accounts ready and configured perfectly',
     duration: '12 min',
-    wistiaId: 'lpkrdgr19e',
+    wistiaId: 'fnjt6devuy',
     thumbnail: '/images/lawyer/course-2.webp',
     lessons: ['Google AI Pro setup', 'Google Flow setup', 'Account configuration'],
     resources: [
@@ -64,7 +64,7 @@ const COURSE_MODULES = [
     title: 'Make Any Photo Talk',
     description: 'Step-by-step: from script to stunning video in 7 minutes',
     duration: '15 min',
-    wistiaId: 'n4lx79ecbo',
+    wistiaId: '511b44q25r',
     thumbnail: '/images/lawyer/course-3.webp',
     lessons: ['Writing magnetic scripts', 'Recording your video', 'Export & optimization'],
     resources: [
@@ -76,7 +76,7 @@ const COURSE_MODULES = [
     title: 'Advanced Video Techniques',
     description: 'Pro tips to make your videos stand out from competitors',
     duration: '10 min',
-    wistiaId: 'j2reo83n4z',
+    wistiaId: '7jtqmnymc5',
     thumbnail: '/images/lawyer/course-4.webp',
     lessons: ['Multi-scene videos', 'B-roll integration', 'Professional editing'],
     resources: [
@@ -88,10 +88,9 @@ const COURSE_MODULES = [
     title: 'Client Attraction System',
     description: 'Turn views into signed retainers with proven strategies',
     duration: '14 min',
-    wistiaId: null,
+    wistiaId: '9waf0llex7',
     thumbnail: '/images/lawyer/course-5.webp',
     lessons: ['Video distribution', 'Social media strategy', 'Lead capture funnels'],
-    comingSoon: true,
     resources: [],
   },
   {
@@ -99,10 +98,9 @@ const COURSE_MODULES = [
     title: 'Scaling & Automation',
     description: 'Build a content machine that runs on autopilot',
     duration: '11 min',
-    wistiaId: null,
+    wistiaId: '9f7os4xklp',
     thumbnail: '/images/lawyer/course-6.webp',
     lessons: ['Batch creation', 'Content calendar', 'Outsourcing tips'],
-    comingSoon: true,
     resources: [],
   },
 ]
