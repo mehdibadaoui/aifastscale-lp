@@ -445,40 +445,40 @@ export default function PsychologistLandingPage() {
       className="min-h-screen noise-overlay font-sans relative psychologist-theme"
       style={{
         background: `
-          radial-gradient(ellipse at 20% 0%, rgba(147, 51, 234, 0.12) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-          linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 50%, #1a0f2e 100%)
+          radial-gradient(ellipse at 20% 0%, rgba(20, 184, 166, 0.12) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 100%, rgba(45, 212, 191, 0.08) 0%, transparent 50%),
+          linear-gradient(135deg, #0a0a0f 0%, #0a0f0f 50%, #0e1a1a 100%)
         `
       }}
     >
-      {/* Psychologist Theme Overrides - Purple/Amber instead of Teal */}
+      {/* Psychologist Theme Overrides - Teal/Cyan matching Dentist branding */}
       <style jsx global>{`
         .psychologist-theme .text-gradient-premium {
-          background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #9333ea 100%);
+          background: linear-gradient(135deg, #5eead4 0%, #14b8a6 50%, #0d9488 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
         .psychologist-theme .btn-premium {
-          background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
         }
         .psychologist-theme .btn-premium:hover {
-          box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .psychologist-theme .shadow-glow-teal {
-          box-shadow: 0 0 30px rgba(147, 51, 234, 0.3), 0 0 60px rgba(147, 51, 234, 0.15);
+          box-shadow: 0 0 30px rgba(20, 184, 166, 0.3), 0 0 60px rgba(20, 184, 166, 0.15);
         }
         .psychologist-theme .glass-teal {
-          background: rgba(147, 51, 234, 0.1);
-          border: 1px solid rgba(147, 51, 234, 0.2);
+          background: rgba(20, 184, 166, 0.1);
+          border: 1px solid rgba(20, 184, 166, 0.2);
           backdrop-filter: blur(8px);
         }
         .psychologist-theme .animate-pulse-glow {
           animation: pulse-glow-teal 2s ease-in-out infinite;
         }
         @keyframes pulse-glow-teal {
-          0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.4), 0 0 40px rgba(147, 51, 234, 0.2); }
-          50% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), 0 0 60px rgba(147, 51, 234, 0.3); }
+          0%, 100% { box-shadow: 0 0 20px rgba(20, 184, 166, 0.4), 0 0 40px rgba(20, 184, 166, 0.2); }
+          50% { box-shadow: 0 0 30px rgba(20, 184, 166, 0.6), 0 0 60px rgba(20, 184, 166, 0.3); }
         }
       `}</style>
 
@@ -493,7 +493,7 @@ export default function PsychologistLandingPage() {
         data-animate
         className="relative text-white py-8 sm:py-16 md:py-20 overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 25%, #1a0f2e 50%, #0f0a1a 75%, #0a0a0f 100%)',
+          background: 'linear-gradient(135deg, #0a0a0f 0%, #0a0f0f 25%, #0e1a1a 50%, #0a0f0f 75%, #0a0a0f 100%)',
           backgroundSize: '200% 200%',
           animation: 'gradient-shift 20s ease infinite'
         }}
@@ -502,7 +502,7 @@ export default function PsychologistLandingPage() {
         <div
           className="absolute inset-0 animate-gradient-xy"
           style={{
-            background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.15) 0%, rgba(168, 85, 247, 0.08) 25%, transparent 50%, rgba(245, 158, 11, 0.08) 75%, rgba(217, 119, 6, 0.12) 100%)',
+            background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(45, 212, 191, 0.08) 25%, transparent 50%, rgba(245, 158, 11, 0.08) 75%, rgba(217, 119, 6, 0.12) 100%)',
             backgroundSize: '400% 400%'
           }}
         />
@@ -510,7 +510,7 @@ export default function PsychologistLandingPage() {
         {/* Subtle grid pattern - teal themed */}
         <div className="absolute inset-0 opacity-[0.08]">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.6) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.6) 1px, transparent 0)',
             backgroundSize: '48px 48px'
           }} />
         </div>
@@ -800,7 +800,7 @@ export default function PsychologistLandingPage() {
         {/* Subtle pattern overlay */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.15) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0)',
             backgroundSize: '32px 32px'
           }} />
         </div>
@@ -2836,36 +2836,36 @@ export default function PsychologistLandingPage() {
       <style jsx global>{`
         /* Override global text-gradient-premium for psychologist (teal theme) */
         .text-gradient-premium {
-          background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #9333ea 100%) !important;
+          background: linear-gradient(135deg, #5eead4 0%, #14b8a6 50%, #0d9488 100%) !important;
           -webkit-background-clip: text !important;
           -webkit-text-fill-color: transparent !important;
           background-clip: text !important;
         }
 
         .text-shadow-glow {
-          text-shadow: 0 0 30px rgba(147, 51, 234, 0.5) !important;
+          text-shadow: 0 0 30px rgba(20, 184, 166, 0.5) !important;
         }
 
         /* Override btn-premium for teal theme */
         .btn-premium {
-          background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%) !important;
+          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
         }
 
         .btn-premium:hover {
           box-shadow:
-            0 8px 25px rgba(147, 51, 234, 0.4),
+            0 8px 25px rgba(20, 184, 166, 0.4),
             0 4px 10px rgba(0, 0, 0, 0.1) !important;
         }
 
         /* Override glass-teal for teal theme */
         .glass-teal {
-          background: rgba(147, 51, 234, 0.08) !important;
-          border: 1px solid rgba(168, 85, 247, 0.2) !important;
+          background: rgba(20, 184, 166, 0.08) !important;
+          border: 1px solid rgba(45, 212, 191, 0.2) !important;
         }
 
         /* Override shadow-glow-teal for teal theme */
         .shadow-glow-teal {
-          box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1) !important;
+          box-shadow: 0 0 20px rgba(20, 184, 166, 0.3), 0 0 40px rgba(20, 184, 166, 0.1) !important;
         }
 
         /* Psychologist background gradient */
@@ -2882,7 +2882,7 @@ export default function PsychologistLandingPage() {
           pointer-events: none;
           z-index: 0;
           opacity: 0.3;
-          background-image: radial-gradient(circle at 2px 2px, rgba(147, 51, 234, 0.15) 1px, transparent 0);
+          background-image: radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0);
           background-size: 50px 50px;
         }
 
@@ -2906,8 +2906,8 @@ export default function PsychologistLandingPage() {
         .testimonial-card-psychologist {
           flex-shrink: 0;
           width: 280px;
-          background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-          border: 1px solid rgba(147, 51, 234, 0.2);
+          background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+          border: 1px solid rgba(20, 184, 166, 0.2);
           border-radius: 1rem;
           padding: 1.25rem;
           position: relative;
