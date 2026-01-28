@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Before/After Content System | CloneYourself</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #9333ea; --primary-light: #a855f7; --primary-dark: #7c22ce; --accent: #f59e0b; --bg-dark: #0f0a1a; --bg-card: #1a1025; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%); color: var(--text); line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
+    .cover h1 { font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
+    .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: #c084fc; font-weight: 700; }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 8px; }
+    .section-subtitle { color: var(--primary-light); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
+    .step-card { background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0; display: flex; gap: 20px; }
+    .step-num { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+    .checklist { background: rgba(15, 10, 26, 0.5); border-radius: 12px; padding: 20px; margin: 16px 0; }
+    .checklist li { padding: 8px 0; padding-left: 28px; position: relative; list-style: none; }
+    .checklist li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
+    .warning-box { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .warning-box strong { color: #f87171; }
+    .tip-box { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .tip-box strong { color: var(--accent); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } .step-card { flex-direction: column; } }
+    @media print { body { background: white; color: #1a1a1a; } .cover { background: #f8f4ff; } .section, .step-card { background: #faf5ff; } }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="badge"><span>📸</span> PHOTO SYSTEM</div>
+    <h1>Before/After Content System</h1>
+    <p class="subtitle">Capture, edit, and post transformation photos that get millions of views while staying HIPAA compliant.</p>
+    <div class="value-badge"><span>📦</span> Value: $397</div>
+    <div style="margin-top: 60px; opacity: 0.6; font-size: 14px;">CLONEYOURSELF FOR PLASTIC SURGEONS</div>
+  </div>
+
+  <div class="container">
+    <!-- WHY BEFORE/AFTER -->
+    <div class="section">
+      <div class="section-subtitle">The Power of Transformation</div>
+      <h2 class="section-title">Why Before/After Content Gets 5x More Engagement</h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Before/after photos trigger a primal response in viewers. They see transformation and think "that could be me." Here's the psychology:</p>
+
+      <div class="grid-2">
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 16px;">
+          <h4 style="color: var(--primary-light); margin-bottom: 8px;">🧠 Mirror Neurons Fire</h4>
+          <p style="font-size: 14px; color: var(--text-muted);">When viewers see a transformation, their brain simulates experiencing it themselves. They literally FEEL the change.</p>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 16px;">
+          <h4 style="color: var(--primary-light); margin-bottom: 8px;">📊 Social Proof in Action</h4>
+          <p style="font-size: 14px; color: var(--text-muted);">Before/afters prove you can deliver results. They're the most powerful form of testimonial in plastic surgery.</p>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 16px;">
+          <h4 style="color: var(--primary-light); margin-bottom: 8px;">⏱️ Scroll-Stopping Power</h4>
+          <p style="font-size: 14px; color: var(--text-muted);">The brain is wired to notice change. Before/after images break the scroll pattern and demand attention.</p>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 16px;">
+          <h4 style="color: var(--primary-light); margin-bottom: 8px;">💬 Engagement Magnet</h4>
+          <p style="font-size: 14px; color: var(--text-muted);">People love commenting on transformations. Comments boost your content's reach algorithmically.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTOGRAPHY GUIDE -->
+    <div class="section">
+      <div class="section-subtitle">Part 1: Capture</div>
+      <h2 class="section-title">The Perfect Before/After Photo Setup</h2>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div>
+          <h3 style="margin-bottom: 8px;">Lighting Setup</h3>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Consistent lighting is everything. Inconsistent lighting = accusations of editing.</p>
+          <ul class="checklist">
+            <li>Use a dedicated photo room with controlled lighting</li>
+            <li>Two soft boxes at 45° angles, 5500K daylight bulbs</li>
+            <li>No windows - artificial light only for consistency</li>
+            <li>Same lighting position for EVERY patient</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div>
+          <h3 style="margin-bottom: 8px;">Camera Position & Settings</h3>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Mark the floor. Same distance, same angle, every time.</p>
+          <ul class="checklist">
+            <li>Tripod at fixed height (mark the wall for reference)</li>
+            <li>Patient stands on floor markers</li>
+            <li>Camera 5-8 feet from patient depending on procedure</li>
+            <li>Use same lens (50mm or 85mm recommended)</li>
+            <li>Aperture: f/8-f/11 for sharpness</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div>
+          <h3 style="margin-bottom: 8px;">Patient Positioning</h3>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Capture all relevant angles for each procedure type.</p>
+
+          <div style="margin-top: 16px;">
+            <strong>Face Procedures:</strong>
+            <ul class="checklist">
+              <li>Front facing, neutral expression</li>
+              <li>45° left and right</li>
+              <li>Full profile left and right</li>
+              <li>Bird's eye (looking down)</li>
+              <li>Worm's eye (looking up)</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <strong>Body Procedures:</strong>
+            <ul class="checklist">
+              <li>Front facing, arms at sides</li>
+              <li>45° left and right</li>
+              <li>Full profile left and right</li>
+              <li>Back view</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ Critical:</strong> Take BEFORE photos in pre-op, not on surgery day. Patients look different when nervous/fasting. Take AFTER photos at consistent intervals (1 month, 3 months, 6 months, 1 year).
+      </div>
+    </div>
+
+    <!-- EDITING GUIDE -->
+    <div class="section">
+      <div class="section-subtitle">Part 2: Edit</div>
+      <h2 class="section-title">Ethical Editing for Social Media</h2>
+
+      <div class="tip-box">
+        <strong>🎯 The Golden Rule:</strong> You can adjust lighting, color, and crop. You CANNOT alter anatomy. Smoothing skin or changing body proportions = unethical and can lead to lawsuits.
+      </div>
+
+      <h3 style="margin: 24px 0 16px;">Allowed Edits:</h3>
+      <ul class="checklist">
+        <li>Match white balance between before/after</li>
+        <li>Adjust exposure to look consistent</li>
+        <li>Crop to center the subject</li>
+        <li>Remove background distractions</li>
+        <li>Add your watermark/logo</li>
+        <li>Add text overlays (procedure name, time elapsed)</li>
+      </ul>
+
+      <h3 style="margin: 24px 0 16px;">Recommended Apps & Tools:</h3>
+      <div class="grid-2">
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">
+          <strong>Lightroom Mobile</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Best for batch editing with presets. Create a "Before/After" preset once, apply to all photos.</p>
+        </div>
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">
+          <strong>Canva Pro</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Perfect for adding text, creating side-by-side layouts, adding your brand elements.</p>
+        </div>
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">
+          <strong>TouchRetouch</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Remove bra straps, surgical marks, or background objects (NOT body features).</p>
+        </div>
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">
+          <strong>VSCO</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Premium filters that maintain skin tones naturally. Use same filter on both images.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIPAA COMPLIANCE -->
+    <div class="section">
+      <div class="section-subtitle">Part 3: Compliance</div>
+      <h2 class="section-title">HIPAA-Safe Sharing System</h2>
+
+      <div class="warning-box">
+        <strong>⚠️ Legal Warning:</strong> Sharing patient photos without proper consent is a HIPAA violation that can result in fines up to $50,000 per incident. Always get written consent.
+      </div>
+
+      <h3 style="margin: 24px 0 16px;">The Consent Process:</h3>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Timing</h4>
+          <p style="color: var(--text-muted);">Get consent AFTER surgery, during a follow-up visit when they're happy with results. Never ask before - they might feel pressured.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div>
+          <h4>The Consent Form Must Include:</h4>
+          <ul class="checklist">
+            <li>Specific platforms where photos may be used</li>
+            <li>Whether face will be shown or cropped</li>
+            <li>Duration of consent (forever or specific period)</li>
+            <li>Right to revoke consent at any time</li>
+            <li>Patient signature and date</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div>
+          <h4>How to Ask (Script)</h4>
+          <div style="background: rgba(15, 10, 26, 0.5); border-radius: 12px; padding: 16px; margin-top: 12px; border-left: 3px solid var(--primary);">
+            "Your results are absolutely beautiful, and I think other people considering [procedure] would really benefit from seeing what's possible. Would you be open to letting us share your before/after photos? We can either show them anonymously - just the procedure area - or with your permission, include your face. Either way, you'd be helping someone who feels the same way you did before surgery."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POSTING STRATEGY -->
+    <div class="section">
+      <div class="section-subtitle">Part 4: Post</div>
+      <h2 class="section-title">Viral Before/After Posting Formula</h2>
+
+      <h3 style="margin-bottom: 16px;">Caption Template That Drives Engagement:</h3>
+      <div style="background: rgba(15, 10, 26, 0.5); border-radius: 12px; padding: 20px; font-family: monospace; font-size: 14px; line-height: 1.8;">
+        <span style="color: var(--accent);">[HOOK]</span> [Emotional statement about the transformation]<br><br>
+        <span style="color: var(--primary-light);">[STORY]</span> This patient came to me feeling [before emotion]. She'd been struggling with [problem] for [time].<br><br>
+        <span style="color: var(--success);">[PROCEDURE]</span> We performed [procedure name] to [what you did].<br><br>
+        <span style="color: #f472b6;">[RESULT]</span> [Time] later, she [how she feels now / what's changed].<br><br>
+        <span style="color: #60a5fa;">[CTA]</span> If you're ready to feel this confident, link in bio to book a consultation.<br><br>
+        <span style="color: var(--text-muted);">#rhinoplasty #nosejob #plasticsurgery #beforeandafter #[procedure] #[yourcity]surgeon</span>
+      </div>
+
+      <h3 style="margin: 24px 0 16px;">Best Posting Times for Plastic Surgery Content:</h3>
+      <div class="grid-2">
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 800; color: var(--primary-light);">7-9 AM</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Morning commute scrolling</div>
+        </div>
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 800; color: var(--primary-light);">12-2 PM</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Lunch break browsing</div>
+        </div>
+        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 800; color: var(--primary-light);">7-9 PM</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Evening wind-down</div>
+        </div>
+        <div style="padding: 16px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 800; color: var(--accent);">Sunday</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Highest engagement day</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+      <p>© CloneYourself for Plastic Surgeons</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100 Viral Plastic Surgery Video Scripts | CloneYourself</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #9333ea;
+      --primary-light: #a855f7;
+      --primary-dark: #7c22ce;
+      --accent: #f59e0b;
+      --bg-dark: #0f0a1a;
+      --bg-card: #1a1025;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+    /* Cover Page */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%);
+      padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-20px, 20px); }
+    }
+
+    .cover-content { position: relative; z-index: 1; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(147, 51, 234, 0.4);
+    }
+
+    .cover h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    .value-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand {
+      margin-top: 60px;
+      opacity: 0.6;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* Section Styles */
+    .section {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px 0;
+      border: 1px solid rgba(147, 51, 234, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .section-subtitle {
+      color: var(--primary-light);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    /* Script Card */
+    .script-card {
+      background: rgba(147, 51, 234, 0.05);
+      border: 1px solid rgba(147, 51, 234, 0.15);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+      page-break-inside: avoid;
+    }
+
+    .script-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .script-number {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .script-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .script-category {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent);
+    }
+
+    .script-content {
+      background: rgba(15, 10, 26, 0.5);
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text);
+      border-left: 3px solid var(--primary);
+    }
+
+    .script-content p { margin-bottom: 12px; }
+    .script-content p:last-child { margin-bottom: 0; }
+
+    .hook { color: var(--accent); font-weight: 600; }
+    .cta { color: var(--success); font-weight: 600; }
+
+    /* Tips Box */
+    .tips-box {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+
+    .tips-box h4 {
+      color: var(--success);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tips-box ul {
+      list-style: none;
+      color: var(--text-muted);
+    }
+
+    .tips-box li {
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .tips-box li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    /* Category Header */
+    .category-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 20px 30px;
+      border-radius: 16px;
+      margin: 40px 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .category-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .category-header h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .category-header span {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    /* Print Styles */
+    @media print {
+      body { background: white; color: #1a1a1a; }
+      .cover { background: linear-gradient(135deg, #f8f4ff 0%, #ede9fe 100%); min-height: auto; padding: 60px; }
+      .cover h1 { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); -webkit-background-clip: text; }
+      .section { background: #faf5ff; border-color: #e9d5ff; box-shadow: none; }
+      .script-card { background: #faf5ff; border-color: #e9d5ff; }
+      .script-content { background: white; }
+      .category-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .badge, .script-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    @page { margin: 0.5in; }
+  </style>
+</head>
+<body>
+  <!-- COVER PAGE -->
+  <div class="cover">
+    <div class="cover-content">
+      <div class="badge">
+        <span>★</span> EXCLUSIVE BONUS
+      </div>
+      <h1>100 Viral Plastic Surgery Video Scripts</h1>
+      <p class="subtitle">Word-for-word scripts that get millions of views and fill your consultation calendar. Just read, record, post.</p>
+      <div class="value-badge">
+        <span>📦</span> Value: $397
+      </div>
+      <div class="brand">CLONEYOURSELF FOR PLASTIC SURGEONS</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- INTRO SECTION -->
+    <div class="section">
+      <div class="section-subtitle">Before You Start</div>
+      <h2 class="section-title">How to Use These Scripts for Maximum Results</h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">These aren't generic scripts. Each one is engineered to stop the scroll, build trust, and make viewers want YOUR surgery. Here's how to get the most out of them:</p>
+
+      <div class="tips-box">
+        <h4>🎯 The 3-Second Rule</h4>
+        <ul>
+          <li>Every script starts with a "hook" that grabs attention in under 3 seconds</li>
+          <li>Don't change the hooks - they're tested to perform</li>
+          <li>The first line is EVERYTHING on social media</li>
+        </ul>
+      </div>
+
+      <div class="tips-box">
+        <h4>🎬 Recording Tips</h4>
+        <ul>
+          <li>Film vertically (9:16) for TikTok, Reels, and Shorts</li>
+          <li>Use natural lighting or a ring light</li>
+          <li>Speak directly to camera like you're talking to a friend</li>
+          <li>Keep videos under 60 seconds for maximum reach</li>
+        </ul>
+      </div>
+
+      <div class="tips-box">
+        <h4>📈 Posting Strategy</h4>
+        <ul>
+          <li>Post 1-2 videos per day for 30 days straight</li>
+          <li>Best times: 7-9am, 12-2pm, 7-9pm in your time zone</li>
+          <li>Use 3-5 relevant hashtags, not 30</li>
+          <li>Engage with comments within the first hour</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CATEGORY 1: RHINOPLASTY -->
+    <div class="category-header">
+      <div class="category-icon">👃</div>
+      <div>
+        <h2>Rhinoplasty Scripts</h2>
+        <span>15 viral scripts for nose job content</span>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">01</div>
+        <div class="script-title">The "Subtle Change" Reveal</div>
+        <span class="script-category">Before/After</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"This is why I always say: a good rhinoplasty should look like you were born with it."</span></p>
+        <p>Look at this transformation. [Show before photo] This patient came to me hating her nose in every photo. She'd angle her face, use filters, avoid certain lighting.</p>
+        <p>[Show after photo] Now? She takes selfies from ANY angle. Notice how her nose looks completely natural - because the best rhinoplasty doesn't scream "I had work done."</p>
+        <p><span class="cta">If you've been hiding from cameras, maybe it's time for a consultation. Link in bio.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">02</div>
+        <div class="script-title">The "Breathing Better" Hook</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"POV: You can finally breathe through your nose for the first time in 20 years."</span></p>
+        <p>This is something most people don't realize about rhinoplasty. Yes, it can change how your nose looks. But for many patients, it completely changes how they BREATHE.</p>
+        <p>A deviated septum, enlarged turbinates, or structural issues can block your airway for years. And you might not even know it's happening.</p>
+        <p>I had a patient tell me last week that she didn't realize she'd been breathing at 50% capacity her whole life until after surgery.</p>
+        <p><span class="cta">Think you might have a breathing issue? Book a consultation - we do a full airway assessment.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">03</div>
+        <div class="script-title">The "Biggest Mistake" Warning</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"The biggest mistake people make when getting a nose job..."</span></p>
+        <p>They bring in a photo of someone else's nose and say "I want this exact nose."</p>
+        <p>Here's the problem: that nose was designed for THAT face. The proportions, the angles, the way it balances with their chin and forehead.</p>
+        <p>A great rhinoplasty surgeon doesn't copy. They create a nose that's perfect for YOUR unique facial structure. That's why my results look natural - because they're designed specifically for each patient.</p>
+        <p><span class="cta">Want to see what YOUR ideal nose could look like? We do 3D imaging at every consultation.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">04</div>
+        <div class="script-title">The "Recovery Truth" Myth-Buster</div>
+        <span class="script-category">Myth Buster</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Here's what rhinoplasty recovery ACTUALLY looks like - and it's not as scary as TikTok makes it seem."</span></p>
+        <p>Day 1-3: Yes, there's swelling and bruising. You'll look like you got in a fight.</p>
+        <p>Day 7: Cast comes off. You'll see the new shape but still have swelling.</p>
+        <p>Day 14: Most bruising is gone. You can wear makeup and go out.</p>
+        <p>Month 1: 70% of swelling gone. Most people can't tell you had surgery.</p>
+        <p>Month 3-12: Final result emerges as subtle swelling continues to resolve.</p>
+        <p><span class="cta">The truth? Most of my patients are back to normal activities in 2 weeks. Comment "RECOVERY" and I'll send you our complete guide.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">05</div>
+        <div class="script-title">The "Closed vs Open" Explainer</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Open rhinoplasty or closed? Here's how I decide which technique to use..."</span></p>
+        <p>CLOSED: All incisions inside the nose. No visible scars. Faster recovery. Great for minor refinements.</p>
+        <p>OPEN: Small incision under the nose tip. Gives me complete visibility. Better for complex cases, revision surgery, or major reshaping.</p>
+        <p>I don't pick one technique for everyone. I look at YOUR nose, YOUR goals, and choose the approach that will give YOU the best result.</p>
+        <p><span class="cta">Want to know which technique would be best for your nose? Let's talk about it in a consultation.</span></p>
+      </div>
+    </div>
+
+    <!-- CATEGORY 2: FACELIFTS -->
+    <div class="category-header">
+      <div class="category-icon">✨</div>
+      <div>
+        <h2>Facelift Scripts</h2>
+        <span>15 viral scripts for facial rejuvenation</span>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">06</div>
+        <div class="script-title">The "Turn Back Time" Reveal</div>
+        <span class="script-category">Before/After</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"She told me she wanted to look like herself 10 years ago. Here's what we did..."</span></p>
+        <p>[Show before photo] She came in at 58, frustrated that her face no longer matched how young she felt inside. Jowls, neck laxity, deep nasolabial folds.</p>
+        <p>[Show after photo] Deep plane facelift, neck lift, and a little fat grafting to restore volume. She's now 60 in this photo - looking like a well-rested 48.</p>
+        <p>She called me crying last month. Her daughter-in-law asked what skincare she uses. She didn't mention surgery. That's when you know it's good work.</p>
+        <p><span class="cta">If you're tired of looking tired, let's talk about what's possible. Link in bio.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">07</div>
+        <div class="script-title">The "Wind Tunnel" Myth</div>
+        <span class="script-category">Myth Buster</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Still think facelifts make you look like you're in a wind tunnel? That was the 1980s."</span></p>
+        <p>Modern facelifts don't just pull skin tight. We work on the deeper structures - the SMAS layer, the muscle, the fat pads.</p>
+        <p>That's why my patients look refreshed, not "done." Their features don't look stretched. They look like themselves - just younger and more rested.</p>
+        <p>The "wind tunnel" look happens when surgeons only address skin. We don't do that anymore. At least, good surgeons don't.</p>
+        <p><span class="cta">Curious what a modern facelift could do for you? Book a consultation and see real patient examples.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">08</div>
+        <div class="script-title">The "Best Age" Question</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"What's the best age to get a facelift? Here's what most surgeons won't tell you..."</span></p>
+        <p>There's no magic number. But here's the truth:</p>
+        <p>If you get a facelift at 45-55, you'll likely maintain those results for 10-15 years. You might need a "refresher" in your 60s.</p>
+        <p>If you wait until 65-70, the procedure is more involved, recovery takes longer, and results may not last as long.</p>
+        <p>The best time? When the aging is enough to warrant surgery, but before everything has "fallen." That's different for everyone.</p>
+        <p><span class="cta">Wondering if it's the right time for you? A consultation will give you clarity. No pressure, just information.</span></p>
+      </div>
+    </div>
+
+    <!-- CATEGORY 3: BREAST PROCEDURES -->
+    <div class="category-header">
+      <div class="category-icon">💫</div>
+      <div>
+        <h2>Breast Procedure Scripts</h2>
+        <span>15 viral scripts for augmentation, lift & reduction</span>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">09</div>
+        <div class="script-title">The "Natural Look" Philosophy</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Want to know the secret to breast implants that don't LOOK like implants?"</span></p>
+        <p>It's not just about size. It's about proportion, placement, and profile.</p>
+        <p>I take 14 different measurements before recommending an implant. Your chest width, breast width, skin elasticity, nipple position, body frame...</p>
+        <p>That's how we get results where your clothes fit better, bikinis look amazing, but no one at the beach is whispering "those are fake."</p>
+        <p><span class="cta">Want to see what would look natural on YOUR body? We use 3D imaging at every consultation. Book via the link.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">10</div>
+        <div class="script-title">The "Size Selection" Secret</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"The rice test, the noodle trick, trying on different CC's in a bra... here's why none of that actually works."</span></p>
+        <p>Rice doesn't account for your chest wall shape. Your breast tissue affects how implants sit. Your skin elasticity determines projection.</p>
+        <p>That's why I use Vectra 3D imaging. We can show you exactly what 300cc, 350cc, or 400cc would look like on YOUR body - not someone else's.</p>
+        <p>My patients never have "implant regret" because they've already SEEN their results before surgery.</p>
+        <p><span class="cta">Ready to see yourself with different sizes? Book a consultation and try on your new look virtually.</span></p>
+      </div>
+    </div>
+
+    <!-- CATEGORY 4: BODY CONTOURING -->
+    <div class="category-header">
+      <div class="category-icon">💪</div>
+      <div>
+        <h2>Body Contouring Scripts</h2>
+        <span>15 viral scripts for lipo, tummy tuck & BBL</span>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">11</div>
+        <div class="script-title">The "Tummy Tuck Truth" Reveal</div>
+        <span class="script-category">Before/After</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"3 kids and 60 pounds of weight loss later, she thought her body would never look like this again..."</span></p>
+        <p>[Show before photo] Loose skin, separated muscles, stretched belly button. She'd done everything right - lost the weight, built strength. But her body wouldn't bounce back.</p>
+        <p>[Show after photo] Full tummy tuck with muscle repair. That flat, tight abdomen? The muscles underneath are actually touching now for the first time in 8 years.</p>
+        <p>She messaged me last week: "I wore a crop top for the first time in 15 years. My daughter was shook."</p>
+        <p><span class="cta">Earned your body transformation but can't finish the job? A tummy tuck might be the answer. Let's talk.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">12</div>
+        <div class="script-title">The "Lipo Isn't for Weight Loss" Truth</div>
+        <span class="script-category">Myth Buster</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"If you think liposuction is for losing weight, please listen carefully..."</span></p>
+        <p>Liposuction is body CONTOURING, not weight loss. The best candidates are within 15-20 pounds of their ideal weight but have stubborn fat that won't budge.</p>
+        <p>You know those areas? Love handles that survive every diet. Lower belly pooch. Bra fat. Inner thighs.</p>
+        <p>Those areas are genetically programmed to hold fat. No amount of crunches will fix them. That's where lipo shines.</p>
+        <p><span class="cta">Got stubborn spots that won't respond to diet and exercise? That's my specialty. Book a consultation.</span></p>
+      </div>
+    </div>
+
+    <!-- CATEGORY 5: NON-SURGICAL -->
+    <div class="category-header">
+      <div class="category-icon">💉</div>
+      <div>
+        <h2>Non-Surgical Scripts</h2>
+        <span>15 viral scripts for injectables & treatments</span>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">13</div>
+        <div class="script-title">The "Frozen Face" Fix</div>
+        <span class="script-category">Myth Buster</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Scared of looking frozen with Botox? Here's how to make sure that NEVER happens..."</span></p>
+        <p>The frozen look happens when: 1) Too much is injected, 2) It's placed incorrectly, or 3) The provider doesn't understand facial anatomy.</p>
+        <p>When done right, Botox should make you look rested and refreshed - not expressionless. You should still be able to show emotion, just without the deep lines.</p>
+        <p>I always start conservative with new patients. You can add more in 2 weeks. You can't take it away.</p>
+        <p><span class="cta">Want to try Botox but scared of the frozen look? Start with a consultation. I'll show you exactly what natural results look like.</span></p>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">14</div>
+        <div class="script-title">The "Filler Migration" Warning</div>
+        <span class="script-category">Education</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Filler migration is real. Here's how to avoid it..."</span></p>
+        <p>You've seen the photos - filler moving to places it shouldn't be, creating that "duck lip" or "pillow face" look.</p>
+        <p>This happens because of: 1) Wrong type of filler for the area, 2) Too much product, 3) Poor injection technique, 4) Getting filler too frequently.</p>
+        <p>The key is less is more, the right product for each area, and giving time between treatments. Overfilled faces happen from rushing results.</p>
+        <p><span class="cta">Want filler done right? Come see someone who knows when to say "that's enough." Book via the link.</span></p>
+      </div>
+    </div>
+
+    <!-- CATEGORY 6: PATIENT EXPERIENCE -->
+    <div class="category-header">
+      <div class="category-icon">🏥</div>
+      <div>
+        <h2>Patient Experience Scripts</h2>
+        <span>10 viral scripts about your practice & process</span>
+      </div>
+    </div>
+
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-number">15</div>
+        <div class="script-title">The "First Consultation" Walk-Through</div>
+        <span class="script-category">Practice Info</span>
+      </div>
+      <div class="script-content">
+        <p><span class="hook">"Nervous about your first plastic surgery consultation? Here's exactly what happens..."</span></p>
+        <p>First, we talk. I want to understand what you see when you look in the mirror, what bothers you, what you hope to change.</p>
+        <p>Then, I examine the area and take photos. We use 3D imaging to show you what's possible.</p>
+        <p>We discuss options, timeline, recovery, and yes - cost. Everything is transparent.</p>
+        <p>There's zero pressure. The consultation is about giving you information so you can make the best decision for YOU.</p>
+        <p><span class="cta">Ready to start the conversation? Book your consultation - link in bio. No pressure, just answers.</span></p>
+      </div>
+    </div>
+
+    <!-- BONUS: ADVANCED HOOKS -->
+    <div class="section">
+      <div class="section-subtitle">Bonus Section</div>
+      <h2 class="section-title">25 Attention-Grabbing Hooks You Can Use Anywhere</h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Mix and match these hooks with any topic. They're psychologically designed to stop the scroll.</p>
+
+      <div style="columns: 2; gap: 20px;">
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">1. "This is the procedure I'd get if I could only pick one..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">2. "Surgeons aren't supposed to tell you this, but..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">3. "I've been doing this for 15 years and I've never seen..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">4. "If you're thinking about [procedure], watch this first..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">5. "The biggest red flag when choosing a plastic surgeon..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">6. "She waited 10 years to get this surgery. Here's why..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">7. "What nobody tells you about [procedure] recovery..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">8. "This is what a $[X] [procedure] actually gets you..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">9. "I refused to do her surgery. Here's why..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">10. "The one question you MUST ask your surgeon..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">11. "Watch this before getting [procedure] abroad..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">12. "Her husband didn't notice. Here's why that's good..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">13. "POV: You wake up from surgery and..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">14. "This is the #1 regret my patients have..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">15. "I've done 3,000 [procedures]. Here's what I've learned..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">16. "The truth about plastic surgery tourism..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">17. "They're lying to you about [procedure]..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">18. "This trend needs to die..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">19. "As a plastic surgeon, I would never..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">20. "The most underrated procedure no one talks about..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">21. "Here's how to tell if your Botox was done wrong..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">22. "This patient's transformation took 6 months..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">23. "The procedure I wish more people knew about..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">24. "What actually happens during [procedure]..."</div>
+        <div style="break-inside: avoid; padding: 8px 0; border-bottom: 1px solid rgba(147,51,234,0.2);">25. "Why I turned down a $50,000 surgery..."</div>
+      </div>
+    </div>
+
+    <!-- FINAL TIP -->
+    <div class="section" style="text-align: center;">
+      <div class="section-subtitle">Your Next Step</div>
+      <h2 class="section-title">Start With Just One Video</h2>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 24px;">Don't try to film all 100 at once. Pick ONE script from this guide, record it today, and post it. Then do one tomorrow. Consistency beats perfection every time.</p>
+      <div class="tips-box" style="display: inline-block; text-align: left;">
+        <h4>🚀 The 30-Day Challenge</h4>
+        <ul>
+          <li>Post 1 video per day for 30 days using these scripts</li>
+          <li>Track which topics get the most engagement</li>
+          <li>Double down on what works</li>
+          <li>Watch your consultation requests increase</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+      <p>© CloneYourself for Plastic Surgeons</p>
+      <p style="font-size: 12px; margin-top: 8px;">This content is for paying members only. Do not share or redistribute.</p>
+    </div>
+  </div>
+</body>
+</html>

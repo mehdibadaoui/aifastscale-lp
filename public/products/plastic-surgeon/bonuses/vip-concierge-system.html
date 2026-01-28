@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP Concierge Patient System | CloneYourself</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #9333ea; --primary-light: #a855f7; --primary-dark: #7c22ce; --accent: #f59e0b; --bg-dark: #0f0a1a; --bg-card: #1a1025; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; --gold: #d4af37; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%); color: var(--text); line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; color: #0f0a1a; }
+    .cover h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
+    .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: var(--gold); font-weight: 700; }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 8px; }
+    .section-subtitle { color: var(--primary-light); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
+    .vip-tier { background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 28px; margin: 20px 0; position: relative; overflow: hidden; }
+    .vip-tier.gold { border-color: rgba(212, 175, 55, 0.4); background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02)); }
+    .vip-tier.gold::before { content: 'MOST PROFITABLE'; position: absolute; top: 16px; right: -32px; background: var(--gold); color: #0f0a1a; font-size: 10px; font-weight: 700; padding: 4px 40px; transform: rotate(45deg); }
+    .tier-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .tier-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+    .tier-name { font-size: 1.4rem; font-weight: 800; }
+    .tier-price { font-size: 0.9rem; color: var(--text-muted); }
+    .tier-features { display: grid; gap: 10px; }
+    .tier-features li { padding: 8px 0; padding-left: 28px; position: relative; list-style: none; color: var(--text-muted); }
+    .tier-features li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
+    .touchpoint { background: rgba(15, 10, 26, 0.5); border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 3px solid var(--primary); }
+    .touchpoint-title { font-weight: 700; color: var(--primary-light); margin-bottom: 8px; }
+    .script-box { background: rgba(15, 10, 26, 0.7); border-radius: 12px; padding: 20px; font-size: 0.95rem; line-height: 1.8; border: 1px solid rgba(147, 51, 234, 0.2); margin: 12px 0; }
+    .amenity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
+    .amenity-item { padding: 20px; background: rgba(147, 51, 234, 0.08); border-radius: 12px; display: flex; align-items: center; gap: 12px; }
+    .amenity-icon { font-size: 24px; }
+    .revenue-calc { background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05)); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; }
+    .calc-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .calc-row:last-child { border: none; }
+    .calc-total { font-weight: 800; font-size: 1.25rem; color: var(--success); }
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--gold), var(--primary)); }
+    .timeline-item { position: relative; padding: 20px 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -26px; top: 24px; width: 12px; height: 12px; background: var(--primary); border-radius: 50%; border: 2px solid var(--bg-card); }
+    @media (max-width: 640px) { .amenity-grid { grid-template-columns: 1fr; } }
+    @media print { body { background: white; color: #1a1a1a; } .cover { background: #f8f4ff; } .section { background: #faf5ff; } }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="badge"><span>👑</span> VIP SYSTEM</div>
+    <h1>The VIP Concierge Patient System</h1>
+    <p class="subtitle">Turn your best patients into $50,000+ lifetime clients. The white-glove experience system that commands premium pricing and creates raving superfans.</p>
+    <div class="value-badge"><span>📦</span> Value: $497</div>
+    <div style="margin-top: 60px; opacity: 0.6; font-size: 14px;">CLONEYOURSELF FOR PLASTIC SURGEONS</div>
+  </div>
+
+  <div class="container">
+    <!-- WHY VIP -->
+    <div class="section">
+      <div class="section-subtitle">The Opportunity</div>
+      <h2 class="section-title">Why a VIP Program Changes Everything</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0;">
+        <div style="padding: 24px; background: rgba(212, 175, 55, 0.1); border-radius: 16px; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: 900; color: var(--gold);">5x</div>
+          <div style="color: var(--text-muted); font-size: 14px;">Higher lifetime value than standard patients</div>
+        </div>
+        <div style="padding: 24px; background: rgba(147, 51, 234, 0.1); border-radius: 16px; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: 900; color: var(--primary-light);">92%</div>
+          <div style="color: var(--text-muted); font-size: 14px;">VIP patient retention rate</div>
+        </div>
+        <div style="padding: 24px; background: rgba(34, 197, 94, 0.1); border-radius: 16px; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: 900; color: var(--success);">3.2</div>
+          <div style="color: var(--text-muted); font-size: 14px;">Average referrals per VIP patient</div>
+        </div>
+      </div>
+
+      <p style="color: var(--text-muted); text-align: center;">The top 20% of your patients generate 80% of your revenue. A VIP program identifies, nurtures, and multiplies these high-value relationships.</p>
+    </div>
+
+    <!-- VIP TIERS -->
+    <div class="section">
+      <div class="section-subtitle">Program Structure</div>
+      <h2 class="section-title">The 3-Tier VIP Framework</h2>
+
+      <div class="vip-tier">
+        <div class="tier-header">
+          <div class="tier-icon" style="background: linear-gradient(135deg, #c0c0c0, #a0a0a0);">🥈</div>
+          <div>
+            <div class="tier-name">Silver Circle</div>
+            <div class="tier-price">Entry VIP • $5,000+ annual spend</div>
+          </div>
+        </div>
+        <ul class="tier-features">
+          <li>Priority scheduling (book within 48 hours)</li>
+          <li>10% discount on all injectables</li>
+          <li>Complimentary skincare samples with each visit</li>
+          <li>Birthday month special (free HydraFacial or similar)</li>
+          <li>Early access to new treatments</li>
+          <li>Dedicated patient coordinator contact</li>
+        </ul>
+      </div>
+
+      <div class="vip-tier gold">
+        <div class="tier-header">
+          <div class="tier-icon" style="background: linear-gradient(135deg, var(--gold), #b8860b);">👑</div>
+          <div>
+            <div class="tier-name">Gold Elite</div>
+            <div class="tier-price">Premium VIP • $15,000+ annual spend</div>
+          </div>
+        </div>
+        <ul class="tier-features">
+          <li>Same-day or next-day appointments guaranteed</li>
+          <li>15% discount on all treatments</li>
+          <li>Complimentary annual skincare consultation ($500 value)</li>
+          <li>Private VIP entrance and waiting area (if available)</li>
+          <li>Quarterly complimentary treatment (Botox touch-up, facial, etc.)</li>
+          <li>Direct cell phone access to coordinator</li>
+          <li>Exclusive VIP-only events and previews</li>
+          <li>Luxury gift on membership anniversary</li>
+        </ul>
+      </div>
+
+      <div class="vip-tier">
+        <div class="tier-header">
+          <div class="tier-icon" style="background: linear-gradient(135deg, #1a1a2e, #0f0a1a); border: 2px solid var(--gold);">💎</div>
+          <div>
+            <div class="tier-name">Platinum Prestige</div>
+            <div class="tier-price">Ultra VIP • $50,000+ annual spend</div>
+          </div>
+        </div>
+        <ul class="tier-features">
+          <li>Concierge service for all appointments (we call you)</li>
+          <li>20% discount on all treatments and procedures</li>
+          <li>Complimentary annual maintenance procedure (Botox, filler, etc.)</li>
+          <li>Private consultation room reserved</li>
+          <li>Dr. [Name]'s personal cell phone number</li>
+          <li>Spouse/partner receives Silver benefits</li>
+          <li>Annual luxury spa day gift ($1,000 value)</li>
+          <li>First access to cutting-edge treatments</li>
+          <li>Complimentary guest pass for friend consultations</li>
+          <li>Annual appreciation dinner with Dr. [Name]</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VIP EXPERIENCE TOUCHPOINTS -->
+    <div class="section">
+      <div class="section-subtitle">The Experience</div>
+      <h2 class="section-title">VIP Touchpoint Map</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="touchpoint">
+            <div class="touchpoint-title">📞 VIP Welcome Call (Day 1)</div>
+            <p style="color: var(--text-muted);">Personal call from coordinator welcoming them to the program. Explain all benefits, get their preferences on file.</p>
+            <div class="script-box">
+              "Hi [Name], this is [Coordinator] calling from Dr. [Name]'s office. I wanted to personally welcome you to our Gold Elite program! I'm going to be your dedicated point of contact from now on. Let me tell you about some of the exclusive benefits you now have access to..."
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="touchpoint">
+            <div class="touchpoint-title">📦 VIP Welcome Package (Week 1)</div>
+            <p style="color: var(--text-muted);">Luxury welcome kit delivered to their home.</p>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px;">
+              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">✨ Personalized welcome letter from Dr.</div>
+              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">🎁 Premium skincare samples</div>
+              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">💳 VIP membership card</div>
+              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">📋 Benefits overview card</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="touchpoint">
+            <div class="touchpoint-title">🎂 Birthday Month Celebration</div>
+            <p style="color: var(--text-muted);">Automated but personalized birthday recognition.</p>
+            <div class="script-box">
+              <strong>Text (1st of birthday month):</strong><br>
+              "Happy birthday month, [Name]! 🎉 As our VIP, you have a complimentary [treatment] waiting for you this month. Call me to schedule - let's make your birthday glow! - [Coordinator]"
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="touchpoint">
+            <div class="touchpoint-title">📅 Quarterly VIP Check-In</div>
+            <p style="color: var(--text-muted);">Proactive outreach to maintain relationship.</p>
+            <div class="script-box">
+              "Hi [Name], just checking in! It's been about 3 months since your last visit and I wanted to see how your [previous treatment] is holding up. We also have some exciting new [treatment type] that I thought you'd love to know about first. Would you like me to schedule a quick consultation?"
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="touchpoint">
+            <div class="touchpoint-title">🎊 Anniversary Celebration</div>
+            <p style="color: var(--text-muted);">Mark their VIP membership anniversary with recognition.</p>
+            <div class="script-box">
+              <strong>Handwritten note + gift:</strong><br>
+              "Dear [Name], I can't believe it's been a year since you joined our VIP family! Thank you for trusting us with your care. Your loyalty means the world to me and my team. Please enjoy this gift as a small token of our appreciation. Here's to another year of you looking and feeling amazing! - Dr. [Name]"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIP ROOM AMENITIES -->
+    <div class="section">
+      <div class="section-subtitle">The Environment</div>
+      <h2 class="section-title">VIP Suite Amenities Checklist</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">If you have space for a dedicated VIP area, these amenities create an unforgettable experience:</p>
+
+      <div class="amenity-grid">
+        <div class="amenity-item">
+          <span class="amenity-icon">☕</span>
+          <div>
+            <strong>Premium Beverage Bar</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Nespresso, sparkling water, champagne for consultations</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🛋️</span>
+          <div>
+            <strong>Luxury Seating</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Comfortable lounge chairs, cashmere throws</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">📱</span>
+          <div>
+            <strong>Tech Amenities</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Phone chargers, WiFi password card, iPad for browsing</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🌸</span>
+          <div>
+            <strong>Aromatherapy</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Subtle, luxurious scent diffuser</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🎵</span>
+          <div>
+            <strong>Ambient Music</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Curated spa playlist, noise-canceling environment</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🍫</span>
+          <div>
+            <strong>Gourmet Snacks</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Artisan chocolates, fresh fruit, light bites</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🚗</span>
+          <div>
+            <strong>Private Entrance</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Discrete entry option, reserved parking spot</div>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🎁</span>
+          <div>
+            <strong>Departure Gift</strong>
+            <div style="font-size: 13px; color: var(--text-muted);">Small luxury item with each visit (lip balm, sample, etc.)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVENUE IMPACT -->
+    <div class="section">
+      <div class="section-subtitle">The Numbers</div>
+      <h2 class="section-title">VIP Program Revenue Calculator</h2>
+
+      <div class="revenue-calc">
+        <h4 style="margin-bottom: 16px; color: var(--success);">💰 Example: 50 VIP Patients</h4>
+        <div class="calc-row"><span>15 Silver patients × $7,500 avg/year</span><span>$112,500</span></div>
+        <div class="calc-row"><span>25 Gold patients × $20,000 avg/year</span><span>$500,000</span></div>
+        <div class="calc-row"><span>10 Platinum patients × $60,000 avg/year</span><span>$600,000</span></div>
+        <div class="calc-row"><span>Referrals from VIPs (3.2 avg × 50 × $5,000)</span><span>$800,000</span></div>
+        <div class="calc-row" style="border-top: 2px solid rgba(34, 197, 94, 0.3); margin-top: 12px; padding-top: 16px;">
+          <span class="calc-total">Annual VIP Revenue</span>
+          <span class="calc-total">$2,012,500</span>
+        </div>
+      </div>
+
+      <p style="color: var(--accent); text-align: center; font-weight: 600;">That's $2M+ from just 50 patients - likely less than 10% of your patient base.</p>
+    </div>
+
+    <!-- INVITATION SCRIPTS -->
+    <div class="section">
+      <div class="section-subtitle">Implementation</div>
+      <h2 class="section-title">VIP Invitation Scripts</h2>
+
+      <div style="background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0;">
+        <h4 style="margin-bottom: 16px;">In-Person Invitation (At Follow-Up)</h4>
+        <div class="script-box">
+          "[Name], I want to tell you about something special. We've created a VIP program for our most valued patients - and honestly, you're exactly who we designed it for."
+          <br><br>
+          "As a [Gold Elite] member, you'd get [list 2-3 best benefits]. Plus, you'd have my direct number for anything you need."
+          <br><br>
+          "There's no fee - it's our way of saying thank you to patients like you who trust us with their care. Would you like me to enroll you?"
+        </div>
+      </div>
+
+      <div style="background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0;">
+        <h4 style="margin-bottom: 16px;">Email Invitation (For Qualifying Patients)</h4>
+        <div class="script-box">
+          <strong>Subject:</strong> [Name], you've been selected for something exclusive
+          <br><br>
+          Dear [Name],
+          <br><br>
+          I wanted to personally reach out because you're one of our most valued patients - and I'd like to invite you to join our exclusive VIP program.
+          <br><br>
+          As a Gold Elite member, you'll receive:
+          <br>• Same-day appointments whenever you need them
+          <br>• 15% off all treatments
+          <br>• Quarterly complimentary treatments
+          <br>• Direct access to your personal coordinator
+          <br>• And much more...
+          <br><br>
+          There's no membership fee - this is simply our way of thanking you for trusting us with your care.
+          <br><br>
+          Would you like me to enroll you? Just reply "Yes" and I'll take care of everything.
+          <br><br>
+          Warmly,<br>
+          Dr. [Name]
+        </div>
+      </div>
+    </div>
+
+    <!-- TRACKING SYSTEM -->
+    <div class="section">
+      <div class="section-subtitle">Operations</div>
+      <h2 class="section-title">VIP Tracking Dashboard</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">Track these metrics monthly to optimize your VIP program:</p>
+
+      <div style="display: grid; gap: 16px;">
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>Total VIP Patients</strong>
+            <p style="font-size: 13px; color: var(--text-muted);">Breakdown by tier</p>
+          </div>
+          <div style="font-size: 14px; color: var(--text-muted);">Track Monthly</div>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>VIP Revenue %</strong>
+            <p style="font-size: 13px; color: var(--text-muted);">What % of revenue comes from VIPs</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 14px; color: var(--text-muted);">Target:</span>
+            <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">40%+</span>
+          </div>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>VIP Retention Rate</strong>
+            <p style="font-size: 13px; color: var(--text-muted);">% who return within 12 months</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 14px; color: var(--text-muted);">Target:</span>
+            <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">90%+</span>
+          </div>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>Referrals per VIP</strong>
+            <p style="font-size: 13px; color: var(--text-muted);">Average referrals per VIP patient</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 14px; color: var(--text-muted);">Target:</span>
+            <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">3+</span>
+          </div>
+        </div>
+        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>Upgrade Rate</strong>
+            <p style="font-size: 13px; color: var(--text-muted);">% moving to higher tiers annually</p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 14px; color: var(--text-muted);">Target:</span>
+            <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">25%+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK START -->
+    <div class="section" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(147, 51, 234, 0.1)); border-color: rgba(212, 175, 55, 0.3);">
+      <h2 class="section-title" style="text-align: center;">🚀 Quick-Start Checklist</h2>
+      <div style="max-width: 600px; margin: 24px auto 0;">
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Define your 3 tiers and spending thresholds</span>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Identify your top 50 patients by annual spend</span>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Create welcome packages for each tier</span>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Design or order VIP membership cards</span>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Train coordinators on VIP scripts</span>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Set up VIP tracking in your CRM</span>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Launch with personal calls to top 10 patients</span>
+        </div>
+        <div style="padding: 16px 0; display: flex; gap: 12px;">
+          <span style="color: var(--gold);">☐</span>
+          <span>Schedule quarterly VIP review meetings</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+      <p>© CloneYourself for Plastic Surgeons</p>
+    </div>
+  </div>
+</body>
+</html>
