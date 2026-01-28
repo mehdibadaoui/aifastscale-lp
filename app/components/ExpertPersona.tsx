@@ -69,6 +69,31 @@ export const DR_SOFIA_DATA: ExpertPersonaProps = {
   accentColor: 'purple',
 }
 
+// Expert data for Alex Morgan (Lawyers)
+export const ALEX_MORGAN_DATA: ExpertPersonaProps = {
+  name: 'Alex Morgan, Esq.',
+  title: 'Trial Attorney & Legal Marketing Expert',
+  credentials: '18+ Years Trial Experience',
+  imageUrl: '/images/lawyer/alex-morgan.webp',
+  positioningStatement: 'After 18 years winning cases and building a 7-figure practice, I realized the attorneys who thrive aren\'t just skilled — they\'re visible. I spent $3,500/month on marketing, got 3-4 new clients monthly. Then I built this AI system for my own firm. Now I get 20+ qualified leads monthly, spend $0 on marketing, and my calendar is booked 6 weeks out. I\'m teaching 500+ attorneys how to do the same.',
+  bulletPoints: [
+    'Built this for my OWN practice first — I use it daily',
+    'Went from 3-4 new clients/month to 20+ qualified leads/month',
+    'Cut marketing costs from $3,500/month to $0 (organic only)',
+    'High-value cases increased from 35% to 60% of practice revenue',
+    'Now helping 500+ attorneys across 18+ countries replicate results',
+  ],
+  philosophy: 'I created this system because I was YOU. Spending thousands on marketing, getting minimal results, watching younger attorneys on social media fill their calendars while you relied on referrals. Clients don\'t hire based on your bar credentials — they hire because they trust you. This framework uses AI to build that trust instantly with professional videos that showcase your expertise. If it didn\'t work for my own practice, I wouldn\'t be teaching it.',
+  trustElement: 'My practice went from 2-3 consults/week to 8-10/week after using this system',
+  stats: [
+    { value: '18+', label: 'Years Trial' },
+    { value: '$0', label: 'Marketing Now' },
+    { value: '500+', label: 'Attorneys Taught' },
+    { value: '20+', label: 'Leads/Month' },
+  ],
+  accentColor: 'gold',
+}
+
 export function ExpertPersona({
   name,
   title,

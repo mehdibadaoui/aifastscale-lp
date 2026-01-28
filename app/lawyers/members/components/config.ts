@@ -75,15 +75,15 @@ export const COURSE_CONFIG = {
   subtitle: "for Lawyers",
   supportEmail: "support@aifastscale.com",
   welcomeVideo: {
-    wistiaId: "myh13ayp9d", // Same welcome video
-    title: "Welcome from Dr. Marcus",
+    wistiaId: "myh13ayp9d",
+    title: "Welcome from Alex Morgan",
     duration: "2 min",
   },
-  drVoss: {
-    name: "Dr. Marcus Rivers",
-    title: "Licensed Clinical Lawyer, PhD",
-    image: "/images/lawyer/dr-marcus.webp",
-    quote: "After 15 years in private practice and helping thousands of clients overcome anxiety and depression, I realized the attorneys who thrive aren't just skilled — they're visible. I built this system to help you reach the people who desperately need your help.",
+  expert: {
+    name: "Alex Morgan, Esq.",
+    title: "Trial Attorney, 18+ Years Experience",
+    image: "/images/lawyer/alex-morgan.webp",
+    quote: "After 18 years winning cases and building a 7-figure practice, I realized the attorneys who thrive aren't just skilled — they're visible. I built this system to help you attract the high-value clients who need YOUR expertise.",
   },
   socialProof: {
     studentCount: 750, // Fallback, use getMemberStats() for dynamic
@@ -93,7 +93,7 @@ export const COURSE_CONFIG = {
   },
 }
 
-export const DEV_AUTO_LOGIN = true
+export const DEV_AUTO_LOGIN = false
 
 // Blocked users - will be auto-logged out
 export const BLOCKED_USERS: string[] = []
@@ -200,26 +200,26 @@ export const COURSE_MODULES = [
   {
     id: 'module-8',
     number: 8,
-    title: 'Mental Health Education Content',
-    description: 'Create educational content that reduces stigma and positions you as the go-to expert in your specialty.',
+    title: 'Legal Educational Content That Converts',
+    description: 'Create educational content that positions you as the authority in your practice area and attracts qualified leads.',
     duration: '5 min',
     durationMinutes: 5,
     wistiaId: null,
     thumbnail: null,
-    lessons: ['Topic selection', 'Stigma-reducing messaging', 'Compliance-friendly content'],
+    lessons: ['Topic selection for your practice area', 'Authority-building messaging', 'Compliance-friendly content'],
     comingSoon: true,
     resources: [],
   },
   {
     id: 'module-9',
     number: 9,
-    title: 'Anxiety & Depression Content Series',
-    description: 'Create a content series specifically for anxiety and depression that attracts your ideal clients.',
+    title: 'Case Study & Success Story Content',
+    description: 'Transform your wins into compelling content that builds trust and attracts similar high-value cases.',
     duration: '7 min',
     durationMinutes: 7,
     wistiaId: null,
     thumbnail: null,
-    lessons: ['Common struggles to address', 'Compassionate messaging', 'Call-to-action strategies'],
+    lessons: ['Selecting compelling cases', 'Client confidentiality best practices', 'Story structure that converts'],
     comingSoon: true,
     resources: [],
   },
@@ -255,16 +255,16 @@ export const TOTAL_RUNTIME = COURSE_MODULES.filter(m => !m.comingSoon).reduce((a
 
 // Bonuses
 export const BONUSES = [
-  { id: 'bonus-1', name: '100 Viral Mental Health Scripts', value: 397, icon: FileText, description: 'Copy-paste scripts that go viral on social media', category: 'Content', url: '/products/lawyer/bonuses/100-viral-scripts.pdf', image: '/images/lawyer/viral-scripts.webp' },
-  { id: 'bonus-2', name: '365-Day Content Calendar', value: 297, icon: Calendar, description: 'Never run out of content ideas for a whole year', category: 'Planning', url: '/products/lawyer/bonuses/365-content-calendar.pdf', image: '/images/lawyer/social-templates.webp' },
-  { id: 'bonus-3', name: 'High-Value Intake Scripts', value: 497, icon: DollarSign, description: 'Convert more consultations into ongoing clients', category: 'Sales', url: '/products/lawyer/bonuses/intake-scripts.pdf', image: '/images/lawyer/consultation-scripts.webp' },
-  { id: 'bonus-4', name: 'Educational Content System', value: 397, icon: Brain, description: 'Create content that reduces stigma and attracts clients', category: 'Content', url: '/products/lawyer/bonuses/educational-content.pdf', image: '/images/lawyer/educational-content.webp' },
-  { id: 'bonus-5', name: 'Intake Coordinator Phone Scripts', value: 397, icon: Headphones, description: 'Convert more phone calls into booked sessions', category: 'Operations', url: '/products/lawyer/bonuses/phone-scripts.pdf', image: '/images/lawyer/phone-scripts.webp' },
-  { id: 'bonus-6', name: 'Insurance & Payment Scripts', value: 347, icon: FileText, description: 'Handle insurance questions with confidence', category: 'Sales', url: '/products/lawyer/bonuses/insurance-scripts.pdf', image: '/images/lawyer/insurance-scripts.webp' },
-  { id: 'bonus-7', name: 'Referral Machine System', value: 447, icon: Users, description: 'Turn happy clients into your best referral source', category: 'Marketing', url: '/products/lawyer/bonuses/referral-system.pdf', image: '/images/lawyer/referral-machine.webp' },
-  { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 297, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-6974ba45c9b4819183b251cfe6b68c27-marcus-the-lawyer-growth-mentor', image: '/images/lawyer/ai-generator.webp' },
-  { id: 'bonus-9', name: '5-Star Review System', value: 397, icon: Star, description: 'Get 20+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/lawyer/bonuses/review-system.pdf', image: '/images/lawyer/review-explosion.webp' },
-  { id: 'bonus-10', name: 'Group Legal Launch System', value: 497, icon: Users, description: 'Scale your impact and income with groups', category: 'Operations', url: '/products/lawyer/bonuses/group-legal.pdf', image: '/images/lawyer/group-legal.webp' },
+  { id: 'bonus-1', name: '100 Viral Legal Video Scripts', value: 497, icon: FileText, description: 'Copy-paste scripts that go viral on social media', category: 'Content', url: '/products/lawyer/bonuses/100-viral-scripts.pdf', image: '/images/lawyer/viral-scripts.webp' },
+  { id: 'bonus-2', name: '365-Day Legal Content Calendar', value: 397, icon: Calendar, description: 'Never run out of content ideas for a whole year', category: 'Planning', url: '/products/lawyer/bonuses/365-content-calendar.pdf', image: '/images/lawyer/social-templates.webp' },
+  { id: 'bonus-3', name: 'The Retainer Closer Scripts', value: 597, icon: DollarSign, description: 'Convert more consultations into retained clients', category: 'Sales', url: '/products/lawyer/bonuses/intake-scripts.pdf', image: '/images/lawyer/consultation-scripts.webp' },
+  { id: 'bonus-4', name: 'Authority Building Content System', value: 497, icon: Brain, description: 'Position yourself as THE go-to attorney in your area', category: 'Content', url: '/products/lawyer/bonuses/educational-content.pdf', image: '/images/lawyer/educational-content.webp' },
+  { id: 'bonus-5', name: 'Legal Intake Specialist Scripts', value: 497, icon: Headphones, description: 'Convert more phone calls into booked consultations', category: 'Operations', url: '/products/lawyer/bonuses/phone-scripts.pdf', image: '/images/lawyer/phone-scripts.webp' },
+  { id: 'bonus-6', name: 'Fee Objection Destroyer Scripts', value: 447, icon: FileText, description: 'Handle fee objections with confidence and close more retainers', category: 'Sales', url: '/products/lawyer/bonuses/fee-objection-scripts.pdf', image: '/images/lawyer/insurance-scripts.webp' },
+  { id: 'bonus-7', name: 'Attorney Referral Network Builder', value: 547, icon: Users, description: 'Build a referral network that sends you cases on autopilot', category: 'Marketing', url: '/products/lawyer/bonuses/referral-system.pdf', image: '/images/lawyer/referral-machine.webp' },
+  { id: 'bonus-8', name: 'AI Content Generator for Attorneys', value: 397, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-6974ba45c9b4819183b251cfe6b68c27-marcus-the-lawyer-growth-mentor', image: '/images/lawyer/ai-generator.webp' },
+  { id: 'bonus-9', name: '5-Star Review Explosion System', value: 497, icon: Star, description: 'Get 20+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/lawyer/bonuses/review-system.pdf', image: '/images/lawyer/review-explosion.webp' },
+  { id: 'bonus-10', name: 'Case Win Marketing System', value: 597, icon: Users, description: 'Turn your case wins into a client attraction machine', category: 'Marketing', url: '/products/lawyer/bonuses/case-win-marketing.pdf', image: '/images/lawyer/group-legal.webp' },
 ]
 
 export const BONUS_CATEGORIES = ['All', ...Array.from(new Set(BONUSES.map(b => b.category)))]

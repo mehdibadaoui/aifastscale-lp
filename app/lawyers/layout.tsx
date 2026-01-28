@@ -7,7 +7,7 @@ const LAWYER_PIXEL_ID = '2660533017679840'
 export const metadata: Metadata = {
   title: 'CloneYourself for Lawyers | AI Video Marketing System | $47',
   description:
-    'Attorneys & Law Firms: Turn your photo into AI talking videos in 7 minutes. Attract high-value clients. No filming needed. Created by James Mitchell, Esq., 18+ years trial experience.',
+    'Attorneys & Law Firms: Turn your photo into AI talking videos in 7 minutes. Attract high-value clients. No filming needed. Created by Alex Morgan, Esq., 18+ years trial experience.',
   keywords:
     'lawyer marketing, attorney AI videos, law firm marketing, client acquisition, legal practice growth, AI video marketing, personal injury marketing, family law marketing',
   openGraph: {

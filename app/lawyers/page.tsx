@@ -48,17 +48,10 @@ import {
 } from 'lucide-react'
 import { LAWYER_BONUS_PRODUCTS, getLawyerTotalBonusValue } from '../config/lawyer-bonus-products'
 import { getMemberStats } from './members/components/config'
-import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/ExpertPersona'
+import { ExpertPersona, ExpertMention, ALEX_MORGAN_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
-// Alex Morgan, Esq. - Expert Attorney Persona
-const ALEX_MORGAN_DATA = {
-  ...DR_SOFIA_DATA,
-  name: 'Alex Morgan, Esq.',
-  title: 'Trial Attorney, 18 Years Experience',
-  image: '/images/lawyer/alex-morgan.webp',
-  bio: 'After 18 years winning cases and building a 7-figure practice, I realized the attorneys who thrive aren\'t just skilled — they\'re visible. I built this system to help you attract the high-value clients who need YOUR expertise.',
-}
+// Alex Morgan, Esq. - Expert Attorney Persona (imported from ExpertPersona component)
 
 // Whop checkout link
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'

@@ -1513,7 +1513,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
     {
       title: "You're In!",
       subtitle: "Welcome to Your Premium Training",
-      description: "You've just unlocked exclusive access to the most comprehensive AI course for dental practices.",
+      description: "You've just unlocked exclusive access to the most comprehensive AI course for legal practices.",
       icon: 'welcome',
       accent: 'from-amber-400 to-yellow-500'
     },
