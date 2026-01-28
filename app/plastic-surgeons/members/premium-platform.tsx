@@ -45,26 +45,26 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
       {/* Floating Gradient Orbs - LP Style */}
-      <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
-      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-500/8 to-purple-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-amber-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
+      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-500/8 to-amber-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10 w-full max-w-md">
         {/* VIP Badge */}
         <div className="flex justify-center mb-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border border-purple-500/30 shadow-lg shadow-purple-500/10">
-            <Star className="w-4 h-4 text-purple-400" />
-            <span className="text-xs font-bold text-purple-400 tracking-wider uppercase">VIP Member Access</span>
-            <Star className="w-4 h-4 text-purple-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium border border-amber-500/30 shadow-lg shadow-amber-500/10">
+            <Star className="w-4 h-4 text-amber-400" />
+            <span className="text-xs font-bold text-amber-400 tracking-wider uppercase">VIP Member Access</span>
+            <Star className="w-4 h-4 text-amber-400" />
           </div>
         </div>
 
-        <div className="glass-premium backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-purple-500/20 border border-purple-500/20 p-6 sm:p-8">
+        <div className="glass-premium backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-amber-500/20 border border-amber-500/20 p-6 sm:p-8">
           <div className="text-center mb-6 sm:mb-8">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center shadow-glow-teal mb-4 sm:mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center shadow-glow-teal mb-4 sm:mb-6">
               <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white">{COURSE_CONFIG.title}</h1>
-            <p className="text-purple-400 font-bold text-base sm:text-lg">{COURSE_CONFIG.subtitle}</p>
+            <p className="text-amber-400 font-bold text-base sm:text-lg">{COURSE_CONFIG.subtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
@@ -80,7 +80,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 autoComplete="email"
-                className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-dark border-2 border-purple-500/30 text-white placeholder-slate-500 focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-500/20 transition-all text-base"
+                className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-dark border-2 border-amber-500/30 text-white placeholder-slate-500 focus:border-amber-400 focus:outline-none focus:ring-4 focus:ring-amber-500/20 transition-all text-base"
               />
             </div>
 
@@ -97,14 +97,14 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="From your welcome email"
                   autoComplete="current-password"
-                  className="w-full px-4 sm:px-5 py-3.5 sm:py-4 pr-12 rounded-xl glass-dark border-2 border-purple-500/30 text-white placeholder-slate-500 focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-500/20 transition-all text-base"
+                  className="w-full px-4 sm:px-5 py-3.5 sm:py-4 pr-12 rounded-xl glass-dark border-2 border-amber-500/30 text-white placeholder-slate-500 focus:border-amber-400 focus:outline-none focus:ring-4 focus:ring-amber-500/20 transition-all text-base"
                   aria-describedby={loginError ? 'login-error' : undefined}
                 />
                 {/* Eye Toggle Button */}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-purple-400 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-amber-400 transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? (
@@ -129,7 +129,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-5 h-5 rounded border-2 border-purple-500/40 bg-transparent peer-checked:bg-purple-500 peer-checked:border-purple-500 transition-all flex items-center justify-center">
+                <div className="w-5 h-5 rounded border-2 border-amber-500/40 bg-transparent peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all flex items-center justify-center">
                   {rememberMe && (
                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -165,7 +165,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
           {/* Forgot Password Link - Opens Email */}
           <a
             href={forgotPasswordMailto}
-            className="mt-3 flex items-center justify-center gap-1.5 text-purple-400/80 text-xs hover:text-purple-300 transition-colors"
+            className="mt-3 flex items-center justify-center gap-1.5 text-amber-400/80 text-xs hover:text-amber-300 transition-colors"
           >
             <Mail className="w-3.5 h-3.5" />
             <span>Forgot password? Check your welcome email or contact support</span>
@@ -217,7 +217,7 @@ const BlockedScreen = memo(function BlockedScreen() {
           {/* Support link */}
           <p className="mt-6 text-slate-500 text-sm">
             Need help? Contact{' '}
-            <a href={`mailto:${COURSE_CONFIG.supportEmail}`} className="text-purple-400 hover:underline">
+            <a href={`mailto:${COURSE_CONFIG.supportEmail}`} className="text-amber-400 hover:underline">
               {COURSE_CONFIG.supportEmail}
             </a>
           </p>
@@ -241,9 +241,9 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStudentName, darkMode, reducedMotion }: WelcomeScreenProps) {
   const statCards = [
-    { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-purple-500 to-amber-500' },
+    { icon: Video, label: 'HD Modules', value: COURSE_MODULES.filter(m => !m.comingSoon).length, gradient: 'from-amber-500 to-amber-500' },
     { icon: Gift, label: 'Bonuses', value: BONUSES.length, gradient: 'from-amber-500 to-blue-500' },
-    { icon: Star, label: 'Total Value', value: `$${BONUSES.reduce((acc, b) => acc + b.value, 0)}`, gradient: 'from-emerald-500 to-purple-500' },
+    { icon: Star, label: 'Total Value', value: `$${BONUSES.reduce((acc, b) => acc + b.value, 0)}`, gradient: 'from-emerald-500 to-amber-500' },
     { icon: Trophy, label: 'Achievements', value: ACHIEVEMENTS.length, gradient: 'from-amber-500 to-orange-500' },
   ]
 
@@ -251,19 +251,19 @@ const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStu
     <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:p-4 bg-gradient-premium relative overflow-hidden">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-purple-500/15 to-amber-500/10 rounded-full blur-3xl ${reducedMotion ? '' : 'floating-slow'}`} />
-        <div className={`absolute bottom-1/4 left-0 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-gradient-to-br from-amber-500/10 to-purple-500/5 rounded-full blur-3xl ${reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
+        <div className={`absolute top-1/4 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-gradient-to-br from-amber-500/15 to-amber-500/10 rounded-full blur-3xl ${reducedMotion ? '' : 'floating-slow'}`} />
+        <div className={`absolute bottom-1/4 left-0 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] bg-gradient-to-br from-amber-500/10 to-amber-500/5 rounded-full blur-3xl ${reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
       </div>
 
       <div className="relative z-10 text-center max-w-4xl mx-auto w-full">
         <div className="mb-6 sm:mb-8">
-          <div className={`w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center shadow-glow-teal ${reducedMotion ? '' : 'animate-bounce-slow'}`}>
+          <div className={`w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center shadow-glow-teal ${reducedMotion ? '' : 'animate-bounce-slow'}`}>
             <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
           </div>
         </div>
 
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 text-white leading-tight drop-shadow-lg">
-          Welcome to Your <span className={`text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-400 ${reducedMotion ? '' : 'gradient-text-animated'}`}>Premium Course</span>
+          Welcome to Your <span className={`text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-400 ${reducedMotion ? '' : 'gradient-text-animated'}`}>Premium Course</span>
         </h1>
 
         <p className="text-base sm:text-xl text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
@@ -279,7 +279,7 @@ const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStu
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             placeholder="Enter your name for your certificate"
-            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-premium border-2 border-purple-500/30 text-white placeholder-slate-500 text-center text-sm sm:text-base focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-500/20 transition-all"
+            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl glass-premium border-2 border-amber-500/30 text-white placeholder-slate-500 text-center text-sm sm:text-base focus:border-amber-400 focus:outline-none focus:ring-4 focus:ring-amber-500/20 transition-all"
           />
         </div>
 
@@ -288,7 +288,7 @@ const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStu
           {statCards.map((stat, i) => (
             <div
               key={i}
-              className="glass-premium backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-purple-500/20 animate-fade-in hover-lift"
+              className="glass-premium backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-500/20 animate-fade-in hover-lift"
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${stat.gradient} rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-lg`}>
@@ -343,22 +343,22 @@ const Navigation = memo(function Navigation({
   ]
 
   return (
-    <nav className="sticky top-0 z-40 glass-premium backdrop-blur-2xl border-b border-purple-500/20 shadow-lg shadow-purple-900/20" role="navigation" aria-label="Main navigation">
+    <nav className="sticky top-0 z-40 glass-premium backdrop-blur-2xl border-b border-amber-500/20 shadow-lg shadow-amber-900/20" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center shadow-glow-teal">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center shadow-glow-teal">
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">
               <div className="font-bold text-white">{COURSE_CONFIG.title}</div>
-              <div className="text-xs text-purple-400 font-medium">{COURSE_CONFIG.subtitle}</div>
+              <div className="text-xs text-amber-400 font-medium">{COURSE_CONFIG.subtitle}</div>
             </div>
           </div>
 
           {/* Desktop Navigation Tabs - LP Glass Style */}
-          <div className="hidden md:flex items-center glass-dark backdrop-blur-sm rounded-full p-1.5 border border-purple-500/20" role="tablist">
+          <div className="hidden md:flex items-center glass-dark backdrop-blur-sm rounded-full p-1.5 border border-amber-500/20" role="tablist">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -366,7 +366,7 @@ const Navigation = memo(function Navigation({
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 focus-ring ${
                   activeSection === tab.id
                     ? 'btn-premium text-white shadow-glow-teal scale-105'
-                    : 'text-slate-400 hover:text-purple-400 hover:bg-white/5'
+                    : 'text-slate-400 hover:text-amber-400 hover:bg-white/5'
                 }`}
                 role="tab"
                 aria-selected={activeSection === tab.id}
@@ -394,9 +394,9 @@ const Navigation = memo(function Navigation({
 
             {/* VIP Badge */}
             {vipGuest && (
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 glass-teal rounded-full border border-purple-500/30">
-                <Crown className="w-4 h-4 text-purple-400" aria-hidden="true" />
-                <span className="text-sm font-bold text-purple-400">{vipGuest.badge}</span>
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 glass-teal rounded-full border border-amber-500/30">
+                <Crown className="w-4 h-4 text-amber-400" aria-hidden="true" />
+                <span className="text-sm font-bold text-amber-400">{vipGuest.badge}</span>
               </div>
             )}
 
@@ -431,14 +431,14 @@ const Navigation = memo(function Navigation({
       </div>
 
       {/* Mobile Navigation - LP Glass Style */}
-      <div className="flex md:hidden border-t border-purple-500/20" role="tablist">
+      <div className="flex md:hidden border-t border-amber-500/20" role="tablist">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveSection(tab.id)}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 min-h-[48px] text-[10px] font-semibold transition-all touch-manipulation ${
               activeSection === tab.id
-                ? 'text-purple-400 bg-purple-500/10 border-b-2 border-purple-400'
+                ? 'text-amber-400 bg-amber-500/10 border-b-2 border-amber-400'
                 : 'text-slate-500 active:bg-white/5'
             }`}
             role="tab"
@@ -450,7 +450,7 @@ const Navigation = memo(function Navigation({
         ))}
 
         {/* Integrated mini stats in nav */}
-        <div className="flex items-center justify-center gap-2 px-2 border-l border-purple-500/20">
+        <div className="flex items-center justify-center gap-2 px-2 border-l border-amber-500/20">
           <div className="flex items-center gap-0.5">
             <Star className="w-3.5 h-3.5 text-amber-400" />
             <span className="text-[10px] font-bold text-amber-400">{totalPoints}</span>
@@ -460,7 +460,7 @@ const Navigation = memo(function Navigation({
             <span className="text-[10px] font-bold text-orange-400">{streak}</span>
           </div>
           {vipGuest && (
-            <Crown className="w-3.5 h-3.5 text-purple-400" />
+            <Crown className="w-3.5 h-3.5 text-amber-400" />
           )}
         </div>
       </div>
@@ -483,11 +483,11 @@ const LogoutModal = memo(function LogoutModal({ isOpen, onClose, onConfirm }: Lo
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
-      <div className="glass-premium rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-purple-500/20" onClick={e => e.stopPropagation()}>
+      <div className="glass-premium rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-amber-500/20" onClick={e => e.stopPropagation()}>
         <h3 className="text-xl font-black text-white mb-2">Log Out?</h3>
         <p className="text-slate-400 mb-6">Your progress is saved and will be here when you return.</p>
         <div className="flex gap-3">
-          <button onClick={onClose} className="flex-1 py-3 rounded-xl font-bold glass-dark text-slate-300 border border-purple-500/20 hover:bg-white/10 transition-all focus-ring">
+          <button onClick={onClose} className="flex-1 py-3 rounded-xl font-bold glass-dark text-slate-300 border border-amber-500/20 hover:bg-white/10 transition-all focus-ring">
             Cancel
           </button>
           <button onClick={onConfirm} className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg hover:shadow-red-500/30 transition-all focus-ring">
@@ -594,9 +594,9 @@ function PremiumCoursePlatformInner() {
 
       {/* Floating Gradient Orbs - LP Style */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className={`absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-br from-purple-500/10 to-amber-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating-slow'}`} />
-        <div className={`absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-gradient-to-br from-amber-500/8 to-purple-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
-        <div className={`absolute top-1/2 left-1/3 w-[200px] h-[200px] bg-gradient-to-br from-purple-500/5 to-transparent rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '4s' }} />
+        <div className={`absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-br from-amber-500/10 to-amber-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating-slow'}`} />
+        <div className={`absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-gradient-to-br from-amber-500/8 to-amber-500/5 rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '2s' }} />
+        <div className={`absolute top-1/2 left-1/3 w-[200px] h-[200px] bg-gradient-to-br from-amber-500/5 to-transparent rounded-full blur-3xl ${state.reducedMotion ? '' : 'floating'}`} style={{ animationDelay: '4s' }} />
       </div>
 
       {/* Skip to main content link */}

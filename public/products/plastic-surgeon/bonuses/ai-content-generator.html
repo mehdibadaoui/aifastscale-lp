@@ -6,22 +6,22 @@
   <title>AI Content Generator for Surgeons | CloneYourself</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #9333ea; --primary-light: #a855f7; --accent: #06b6d4; --bg-dark: #0f0a1a; --bg-card: #1a1025; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; }
+    :root { --primary: #d4af37; --primary-light: #f4d03f; --accent: #06b6d4; --bg-dark: #0a0a0a; --bg-card: #141414; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%); color: var(--text); line-height: 1.6; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a1a 100%); color: var(--text); line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
-    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%); }
-    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary) 0%, #7c22ce 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2a2a1a 50%, var(--bg-dark) 100%); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary) 0%, #b8860b 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
     .cover h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
     .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: var(--accent); font-weight: 700; }
-    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(212, 175, 55, 0.2); }
     .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 24px; }
-    .prompt-card { background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 16px 0; }
+    .prompt-card { background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 24px; margin: 16px 0; }
     .prompt-title { font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
     .prompt-title span { font-size: 20px; }
-    .prompt-box { background: rgba(15, 10, 26, 0.7); border-radius: 12px; padding: 16px; font-family: 'Fira Code', monospace; font-size: 13px; line-height: 1.7; border: 1px solid rgba(147, 51, 234, 0.3); }
-    .category-header { background: linear-gradient(135deg, var(--primary) 0%, #7c22ce 100%); padding: 16px 24px; border-radius: 12px; margin: 30px 0 20px; }
+    .prompt-box { background: rgba(15, 10, 26, 0.7); border-radius: 12px; padding: 16px; font-family: 'Fira Code', monospace; font-size: 13px; line-height: 1.7; border: 1px solid rgba(212, 175, 55, 0.3); }
+    .category-header { background: linear-gradient(135deg, var(--primary) 0%, #b8860b 100%); padding: 16px 24px; border-radius: 12px; margin: 30px 0 20px; }
     .copy-tip { font-size: 12px; color: var(--accent); margin-top: 8px; }
     @media print { body { background: white; color: #1a1a1a; } }
   </style>
@@ -236,14 +236,14 @@ Requirements:
       <h2 class="section-title">Full Prompt Library</h2>
       <p style="color: var(--text-muted); margin-bottom: 24px;">This document contains 500+ prompts organized by category:</p>
       <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; text-align: left;">
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">📸 Instagram Captions (75)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">🎬 Video Scripts (50)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">📝 Blog Outlines (40)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">✉️ Email Templates (35)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">💬 Comment Responses (100)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">📊 Ad Copy (50)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">🌟 Review Requests (25)</div>
-        <div style="padding: 16px; background: rgba(147, 51, 234, 0.1); border-radius: 12px;">🎯 Procedure-Specific (125)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">📸 Instagram Captions (75)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">🎬 Video Scripts (50)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">📝 Blog Outlines (40)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">✉️ Email Templates (35)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">💬 Comment Responses (100)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">📊 Ad Copy (50)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">🌟 Review Requests (25)</div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px;">🎯 Procedure-Specific (125)</div>
       </div>
     </div>
 

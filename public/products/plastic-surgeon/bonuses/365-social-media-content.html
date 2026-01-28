@@ -7,35 +7,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #9333ea;
-      --primary-light: #a855f7;
-      --primary-dark: #7c22ce;
+      --primary: #d4af37;
+      --primary-light: #f4d03f;
+      --primary-dark: #b8860b;
       --accent: #f59e0b;
-      --bg-dark: #0f0a1a;
-      --bg-card: #1a1025;
+      --bg-dark: #0a0a0a;
+      --bg-card: #141414;
       --text: #f8fafc;
       --text-muted: #94a3b8;
       --success: #22c55e;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%); color: var(--text); line-height: 1.6; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a1a 100%); color: var(--text); line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
-    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%); }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2a2a1a 50%, var(--bg-dark) 100%); }
     .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
     .cover h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
     .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: var(--accent); font-weight: 700; }
-    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(212, 175, 55, 0.2); }
     .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 24px; }
     .month-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 16px 24px; border-radius: 12px; margin: 30px 0 20px; display: flex; align-items: center; gap: 12px; }
     .month-header h3 { font-size: 1.25rem; font-weight: 700; }
     .content-grid { display: grid; gap: 12px; }
-    .content-item { background: rgba(147, 51, 234, 0.08); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; }
+    .content-item { background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; }
     .day-num { width: 40px; height: 40px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
     .content-type { font-size: 10px; font-weight: 600; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; }
     .type-education { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
     .type-engagement { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-    .type-beforeafter { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+    .type-beforeafter { background: rgba(244, 208, 63, 0.2); color: #c084fc; }
     .type-behindscenes { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
     .type-testimonial { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
     .type-trending { background: rgba(239, 68, 68, 0.2); color: #f87171; }
@@ -59,7 +59,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 20px;">
         <div style="padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-education">Education</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Teach something valuable</p></div>
         <div style="padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-engagement">Engagement</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Questions & polls</p></div>
-        <div style="padding: 12px; background: rgba(168, 85, 247, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-beforeafter">Before/After</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Transformations</p></div>
+        <div style="padding: 12px; background: rgba(244, 208, 63, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-beforeafter">Before/After</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Transformations</p></div>
         <div style="padding: 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-behindscenes">Behind Scenes</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Your practice & life</p></div>
         <div style="padding: 12px; background: rgba(236, 72, 153, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-testimonial">Testimonial</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Patient stories</p></div>
         <div style="padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; text-align: center;"><span class="content-type type-trending">Trending</span><p style="font-size: 12px; margin-top: 8px; color: var(--text-muted);">Hop on trends</p></div>

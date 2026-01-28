@@ -146,21 +146,21 @@ function ThankYouContent() {
 
   if (hasVisited) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#2a1a3e] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1500] to-[#2a1a3e] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#2a1a3e]">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1500] to-[#2a1a3e]">
       <div className="container mx-auto px-4 py-8 md:py-12 max-w-2xl">
 
         {/* SUCCESS HEADER */}
         <div className="text-center mb-8">
           <div className="relative inline-block mb-6">
-            <div className="absolute inset-0 rounded-full bg-purple-500/30 blur-xl animate-pulse"></div>
-            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+            <div className="absolute inset-0 rounded-full bg-amber-500/30 blur-xl animate-pulse"></div>
+            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
               <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-white" strokeWidth={2.5} />
             </div>
           </div>
@@ -168,23 +168,23 @@ function ThankYouContent() {
           <h1 className="text-3xl md:text-5xl font-black text-white mb-3">
             You're In!
           </h1>
-          <p className="text-xl md:text-2xl font-bold text-purple-400 mb-4">
+          <p className="text-xl md:text-2xl font-bold text-amber-400 mb-4">
             Payment Successful
           </p>
 
           {/* Social Proof */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-            <Users className="w-4 h-4 text-purple-400" />
+            <Users className="w-4 h-4 text-amber-400" />
             <span className="text-white text-sm font-medium">
-              You joined <span className="text-purple-400 font-bold">850+</span> plastic surgeons
+              You joined <span className="text-amber-400 font-bold">850+</span> plastic surgeons
             </span>
           </div>
         </div>
 
         {/* LOADING STATE */}
         {isLoading && (
-          <div className="rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-500/10 to-transparent border border-purple-500/30 p-8 backdrop-blur-sm text-center">
-            <Loader2 className="w-12 h-12 text-purple-400 animate-spin mx-auto mb-4" />
+          <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/30 p-8 backdrop-blur-sm text-center">
+            <Loader2 className="w-12 h-12 text-amber-400 animate-spin mx-auto mb-4" />
             <p className="text-white text-xl font-bold">Setting up your account...</p>
             <p className="text-white/60 mt-2">This only takes a few seconds</p>
           </div>
@@ -194,18 +194,18 @@ function ThankYouContent() {
         {credentials && !isLoading && (
           <>
             {/* Login Card */}
-            <div className="rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-500/10 to-transparent border border-purple-500 p-6 md:p-8 backdrop-blur-sm mb-6">
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500 p-6 md:p-8 backdrop-blur-sm mb-6">
 
               <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-6">
                 Your Login Details
               </h2>
 
               {/* Credentials Box */}
-              <div className="bg-[#0a0a0a]/80 rounded-xl p-5 mb-6 border border-purple-500/30">
+              <div className="bg-[#0a0a0a]/80 rounded-xl p-5 mb-6 border border-amber-500/30">
 
                 {/* Email */}
                 <div className="mb-4">
-                  <p className="text-purple-400 text-xs font-semibold uppercase tracking-wider mb-2">Email</p>
+                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">Email</p>
                   <div className="bg-white/5 rounded-lg px-4 py-3 border border-white/10">
                     <p className="text-white text-base font-medium">{credentials.email}</p>
                   </div>
@@ -213,15 +213,15 @@ function ThankYouContent() {
 
                 {/* Password */}
                 <div>
-                  <p className="text-purple-400 text-xs font-semibold uppercase tracking-wider mb-2">Password</p>
-                  <div className="bg-white/5 rounded-lg px-4 py-3 border border-purple-500/50 flex items-center justify-between gap-3">
+                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">Password</p>
+                  <div className="bg-white/5 rounded-lg px-4 py-3 border border-amber-500/50 flex items-center justify-between gap-3">
                     <p className="text-white text-base font-medium">{credentials.password}</p>
                     <button
                       onClick={copyPassword}
                       className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
                         copiedPassword
                           ? 'bg-emerald-500 text-white'
-                          : 'bg-purple-500 hover:bg-purple-400 text-white'
+                          : 'bg-amber-500 hover:bg-amber-400 text-white'
                       }`}
                     >
                       {copiedPassword ? (
@@ -240,7 +240,7 @@ function ThankYouContent() {
                 disabled={!copiedPassword}
                 className={`w-full font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${
                   copiedPassword
-                    ? 'bg-gradient-to-r from-purple-500 to-amber-500 hover:from-purple-400 hover:to-amber-400 text-white shadow-lg shadow-purple-500/30 cursor-pointer'
+                    ? 'bg-gradient-to-r from-amber-500 to-amber-500 hover:from-amber-400 hover:to-amber-400 text-white shadow-lg shadow-amber-500/30 cursor-pointer'
                     : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
                 }`}
               >
@@ -280,8 +280,8 @@ function ThankYouContent() {
                   <div key={i} className="flex flex-col items-center text-center flex-1">
                     <div className={`w-11 h-11 rounded-full flex items-center justify-center mb-2 transition-all ${
                       step.active
-                        ? 'bg-purple-500 shadow-lg shadow-purple-500/30'
-                        : i < (copiedPassword ? 2 : 1) ? 'bg-purple-500/70' : 'bg-white/10'
+                        ? 'bg-amber-500 shadow-lg shadow-amber-500/30'
+                        : i < (copiedPassword ? 2 : 1) ? 'bg-amber-500/70' : 'bg-white/10'
                     }`}>
                       <step.icon className={`w-5 h-5 ${step.active ? 'text-white' : 'text-white/70'}`} />
                     </div>
@@ -295,8 +295,8 @@ function ThankYouContent() {
             <div className="space-y-4">
               {/* Email Backup */}
               <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-purple-400" />
+                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-amber-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Login Saved to Your Email</p>
@@ -321,7 +321,7 @@ function ThankYouContent() {
             </div>
 
             {/* Lifetime Access Badge */}
-            <div className="mt-6 rounded-xl bg-gradient-to-r from-emerald-500/20 to-purple-500/20 border border-emerald-500/30 p-4 text-center">
+            <div className="mt-6 rounded-xl bg-gradient-to-r from-emerald-500/20 to-amber-500/20 border border-emerald-500/30 p-4 text-center">
               <p className="text-white font-semibold flex items-center justify-center gap-2">
                 <CheckCircle className="w-5 h-5 text-emerald-400" />
                 Lifetime Access Activated
@@ -336,8 +336,8 @@ function ThankYouContent() {
         {/* FALLBACK - Check Email */}
         {showFallback && !credentials && !isLoading && (
           <>
-            <div className="rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-500/10 to-transparent border border-purple-500 p-6 md:p-8 backdrop-blur-sm mb-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-amber-500 flex items-center justify-center mx-auto mb-4">
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500 p-6 md:p-8 backdrop-blur-sm mb-6 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-white" />
               </div>
 
@@ -360,7 +360,7 @@ function ThankYouContent() {
                   window.history.replaceState(null, '', '/plastic-surgeons/members')
                   router.push('/plastic-surgeons/members')
                 }}
-                className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
               >
                 <Zap className="w-5 h-5" />
                 Go to Login Page
@@ -381,7 +381,7 @@ function ThankYouContent() {
                 ].map((step, i) => (
                   <div key={i} className="flex flex-col items-center text-center flex-1">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-1 ${
-                      i === 0 ? 'bg-purple-500' : i === 1 ? 'bg-purple-500/60' : 'bg-purple-500/30'
+                      i === 0 ? 'bg-amber-500' : i === 1 ? 'bg-amber-500/60' : 'bg-amber-500/30'
                     }`}>
                       <step.icon className="w-4 h-4 text-white" />
                     </div>
@@ -396,7 +396,7 @@ function ThankYouContent() {
         {/* Support */}
         <p className="text-center text-white/40 text-sm mt-8">
           Need help? Email us at{' '}
-          <a href="mailto:support@aifastscale.com" className="text-purple-400 hover:underline">
+          <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:underline">
             support@aifastscale.com
           </a>
         </p>
@@ -409,8 +409,8 @@ function ThankYouContent() {
 export default function PlasticSurgeonThankYouPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#2a1a3e] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1500] to-[#2a1a3e] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
       </div>
     }>
       <ThankYouContent />

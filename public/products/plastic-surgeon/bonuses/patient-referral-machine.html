@@ -6,19 +6,19 @@
   <title>The Patient Referral Machine | CloneYourself</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #9333ea; --primary-light: #a855f7; --accent: #f59e0b; --bg-dark: #0f0a1a; --bg-card: #1a1025; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; }
+    :root { --primary: #d4af37; --primary-light: #f4d03f; --accent: #f59e0b; --bg-dark: #0a0a0a; --bg-card: #141414; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%); color: var(--text); line-height: 1.6; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a1a 100%); color: var(--text); line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
-    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%); }
-    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary) 0%, #7c22ce 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2a2a1a 50%, var(--bg-dark) 100%); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--primary) 0%, #b8860b 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
     .cover h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
     .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: var(--accent); font-weight: 700; }
-    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(212, 175, 55, 0.2); }
     .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 24px; }
-    .step-card { background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0; display: flex; gap: 20px; }
-    .step-num { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), #7c22ce); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+    .step-card { background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0; display: flex; gap: 20px; }
+    .step-num { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), #b8860b); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
     .template-box { background: rgba(15, 10, 26, 0.5); border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 3px solid var(--primary); }
     .checklist li { padding: 8px 0; padding-left: 28px; position: relative; list-style: none; }
     .checklist li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
@@ -130,7 +130,7 @@
           <div style="font-size: 2.5rem; font-weight: 900; color: var(--success);">67</div>
           <div style="color: var(--text-muted);">Referrals in 90 Days</div>
         </div>
-        <div style="padding: 24px; background: rgba(147, 51, 234, 0.1); border-radius: 16px;">
+        <div style="padding: 24px; background: rgba(212, 175, 55, 0.1); border-radius: 16px;">
           <div style="font-size: 2.5rem; font-weight: 900; color: var(--primary-light);">$0</div>
           <div style="color: var(--text-muted);">Ad Spend Required</div>
         </div>

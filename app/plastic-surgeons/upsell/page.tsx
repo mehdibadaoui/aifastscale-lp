@@ -56,12 +56,12 @@ export default function PlasticSurgeonUpsellPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-[#1a0a2e] to-slate-950 flex items-center justify-center p-2 md:p-3">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-[#1a1500] to-slate-950 flex items-center justify-center p-2 md:p-3">
       {/* Modal-style container */}
-      <div className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl md:rounded-2xl border border-purple-500/30 shadow-2xl shadow-purple-500/10 overflow-hidden">
+      <div className="w-full max-w-md bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl md:rounded-2xl border border-amber-500/30 shadow-2xl shadow-amber-500/10 overflow-hidden">
 
         {/* Header - Timer */}
-        <div className="bg-gradient-to-r from-purple-500 to-amber-500 px-3 md:px-4 py-2 md:py-2.5">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-500 px-3 md:px-4 py-2 md:py-2.5">
           <div className="flex items-center justify-center gap-1.5 md:gap-2">
             <Clock className="w-3 h-3 md:w-4 md:h-4 text-white animate-pulse" />
             <span className="text-white/90 text-[10px] md:text-xs font-bold">ONE-TIME OFFER - EXPIRES IN</span>
@@ -78,19 +78,19 @@ export default function PlasticSurgeonUpsellPage() {
               Complete Your Bundle
             </h1>
             <p className="text-white/60 text-xs md:text-sm">
-              Add 5 more premium tools for just <span className="text-purple-400 font-black">${pricePerItem} each</span>
+              Add 5 more premium tools for just <span className="text-amber-400 font-black">${pricePerItem} each</span>
             </p>
           </div>
 
           {/* Products Card */}
-          <div className="bg-white/5 rounded-lg md:rounded-xl border border-purple-500/30 mb-3 md:mb-4">
+          <div className="bg-white/5 rounded-lg md:rounded-xl border border-amber-500/30 mb-3 md:mb-4">
             <div className="px-2.5 md:px-3 py-1.5 md:py-2 border-b border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5 md:gap-2">
-                  <Gift className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
+                  <Gift className="w-3 h-3 md:w-4 md:h-4 text-amber-400" />
                   <span className="text-white font-bold text-xs md:text-sm">5 Premium Tools</span>
                 </div>
-                <span className="text-purple-400 font-black text-xs md:text-sm">${pricePerItem}/each</span>
+                <span className="text-amber-400 font-black text-xs md:text-sm">${pricePerItem}/each</span>
               </div>
             </div>
 
@@ -110,8 +110,8 @@ export default function PlasticSurgeonUpsellPage() {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-purple-500/20 flex items-center justify-center">
-                          <Gift className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+                        <div className="w-full h-full bg-amber-500/20 flex items-center justify-center">
+                          <Gift className="w-4 h-4 md:w-5 md:h-5 text-amber-400" />
                         </div>
                       )}
                     </div>
@@ -120,7 +120,7 @@ export default function PlasticSurgeonUpsellPage() {
                     </div>
                     <div className="flex items-center gap-1 md:gap-1.5 flex-shrink-0">
                       <span className="text-red-400 line-through text-[9px] md:text-[10px]">${product.value}</span>
-                      <span className="text-purple-400 font-black text-[10px] md:text-xs bg-purple-500/20 px-1 md:px-1.5 py-0.5 rounded">FREE</span>
+                      <span className="text-amber-400 font-black text-[10px] md:text-xs bg-amber-500/20 px-1 md:px-1.5 py-0.5 rounded">FREE</span>
                     </div>
                   </div>
                 )
@@ -137,8 +137,8 @@ export default function PlasticSurgeonUpsellPage() {
             <div className="flex items-center justify-between">
               <span className="text-white font-bold text-sm md:text-lg">Today Only:</span>
               <div className="flex items-center gap-1.5 md:gap-2">
-                <span className="text-2xl md:text-3xl font-black text-purple-400">${upsellPrice}</span>
-                <span className="bg-purple-500/20 text-purple-400 text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded font-black">
+                <span className="text-2xl md:text-3xl font-black text-amber-400">${upsellPrice}</span>
+                <span className="bg-amber-500/20 text-amber-400 text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 rounded font-black">
                   ${pricePerItem}/tool
                 </span>
               </div>
@@ -149,7 +149,7 @@ export default function PlasticSurgeonUpsellPage() {
           <div className="space-y-2 md:space-y-3">
             <a
               href={WHOP_UPSELL_LINK}
-              className="w-full bg-gradient-to-r from-purple-500 to-amber-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-purple-500/30"
+              className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-amber-500/30"
             >
               Yes, Add to My Order - ${upsellPrice}
             </a>

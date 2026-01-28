@@ -11,7 +11,7 @@ const product = {
   membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
   productName: 'CloneYourself for Plastic Surgeons',
   price: '47.82',
-  accentColor: '#9333ea'
+  accentColor: '#d4af37'
 }
 
 export async function GET() {
@@ -19,11 +19,11 @@ export async function GET() {
   const userPassword = 'DEMO-PS2026'
   const firstName = 'Dr. Smith'
 
-  // Purple branding for plastic surgeons
-  const accent = '#9333ea' // Purple
-  const buttonColor = '#9333ea'
-  const glowColor = 'rgba(147, 51, 234, 0.08)'
-  const socialProof = 'Trusted by <strong style="color: #9333ea;">+850 plastic surgeons</strong> worldwide'
+  // Gold branding for plastic surgeons (black & gold theme)
+  const accent = '#d4af37' // Gold
+  const buttonColor = '#d4af37'
+  const glowColor = 'rgba(212, 175, 55, 0.08)'
+  const socialProof = 'Trusted by <strong style="color: #d4af37;">+850 plastic surgeons</strong> worldwide'
 
   const darkBg = '#09090b'
   const cardBg = '#18181b'

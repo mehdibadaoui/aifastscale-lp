@@ -12,29 +12,29 @@ export function ThemeStyles() {
   return (
     <style dangerouslySetInnerHTML={{ __html: `
       :root {
-        --color-primary: 147 51 234;
-        --color-primary-light: 168 85 247;
-        --color-accent: 245 158 11;
+        --color-primary: 212 175 55;
+        --color-primary-light: 245 197 66;
+        --color-accent: 212 175 55;
         --color-success: 16 185 129;
         --color-warning: 245 158 11;
         --color-error: 239 68 68;
         --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
         --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
-        --shadow-glow: 0 0 20px rgba(147, 51, 234, 0.3);
-        --shadow-glow-lg: 0 0 40px rgba(147, 51, 234, 0.4);
+        --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.3);
+        --shadow-glow-lg: 0 0 40px rgba(212, 175, 55, 0.4);
       }
 
-      /* Override global btn-premium for purple theme */
+      /* Override global btn-premium for gold theme */
       .btn-premium {
-        background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%) !important;
+        background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
       }
       .btn-premium:hover {
-        box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
       }
 
-      /* Override shadow-glow-teal for purple theme */
+      /* Override shadow-glow-teal for gold theme */
       .shadow-glow-teal {
-        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1) !important;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1) !important;
       }
 
       /* Premium Background - Dark by default */
@@ -79,7 +79,7 @@ export function ThemeStyles() {
       .floating-orb-1 {
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
         top: -200px;
         right: -200px;
         animation-delay: 0s;
@@ -88,7 +88,7 @@ export function ThemeStyles() {
       .floating-orb-2 {
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
         bottom: -150px;
         left: -150px;
         animation-delay: -5s;
@@ -97,7 +97,7 @@ export function ThemeStyles() {
       .floating-orb-3 {
         width: 400px;
         height: 400px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(184, 134, 11, 0.25) 0%, transparent 70%);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -116,7 +116,7 @@ export function ThemeStyles() {
         position: absolute;
         width: 4px;
         height: 4px;
-        background: rgba(147, 51, 234, 0.6);
+        background: rgba(212, 175, 55, 0.6);
         border-radius: 50%;
         animation: particle-float 10s ease-in-out infinite;
         pointer-events: none;
@@ -141,7 +141,7 @@ export function ThemeStyles() {
       /* Light mode glass-premium */
       html:not(.dark) .glass-premium {
         background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(147, 51, 234, 0.2);
+        border: 1px solid rgba(212, 175, 55, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
       }
 
@@ -157,37 +157,37 @@ export function ThemeStyles() {
         border: 1px solid rgba(0, 0, 0, 0.05);
       }
 
-      /* Glass Purple (Plastic Surgeon Theme) */
+      /* Glass Gold (Plastic Surgeon Theme) */
       .glass-teal {
-        background: rgba(147, 51, 234, 0.1);
-        border: 1px solid rgba(168, 85, 247, 0.2);
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid rgba(212, 175, 55, 0.2);
         transition: background 0.3s ease, border-color 0.3s ease;
       }
       /* Light mode glass */
       html:not(.dark) .glass-teal {
-        background: rgba(147, 51, 234, 0.08);
-        border: 1px solid rgba(147, 51, 234, 0.3);
+        background: rgba(212, 175, 55, 0.08);
+        border: 1px solid rgba(212, 175, 55, 0.3);
       }
 
       /* Neon Glow Effect */
       .neon-glow {
-        box-shadow: 0 0 20px rgba(147, 51, 234, 0.3), 0 0 40px rgba(147, 51, 234, 0.1);
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
       }
 
       .neon-glow-hover:hover {
-        box-shadow: 0 0 30px rgba(147, 51, 234, 0.5), 0 0 60px rgba(147, 51, 234, 0.2);
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2);
       }
 
       /* Gradient Text Premium */
       .gradient-text-premium {
-        background: linear-gradient(135deg, #9333ea 0%, #f59e0b 50%, #a855f7 100%);
+        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #b8860b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .gradient-text-animated-premium {
-        background: linear-gradient(90deg, #9333ea, #f59e0b, #a855f7, #f59e0b, #9333ea);
+        background: linear-gradient(90deg, #d4af37, #f4d03f, #b8860b, #f4d03f, #d4af37);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -210,11 +210,11 @@ export function ThemeStyles() {
         height: 200%;
         background: conic-gradient(from 0deg at 50% 50%,
           transparent 0deg,
-          rgba(147, 51, 234, 0.1) 60deg,
+          rgba(212, 175, 55, 0.1) 60deg,
           transparent 120deg,
-          rgba(245, 158, 11, 0.1) 180deg,
+          rgba(244, 208, 63, 0.1) 180deg,
           transparent 240deg,
-          rgba(139, 92, 246, 0.1) 300deg,
+          rgba(184, 134, 11, 0.1) 300deg,
           transparent 360deg
         );
         animation: aurora-rotate 30s linear infinite;
@@ -229,11 +229,11 @@ export function ThemeStyles() {
       /* Mesh Gradient */
       .mesh-gradient {
         background:
-          radial-gradient(at 40% 20%, rgba(147, 51, 234, 0.15) 0px, transparent 50%),
-          radial-gradient(at 80% 0%, rgba(245, 158, 11, 0.1) 0px, transparent 50%),
-          radial-gradient(at 0% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
-          radial-gradient(at 80% 50%, rgba(147, 51, 234, 0.1) 0px, transparent 50%),
-          radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
+          radial-gradient(at 40% 20%, rgba(212, 175, 55, 0.15) 0px, transparent 50%),
+          radial-gradient(at 80% 0%, rgba(244, 208, 63, 0.1) 0px, transparent 50%),
+          radial-gradient(at 0% 50%, rgba(184, 134, 11, 0.1) 0px, transparent 50%),
+          radial-gradient(at 80% 50%, rgba(212, 175, 55, 0.1) 0px, transparent 50%),
+          radial-gradient(at 0% 100%, rgba(244, 208, 63, 0.15) 0px, transparent 50%);
       }
 
       /* Premium micro-interactions */
@@ -268,7 +268,7 @@ export function ThemeStyles() {
         content: '';
         position: absolute;
         inset: -2px;
-        background: linear-gradient(45deg, #9333ea, #f59e0b, #9333ea);
+        background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37);
         border-radius: inherit;
         opacity: 0;
         transition: opacity 0.3s;
@@ -286,7 +286,7 @@ export function ThemeStyles() {
 
       /* Gradient text animation */
       .gradient-text-animated {
-        background: linear-gradient(90deg, #9333ea, #f59e0b, #a855f7, #9333ea);
+        background: linear-gradient(90deg, #d4af37, #f4d03f, #b8860b, #d4af37);
         background-size: 300% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -750,7 +750,7 @@ export function ProgressRing({ progress, size = 120, strokeWidth = 8, className 
         />
         <defs>
           <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#9333ea" />
+            <stop offset="0%" stopColor="#d4af37" />
             <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
         </defs>
@@ -886,14 +886,14 @@ export function Modal({ isOpen, onClose, title, icon, children, size = 'md', sho
     >
       <div
         ref={modalRef}
-        className={`glass-premium rounded-t-2xl sm:rounded-2xl shadow-2xl w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-auto animate-slide-up sm:animate-scale-in border border-purple-500/20 pb-safe`}
+        className={`glass-premium rounded-t-2xl sm:rounded-2xl shadow-2xl w-full ${sizeClasses[size]} max-h-[85vh] sm:max-h-[90vh] overflow-auto animate-slide-up sm:animate-scale-in border border-amber-500/20 pb-safe`}
         onClick={e => e.stopPropagation()}
       >
         {/* Mobile drag handle */}
         <div className="sm:hidden flex justify-center pt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-slate-600" />
         </div>
-        <div className="p-3 sm:p-4 border-b border-purple-500/20 flex items-center justify-between sticky top-0 glass-premium backdrop-blur-sm z-10">
+        <div className="p-3 sm:p-4 border-b border-amber-500/20 flex items-center justify-between sticky top-0 glass-premium backdrop-blur-sm z-10">
           <h2 id="modal-title" className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
             {icon} {title}
           </h2>
@@ -1020,14 +1020,14 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
   }
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 ring-1 ring-purple-500/10">
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/20 ring-1 ring-amber-500/10">
       {isLoading && (
         <div className="absolute inset-0 glass-premium flex items-center justify-center z-10 rounded-2xl">
           <div className="text-center">
-            <Loader2 className={`w-10 h-10 text-purple-400 mx-auto mb-3 ${reducedMotion ? '' : 'animate-spin'}`} />
+            <Loader2 className={`w-10 h-10 text-amber-400 mx-auto mb-3 ${reducedMotion ? '' : 'animate-spin'}`} />
             <p className="text-slate-400 text-sm">Loading video...</p>
             {resumeTime > 0 && (
-              <p className="text-purple-400 text-xs mt-2">Resuming from {Math.floor(resumeTime / 60)}:{String(Math.floor(resumeTime % 60)).padStart(2, '0')}</p>
+              <p className="text-amber-400 text-xs mt-2">Resuming from {Math.floor(resumeTime / 60)}:{String(Math.floor(resumeTime % 60)).padStart(2, '0')}</p>
             )}
           </div>
         </div>
@@ -1040,7 +1040,7 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
           <div className="relative">
             <button
               onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-dark hover:bg-white/20 text-white text-sm font-medium transition-all border border-purple-500/30"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-dark hover:bg-white/20 text-white text-sm font-medium transition-all border border-amber-500/30"
               aria-label="Playback speed"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1050,14 +1050,14 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
             </button>
 
             {showSpeedMenu && (
-              <div className="absolute bottom-full right-0 mb-2 glass-premium rounded-xl shadow-xl border border-purple-500/30 overflow-hidden animate-scale-in">
+              <div className="absolute bottom-full right-0 mb-2 glass-premium rounded-xl shadow-xl border border-amber-500/30 overflow-hidden animate-scale-in">
                 {PLAYBACK_SPEEDS.map((speed) => (
                   <button
                     key={speed}
                     onClick={() => changeSpeed(speed)}
                     className={`w-full px-4 py-2 text-sm font-medium text-left transition-all hover:bg-white/10 ${
                       playbackSpeed === speed
-                        ? 'bg-purple-500/20 text-purple-400'
+                        ? 'bg-amber-500/20 text-amber-400'
                         : 'text-slate-300'
                     }`}
                   >
@@ -1086,7 +1086,7 @@ interface ConfettiProps {
 export function Confetti({ active, reducedMotion, variant = 'default' }: ConfettiProps) {
   if (!active || reducedMotion) return null
 
-  const colors = ['#9333ea', '#a855f7', '#f59e0b', '#d946ef', '#c084fc', '#fbbf24']
+  const colors = ['#d4af37', '#f4d03f', '#b8860b', '#c9a227', '#e5c100', '#fbbf24']
 
   if (variant === 'stars') {
     return (
@@ -1230,7 +1230,7 @@ export function FloatingActionButton({ actions }: FABProps) {
           <button
             key={i}
             onClick={() => { action.onClick(); setIsOpen(false); haptic.medium(); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full glass-premium shadow-lg border border-purple-500/20 text-sm font-medium text-white whitespace-nowrap animate-scale-in"
+            className="flex items-center gap-2 px-4 py-2 rounded-full glass-premium shadow-lg border border-amber-500/20 text-sm font-medium text-white whitespace-nowrap animate-scale-in"
             style={{ animationDelay: `${i * 50}ms` }}
           >
             {action.icon}
@@ -1242,7 +1242,7 @@ export function FloatingActionButton({ actions }: FABProps) {
       {/* Main FAB */}
       <button
         onClick={toggleOpen}
-        className={`w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-amber-500 text-white shadow-glow-teal flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
+        className={`w-14 h-14 rounded-full bg-gradient-to-r from-amber-500 to-amber-500 text-white shadow-glow-teal flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-45 scale-110' : ''}`}
         aria-label="Quick actions"
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1288,12 +1288,12 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
           value={noteText}
           onChange={(e) => setNoteText(e.target.value)}
           placeholder="Write your notes here... What did you learn? Key takeaways?"
-          className="w-full h-48 p-4 rounded-xl glass-premium border-2 border-purple-500/20 text-white placeholder-slate-500 focus:border-purple-500/50 focus:outline-none focus:ring-4 focus:ring-purple-500/20 transition-all resize-none"
+          className="w-full h-48 p-4 rounded-xl glass-premium border-2 border-amber-500/20 text-white placeholder-slate-500 focus:border-amber-500/50 focus:outline-none focus:ring-4 focus:ring-amber-500/20 transition-all resize-none"
           aria-label="Module notes"
         />
       </div>
-      <div className="p-4 border-t border-purple-500/20 flex gap-3 justify-end">
-        <button onClick={onClose} className="px-4 py-2 rounded-xl font-bold glass-premium text-slate-300 border border-purple-500/20 hover:bg-white/10 transition-all focus-ring">
+      <div className="p-4 border-t border-amber-500/20 flex gap-3 justify-end">
+        <button onClick={onClose} className="px-4 py-2 rounded-xl font-bold glass-premium text-slate-300 border border-amber-500/20 hover:bg-white/10 transition-all focus-ring">
           Cancel
         </button>
         <button onClick={handleSave} className="btn-premium px-4 py-2 rounded-xl font-bold text-white shadow-glow-teal transition-all btn-press focus-ring">
@@ -1310,12 +1310,12 @@ export function NotesModal({ isOpen, onClose, moduleId, moduleTitle, notes, onSa
 
 export function KeyboardShortcutsModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Keyboard Shortcuts" icon={<Keyboard className="w-5 h-5 text-purple-400" />} size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Keyboard Shortcuts" icon={<Keyboard className="w-5 h-5 text-amber-400" />} size="sm">
       <div className="p-4 space-y-2">
         {KEYBOARD_SHORTCUTS.map((shortcut, i) => (
           <div key={i} className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-white/5 transition-all">
             <span className="text-slate-400">{shortcut.action}</span>
-            <kbd className="px-3 py-1 rounded-lg glass-premium text-white font-mono text-sm border border-purple-500/20 shadow-sm">
+            <kbd className="px-3 py-1 rounded-lg glass-premium text-white font-mono text-sm border border-amber-500/20 shadow-sm">
               {shortcut.key}
             </kbd>
           </div>
@@ -1348,25 +1348,25 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={<Settings className="w-5 h-5 text-purple-400" />} size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Settings" icon={<Settings className="w-5 h-5 text-amber-400" />} size="sm">
       <div className="p-4 space-y-3">
         {/* Dark Mode */}
         <button
           onClick={() => toggle('darkMode', darkMode)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-amber-500/20 hover:bg-white/10 hover:border-amber-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={darkMode}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-purple-500/20' : 'bg-amber-500/20'}`}>
-              {darkMode ? <Moon className="w-5 h-5 text-purple-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${darkMode ? 'bg-amber-500/20' : 'bg-amber-500/20'}`}>
+              {darkMode ? <Moon className="w-5 h-5 text-amber-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
             </div>
             <div className="text-left">
               <p className="font-bold text-white">Dark Mode</p>
               <p className="text-sm text-slate-400">Easier on the eyes</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${darkMode ? 'bg-purple-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${darkMode ? 'bg-amber-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${darkMode ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1374,20 +1374,20 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Auto-play Next */}
         <button
           onClick={() => toggle('autoPlayNext', autoPlayNext)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-amber-500/20 hover:bg-white/10 hover:border-amber-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={autoPlayNext}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-500/20">
-              <SkipForward className="w-5 h-5 text-purple-400" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-500/20">
+              <SkipForward className="w-5 h-5 text-amber-400" />
             </div>
             <div className="text-left">
               <p className="font-bold text-white">Auto-play Next</p>
               <p className="text-sm text-slate-400">Play next module automatically</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${autoPlayNext ? 'bg-purple-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${autoPlayNext ? 'bg-amber-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${autoPlayNext ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1395,7 +1395,7 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Sound Effects */}
         <button
           onClick={() => toggle('soundEnabled', soundEnabled)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-amber-500/20 hover:bg-white/10 hover:border-amber-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={soundEnabled}
         >
@@ -1408,7 +1408,7 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
               <p className="text-sm text-slate-400">Play sounds for achievements</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${soundEnabled ? 'bg-purple-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${soundEnabled ? 'bg-amber-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${soundEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
@@ -1416,7 +1416,7 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
         {/* Show Completed Badge */}
         <button
           onClick={() => toggle('showCompletedBadge', showCompletedBadge)}
-          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-purple-500/20 hover:bg-white/10 hover:border-purple-500/30 transition-all focus-ring"
+          className="w-full flex items-center justify-between p-4 rounded-xl glass-premium border border-amber-500/20 hover:bg-white/10 hover:border-amber-500/30 transition-all focus-ring"
           role="switch"
           aria-checked={showCompletedBadge}
         >
@@ -1429,12 +1429,12 @@ export function SettingsModal({ isOpen, onClose, darkMode, autoPlayNext, showCom
               <p className="text-sm text-slate-400">Show completion status</p>
             </div>
           </div>
-          <div className={`w-12 h-6 rounded-full transition-all ${showCompletedBadge ? 'bg-purple-500' : 'bg-slate-600'}`}>
+          <div className={`w-12 h-6 rounded-full transition-all ${showCompletedBadge ? 'bg-amber-500' : 'bg-slate-600'}`}>
             <div className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-all mt-0.5 ${showCompletedBadge ? 'translate-x-6' : 'translate-x-0.5'}`} />
           </div>
         </button>
       </div>
-      <div className="p-4 border-t border-purple-500/20 text-center text-sm text-slate-400">
+      <div className="p-4 border-t border-amber-500/20 text-center text-sm text-slate-400">
         Settings auto-save when changed
       </div>
     </Modal>
@@ -1470,20 +1470,20 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Your Certificate" size="lg" showPrint>
       <div className="p-8">
-        <div className="bg-gradient-to-br from-purple-900/40 to-amber-900/40 rounded-2xl p-8 border-4 border-purple-500/30 text-center relative overflow-hidden glass-premium">
+        <div className="bg-gradient-to-br from-amber-900/40 to-amber-900/40 rounded-2xl p-8 border-4 border-amber-500/30 text-center relative overflow-hidden glass-premium">
           {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-br-full" />
+          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-500/20 to-transparent rounded-br-full" />
           <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-amber-500/20 to-transparent rounded-tl-full" />
-          <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-purple-500/20 to-transparent -translate-y-1/2" />
+          <div className="absolute top-1/2 left-0 w-4 h-20 bg-gradient-to-r from-amber-500/20 to-transparent -translate-y-1/2" />
           <div className="absolute top-1/2 right-0 w-4 h-20 bg-gradient-to-l from-amber-500/20 to-transparent -translate-y-1/2" />
 
           <div className="relative z-10">
             <Trophy className="w-16 h-16 text-amber-500 mx-auto mb-4 animate-float" />
-            <h3 className="text-lg font-medium text-purple-400 mb-2">Certificate of Completion</h3>
+            <h3 className="text-lg font-medium text-amber-400 mb-2">Certificate of Completion</h3>
             <h1 className="text-4xl font-black gradient-text-animated mb-2">{COURSE_CONFIG.title}</h1>
-            <p className="text-xl text-purple-400 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
+            <p className="text-xl text-amber-400 font-bold mb-8">{COURSE_CONFIG.subtitle}</p>
 
-            <div className="bg-white/10 rounded-xl p-6 mb-6 inline-block glass-premium border border-purple-500/20">
+            <div className="bg-white/10 rounded-xl p-6 mb-6 inline-block glass-premium border border-amber-500/20">
               <p className="text-slate-400 mb-2">This certifies that</p>
               <p className="text-3xl font-black text-white">{studentName || 'Student'}</p>
               <p className="text-slate-400 mt-2">has successfully completed all modules</p>
@@ -1503,7 +1503,7 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate 
         </div>
       </div>
 
-      <div className="p-6 border-t border-purple-500/20 flex flex-wrap gap-3 justify-center">
+      <div className="p-6 border-t border-amber-500/20 flex flex-wrap gap-3 justify-center">
         <button onClick={handlePrint} className="btn-premium flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold shadow-glow-teal transition-all btn-press focus-ring">
           <Printer className="w-4 h-4" /> Print
         </button>
@@ -1546,8 +1546,8 @@ const OnboardingIcons = {
       <path d="M10 8.5V15.5L16 12L10 8.5Z" fill="white" />
       <defs>
         <linearGradient id="video-gradient" x1="2" y1="4" x2="22" y2="20">
-          <stop stopColor="#6366f1" />
-          <stop offset="1" stopColor="#8b5cf6" />
+          <stop stopColor="#d4af37" />
+          <stop offset="1" stopColor="#b8860b" />
         </linearGradient>
       </defs>
     </svg>
@@ -1561,11 +1561,11 @@ const OnboardingIcons = {
       <path d="M12 7H16.5C17.88 7 19 5.88 19 4.5C19 3.12 17.88 2 16.5 2C14 2 12 7 12 7Z" fill="#f59e0b" />
       <defs>
         <linearGradient id="gift-gradient" x1="4" y1="12" x2="20" y2="22">
-          <stop stopColor="#9333ea" />
+          <stop stopColor="#d4af37" />
           <stop offset="1" stopColor="#f59e0b" />
         </linearGradient>
         <linearGradient id="gift-gradient-2" x1="2" y1="7" x2="22" y2="12">
-          <stop stopColor="#a855f7" />
+          <stop stopColor="#f4d03f" />
           <stop offset="1" stopColor="#fbbf24" />
         </linearGradient>
       </defs>
@@ -1595,8 +1595,8 @@ const OnboardingIcons = {
       <path d="M19 15L16 12L18 17L19 15Z" fill="#f59e0b" />
       <defs>
         <linearGradient id="rocket-gradient" x1="8" y1="2" x2="16" y2="22">
-          <stop stopColor="#a855f7" />
-          <stop offset="1" stopColor="#ec4899" />
+          <stop stopColor="#f4d03f" />
+          <stop offset="1" stopColor="#d4af37" />
         </linearGradient>
       </defs>
     </svg>
@@ -1635,21 +1635,21 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
       subtitle: "Welcome to Your Premium Training",
       description: "You've just unlocked exclusive access to the most comprehensive AI course for dental practices.",
       icon: 'welcome',
-      accent: 'from-purple-400 to-amber-500'
+      accent: 'from-amber-400 to-amber-500'
     },
     {
       title: "Master the Content",
       subtitle: "HD Video Training",
       description: "Dive into our expert-led video modules. Your progress saves automatically — pick up right where you left off.",
       icon: 'video',
-      accent: 'from-violet-500 to-purple-600'
+      accent: 'from-amber-500 to-amber-600'
     },
     {
       title: "Claim Your Bonuses",
       subtitle: "$2,000+ in Resources",
       description: "Download templates, scripts, and tools designed to accelerate your results. They're all yours.",
       icon: 'bonus',
-      accent: 'from-emerald-400 to-purple-500'
+      accent: 'from-emerald-400 to-amber-500'
     },
     {
       title: "Track Your Wins",
@@ -1713,7 +1713,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
               <div
                 className="w-2 h-2 sm:w-3 sm:h-3"
                 style={{
-                  backgroundColor: ['#9333ea', '#a855f7', '#f59e0b', '#fbbf24', '#c084fc', '#d946ef'][Math.floor(Math.random() * 6)],
+                  backgroundColor: ['#d4af37', '#f4d03f', '#b8860b', '#fbbf24', '#c9a227', '#e5c100'][Math.floor(Math.random() * 6)],
                   transform: `rotate(${Math.random() * 360}deg)`,
                   borderRadius: Math.random() > 0.5 ? '50%' : '2px',
                 }}
@@ -1734,7 +1734,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
         {/* Modal content */}
         <div className="relative glass-premium rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 overflow-hidden">
           {/* Animated gradient border */}
-          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-purple-500/50 via-amber-500/50 to-purple-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
+          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-amber-500/50 via-amber-500/50 to-amber-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
 
           {/* Inner content */}
           <div className="relative p-6 sm:p-8 pb-safe">
@@ -1748,7 +1748,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
               {[...Array(6)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-1 h-1 bg-purple-400/40 rounded-full"
+                  className="absolute w-1 h-1 bg-amber-400/40 rounded-full"
                   style={{
                     left: `${20 + Math.random() * 60}%`,
                     top: `${20 + Math.random() * 60}%`,
@@ -1832,7 +1832,7 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                         i === step
                           ? `w-6 bg-gradient-to-r ${currentStep.accent}`
                           : i < step
-                            ? 'w-2 bg-purple-500/60'
+                            ? 'w-2 bg-amber-500/60'
                             : 'w-2 bg-white/20 group-hover:bg-white/30'
                       }`}
                     />
@@ -1916,10 +1916,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-premium noise-overlay section-premium relative overflow-hidden">
           {/* Floating Gradient Orbs */}
-          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-amber-500/10 to-purple-500/5 rounded-full blur-3xl floating" />
+          <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-amber-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-amber-500/10 to-amber-500/5 rounded-full blur-3xl floating" />
 
-          <div className="text-center max-w-md animate-fade-in glass-premium p-8 rounded-2xl border border-purple-500/20">
+          <div className="text-center max-w-md animate-fade-in glass-premium p-8 rounded-2xl border border-amber-500/20">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
             <h1 className="text-2xl font-black text-white mb-2">Something went wrong</h1>
             <p className="text-slate-400 mb-6">
@@ -1966,8 +1966,8 @@ export function AnimatedBackground({ darkMode = false, reducedMotion = false }: 
     return (
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         {/* Single subtle gradient orb for mobile */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-500/10 to-amber-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-amber-500/10 to-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-amber-500/10 to-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-amber-500/10 to-amber-500/10 rounded-full blur-3xl" />
       </div>
     )
   }
@@ -2030,15 +2030,15 @@ interface PremiumNavProps {
 
 export function PremiumNav({ tabs, activeTab, onTabChange, darkMode }: PremiumNavProps) {
   return (
-    <nav className="flex items-center gap-1 p-1 rounded-2xl glass-premium backdrop-blur-xl border border-purple-500/20 shadow-lg">
+    <nav className="flex items-center gap-1 p-1 rounded-2xl glass-premium backdrop-blur-xl border border-amber-500/20 shadow-lg">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-300 ${
             activeTab === tab.id
-              ? 'bg-gradient-to-r from-purple-500 to-amber-500 text-white shadow-lg shadow-purple-500/30 scale-105'
-              : 'text-slate-400 hover:bg-white/10 hover:text-purple-400'
+              ? 'bg-gradient-to-r from-amber-500 to-amber-500 text-white shadow-lg shadow-amber-500/30 scale-105'
+              : 'text-slate-400 hover:bg-white/10 hover:text-amber-400'
           }`}
         >
           {tab.icon}

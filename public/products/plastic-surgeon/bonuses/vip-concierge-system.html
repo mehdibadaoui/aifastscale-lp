@@ -6,21 +6,21 @@
   <title>VIP Concierge Patient System | CloneYourself</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #9333ea; --primary-light: #a855f7; --primary-dark: #7c22ce; --accent: #f59e0b; --bg-dark: #0f0a1a; --bg-card: #1a1025; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; --gold: #d4af37; }
+    :root { --primary: #d4af37; --primary-light: #f4d03f; --primary-dark: #b8860b; --accent: #f59e0b; --bg-dark: #0a0a0a; --bg-card: #141414; --text: #f8fafc; --text-muted: #94a3b8; --success: #22c55e; --gold: #d4af37; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0a2e 100%); color: var(--text); line-height: 1.6; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a1a 100%); color: var(--text); line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
-    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1a4a 50%, var(--bg-dark) 100%); }
-    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; color: #0f0a1a; }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, var(--bg-dark) 0%, #2a2a1a 50%, var(--bg-dark) 100%); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; color: #0a0a0a; }
     .cover h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #e9d5ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
     .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: var(--gold); font-weight: 700; }
-    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(212, 175, 55, 0.2); }
     .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 8px; }
     .section-subtitle { color: var(--primary-light); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
-    .vip-tier { background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 28px; margin: 20px 0; position: relative; overflow: hidden; }
+    .vip-tier { background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 28px; margin: 20px 0; position: relative; overflow: hidden; }
     .vip-tier.gold { border-color: rgba(212, 175, 55, 0.4); background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02)); }
-    .vip-tier.gold::before { content: 'MOST PROFITABLE'; position: absolute; top: 16px; right: -32px; background: var(--gold); color: #0f0a1a; font-size: 10px; font-weight: 700; padding: 4px 40px; transform: rotate(45deg); }
+    .vip-tier.gold::before { content: 'MOST PROFITABLE'; position: absolute; top: 16px; right: -32px; background: var(--gold); color: #0a0a0a; font-size: 10px; font-weight: 700; padding: 4px 40px; transform: rotate(45deg); }
     .tier-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
     .tier-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
     .tier-name { font-size: 1.4rem; font-weight: 800; }
@@ -30,9 +30,9 @@
     .tier-features li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
     .touchpoint { background: rgba(15, 10, 26, 0.5); border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 3px solid var(--primary); }
     .touchpoint-title { font-weight: 700; color: var(--primary-light); margin-bottom: 8px; }
-    .script-box { background: rgba(15, 10, 26, 0.7); border-radius: 12px; padding: 20px; font-size: 0.95rem; line-height: 1.8; border: 1px solid rgba(147, 51, 234, 0.2); margin: 12px 0; }
+    .script-box { background: rgba(15, 10, 26, 0.7); border-radius: 12px; padding: 20px; font-size: 0.95rem; line-height: 1.8; border: 1px solid rgba(212, 175, 55, 0.2); margin: 12px 0; }
     .amenity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
-    .amenity-item { padding: 20px; background: rgba(147, 51, 234, 0.08); border-radius: 12px; display: flex; align-items: center; gap: 12px; }
+    .amenity-item { padding: 20px; background: rgba(212, 175, 55, 0.08); border-radius: 12px; display: flex; align-items: center; gap: 12px; }
     .amenity-icon { font-size: 24px; }
     .revenue-calc { background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05)); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 16px; padding: 24px; margin: 24px 0; }
     .calc-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -66,7 +66,7 @@
           <div style="font-size: 2.5rem; font-weight: 900; color: var(--gold);">5x</div>
           <div style="color: var(--text-muted); font-size: 14px;">Higher lifetime value than standard patients</div>
         </div>
-        <div style="padding: 24px; background: rgba(147, 51, 234, 0.1); border-radius: 16px; text-align: center;">
+        <div style="padding: 24px; background: rgba(212, 175, 55, 0.1); border-radius: 16px; text-align: center;">
           <div style="font-size: 2.5rem; font-weight: 900; color: var(--primary-light);">92%</div>
           <div style="color: var(--text-muted); font-size: 14px;">VIP patient retention rate</div>
         </div>
@@ -124,7 +124,7 @@
 
       <div class="vip-tier">
         <div class="tier-header">
-          <div class="tier-icon" style="background: linear-gradient(135deg, #1a1a2e, #0f0a1a); border: 2px solid var(--gold);">💎</div>
+          <div class="tier-icon" style="background: linear-gradient(135deg, #1a1a2e, #0a0a0a); border: 2px solid var(--gold);">💎</div>
           <div>
             <div class="tier-name">Platinum Prestige</div>
             <div class="tier-price">Ultra VIP • $50,000+ annual spend</div>
@@ -166,10 +166,10 @@
             <div class="touchpoint-title">📦 VIP Welcome Package (Week 1)</div>
             <p style="color: var(--text-muted);">Luxury welcome kit delivered to their home.</p>
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px;">
-              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">✨ Personalized welcome letter from Dr.</div>
-              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">🎁 Premium skincare samples</div>
-              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">💳 VIP membership card</div>
-              <div style="padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; font-size: 14px;">📋 Benefits overview card</div>
+              <div style="padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 14px;">✨ Personalized welcome letter from Dr.</div>
+              <div style="padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 14px;">🎁 Premium skincare samples</div>
+              <div style="padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 14px;">💳 VIP membership card</div>
+              <div style="padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 14px;">📋 Benefits overview card</div>
             </div>
           </div>
         </div>
@@ -299,7 +299,7 @@
       <div class="section-subtitle">Implementation</div>
       <h2 class="section-title">VIP Invitation Scripts</h2>
 
-      <div style="background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0;">
+      <div style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0;">
         <h4 style="margin-bottom: 16px;">In-Person Invitation (At Follow-Up)</h4>
         <div class="script-box">
           "[Name], I want to tell you about something special. We've created a VIP program for our most valued patients - and honestly, you're exactly who we designed it for."
@@ -310,7 +310,7 @@
         </div>
       </div>
 
-      <div style="background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0;">
+      <div style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 24px; margin: 20px 0;">
         <h4 style="margin-bottom: 16px;">Email Invitation (For Qualifying Patients)</h4>
         <div class="script-box">
           <strong>Subject:</strong> [Name], you've been selected for something exclusive
@@ -343,14 +343,14 @@
       <p style="color: var(--text-muted); margin-bottom: 24px;">Track these metrics monthly to optimize your VIP program:</p>
 
       <div style="display: grid; gap: 16px;">
-        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 20px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <strong>Total VIP Patients</strong>
             <p style="font-size: 13px; color: var(--text-muted);">Breakdown by tier</p>
           </div>
           <div style="font-size: 14px; color: var(--text-muted);">Track Monthly</div>
         </div>
-        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 20px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <strong>VIP Revenue %</strong>
             <p style="font-size: 13px; color: var(--text-muted);">What % of revenue comes from VIPs</p>
@@ -360,7 +360,7 @@
             <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">40%+</span>
           </div>
         </div>
-        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 20px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <strong>VIP Retention Rate</strong>
             <p style="font-size: 13px; color: var(--text-muted);">% who return within 12 months</p>
@@ -370,7 +370,7 @@
             <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">90%+</span>
           </div>
         </div>
-        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 20px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <strong>Referrals per VIP</strong>
             <p style="font-size: 13px; color: var(--text-muted);">Average referrals per VIP patient</p>
@@ -380,7 +380,7 @@
             <span style="font-size: 20px; font-weight: 800; color: var(--success); margin-left: 8px;">3+</span>
           </div>
         </div>
-        <div style="padding: 20px; background: rgba(147, 51, 234, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="padding: 20px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
           <div>
             <strong>Upgrade Rate</strong>
             <p style="font-size: 13px; color: var(--text-muted);">% moving to higher tiers annually</p>
@@ -394,7 +394,7 @@
     </div>
 
     <!-- QUICK START -->
-    <div class="section" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(147, 51, 234, 0.1)); border-color: rgba(212, 175, 55, 0.3);">
+    <div class="section" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.1)); border-color: rgba(212, 175, 55, 0.3);">
       <h2 class="section-title" style="text-align: center;">🚀 Quick-Start Checklist</h2>
       <div style="max-width: 600px; margin: 24px auto 0;">
         <div style="padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 12px;">

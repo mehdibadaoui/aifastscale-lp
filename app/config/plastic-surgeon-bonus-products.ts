@@ -31,7 +31,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 397,
     description: 'One surgeon posted 3 videos using these scripts. 1.2M views. 47 new consultation requests in 3 weeks. These are the exact word-for-word scripts that make people stop scrolling, watch till the end, and book a consultation at YOUR clinic. Just read, record, post. Your phone starts ringing.',
     icon: 'Video',
-    iconColor: '#9333ea', // Purple
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/viral-scripts.webp',
     category: 'marketing',
   },
@@ -42,7 +42,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 297,
     description: 'Every day you don\'t post, your competitor does - and steals your future patients. This gives you 365 ready-to-post templates specifically for plastic surgeons. Open. Click. Customize in 30 seconds. Post. Done. One surgeon went from 500 followers to 28,000 in 5 months. Her consultation calendar is now booked 8 weeks out.',
     icon: 'Layout',
-    iconColor: '#f59e0b', // Gold
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/social-templates.webp',
     category: 'marketing',
   },
@@ -64,7 +64,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 397,
     description: 'Before/after posts get 5x more engagement than any other content in plastic surgery. They make people WANT your work. This system shows you exactly how to capture, edit, and post for maximum impact while staying HIPAA compliant. One surgeon\'s tummy tuck reveal got 3.8 million views. She booked $420,000 in procedures that month.',
     icon: 'Camera',
-    iconColor: '#d946ef', // Fuchsia
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/before-after.webp',
     category: 'marketing',
   },
@@ -75,7 +75,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 397,
     description: 'Right now, your patient coordinator is losing you 8-12 consultations per week. "How much is a nose job?" Click. Gone. Forever. These scripts flip that. When a caller says "I\'m just getting prices," your team knows EXACTLY what to say to book them. One practice added $67,000/month in procedures just by changing how they answer the phone.',
     icon: 'Phone',
-    iconColor: '#8b5cf6', // Purple
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/phone-scripts.webp',
     category: 'operations',
   },
@@ -89,7 +89,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 347,
     description: 'Most patients who say "I can\'t afford it" actually CAN - they just need help seeing how. These scripts help your coordinator present financing options that turn hesitant patients into booked surgeries. One practice increased their close rate by 34% just by implementing these scripts. That\'s an extra $90,000/month.',
     icon: 'CreditCard',
-    iconColor: '#6366f1', // Indigo
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/financing-scripts.webp',
     category: 'revenue',
   },
@@ -100,7 +100,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 447,
     description: 'Your best patients know other people who want plastic surgery. But they\'re not referring anyone because you never asked - or asked wrong. This system makes referring effortless. One practice generated 67 referrals in 90 days. That\'s 67 new patients who came pre-sold, ready to book, because someone they trust said "go here."',
     icon: 'Users',
-    iconColor: '#f59e0b', // Amber/Gold
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/referral-machine.webp',
     category: 'revenue',
   },
@@ -111,7 +111,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 297,
     description: '500+ copy-paste prompts that turn ChatGPT into your personal plastic surgery marketing team. Need a caption? 10 seconds. Video script? 10 seconds. Email newsletter? 10 seconds. One surgeon creates a full week of content every Monday morning in 15 minutes while drinking coffee. Then she\'s done. What would you do with that time back?',
     icon: 'Sparkles',
-    iconColor: '#06b6d4', // Cyan
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/ai-generator.webp',
     category: 'marketing',
   },
@@ -122,7 +122,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 397,
     description: 'When someone Googles "plastic surgeon near me," they click the one with the most reviews. Period. This system floods your Google profile with 5-star reviews - automatically. One practice went from 3 reviews/month to 24/month. Within 90 days, they ranked #1 locally. Now they turn away patients. What would 20 new 5-star reviews do for YOU this month?',
     icon: 'Star',
-    iconColor: '#fbbf24', // Yellow/Gold
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/review-explosion.webp',
     category: 'marketing',
   },
@@ -133,7 +133,7 @@ export const PLASTIC_SURGEON_BONUS_PRODUCTS: PlasticSurgeonBonusProduct[] = [
     value: 497,
     description: 'Plastic surgery patients expect luxury. This system shows you how to create a VIP experience from first call to post-op that justifies premium pricing. Patients who feel like VIPs pay more, complain less, and refer more. One surgeon raised prices 25% after implementing this - and bookings actually increased.',
     icon: 'Crown',
-    iconColor: '#9333ea', // Purple
+    iconColor: '#d4af37', // Gold
     image: '/images/plastic-surgeon/bonuses/vip-concierge.webp',
     category: 'operations',
   },
