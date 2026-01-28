@@ -214,7 +214,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                   alt={COURSE_CONFIG.expert?.name || 'Alex Morgan'}
                   width={64}
                   height={64}
-                  className="object-cover w-full h-full"
+                  className="object-cover object-top w-full h-full"
                 />
               </div>
               <div className="flex-1">
@@ -242,7 +242,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 alt={COURSE_CONFIG.expert?.name || 'Alex Morgan'}
                 width={96}
                 height={96}
-                className="object-cover w-full h-full"
+                className="object-cover object-top w-full h-full"
               />
             </div>
             <div className="flex-1">
@@ -270,7 +270,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                   alt={COURSE_CONFIG.expert?.name || 'Alex Morgan'}
                   width={40}
                   height={40}
-                  className="object-cover w-full h-full"
+                  className="object-cover object-top w-full h-full"
                 />
               </div>
               <div>
