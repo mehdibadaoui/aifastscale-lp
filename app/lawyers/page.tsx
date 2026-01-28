@@ -601,7 +601,7 @@ export default function PlasticAttorneyLandingPage() {
         data-animate
         className="relative text-white py-8 sm:py-16 md:py-20 overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 25%, #1a0f2e 50%, #0f0a1a 75%, #0a0a0f 100%)',
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #0d0a05 25%, #1a1005 50%, #0d0a05 75%, #0a0a0a 100%)',
           backgroundSize: '200% 200%',
           animation: 'gradient-shift 20s ease infinite'
         }}
