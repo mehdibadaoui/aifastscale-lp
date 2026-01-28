@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authority Building Content System | CloneYourself</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold: #d4af37; --gold-light: #f4d03f; --gold-dark: #b8860b; --bg-dark: #0a0a0a; --bg-card: #141414; --text: #f8fafc; --text-muted: #a1a1aa; --success: #22c55e; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a1a 100%); color: var(--text); line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; color: #0a0a0a; }
+    .cover h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, var(--gold-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .cover .subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
+    .value-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); padding: 12px 24px; border-radius: 12px; font-size: 1.1rem; color: var(--gold); font-weight: 700; }
+    .section { background: var(--bg-card); border-radius: 24px; padding: 40px; margin: 40px 0; border: 1px solid rgba(212, 175, 55, 0.2); }
+    .section-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 24px; }
+    .pillar-card { background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 16px; padding: 28px; margin: 20px 0; }
+    .pillar-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .pillar-icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+    .content-box { background: rgba(10, 10, 10, 0.5); border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 3px solid var(--gold); }
+    .checklist li { padding: 10px 0; padding-left: 28px; position: relative; list-style: none; color: var(--text-muted); }
+    .checklist li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
+    @media print { body { background: white; color: #1a1a1a; } }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="badge">AUTHORITY SYSTEM</div>
+    <h1>Authority Building Content System</h1>
+    <p class="subtitle">Position yourself as THE go-to expert in your field. The complete system for building unshakable credibility that attracts premium clients.</p>
+    <div class="value-badge">Value: $497</div>
+    <div style="margin-top: 60px; opacity: 0.6; font-size: 14px;">CLONEYOURSELF</div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <h2 class="section-title">The Authority Advantage</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">When you're seen as THE authority, everything changes:</p>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div style="padding: 20px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; border-left: 3px solid var(--success);">
+          <strong>Clients come to YOU</strong>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Stop chasing - start attracting</p>
+        </div>
+        <div style="padding: 20px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; border-left: 3px solid var(--success);">
+          <strong>Premium pricing accepted</strong>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Price becomes less of an objection</p>
+        </div>
+        <div style="padding: 20px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; border-left: 3px solid var(--success);">
+          <strong>Referrals multiply</strong>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">"You HAVE to work with [Name]"</p>
+        </div>
+        <div style="padding: 20px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; border-left: 3px solid var(--success);">
+          <strong>Less skepticism</strong>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Trust is pre-built before they meet you</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 1 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon">1</div>
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 800;">Expertise Demonstration</h3>
+          <p style="color: var(--text-muted); font-size: 14px;">Show what you know through educational content</p>
+        </div>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Content Types:</h4>
+        <ul class="checklist">
+          <li>How-to guides and tutorials</li>
+          <li>Common mistake breakdowns</li>
+          <li>Industry myth-busting</li>
+          <li>Process explanations</li>
+          <li>FAQ answer videos</li>
+        </ul>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Example Topics:</h4>
+        <p style="color: var(--text-muted);">
+          "The 5 biggest mistakes people make with [topic]"<br>
+          "What actually happens when you [process]"<br>
+          "Why [common belief] is completely wrong"<br>
+          "[Number] things I wish everyone knew about [topic]"
+        </p>
+      </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon">2</div>
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 800;">Social Proof & Results</h3>
+          <p style="color: var(--text-muted); font-size: 14px;">Let your results speak for themselves</p>
+        </div>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Content Types:</h4>
+        <ul class="checklist">
+          <li>Client success stories (with permission)</li>
+          <li>Before/after transformations</li>
+          <li>Case study breakdowns</li>
+          <li>Results and statistics</li>
+          <li>Testimonial compilations</li>
+        </ul>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Storytelling Framework:</h4>
+        <p style="color: var(--text-muted);">
+          <strong>1. The Problem:</strong> "They came to me with [challenge]..."<br>
+          <strong>2. The Solution:</strong> "Here's the approach we took..."<br>
+          <strong>3. The Result:</strong> "Now they're [positive outcome]..."<br>
+          <strong>4. The Lesson:</strong> "What this teaches us is..."
+        </p>
+      </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon">3</div>
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 800;">Thought Leadership</h3>
+          <p style="color: var(--text-muted); font-size: 14px;">Share opinions and perspectives that differentiate you</p>
+        </div>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Content Types:</h4>
+        <ul class="checklist">
+          <li>Industry commentary and trends</li>
+          <li>Hot takes and opinions</li>
+          <li>Predictions and forecasts</li>
+          <li>Philosophy and values</li>
+          <li>What you believe differently</li>
+        </ul>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Thought Leadership Prompts:</h4>
+        <p style="color: var(--text-muted);">
+          "Most people in my industry believe X. I believe Y. Here's why..."<br>
+          "The future of [industry] is changing. Here's what I'm seeing..."<br>
+          "Unpopular opinion: [Controversial but defensible take]"<br>
+          "If I were starting over today, here's what I'd do differently..."
+        </p>
+      </div>
+    </div>
+
+    <!-- PILLAR 4 -->
+    <div class="pillar-card">
+      <div class="pillar-header">
+        <div class="pillar-icon">4</div>
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 800;">Personal Brand</h3>
+          <p style="color: var(--text-muted); font-size: 14px;">Let people know the person behind the expertise</p>
+        </div>
+      </div>
+      <div class="content-box">
+        <h4 style="margin-bottom: 12px;">Content Types:</h4>
+        <ul class="checklist">
+          <li>Your origin story</li>
+          <li>Behind-the-scenes of your work</li>
+          <li>Your values and why they matter</li>
+          <li>Day-in-the-life content</li>
+          <li>Lessons from your journey</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Weekly Authority Content Plan</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between;">
+          <strong>Monday</strong><span style="color: var(--text-muted);">Educational (Pillar 1)</span>
+        </div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between;">
+          <strong>Wednesday</strong><span style="color: var(--text-muted);">Social Proof (Pillar 2)</span>
+        </div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between;">
+          <strong>Friday</strong><span style="color: var(--text-muted);">Thought Leadership (Pillar 3)</span>
+        </div>
+        <div style="padding: 16px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; justify-content: space-between;">
+          <strong>Weekend</strong><span style="color: var(--text-muted);">Personal Brand (Pillar 4)</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+      <p>© CloneYourself</p>
+    </div>
+  </div>
+</body>
+</html>

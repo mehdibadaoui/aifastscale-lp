@@ -11,19 +11,19 @@ const product = {
   membersUrl: 'https://aifastscale.com/lawyers/members',
   productName: 'CloneYourself for Lawyers',
   price: '47.82',
-  accentColor: '#0ea5e9'
+  accentColor: '#d4af37'
 }
 
 export async function GET() {
-  const userEmail = 'dr.thompson@example.com'
-  const userPassword = 'DEMO-PSY2026'
-  const firstName = 'Dr. Thompson'
+  const userEmail = 'alex.morgan@example.com'
+  const userPassword = 'DEMO-LAW2026'
+  const firstName = 'Alex'
 
-  // Sky blue branding for lawyers
-  const accent = '#0ea5e9' // Sky blue
-  const buttonColor = '#0ea5e9'
-  const glowColor = 'rgba(14, 165, 233, 0.08)'
-  const socialProof = 'Trusted by <strong style="color: #0ea5e9;">+750 lawyers & attorneys</strong> worldwide'
+  // Gold branding for lawyers (black and gold theme)
+  const accent = '#d4af37' // Gold
+  const buttonColor = '#d4af37'
+  const glowColor = 'rgba(212, 175, 55, 0.08)'
+  const socialProof = 'Trusted by <strong style="color: #d4af37;">+750 lawyers & attorneys</strong> worldwide'
 
   const darkBg = '#09090b'
   const cardBg = '#18181b'
