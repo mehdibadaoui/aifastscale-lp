@@ -31,7 +31,7 @@ export const PSYCHOLOGIST_BONUS_PRODUCTS: PsychologistBonusProduct[] = [
     value: 397,
     description: 'One therapist posted 3 videos using these scripts. 890K views. 34 new client inquiries in 3 weeks. These are the exact word-for-word scripts that make people stop scrolling, watch till the end, and book a session with YOU. Just read, record, post. Your calendar starts filling.',
     icon: 'Video',
-    iconColor: '#a855f7', // Purple
+    iconColor: '#14b8a6', // Teal
     image: '/images/psychologist/viral-scripts.webp',
     category: 'marketing',
   },
@@ -75,7 +75,7 @@ export const PSYCHOLOGIST_BONUS_PRODUCTS: PsychologistBonusProduct[] = [
     value: 397,
     description: 'Right now, your front desk is losing you 6-10 potential clients per week. "How much is a session?" Click. Gone. Forever. These scripts flip that. When a caller asks about insurance or costs, your team knows EXACTLY what to say to book them. One practice added $52,000/month in sessions just by changing how they answer the phone.',
     icon: 'Phone',
-    iconColor: '#7c3aed', // Violet
+    iconColor: '#0d9488', // Teal
     image: '/images/psychologist/phone-scripts.webp',
     category: 'operations',
   },
@@ -111,7 +111,7 @@ export const PSYCHOLOGIST_BONUS_PRODUCTS: PsychologistBonusProduct[] = [
     value: 297,
     description: '500+ copy-paste prompts that turn ChatGPT into your personal mental health marketing team. Need a caption? 10 seconds. Video script? 10 seconds. Newsletter? 10 seconds. One psychologist creates a full week of content every Monday morning in 15 minutes while drinking coffee. Then she\'s done. What would you do with that time back?',
     icon: 'Sparkles',
-    iconColor: '#9333ea', // Purple
+    iconColor: '#14b8a6', // Teal
     image: '/images/psychologist/ai-generator.webp',
     category: 'marketing',
   },
@@ -133,7 +133,7 @@ export const PSYCHOLOGIST_BONUS_PRODUCTS: PsychologistBonusProduct[] = [
     value: 497,
     description: 'Private sessions cap your income at your available hours. Group therapy lets you help more people while earning more per hour. This system shows you how to launch, market, and fill group therapy programs. One therapist added $6,000/month working just 4 extra hours by running two groups.',
     icon: 'Users2',
-    iconColor: '#a855f7', // Purple
+    iconColor: '#0d9488', // Teal
     image: '/images/psychologist/group-therapy.webp',
     category: 'operations',
   },
