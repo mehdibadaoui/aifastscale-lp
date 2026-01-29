@@ -148,9 +148,9 @@ const PLANS = {
   DENTIST_UPSELL: { id: 'plan_piIlcIeKKia85', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
   DENTIST_DOWNSELL: { id: 'plan_fEnYsa70KFAWW', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
-  PLASTIC_SURGEON_MAIN: { id: 'plan_RrQTpB6oAKIW7', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'plan_WerHpDW91dbRR', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_BKxSLirxKe3ZW', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_MAIN: { id: 'plan_OGprA4gd4Lr7N', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'plan_c7mDkR3oBXE7n', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_3QGO1WJI50ujP', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
   // Psychologist products
   PSYCHOLOGIST_MAIN: { id: 'plan_QBhFmuZAzfDyh', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
   PSYCHOLOGIST_UPSELL: { id: 'plan_5fa6gRWmpdn1a', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },

@@ -52,7 +52,7 @@ import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/Exper
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Whop checkout link
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_RrQTpB6oAKIW7'
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
 
 // ===========================================
 // META TRACKING - Browser Pixel Only
