@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Privacy Policy | AI FastScale',
-  description: 'Privacy Policy for AI FastScale - 7 Minute AgentClone Course',
+  description: 'Privacy Policy for AI FastScale LLC - CloneYourself Video System',
 }
 
 export default function PrivacyPolicy() {
@@ -37,11 +37,11 @@ export default function PrivacyPolicy() {
                 1. Introduction
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Welcome to AI FastScale ("we," "our," or "us"). We are committed
+                Welcome to <strong>AI FastScale LLC, a Wyoming Limited Liability Company</strong> ("we," "our," or "us"). We are committed
                 to protecting your personal information and your right to
                 privacy. This Privacy Policy explains how we collect, use,
                 disclose, and safeguard your information when you visit our
-                website and purchase our 7 Minute AgentClone Course.
+                website and purchase our CloneYourself Video System courses.
               </p>
               <p className="leading-relaxed text-gray-700">
                 By using our service, you agree to the collection and use of
@@ -52,7 +52,21 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                2. Information We Collect
+                2. Operating Entity
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                All services provided through this website are offered by:
+              </p>
+              <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
+                <p className="mb-1 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">Email: support@aifastscale.com</p>
+              </div>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                3. Information We Collect
               </h2>
               <h3 className="mb-3 text-xl font-bold text-gray-900">
                 Personal Information
@@ -81,8 +95,7 @@ export default function PrivacyPolicy() {
                 </li>
                 <li>Account credentials (username, password)</li>
                 <li>
-                  Professional information (real estate license, brokerage
-                  affiliation)
+                  Professional information (profession, practice area)
                 </li>
                 <li>Communication preferences</li>
               </ul>
@@ -105,7 +118,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                3. How We Use Your Information
+                4. How We Use Your Information
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We use the information we collect to:
@@ -126,10 +139,10 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                4. Payment Processing & PCI-DSS Compliance
+                5. Payment Processing & PCI-DSS Compliance
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Important:</strong> We do NOT store, process, or have access to your full credit card information. All payment processing is handled by our PCI-DSS Level 1 certified payment processor.
+                <strong>Important:</strong> We do NOT store, process, or have access to your full credit card information. All payment processing is handled by our PCI-DSS Level 1 certified payment processor (Whop).
               </p>
               <h3 className="mb-3 text-xl font-bold text-gray-900">
                 Secure Payment Processing
@@ -161,7 +174,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                5. Information Sharing and Disclosure
+                6. Information Sharing and Disclosure
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We do not sell your personal information. We may share your
@@ -169,7 +182,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
-                  <strong>Payment Processors:</strong> Our certified payment processor for secure payment processing (see Section 4 for details)
+                  <strong>Payment Processors:</strong> Our certified payment processor (Whop) for secure payment processing (see Section 5 for details)
                 </li>
                 <li>
                   <strong>Email Service Providers:</strong> To send course materials, updates, and transactional emails
@@ -193,7 +206,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                6. Cookies and Tracking Technologies
+                7. Cookies and Tracking Technologies
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We use cookies, pixels, and similar tracking technologies to enhance your experience and analyze website performance. By using our website, you consent to our use of these technologies.
@@ -228,7 +241,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                7. Data Retention
+                8. Data Retention
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We retain your personal information only as long as necessary to fulfill the purposes outlined in this Privacy Policy:
@@ -245,7 +258,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                8. Data Security
+                9. Data Security
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We implement appropriate technical and organizational security
@@ -268,7 +281,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                9. Your Privacy Rights (GDPR & CCPA)
+                10. Your Privacy Rights (GDPR & CCPA)
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 Depending on your location, you may have the following rights under GDPR (European Union) and CCPA (California):
@@ -338,7 +351,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                10. Children's Privacy
+                11. Children's Privacy
               </h2>
               <p className="leading-relaxed text-gray-700">
                 Our service is not intended for individuals under the age of 18.
@@ -350,7 +363,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                11. International Data Transfers
+                12. International Data Transfers
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 Your information may be transferred to and maintained on
@@ -368,7 +381,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                12. Changes to This Privacy Policy
+                13. Changes to This Privacy Policy
               </h2>
               <p className="leading-relaxed text-gray-700">
                 We may update our Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will
@@ -386,17 +399,16 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                13. Contact Us & Data Protection Officer
+                14. Contact Us
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 If you have any questions about this Privacy Policy, please
                 contact us:
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">AI FastScale</p>
+                <p className="mb-2 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
-                <p className="text-gray-700">Phone: +1 (555) 123-4567</p>
-                <p className="text-gray-700">Address: Miami, FL USA</p>
               </div>
             </section>
           </div>

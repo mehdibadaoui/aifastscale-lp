@@ -2030,6 +2030,10 @@ export default function PlasticAttorneyLandingPage() {
               <span>•</span>
               <span><span className="text-amber-400 font-bold">20+</span> countries</span>
             </div>
+            {/* Testimonial Disclosure - FTC Compliance */}
+            <p className="text-gray-600 text-[10px] sm:text-xs mt-3 max-w-2xl mx-auto">
+              *Testimonials reflect individual experiences and are not guaranteed results. Individual results vary based on effort, market conditions, and other factors. See our <a href="/disclaimer" className="text-amber-500 hover:text-amber-400 underline">full disclaimer</a>.
+            </p>
           </div>
         </div>
 
@@ -3084,15 +3088,30 @@ export default function PlasticAttorneyLandingPage() {
                 <span>Instant Access</span>
               </div>
             </div>
+            {/* Wyoming LLC Identification */}
+            <p className="text-gray-600 text-[10px] sm:text-xs mb-2">
+              AI FastScale LLC, a Wyoming Limited Liability Company
+            </p>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
               © {new Date().getFullYear()} CloneYourself. All rights reserved.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
               <span className="hidden sm:inline">•</span>
               <a href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</a>
               <span className="hidden sm:inline">•</span>
               <a href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
+            </div>
+            {/* FTC Earnings & Attorney Advertising Disclaimer */}
+            <div className="max-w-3xl mx-auto text-[9px] sm:text-[10px] text-gray-600 leading-relaxed space-y-2">
+              <p>
+                <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
+              </p>
+              <p>
+                <strong>ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar's Rules of Professional Conduct regarding advertising and client solicitation. AI FastScale LLC does not provide legal advice regarding bar compliance.
+              </p>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Terms of Service | AI FastScale',
-  description: 'Terms of Service for AI FastScale - 7 Minute AgentClone Course',
+  description: 'Terms of Service for AI FastScale LLC - CloneYourself Video System',
 }
 
 export default function TermsOfService() {
@@ -38,9 +38,9 @@ export default function TermsOfService() {
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 These Terms of Service ("Terms") constitute a legally binding
-                agreement between you and AI FastScale ("Company," "we," "us,"
+                agreement between you and <strong>AI FastScale LLC, a Wyoming Limited Liability Company</strong> ("Company," "we," "us,"
                 or "our") concerning your access to and use of the AI FastScale
-                website and the 7 Minute AgentClone Course.
+                website and the CloneYourself Video System courses and products.
               </p>
               <p className="leading-relaxed text-gray-700">
                 By accessing or using our service, you agree to be bound by
@@ -51,11 +51,25 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                2. Product Description
+                2. Operating Entity
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                The 7 Minute AgentClone Course is a digital educational product
-                designed for real estate agents. The course includes:
+                All services provided through this website are offered by:
+              </p>
+              <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
+                <p className="mb-1 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">Email: support@aifastscale.com</p>
+              </div>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                3. Product Description
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                The CloneYourself Video System is a digital educational product
+                designed for professionals including lawyers, dentists, psychologists, plastic surgeons, real estate agents, and other service professionals. The course includes:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
@@ -63,36 +77,34 @@ export default function TermsOfService() {
                   videos
                 </li>
                 <li>System prompts and workflows for AI video creation</li>
-                <li>Real estate-specific scripts and templates</li>
+                <li>Industry-specific scripts and templates</li>
                 <li>Phone editing templates with captions, logos, and CTAs</li>
                 <li>
-                  Bonus materials including personal branding blueprints and
-                  hooks
+                  Bonus materials including content calendars and marketing resources
                 </li>
               </ul>
               <p className="leading-relaxed text-gray-700">
-                Current price: $37 USD (subject to change, limited time offer,
-                may increase to $97).
+                <strong>Pricing:</strong> Product pricing varies by industry and promotional offers. Current prices are displayed at checkout and typically range from $37 to $47.82 USD (subject to change). Upsell products may be offered at additional prices. All prices are clearly displayed before purchase.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                3. Purchase and Payment
+                4. Purchase and Payment
               </h2>
 
               <h3 className="mb-3 text-xl font-bold text-gray-900">
                 One-Time Payment (No Recurring Charges)
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>IMPORTANT:</strong> This is a ONE-TIME PAYMENT ONLY. You will be charged only ONCE for $37 USD (or current pricing). There are NO recurring charges, NO monthly subscriptions, NO hidden fees. You pay once and get lifetime access forever.
+                <strong>IMPORTANT:</strong> This is a ONE-TIME PAYMENT ONLY. You will be charged only ONCE for the displayed price. There are NO recurring charges, NO monthly subscriptions, NO hidden fees. You pay once and get lifetime access forever.
               </p>
 
               <h3 className="mb-3 text-xl font-bold text-gray-900">
                 Payment Processing
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                All payments are processed securely through our PCI-DSS Level 1 certified payment processor. By making a purchase, you agree to:
+                All payments are processed securely through our PCI-DSS Level 1 certified payment processor (Whop). By making a purchase, you agree to:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Provide current, complete, and accurate purchase and account information</li>
@@ -119,7 +131,7 @@ export default function TermsOfService() {
                 Pricing & Currency
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Current Price:</strong> $37 USD (limited time offer, may increase to $97 USD). All prices are in U.S. Dollars (USD). The price applicable to your purchase is the price displayed at the time of checkout completion. We reserve the right to change pricing at any time without prior notice (existing customers are grandfathered at their purchase price).
+                All prices are in U.S. Dollars (USD). The price applicable to your purchase is the price displayed at the time of checkout completion. We reserve the right to change pricing at any time without prior notice (existing customers are grandfathered at their purchase price).
               </p>
 
               <h3 className="mb-3 text-xl font-bold text-gray-900">
@@ -138,7 +150,7 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                4. 30-Day Money-Back Guarantee
+                5. 30-Day Money-Back Guarantee
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We offer a 30-day money-back guarantee from the date of
@@ -159,7 +171,7 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                5. User Account
+                6. User Account
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 When you create an account with us, you must provide accurate,
@@ -180,11 +192,11 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                6. Intellectual Property Rights
+                7. Intellectual Property Rights
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 All course materials, including videos, templates, prompts,
-                graphics, and written content, are owned by AI FastScale and
+                graphics, and written content, are owned by AI FastScale LLC and
                 protected by copyright, trademark, and other intellectual
                 property laws.
               </p>
@@ -209,7 +221,7 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                7. Acceptable Use
+                8. Acceptable Use
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 You agree to use our service only for lawful purposes. You may
@@ -227,19 +239,19 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                8. Disclaimers and Limitations
+                9. Disclaimers and Limitations
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>No Guarantees:</strong> While we provide tools and
-                training, we do not guarantee specific results, leads, or
+                training, we do not guarantee specific results, leads, clients, or
                 income. Your success depends on your effort, market conditions,
                 and other factors beyond our control.
               </p>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Educational Purpose:</strong> This course is for
-                educational purposes only. Results mentioned (such as "5-15
-                leads per week" or "100+ monthly leads") are examples and not
-                guarantees of your individual results.
+                educational purposes only. Results mentioned in testimonials or marketing
+                materials are examples and not
+                guarantees of your individual results. Individual results vary significantly.
               </p>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Service Availability:</strong> We strive to maintain
@@ -250,44 +262,47 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                9. Limitation of Liability
+                10. Limitation of Liability
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                To the maximum extent permitted by law, AI FastScale shall not
+                To the maximum extent permitted by law, AI FastScale LLC shall not
                 be liable for any indirect, incidental, special, consequential,
                 or punitive damages, including loss of profits, data, or
                 goodwill.
               </p>
               <p className="leading-relaxed text-gray-700">
                 Our total liability shall not exceed the amount you paid for the
-                course ($37).
+                course (up to $50 USD maximum).
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                10. Compliance with Real Estate Regulations
+                11. Professional Compliance Responsibility
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                As a real estate professional, you are responsible for ensuring
+                As a licensed professional, you are responsible for ensuring
                 your use of AI-generated videos complies with:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>MLS (Multiple Listing Service) rules and regulations</li>
-                <li>Your broker's policies and requirements</li>
-                <li>State and federal fair housing laws</li>
+                <li>Your state or jurisdiction's licensing laws and regulations</li>
+                <li>Professional association rules and ethics guidelines</li>
+                <li>Advertising regulations specific to your profession</li>
                 <li>Truth in advertising standards</li>
-                <li>Any required disclosures in your videos</li>
+                <li>Any required disclosures in your marketing materials</li>
               </ul>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>For Attorneys:</strong> You must ensure compliance with your state bar's Rules of Professional Conduct, including rules governing attorney advertising, client solicitation, and required disclosures. AI FastScale LLC does not provide legal advice regarding bar compliance.
+              </p>
               <p className="leading-relaxed text-gray-700">
-                We provide broker compliance overlay kits, but you are
-                ultimately responsible for compliance.
+                We provide templates and guidance, but you are
+                ultimately responsible for compliance with all applicable professional regulations.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                11. Updates and Modifications
+                12. Updates and Modifications
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Course Updates:</strong> We may update course content to
@@ -304,17 +319,17 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                12. Third-Party Dependencies & AI Tools
+                13. Third-Party Dependencies & AI Tools
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Important Notice:</strong> This course teaches you to use third-party AI platforms and tools (such as HeyGen, ElevenLabs, D-ID, Synthesia, or similar services). You acknowledge and agree that:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>These AI platforms are independent third-party services NOT owned or controlled by AI FastScale</li>
+                <li>These AI platforms are independent third-party services NOT owned or controlled by AI FastScale LLC</li>
                 <li>You are responsible for complying with each AI platform's Terms of Service and pricing</li>
                 <li>AI platforms may change their features, pricing, or terms at any time</li>
                 <li>If an AI platform discontinues service, we will provide alternative solutions but cannot guarantee identical functionality</li>
-                <li>You may need separate subscriptions to AI platforms (which are not included in the $37 course price)</li>
+                <li>You may need separate subscriptions to AI platforms (which are not included in the course price)</li>
                 <li>We are not responsible for any costs, changes, or issues with third-party AI platforms</li>
               </ul>
               <p className="mb-4 leading-relaxed text-gray-700">
@@ -324,7 +339,7 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                13. Termination
+                14. Termination
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We may terminate or suspend your account immediately, without
@@ -345,7 +360,7 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                14. Force Majeure
+                15. Force Majeure
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We shall not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, including but not limited to:
@@ -366,18 +381,18 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                15. Governing Law
+                16. Governing Law
               </h2>
               <p className="leading-relaxed text-gray-700">
                 These Terms shall be governed by and construed in accordance
-                with the laws of the State of Florida, United States, without
+                with the laws of the State of Wyoming, United States, without
                 regard to its conflict of law provisions.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                16. Dispute Resolution & Arbitration
+                17. Dispute Resolution & Arbitration
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Informal Resolution First:</strong> Before filing any formal dispute, you agree to contact us at support@aifastscale.com and attempt to resolve the issue informally. We resolve 95% of disputes this way.
@@ -388,7 +403,7 @@ export default function TermsOfService() {
               <ol className="mb-4 list-decimal space-y-2 pl-6 text-gray-700">
                 <li>Good faith negotiation between the parties (30-day period)</li>
                 <li>Mediation if negotiation fails (optional)</li>
-                <li>Binding arbitration in Miami-Dade County, Florida under the rules of the American Arbitration Association (AAA)</li>
+                <li>Binding arbitration under the rules of the American Arbitration Association (AAA), with venue in Wyoming or via online arbitration proceedings at the Company's discretion</li>
               </ol>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Class Action Waiver:</strong> You agree that disputes will be resolved on an individual basis only. You waive any right to participate in class action lawsuits or class-wide arbitration.
@@ -400,34 +415,33 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                17. Severability & Entire Agreement
+                18. Severability & Entire Agreement
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 If any provision of these Terms is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary, and the remaining provisions will remain in full force and effect.
               </p>
               <p className="leading-relaxed text-gray-700">
-                These Terms, together with our Privacy Policy and Refund Policy, constitute the entire agreement between you and AI FastScale regarding the 7 Minute AgentClone Course and supersede all prior agreements.
+                These Terms, together with our Privacy Policy and Refund Policy, constitute the entire agreement between you and AI FastScale LLC regarding our products and services and supersede all prior agreements.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                18. Contact Information
+                19. Contact Information
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 For questions about these Terms of Service, please contact us:
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">AI FastScale</p>
+                <p className="mb-2 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
-                <p className="text-gray-700">Phone: +1 (555) 123-4567</p>
-                <p className="text-gray-700">Address: Miami, FL USA</p>
               </div>
             </section>
 
             <div className="mt-8 rounded-xl border-2 border-yellow-400 bg-gradient-to-r from-yellow-100 to-orange-100 p-6">
               <p className="mb-2 font-bold text-gray-900">
-                By purchasing and using the 7 Minute AgentClone Course, you
+                By purchasing and using the CloneYourself Video System, you
                 acknowledge that you have read, understood, and agree to be
                 bound by these Terms of Service.
               </p>

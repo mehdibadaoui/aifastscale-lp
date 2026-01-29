@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Refund Policy | AI FastScale',
-  description: '30-Day Money-Back Guarantee for AI FastScale - 7 Minute AgentClone Course',
+  description: '30-Day Money-Back Guarantee for AI FastScale LLC - CloneYourself Video System',
 }
 
 export default function RefundPolicy() {
@@ -40,16 +40,27 @@ export default function RefundPolicy() {
                 We stand behind our product 100%.
               </p>
               <p className="mb-0 text-gray-700">
-                If you're not completely satisfied with the 7 Minute AgentClone Course for any reason within 30 days of your purchase, we'll give you a full refund. No questions asked. No hassle. No hard feelings.
+                If you're not completely satisfied with the CloneYourself Video System for any reason within 30 days of your purchase, we'll give you a full refund. No questions asked. No hassle. No hard feelings.
               </p>
             </div>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                Operating Entity
+              </h2>
+              <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
+                <p className="mb-1 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">Email: support@aifastscale.com</p>
+              </div>
+            </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
                 1. Our Commitment to You
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                At AI FastScale, we're confident that the 7 Minute AgentClone Course will transform your real estate marketing and help you generate more leads with AI-powered videos. However, we understand that every real estate agent's situation is unique.
+                At AI FastScale LLC, we're confident that the CloneYourself Video System will transform your marketing and help you generate more leads with AI-powered videos. However, we understand that every professional's situation is unique.
               </p>
               <p className="mb-4 leading-relaxed text-gray-700">
                 That's why we offer a generous 30-day money-back guarantee with absolutely no questions asked. We want you to have plenty of time to:
@@ -102,7 +113,7 @@ export default function RefundPolicy() {
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Video training modules</li>
                 <li>System prompts and workflows</li>
-                <li>Real estate scripts and templates</li>
+                <li>Industry-specific scripts and templates</li>
                 <li>Phone editing templates</li>
                 <li>Bonus materials and resources</li>
               </ul>
@@ -117,7 +128,7 @@ export default function RefundPolicy() {
                 You'll receive a <strong>100% full refund</strong> of your purchase price:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>Full amount: $37 USD</li>
+                <li>Full amount of your original purchase (up to $50 USD)</li>
                 <li>No partial refunds</li>
                 <li>No deductions</li>
                 <li>No processing fees</li>
@@ -262,7 +273,7 @@ export default function RefundPolicy() {
                 7.1 Instant Access Notice
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                The 7 Minute AgentClone Course is a digital product with instant access. Upon purchase, you receive immediate access to all course materials.
+                The CloneYourself Video System is a digital product with instant access. Upon purchase, you receive immediate access to all course materials.
               </p>
 
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
@@ -391,7 +402,7 @@ export default function RefundPolicy() {
                 11.2 Contact Support First
               </h3>
               <p className="leading-relaxed text-gray-700">
-                Before requesting a refund, please reach out to support@aifastscale.com. Tell us what's not working. We genuinely want to help you succeed, and most issues can be resolved with a quick conversation. Our goal is your success, not keeping your $37.
+                Before requesting a refund, please reach out to support@aifastscale.com. Tell us what's not working. We genuinely want to help you succeed, and most issues can be resolved with a quick conversation. Our goal is your success.
               </p>
             </section>
 
@@ -403,17 +414,16 @@ export default function RefundPolicy() {
                 We're here to help! If you have any questions about this refund policy, your purchase, or the course itself, please don't hesitate to reach out.
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">Contact AI FastScale</p>
+                <p className="mb-2 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
-                <p className="text-gray-700">Instagram: @sara.theagent</p>
-                <p className="text-gray-700">Address: Miami, FL USA</p>
               </div>
             </section>
 
             <div className="mt-8 rounded-xl border-2 border-green-400 bg-gradient-to-r from-green-100 to-emerald-100 p-6">
               <p className="mb-2 font-bold text-gray-900">Our Promise</p>
               <p className="mb-0 text-gray-700">
-                We built the 7 Minute AgentClone Course to genuinely help real estate agents like you succeed with AI video marketing. If the course doesn't work for you, we don't want your money. Simple as that. Your satisfaction and success are what matter most to us. We believe in our product so much that we're willing to stand behind it 100% with this generous guarantee.
+                We built the CloneYourself Video System to genuinely help professionals like you succeed with AI video marketing. If the course doesn't work for you, we don't want your money. Simple as that. Your satisfaction and success are what matter most to us. We believe in our product so much that we're willing to stand behind it 100% with this generous guarantee.
               </p>
             </div>
           </div>
