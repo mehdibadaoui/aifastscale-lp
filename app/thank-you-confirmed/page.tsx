@@ -67,8 +67,8 @@ function ThankYouContent() {
     hasTrackedPurchase.current = true
 
     // Determine product and value based on purchase type
-    let productName = '7 Minute AgentClone'
-    let value = 37
+    let productName = 'CloneYourself Video System'
+    let value = 47.82
 
     if (purchased === 'oto-premium') {
       productName = '6-Month Content Partner'

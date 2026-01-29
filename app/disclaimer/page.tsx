@@ -48,6 +48,7 @@ export default function Disclaimer() {
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
+                <p className="text-gray-700">Phone: +1 (307) 335-5058</p>
               </div>
             </section>
 

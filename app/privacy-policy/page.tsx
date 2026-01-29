@@ -62,6 +62,7 @@ export default function PrivacyPolicy() {
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
+                <p className="text-gray-700">Phone: +1 (307) 335-5058</p>
               </div>
             </section>
 
@@ -136,11 +137,60 @@ export default function PrivacyPolicy() {
                 <li>Send marketing communications (with your consent)</li>
                 <li>Analyze usage patterns and optimize user experience</li>
               </ul>
+
+              <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
+                Legal Basis for Processing (GDPR):
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                For users in the European Economic Area (EEA), we process your data under the following legal bases:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li><strong>Contract Performance:</strong> Processing necessary to deliver the course you purchased</li>
+                <li><strong>Legitimate Interests:</strong> Improving our services, fraud prevention, customer support</li>
+                <li><strong>Consent:</strong> Marketing communications and non-essential cookies (you may withdraw consent anytime via our cookie banner or unsubscribe links)</li>
+                <li><strong>Legal Obligation:</strong> Tax records, regulatory compliance, responding to legal requests</li>
+              </ul>
             </section>
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                5. Payment Processing & PCI-DSS Compliance
+                5. Email Communications & CAN-SPAM Compliance
+              </h2>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                We comply with the CAN-SPAM Act of 2003 and all applicable email marketing regulations.
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Our Email Practices:
+              </h3>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li><strong>Clear Identification:</strong> All marketing emails clearly identify Velon LLC as the sender</li>
+                <li><strong>Physical Address:</strong> Every email includes our physical mailing address: 30 N Gould St Ste R, Sheridan, WY 82801</li>
+                <li><strong>Unsubscribe Mechanism:</strong> Every marketing email contains a clear, conspicuous unsubscribe link</li>
+                <li><strong>Opt-Out Honoring:</strong> We process all unsubscribe requests within 10 business days</li>
+                <li><strong>No Deception:</strong> We never use deceptive subject lines or misleading header information</li>
+                <li><strong>Third-Party Compliance:</strong> We do not sell or transfer email addresses to third parties for their marketing purposes</li>
+              </ul>
+
+              <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
+                How to Unsubscribe:
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                You can opt out of marketing communications at any time by:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li>Clicking the &quot;unsubscribe&quot; link at the bottom of any marketing email</li>
+                <li>Emailing support@aifastscale.com with &quot;UNSUBSCRIBE&quot; in the subject line</li>
+                <li>Replying to any marketing email with &quot;UNSUBSCRIBE&quot;</li>
+              </ul>
+              <p className="leading-relaxed text-gray-700">
+                <strong>Note:</strong> Unsubscribing from marketing emails will NOT affect transactional emails (order confirmations, access credentials, support responses).
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="mb-4 text-2xl font-black text-gray-900">
+                6. Payment Processing & PCI-DSS Compliance
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 <strong>Important:</strong> We do NOT store, process, or have access to your full credit card information. All payment processing is handled by our PCI-DSS Level 1 certified payment processor (Whop).
@@ -175,7 +225,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                6. Information Sharing and Disclosure
+                7. Information Sharing and Disclosure
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We do not sell your personal information. We may share your
@@ -207,7 +257,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                7. Cookies and Tracking Technologies
+                8. Cookies and Tracking Technologies
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We use cookies, pixels, and similar tracking technologies to enhance your experience and analyze website performance. By using our website, you consent to our use of these technologies.
@@ -242,7 +292,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                8. Data Retention
+                9. Data Retention
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We retain your personal information only as long as necessary to fulfill the purposes outlined in this Privacy Policy:
@@ -259,7 +309,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                9. Data Security
+                10. Data Security
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 We implement appropriate technical and organizational security
@@ -282,7 +332,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                10. Your Privacy Rights (GDPR & CCPA)
+                11. Your Privacy Rights (GDPR & CCPA)
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 Depending on your location, you may have the following rights under GDPR (European Union) and CCPA (California):
@@ -352,7 +402,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                11. Children's Privacy
+                12. Children's Privacy
               </h2>
               <p className="leading-relaxed text-gray-700">
                 Our service is not intended for individuals under the age of 18.
@@ -364,7 +414,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                12. International Data Transfers
+                13. International Data Transfers
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 Your information may be transferred to and maintained on
@@ -382,7 +432,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                13. Changes to This Privacy Policy
+                14. Changes to This Privacy Policy
               </h2>
               <p className="leading-relaxed text-gray-700">
                 We may update our Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will
@@ -400,7 +450,7 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                14. Contact Us
+                15. Contact Us
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 If you have any questions about this Privacy Policy, please
@@ -411,6 +461,7 @@ export default function PrivacyPolicy() {
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
+                <p className="text-gray-700">Phone: +1 (307) 335-5058</p>
               </div>
             </section>
           </div>

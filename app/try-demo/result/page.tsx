@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Download, Play, Sparkles, CheckCircle, Star, Shield, Clock, Zap, Users, TrendingUp, ArrowRight, MessageCircle, Target, Video, Lock, Verified, Check, Gift, Crown, Flame, Award, Heart } from 'lucide-react'
 import Image from 'next/image'
 
-// Whop checkout link for $37
+// Whop checkout link for $47.82
 const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_7x5Kz1cflmrYH'
 
 export default function VideoResultPage() {
@@ -63,7 +63,7 @@ export default function VideoResultPage() {
       } ${className}`}
     >
       <Sparkles className={`flex-shrink-0 ${size === 'large' ? 'h-4 w-4 sm:h-6 sm:w-6' : 'h-4 w-4 sm:h-5 sm:w-5'}`} />
-      <span>Get Instant Access - $37</span>
+      <span>Get Instant Access - $47.82</span>
       <ArrowRight className={`flex-shrink-0 transition-transform group-hover:translate-x-1 ${size === 'large' ? 'h-4 w-4 sm:h-6 sm:w-6' : 'h-4 w-4 sm:h-5 sm:w-5'}`} />
     </a>
   )
@@ -662,7 +662,7 @@ export default function VideoResultPage() {
                   <span className="text-slate-400 line-through text-xl">$1,202</span>
                 </div>
                 <p className="text-violet-600 font-bold mb-1">Get Everything For Just</p>
-                <p className="text-6xl font-black bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent mb-2 sm:text-7xl">$37</p>
+                <p className="text-6xl font-black bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent mb-2 sm:text-7xl">$47.82</p>
                 <p className="text-emerald-600 font-bold mb-6">Save $1,165 (97% off)</p>
 
                 <CTAButton size="large" />
@@ -751,7 +751,7 @@ export default function VideoResultPage() {
                     <h3 className="mb-2 text-base font-black text-slate-900 sm:text-lg">"Is there a monthly subscription?"</h3>
                     <div className="rounded-xl bg-emerald-50 p-3 ring-1 ring-emerald-200 sm:p-4">
                       <p className="text-sm text-slate-700 sm:text-base">
-                        <span className="font-black text-emerald-600">No. You pay once — you own it forever.</span> This is lifetime access with free monthly updates. No hidden fees, no recurring charges, no surprises. One payment of $37 and you're in for life.
+                        <span className="font-black text-emerald-600">No. You pay once — you own it forever.</span> This is lifetime access with free monthly updates. No hidden fees, no recurring charges, no surprises. One payment of $47.82 and you're in for life.
                       </p>
                     </div>
                   </div>
@@ -916,7 +916,7 @@ export default function VideoResultPage() {
                   <p className="mb-1 text-xs sm:text-sm text-white/70">Total Value: $1,202</p>
                   <p className="mb-2 text-xs sm:text-sm text-white/70"><s>Regular Price: $197</s></p>
                   <p className="text-3xl font-black text-white sm:text-5xl">
-                    Today: <span className="text-yellow-300">$37</span>
+                    Today: <span className="text-yellow-300">$47.82</span>
                   </p>
                   <p className="mt-2 text-xs sm:text-sm text-emerald-300 font-semibold">Save $160 (81% off)</p>
                 </div>

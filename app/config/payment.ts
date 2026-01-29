@@ -12,8 +12,8 @@ export const PAYMENT_CONFIG = {
     // Main Course
     mainCourse: {
       id: '', // Add your plan ID
-      price: 37,
-      name: 'AgentClone 7-Minute System',
+      price: 47.82,
+      name: 'CloneYourself Video System',
     },
     // Upsell - Done-For-You Package
     upsell: {

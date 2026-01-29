@@ -190,7 +190,7 @@ export default function SpinWheel({ isOpen, onClose, onWin, onSpinComplete }: Sp
         onClose={() => setShowCheckout(false)}
         planId={PAYMENT_CONFIG.plans.mainCourse.id}
         planName={`7-Minute AgentClone (${prize?.label})`}
-        price={prize ? `$${(37 * (1 - prize.discount / 100)).toFixed(2)}` : '$37'}
+        price={prize ? `$${(47.82 * (1 - prize.discount / 100)).toFixed(2)}` : '$47.82'}
       />
     </>
   )

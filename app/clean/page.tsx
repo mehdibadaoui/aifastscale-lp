@@ -466,7 +466,7 @@ export default function CleanLandingPage() {
             <div className={`mt-4 sm:mt-5 flex flex-col items-center gap-2 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-2 sm:gap-3 bg-white/5 border border-white/10 rounded-full px-4 py-2">
                 <span className="text-gray-400 text-sm line-through">$1,696</span>
-                <span className="text-gold-premium font-black text-lg sm:text-xl">$37</span>
+                <span className="text-gold-premium font-black text-lg sm:text-xl">$47.82</span>
                 <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">98% OFF</span>
               </div>
               <p className="text-gray-500 text-xs sm:text-sm">One-time payment • Lifetime access • 30-day guarantee</p>
@@ -1258,7 +1258,7 @@ export default function CleanLandingPage() {
               <div className="bg-gradient-to-r from-gold-premium/20 to-gold-premium/10 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-gold-premium/40">
                 <p className="text-gold-premium font-bold text-sm sm:text-base mb-2">Get Everything Above For Just</p>
                 <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2">
-                  <span className="text-5xl sm:text-7xl font-black text-gold-premium">$37</span>
+                  <span className="text-5xl sm:text-7xl font-black text-gold-premium">$47.82</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm sm:text-base font-black block">SAVE $1,659</span>
                     <p className="text-gray-400 text-xs sm:text-sm mt-1">One-time payment</p>
@@ -1288,7 +1288,7 @@ export default function CleanLandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2 sm:gap-3">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
-                  Claim My $1,659 Bundle for $37
+                  Claim My $1,659 Bundle for $47.82
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
@@ -1602,7 +1602,7 @@ export default function CleanLandingPage() {
                   <div>
                     <p className="text-white text-lg sm:text-xl leading-relaxed mb-5">
                       <span className="text-gold-premium font-bold">$46,250 commission</span> from a 7-minute video.
-                      My videographer wanted $2,000 to shoot that villa. I spent <span className="text-gold-premium font-bold">$37</span> on this system and
+                      My videographer wanted $2,000 to shoot that villa. I spent <span className="text-gold-premium font-bold">$47.82</span> on this system and
                       the AI video outperformed everything I ever paid for.
                     </p>
                     <div className="flex items-center gap-4">
@@ -1920,7 +1920,7 @@ export default function CleanLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
                     <h3 className="font-bold text-black text-sm sm:text-base">AgentClone AI</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-black mb-1 sm:mb-2">$37<span className="text-sm sm:text-lg text-black/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-black mb-1 sm:mb-2">$47.82<span className="text-sm sm:text-lg text-black/70"> one-time</span></div>
                   <p className="text-black/70 text-xs sm:text-sm">Unlimited videos forever</p>
                 </div>
               </div>
@@ -1932,7 +1932,7 @@ export default function CleanLandingPage() {
             }`}>
               {/* Price */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-5xl sm:text-7xl font-black text-gold-premium">$37</span>
+                <span className="text-5xl sm:text-7xl font-black text-gold-premium">$47.82</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE $1,659</span>
                   <p className="text-gray-400 text-xs sm:text-sm mt-1">One-time payment</p>
@@ -2253,7 +2253,7 @@ export default function CleanLandingPage() {
             <div className="bg-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-gold-premium">$37</span>
+                <span className="text-3xl sm:text-5xl font-black text-gold-premium">$47.82</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE $1,659</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>

@@ -55,7 +55,7 @@ export default function FullSalesContent({ generatedVideo }: FullSalesContentPro
       {/* Shine effect */}
       <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
       <Sparkles className={`relative z-10 flex-shrink-0 ${size === 'large' ? 'h-5 w-5 sm:h-6 sm:w-6' : 'h-4 w-4 sm:h-5 sm:w-5'}`} />
-      <span className="relative z-10">Get Instant Access - $37</span>
+      <span className="relative z-10">Get Instant Access - $47.82</span>
       <ArrowRight className={`relative z-10 flex-shrink-0 transition-transform group-hover:translate-x-1 ${size === 'large' ? 'h-5 w-5 sm:h-6 sm:w-6' : 'h-4 w-4 sm:h-5 sm:w-5'}`} />
     </a>
   )
@@ -562,7 +562,7 @@ export default function FullSalesContent({ generatedVideo }: FullSalesContentPro
                 <span className="text-slate-400 line-through text-xl">$1,202</span>
               </div>
               <p className="text-violet-600 font-bold mb-1">Get Everything For Just</p>
-              <p className="text-6xl font-black bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent mb-2 sm:text-7xl">$37</p>
+              <p className="text-6xl font-black bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent mb-2 sm:text-7xl">$47.82</p>
               <p className="text-emerald-600 font-bold mb-6">Save $1,165 (97% off)</p>
 
               <CTAButton size="large" />
@@ -651,7 +651,7 @@ export default function FullSalesContent({ generatedVideo }: FullSalesContentPro
                   <h3 className="mb-2 text-base font-black text-slate-900 sm:text-lg">"Is there a monthly subscription?"</h3>
                   <div className="rounded-xl bg-emerald-50 p-3 ring-1 ring-emerald-200 sm:p-4">
                     <p className="text-sm text-slate-700 sm:text-base">
-                      <span className="font-black text-emerald-600">No. You pay once — you own it forever.</span> This is lifetime access with free monthly updates. No hidden fees, no recurring charges, no surprises. One payment of $37 and you're in for life.
+                      <span className="font-black text-emerald-600">No. You pay once — you own it forever.</span> This is lifetime access with free monthly updates. No hidden fees, no recurring charges, no surprises. One payment of $47.82 and you're in for life.
                     </p>
                   </div>
                 </div>

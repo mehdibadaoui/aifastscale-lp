@@ -8,8 +8,9 @@
 // ============================================================================
 
 export const SITE_CONFIG = {
-  name: 'AI FastScale',
-  tagline: '7-Minute AgentClone',
+  name: 'CloneYourself Video System',
+  companyName: 'Velon LLC',
+  tagline: 'AI Videos for Professionals',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://aifastscale.com',
   supportEmail: 'support@aifastscale.com',
 } as const
@@ -19,12 +20,12 @@ export const SITE_CONFIG = {
 // ============================================================================
 
 export const PRICING = {
-  current: 37,
+  current: 47.82,
   original: 1691,
   currency: 'USD',
   currencySymbol: '$',
-  discount: 0.98, // 98% off
-  savings: 60, // $60 off messaging
+  discount: 0.97, // 97% off
+  savings: 60, // savings messaging
   midnight_price: 97, // Price after midnight
 } as const
 

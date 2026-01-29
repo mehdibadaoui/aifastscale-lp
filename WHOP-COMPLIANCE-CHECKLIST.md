@@ -19,9 +19,29 @@ This document contains all compliance requirements to prevent Whop account suspe
 | **Business Address** | 30 N Gould St Ste R, Sheridan, WY 82801 |
 | **Owner/Organizer** | Mohammed Elmehdi Badaoui |
 | **Support Email** | support@aifastscale.com |
+| **Phone Number** | +1 (307) 335-5058 |
 | **Product Price** | $47.82 USD (one-time) |
 | **Upsell Price** | $9.95 USD (one-time) |
 | **Downsell Price** | $4.95 USD (one-time) |
+
+---
+
+## GDPR Cookie Consent Requirements
+
+### Cookie Banner Implementation
+- [x] Cookie consent banner displays BEFORE tracking scripts load
+- [x] Three-button design: "Accept All" | "Manage Preferences" | "Reject Non-Essential"
+- [x] Consent stored in localStorage with key `cookie_consent`
+- [x] Meta Pixel ONLY loads after explicit consent
+- [x] Consent persists across sessions
+- [x] Mobile responsive design
+- [x] Link to Privacy Policy included
+
+### Files Modified for GDPR Compliance
+- `/app/components/CookieConsent.tsx` - Cookie consent banner component
+- `/app/components/MetaPixel.tsx` - Consent-aware Meta Pixel
+- `/app/components/RootLayoutPixels.tsx` - Consent-aware root pixels
+- `/app/layout.tsx` - Cookie consent integration
 
 ---
 
@@ -241,6 +261,22 @@ Email: support@aifastscale.com
 | Date | Changes |
 |------|---------|
 | 2026-01-29 | Initial compliance setup - Fixed from "AI FastScale LLC" to "Velon LLC" |
+| 2026-01-29 | Fixed all pricing from $37 to $47.82 across all files |
+| 2026-01-29 | Updated JSON-LD structured data in layout.tsx (Product, FAQ, Organization, LocalBusiness, Video) |
+| 2026-01-29 | Fixed constants.ts PRICING.current from 37 to 47.82 |
+| 2026-01-29 | Fixed payment.ts mainCourse.price from 37 to 47.82 |
+| 2026-01-29 | Fixed MetaPixel.tsx tracking value from 37 to 47.82 |
+| 2026-01-29 | Fixed SpinWheel.tsx price calculation from $37 base to $47.82 |
+| 2026-01-29 | Updated product-feed.xml with correct pricing and Velon LLC brand |
+| 2026-01-29 | Updated all JSON-LD addresses from Dubai to Wyoming (Sheridan, WY 82801) |
+| 2026-01-29 | Added GDPR Cookie Consent Banner (CookieConsent.tsx) |
+| 2026-01-29 | Meta Pixel now consent-aware - only loads after Accept All |
+| 2026-01-29 | Added CAN-SPAM compliance section to Privacy Policy |
+| 2026-01-29 | Added GDPR Legal Basis section to Privacy Policy |
+| 2026-01-29 | Added $50 "Better Than Risk-Free" Guarantee to Refund Policy |
+| 2026-01-29 | Added FTC testimonial disclaimers to lawyers page (3 case studies) |
+| 2026-01-29 | Added AI content disclosure near video demos |
+| 2026-01-29 | Added phone number +1 (307) 335-5058 to all legal pages |
 
 ---
 

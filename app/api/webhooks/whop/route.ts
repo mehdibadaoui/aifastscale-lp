@@ -117,8 +117,8 @@ const PRODUCTS = {
   },
   realestate: {
     membersUrl: 'https://aifastscale.com/members',
-    productName: '7-Minute AgentClone',
-    price: '37.00',
+    productName: 'CloneYourself Video System',
+    price: '47.82',
     accentColor: '#14b8a6'
   },
   'plastic-surgeon': {
@@ -722,11 +722,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Record main course purchase with revenue
-    let mainPrice = 37 // Default for realestate
-    if (productType === 'plastic-surgeon') mainPrice = 47.82
-    else if (productType === 'psychologist') mainPrice = 47.82
-    else if (productType === 'lawyer') mainPrice = 47.82
-    else if (productType === 'dentist') mainPrice = 47
+    let mainPrice = 47.82 // Default price
+    if (productType === 'dentist') mainPrice = 47.82
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
     // Send welcome email with personalized credentials

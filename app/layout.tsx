@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import LazyTrackingPixels from './components/LazyTrackingPixels'
 import RootLayoutPixels from './components/RootLayoutPixels'
+import CookieConsent from './components/CookieConsent'
 import { SITE_CONFIG } from './config/constants'
 
 // Premium font: Inter for body text - only essential weights for performance
@@ -26,14 +27,14 @@ const plusJakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  title: '7-Min AI Videos | 100+ Real Estate Leads UAE | $37',
+  title: 'CloneYourself Video System | AI Videos for Professionals | $47.82',
   description:
-    'UAE & Dubai real estate agents: Turn photos into AI talking videos in 7 min. Generate 15 leads/week. No camera needed. $37 course.',
+    'Create AI talking videos in minutes. Perfect for lawyers, dentists, psychologists, and professionals. One-time $47.82 payment, lifetime access.',
   keywords:
-    'AI video, real estate marketing, talking AI videos, lead generation, real estate agents, AI agent clone, video marketing, property listing videos',
-  authors: [{ name: 'AI FastScale' }],
-  creator: 'AI FastScale',
-  publisher: 'AI FastScale',
+    'AI video, professional marketing, talking AI videos, lead generation, lawyer marketing, dentist marketing, AI video course',
+  authors: [{ name: 'Velon LLC' }],
+  creator: 'Velon LLC',
+  publisher: 'Velon LLC',
   formatDetection: {
     email: false,
     address: false,
@@ -45,11 +46,11 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      'AI FastScale – 7-Minute AgentClone™ | Turn Photos Into Talking AI Videos',
+      'CloneYourself Video System | AI Videos for Professionals',
     description:
-      'Turn a photo into a realistic talking AI video in 7 minutes. Get 5-15 leads this week, 100+ real buyer leads monthly. Built for real estate agents.',
+      'Create realistic AI talking videos in minutes. Perfect for lawyers, dentists, psychologists, and service professionals. One-time payment, lifetime access.',
     url: SITE_CONFIG.url,
-    siteName: 'AI FastScale',
+    siteName: 'CloneYourself Video System',
     images: [
       {
         url: '/images/P1_result.webp',
@@ -63,9 +64,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI FastScale – 7-Minute AgentClone™',
+    title: 'CloneYourself Video System | AI Videos for Professionals',
     description:
-      'Turn a photo into a realistic talking AI video in 7 minutes. Get 5-15 leads this week. Built for real estate agents.',
+      'Create realistic AI talking videos in minutes. Perfect for lawyers, dentists, psychologists, and service professionals.',
     images: ['/images/P1_result.webp'],
     creator: '@aifastscale',
   },
@@ -205,24 +206,24 @@ export default function RootLayout({
                 {
                   '@type': 'Product',
                   '@id': 'https://aifastscale.com/#product',
-                  name: '7 Minute AgentClone',
+                  name: 'CloneYourself Video System',
                   description:
-                    'Turn a photo into a realistic talking AI video in 7 minutes. Complete step-by-step blueprint for real estate agents to generate 100+ leads monthly.',
+                    'Turn a photo into a realistic talking AI video in minutes. Complete step-by-step system for professionals to create AI videos.',
                   image: 'https://aifastscale.com/images/P1_result.webp',
                   brand: {
                     '@type': 'Brand',
-                    name: 'AI FastScale',
+                    name: 'CloneYourself Video System',
                   },
                   offers: {
                     '@type': 'Offer',
                     url: 'https://aifastscale.com',
                     priceCurrency: 'USD',
-                    price: '37',
+                    price: '47.82',
                     availability: 'https://schema.org/InStock',
-                    priceValidUntil: '2025-12-31',
+                    priceValidUntil: '2026-12-31',
                     seller: {
                       '@type': 'Organization',
-                      name: 'AI FastScale',
+                      name: 'Velon LLC',
                     },
                   },
                   aggregateRating: {
@@ -242,15 +243,15 @@ export default function RootLayout({
                       name: 'How long does it take to create an AI video?',
                       acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'With the 7-Minute AgentClone system, you can create professional talking AI videos in just 7 minutes. No technical skills or filming required.',
+                        text: 'With the CloneYourself Video System, you can create professional talking AI videos in minutes. No technical skills or filming required.',
                       },
                     },
                     {
                       '@type': 'Question',
-                      name: 'Will this work for real estate agents in UAE and Dubai?',
+                      name: 'Who is this product for?',
                       acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'Yes! The 7-Minute AgentClone works perfectly for UAE real estate agents in Dubai, Abu Dhabi, and Sharjah. Generate 5-15 leads per week with AI videos.',
+                        text: 'The CloneYourself Video System is designed for professionals including lawyers, dentists, psychologists, plastic surgeons, and other service professionals who want to create AI videos for their practice.',
                       },
                     },
                     {
@@ -258,7 +259,7 @@ export default function RootLayout({
                       name: 'Do I need to film myself or hire actors?',
                       acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'No filming needed! Simply upload a photo and the AI creates a realistic talking video. Perfect for agents who want professional videos without being on camera.',
+                        text: 'No filming needed! Simply upload a photo and the AI creates a realistic talking video. Perfect for professionals who want marketing videos without being on camera.',
                       },
                     },
                     {
@@ -266,7 +267,7 @@ export default function RootLayout({
                       name: 'What is the refund policy?',
                       acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'We offer a 30-day money-back guarantee. If you are not satisfied with the 7-Minute AgentClone course, request a full refund within 30 days.',
+                        text: 'We offer a 30-day money-back guarantee. If you are not satisfied with the CloneYourself Video System, request a full refund within 30 days.',
                       },
                     },
                     {
@@ -274,7 +275,7 @@ export default function RootLayout({
                       name: 'How many videos can I create?',
                       acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'Unlimited! After the one-time $37 investment, create as many AI talking videos as you want at no extra cost. No monthly subscriptions.',
+                        text: 'Unlimited! After the one-time $47.82 investment, create as many AI talking videos as you want at no extra cost. No monthly subscriptions.',
                       },
                     },
                   ],
@@ -282,7 +283,7 @@ export default function RootLayout({
                 {
                   '@type': 'Organization',
                   '@id': 'https://aifastscale.com/#organization',
-                  name: 'AI FastScale',
+                  name: 'Velon LLC',
                   url: 'https://aifastscale.com',
                   logo: {
                     '@type': 'ImageObject',
@@ -290,40 +291,50 @@ export default function RootLayout({
                     width: 1200,
                     height: 630,
                   },
+                  address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: '30 N Gould St Ste R',
+                    addressLocality: 'Sheridan',
+                    addressRegion: 'WY',
+                    postalCode: '82801',
+                    addressCountry: 'US',
+                  },
                   contactPoint: {
                     '@type': 'ContactPoint',
                     contactType: 'Customer Service',
-                    areaServed: ['AE', 'SA', 'US', 'GB'],
-                    availableLanguage: ['English', 'Arabic'],
+                    areaServed: ['US', 'GB', 'AE', 'SA'],
+                    availableLanguage: ['English'],
                   },
                 },
                 {
                   '@type': 'LocalBusiness',
                   '@id': 'https://aifastscale.com/#localbusiness',
-                  name: 'AI FastScale',
+                  name: 'Velon LLC',
                   description:
-                    'AI video creation platform for real estate agents in UAE. Turn photos into talking AI videos in 7 minutes.',
+                    'AI video creation system for professionals. Turn photos into talking AI videos in minutes.',
                   url: 'https://aifastscale.com',
                   address: {
                     '@type': 'PostalAddress',
-                    addressLocality: 'Dubai',
-                    addressRegion: 'Dubai',
-                    addressCountry: 'AE',
+                    streetAddress: '30 N Gould St Ste R',
+                    addressLocality: 'Sheridan',
+                    addressRegion: 'WY',
+                    postalCode: '82801',
+                    addressCountry: 'US',
                   },
                   geo: {
                     '@type': 'GeoCoordinates',
-                    latitude: 25.2048,
-                    longitude: 55.2708,
+                    latitude: 44.7972,
+                    longitude: -106.9561,
                   },
-                  priceRange: '$37',
+                  priceRange: '$47.82',
                   openingHours: 'Mo-Su 00:00-23:59',
                 },
                 {
                   '@type': 'VideoObject',
                   '@id': 'https://aifastscale.com/#herovideo',
-                  name: '7-Minute AgentClone Demo - Turn Photos Into Talking AI Videos',
+                  name: 'CloneYourself Video System Demo - Turn Photos Into Talking AI Videos',
                   description:
-                    'Watch how real estate agents create professional AI videos in 7 minutes to generate 100+ leads monthly.',
+                    'Watch how professionals create AI videos in minutes for their practice marketing.',
                   thumbnailUrl: 'https://aifastscale.com/images/P1_result.webp',
                   uploadDate: '2025-01-01',
                   duration: 'PT4M25S',
@@ -343,6 +354,8 @@ export default function RootLayout({
         {/* Lazy load tracking pixels (TikTok + Meta) - path-aware */}
         <LazyTrackingPixels />
         {children}
+        {/* GDPR-compliant cookie consent banner */}
+        <CookieConsent />
       </body>
     </html>
   )

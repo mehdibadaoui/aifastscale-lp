@@ -3,15 +3,15 @@ import Link from 'next/link'
 import { ArrowLeft, Plus, Minus } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'FAQ - AI FastScale | Common Questions About AI Video Marketing for Real Estate',
+  title: 'FAQ - CloneYourself Video System | Common Questions',
   description:
-    'Frequently asked questions about AI FastScale: pricing, features, AI video creation, lead generation for UAE real estate agents. Get answers to all your questions.',
+    'Frequently asked questions about the CloneYourself Video System: pricing, features, AI video creation, professional lead generation. Get answers to all your questions.',
   keywords:
-    'AI FastScale FAQ, AI video questions, real estate AI help, Dubai agent questions, AI video pricing, how AI videos work',
+    'CloneYourself FAQ, AI video questions, professional AI video help, AI video pricing, how AI videos work',
   openGraph: {
-    title: 'Frequently Asked Questions - AI FastScale',
+    title: 'Frequently Asked Questions - CloneYourself Video System',
     description:
-      'Get answers to common questions about creating AI videos for real estate. Pricing, features, results, and more.',
+      'Get answers to common questions about creating AI videos for professionals. Pricing, features, results, and more.',
     url: 'https://aifastscale.com/faq',
     type: 'website',
   },
@@ -26,228 +26,206 @@ export default function FAQPage() {
       category: 'Getting Started',
       questions: [
         {
-          q: 'What is AI FastScale?',
-          a: 'AI FastScale is a platform that helps real estate agents create AI-powered talking videos in 7 minutes. Upload your photo, paste your script, and our AI generates a professional video of you speaking—without filming.',
+          q: 'What is the CloneYourself Video System?',
+          a: 'The CloneYourself Video System is a training course that teaches professionals (lawyers, dentists, psychologists, plastic surgeons, and other service professionals) how to create AI-powered talking videos. Upload your photo, provide your script, and AI generates a professional video of you speaking—without filming.',
         },
         {
           q: 'Do I need video editing experience?',
-          a: 'No. AI FastScale is designed for complete beginners. If you can upload a photo and paste text, you can create professional videos. No filming, no editing, no technical skills required.',
+          a: 'No. The system is designed for complete beginners. If you can upload a photo and paste text, you can create professional videos. No filming, no editing, no technical skills required.',
         },
         {
           q: 'How long does it take to create a video?',
-          a: 'About 7 minutes from start to finish. Upload photo (1 min), write script (3 min), generate video (3 min). Most agents batch-create 10 videos in one hour.',
+          a: 'About 7-20 minutes from start to finish. Upload photo (1 min), write script (3-10 min), generate video (3-5 min). Most professionals batch-create multiple videos in one session.',
         },
         {
           q: 'Do AI videos look realistic?',
-          a: 'Yes. Our AI produces videos where 90% of viewers believe the person is actually speaking. The lip-sync is natural, facial movements are realistic, and the quality is high enough for Instagram Reels, TikTok, and professional use.',
+          a: 'Yes. The AI produces videos where the vast majority of viewers believe the person is actually speaking. The lip-sync is natural, facial movements are realistic, and the quality is high enough for Instagram Reels, TikTok, YouTube, and professional use.',
         },
       ],
     },
     {
-      category: 'Pricing & Plans',
+      category: 'Pricing & Payment',
       questions: [
         {
-          q: 'How much does AI FastScale cost?',
-          a: '$37 per month for unlimited videos. No per-video fees, no hidden costs, no watermarks. Cancel anytime.',
+          q: 'How much does the CloneYourself Video System cost?',
+          a: '$47.82 USD one-time payment for lifetime access. This is NOT a subscription—you pay once and get access forever. No monthly fees, no hidden costs, no recurring charges.',
         },
         {
-          q: 'Is there a free trial?',
-          a: 'We offer a 30-day money-back guarantee instead of a free trial. Try AI FastScale for a full month—if you don\'t love it or don\'t see results, get a complete refund. No questions asked.',
+          q: 'Is this a subscription?',
+          a: 'NO. This is a ONE-TIME payment of $47.82. You pay once and get lifetime access to all course materials and future updates. There are NO recurring charges or monthly fees.',
         },
         {
           q: 'What payment methods do you accept?',
-          a: 'We accept all major credit cards (Visa, MasterCard, American Express) via our secure payment processor. Payments are secure and processed instantly.',
-        },
-        {
-          q: 'Can I cancel anytime?',
-          a: 'Yes. Cancel anytime from your account dashboard. No contracts, no cancellation fees. Your access continues until the end of your billing period.',
+          a: 'We accept all major credit cards (Visa, MasterCard, American Express) and debit cards via our secure PCI-DSS Level 1 certified payment processor (Whop). Payments are secure and processed instantly.',
         },
         {
           q: 'Do you offer refunds?',
-          a: 'Yes. 30-day money-back guarantee. If AI FastScale doesn\'t work for you within the first 30 days, email us for a full refund. We\'ll process it within 24-48 hours.',
+          a: 'Yes. We offer a 30-day money-back guarantee. If the CloneYourself Video System doesn\'t work for you within the first 30 days, email support@aifastscale.com for a full refund. No questions asked.',
+        },
+        {
+          q: 'Are there any additional costs?',
+          a: 'The course teaches you to use third-party AI tools (like HeyGen, ElevenLabs, etc.). These tools may have their own pricing. The course itself is a one-time $47.82 payment with no additional fees from us.',
         },
       ],
     },
     {
-      category: 'Features & Capabilities',
+      category: 'Course Content & Features',
       questions: [
         {
+          q: 'What do I get with my purchase?',
+          a: 'You get lifetime access to: Step-by-step video training modules, AI prompts and workflows, industry-specific scripts and templates, phone editing templates with captions, bonus content calendars and marketing resources, plus all future updates.',
+        },
+        {
           q: 'How many videos can I create?',
-          a: 'Unlimited. Create 10 videos per day, 100 videos per week, 1,000 videos per month—there are no limits with your $37/month subscription.',
+          a: 'Unlimited. The course teaches you the techniques—you can create as many videos as you want using the third-party AI tools covered in the training.',
         },
         {
           q: 'Can I use my own photo?',
-          a: 'Yes. Upload any photo of yourself (or use stock photos/AI avatars). Best results with clear, well-lit headshots looking at the camera.',
+          a: 'Yes. The course teaches you how to upload your own professional photo to create AI videos of yourself speaking. Best results with clear, well-lit headshots looking at the camera.',
         },
         {
-          q: 'What languages are supported?',
-          a: 'Currently English and Arabic. More languages coming soon. Many UAE agents create both English and Arabic versions to reach wider audiences.',
+          q: 'What industries is this for?',
+          a: 'The CloneYourself Video System is designed for service professionals including lawyers, dentists, psychologists, plastic surgeons, real estate agents, and other professionals who want to leverage AI video for marketing.',
         },
         {
-          q: 'Can I add music and captions?',
-          a: 'Yes. You can download your video and add music/captions using free tools like CapCut, or we can add them during video generation (feature coming soon).',
-        },
-        {
-          q: 'What video formats do you support?',
-          a: 'We export MP4 videos optimized for Instagram Reels (9:16), TikTok (9:16), YouTube (16:9), and Facebook. Choose your format during export.',
-        },
-        {
-          q: 'Do videos have watermarks?',
-          a: 'No watermarks. Your videos are 100% clean and professional. Use them anywhere—Instagram, TikTok, YouTube, website, ads.',
+          q: 'Is the content updated?',
+          a: 'Yes. AI technology evolves rapidly, and we update the course materials to reflect current best practices. All updates are included free with your one-time purchase.',
         },
       ],
     },
     {
-      category: 'Results & Effectiveness',
+      category: 'Results & Expectations',
       questions: [
         {
-          q: 'How many leads can I expect?',
-          a: 'Dubai agents using AI FastScale generate 100-200 leads monthly by posting 5-10 videos per week. Results vary based on consistency, quality of content, and your market. Most agents see their first leads within 1-2 weeks.',
+          q: 'What results can I expect?',
+          a: 'Results vary significantly based on your effort, market conditions, content quality, and implementation. Some users have reported generating new leads and clients, but these results are NOT typical and NOT guaranteed. See our disclaimer for details.',
         },
         {
-          q: 'How long until I see results?',
-          a: 'Most agents get their first leads within 1-2 weeks of posting consistently. By week 4-6, you should be generating 20-50 leads per month. By month 3, many agents hit 100+ leads monthly.',
+          q: 'How quickly will I see results?',
+          a: 'This depends entirely on you. Some users create their first video within hours of purchasing. Getting clients from those videos depends on many factors including your market, content quality, and audience. We make no guarantees about timeline or results.',
         },
         {
-          q: 'Will AI videos work in my market?',
-          a: 'Yes. AI videos work in Dubai, Abu Dhabi, Sharjah, and internationally. The Instagram and TikTok algorithms prioritize video content regardless of location.',
-        },
-        {
-          q: 'Do AI videos perform as well as real videos?',
-          a: 'Yes. In our tests, AI videos and self-filmed videos generate similar lead volumes. The key is consistency—posting 5-10 videos per week. AI makes consistency easier because it\'s faster.',
-        },
-        {
-          q: 'Can I use AI videos for paid ads?',
-          a: 'Yes. AI videos work great for Facebook ads, Instagram ads, and TikTok ads. Many agents report lower cost-per-lead with video ads vs photo ads.',
+          q: 'Do you guarantee leads or clients?',
+          a: 'NO. We do not guarantee any specific results, leads, clients, or income. The course provides educational content and tools—your results depend on your implementation, effort, market conditions, and many other factors beyond our control.',
         },
       ],
     },
     {
-      category: 'Technical & Platform',
+      category: 'Technical & Support',
       questions: [
         {
-          q: 'What devices can I use?',
-          a: 'AI FastScale works on desktop (Mac/Windows), tablets, and mobile phones (iPhone/Android). Access from any device with internet.',
-        },
-        {
-          q: 'Do I need to download software?',
-          a: 'No. AI FastScale is 100% web-based. Access from your browser—no downloads, no installations required.',
-        },
-        {
-          q: 'Is my data secure?',
-          a: 'Yes. We use bank-level encryption for all data. Your photos and videos are stored securely and never shared with third parties. Delete your data anytime from your account.',
+          q: 'How do I access the course?',
+          a: 'After purchase, you\'ll receive an email with login credentials to access the members area. You can also access it through Whop.com. Access is instant—within 5 minutes of payment.',
         },
         {
           q: 'What if I have technical issues?',
-          a: 'Email support@aifastscale.com and we\'ll respond within 24 hours (usually faster). We also have video tutorials and a knowledge base for common issues.',
+          a: 'Email support@aifastscale.com and we\'ll help you resolve any access or technical issues. We typically respond within 24-48 hours.',
+        },
+        {
+          q: 'Can I share my login with others?',
+          a: 'No. Your account is for personal use only. Sharing login credentials violates our Terms of Service and may result in account termination without refund.',
         },
       ],
     },
     {
-      category: 'Use Cases & Best Practices',
+      category: 'Legal & Compliance',
       questions: [
         {
-          q: 'What should I create videos about?',
-          a: 'Property listings, market updates, neighborhood guides, buying/selling tips, client success stories, open house announcements. Check our blog for 100+ content ideas.',
+          q: 'Who operates this website?',
+          a: 'This website is operated by Velon LLC, a Wyoming Limited Liability Company. Address: 30 N Gould St Ste R, Sheridan, WY 82801. Email: support@aifastscale.com',
         },
         {
-          q: 'How often should I post?',
-          a: 'Aim for 5-10 videos per week for best results. Batch-create content on Mondays (create 10 videos in 1 hour), then post 1-2 daily throughout the week.',
+          q: 'Are there professional compliance requirements?',
+          a: 'Yes. As a licensed professional (lawyer, doctor, etc.), YOU are responsible for ensuring your AI-generated videos comply with your state\'s licensing laws, professional association rules, and advertising regulations. We provide educational content only—not legal or compliance advice.',
         },
         {
-          q: 'Can I use AI videos for personal branding?',
-          a: 'Yes. Many agents use AI videos for daily market updates, tips, and thought leadership content to position themselves as local experts.',
-        },
-        {
-          q: 'Should I use my photo or an avatar?',
-          a: 'Use your own photo for best results. Buyers want to see YOU. Using your real photo builds trust and personal connection.',
+          q: 'What about attorney advertising rules?',
+          a: 'If you\'re an attorney, you must ensure your AI videos comply with your state bar\'s Rules of Professional Conduct regarding advertising and client solicitation. The course does not provide legal advice on bar compliance.',
         },
       ],
     },
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
-      <header className="border-b bg-white shadow-sm">
-        <div className="mx-auto max-w-4xl px-4 py-6">
+      <header className="bg-white border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 py-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-black"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm font-medium">Back to Home</span>
           </Link>
         </div>
       </header>
 
-      {/* Hero */}
-      <div className="border-b bg-white py-16">
-        <div className="mx-auto max-w-4xl px-4">
-          <h1 className="mb-4 text-center text-5xl font-black text-gray-900">
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-black text-gray-900 mb-4">
             Frequently Asked Questions
           </h1>
-          <p className="mx-auto max-w-2xl text-center text-xl text-gray-700">
-            Everything you need to know about AI FastScale, AI video creation, and generating leads
-            for your real estate business.
+          <p className="text-gray-600 text-lg">
+            Everything you need to know about the CloneYourself Video System
           </p>
         </div>
-      </div>
 
-      {/* FAQ Content */}
-      <div className="mx-auto max-w-4xl px-4 py-16">
-        {faqs.map((category, idx) => (
-          <div key={idx} className="mb-12">
-            <h2 className="mb-6 text-3xl font-black text-gray-900">{category.category}</h2>
-            <div className="space-y-4">
-              {category.questions.map((faq, qIdx) => (
-                <details
-                  key={qIdx}
-                  className="group rounded-xl border-2 border-gray-200 bg-white p-6 transition-all hover:border-yellow-400"
-                >
-                  <summary className="flex cursor-pointer items-start justify-between font-bold text-gray-900">
-                    <span className="pr-4 text-lg">{faq.q}</span>
-                    <Plus className="h-6 w-6 flex-shrink-0 text-yellow-600 group-open:hidden" />
-                    <Minus className="hidden h-6 w-6 flex-shrink-0 text-yellow-600 group-open:block" />
-                  </summary>
-                  <p className="mt-4 text-gray-700 leading-relaxed">{faq.a}</p>
-                </details>
-              ))}
+        {/* FAQ Sections */}
+        <div className="space-y-8">
+          {faqs.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              <h2 className="bg-gray-50 px-6 py-4 text-lg font-bold text-gray-900 border-b border-gray-200">
+                {section.category}
+              </h2>
+              <div className="divide-y divide-gray-100">
+                {section.questions.map((faq, faqIndex) => (
+                  <details key={faqIndex} className="group">
+                    <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                      <span className="font-medium text-gray-900 pr-4">{faq.q}</span>
+                      <Plus className="w-5 h-5 text-gray-400 group-open:hidden flex-shrink-0" />
+                      <Minus className="w-5 h-5 text-gray-400 hidden group-open:block flex-shrink-0" />
+                    </summary>
+                    <div className="px-6 pb-4 text-gray-600 leading-relaxed">
+                      {faq.a}
+                    </div>
+                  </details>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
-        {/* Still have questions CTA */}
-        <div className="mt-16 rounded-2xl border-4 border-yellow-400 bg-gradient-to-br from-yellow-50 to-orange-50 p-12 text-center">
-          <h3 className="mb-4 text-3xl font-black text-gray-900">Still Have Questions?</h3>
-          <p className="mb-6 text-lg text-gray-700">
-            Can't find the answer you're looking for? Email us and we'll respond within 24 hours.
+        {/* Contact Section */}
+        <div className="mt-12 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl border border-amber-200 p-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Still have questions?</h2>
+          <p className="text-gray-600 mb-4">
+            We're here to help. Contact our support team.
           </p>
           <a
             href="mailto:support@aifastscale.com"
-            className="inline-block rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 px-8 py-4 font-black text-black transition-transform hover:scale-105"
+            className="inline-flex items-center gap-2 bg-amber-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-amber-600 transition-colors"
           >
             Email Support
           </a>
         </div>
 
-        {/* Ready to start CTA */}
-        <div className="mt-12 rounded-2xl border-2 border-gray-200 bg-white p-12 text-center">
-          <h3 className="mb-4 text-3xl font-black text-gray-900">Ready to Get Started?</h3>
-          <p className="mb-6 text-lg text-gray-700">
-            Create unlimited AI talking videos for just $37/month. 30-day money-back guarantee.
-          </p>
-          <Link
-            href="/"
-            className="inline-block rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 px-10 py-5 text-xl font-black text-black transition-transform hover:scale-105"
-          >
-            Start Creating Videos →
-          </Link>
-          <p className="mt-4 text-sm text-gray-600">
-            No credit card required for 30-day money-back guarantee
-          </p>
+        {/* Legal Footer */}
+        <div className="mt-12 text-center text-gray-500 text-sm">
+          <p className="mb-2">Velon LLC, a Wyoming Limited Liability Company</p>
+          <p className="mb-4">30 N Gould St Ste R, Sheridan, WY 82801</p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/privacy-policy" className="hover:text-gray-700">Privacy Policy</Link>
+            <span>•</span>
+            <Link href="/terms-of-service" className="hover:text-gray-700">Terms of Service</Link>
+            <span>•</span>
+            <Link href="/refund-policy" className="hover:text-gray-700">Refund Policy</Link>
+            <span>•</span>
+            <Link href="/disclaimer" className="hover:text-gray-700">Disclaimer</Link>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

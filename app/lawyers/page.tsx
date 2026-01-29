@@ -1152,6 +1152,12 @@ export default function PlasticAttorneyLandingPage() {
                     <span className="text-white text-sm font-medium">Board-Certified Attorney • Verified Results</span>
                   </div>
                 </div>
+
+                {/* AI Content Disclosure */}
+                <p className="text-center text-gray-500 text-[10px] sm:text-xs mt-3 flex items-center justify-center gap-2">
+                  <span className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">AI</span>
+                  Video demonstrations on this page were created using AI video generation technology—the same technology taught in this course.
+                </p>
               </div>
 
               {/* Results Strip */}
@@ -1258,6 +1264,11 @@ export default function PlasticAttorneyLandingPage() {
               </div>
             </div>
           </div>
+
+          {/* FTC Disclaimer after Case Study */}
+          <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-gray-300 bg-gray-100/50">
+            *RESULTS NOT TYPICAL: This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline">See full disclaimer</a>.
+          </p>
         </div>
       </section>
 
@@ -1907,6 +1918,11 @@ export default function PlasticAttorneyLandingPage() {
               </div>
             </div>
           </div>
+
+          {/* FTC Disclaimer after Case Study */}
+          <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-amber-500/30 bg-amber-50/30">
+            *RESULTS NOT TYPICAL: This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline">See full disclaimer</a>.
+          </p>
         </div>
       </section>
 
@@ -2003,6 +2019,11 @@ export default function PlasticAttorneyLandingPage() {
                 </div>
               </div>
             </div>
+
+            {/* FTC Disclaimer after Case Study */}
+            <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-yellow-500/30 bg-white/5">
+              *RESULTS NOT TYPICAL: This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-yellow-500 hover:text-yellow-400 underline">See full disclaimer</a>.
+            </p>
           </div>
         </div>
       </section>
