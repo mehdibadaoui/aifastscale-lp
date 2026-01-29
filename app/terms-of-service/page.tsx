@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Terms of Service | AI FastScale',
-  description: 'Terms of Service for AI FastScale LLC - CloneYourself Video System',
+  description: 'Terms of Service for Velon LLC - CloneYourself Video System',
 }
 
 export default function TermsOfService() {
@@ -38,7 +38,7 @@ export default function TermsOfService() {
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 These Terms of Service ("Terms") constitute a legally binding
-                agreement between you and <strong>AI FastScale LLC, a Wyoming Limited Liability Company</strong> ("Company," "we," "us,"
+                agreement between you and <strong>Velon LLC, a Wyoming Limited Liability Company</strong> ("Company," "we," "us,"
                 or "our") concerning your access to and use of the AI FastScale
                 website and the CloneYourself Video System courses and products.
               </p>
@@ -57,8 +57,9 @@ export default function TermsOfService() {
                 All services provided through this website are offered by:
               </p>
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
-                <p className="mb-1 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="mb-1 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
               </div>
             </section>
@@ -84,7 +85,7 @@ export default function TermsOfService() {
                 </li>
               </ul>
               <p className="leading-relaxed text-gray-700">
-                <strong>Pricing:</strong> Product pricing varies by industry and promotional offers. Current prices are displayed at checkout and typically range from $37 to $47.82 USD (subject to change). Upsell products may be offered at additional prices. All prices are clearly displayed before purchase.
+                <strong>Pricing:</strong> The standard price is $47.82 USD (one-time payment). Upsell products are available at $9.95 USD and downsell products at $4.95 USD. All prices are clearly displayed at checkout before purchase. Promotional pricing may be offered from time to time.
               </p>
             </section>
 
@@ -196,7 +197,7 @@ export default function TermsOfService() {
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 All course materials, including videos, templates, prompts,
-                graphics, and written content, are owned by AI FastScale LLC and
+                graphics, and written content, are owned by Velon LLC and
                 protected by copyright, trademark, and other intellectual
                 property laws.
               </p>
@@ -265,7 +266,7 @@ export default function TermsOfService() {
                 10. Limitation of Liability
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                To the maximum extent permitted by law, AI FastScale LLC shall not
+                To the maximum extent permitted by law, Velon LLC shall not
                 be liable for any indirect, incidental, special, consequential,
                 or punitive damages, including loss of profits, data, or
                 goodwill.
@@ -292,7 +293,7 @@ export default function TermsOfService() {
                 <li>Any required disclosures in your marketing materials</li>
               </ul>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>For Attorneys:</strong> You must ensure compliance with your state bar's Rules of Professional Conduct, including rules governing attorney advertising, client solicitation, and required disclosures. AI FastScale LLC does not provide legal advice regarding bar compliance.
+                <strong>For Attorneys:</strong> You must ensure compliance with your state bar's Rules of Professional Conduct, including rules governing attorney advertising, client solicitation, and required disclosures. Velon LLC does not provide legal advice regarding bar compliance.
               </p>
               <p className="leading-relaxed text-gray-700">
                 We provide templates and guidance, but you are
@@ -325,7 +326,7 @@ export default function TermsOfService() {
                 <strong>Important Notice:</strong> This course teaches you to use third-party AI platforms and tools (such as HeyGen, ElevenLabs, D-ID, Synthesia, or similar services). You acknowledge and agree that:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>These AI platforms are independent third-party services NOT owned or controlled by AI FastScale LLC</li>
+                <li>These AI platforms are independent third-party services NOT owned or controlled by Velon LLC</li>
                 <li>You are responsible for complying with each AI platform's Terms of Service and pricing</li>
                 <li>AI platforms may change their features, pricing, or terms at any time</li>
                 <li>If an AI platform discontinues service, we will provide alternative solutions but cannot guarantee identical functionality</li>
@@ -421,7 +422,7 @@ export default function TermsOfService() {
                 If any provision of these Terms is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary, and the remaining provisions will remain in full force and effect.
               </p>
               <p className="leading-relaxed text-gray-700">
-                These Terms, together with our Privacy Policy and Refund Policy, constitute the entire agreement between you and AI FastScale LLC regarding our products and services and supersede all prior agreements.
+                These Terms, together with our Privacy Policy and Refund Policy, constitute the entire agreement between you and Velon LLC regarding our products and services and supersede all prior agreements.
               </p>
             </section>
 
@@ -433,7 +434,7 @@ export default function TermsOfService() {
                 For questions about these Terms of Service, please contact us:
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
               </div>

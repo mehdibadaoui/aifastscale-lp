@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Disclaimer | AI FastScale',
-  description: 'Disclaimer for AI FastScale LLC - CloneYourself Video System. Important legal notices and disclaimers.',
+  description: 'Disclaimer for Velon LLC - CloneYourself Video System. Important legal notices and disclaimers.',
 }
 
 export default function Disclaimer() {
@@ -44,8 +44,9 @@ export default function Disclaimer() {
                 Operating Entity
               </h2>
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
-                <p className="mb-1 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="mb-1 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
               </div>
             </section>
@@ -55,7 +56,7 @@ export default function Disclaimer() {
                 1. General Information Disclaimer
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                The information provided by AI FastScale LLC ("we," "us," "our") on our website and in the CloneYourself Video System courses is for general informational and educational purposes only. All information is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information.
+                The information provided by Velon LLC ("we," "us," "our") on our website and in the CloneYourself Video System courses is for general informational and educational purposes only. All information is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information.
               </p>
               <p className="leading-relaxed text-gray-700">
                 Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of our service or reliance on any information provided. Your use of our service and your reliance on any information is solely at your own risk.
@@ -188,7 +189,7 @@ export default function Disclaimer() {
               <div className="rounded-xl border-2 border-purple-400 bg-purple-50 p-6 mb-4">
                 <p className="mb-2 font-bold text-gray-900">ATTORNEY ADVERTISING NOTICE (For Legal Professionals)</p>
                 <p className="mb-0 text-gray-700">
-                  This product is for educational purposes only. Attorneys using AI-generated videos for marketing must ensure compliance with their state bar's Rules of Professional Conduct, including but not limited to rules governing attorney advertising, client solicitation, and required disclosures. AI FastScale LLC does not provide legal advice regarding bar compliance. Users are solely responsible for ensuring their marketing materials comply with applicable bar rules and regulations.
+                  This product is for educational purposes only. Attorneys using AI-generated videos for marketing must ensure compliance with their state bar's Rules of Professional Conduct, including but not limited to rules governing attorney advertising, client solicitation, and required disclosures. Velon LLC does not provide legal advice regarding bar compliance. Users are solely responsible for ensuring their marketing materials comply with applicable bar rules and regulations.
                 </p>
               </div>
 
@@ -304,7 +305,7 @@ export default function Disclaimer() {
                 9.1 Complete Disclaimer
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                To the fullest extent permitted by applicable law, AI FastScale LLC, its owners, employees, agents, and affiliates shall not be liable for:
+                To the fullest extent permitted by applicable law, Velon LLC, its owners, employees, agents, and affiliates shall not be liable for:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>Any direct, indirect, incidental, consequential, or punitive damages</li>
@@ -352,8 +353,9 @@ export default function Disclaimer() {
                 If you have any questions about this disclaimer:
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
               </div>
             </section>

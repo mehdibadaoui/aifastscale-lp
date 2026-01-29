@@ -3089,11 +3089,14 @@ export default function PlasticAttorneyLandingPage() {
               </div>
             </div>
             {/* Wyoming LLC Identification */}
-            <p className="text-gray-600 text-[10px] sm:text-xs mb-2">
-              AI FastScale LLC, a Wyoming Limited Liability Company
+            <p className="text-gray-600 text-[10px] sm:text-xs mb-1">
+              Velon LLC, a Wyoming Limited Liability Company
+            </p>
+            <p className="text-gray-700 text-[9px] sm:text-[10px] mb-2">
+              30 N Gould St Ste R, Sheridan, WY 82801
             </p>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
-              © {new Date().getFullYear()} CloneYourself. All rights reserved.
+              © {new Date().getFullYear()} Velon LLC. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -3110,7 +3113,7 @@ export default function PlasticAttorneyLandingPage() {
                 <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
               </p>
               <p>
-                <strong>ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar's Rules of Professional Conduct regarding advertising and client solicitation. AI FastScale LLC does not provide legal advice regarding bar compliance.
+                <strong>ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar's Rules of Professional Conduct regarding advertising and client solicitation. Velon LLC does not provide legal advice regarding bar compliance.
               </p>
             </div>
           </div>

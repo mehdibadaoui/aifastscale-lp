@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
   title: 'Privacy Policy | AI FastScale',
-  description: 'Privacy Policy for AI FastScale LLC - CloneYourself Video System',
+  description: 'Privacy Policy for Velon LLC - CloneYourself Video System',
 }
 
 export default function PrivacyPolicy() {
@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
                 1. Introduction
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Welcome to <strong>AI FastScale LLC, a Wyoming Limited Liability Company</strong> ("we," "our," or "us"). We are committed
+                Welcome to <strong>Velon LLC, a Wyoming Limited Liability Company</strong> ("we," "our," or "us"). We are committed
                 to protecting your personal information and your right to
                 privacy. This Privacy Policy explains how we collect, use,
                 disclose, and safeguard your information when you visit our
@@ -58,8 +58,9 @@ export default function PrivacyPolicy() {
                 All services provided through this website are offered by:
               </p>
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
-                <p className="mb-1 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="mb-1 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
               </div>
             </section>
@@ -406,8 +407,9 @@ export default function PrivacyPolicy() {
                 contact us:
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">AI FastScale LLC</p>
+                <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
+                <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
               </div>
             </section>
