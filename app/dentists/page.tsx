@@ -1107,7 +1107,7 @@ export default function DentistCleanLandingPage() {
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
-              <p className="text-gray-500 text-xs sm:text-sm mt-3">73% off today • 100% refund if not satisfied</p>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">Save $2,622+ today • 100% refund if not satisfied</p>
             </div>
           </div>
         </div>

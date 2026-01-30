@@ -2482,7 +2482,7 @@ export default function PlasticSurgeonLandingPage() {
 
                 {/* Bonuses */}
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Dental Video Scripts</span>
+                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Cosmetic Surgery Video Scripts</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
@@ -2494,11 +2494,11 @@ export default function PlasticSurgeonLandingPage() {
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$397</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">Dental Profit Simulator</span>
+                  <span className="text-gray-300 text-sm sm:text-base">Practice ROI Calculator</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$247</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">Front Desk Conversion Scripts</span>
+                  <span className="text-gray-300 text-sm sm:text-base">Consultation Booking Scripts</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
