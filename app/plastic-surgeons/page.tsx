@@ -478,10 +478,9 @@ export default function PlasticSurgeonLandingPage() {
       const now = new Date()
       const diff = BONUS_DEADLINE.getTime() - now.getTime()
 
-      // If deadline passed, reset to 3 days from now
+      // If deadline passed, show zeros (no fake scarcity reset - Stripe compliant)
       if (diff <= 0) {
-        localStorage.removeItem('ps_bonus_deadline')
-        return { days: 2, hours: 23, minutes: 59, seconds: 59 }
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 }
       }
 
       return {
@@ -2231,7 +2230,7 @@ export default function PlasticSurgeonLandingPage() {
       </section>
 
       {/* ================================================================
-          6. GUARANTEE #1 - WHITE SECTION - FILL YOUR CALENDAR
+          6. GUARANTEE #1 - WHITE SECTION - SATISFACTION GUARANTEE
           ================================================================ */}
       <section
         id="guarantee1"
@@ -2250,10 +2249,10 @@ export default function PlasticSurgeonLandingPage() {
                 <div className="text-center mb-5 sm:mb-8">
                   <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4 animate-bounce">
                     <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
-                    <span className="text-green-600 font-bold text-xs sm:text-sm uppercase">Calendar Guarantee</span>
+                    <span className="text-green-600 font-bold text-xs sm:text-sm uppercase">Satisfaction Guarantee</span>
                   </div>
                   <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                    Fill Your Calendar or <span className="text-amber-500">100% Refund</span>
+                    100% Satisfaction or <span className="text-amber-500">Full Refund</span>
                   </h2>
                   <p className="text-gray-600 text-sm sm:text-base">No questions. No hassle. Period.</p>
                 </div>
@@ -2284,7 +2283,7 @@ export default function PlasticSurgeonLandingPage() {
                   <div className="flex-1">
                     <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-amber-500/20 shadow-lg">
                       <p className="text-gray-800 text-sm sm:text-lg leading-relaxed font-medium">
-                        If you don't fill your next month's calendar with new patients using this system,
+                        If you're not completely satisfied with the CloneYourself Video System for any reason,
                         I'll refund <span className="text-amber-500 font-black">every single penny</span> — no questions asked.
                       </p>
                       <div className="mt-3 pt-3 border-t border-gray-200">
@@ -2298,7 +2297,7 @@ export default function PlasticSurgeonLandingPage() {
 
                 <div className="grid grid-cols-2 gap-2 sm:gap-4 mt-6 sm:mt-8">
                   {[
-                    { icon: CalendarCheck, title: 'More Patients', desc: 'Or your money back' },
+                    { icon: Shield, title: 'Complete Satisfaction', desc: 'Or your money back' },
                     { icon: Shield, title: '30-Day Trial', desc: 'Full refund anytime' },
                   ].map((item, i) => (
                     <div key={i} className="bg-white rounded-xl p-3 sm:p-4 text-center border border-amber-500/20 shadow-lg hover:shadow-xl transition-shadow hover:scale-[1.02] transform duration-200">
