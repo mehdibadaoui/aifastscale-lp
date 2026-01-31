@@ -107,37 +107,37 @@ async function logWebhook(data: any, status: string) {
 // Initialize Resend
 const getResend = () => new Resend(process.env.RESEND_API_KEY)
 
-// Product configuration
+// Product configuration - ALL products point to universal /members
 const PRODUCTS = {
   dentist: {
-    membersUrl: 'https://aifastscale.com/dentists/members',
-    productName: 'CloneYourself for Dentists',
+    membersUrl: 'https://aifastscale.com/members',
+    productName: 'CloneYourself AI Video Mastery',
     price: '47.00',
-    accentColor: '#14b8a6' // Teal
+    accentColor: '#d4af37' // Gold (universal)
   },
   realestate: {
     membersUrl: 'https://aifastscale.com/members',
-    productName: 'CloneYourself Video System',
+    productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
-    accentColor: '#14b8a6'
+    accentColor: '#d4af37'
   },
   'plastic-surgeon': {
-    membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
-    productName: 'CloneYourself for Plastic Surgeons',
+    membersUrl: 'https://aifastscale.com/members',
+    productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
-    accentColor: '#9333ea' // Purple
+    accentColor: '#d4af37'
   },
   'psychologist': {
-    membersUrl: 'https://aifastscale.com/psychologists/members',
-    productName: 'CloneYourself for Psychologists',
+    membersUrl: 'https://aifastscale.com/members',
+    productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
-    accentColor: '#14b8a6' // Teal
+    accentColor: '#d4af37'
   },
   'lawyer': {
-    membersUrl: 'https://aifastscale.com/lawyers/members',
-    productName: 'CloneYourself for Lawyers',
+    membersUrl: 'https://aifastscale.com/members',
+    productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
-    accentColor: '#d4af37' // Gold
+    accentColor: '#d4af37'
   }
 }
 
@@ -299,7 +299,7 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
 }
 
 // Generate VIP welcome email with personalized password
-// Supports dentist (teal), plastic surgeon (purple), psychologist (teal), and lawyer (gold) branding
+// UNIVERSAL VERSION - same premium branding for all customers
 function generateWelcomeEmail(
   product: typeof PRODUCTS.dentist,
   userPassword: string,
@@ -309,39 +309,13 @@ function generateWelcomeEmail(
 ) {
   const firstName = buyerName ? buyerName.split(' ')[0] : ''
 
-  // Product-specific branding
-  const isPlasticSurgeon = productType === 'plastic-surgeon'
-  const isPsychologist = productType === 'psychologist'
-  const isLawyer = productType === 'lawyer'
+  // Universal premium branding - Gold color palette
+  const accent = '#d4af37' // Gold
+  const buttonColor = '#d4af37'
+  const glowColor = 'rgba(212, 175, 55, 0.08)'
 
-  // Color palette - purple for plastic surgeons, gold for lawyers, teal for others
-  let accent = '#14b8a6' // Default teal
-  let buttonColor = '#14b8a6'
-  let glowColor = 'rgba(20, 184, 166, 0.08)'
-
-  if (isPlasticSurgeon) {
-    accent = '#9333ea' // Purple
-    buttonColor = '#9333ea'
-    glowColor = 'rgba(147, 51, 234, 0.08)'
-  } else if (isLawyer) {
-    accent = '#d4af37' // Gold
-    buttonColor = '#d4af37'
-    glowColor = 'rgba(212, 175, 55, 0.08)'
-  } else if (isPsychologist) {
-    accent = '#14b8a6' // Teal
-    buttonColor = '#14b8a6'
-    glowColor = 'rgba(20, 184, 166, 0.08)'
-  }
-
-  // Social proof text
-  let socialProof = 'Trusted by <strong style="color: ' + accent + ';">+21,000 dentists</strong> worldwide'
-  if (isPlasticSurgeon) {
-    socialProof = 'Trusted by <strong style="color: ' + accent + ';">+850 plastic surgeons</strong> worldwide'
-  } else if (isLawyer) {
-    socialProof = 'Trusted by <strong style="color: ' + accent + ';">+650 attorneys</strong> worldwide'
-  } else if (isPsychologist) {
-    socialProof = 'Trusted by <strong style="color: ' + accent + ';">+750 psychologists & therapists</strong> worldwide'
-  }
+  // Universal social proof
+  const socialProof = 'Trusted by <strong style="color: ' + accent + ';">+25,000 professionals</strong> worldwide'
 
   const darkBg = '#09090b'
   const cardBg = '#18181b'

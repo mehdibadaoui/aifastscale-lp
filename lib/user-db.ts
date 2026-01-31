@@ -46,9 +46,9 @@ export interface User {
 }
 
 // Generate a unique, readable password
-// Format: product-random6chars (e.g., "dental-x7k9m2")
+// Format: clone-random6chars (e.g., "clone-x7k9m2") - UNIVERSAL for all products
 export function generateUniquePassword(product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer' = 'dentist'): string {
-  const prefix = product === 'dentist' ? 'dental' : product === 'plastic-surgeon' ? 'surgeon' : product === 'psychologist' ? 'therapy' : product === 'lawyer' ? 'legal' : 'agent'
+  const prefix = 'clone' // Universal prefix for all products
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789' // No confusing chars (0,o,1,l,i)
   let randomPart = ''
 

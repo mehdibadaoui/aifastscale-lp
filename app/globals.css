@@ -4120,3 +4120,147 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
     transition: none !important;
   }
 }
+
+/* ============================================
+   MOBILE-FIRST ANIMATIONS
+   ============================================ */
+
+/* Fade In */
+@keyframes mobile-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: mobile-fade-in 0.3s ease-out forwards;
+}
+
+/* Slide Up (for bottom sheets) */
+@keyframes mobile-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: mobile-slide-up 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+/* Slide Down (for sticky headers) */
+@keyframes mobile-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: mobile-slide-down 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+/* Shine effect for premium CTA buttons */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shine {
+  animation: shine 2s infinite;
+}
+
+/* Scale pop for achievements/badges */
+@keyframes scale-pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-pop {
+  animation: scale-pop 0.4s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+/* Pulse glow for active elements */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px rgba(245, 158, 11, 0.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Safe area padding for iOS */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch optimization for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .touch-optimized {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Ensure touch targets are at least 44x44px */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Faster transitions on mobile */
+  .mobile-transition {
+    transition-duration: 150ms !important;
+  }
+}
+
+/* Bottom navigation safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .nav-safe-area {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+}

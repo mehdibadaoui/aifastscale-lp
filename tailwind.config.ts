@@ -6,6 +6,16 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    // Dynamic color classes for niche theming (amber for lawyers, teal for others)
+    { pattern: /bg-(amber|teal)-\d+\/\d+/ },
+    { pattern: /text-(amber|teal)-\d+/ },
+    { pattern: /border-(amber|teal)-\d+\/\d+/ },
+    { pattern: /fill-(amber|teal)-\d+/ },
+    { pattern: /from-(amber|teal)-\d+/ },
+    { pattern: /to-(amber|teal)-\d+/ },
+    { pattern: /via-(amber|teal)-\d+/ },
+  ],
   theme: {
     extend: {
       colors: {
