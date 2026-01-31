@@ -2,9 +2,13 @@
 
 import { usePathname } from 'next/navigation'
 import { useEffect, useState, useCallback } from 'react'
-import { getCookieConsent, hasMarketingConsent } from './CookieConsent'
+import { getCookieConsent } from './CookieConsent'
 
-// Real Estate Meta Pixels - Only loads on non-product pages AND with consent
+// Meta Pixel IDs - Add your pixel IDs here
+const PIXEL_ID_1 = '' // TODO: Add your first Meta Pixel ID
+const PIXEL_ID_2 = '' // TODO: Add your second Meta Pixel ID (optional)
+
+// Loads Meta Pixels on non-product pages with consent
 export default function RootLayoutPixels() {
   const pathname = usePathname()
   const [shouldLoad, setShouldLoad] = useState(false)
@@ -20,6 +24,11 @@ export default function RootLayoutPixels() {
   const loadMetaPixel = useCallback(() => {
     if (typeof window === 'undefined') return
     if ((window as any).fbq) return // Already loaded
+    if (!PIXEL_ID_1) return // No pixel ID configured
+
+    const pixelInits = PIXEL_ID_2
+      ? `fbq('init', '${PIXEL_ID_1}'); fbq('init', '${PIXEL_ID_2}');`
+      : `fbq('init', '${PIXEL_ID_1}');`
 
     const script = document.createElement('script')
     script.innerHTML = `
@@ -31,8 +40,7 @@ export default function RootLayoutPixels() {
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '806502898408304');
-      fbq('init', '1897880187469286');
+      ${pixelInits}
       fbq('track', 'PageView');
     `
     document.head.appendChild(script)
@@ -71,7 +79,8 @@ export default function RootLayoutPixels() {
     // Only load pixel if:
     // 1. Should load (not a product page)
     // 2. Has marketing consent
-    if (!shouldLoad || !hasConsent) return
+    // 3. Pixel ID is configured
+    if (!shouldLoad || !hasConsent || !PIXEL_ID_1) return
 
     // Load Meta Pixel after 2 seconds (performance optimization)
     const timeout = setTimeout(() => {

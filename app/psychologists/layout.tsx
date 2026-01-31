@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 
-// Psychologist Pixel ID
-const PSYCHOLOGIST_PIXEL_ID = '778800911911121'
+// Psychologist Pixel ID - Add your pixel ID here
+const PSYCHOLOGIST_PIXEL_ID = '' // TODO: Add your Psychologist Meta Pixel ID
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Psychologists | AI Video Marketing System | $47',
@@ -53,14 +52,14 @@ export default function PsychologistLayout({
         fetchPriority="high"
         media="(min-width: 640px)"
       />
-      {/* Preconnect to external domains for faster loading */}
-      <link rel="preconnect" href="https://connect.facebook.net" />
-      <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
-      {/* Meta Pixel for Psychologist LP */}
+      {/* Meta Pixel for Psychologist LP - Add your pixel script here when ready */}
+      {/*
+      When you have your new pixel ID, uncomment and update this section:
+
       <Script
         id="psychologist-meta-pixel"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
@@ -71,20 +70,12 @@ export default function PsychologistLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${PSYCHOLOGIST_PIXEL_ID}');
+            fbq('init', 'YOUR_PIXEL_ID_HERE');
             fbq('track', 'PageView');
           `,
         }}
       />
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: 'none' }}
-          src={`https://www.facebook.com/tr?id=${PSYCHOLOGIST_PIXEL_ID}&ev=PageView&noscript=1`}
-          alt=""
-        />
-      </noscript>
+      */}
 
       {children}
     </>

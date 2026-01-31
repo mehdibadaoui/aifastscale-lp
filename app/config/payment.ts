@@ -11,19 +11,19 @@ export const PAYMENT_CONFIG = {
   plans: {
     // Main Course
     mainCourse: {
-      id: '', // Add your plan ID
+      id: '', // TODO: Add your plan ID
       price: 47.82,
       name: 'CloneYourself Video System',
     },
     // Upsell - Done-For-You Package
     upsell: {
-      id: '', // Add your plan ID
+      id: '', // TODO: Add your plan ID
       price: 565,
       name: 'Done-For-You Content Package',
     },
     // Downsell - Discounted Package
     downsell: {
-      id: '', // Add your plan ID
+      id: '', // TODO: Add your plan ID
       price: 395,
       name: 'Done-For-You Content Package (Discounted)',
     },
@@ -38,31 +38,31 @@ export const PAYMENT_CONFIG = {
 } as const
 
 // Dentist-specific plan IDs
-// ADD YOUR WHOP CHECKOUT LINKS BELOW
+// ADD YOUR CHECKOUT LINKS BELOW
 export const DENTIST_PAYMENT_CONFIG = {
   plans: {
     mainCourse: {
-      id: 'plan_chOBDoTBxc7NH',
+      id: '', // TODO: Add your plan ID
       price: 47.82,
       name: 'CloneYourself Dentist System',
     },
     upsell: {
-      id: 'plan_piIlcIeKKia85',
+      id: '', // TODO: Add your plan ID
       price: 9.95,
       name: 'CloneYourself Dentist - Premium Bundle',
     },
     downsell: {
-      id: 'plan_fEnYsa70KFAWW',
+      id: '', // TODO: Add your plan ID
       price: 4.95,
       name: 'CloneYourself Dentist - Value Bundle',
     },
   },
 
-  // Whop checkout links
+  // Checkout links - Add your payment provider links here
   checkoutLinks: {
-    main: 'https://whop.com/checkout/plan_chOBDoTBxc7NH',
-    upsell: 'https://whop.com/checkout/plan_piIlcIeKKia85',
-    downsell: 'https://whop.com/checkout/plan_fEnYsa70KFAWW',
+    main: '', // TODO: Add your checkout link
+    upsell: '', // TODO: Add your checkout link
+    downsell: '', // TODO: Add your checkout link
   },
 
   redirects: {

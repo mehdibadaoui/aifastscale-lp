@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 
-// Dentist Pixel ID
-const DENTIST_PIXEL_ID = '1176362697938270'
+// Dentist Pixel ID - Add your pixel ID here
+const DENTIST_PIXEL_ID = '' // TODO: Add your Dentist Meta Pixel ID
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Dentists | AI Video Marketing System | $47',
@@ -45,7 +44,10 @@ export default function DentistLayout({
         fetchPriority="high"
       />
 
-      {/* Meta Pixel for Dentist LP */}
+      {/* Meta Pixel for Dentist LP - Add your pixel script here when ready */}
+      {/*
+      When you have your new pixel ID, uncomment and update this section:
+
       <Script
         id="dentist-meta-pixel"
         strategy="afterInteractive"
@@ -59,20 +61,12 @@ export default function DentistLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${DENTIST_PIXEL_ID}');
+            fbq('init', 'YOUR_PIXEL_ID_HERE');
             fbq('track', 'PageView');
           `,
         }}
       />
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: 'none' }}
-          src={`https://www.facebook.com/tr?id=${DENTIST_PIXEL_ID}&ev=PageView&noscript=1`}
-          alt=""
-        />
-      </noscript>
+      */}
 
       {children}
     </>

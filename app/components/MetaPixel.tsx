@@ -10,8 +10,8 @@ declare global {
   }
 }
 
-// Meta Pixel ID - hardcoded for reliability
-const PIXEL_ID = '806502898408304'
+// Meta Pixel ID - Add your pixel ID here
+const PIXEL_ID = '' // TODO: Add your Meta Pixel ID
 
 export default function MetaPixel() {
   const [hasConsent, setHasConsent] = useState(false)
@@ -22,6 +22,7 @@ export default function MetaPixel() {
     if (typeof window === 'undefined') return
     if (window.fbq) return // Already loaded
     if (isLoaded) return
+    if (!PIXEL_ID) return // No pixel ID configured
 
     // Create and inject the Meta Pixel script
     const script = document.createElement('script')
@@ -37,13 +38,6 @@ export default function MetaPixel() {
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '${PIXEL_ID}');
       fbq('track', 'PageView');
-      fbq('track', 'ViewContent', {
-        content_name: 'CloneYourself Video System',
-        content_category: 'AI Video Course',
-        content_type: 'product',
-        value: 47.82,
-        currency: 'USD'
-      });
     `
     document.head.appendChild(script)
     setIsLoaded(true)
@@ -75,8 +69,8 @@ export default function MetaPixel() {
     loadMetaPixel()
   }, [hasConsent, loadMetaPixel])
 
-  // Noscript fallback only shown if consent given (for SEO crawlers with consent)
-  if (!hasConsent) return null
+  // Don't render anything if no pixel ID configured
+  if (!PIXEL_ID || !hasConsent) return null
 
   return (
     <noscript dangerouslySetInnerHTML={{

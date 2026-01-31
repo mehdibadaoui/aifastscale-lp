@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 
-const TIKTOK_PIXEL_ID = 'D3LRUDJC77U1N95DTTAG'
+// TikTok Pixel ID - Add your pixel ID here
+const TIKTOK_PIXEL_ID = process.env.TIKTOK_PIXEL_ID || '' // TODO: Add your TikTok Pixel ID
 const TIKTOK_ACCESS_TOKEN = process.env.TIKTOK_ACCESS_TOKEN || ''
 
 // TikTok Events API v1.3 endpoint (Web events)
@@ -14,6 +15,14 @@ function hashData(data: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Return early if not configured
+    if (!TIKTOK_PIXEL_ID || !TIKTOK_ACCESS_TOKEN) {
+      return NextResponse.json(
+        { success: false, error: 'TikTok CAPI not configured' },
+        { status: 400 }
+      )
+    }
+
     const body = await request.json()
     const {
       event_name,
@@ -126,7 +135,6 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     status: 'TikTok CAPI endpoint ready',
-    pixel_id: TIKTOK_PIXEL_ID,
-    has_token: !!TIKTOK_ACCESS_TOKEN,
+    configured: !!(TIKTOK_PIXEL_ID && TIKTOK_ACCESS_TOKEN),
   })
 }

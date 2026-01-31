@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
-import LazyTrackingPixels from './components/LazyTrackingPixels'
-import RootLayoutPixels from './components/RootLayoutPixels'
 import CookieConsent from './components/CookieConsent'
 import { SITE_CONFIG } from './config/constants'
 
@@ -104,29 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* META PIXELS: Now loaded via RootLayoutPixels client component */}
-        {/* This allows path-aware loading (not on /dentists pages) */}
-
-        {/* Google Analytics 4 (GA4) - Deferred loading */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.addEventListener('load', function() {
-                setTimeout(function() {
-                  var s = document.createElement('script');
-                  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-Q7JM9NRV7Z';
-                  s.async = true;
-                  document.head.appendChild(s);
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  window.gtag = gtag;
-                  gtag('js', new Date());
-                  gtag('config', 'G-Q7JM9NRV7Z');
-                }, 2500);
-              });
-            `,
-          }}
-        />
+        {/* TRACKING PIXELS: Add your pixel scripts here when ready */}
 
         {/* CRITICAL: Inline critical CSS for instant hero rendering - prevents render blocking */}
         <style dangerouslySetInnerHTML={{ __html: `
@@ -158,10 +134,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-        {/* DNS prefetch for tracking (loaded later, so just prefetch) */}
-        <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* DNS prefetch for tracking - add when pixels are configured */}
 
         {/* Hreflang Tags for International SEO */}
         <link rel="alternate" hrefLang="en" href="https://aifastscale.com" />
@@ -349,10 +322,6 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${plusJakarta.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
-        {/* Real Estate Meta Pixels - Only loads on non-dentist pages */}
-        <RootLayoutPixels />
-        {/* Lazy load tracking pixels (TikTok + Meta) - path-aware */}
-        <LazyTrackingPixels />
         {children}
         {/* GDPR-compliant cookie consent banner */}
         <CookieConsent />

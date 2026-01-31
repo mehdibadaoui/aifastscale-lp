@@ -62,7 +62,7 @@ export const GOOGLE_DRIVE = {
 
 export const TRACKING = {
   meta: {
-    pixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '806502898408304',
+    pixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '', // TODO: Add your Meta Pixel ID
     conversionsApiToken: process.env.META_CONVERSIONS_API_TOKEN || '',
   },
 } as const

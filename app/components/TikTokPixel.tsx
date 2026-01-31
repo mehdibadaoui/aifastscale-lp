@@ -10,7 +10,8 @@ declare global {
   }
 }
 
-const TIKTOK_PIXEL_ID = 'D3LRUDJC77U1N95DTTAG'
+// TikTok Pixel ID - Add your pixel ID here
+const TIKTOK_PIXEL_ID = '' // TODO: Add your TikTok Pixel ID
 
 function TikTokPixelInner() {
   const pathname = usePathname()
@@ -18,6 +19,9 @@ function TikTokPixelInner() {
 
   // Initialize TikTok Pixel - deferred for performance
   useEffect(() => {
+    // Don't load if no pixel ID configured
+    if (!TIKTOK_PIXEL_ID) return
+
     // Delay loading to not block initial render
     const timer = setTimeout(() => {
       // Load TikTok Pixel script
@@ -79,6 +83,9 @@ function TikTokPixelInner() {
 
 // Wrapper with Suspense
 export default function TikTokPixel() {
+  // Don't render if no pixel ID
+  if (!TIKTOK_PIXEL_ID) return null
+
   return (
     <Suspense fallback={null}>
       <TikTokPixelInner />

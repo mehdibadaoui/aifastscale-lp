@@ -141,24 +141,25 @@ const PRODUCTS = {
   }
 }
 
-// Plan IDs and prices
+// Plan IDs and prices - Add your plan IDs here
+// TODO: Configure your payment gateway plan IDs
 const PLANS = {
   // Dentist products
-  DENTIST_MAIN: { id: 'plan_chOBDoTBxc7NH', price: 47, type: 'main' as const, product: 'dentist' as const },
-  DENTIST_UPSELL: { id: 'plan_piIlcIeKKia85', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
-  DENTIST_DOWNSELL: { id: 'plan_fEnYsa70KFAWW', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
+  DENTIST_MAIN: { id: '', price: 47, type: 'main' as const, product: 'dentist' as const },
+  DENTIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
+  DENTIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
-  PLASTIC_SURGEON_MAIN: { id: 'plan_OGprA4gd4Lr7N', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'plan_c7mDkR3oBXE7n', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_3QGO1WJI50ujP', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
   // Psychologist products
-  PSYCHOLOGIST_MAIN: { id: 'plan_QBhFmuZAzfDyh', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
-  PSYCHOLOGIST_UPSELL: { id: 'plan_5fa6gRWmpdn1a', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
-  PSYCHOLOGIST_DOWNSELL: { id: 'plan_YI0qv3YB6JlC3', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
-  // Lawyer products - PLACEHOLDER IDs (user will provide)
-  LAWYER_MAIN: { id: 'plan_GpUjd1q7kN6pj', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
-  LAWYER_UPSELL: { id: 'plan_97EdLFRTEConC', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
-  LAWYER_DOWNSELL: { id: 'plan_sdONQXGabaCd0', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
+  PSYCHOLOGIST_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
+  PSYCHOLOGIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
+  // Lawyer products
+  LAWYER_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
+  LAWYER_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
+  LAWYER_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
 }
 
 // Get plan info from plan ID

@@ -158,7 +158,7 @@ const PROFESSIONS = [
   { id: 'other', label: 'Other', icon: '✨', url: null },
 ]
 
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'
+const WHOP_CHECKOUT_LINK = '' // TODO: Add your checkout link
 
 export default function LanguagesPage() {
   const [search, setSearch] = useState('')

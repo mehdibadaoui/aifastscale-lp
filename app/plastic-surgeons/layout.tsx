@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 
-// Plastic Surgeon Pixel ID
-const PLASTIC_SURGEON_PIXEL_ID = '1526841625273321'
+// Plastic Surgeon Pixel ID - Add your pixel ID here
+const PLASTIC_SURGEON_PIXEL_ID = '' // TODO: Add your Plastic Surgeon Meta Pixel ID
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Plastic Surgeons | AI Video Marketing System | $47',
@@ -53,11 +52,11 @@ export default function PlasticSurgeonLayout({
         fetchPriority="high"
         media="(min-width: 640px)"
       />
-      {/* Preconnect to external domains for faster loading */}
-      <link rel="preconnect" href="https://connect.facebook.net" />
-      <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
-      {/* Meta Pixel for Plastic Surgeon LP */}
+      {/* Meta Pixel for Plastic Surgeon LP - Add your pixel script here when ready */}
+      {/*
+      When you have your new pixel ID, uncomment and update this section:
+
       <Script
         id="plastic-surgeon-meta-pixel"
         strategy="afterInteractive"
@@ -71,20 +70,12 @@ export default function PlasticSurgeonLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${PLASTIC_SURGEON_PIXEL_ID}');
+            fbq('init', 'YOUR_PIXEL_ID_HERE');
             fbq('track', 'PageView');
           `,
         }}
       />
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: 'none' }}
-          src={`https://www.facebook.com/tr?id=${PLASTIC_SURGEON_PIXEL_ID}&ev=PageView&noscript=1`}
-          alt=""
-        />
-      </noscript>
+      */}
 
       {children}
     </>
