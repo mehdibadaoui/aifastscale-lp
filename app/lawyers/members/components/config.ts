@@ -108,7 +108,7 @@ export const COURSE_MODULES = [
     duration: '3 min',
     durationMinutes: 3,
     wistiaId: 'fnjt6devuy',
-    thumbnail: '/images/lawyer/module-1.webp',
+    thumbnail: null,
     lessons: ['Write video scripts in minutes', 'Using Attorney Expert Copywriter AI', 'Get scripts for trust & appointments'],
     resources: [
       { name: 'Marcus - Lawyer Growth Mentor', url: 'https://chatgpt.com/g/g-6974ba45c9b4819183b251cfe6b68c27-marcus-the-lawyer-growth-mentor', type: 'link' as const },
@@ -122,7 +122,7 @@ export const COURSE_MODULES = [
     duration: '5 min',
     durationMinutes: 5,
     wistiaId: '511b44q25r',
-    thumbnail: '/images/lawyer/module-2.webp',
+    thumbnail: null,
     lessons: ['Where to register', 'Which plan to choose', 'Avoiding common mistakes'],
     resources: [
       { name: 'Google AI Pro (1-month free trial)', url: 'https://one.google.com/about/google-ai-plans/', type: 'link' as const },
@@ -137,7 +137,7 @@ export const COURSE_MODULES = [
     duration: '6 min',
     durationMinutes: 6,
     wistiaId: '7jtqmnymc5',
-    thumbnail: '/images/lawyer/module-3.webp',
+    thumbnail: null,
     lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
     resources: [
       { name: 'Lawyer AI Talking Video Prompt', url: '/products/lawyer/Attorney_AI_Video_Prompt.txt', type: 'file' as const },
@@ -151,7 +151,7 @@ export const COURSE_MODULES = [
     duration: '4 min',
     durationMinutes: 4,
     wistiaId: '9waf0llex7',
-    thumbnail: '/images/lawyer/module-4.webp',
+    thumbnail: null,
     lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
     resources: [
       { name: 'Background Music Collection', url: '/products/lawyer/Background music/', type: 'folder' as const },
@@ -165,7 +165,7 @@ export const COURSE_MODULES = [
     duration: '5 min',
     durationMinutes: 5,
     wistiaId: '9f7os4xklp',
-    thumbnail: '/images/lawyer/module-5.webp',
+    thumbnail: null,
     lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
     resources: [
       { name: 'Lawyer AI Image Generation Prompt', url: '/products/lawyer/Attorney_AI_Image_Prompt.txt', type: 'file' as const },
