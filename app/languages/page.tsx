@@ -88,6 +88,13 @@ const LANGUAGES = [
   { code: 'sq', name: 'Albanian', flag: '🇦🇱', speakers: '7.5M', aliases: ['albania', 'kosovo', 'tirana'] },
   { code: 'mk', name: 'Macedonian', flag: '🇲🇰', speakers: '2M', aliases: ['north macedonia', 'skopje'] },
   { code: 'bs', name: 'Bosnian', flag: '🇧🇦', speakers: '2.5M', aliases: ['bosnia', 'sarajevo'] },
+  { code: 'be', name: 'Belarusian', flag: '🇧🇾', speakers: '5.1M', aliases: ['belarus', 'minsk'] },
+  { code: 'gd', name: 'Scottish Gaelic', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', speakers: '57K', aliases: ['scotland', 'highlands'] },
+  { code: 'lb', name: 'Luxembourgish', flag: '🇱🇺', speakers: '400K', aliases: ['luxembourg'] },
+  { code: 'tg', name: 'Tajik', flag: '🇹🇯', speakers: '8.4M', aliases: ['tajikistan', 'dushanbe'] },
+  { code: 'tk', name: 'Turkmen', flag: '🇹🇲', speakers: '11M', aliases: ['turkmenistan', 'ashgabat'] },
+  { code: 'ky', name: 'Kyrgyz', flag: '🇰🇬', speakers: '4.5M', aliases: ['kyrgyzstan', 'bishkek'] },
+  { code: 'so', name: 'Somali', flag: '🇸🇴', speakers: '22M', aliases: ['somalia', 'mogadishu', 'djibouti'] },
 ]
 
 export default function LanguagesPage() {
