@@ -149,6 +149,17 @@ const SOCIAL_PROOF_MESSAGES = [
   { country: 'Poland', lang: 'Polish', flag: '🇵🇱' },
 ]
 
+// Profession options with redirect URLs
+const PROFESSIONS = [
+  { id: 'dentist', label: 'Dentist', icon: '🦷', url: '/dentists' },
+  { id: 'lawyer', label: 'Lawyer', icon: '⚖️', url: '/lawyers' },
+  { id: 'psychologist', label: 'Psychologist', icon: '🧠', url: '/psychologists' },
+  { id: 'plastic-surgeon', label: 'Plastic Surgeon', icon: '💉', url: '/plastic-surgeons' },
+  { id: 'other', label: 'Other', icon: '✨', url: null },
+]
+
+const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'
+
 export default function LanguagesPage() {
   const [search, setSearch] = useState('')
   const [activeRegion, setActiveRegion] = useState<Region | 'all'>('all')
@@ -158,6 +169,13 @@ export default function LanguagesPage() {
   const [requestEmail, setRequestEmail] = useState('')
   const [requestLang, setRequestLang] = useState('')
   const [requestSubmitted, setRequestSubmitted] = useState(false)
+
+  // Profession selector modal
+  const [showProfessionModal, setShowProfessionModal] = useState(false)
+  const [showOtherInput, setShowOtherInput] = useState(false)
+  const [otherProfession, setOtherProfession] = useState('')
+  const [otherEmail, setOtherEmail] = useState('')
+  const [isSubmittingOther, setIsSubmittingOther] = useState(false)
 
   // Detect user's browser language
   useEffect(() => {
@@ -207,6 +225,35 @@ export default function LanguagesPage() {
   const maxSpeakers = Math.max(...LANGUAGES.map(l => l.speakerCount))
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Handle profession selection
+  const handleProfessionSelect = (profession: typeof PROFESSIONS[0]) => {
+    if (profession.id === 'other') {
+      setShowOtherInput(true)
+    } else if (profession.url) {
+      window.location.href = profession.url
+    }
+  }
+
+  // Handle "Other" profession submission
+  const handleOtherSubmit = async () => {
+    if (!otherProfession.trim() || isSubmittingOther) return
+
+    setIsSubmittingOther(true)
+    try {
+      // Send notification email
+      await fetch('/api/profession-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profession: otherProfession, email: otherEmail }),
+      })
+    } catch (error) {
+      console.error('Error:', error)
+    }
+
+    // Redirect to Whop checkout
+    window.location.href = WHOP_CHECKOUT_LINK
+  }
 
   const handleRequestSubmit = async () => {
     if (!requestEmail || !requestLang || isSubmitting) return
@@ -260,13 +307,13 @@ export default function LanguagesPage() {
             </div>
             <span className="font-black text-xl hidden sm:block">AIFastScale</span>
           </Link>
-          <Link
-            href="/"
+          <button
+            onClick={() => setShowProfessionModal(true)}
             className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold text-sm hover:shadow-lg hover:shadow-amber-500/25 transition-all"
           >
             Get Started
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </button>
         </div>
       </header>
 
@@ -279,12 +326,12 @@ export default function LanguagesPage() {
               <p className="font-bold text-emerald-400">We detected you speak {detectedLang.name}!</p>
               <p className="text-sm text-white/60">Yes, we support it. Create videos in {detectedLang.name} today.</p>
             </div>
-            <Link
-              href="/"
+            <button
+              onClick={() => setShowProfessionModal(true)}
               className="ml-4 px-4 py-2 rounded-full bg-emerald-500 text-black font-bold text-sm hover:bg-emerald-400 transition-colors"
             >
               Try Now
-            </Link>
+            </button>
           </div>
         </div>
       )}
@@ -502,13 +549,13 @@ export default function LanguagesPage() {
             Your AI video clone can speak any of these {LANGUAGES.length}+ languages fluently.
           </p>
 
-          <Link
-            href="/"
+          <button
+            onClick={() => setShowProfessionModal(true)}
             className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold text-lg hover:shadow-xl hover:shadow-amber-500/25 transition-all"
           >
             Get Started Now
             <ArrowRight className="w-5 h-5" />
-          </Link>
+          </button>
 
           <p className="text-white/40 text-sm mt-4">
             Join 12,000+ creators already using AI FastScale
@@ -582,6 +629,111 @@ export default function LanguagesPage() {
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit Request'}
                   </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Profession Selector Modal */}
+      {showProfessionModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => {
+              setShowProfessionModal(false)
+              setShowOtherInput(false)
+              setOtherProfession('')
+              setOtherEmail('')
+            }}
+          />
+          <div className="relative bg-zinc-900 rounded-3xl border border-white/10 p-6 w-full max-w-md">
+            <button
+              onClick={() => {
+                setShowProfessionModal(false)
+                setShowOtherInput(false)
+                setOtherProfession('')
+                setOtherEmail('')
+              }}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10"
+            >
+              <X className="w-5 h-5 text-white/50" />
+            </button>
+
+            {!showOtherInput ? (
+              <>
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-amber-400" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">What's your profession?</h3>
+                  <p className="text-white/60 text-sm">We'll show you the perfect solution for your field</p>
+                </div>
+
+                <div className="space-y-3">
+                  {PROFESSIONS.map((profession) => (
+                    <button
+                      key={profession.id}
+                      onClick={() => handleProfessionSelect(profession)}
+                      className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-amber-500/30 transition-all group"
+                    >
+                      <span className="text-3xl">{profession.icon}</span>
+                      <span className="font-bold text-white text-lg">{profession.label}</span>
+                      <ChevronRight className="w-5 h-5 text-white/30 ml-auto group-hover:text-amber-400 transition-colors" />
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setShowOtherInput(false)}
+                  className="flex items-center gap-2 text-white/50 hover:text-white mb-4 transition-colors"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180" />
+                  <span className="text-sm">Back</span>
+                </button>
+
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-8 h-8 text-violet-400" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Tell us about yourself</h3>
+                  <p className="text-white/60 text-sm">What industry or profession are you in?</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">Your profession/industry</label>
+                    <input
+                      type="text"
+                      value={otherProfession}
+                      onChange={(e) => setOtherProfession(e.target.value)}
+                      placeholder="e.g. Real Estate Agent, Coach, Doctor..."
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-violet-500/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">Your email (optional)</label>
+                    <input
+                      type="email"
+                      value={otherEmail}
+                      onChange={(e) => setOtherEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-violet-500/50"
+                    />
+                  </div>
+                  <button
+                    onClick={handleOtherSubmit}
+                    disabled={!otherProfession.trim() || isSubmittingOther}
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-amber-500/25 transition-all"
+                  >
+                    {isSubmittingOther ? 'Redirecting...' : 'Continue to Checkout →'}
+                  </button>
+                  <p className="text-center text-white/40 text-xs">
+                    You'll be redirected to secure checkout
+                  </p>
                 </div>
               </>
             )}
