@@ -17,6 +17,12 @@ import { verifyUser } from '@/lib/user-db'
 const LEGACY_PASSWORD = 'dentist2026'
 const LEGACY_ENABLED = true // Set to false to disable legacy login
 
+// Owner/Admin accounts - instant access with any password
+const OWNER_EMAILS = [
+  'badaoui577@gmail.com',
+  'mehdi@cloneyourselfwithai.com'
+]
+
 // VIP Guest accounts (manual special access)
 const VIP_GUESTS = [
   {
@@ -50,6 +56,29 @@ export async function POST(request: NextRequest) {
 
     const trimmedPassword = password.trim()
     const trimmedEmail = email?.trim()?.toLowerCase() || ''
+
+    // ========================================
+    // OWNER ACCESS - Instant login for admins
+    // ========================================
+    if (OWNER_EMAILS.includes(trimmedEmail)) {
+      console.log(`👑 Owner access granted: ${trimmedEmail}`)
+      return NextResponse.json({
+        success: true,
+        isVip: true,
+        isOwner: true,
+        user: {
+          email: trimmedEmail,
+          name: 'Admin',
+          product: 'dentist',
+        },
+        vipGuest: {
+          id: 'owner',
+          name: 'Owner',
+          badge: 'Owner',
+          welcomeMessage: 'Welcome back, Boss!'
+        }
+      })
+    }
 
     // ========================================
     // MODE 1: Email + Password (Personalized)

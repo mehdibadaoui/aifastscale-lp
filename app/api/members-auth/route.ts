@@ -15,6 +15,12 @@ import { universalConfig, acceptedProductIds } from '@/app/members/config/univer
  * 3. Legacy shared password (backward compatibility)
  */
 
+// Owner/Admin accounts - instant access with any password
+const OWNER_EMAILS = [
+  'badaoui577@gmail.com',
+  'mehdi@cloneyourselfwithai.com'
+]
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -32,6 +38,29 @@ export async function POST(request: NextRequest) {
 
     const trimmedPassword = password.trim()
     const trimmedEmail = email?.trim()?.toLowerCase() || ''
+
+    // ========================================
+    // OWNER ACCESS - Instant login for admins
+    // ========================================
+    if (OWNER_EMAILS.includes(trimmedEmail)) {
+      console.log(`[members] 👑 Owner access granted: ${trimmedEmail}`)
+      return NextResponse.json({
+        success: true,
+        isVip: true,
+        isOwner: true,
+        user: {
+          email: trimmedEmail,
+          name: 'Admin',
+          product: 'clone-yourself-pro',
+        },
+        vipGuest: {
+          id: 'owner',
+          name: 'Owner',
+          badge: 'Owner',
+          welcomeMessage: 'Welcome back, Boss!'
+        }
+      })
+    }
 
     // ========================================
     // MODE 1: Email + Password (Personalized)
