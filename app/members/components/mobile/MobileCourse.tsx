@@ -184,7 +184,14 @@ export const MobileCourse = memo(function MobileCourse({ state }: MobileCoursePr
   if (!currentModule) return null
 
   return (
-    <div className="min-h-screen pb-28 bg-zinc-950">
+    <div
+      className="min-h-screen pb-28 bg-zinc-950"
+      style={{
+        backgroundColor: '#09090b',
+        minHeight: '100dvh',
+        overscrollBehavior: 'none',
+      }}
+    >
       {/* HEADER - Course Progress */}
       <div className="sticky top-0 z-30 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-3">
         <div className="flex items-center justify-between">

@@ -62,7 +62,7 @@ export const MobileTracker = memo(function MobileTracker({ state }: MobileTracke
   }
 
   return (
-    <div className="min-h-screen pb-32 bg-zinc-950">
+    <div className="min-h-screen pb-32 bg-zinc-950" style={{ backgroundColor: '#09090b', minHeight: '100dvh', overscrollBehavior: 'none' }}>
       {/* HEADER */}
       <div className="sticky top-0 z-30 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-3">
         <div className="flex items-center justify-between">

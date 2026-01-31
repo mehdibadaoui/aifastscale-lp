@@ -345,7 +345,15 @@ export const MobilePageWrapper = memo(function MobilePageWrapper({
   hasBottomNav?: boolean
 }) {
   return (
-    <div className={`min-h-screen ${hasBottomNav ? 'pb-24' : ''}`}>
+    <div
+      className={`min-h-screen bg-zinc-950 ${hasBottomNav ? 'pb-24' : ''}`}
+      style={{
+        backgroundColor: '#09090b',
+        minHeight: '100dvh',
+        // Prevent iOS Safari overscroll white flash
+        overscrollBehavior: 'none',
+      }}
+    >
       {children}
     </div>
   )

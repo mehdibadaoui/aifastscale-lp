@@ -71,14 +71,34 @@ export const MobilePlatform = memo(function MobilePlatform({ state }: MobilePlat
   )
 
   // Set dark background on body to prevent white flash on scroll
-  useEffect(() => {
+  // Using useLayoutEffect alternative pattern - runs synchronously
+  if (typeof window !== 'undefined') {
+    // Apply immediately on first render (before paint)
     document.documentElement.classList.add('members-dark')
     document.body.classList.add('members-dark')
+    document.documentElement.style.backgroundColor = '#09090b'
     document.body.style.backgroundColor = '#09090b'
+    // Prevent iOS Safari overscroll bounce
+    document.body.style.overscrollBehavior = 'none'
+    document.documentElement.style.overscrollBehavior = 'none'
+  }
+
+  useEffect(() => {
+    // Ensure dark mode is applied (backup)
+    document.documentElement.classList.add('members-dark')
+    document.body.classList.add('members-dark')
+    document.documentElement.style.backgroundColor = '#09090b'
+    document.body.style.backgroundColor = '#09090b'
+    document.body.style.overscrollBehavior = 'none'
+    document.documentElement.style.overscrollBehavior = 'none'
+
     return () => {
       document.documentElement.classList.remove('members-dark')
       document.body.classList.remove('members-dark')
+      document.documentElement.style.backgroundColor = ''
       document.body.style.backgroundColor = ''
+      document.body.style.overscrollBehavior = ''
+      document.documentElement.style.overscrollBehavior = ''
     }
   }, [])
 
@@ -98,7 +118,14 @@ export const MobilePlatform = memo(function MobilePlatform({ state }: MobilePlat
   const unlockedAchievements = state.achievements?.filter(a => a.unlocked) || []
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div
+      className="min-h-screen bg-zinc-950"
+      style={{
+        backgroundColor: '#09090b',
+        minHeight: '100dvh',
+        overscrollBehavior: 'none',
+      }}
+    >
       <MobilePageWrapper hasBottomNav={true}>
         {/* Main content based on section */}
         {mobileSection === 'dashboard' && (
@@ -205,7 +232,7 @@ const MobileAchievements = memo(function MobileAchievements({
   const unlockedCount = achievements.filter(a => a.unlocked).length
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 bg-zinc-950" style={{ backgroundColor: '#09090b', minHeight: '100dvh', overscrollBehavior: 'none' }}>
       {/* Header */}
       <div className="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-4">
         <div className="flex items-center gap-3">
@@ -276,7 +303,7 @@ const MobileSettings = memo(function MobileSettings({
   onBack: () => void
 }) {
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 bg-zinc-950" style={{ backgroundColor: '#09090b', minHeight: '100dvh', overscrollBehavior: 'none' }}>
       {/* Header */}
       <div className="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-4">
         <div className="flex items-center gap-3">
@@ -324,7 +351,7 @@ const MobileSupport = memo(function MobileSupport({
   onBack: () => void
 }) {
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 bg-zinc-950" style={{ backgroundColor: '#09090b', minHeight: '100dvh', overscrollBehavior: 'none' }}>
       {/* Header */}
       <div className="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-4">
         <div className="flex items-center gap-3">

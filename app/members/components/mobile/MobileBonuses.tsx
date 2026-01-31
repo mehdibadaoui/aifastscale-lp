@@ -82,7 +82,7 @@ export const MobileBonuses = memo(function MobileBonuses({ state }: MobileBonuse
   }
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 bg-zinc-950" style={{ backgroundColor: '#09090b', minHeight: '100dvh', overscrollBehavior: 'none' }}>
       {/* HEADER */}
       <div className="px-4 py-6 space-y-4">
         {/* Title & Search */}
