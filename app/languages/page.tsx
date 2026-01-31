@@ -206,15 +206,32 @@ export default function LanguagesPage() {
   // Max speaker count for visual bars
   const maxSpeakers = Math.max(...LANGUAGES.map(l => l.speakerCount))
 
-  const handleRequestSubmit = () => {
-    if (requestEmail && requestLang) {
-      setRequestSubmitted(true)
-      setTimeout(() => {
-        setShowRequestModal(false)
-        setRequestSubmitted(false)
-        setRequestEmail('')
-        setRequestLang('')
-      }, 2000)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleRequestSubmit = async () => {
+    if (!requestEmail || !requestLang || isSubmitting) return
+
+    setIsSubmitting(true)
+    try {
+      const res = await fetch('/api/language-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ language: requestLang, email: requestEmail }),
+      })
+
+      if (res.ok) {
+        setRequestSubmitted(true)
+        setTimeout(() => {
+          setShowRequestModal(false)
+          setRequestSubmitted(false)
+          setRequestEmail('')
+          setRequestLang('')
+        }, 2000)
+      }
+    } catch (error) {
+      console.error('Error submitting request:', error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -560,10 +577,10 @@ export default function LanguagesPage() {
                   </div>
                   <button
                     onClick={handleRequestSubmit}
-                    disabled={!requestEmail || !requestLang}
+                    disabled={!requestEmail || !requestLang || isSubmitting}
                     className="w-full py-3 rounded-xl bg-amber-500 text-black font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-amber-400 transition-colors"
                   >
-                    Submit Request
+                    {isSubmitting ? 'Submitting...' : 'Submit Request'}
                   </button>
                 </div>
               </>
