@@ -33,7 +33,7 @@ interface MobileTrackerProps {
 }
 
 // Currency symbol - consistent throughout
-const CURRENCY = '£'
+const CURRENCY = '$'
 
 // ============================================
 // MAIN COMPONENT
