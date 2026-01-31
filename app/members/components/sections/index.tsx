@@ -14,7 +14,7 @@ import { getMemberStats, computeDerivedConfig } from '../../config'
 import type { CourseModule, ComingSoonCourse, NicheConfig } from '../../config'
 import Image from 'next/image'
 import { WistiaPlayer, Skeleton, DashboardSkeleton, ProgressRing, useSwipeGesture, useHaptic, FloatingActionButton } from '../ui'
-import { TotalValueBadge, MembersOnlineBadge, NewMembersTodayBadge } from '../ui/ValueReinforcement'
+import { TotalValueBadge, MembersOnlineBadge, CourseContentBadge } from '../ui/ValueReinforcement'
 import { ReviewsSection } from './Reviews'
 import { UpdatesSection } from './Updates'
 import type { PlatformStateType } from '../../hooks'
@@ -518,63 +518,42 @@ const LegacyDashboardSection = memo(function LegacyDashboardSection({ state }: D
 
       {/* MOBILE: Social Proof - LP Glass Style */}
       <div className="sm:hidden rounded-2xl glass-premium p-4 border border-amber-500/20">
-        <div className="grid grid-cols-4 gap-2 text-center">
+        <div className="grid grid-cols-3 gap-2 text-center">
           {[
-            { icon: Users, value: `${(memberStats.totalMembers / 1000).toFixed(1)}k`, label: 'Students', color: 'text-amber-400' },
-            { icon: null, value: memberStats.activeNow.toLocaleString(), label: 'Active', color: 'text-emerald-400', pulse: true },
-            { icon: Star, value: '4.9', label: 'Rating', color: 'text-amber-400' },
-            { icon: Globe, value: '23', label: 'Countries', color: 'text-blue-400' },
+            { icon: Video, value: '5', label: 'Modules', color: 'text-amber-400' },
+            { icon: Gift, value: '10', label: 'Bonuses', color: 'text-emerald-400' },
+            { icon: Clock, value: '23m', label: 'Content', color: 'text-blue-400' },
           ].map((stat, i) => (
             <div key={i} className="py-2">
-              {stat.pulse ? (
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <div className="relative">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                    <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-                  </div>
-                  <span className={`text-lg font-black ${stat.color}`}>{stat.value}</span>
-                </div>
-              ) : (
-                <p className={`text-lg font-black ${stat.color}`}>{stat.value}</p>
-              )}
+              <p className={`text-lg font-black ${stat.color}`}>{stat.value}</p>
               <p className="text-[10px] text-slate-400">{stat.label}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* DESKTOP: Social Proof Banner - LP Glass Style */}
+      {/* DESKTOP: Course Stats Banner */}
       <div className="hidden sm:block glass-premium rounded-2xl p-5 border border-amber-500/20">
-        <div className="grid grid-cols-4 gap-4 text-center">
+        <div className="grid grid-cols-3 gap-4 text-center">
           <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-gold">
-            <Users className="w-5 h-5 text-amber-400" />
+            <Video className="w-5 h-5 text-amber-400" />
             <div className="flex items-center gap-1">
-              <span className="font-black text-white">{memberStats.totalMembers.toLocaleString()}+</span>
-              <span className="text-slate-400 text-sm">enrolled</span>
+              <span className="font-black text-white">5</span>
+              <span className="text-slate-400 text-sm">modules</span>
             </div>
           </div>
           <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-gold">
-            <div className="relative">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-            </div>
+            <Gift className="w-5 h-5 text-emerald-400" />
             <div className="flex items-center gap-1">
-              <span className="font-black text-emerald-400">{memberStats.activeNow.toLocaleString()}</span>
-              <span className="text-slate-400 text-sm">active</span>
+              <span className="font-black text-emerald-400">10</span>
+              <span className="text-slate-400 text-sm">bonuses</span>
             </div>
           </div>
           <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-gold">
-            <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+            <Clock className="w-5 h-5 text-blue-400" />
             <div className="flex items-center gap-1">
-              <span className="font-black text-white">4.9</span>
-              <span className="text-slate-400 text-sm">rating</span>
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-center gap-2 p-2 rounded-lg glass-gold">
-            <Globe className="w-5 h-5 text-blue-400" />
-            <div className="flex items-center gap-1">
-              <span className="font-black text-white">23</span>
-              <span className="text-slate-400 text-sm">countries</span>
+              <span className="font-black text-white">23 min</span>
+              <span className="text-slate-400 text-sm">content</span>
             </div>
           </div>
         </div>
@@ -602,7 +581,7 @@ const LegacyDashboardSection = memo(function LegacyDashboardSection({ state }: D
       {/* MOBILE: Live Activity Badges */}
       <div className="sm:hidden flex flex-wrap items-center justify-center gap-3">
         <MembersOnlineBadge config={config} />
-        <NewMembersTodayBadge config={config} />
+        <CourseContentBadge config={config} />
       </div>
 
       {/* Coming Soon Courses - LP Premium Style */}
@@ -1014,19 +993,16 @@ const LegacyCourseSection = memo(function LegacyCourseSection({ state }: CourseP
                       <div className={`relative aspect-video bg-gradient-to-br ${gradientClass} overflow-hidden`}>
                         {/* Actual thumbnail image - use Wistia thumbnail if available */}
                         {module.thumbnail ? (
-                          <Image
+                          <img
                             src={module.thumbnail}
                             alt={module.title}
-                            fill
-                            className="object-cover"
+                            className="absolute inset-0 w-full h-full object-cover" style={{ imageRendering: 'auto', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }} loading="lazy"
                           />
                         ) : module.wistiaId && (
-                          <Image
+                          <img
                             src={`https://fast.wistia.com/embed/medias/${module.wistiaId}/swatch`}
                             alt={module.title}
-                            fill
-                            className="object-cover"
-                            unoptimized
+                            className="absolute inset-0 w-full h-full object-cover" style={{ imageRendering: 'auto', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }} loading="lazy"
                           />
                         )}
 
@@ -1137,19 +1113,16 @@ const LegacyCourseSection = memo(function LegacyCourseSection({ state }: CourseP
                   <div className="relative h-32 overflow-hidden">
                     {/* Actual thumbnail image - use Wistia thumbnail if available */}
                     {module.thumbnail ? (
-                      <Image
+                      <img
                         src={module.thumbnail}
                         alt={module.title}
-                        fill
-                        className={`object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
+                        className={`absolute inset-0 w-full h-full object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
                       />
                     ) : module.wistiaId ? (
-                      <Image
+                      <img
                         src={`https://fast.wistia.com/embed/medias/${module.wistiaId}/swatch`}
                         alt={module.title}
-                        fill
-                        className={`object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
-                        unoptimized
+                        className={`absolute inset-0 w-full h-full object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-yellow-600" />

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useCallback } from 'react'
+import React, { memo, useCallback, useState, useEffect } from 'react'
 import {
   GraduationCap, Home, Video, Gift, Trophy, Star, Flame, Moon, Sun,
   Settings, LogOut, Sparkles, ArrowRight, HelpCircle, Crown, ChevronUp,
@@ -548,6 +548,18 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
     }
   }, [state.soundEnabled])
 
+  // Set dark background on body to prevent white flash on scroll (for all devices)
+  useEffect(() => {
+    document.documentElement.classList.add('members-dark')
+    document.body.classList.add('members-dark')
+    document.body.style.backgroundColor = '#09090b'
+    return () => {
+      document.documentElement.classList.remove('members-dark')
+      document.body.classList.remove('members-dark')
+      document.body.style.backgroundColor = ''
+    }
+  }, [])
+
   // Blocked user screen (refunded users)
   if (state.isBlocked) {
     return (
@@ -590,7 +602,7 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
     )
   }
 
-  // Main platform
+  // Main platform (responsive for all devices)
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-premium transition-colors duration-300">
       <ThemeStyles />

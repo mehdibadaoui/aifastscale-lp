@@ -62,74 +62,66 @@ export const MobileTracker = memo(function MobileTracker({ state }: MobileTracke
   }
 
   return (
-    <div className="min-h-screen pb-32">
-      {/* HEADER STATS */}
-      <div className="px-4 py-6 space-y-4">
-        {/* Month selector */}
+    <div className="min-h-screen pb-32 bg-zinc-950">
+      {/* HEADER */}
+      <div className="sticky top-0 z-30 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-3">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-black text-white">Profit Tracker</h1>
+          <h1 className="text-xl font-bold text-white">Profit Tracker</h1>
           <input
             type="month"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-amber-500/50"
+            className="bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-white text-xs focus:outline-none focus:border-amber-500/50"
           />
         </div>
+      </div>
 
-        {/* Net Profit Card */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-transparent border border-amber-500/20 p-5">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/30 rounded-full blur-3xl" />
-          <div className="relative">
-            <p className="text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
-              Net Profit
-            </p>
-            <div className="flex items-baseline gap-2">
-              <span className={`text-4xl font-black ${netProfit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                {netProfit >= 0 ? '+' : ''}$<MobileAnimatedNumber value={Math.abs(netProfit)} />
+      {/* STATS */}
+      <div className="px-4 py-3 space-y-3">
+        {/* Net Profit Card - COMPACT */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-transparent border border-amber-500/20 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-amber-400 text-xs font-bold uppercase tracking-wider mb-0.5">Net Profit</p>
+              <span className={`text-3xl font-black ${netProfit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                {netProfit >= 0 ? '+' : ''}&pound;<MobileAnimatedNumber value={Math.abs(netProfit)} />
               </span>
             </div>
-
-            {/* Goal progress */}
             {state.monthlyGoal && state.monthlyGoal > 0 && (
-              <div className="mt-4">
-                <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-white/50">Monthly Goal</span>
-                  <span className="text-amber-400 font-bold">
-                    {Math.round(goalProgress)}% of ${state.monthlyGoal.toLocaleString()}
-                  </span>
-                </div>
-                <div className="h-2 bg-black/30 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all duration-1000 ${
-                      goalProgress >= 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-amber-500 to-yellow-400'
-                    }`}
-                    style={{ width: `${goalProgress}%` }}
-                  />
-                </div>
+              <div className="text-right">
+                <p className="text-xs text-white/50">Goal</p>
+                <p className="text-sm font-bold text-amber-400">{Math.round(goalProgress)}%</p>
               </div>
             )}
           </div>
+          {state.monthlyGoal && state.monthlyGoal > 0 && (
+            <div className="mt-3 h-1.5 bg-black/30 rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-1000 ${goalProgress >= 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-amber-500 to-yellow-400'}`}
+                style={{ width: `${goalProgress}%` }}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Income / Expenses Row */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <ArrowUpRight className="w-5 h-5 text-emerald-400" />
-              <span className="text-sm text-emerald-400 font-medium">Income</span>
+        {/* Income / Expenses Row - COMPACT */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="flex items-center gap-1.5 mb-1">
+              <ArrowUpRight className="w-4 h-4 text-emerald-400" />
+              <span className="text-xs text-emerald-400 font-medium">Income</span>
             </div>
-            <p className="text-2xl font-black text-emerald-400">
-              $<MobileAnimatedNumber value={totalIncome} />
+            <p className="text-xl font-black text-emerald-400">
+              &pound;<MobileAnimatedNumber value={totalIncome} />
             </p>
           </div>
-
-          <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <ArrowDownRight className="w-5 h-5 text-red-400" />
-              <span className="text-sm text-red-400 font-medium">Expenses</span>
+          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+            <div className="flex items-center gap-1.5 mb-1">
+              <ArrowDownRight className="w-4 h-4 text-red-400" />
+              <span className="text-xs text-red-400 font-medium">Expenses</span>
             </div>
-            <p className="text-2xl font-black text-red-400">
-              $<MobileAnimatedNumber value={totalExpenses} />
+            <p className="text-xl font-black text-red-400">
+              &pound;<MobileAnimatedNumber value={totalExpenses} />
             </p>
           </div>
         </div>
@@ -263,8 +255,8 @@ const AddTransactionSheet = memo(function AddTransactionSheet({
   const [category, setCategory] = useState('')
   const haptic = useHapticFeedback()
 
-  const incomeCategories = ['Client Work', 'Consulting', 'Products', 'Ads', 'Affiliate', 'Other']
-  const expenseCategories = ['Software', 'Ads', 'Equipment', 'Services', 'Education', 'Other']
+  const incomeCategories = ['Client', 'Sale', 'Consulting', 'Affiliate', 'Other']
+  const expenseCategories = ['Software', 'Ads', 'Tools', 'Services', 'Other']
   const categories = type === 'income' ? incomeCategories : expenseCategories
 
   const handleSubmit = () => {
@@ -288,38 +280,40 @@ const AddTransactionSheet = memo(function AddTransactionSheet({
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} title={`Add ${type === 'income' ? 'Income' : 'Expense'}`}>
-      <div className="px-4 pb-6 space-y-4">
-        {/* Amount */}
-        <div>
-          <label className="block text-sm font-bold text-white/50 mb-2">Amount</label>
-          <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-white/40">$</span>
+      <div className="px-4 pb-6 space-y-3">
+        {/* Amount - Hero input */}
+        <div className={`p-4 rounded-2xl ${type === 'income' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-red-500/10 border-red-500/20'} border`}>
+          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${type === 'income' ? 'text-emerald-400' : 'text-red-400'}`}>Amount</label>
+          <div className="flex items-center gap-2">
+            <span className={`text-3xl font-black ${type === 'income' ? 'text-emerald-400' : 'text-red-400'}`}>&pound;</span>
             <input
               type="number"
+              inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
-              className="w-full pl-10 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-2xl font-bold text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
+              autoFocus
+              className="flex-1 bg-transparent text-3xl font-black text-white placeholder-white/20 focus:outline-none"
             />
           </div>
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-bold text-white/50 mb-2">Description</label>
+          <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-1.5">Description</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="What was this for?"
-            className="w-full px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
+            placeholder={type === 'income' ? 'e.g., Client payment, Sale' : 'e.g., Software, Ads'}
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
           />
         </div>
 
-        {/* Category */}
+        {/* Category - Compact chips */}
         <div>
-          <label className="block text-sm font-bold text-white/50 mb-2">Category</label>
-          <div className="flex flex-wrap gap-2">
+          <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-1.5">Category</label>
+          <div className="flex flex-wrap gap-1.5">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -327,11 +321,11 @@ const AddTransactionSheet = memo(function AddTransactionSheet({
                   haptic.trigger('light')
                   setCategory(category === cat ? '' : cat)
                 }}
-                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   category === cat
                     ? type === 'income'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                      : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-red-500 text-white'
                     : 'bg-white/5 text-white/60 border border-white/10'
                 }`}
               >
@@ -343,12 +337,12 @@ const AddTransactionSheet = memo(function AddTransactionSheet({
 
         {/* Date */}
         <div>
-          <label className="block text-sm font-bold text-white/50 mb-2">Date</label>
+          <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-1.5">Date</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-amber-500/50"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-amber-500/50"
           />
         </div>
 
@@ -356,7 +350,7 @@ const AddTransactionSheet = memo(function AddTransactionSheet({
         <button
           onClick={handleSubmit}
           disabled={!isValid}
-          className={`w-full py-4 rounded-2xl font-bold transition-all ${
+          className={`w-full py-4 rounded-xl font-bold text-lg transition-all mt-2 ${
             isValid
               ? type === 'income'
                 ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/30 active:scale-[0.98]'
@@ -364,7 +358,7 @@ const AddTransactionSheet = memo(function AddTransactionSheet({
               : 'bg-white/10 text-white/30 cursor-not-allowed'
           }`}
         >
-          Add {type === 'income' ? 'Income' : 'Expense'}
+          {isValid ? `Add &pound;${parseFloat(amount).toLocaleString()} ${type === 'income' ? 'Income' : 'Expense'}` : `Add ${type === 'income' ? 'Income' : 'Expense'}`}
         </button>
       </div>
     </BottomSheet>

@@ -70,6 +70,18 @@ export const MobilePlatform = memo(function MobilePlatform({ state }: MobilePlat
     (state.activeSection as MobileSection) || 'dashboard'
   )
 
+  // Set dark background on body to prevent white flash on scroll
+  useEffect(() => {
+    document.documentElement.classList.add('members-dark')
+    document.body.classList.add('members-dark')
+    document.body.style.backgroundColor = '#09090b'
+    return () => {
+      document.documentElement.classList.remove('members-dark')
+      document.body.classList.remove('members-dark')
+      document.body.style.backgroundColor = ''
+    }
+  }, [])
+
   // Sync with parent state
   useEffect(() => {
     if (state.activeSection) {

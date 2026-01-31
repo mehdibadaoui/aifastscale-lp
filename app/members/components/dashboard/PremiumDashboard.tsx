@@ -259,36 +259,47 @@ const ValueReinforcementCard = memo(function ValueReinforcementCard({
 // ============================================
 
 const SocialProofRow = memo(function SocialProofRow({
-  memberCount,
-  activeNow,
-  rating,
-  countries
+  moduleCount,
+  bonusCount,
+  totalMinutes
 }: {
-  memberCount: number
-  activeNow: number
-  rating: number
-  countries: number
+  moduleCount: number
+  bonusCount: number
+  totalMinutes: number
 }) {
+  const [activeUsers, setActiveUsers] = useState(() => Math.floor(Math.random() * (773 - 323 + 1)) + 323)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveUsers(prev => {
+        const change = Math.floor(Math.random() * 21) - 10
+        const newValue = prev + change
+        return Math.max(323, Math.min(773, newValue))
+      })
+    }, 30000 + Math.random() * 30000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div className="grid grid-cols-4 gap-3">
       {[
-        { icon: Users, value: memberCount, suffix: '+', label: 'Students', color: 'text-amber-400' },
-        { icon: null, value: activeNow, label: 'Active Now', color: 'text-emerald-400', pulse: true },
-        { icon: Star, value: rating, label: 'Rating', color: 'text-amber-400', decimals: 1 },
-        { icon: Globe, value: countries, label: 'Countries', color: 'text-blue-400' },
+        { icon: null, value: activeUsers, label: 'Online', color: 'text-emerald-400', pulse: true },
+        { icon: Video, value: moduleCount, label: 'Modules', color: 'text-amber-400' },
+        { icon: Gift, value: bonusCount, label: 'Bonuses', color: 'text-amber-400' },
+        { icon: Clock, value: totalMinutes, suffix: ' min', label: 'Content', color: 'text-blue-400' },
       ].map((stat, i) => (
         <div key={i} className="flex items-center justify-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10">
           {stat.pulse ? (
             <div className="relative">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
+              <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping opacity-50" />
             </div>
           ) : stat.icon ? (
             <stat.icon className={`w-4 h-4 ${stat.color}`} />
           ) : null}
           <div className="flex items-center gap-1">
             <span className={`font-black ${stat.color}`}>
-              {stat.decimals ? stat.value.toFixed(stat.decimals) : stat.value.toLocaleString()}{stat.suffix || ''}
+              {stat.value.toLocaleString()}{stat.suffix || ''}
             </span>
             <span className="text-white/40 text-xs">{stat.label}</span>
           </div>
@@ -615,14 +626,13 @@ export const PremiumDashboard = memo(function PremiumDashboard({
 
         <div className="space-y-4">
           <SocialProofRow
-            memberCount={state.config.memberStats?.totalMembers || 1247}
-            activeNow={state.config.memberStats?.activeNow || 42}
-            rating={4.9}
-            countries={23}
+            moduleCount={state.config.modules?.filter((m: any) => !m.comingSoon).length || 5}
+            bonusCount={state.config.bonuses?.length || 10}
+            totalMinutes={state.config.modules?.filter((m: any) => !m.comingSoon).reduce((acc: number, m: any) => acc + (m.durationMinutes || 0), 0) || 23}
           />
 
           <p className="text-white/30 text-xs text-center">
-            Join thousands of professionals creating AI videos
+            Master AI video creation at your own pace
           </p>
         </div>
       </div>

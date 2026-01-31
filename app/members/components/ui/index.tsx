@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, ReactNode, useCallback } from 'react'
-import { X, Trophy, Loader2, AlertCircle, StickyNote, Keyboard, Settings, Moon, Sun, SkipForward, CheckCircle, Twitter, Linkedin, Printer, Award, Volume2, VolumeX } from 'lucide-react'
+import { X, Trophy, Loader2, AlertCircle, StickyNote, Keyboard, Settings, Moon, Sun, SkipForward, CheckCircle, Twitter, Linkedin, Printer, Award, Volume2, VolumeX, Play } from 'lucide-react'
 import { NicheConfig, computeDerivedConfig } from '../../config'
 
 // ============================================
@@ -823,10 +823,11 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
   const [hasError, setHasError] = useState(false)
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
   const [showSpeedMenu, setShowSpeedMenu] = useState(false)
+  const [isActivated, setIsActivated] = useState(false) // Lazy load: only load player when clicked
   const videoRef = useRef<any>(null)
 
   useEffect(() => {
-    if (!containerRef.current || !wistiaId) return
+    if (!containerRef.current || !wistiaId || !isActivated) return
     setIsLoading(true)
     setHasError(false)
     containerRef.current.innerHTML = ''
@@ -903,6 +904,33 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
           <p className="text-white font-bold mb-2">Video failed to load</p>
           <p className="text-slate-400 text-sm">Please refresh the page</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show lightweight thumbnail facade until user clicks play (improves LCP)
+  if (!isActivated) {
+    return (
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/20 ring-1 ring-amber-500/10">
+        <div className="aspect-video bg-gradient-to-br from-zinc-900 to-zinc-800 relative">
+          {/* Thumbnail - use optimized Wistia thumbnail */}
+          <img
+            src={`https://embed-ssl.wistia.com/deliveries/d70480661b8a93b1ead9507e03cc1654.jpg?image_crop_resized=960x540`}
+            alt="Video thumbnail"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'brightness(0.9)' }}
+          />
+          {/* Play button overlay */}
+          <button
+            onClick={() => setIsActivated(true)}
+            className="absolute inset-0 flex items-center justify-center group cursor-pointer"
+            aria-label="Play video"
+          >
+            <div className="w-20 h-20 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 flex items-center justify-center shadow-2xl shadow-amber-500/50 group-hover:scale-110 transition-transform">
+              <Play className="w-10 h-10 text-white ml-1" fill="white" />
+            </div>
+          </button>
         </div>
       </div>
     )
@@ -1358,7 +1386,14 @@ interface CertificateModalProps {
 }
 
 export function CertificateModal({ isOpen, onClose, studentName, completionDate, courseTitle = 'CloneYourself', courseSubtitle = 'for Professionals', totalRuntime = 23, shareUrl = 'https://aifastscale.com' }: CertificateModalProps) {
-  const handlePrint = () => window.print()
+  const [showDownloadTip, setShowDownloadTip] = useState(false)
+
+  const handleDownload = () => {
+    setShowDownloadTip(true)
+    setTimeout(() => {
+      window.print()
+    }, 100)
+  }
 
   const handleShare = (platform: 'twitter' | 'linkedin') => {
     const text = `I just completed the ${courseTitle} ${courseSubtitle} course! 🎓`
@@ -1408,16 +1443,25 @@ export function CertificateModal({ isOpen, onClose, studentName, completionDate,
         </div>
       </div>
 
-      <div className="p-6 border-t border-amber-500/20 flex flex-wrap gap-3 justify-center">
-        <button onClick={handlePrint} className="btn-premium flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold shadow-glow-gold transition-all btn-press focus-ring">
-          <Printer className="w-4 h-4" /> Print
-        </button>
-        <button onClick={() => handleShare('twitter')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1DA1F2] text-white font-bold hover:opacity-90 transition-all btn-press focus-ring">
-          <Twitter className="w-4 h-4" /> Tweet
-        </button>
-        <button onClick={() => handleShare('linkedin')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0A66C2] text-white font-bold hover:opacity-90 transition-all btn-press focus-ring">
-          <Linkedin className="w-4 h-4" /> Share
-        </button>
+      <div className="p-6 border-t border-amber-500/20">
+        {showDownloadTip && (
+          <div className="mb-4 p-3 rounded-lg bg-amber-500/20 border border-amber-500/30 text-center">
+            <p className="text-sm text-amber-400">
+              💡 <strong>Tip:</strong> In the print dialog, select "Save as PDF" as the destination to download your certificate.
+            </p>
+          </div>
+        )}
+        <div className="flex flex-wrap gap-3 justify-center">
+          <button onClick={handleDownload} className="btn-premium flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold shadow-glow-gold transition-all btn-press focus-ring">
+            <Award className="w-4 h-4" /> Download PDF
+          </button>
+          <button onClick={() => handleShare('twitter')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1DA1F2] text-white font-bold hover:opacity-90 transition-all btn-press focus-ring">
+            <Twitter className="w-4 h-4" /> Tweet
+          </button>
+          <button onClick={() => handleShare('linkedin')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0A66C2] text-white font-bold hover:opacity-90 transition-all btn-press focus-ring">
+            <Linkedin className="w-4 h-4" /> Share
+          </button>
+        </div>
       </div>
     </Modal>
   )

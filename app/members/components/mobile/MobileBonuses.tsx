@@ -14,7 +14,7 @@ import { BottomSheet, HorizontalScroll, MobileAnimatedNumber, useHapticFeedback 
 
 interface Bonus {
   id: string
-  title: string
+  name: string  // Config uses 'name' not 'title'
   description: string
   value: number
   category?: string
@@ -22,6 +22,8 @@ interface Bonus {
   type?: 'link' | 'file' | 'video' | 'folder'
   isNew?: boolean
   isPremium?: boolean
+  image?: string
+  icon?: any
 }
 
 interface MobileBonusesProps {
@@ -59,7 +61,7 @@ export const MobileBonuses = memo(function MobileBonuses({ state }: MobileBonuse
   const filteredBonuses = useMemo(() => {
     return state.config.bonuses.filter(bonus => {
       const matchesSearch = !searchQuery ||
-        bonus.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        bonus.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         bonus.description?.toLowerCase().includes(searchQuery.toLowerCase())
       const matchesCategory = activeCategory === 'All' || bonus.category === activeCategory
       return matchesSearch && matchesCategory
@@ -225,7 +227,7 @@ export const MobileBonuses = memo(function MobileBonuses({ state }: MobileBonuse
 
                   <div className="flex-1 text-left min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-white truncate">{bonus.title}</p>
+                      <p className="font-bold text-white truncate">{bonus.name}</p>
                       {bonus.isNew && (
                         <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
                           NEW
@@ -324,7 +326,7 @@ const NewBonusCard = memo(function NewBonusCard({
           NEW
         </span>
       </div>
-      <p className="font-bold text-white mb-1 line-clamp-2">{bonus.title}</p>
+      <p className="font-bold text-white mb-1 line-clamp-2">{bonus.name}</p>
       <p className="text-sm text-white/40 line-clamp-2">{bonus.description}</p>
       {bonus.value > 0 && (
         <div className="flex items-center gap-2 mt-3">
@@ -388,7 +390,7 @@ const BonusDetailSheet = memo(function BonusDetailSheet({
                 </span>
               )}
             </div>
-            <h3 className="text-xl font-black text-white">{bonus.title}</h3>
+            <h3 className="text-xl font-black text-white">{bonus.name}</h3>
           </div>
         </div>
 

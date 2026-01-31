@@ -554,6 +554,19 @@ body {
   line-height: 1.6;
 }
 
+/* Members Area Dark Background - Prevents white flash on scroll */
+body.members-dark,
+html.members-dark {
+  background-color: #09090b !important;
+}
+
+/* Force dark background on members pages to prevent scroll white space */
+[data-members-page="true"],
+.members-page-root {
+  background-color: #09090b !important;
+  min-height: 100vh;
+}
+
 /* ============================================================================
    CUSTOM SCROLLBAR - Luxury Gold
    ============================================================================ */

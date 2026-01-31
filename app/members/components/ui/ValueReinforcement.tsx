@@ -45,47 +45,46 @@ export const TotalValueBadge = memo(function TotalValueBadge({ config, compact =
   )
 })
 
-// Shows members online now
+// Shows members online now (fluctuates between 323-773)
 export const MembersOnlineBadge = memo(function MembersOnlineBadge({ config }: ValueReinforcementProps) {
-  const [stats, setStats] = useState(() => getMemberStats(config.memberStats))
+  const [activeCount, setActiveCount] = useState(() => Math.floor(Math.random() * (773 - 323 + 1)) + 323)
   const isPrimaryAmber = config.theme.primary.includes('amber')
   const primaryColorClass = isPrimaryAmber ? 'amber' : 'teal'
 
   useEffect(() => {
+    // Update every 30-60 seconds with small fluctuation
     const interval = setInterval(() => {
-      setStats(getMemberStats(config.memberStats))
-    }, 30000)
+      setActiveCount(prev => {
+        const change = Math.floor(Math.random() * 21) - 10 // -10 to +10
+        const newValue = prev + change
+        return Math.max(323, Math.min(773, newValue)) // Keep within 323-773
+      })
+    }, 30000 + Math.random() * 30000)
     return () => clearInterval(interval)
-  }, [config.memberStats])
+  }, [])
 
   return (
     <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-premium border border-${primaryColorClass}-500/20`}>
       <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
       <span className="text-sm text-slate-300">
-        <span className={`font-bold text-${primaryColorClass}-400`}>{stats.activeNow}</span> members online now
+        <span className={`font-bold text-green-400`}>{activeCount}</span> members online
       </span>
     </div>
   )
 })
 
-// Shows daily new members counter
-export const NewMembersTodayBadge = memo(function NewMembersTodayBadge({ config }: ValueReinforcementProps) {
-  const [stats, setStats] = useState(() => getMemberStats(config.memberStats))
+// Shows course content summary
+export const CourseContentBadge = memo(function CourseContentBadge({ config }: ValueReinforcementProps) {
   const isPrimaryAmber = config.theme.primary.includes('amber')
   const primaryColorClass = isPrimaryAmber ? 'amber' : 'teal'
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStats(getMemberStats(config.memberStats))
-    }, 60000)
-    return () => clearInterval(interval)
-  }, [config.memberStats])
+  const moduleCount = config.modules?.filter(m => !m.comingSoon).length || 5
+  const bonusCount = config.bonuses?.length || 10
 
   return (
     <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-premium border border-${primaryColorClass}-500/20`}>
-      <TrendingUp className={`w-4 h-4 text-${primaryColorClass}-400`} />
+      <Sparkles className={`w-4 h-4 text-${primaryColorClass}-400`} />
       <span className="text-sm text-slate-300">
-        <span className={`font-bold text-${primaryColorClass}-400`}>{stats.todayNewMembers}</span> joined today
+        <span className={`font-bold text-${primaryColorClass}-400`}>{moduleCount} modules</span> + <span className={`font-bold text-${primaryColorClass}-400`}>{bonusCount} bonuses</span>
       </span>
     </div>
   )

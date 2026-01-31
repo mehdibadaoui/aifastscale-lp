@@ -66,6 +66,35 @@ interface CourseState {
 }
 
 // ============================================
+// ACTIVE USERS INDICATOR (323-773)
+// ============================================
+
+const ActiveUsersIndicator = memo(function ActiveUsersIndicator() {
+  const [count, setCount] = useState(() => Math.floor(Math.random() * (773 - 323 + 1)) + 323)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prev => {
+        const change = Math.floor(Math.random() * 21) - 10
+        return Math.max(323, Math.min(773, prev + change))
+      })
+    }, 30000 + Math.random() * 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <div className="relative">
+        <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+        <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping opacity-50" />
+      </div>
+      <span className="text-xs text-emerald-400 font-bold">{count}</span>
+      <span className="text-xs text-white/40">online</span>
+    </div>
+  )
+})
+
+// ============================================
 // KEYBOARD SHORTCUTS TOOLTIP
 // ============================================
 
@@ -457,39 +486,39 @@ const LessonHeader = memo(function LessonHeader({
         <h1 className="text-xl sm:text-2xl font-black text-white mb-2">{module.title}</h1>
         <p className="text-white/60 text-sm sm:text-base mb-6">{module.description}</p>
 
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        {/* Actions - All buttons in a row */}
+        <div className="flex items-center gap-2 sm:gap-3">
           {isCompleted ? (
             <button
               onClick={onMarkComplete}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-sm transition-all hover:bg-emerald-500/20"
+              className="flex-1 flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-sm transition-all hover:bg-emerald-500/20"
             >
               <CheckCircle className="w-4 h-4" />
-              Completed
+              <span className="hidden xs:inline">Completed</span>
             </button>
           ) : (
             <button
               onClick={onMarkComplete}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold text-sm shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold text-sm shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] transition-all"
             >
               <CheckCircle className="w-4 h-4" />
-              Mark as Complete
+              <span className="hidden xs:inline">Mark</span> Complete
             </button>
           )}
 
           {canGoNext && (
             <button
               onClick={onNext}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition-all"
             >
-              Next Lesson
+              Next
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
 
           <button
             onClick={onToggleBookmark}
-            className={`p-3 rounded-xl border transition-all ${
+            className={`p-3 rounded-xl border transition-all flex-shrink-0 ${
               isBookmarked
                 ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
                 : 'bg-white/5 border-white/10 text-white/50 hover:text-amber-400 hover:border-amber-500/30'
@@ -762,7 +791,10 @@ const ModuleSidebar = memo(function ModuleSidebar({
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <p className="text-xs text-white/40 mt-2">{progressPercent.toFixed(0)}% complete</p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-xs text-white/40">{progressPercent.toFixed(0)}% complete</p>
+          <ActiveUsersIndicator />
+        </div>
       </div>
 
       {/* All modules visible - no max-height scroll */}
@@ -790,19 +822,20 @@ const ModuleSidebar = memo(function ModuleSidebar({
               {/* Thumbnail */}
               <div className={`relative aspect-video bg-gradient-to-br from-amber-500/20 to-yellow-500/10 ${isComingSoon ? 'grayscale' : ''}`}>
                 {module.thumbnail ? (
-                  <Image
+                  <img
                     src={module.thumbnail}
                     alt={module.title}
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ imageRendering: 'auto', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
+                    loading="lazy"
                   />
                 ) : module.wistiaId && !isComingSoon && (
-                  <Image
+                  <img
                     src={`https://fast.wistia.com/embed/medias/${module.wistiaId}/swatch`}
                     alt={module.title}
-                    fill
-                    className="object-cover"
-                    unoptimized
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ imageRendering: 'auto', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
+                    loading="lazy"
                   />
                 )}
 
@@ -1097,21 +1130,14 @@ export const PremiumCourse = memo(function PremiumCourse({ state }: { state: Cou
         totalModules={state.totalModules}
       />
 
-      {/* Mobile Header */}
-      <div className="sm:hidden flex items-center justify-between">
+      {/* Mobile Header - Compact info */}
+      <div className="lg:hidden flex items-center justify-between">
         <div>
-          <p className="text-xs text-amber-400 font-bold">Module {currentModule.number}</p>
+          <p className="text-xs text-amber-400 font-bold">Now Playing: Module {currentModule.number}</p>
           <p className="text-[10px] text-white/50">
-            {state.completedModules.length}/{state.totalModules} complete
+            {state.completedModules.length}/{state.totalModules} modules complete
           </p>
         </div>
-        <button
-          onClick={() => setShowMobileDrawer(true)}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white/70"
-        >
-          <List className="w-4 h-4" />
-          All Modules
-        </button>
       </div>
 
       {/* Continue Watching Banner */}
@@ -1162,6 +1188,88 @@ export const PremiumCourse = memo(function PremiumCourse({ state }: { state: Cou
             totalModules={state.totalModules}
           />
 
+          {/* Mobile: All Modules Section - RIGHT AFTER HEADER */}
+          <div className="lg:hidden space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-black text-white">All Modules</h3>
+              <span className="text-xs text-white/50">{state.completedModules.length}/{state.totalModules} complete</span>
+            </div>
+
+            {/* Progress bar */}
+            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 transition-all duration-500"
+                style={{ width: `${state.totalModules > 0 ? (state.completedModules.length / state.totalModules) * 100 : 0}%` }}
+              />
+            </div>
+
+            {/* All modules grid with thumbnails */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {state.config.modules.map((module, index) => {
+                const isCurrent = state.currentModuleIndex === index
+                const isModuleCompleted = state.completedModules.includes(module.id)
+                const isComingSoon = module.comingSoon
+                const progress = state.videoProgress[module.id]
+                const watchPercent = progress?.percent || 0
+
+                return (
+                  <button
+                    key={module.id}
+                    onClick={() => !isComingSoon && state.setCurrentModuleIndex(index)}
+                    disabled={isComingSoon}
+                    className={`w-full text-left rounded-2xl overflow-hidden transition-all group ${
+                      isComingSoon
+                        ? 'opacity-60 cursor-not-allowed'
+                        : isCurrent
+                        ? 'ring-2 ring-amber-500 shadow-lg shadow-amber-500/20'
+                        : 'hover:ring-1 hover:ring-amber-500/30'
+                    }`}
+                  >
+                    {/* Thumbnail */}
+                    <div className={`relative aspect-video bg-gradient-to-br from-amber-500/20 to-yellow-500/10 ${isComingSoon ? 'grayscale' : ''}`}>
+                      {module.thumbnail ? (
+                        <img
+                          src={module.thumbnail}
+                          alt={module.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : module.wistiaId && !isComingSoon && (
+                        <img
+                          src={`https://fast.wistia.com/embed/medias/${module.wistiaId}/swatch`}
+                          alt={module.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-black/30" />
+                      <div className="absolute top-2 left-3 text-3xl font-black text-white/30">{module.number}</div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                          isComingSoon ? 'bg-white/20' : isCurrent ? 'bg-white' : 'bg-white/80 group-hover:bg-white group-hover:scale-110'
+                        }`}>
+                          {isComingSoon ? <Lock className="w-6 h-6 text-white/60" /> : isModuleCompleted ? <CheckCircle className="w-6 h-6 text-emerald-500" /> : <Play className={`w-6 h-6 ${isCurrent ? 'text-amber-500' : 'text-slate-600'}`} fill={isCurrent ? '#f59e0b' : '#475569'} />}
+                        </div>
+                      </div>
+                      <div className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-black/40 backdrop-blur-sm">
+                        <span className="text-xs font-bold text-white">{module.duration}</span>
+                      </div>
+                      {isComingSoon && <div className="absolute bottom-2 left-2 px-2 py-1 rounded-lg bg-amber-500/80 text-xs font-bold text-white">Coming Soon</div>}
+                      {isModuleCompleted && !isComingSoon && <div className="absolute bottom-2 left-2 px-2 py-1 rounded-lg bg-emerald-500 text-xs font-bold text-white">Done</div>}
+                      {isCurrent && !isModuleCompleted && !isComingSoon && <div className="absolute bottom-2 left-2 px-2 py-1 rounded-lg bg-amber-500 text-xs font-bold text-white animate-pulse">Now Playing</div>}
+                      {watchPercent > 0 && watchPercent < 100 && !isComingSoon && (
+                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30"><div className="h-full bg-amber-400" style={{ width: `${watchPercent}%` }} /></div>
+                      )}
+                    </div>
+                    <div className="p-3 bg-gradient-to-br from-white/[0.03] to-transparent border-t border-white/5">
+                      <h4 className={`text-sm font-bold leading-tight line-clamp-2 ${isComingSoon ? 'text-white/50' : isCurrent ? 'text-amber-400' : 'text-white'}`}>{module.title}</h4>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
           {/* What You'll Learn */}
           <WhatYoullLearn
             lessons={currentModule.lessons}
@@ -1170,13 +1278,6 @@ export const PremiumCourse = memo(function PremiumCourse({ state }: { state: Cou
 
           {/* Resources */}
           <ResourcesBlock resources={currentModule.resources} />
-
-          {/* User Notes */}
-          <UserNotes
-            moduleId={currentModule.id}
-            savedNote={savedNote}
-            onSave={(note) => state.saveNote(currentModule.id, note)}
-          />
 
           {/* Navigation Footer */}
           <div className="flex items-center justify-between pt-4 border-t border-white/10">
@@ -1210,6 +1311,13 @@ export const PremiumCourse = memo(function PremiumCourse({ state }: { state: Cou
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
+
+          {/* User Notes - AT THE END */}
+          <UserNotes
+            moduleId={currentModule.id}
+            savedNote={savedNote}
+            onSave={(note) => state.saveNote(currentModule.id, note)}
+          />
         </div>
 
         {/* Right Column: Module Sidebar (Desktop) */}
@@ -1226,62 +1334,6 @@ export const PremiumCourse = memo(function PremiumCourse({ state }: { state: Cou
             />
           </div>
         </div>
-      </div>
-
-      {/* Mobile: Up Next Section */}
-      <div className="sm:hidden space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-black text-white">Up Next</h3>
-          <button
-            onClick={() => setShowMobileDrawer(true)}
-            className="text-xs text-amber-400 font-medium"
-          >
-            View all
-          </button>
-        </div>
-
-        {/* Next module card */}
-        {nextModule && (
-          <button
-            onClick={state.nextModule}
-            className="w-full text-left rounded-2xl overflow-hidden border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-transparent hover:border-amber-500/40 transition-all"
-          >
-            <div className="relative h-32">
-              {nextModule.thumbnail ? (
-                <Image
-                  src={nextModule.thumbnail}
-                  alt={nextModule.title}
-                  fill
-                  className="object-cover"
-                />
-              ) : nextModule.wistiaId && (
-                <Image
-                  src={`https://fast.wistia.com/embed/medias/${nextModule.wistiaId}/swatch`}
-                  alt={nextModule.title}
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-              <div className="absolute top-3 left-3 text-4xl font-black text-white/30">
-                {nextModule.number}
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center">
-                  <Play className="w-7 h-7 text-slate-700" fill="#334155" />
-                </div>
-              </div>
-              <div className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/40 backdrop-blur-sm">
-                <span className="text-xs font-bold text-white">{nextModule.duration}</span>
-              </div>
-            </div>
-            <div className="p-4">
-              <p className="text-xs text-amber-400 font-bold mb-1">UP NEXT</p>
-              <h4 className="font-bold text-white">{nextModule.title}</h4>
-            </div>
-          </button>
-        )}
       </div>
     </div>
   )
