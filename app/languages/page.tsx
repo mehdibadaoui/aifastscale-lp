@@ -239,12 +239,6 @@ const LanguageCard = memo(function LanguageCard({
 export default function LanguagesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedTier, setSelectedTier] = useState<number | null>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  // Animate on mount
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
 
   // Filter languages based on search and tier
   const filteredLanguages = useMemo(() => {
@@ -314,7 +308,7 @@ export default function LanguagesPage() {
       </header>
 
       {/* Hero Section */}
-      <section className={`relative z-10 pt-12 pb-8 px-4 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <section className={`relative z-10 pt-12 pb-8 px-4 transition-all duration-1000 animate-fade-in`}>
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6">
@@ -367,7 +361,7 @@ export default function LanguagesPage() {
       </section>
 
       {/* Search Section */}
-      <section className={`relative z-10 px-4 pb-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <section className={`relative z-10 px-4 pb-6 transition-all duration-1000 delay-300 animate-fade-in`}>
         <div className="max-w-3xl mx-auto">
           {/* Search Input */}
           <div className="relative mb-6">
@@ -435,7 +429,7 @@ export default function LanguagesPage() {
       </section>
 
       {/* Languages Grid */}
-      <section className={`relative z-10 px-4 pb-16 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <section className={`relative z-10 px-4 pb-16 transition-all duration-1000 delay-500 animate-fade-in`}>
         <div className="max-w-7xl mx-auto">
           {filteredLanguages.length === 0 ? (
             <div className="text-center py-16">
