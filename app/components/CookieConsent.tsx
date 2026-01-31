@@ -106,7 +106,7 @@ export default function CookieConsent() {
                 By clicking &quot;Accept All,&quot; you consent to our use of cookies.{' '}
                 <Link
                   href="/privacy-policy"
-                  className="text-violet-400 hover:text-violet-300 underline"
+                  className="text-amber-400 hover:text-amber-300 underline"
                 >
                   Privacy Policy
                 </Link>
@@ -115,7 +115,7 @@ export default function CookieConsent() {
             <div className="flex flex-wrap gap-2 md:gap-3">
               <button
                 onClick={handleAcceptAll}
-                className="px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all text-sm md:text-base"
+                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all text-sm md:text-base"
               >
                 Accept All
               </button>
@@ -162,7 +162,7 @@ export default function CookieConsent() {
                   onChange={(e) => setPreferences(p => ({ ...p, analytics: e.target.checked }))}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
               </label>
             </div>
 
@@ -179,7 +179,7 @@ export default function CookieConsent() {
                   onChange={(e) => setPreferences(p => ({ ...p, marketing: e.target.checked }))}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
               </label>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function CookieConsent() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={handleSavePreferences}
-              className="px-5 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all"
+              className="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all"
             >
               Save Preferences
             </button>
