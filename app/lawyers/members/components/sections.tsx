@@ -845,13 +845,21 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                     }`}>
                       {/* Mini thumbnail header */}
                       <div className={`relative aspect-video bg-gradient-to-br ${gradientClass} overflow-hidden`}>
-                        {/* Actual thumbnail image */}
-                        {module.thumbnail && (
+                        {/* Actual thumbnail image - use Wistia thumbnail if available */}
+                        {module.thumbnail ? (
                           <Image
                             src={module.thumbnail}
                             alt={module.title}
                             fill
-                            className="object-contain"
+                            className="object-cover"
+                          />
+                        ) : module.wistiaId && (
+                          <Image
+                            src={`https://fast.wistia.com/embed/medias/${module.wistiaId}/swatch`}
+                            alt={module.title}
+                            fill
+                            className="object-cover"
+                            unoptimized
                           />
                         )}
 
@@ -960,13 +968,21 @@ export const CourseSection = memo(function CourseSection({ state }: CourseProps)
                 }`}>
                   {/* Thumbnail/Visual Header - Now with actual image */}
                   <div className="relative h-32 overflow-hidden">
-                    {/* Actual thumbnail image */}
+                    {/* Actual thumbnail image - use Wistia thumbnail if available */}
                     {module.thumbnail ? (
                       <Image
                         src={module.thumbnail}
                         alt={module.title}
                         fill
                         className={`object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
+                      />
+                    ) : module.wistiaId ? (
+                      <Image
+                        src={`https://fast.wistia.com/embed/medias/${module.wistiaId}/swatch`}
+                        alt={module.title}
+                        fill
+                        className={`object-cover ${isComingSoon ? 'grayscale opacity-50' : ''}`}
+                        unoptimized
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-yellow-600" />
