@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Sparkles, CheckCircle, Star, Shield, Clock, Zap, Users, TrendingUp, ArrowRight, MessageCircle, Target, Video, Lock, Verified, Check, Gift, Award, Flame } from 'lucide-react'
 import Image from 'next/image'
 
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_7x5Kz1cflmrYH'
+const CHECKOUT_LINK = '#'
 
 interface FullSalesContentProps {
   generatedVideo: string
@@ -44,7 +44,7 @@ export default function FullSalesContent({ generatedVideo }: FullSalesContentPro
   // Reusable CTA Button Component - Modern Glass Effect
   const CTAButton = ({ size = 'large', className = '' }: { size?: 'small' | 'large', className?: string }) => (
     <a
-      href={WHOP_CHECKOUT_LINK}
+      href={CHECKOUT_LINK}
       className={`group relative inline-flex items-center justify-center overflow-hidden rounded-xl font-black text-violet-600 shadow-2xl transition-all duration-300 hover:scale-[1.03] hover:shadow-white/50 active:scale-[0.98] ${
         size === 'large'
           ? 'px-6 py-4 text-base sm:px-12 sm:py-5 sm:text-xl gap-2 sm:gap-3'
@@ -866,7 +866,7 @@ export default function FullSalesContent({ generatedVideo }: FullSalesContentPro
 
                     {/* CTA Button */}
                     <a
-                      href={WHOP_CHECKOUT_LINK}
+                      href={CHECKOUT_LINK}
                       className="group relative mb-4 flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-4 text-lg font-black text-white shadow-lg shadow-violet-500/25 transition-all hover:shadow-xl hover:shadow-violet-500/30 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />

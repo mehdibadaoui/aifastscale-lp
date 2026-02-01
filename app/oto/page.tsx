@@ -1,11 +1,8 @@
 'use client'
 
 import { Shield, Clock, Zap, CheckCircle, Sparkles, Crown, Star } from 'lucide-react'
-import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
-import { trackMetaEvent } from '../components/MetaPixel'
-
-// Whop payment link for OTO - $29
-const WHOP_OTO_LINK = 'https://whop.com/checkout/plan_WsTHXLDJ3nJRo'
+// Checkout link placeholder
+const CHECKOUT_LINK = '#'
 
 // Save tracking params to localStorage before Whop redirect
 const saveTrackingParams = () => {
@@ -46,7 +43,7 @@ export default function OTOPage() {
       value: 29,
       currency: 'USD'
     })
-    window.location.href = WHOP_OTO_LINK
+    window.location.href = CHECKOUT_LINK
   }
 
   const handleDecline = () => {

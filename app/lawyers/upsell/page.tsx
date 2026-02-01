@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getLawyerUpsellBonuses } from '../../config/lawyer-bonus-products'
 
 // Whop checkout link for Upsell
-const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_97EdLFRTEConC'
+const CHECKOUT_LINK = '#'
 
 export default function LawyerUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
@@ -148,7 +148,7 @@ export default function LawyerUpsellPage() {
           {/* CTA Buttons */}
           <div className="space-y-2 md:space-y-3">
             <a
-              href={WHOP_UPSELL_LINK}
+              href={CHECKOUT_LINK}
               className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-amber-500/30"
             >
               Yes, Add to My Order - ${upsellPrice}

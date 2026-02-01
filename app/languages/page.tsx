@@ -158,7 +158,7 @@ const PROFESSIONS = [
   { id: 'other', label: 'Other', icon: '✨', url: null },
 ]
 
-const WHOP_CHECKOUT_LINK = '' // TODO: Add your checkout link
+const CHECKOUT_LINK = '#'
 
 export default function LanguagesPage() {
   const [search, setSearch] = useState('')
@@ -252,7 +252,7 @@ export default function LanguagesPage() {
     }
 
     // Redirect to Whop checkout
-    window.location.href = WHOP_CHECKOUT_LINK
+    window.location.href = CHECKOUT_LINK
   }
 
   const handleRequestSubmit = async () => {

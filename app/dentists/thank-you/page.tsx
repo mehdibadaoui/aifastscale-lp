@@ -10,29 +10,6 @@ interface Credentials {
   name: string
 }
 
-// ============================================================================
-// PURCHASE TRACKING - Browser Pixel Only
-// ============================================================================
-
-const trackPurchase = () => {
-  if (typeof window === 'undefined') return
-
-  // Prevent duplicate fires
-  if (sessionStorage.getItem('dentist_purchase_tracked')) return
-
-  if ((window as any).fbq) {
-    (window as any).fbq('track', 'Purchase', {
-      value: 47.00,
-      currency: 'USD',
-      content_name: 'CloneYourself Dentist',
-      content_type: 'product',
-      content_ids: ['dentist-main'],
-    })
-  }
-
-  sessionStorage.setItem('dentist_purchase_tracked', 'true')
-}
-
 function ThankYouContent() {
   const router = useRouter()
   const [copiedPassword, setCopiedPassword] = useState(false)
@@ -49,16 +26,6 @@ function ThankYouContent() {
     }
   }, [])
 
-  // Fire Purchase event when credentials are confirmed (proves purchase completed)
-  useEffect(() => {
-    if (credentials && credentials.email) {
-      // Small delay to ensure pixel is loaded
-      const timer = setTimeout(() => {
-        trackPurchase()
-      }, 500)
-      return () => clearTimeout(timer)
-    }
-  }, [credentials])
 
   const fetchCredentials = useCallback(async (email?: string, userId?: string) => {
     try {
@@ -95,8 +62,6 @@ function ThankYouContent() {
       if (!email && !userId) {
         setIsLoading(false)
         setShowFallback(true)
-        // Still track purchase even without email (they completed checkout)
-        setTimeout(() => trackPurchase(), 500)
         return
       }
 

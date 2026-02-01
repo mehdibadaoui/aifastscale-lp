@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { getPsychologistUpsellBonuses } from '../../config/psychologist-bonus-products'
 
 // Whop checkout link for Upsell
-const WHOP_UPSELL_LINK = 'https://whop.com/checkout/plan_5fa6gRWmpdn1a'
+const CHECKOUT_LINK = '#'
 
 export default function PsychologistUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
@@ -148,7 +148,7 @@ export default function PsychologistUpsellPage() {
           {/* CTA Buttons */}
           <div className="space-y-2 md:space-y-3">
             <a
-              href={WHOP_UPSELL_LINK}
+              href={CHECKOUT_LINK}
               className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"
             >
               Yes, Add to My Order - ${upsellPrice}

@@ -332,7 +332,7 @@ export const psychologistsConfig: NicheConfig = {
     legacyPassword: 'therapy2026',
     legacyEnabled: true,
     vipGuests: [],
-    whopCheckoutLink: 'https://whop.com/checkout/plan_QBhFmuZAzfDyh',
+    whopCheckoutLink: '#',
     authStorageKey: 'psychologistMemberAuth',
   },
   blockedUsers: [],

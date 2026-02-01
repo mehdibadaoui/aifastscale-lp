@@ -347,7 +347,7 @@ export const dentistsConfig: NicheConfig = {
         badge: 'Reviewer',
       },
     ],
-    whopCheckoutLink: 'https://whop.com/checkout/plan_chOBDoTBxc7NH',
+    whopCheckoutLink: '#',
     authStorageKey: 'dentistMemberAuth',
   },
   blockedUsers: [

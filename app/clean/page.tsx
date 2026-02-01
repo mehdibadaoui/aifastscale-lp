@@ -40,61 +40,6 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { BONUS_PRODUCTS, getTotalBonusValue } from '../config/bonus-products'
-import { trackTikTokInitiateCheckout } from '../components/TikTokPixel'
-import { trackMetaEvent } from '../components/MetaPixel'
-
-// Save tracking params to localStorage before Whop redirect
-// This preserves fbclid, ttclid, UTMs for thank-you page attribution
-const saveTrackingParams = () => {
-  if (typeof window === 'undefined') return
-
-  const params = new URLSearchParams(window.location.search)
-  const trackingData: Record<string, string> = {}
-
-  // Capture Meta fbclid
-  const fbclid = params.get('fbclid')
-  if (fbclid) trackingData.fbclid = fbclid
-
-  // Capture TikTok ttclid
-  const ttclid = params.get('ttclid')
-  if (ttclid) trackingData.ttclid = ttclid
-
-  // Capture UTM params
-  const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
-  utmParams.forEach(param => {
-    const value = params.get(param)
-    if (value) trackingData[param] = value
-  })
-
-  // Capture Meta cookies (_fbc, _fbp) if they exist
-  const fbc = document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1]
-  const fbp = document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1]
-  if (fbc) trackingData._fbc = fbc
-  if (fbp) trackingData._fbp = fbp
-
-  // Save timestamp
-  trackingData.checkout_started = new Date().toISOString()
-
-  // Store in localStorage (persists across redirect to Whop and back)
-  localStorage.setItem('aifastscale_tracking', JSON.stringify(trackingData))
-}
-
-// Combined tracking function for all platforms
-const trackInitiateCheckout = (contentId: string, value: number) => {
-  // Save tracking params BEFORE redirect
-  saveTrackingParams()
-
-  // TikTok tracking
-  trackTikTokInitiateCheckout(contentId, value)
-  // Meta Pixel tracking
-  trackMetaEvent('InitiateCheckout', {
-    content_ids: [contentId],
-    content_name: '7 Minute AgentClone',
-    content_type: 'product',
-    value: value,
-    currency: 'USD'
-  })
-}
 
 export default function CleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -451,8 +396,7 @@ export default function CleanLandingPage() {
 
             {/* CTA - Main Hero Button */}
             <a
-              href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-              onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+              href="#"
               className={`group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-6 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -704,9 +648,8 @@ export default function CleanLandingPage() {
             {/* CTA After Jessica Proof */}
             <div className="mt-8 text-center">
               <a
-                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group inline-flex items-center gap-3 bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/40"
+                href="#"
+                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/40"
               >
                 <span>Get The Same System Jessica Used</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
@@ -1281,9 +1224,8 @@ export default function CleanLandingPage() {
 
               {/* CTA Button - Hormozi Style */}
               <a
-                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-5 sm:py-6 rounded-xl font-black text-lg sm:text-2xl shadow-2xl shadow-gold-premium/30 flex items-center justify-center gap-3 mb-4 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer overflow-hidden animate-glow-pulse"
+                href="#"
+                  className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-5 sm:py-6 rounded-xl font-black text-lg sm:text-2xl shadow-2xl shadow-gold-premium/30 flex items-center justify-center gap-3 mb-4 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer overflow-hidden animate-glow-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2 sm:gap-3">
@@ -1414,9 +1356,8 @@ export default function CleanLandingPage() {
             {/* CTA - After How It Works */}
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
-                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
+                href="#"
+                  className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1765,8 +1706,7 @@ export default function CleanLandingPage() {
         <div className={`max-w-xl mx-auto px-3 sm:px-6 mt-8 sm:mt-12 text-center relative z-10 ${visibleSections.has('testimonials') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
           <p className="text-gray-400 text-sm mb-4">Ready to join them?</p>
           <a
-            href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-            onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
+            href="#"
             className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
           >
             <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -1942,9 +1882,8 @@ export default function CleanLandingPage() {
 
               {/* CTA Button */}
               <a
-                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative w-full max-w-md mx-auto bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-4 sm:py-6 rounded-xl font-black text-lg sm:text-2xl shadow-2xl shadow-gold-premium/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden mb-4 sm:mb-6 shine-effect animate-glow-pulse"
+                href="#"
+                  className="group relative w-full max-w-md mx-auto bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-4 sm:py-6 rounded-xl font-black text-lg sm:text-2xl shadow-2xl shadow-gold-premium/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden mb-4 sm:mb-6 shine-effect animate-glow-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
@@ -2032,9 +1971,8 @@ export default function CleanLandingPage() {
             <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
-                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
+                href="#"
+                  className="group relative inline-flex items-center justify-center bg-gradient-to-r from-gold-premium via-gold-light to-gold-premium text-black px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-gold-premium/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2262,9 +2200,8 @@ export default function CleanLandingPage() {
 
               {/* CTA Button */}
               <a
-                href="https://whop.com/checkout/plan_7x5Kz1cflmrYH"
-                onClick={() => trackInitiateCheckout('7min-agentclone', 37)}
-                className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden shine-effect animate-glow-pulse"
+                href="#"
+                  className="group relative w-full bg-gradient-to-r from-gold-premium via-yellow-400 to-gold-premium text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden shine-effect animate-glow-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">

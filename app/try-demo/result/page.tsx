@@ -5,7 +5,7 @@ import { Download, Play, Sparkles, CheckCircle, Star, Shield, Clock, Zap, Users,
 import Image from 'next/image'
 
 // Whop checkout link for $47.82
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_7x5Kz1cflmrYH'
+const CHECKOUT_LINK = '#'
 
 export default function VideoResultPage() {
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
@@ -55,7 +55,7 @@ export default function VideoResultPage() {
   // Reusable CTA Button Component
   const CTAButton = ({ size = 'large', className = '' }: { size?: 'small' | 'large', className?: string }) => (
     <a
-      href={WHOP_CHECKOUT_LINK}
+      href={CHECKOUT_LINK}
       className={`group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 bg-[length:200%_100%] font-bold text-white shadow-2xl shadow-violet-500/25 transition-all duration-300 hover:bg-[100%_0] hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98] ${
         size === 'large'
           ? 'px-5 py-3.5 text-base sm:px-10 sm:py-5 sm:text-xl gap-2 sm:gap-3'
@@ -131,7 +131,7 @@ export default function VideoResultPage() {
               </div>
               <span className="text-xl font-black bg-gradient-to-r from-violet-700 to-indigo-700 bg-clip-text text-transparent sm:text-2xl">AgentClone</span>
             </a>
-            <a href={WHOP_CHECKOUT_LINK} className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-violet-200 hover:shadow-xl transition-shadow sm:px-5">
+            <a href={CHECKOUT_LINK} className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-violet-200 hover:shadow-xl transition-shadow sm:px-5">
               Get Access
             </a>
           </div>
@@ -922,7 +922,7 @@ export default function VideoResultPage() {
                 </div>
 
                 <a
-                  href={WHOP_CHECKOUT_LINK}
+                  href={CHECKOUT_LINK}
                   className="group mb-4 sm:mb-6 inline-flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white px-5 py-3.5 text-base font-black text-violet-600 shadow-2xl transition-all hover:scale-[1.02] hover:shadow-white/30 active:scale-[0.98] sm:px-12 sm:py-6 sm:text-2xl"
                 >
                   <Target className="h-5 w-5 sm:h-7 sm:w-7 flex-shrink-0" />

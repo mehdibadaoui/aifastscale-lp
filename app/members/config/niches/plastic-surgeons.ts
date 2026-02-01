@@ -340,7 +340,7 @@ export const plasticSurgeonsConfig: NicheConfig = {
         badge: 'VIP Guest',
       },
     ],
-    whopCheckoutLink: 'https://whop.com/checkout/plan_OGprA4gd4Lr7N',
+    whopCheckoutLink: '#',
     authStorageKey: 'plasticSurgeonMemberAuth',
   },
   blockedUsers: [],

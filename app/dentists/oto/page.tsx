@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 
 // Whop checkout link for OTO
-const WHOP_OTO_LINK = 'https://whop.com/checkout/plan_piIlcIeKKia85'
+const CHECKOUT_LINK = '#'
 
 export default function DentistOtoPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
@@ -148,7 +148,7 @@ export default function DentistOtoPage() {
           {/* CTA Buttons */}
           <div className="space-y-2 md:space-y-3">
             <a
-              href={WHOP_OTO_LINK}
+              href={CHECKOUT_LINK}
               className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 md:py-5 rounded-xl font-black text-base md:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg shadow-teal-500/30"
             >
               Yes, Add to My Order - ${upsellPrice}
