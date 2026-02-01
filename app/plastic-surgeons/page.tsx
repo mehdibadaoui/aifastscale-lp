@@ -54,6 +54,40 @@ import { AnimatedBackground } from '../components/AnimatedBackground'
 // Checkout link - Replace with your payment link
 const CHECKOUT_LINK = '#'
 
+// ===========================================
+// META PIXEL TRACKING (No duplicates)
+// ===========================================
+
+// Track ViewContent (fires once per session)
+const trackViewContent = () => {
+  if (typeof window === 'undefined') return
+  if (sessionStorage.getItem('ps_vc_tracked')) return
+
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'ViewContent', {
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      value: 47.82,
+      currency: 'USD',
+    })
+    sessionStorage.setItem('ps_vc_tracked', '1')
+  }
+}
+
+// Track InitiateCheckout (fires on CTA click)
+const trackInitiateCheckout = () => {
+  if (typeof window === 'undefined') return
+
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'InitiateCheckout', {
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      value: 47.82,
+      currency: 'USD',
+    })
+  }
+}
+
 // 100+ World Languages - With comprehensive country aliases
 // Users can search by language name OR country name
 const SUPPORTED_LANGUAGES = [
@@ -225,6 +259,11 @@ export default function PlasticSurgeonLandingPage() {
     return () => clearInterval(interval)
   }, [])
 
+  // Track ViewContent on page load (once per session)
+  useEffect(() => {
+    const timer = setTimeout(() => trackViewContent(), 500)
+    return () => clearTimeout(timer)
+  }, [])
 
   // Sticky mobile CTA - show after scrolling past 600px
   useEffect(() => {
@@ -675,7 +714,8 @@ export default function PlasticSurgeonLandingPage() {
             {/* CTA - Premium Button with Glow */}
             <a
               href={CHECKOUT_LINK}
-                            className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
+              onClick={trackInitiateCheckout}
+              className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                 <span className="sm:hidden">Get Instant Access</span>
@@ -1375,7 +1415,8 @@ export default function PlasticSurgeonLandingPage() {
               {/* CTA Button */}
               <Link
                 href={CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              onClick={trackInitiateCheckout}
+                  className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -1651,7 +1692,8 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                 href={CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-amber-500/30"
+              onClick={trackInitiateCheckout}
+                  className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-amber-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2331,7 +2373,8 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`text-center mt-8 ${visibleSections.has('comparison') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <a
                 href={CHECKOUT_LINK}
-                                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-amber-500/25"
+              onClick={trackInitiateCheckout}
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-amber-500/25"
               >
                 <Zap className="w-5 h-5" />
                 Get CloneYourself Now
@@ -2485,7 +2528,8 @@ export default function PlasticSurgeonLandingPage() {
 
               <Link
                 href={CHECKOUT_LINK}
-                                className="w-full max-w-md mx-auto bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
+              onClick={trackInitiateCheckout}
+                  className="w-full max-w-md mx-auto bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 Get Instant Access Now
@@ -2550,7 +2594,8 @@ export default function PlasticSurgeonLandingPage() {
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                 href={CHECKOUT_LINK}
-                                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-amber-500/30"
+              onClick={trackInitiateCheckout}
+                  className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-amber-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2957,7 +3002,8 @@ export default function PlasticSurgeonLandingPage() {
               {/* CTA Button */}
               <Link
                 href={CHECKOUT_LINK}
-                                className="group relative w-full bg-gradient-to-r from-amber-400 via-amber-400 to-amber-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
+              onClick={trackInitiateCheckout}
+                  className="group relative w-full bg-gradient-to-r from-amber-400 via-amber-400 to-amber-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
@@ -3030,7 +3076,8 @@ export default function PlasticSurgeonLandingPage() {
 
               <a
                 href={CHECKOUT_LINK}
-                                className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              onClick={trackInitiateCheckout}
+                  className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
                 Get Instant Access Now
@@ -3100,7 +3147,8 @@ export default function PlasticSurgeonLandingPage() {
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
             href={CHECKOUT_LINK}
-                        className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/30 active:scale-[0.98] transition-transform"
+              onClick={trackInitiateCheckout}
+          className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
             <span className="text-amber-200 font-bold">$47.82</span>
@@ -3496,7 +3544,8 @@ export default function PlasticSurgeonLandingPage() {
         <div className="bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-4 px-4">
           <a
             href={CHECKOUT_LINK}
-                        className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30 animate-pulse"
+              onClick={trackInitiateCheckout}
+          className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />
             Get Instant Access — $47.82

@@ -10,6 +10,21 @@ interface Credentials {
   name: string
 }
 
+// Track Purchase (fires once per session)
+const trackPurchase = () => {
+  if (typeof window === 'undefined') return
+  if (sessionStorage.getItem('ps_purchase_tracked')) return
+
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'Purchase', {
+      content_name: 'CloneYourself for Plastic Surgeons',
+      content_type: 'product',
+      value: 47.82,
+      currency: 'USD',
+    })
+    sessionStorage.setItem('ps_purchase_tracked', '1')
+  }
+}
 
 function ThankYouContent() {
   const router = useRouter()
@@ -25,6 +40,12 @@ function ThankYouContent() {
     if (visited) {
       setHasVisited(true)
     }
+  }, [])
+
+  // Track Purchase on page load (once per session)
+  useEffect(() => {
+    const timer = setTimeout(() => trackPurchase(), 500)
+    return () => clearTimeout(timer)
   }, [])
 
   const fetchCredentials = useCallback(async (email?: string, userId?: string) => {
