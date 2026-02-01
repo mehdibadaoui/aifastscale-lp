@@ -67,56 +67,8 @@ const DR_MARCUS_DATA = {
   accentColor: 'teal' as const,
 }
 
-// Whop checkout link
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_QBhFmuZAzfDyh'
-
-// ===========================================
-// META TRACKING - Browser Pixel Only
-// ===========================================
-
-// Capture fbclid from Facebook ads and store as _fbc cookie
-const captureFbclid = () => {
-  if (typeof window === 'undefined') return
-
-  const params = new URLSearchParams(window.location.search)
-  const fbclid = params.get('fbclid')
-
-  if (fbclid) {
-    const fbc = `fb.1.${Date.now()}.${fbclid}`
-    document.cookie = `_fbc=${fbc}; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax`
-    sessionStorage.setItem('psychologist_fbc', fbc)
-  }
-}
-
-// Fire ViewContent event (Browser Pixel)
-const trackViewContent = () => {
-  if (typeof window === 'undefined') return
-
-  if ((window as any).fbq) {
-    (window as any).fbq('track', 'ViewContent', {
-      value: 47.82,
-      currency: 'USD',
-      content_name: 'CloneYourself for Psychologists',
-      content_type: 'product',
-      content_ids: ['psychologist-main'],
-    })
-  }
-}
-
-// Fire InitiateCheckout event (Browser Pixel)
-const trackInitiateCheckout = () => {
-  if (typeof window === 'undefined') return
-
-  if ((window as any).fbq) {
-    (window as any).fbq('track', 'InitiateCheckout', {
-      value: 47.82,
-      currency: 'USD',
-      content_name: 'CloneYourself for Psychologists',
-      content_type: 'product',
-      content_ids: ['psychologist-main'],
-    })
-  }
-}
+// Checkout link placeholder (tracking removed)
+const CHECKOUT_LINK = '#'
 
 
 export default function PsychologistLandingPage() {
@@ -146,15 +98,6 @@ export default function PsychologistLandingPage() {
     return () => clearInterval(interval)
   }, [])
 
-  // Meta tracking on page load - capture fbclid and fire ViewContent
-  useEffect(() => {
-    captureFbclid()
-    // Small delay to ensure pixel is loaded
-    const timer = setTimeout(() => {
-      trackViewContent()
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [])
 
   // Sticky mobile CTA - show after scrolling past 600px (direct DOM, no re-renders)
   useEffect(() => {
@@ -560,7 +503,7 @@ export default function PsychologistLandingPage() {
             {/* Hero Image - Premium Glass Container - Mobile Optimized */}
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-scale-in animation-delay-300' : ''}`}>
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift img-zoom">
-                {/* Mobile: 22KB optimized hero */}
+                {/* Mobile: optimized hero */}
                 <Image
                   src="/images/psychologist/therapist-hero-mobile.webp"
                   alt="AI Video System for Psychologists Showcase"
@@ -568,6 +511,7 @@ export default function PsychologistLandingPage() {
                   height={358}
                   className="w-full h-auto sm:hidden"
                   priority
+                  quality={95}
                 />
                 {/* Desktop: Full quality hero */}
                 <Image
@@ -577,6 +521,7 @@ export default function PsychologistLandingPage() {
                   height={768}
                   className="w-full h-auto hidden sm:block"
                   priority
+                  quality={95}
                   sizes="(max-width: 1024px) 80vw, 800px"
                 />
               </div>
@@ -616,7 +561,7 @@ export default function PsychologistLandingPage() {
 
             {/* CTA - Premium Button with Glow */}
             <a
-              onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+              href={CHECKOUT_LINK}
                             className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -868,6 +813,7 @@ export default function PsychologistLandingPage() {
                       fill
                       className="object-contain"
                       loading="lazy"
+                      quality={95}
                     />
                   )}
                 </div>
@@ -1022,6 +968,7 @@ export default function PsychologistLandingPage() {
                   fill
                   className="object-cover"
                   loading="lazy"
+                  quality={95}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
                 />
               </div>
@@ -1080,7 +1027,7 @@ export default function PsychologistLandingPage() {
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/psychologist/viral-scripts.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" sizes="(max-width: 640px) 100vw, 400px" />
+                    <Image src={bonus.image || '/images/psychologist/viral-scripts.webp'} alt={bonus.title} fill className="object-cover" loading="lazy" quality={95} sizes="(max-width: 640px) 100vw, 600px" />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -1146,7 +1093,7 @@ export default function PsychologistLandingPage() {
 
               {/* CTA Button */}
               <Link
-                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+                href={CHECKOUT_LINK}
                                 className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1422,7 +1369,7 @@ export default function PsychologistLandingPage() {
             {/* CTA */}
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
-                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+                href={CHECKOUT_LINK}
                                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -1508,7 +1455,7 @@ export default function PsychologistLandingPage() {
                 </div>
 
                 <div className="relative rounded-xl overflow-hidden border-2 border-teal-500/40 shadow-2xl">
-                  {/* Mobile: 27KB optimized image */}
+                  {/* Mobile: optimized image */}
                   <Image
                     src="/images/psychologist/case-study-therapy-mobile.webp"
                     alt="Dr. Michael Chen - AI Video Success"
@@ -1516,6 +1463,7 @@ export default function PsychologistLandingPage() {
                     height={270}
                     className="w-full h-auto object-cover sm:hidden"
                     loading="lazy"
+                    quality={95}
                   />
                   {/* Desktop: Full quality image */}
                   <Image
@@ -1525,6 +1473,7 @@ export default function PsychologistLandingPage() {
                     height={768}
                     className="w-full h-auto object-cover hidden sm:block"
                     loading="lazy"
+                    quality={95}
                     sizes="(max-width: 1024px) 90vw, 700px"
                   />
                 </div>
@@ -1674,13 +1623,14 @@ export default function PsychologistLandingPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: Image - Mobile optimized */}
                 <div className="relative aspect-video lg:aspect-auto">
-                  {/* Mobile: 22KB optimized image */}
+                  {/* Mobile: optimized image */}
                   <Image
                     src="/images/psychologist/case-study-therapy-mobile.webp"
                     alt="Dr. Lisa Park - Therapy Practice AI Video"
                     fill
                     className="object-cover sm:hidden"
                     loading="lazy"
+                    quality={95}
                   />
                   {/* Desktop: Full quality image */}
                   <Image
@@ -1689,6 +1639,7 @@ export default function PsychologistLandingPage() {
                     fill
                     className="object-cover hidden sm:block"
                     loading="lazy"
+                    quality={95}
                     sizes="(max-width: 1024px) 50vw, 500px"
                   />
                   <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-lg">
@@ -2088,8 +2039,7 @@ export default function PsychologistLandingPage() {
             {/* Bottom CTA */}
             <div className={`text-center mt-8 ${visibleSections.has('comparison') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <a
-                href={WHOP_CHECKOUT_LINK}
-                onClick={trackInitiateCheckout}
+                href={CHECKOUT_LINK}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-teal-500/25"
               >
                 <Zap className="w-5 h-5" />
@@ -2243,7 +2193,7 @@ export default function PsychologistLandingPage() {
               <p className="text-teal-400 font-bold text-xs sm:text-base mb-4 sm:mb-6">Lifetime access • No monthly fees</p>
 
               <Link
-                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+                href={CHECKOUT_LINK}
                                 className="w-full max-w-md mx-auto bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -2308,7 +2258,7 @@ export default function PsychologistLandingPage() {
             <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-bounce-in animation-delay-500' : ''}`}>
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
-                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+                href={CHECKOUT_LINK}
                                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -2715,7 +2665,7 @@ export default function PsychologistLandingPage() {
 
               {/* CTA Button */}
               <Link
-                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+                href={CHECKOUT_LINK}
                                 className="group relative w-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -2788,7 +2738,7 @@ export default function PsychologistLandingPage() {
               </p>
 
               <a
-                onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+                href={CHECKOUT_LINK}
                                 className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
@@ -2858,7 +2808,7 @@ export default function PsychologistLandingPage() {
       <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-safe">
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
-            onClick={trackInitiateCheckout} href={WHOP_CHECKOUT_LINK}
+            href={CHECKOUT_LINK}
                         className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
@@ -3256,8 +3206,7 @@ export default function PsychologistLandingPage() {
       >
         <div className="bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-4 px-4">
           <a
-            href={WHOP_CHECKOUT_LINK}
-            onClick={trackInitiateCheckout}
+            href={CHECKOUT_LINK}
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-teal-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />

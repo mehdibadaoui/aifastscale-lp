@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
 
-// Lawyer Pixel ID - Add your pixel ID here
-const LAWYER_PIXEL_ID = '' // TODO: Add your Lawyer Meta Pixel ID
-
 export const metadata: Metadata = {
   title: 'CloneYourself for Lawyers | AI Video Marketing System | $47',
   description:
@@ -52,30 +49,6 @@ export default function LawyerLayout({
         fetchPriority="high"
         media="(min-width: 640px)"
       />
-
-      {/* Meta Pixel for Lawyer LP - Add your pixel script here when ready */}
-      {/*
-      When you have your new pixel ID, uncomment and update this section:
-
-      <Script
-        id="lawyer-meta-pixel"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', 'YOUR_PIXEL_ID_HERE');
-            fbq('track', 'PageView');
-          `,
-        }}
-      />
-      */}
 
       {children}
     </>

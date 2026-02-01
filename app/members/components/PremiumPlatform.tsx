@@ -14,7 +14,7 @@ import {
   ErrorBoundary
 } from './ui'
 import { DashboardSection, CourseSection, BonusesSection, AchievementsSection } from './sections'
-import { ProfitTracker } from './profit-tracker'
+import { MobileTracker } from './mobile/MobileTracker'
 
 // ============================================
 // LOGIN SCREEN
@@ -604,7 +604,7 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
 
   // Main platform (responsive for all devices)
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-premium transition-colors duration-300">
+    <div className="min-h-screen relative bg-gradient-premium transition-colors duration-300 overflow-y-auto">
       <ThemeStyles />
 
       {/* Floating Gradient Orbs */}
@@ -680,7 +680,7 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
         {state.activeSection === 'course' && <CourseSection state={state} />}
         {state.activeSection === 'bonuses' && <BonusesSection state={state} />}
         {state.activeSection === 'achievements' && <AchievementsSection state={state} />}
-        {state.activeSection === 'tracker' && <ProfitTracker />}
+        {state.activeSection === 'tracker' && <MobileTracker />}
       </main>
     </div>
   )

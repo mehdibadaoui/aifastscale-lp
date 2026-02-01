@@ -180,7 +180,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
 // BLOCKED/PAYMENT REQUIRED SCREEN
 // ============================================
 
-const WHOP_CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
+const CHECKOUT_LINK = '#'
 
 const BlockedScreen = memo(function BlockedScreen() {
   return (
@@ -206,7 +206,7 @@ const BlockedScreen = memo(function BlockedScreen() {
 
           {/* CTA Button */}
           <a
-            href={WHOP_CHECKOUT_LINK}
+            href={CHECKOUT_LINK}
             className="btn-premium inline-flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg text-white shadow-glow-teal focus-ring"
           >
             <Sparkles className="w-5 h-5" />

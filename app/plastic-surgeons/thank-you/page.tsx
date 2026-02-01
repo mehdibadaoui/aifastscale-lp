@@ -10,26 +10,6 @@ interface Credentials {
   name: string
 }
 
-// ===========================================
-// PURCHASE TRACKING - Browser Pixel Only
-// ===========================================
-const trackPurchase = () => {
-  if (typeof window === 'undefined') return
-
-  if (sessionStorage.getItem('plastic_surgeon_purchase_tracked')) return
-
-  if ((window as any).fbq) {
-    (window as any).fbq('track', 'Purchase', {
-      value: 47.82,
-      currency: 'USD',
-      content_name: 'CloneYourself for Plastic Surgeons',
-      content_type: 'product',
-      content_ids: ['plastic-surgeon-main'],
-    })
-  }
-
-  sessionStorage.setItem('plastic_surgeon_purchase_tracked', 'true')
-}
 
 function ThankYouContent() {
   const router = useRouter()
@@ -82,8 +62,6 @@ function ThankYouContent() {
       if (!email && !userId) {
         setIsLoading(false)
         setShowFallback(true)
-        // Still track purchase even without email (they completed checkout)
-        setTimeout(() => trackPurchase(), 500)
         return
       }
 
@@ -136,13 +114,6 @@ function ThankYouContent() {
     }
   }, [hasVisited, router])
 
-  // Track Purchase when credentials are confirmed
-  useEffect(() => {
-    if (credentials && credentials.email) {
-      // Small delay to ensure page is fully loaded
-      setTimeout(() => trackPurchase(), 500)
-    }
-  }, [credentials])
 
   if (hasVisited) {
     return (

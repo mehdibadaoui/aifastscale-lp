@@ -1621,16 +1621,16 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
     setIsAnimating(true)
     haptic.light()
 
-    setTimeout(() => {
-      if (step < steps.length - 1) {
-        setStep(step + 1)
-        setShowConfetti(false)
-      } else {
-        haptic.success()
-        onComplete()
-      }
-      setIsAnimating(false)
-    }, 150)
+    // Faster transition for snappy feel
+    if (step < steps.length - 1) {
+      setStep(step + 1)
+      setShowConfetti(false)
+    } else {
+      haptic.success()
+      onComplete()
+    }
+
+    setTimeout(() => setIsAnimating(false), 80)
   }
 
   const handleSkip = () => {
@@ -1644,27 +1644,26 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
   const iconKey = currentStep.icon as keyof typeof OnboardingIcons
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-      {/* Confetti celebration on first step */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+      {/* Confetti celebration on first step - reduced for performance */}
       {showConfetti && step === 0 && (
         <div className="fixed inset-0 pointer-events-none z-[60]" aria-hidden="true">
-          {[...Array(50)].map((_, i) => (
+          {[...Array(15)].map((_, i) => (
             <div
               key={i}
-              className="absolute animate-confetti"
+              className="absolute animate-confetti will-change-transform"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: '-20px',
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2.5 + Math.random() * 2}s`,
+                animationDelay: `${Math.random() * 1.5}s`,
+                animationDuration: `${2 + Math.random() * 1.5}s`,
               }}
             >
               <div
-                className="w-2 h-2 sm:w-3 sm:h-3"
+                className="w-2 h-2"
                 style={{
-                  backgroundColor: ['#d4af37', '#f59e0b', '#fbbf24', '#fcd34d', '#b8960c', '#d97706'][Math.floor(Math.random() * 6)],
-                  transform: `rotate(${Math.random() * 360}deg)`,
-                  borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+                  backgroundColor: ['#d4af37', '#f59e0b', '#fbbf24'][Math.floor(Math.random() * 3)],
+                  borderRadius: '2px',
                 }}
               />
             </div>
@@ -1674,16 +1673,13 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
 
       {/* Main Modal */}
       <div
-        className="relative w-full max-w-md mx-4 sm:mx-0 animate-slide-up sm:animate-scale-in"
-        style={{ animationDuration: '0.4s', animationTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+        className="relative w-full max-w-md mx-4 sm:mx-0 will-change-transform"
+        style={{ animation: 'scale-in 0.3s ease-out forwards' }}
       >
-        {/* Glow effect behind modal */}
-        <div className={`absolute -inset-4 bg-gradient-to-r ${currentStep.accent} rounded-3xl blur-2xl opacity-20 animate-pulse`} />
-
         {/* Modal content */}
-        <div className="relative glass-premium rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 overflow-hidden">
-          {/* Animated gradient border */}
-          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-amber-500/50 via-yellow-500/50 to-amber-500/50 opacity-50" style={{ backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }} />
+        <div className="relative rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10 overflow-hidden bg-gradient-to-b from-zinc-800/95 to-zinc-900/95">
+          {/* Simple gradient border */}
+          <div className={`absolute inset-0 rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r ${currentStep.accent} opacity-30`} />
 
           {/* Inner content */}
           <div className="relative p-6 sm:p-8 pb-safe">
@@ -1692,76 +1688,39 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
               <div className="w-8 h-1 rounded-full bg-white/20" />
             </div>
 
-            {/* Floating particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {[...Array(6)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute w-1 h-1 bg-amber-400/40 rounded-full"
-                  style={{
-                    left: `${20 + Math.random() * 60}%`,
-                    top: `${20 + Math.random() * 60}%`,
-                    animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
-                    animationDelay: `${Math.random() * 2}s`,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Icon with glow */}
+            {/* Icon with simple glow */}
             <div className="relative mb-6 sm:mb-8">
-              {/* Glow ring */}
-              <div className={`absolute inset-0 mx-auto w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r ${currentStep.accent} rounded-2xl blur-xl opacity-40 animate-pulse`} />
-
               {/* Icon container */}
               <div
-                className={`relative mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br ${currentStep.accent} flex items-center justify-center shadow-2xl transform transition-all duration-500`}
-                style={{
-                  animation: isAnimating ? 'none' : 'float 3s ease-in-out infinite',
-                  boxShadow: `0 20px 40px -10px rgba(212, 175, 55, 0.4)`,
-                }}
+                className={`relative mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br ${currentStep.accent} flex items-center justify-center shadow-xl`}
+                style={{ boxShadow: `0 15px 30px -10px rgba(212, 175, 55, 0.35)` }}
                 key={step}
               >
-                {/* Sparkle accents */}
+                {/* Simple sparkle */}
                 <div className="absolute -top-1 -right-1 w-3 h-3">
-                  <svg viewBox="0 0 24 24" fill="white" className="w-full h-full animate-pulse">
+                  <svg viewBox="0 0 24 24" fill="white" className="w-full h-full opacity-80">
                     <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
                   </svg>
                 </div>
-                <div className="absolute -bottom-1 -left-1 w-2 h-2">
-                  <svg viewBox="0 0 24 24" fill="white" className="w-full h-full animate-pulse" style={{ animationDelay: '0.5s' }}>
-                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
-                  </svg>
-                </div>
-
                 {OnboardingIcons[iconKey]}
               </div>
             </div>
 
-            {/* Text content with stagger animation */}
+            {/* Text content */}
             <div className="text-center mb-6 sm:mb-8" key={`content-${step}`}>
               {/* Subtitle badge */}
-              <div
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-3"
-                style={{ animation: 'fade-in 0.4s ease-out forwards', animationDelay: '0.1s', opacity: 0 }}
-              >
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-3">
                 <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${currentStep.accent}`} />
                 <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{currentStep.subtitle}</span>
               </div>
 
               {/* Title */}
-              <h2
-                className="text-2xl sm:text-3xl font-black mb-3 bg-gradient-to-r from-white via-white to-slate-300 bg-clip-text text-transparent"
-                style={{ animation: 'fade-in 0.4s ease-out forwards', animationDelay: '0.2s', opacity: 0 }}
-              >
+              <h2 className="text-2xl sm:text-3xl font-black mb-3 text-white">
                 {currentStep.title}
               </h2>
 
               {/* Description */}
-              <p
-                className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-sm mx-auto"
-                style={{ animation: 'fade-in 0.4s ease-out forwards', animationDelay: '0.3s', opacity: 0 }}
-              >
+              <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-sm mx-auto">
                 {currentStep.description}
               </p>
             </div>
@@ -1777,12 +1736,12 @@ export function OnboardingTour({ isOpen, onComplete }: OnboardingProps) {
                     aria-label={`Go to step ${i + 1}`}
                   >
                     <div
-                      className={`h-1 rounded-full transition-all duration-500 ${
+                      className={`h-1 rounded-full transition-all duration-200 ${
                         i === step
                           ? `w-6 bg-gradient-to-r ${currentStep.accent}`
                           : i < step
                             ? 'w-2 bg-amber-500/60'
-                            : 'w-2 bg-white/20 group-hover:bg-white/30'
+                            : 'w-2 bg-white/20'
                       }`}
                     />
                   </button>
