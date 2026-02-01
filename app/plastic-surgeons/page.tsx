@@ -51,8 +51,8 @@ import { getMemberStats } from './members/components/config'
 import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
-// Checkout link - Replace with your payment link
-const CHECKOUT_LINK = '#'
+// Checkout link
+const CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
 
 // ===========================================
 // META PIXEL TRACKING (No duplicates)
