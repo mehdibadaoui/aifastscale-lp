@@ -25,23 +25,16 @@ export default function PlasticSurgeonCheckout() {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        {/* Trust Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 px-3 py-1 rounded-full mb-3">
-            <Zap className="w-3 h-3 text-green-400" />
-            <span className="text-green-400 text-xs font-semibold">INSTANT ACCESS</span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            You're One Step Away...
-          </h1>
-          <p className="text-gray-400">
-            Complete your order below to get <span className="text-white font-semibold">instant access</span> to everything
+        {/* Compact Header - Mobile */}
+        <div className="text-center mb-4 lg:mb-8">
+          <p className="text-gray-400 text-sm">
+            CloneYourself for Plastic Surgeons - <span className="text-white font-semibold">$47.82</span>
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Checkout Form - Takes 2 columns on desktop */}
-          <div className="lg:col-span-2 order-2 lg:order-1">
+          <div className="lg:col-span-2 order-1 lg:order-1">
             <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
               <WhopCheckoutEmbed
                 planId="plan_OGprA4gd4Lr7N"
@@ -53,7 +46,21 @@ export default function PlasticSurgeonCheckout() {
           </div>
 
           {/* Trust Sidebar */}
-          <div className="lg:col-span-1 space-y-4 order-1 lg:order-2">
+          <div className="lg:col-span-1 space-y-4 order-2 lg:order-2">
+            {/* "One Step Away" - Shows after checkout on mobile */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 px-3 py-1 rounded-full mb-2">
+                <Zap className="w-3 h-3 text-green-400" />
+                <span className="text-green-400 text-xs font-semibold">INSTANT ACCESS</span>
+              </div>
+              <h2 className="text-xl font-bold text-white mb-1">
+                You're One Step Away...
+              </h2>
+              <p className="text-gray-400 text-sm">
+                Complete your order to get instant access
+              </p>
+            </div>
+
             {/* What You Get - REWRITTEN */}
             <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/30 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
