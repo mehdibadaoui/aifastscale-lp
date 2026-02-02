@@ -652,7 +652,7 @@ export default function PlasticSurgeonLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Get 100+ New Patients
+                {' '}Attract More Patients
               </span>
             </motion.h1>
 
@@ -1137,7 +1137,7 @@ export default function PlasticSurgeonLandingPage() {
                 <span className="text-amber-700 font-bold text-xs uppercase tracking-wide">Real Results • Board-Certified Surgeon</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                Dr. Daniel Booked <span className="text-amber-600">$156K in Procedures</span>...
+                Dr. Daniel Booked <span className="text-amber-600">$156K in Procedures*</span>...
               </h2>
               <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Filming a Single Video Himself.</p>
             </div>
@@ -1300,7 +1300,7 @@ export default function PlasticSurgeonLandingPage() {
                 {[
                   { value: '$47.82', label: 'Investment', sub: 'One-time' },
                   { value: '28', label: 'Consultations', sub: '4 weeks' },
-                  { value: '$156K', label: 'Revenue', sub: '8 weeks' },
+                  { value: '$156K', label: 'Revenue*', sub: '8 weeks' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-amber-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
@@ -1309,6 +1309,10 @@ export default function PlasticSurgeonLandingPage() {
                   </div>
                 ))}
               </div>
+              {/* Disclaimer */}
+              <p className="text-center text-gray-500 text-[10px] py-2 bg-black/30 border-t border-white/5">
+                *Results not typical. Individual results vary. <a href="/disclaimer" className="text-amber-400/70 hover:text-amber-400 underline">See disclaimer</a>.
+              </p>
             </div>
           </div>
 
@@ -1979,8 +1983,8 @@ export default function PlasticSurgeonLandingPage() {
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
                   { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$189K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '1,932x', label: 'ROI', sub: 'Return' },
+                  { value: '$189K', label: 'Revenue*', sub: '2 weeks' },
+                  { value: '12+', label: 'Bonuses', sub: 'Included' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-amber-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -2075,7 +2079,7 @@ export default function PlasticSurgeonLandingPage() {
                     {[
                       { value: '89K', label: 'Views' },
                       { value: '23', label: 'Consults' },
-                      { value: '$276K', label: 'Revenue' },
+                      { value: '$276K', label: 'Revenue*' },
                     ].map((stat, i) => (
                       <div key={i} className="bg-black/40 rounded-lg p-3 text-center border border-white/10">
                         <div className={`text-lg sm:text-xl font-black ${i === 2 ? 'text-green-400' : 'text-amber-400'}`}>{stat.value}</div>
