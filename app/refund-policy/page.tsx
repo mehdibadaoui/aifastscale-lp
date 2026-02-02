@@ -130,7 +130,7 @@ export default function RefundPolicy() {
                 You'll receive a <strong>100% full refund</strong> of your purchase price:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>Full amount of your original purchase (up to $50 USD)</li>
+                <li>Full amount of your original purchase</li>
                 <li>No partial refunds</li>
                 <li>No deductions</li>
                 <li>No processing fees</li>
