@@ -53,8 +53,8 @@ import { getMemberStats } from './members/components/config'
 import { ExpertPersona, ExpertMention, DR_SOFIA_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
-// Checkout link
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
+// Checkout link - embedded checkout for better CVR
+const CHECKOUT_LINK = '/plastic-surgeons/checkout'
 
 // ===========================================
 // BLUR PLACEHOLDERS FOR IMAGES (Performance)
