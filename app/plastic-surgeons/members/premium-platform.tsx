@@ -81,7 +81,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-x-hidden bg-gradient-premium">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-amber-500/10 to-amber-500/5 rounded-full blur-3xl floating-slow" />
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-amber-500/8 to-amber-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
@@ -226,7 +226,7 @@ const CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
 
 const BlockedScreen = memo(function BlockedScreen() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-x-hidden bg-gradient-premium">
       {/* Floating Gradient Orbs - LP Style */}
       <div className="absolute top-20 right-10 w-80 h-80 bg-gradient-to-br from-red-500/10 to-orange-500/5 rounded-full blur-3xl floating-slow" />
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-br from-orange-500/8 to-red-500/5 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }} />
@@ -631,7 +631,7 @@ function PremiumCoursePlatformInner() {
 
   // Main platform - LP Premium Theme
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-premium transition-colors duration-300">
+    <div className="min-h-screen relative overflow-x-hidden bg-gradient-premium transition-colors duration-300">
       <ThemeStyles />
 
       {/* Floating Gradient Orbs - LP Style */}
