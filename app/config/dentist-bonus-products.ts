@@ -22,8 +22,30 @@ export interface DentistBonusProduct {
 }
 
 export const DENTIST_BONUS_PRODUCTS: DentistBonusProduct[] = [
-  // ===== FIRST 5: FREE BONUSES (USER PICKS 5) =====
+  // ===== FIRST 7: FREE BONUSES (INCLUDED WITH MAIN OFFER) =====
 
+  {
+    id: 'website-templates',
+    title: '2-in-1 Professional Website Templates',
+    subtitle: 'Drag & Drop. No Code. Launch Today.',
+    value: 497,
+    description: 'Your website is your 24/7 receptionist. These 2 premium templates are specifically designed for dental practices - one for lead generation, one for services showcase. Just drag, drop, and customize. One dentist launched her new site in 2 hours and booked 18 new patients the first week. No developers. No coding. No waiting.',
+    icon: 'Globe',
+    iconColor: '#d4af37', // Gold
+    image: '/images/bonuses/website-templates.jpeg',
+    category: 'marketing',
+  },
+  {
+    id: 'profit-tracker',
+    title: 'Profit Tracker Dashboard',
+    subtitle: 'See Exactly Where Your Money Goes',
+    value: 397,
+    description: 'Track your income, expenses, and profit in one beautiful dashboard. See your 6-month trends, profit margins, and streaks at a glance. Set monthly goals and watch your practice grow. One dentist discovered she was losing $3,400/month on underpriced procedures - and fixed it in a week. Know your numbers. Grow your profits.',
+    icon: 'TrendingUp',
+    iconColor: '#22c55e', // Green
+    image: '/images/bonuses/profit-tracker.jpeg',
+    category: 'operations',
+  },
   {
     id: 'viral-video-scripts',
     title: '100 Viral Dental Video Scripts',
@@ -144,12 +166,12 @@ export const getDentistTotalBonusValue = (): number => {
   return DENTIST_BONUS_PRODUCTS.reduce((total, product) => total + product.value, 0)
 }
 
-// Get first 5 (free bonuses)
+// Get first 7 (free bonuses)
 export const getDentistFreeBonuses = () => {
-  return DENTIST_BONUS_PRODUCTS.slice(0, 5)
+  return DENTIST_BONUS_PRODUCTS.slice(0, 7)
 }
 
 // Get last 5 (upsell bonuses)
 export const getDentistUpsellBonuses = () => {
-  return DENTIST_BONUS_PRODUCTS.slice(5, 10)
+  return DENTIST_BONUS_PRODUCTS.slice(7, 12)
 }

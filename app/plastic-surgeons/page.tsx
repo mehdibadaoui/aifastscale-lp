@@ -1321,11 +1321,11 @@ export default function PlasticSurgeonLandingPage() {
             <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
                 <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                <span className="text-amber-400 font-black text-sm sm:text-base">+ 10 BONUSES (${totalBonusValue} Value)</span>
+                <span className="text-amber-400 font-black text-sm sm:text-base">+ 12 BONUSES (${totalBonusValue} Value)</span>
               </div>
             </div>
 
-            {/* ALL 10 BONUS PRODUCTS */}
+            {/* ALL 12 BONUS PRODUCTS */}
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-amber-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
