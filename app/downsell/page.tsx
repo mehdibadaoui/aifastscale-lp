@@ -35,14 +35,6 @@ const saveTrackingParams = () => {
 export default function DownsellPage() {
   const handleCheckout = () => {
     saveTrackingParams()
-    trackTikTokInitiateCheckout('downsell-dfy', 19)
-    trackMetaEvent('InitiateCheckout', {
-      content_ids: ['downsell-dfy'],
-      content_name: '24h AI Video (Done For You)',
-      content_type: 'product',
-      value: 19,
-      currency: 'USD'
-    })
     window.location.href = CHECKOUT_LINK
   }
 

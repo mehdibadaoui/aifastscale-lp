@@ -35,14 +35,6 @@ const saveTrackingParams = () => {
 export default function OTOPage() {
   const handleCheckout = () => {
     saveTrackingParams()
-    trackTikTokInitiateCheckout('oto-24h-video', 29)
-    trackMetaEvent('InitiateCheckout', {
-      content_ids: ['oto-24h-video'],
-      content_name: '24h AI Video - OTO',
-      content_type: 'product',
-      value: 29,
-      currency: 'USD'
-    })
     window.location.href = CHECKOUT_LINK
   }
 

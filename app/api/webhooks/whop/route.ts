@@ -122,7 +122,7 @@ const PRODUCTS = {
     accentColor: '#d4af37'
   },
   'plastic-surgeon': {
-    membersUrl: 'https://aifastscale.com/members',
+    membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
     productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
     accentColor: '#d4af37'
@@ -149,9 +149,9 @@ const PLANS = {
   DENTIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
   DENTIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
-  PLASTIC_SURGEON_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_MAIN: { id: 'plan_OGprA4gd4Lr7N', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: 'plan_c7mDkR3oBXE7n', price: 97, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_3QGO1WJI50ujP', price: 47, type: 'downsell' as const, product: 'plastic-surgeon' as const },
   // Psychologist products
   PSYCHOLOGIST_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
   PSYCHOLOGIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },

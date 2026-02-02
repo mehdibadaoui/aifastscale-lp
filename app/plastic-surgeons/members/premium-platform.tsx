@@ -32,15 +32,39 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
   const [password, setPassword] = React.useState('')
   const [showPassword, setShowPassword] = React.useState(false)
   const [rememberMe, setRememberMe] = React.useState(true)
+  const [isResending, setIsResending] = React.useState(false)
+  const [resendMessage, setResendMessage] = React.useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     await onLogin(email.trim(), password, rememberMe)
   }
 
-  // Pre-filled support email for password help
-  const supportEmail = COURSE_CONFIG.supportEmail || 'hello@aifastscale.com'
-  const forgotPasswordMailto = `mailto:${supportEmail}?subject=Password%20Help%20-%20CloneYourself%20for%20Plastic Surgeons&body=Hi%2C%0A%0AI%20need%20help%20with%20my%20login.%0A%0AMy%20email%3A%20${encodeURIComponent(email || '[your email]')}%0A%0APlease%20resend%20my%20password.%0A%0AThank%20you!`
+  const handleResendCredentials = async () => {
+    if (!email.trim()) {
+      setResendMessage('Please enter your email first')
+      return
+    }
+    setIsResending(true)
+    setResendMessage(null)
+    try {
+      const res = await fetch('/api/resend-credentials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() })
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setResendMessage('Check your email! Credentials sent.')
+      } else {
+        setResendMessage(data.error || 'Failed to send. Try again.')
+      }
+    } catch {
+      setResendMessage('Network error. Please try again.')
+    } finally {
+      setIsResending(false)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-premium">
@@ -157,19 +181,23 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
             </button>
           </form>
 
-          {/* Help Text */}
-          <p className="mt-5 sm:mt-6 text-center text-slate-300 text-xs sm:text-sm">
-            Tip: Paste your password and click the eye to verify it
-          </p>
-
-          {/* Forgot Password Link - Opens Email */}
-          <a
-            href={forgotPasswordMailto}
-            className="mt-3 flex items-center justify-center gap-1.5 text-amber-400/80 text-xs hover:text-amber-300 transition-colors"
-          >
-            <Mail className="w-3.5 h-3.5" />
-            <span>Forgot password? Check your welcome email or contact support</span>
-          </a>
+          {/* Resend Credentials */}
+          <div className="mt-5 sm:mt-6 text-center">
+            {resendMessage && (
+              <p className={`text-xs mb-2 ${resendMessage.includes('Check your email') ? 'text-green-400' : 'text-amber-400'}`}>
+                {resendMessage}
+              </p>
+            )}
+            <button
+              type="button"
+              onClick={handleResendCredentials}
+              disabled={isResending}
+              className="inline-flex items-center justify-center gap-1.5 text-amber-400/80 text-xs hover:text-amber-300 transition-colors disabled:opacity-50"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              <span>{isResending ? 'Sending...' : 'Forgot password? Resend my credentials'}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
