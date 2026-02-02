@@ -548,24 +548,29 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
     }
   }, [state.soundEnabled])
 
-  // Set dark background on body to prevent white flash on scroll (for all devices)
-  // Also ensure body allows scrolling (fix for Android/mobile)
+  // CRITICAL: Force scroll to work - reset any blocking styles
+  // This runs on mount AND continuously to override any modal/component that sets overflow:hidden
   useEffect(() => {
-    document.documentElement.classList.add('members-dark')
-    document.body.classList.add('members-dark')
-    document.body.style.backgroundColor = '#09090b'
-    document.body.style.overflow = 'auto'
-    document.body.style.overflowX = 'hidden'
-    document.documentElement.style.overflow = 'auto'
-    document.documentElement.style.overflowX = 'hidden'
+    const forceScrollEnabled = () => {
+      // Reset all potentially blocking styles
+      document.documentElement.style.cssText = 'overflow: auto !important; overflow-x: hidden !important; height: auto !important; position: static !important;'
+      document.body.style.cssText = 'overflow: auto !important; overflow-x: hidden !important; height: auto !important; position: static !important; background-color: #09090b !important;'
+      document.documentElement.classList.add('members-dark')
+      document.body.classList.add('members-dark')
+    }
+
+    // Force scroll on mount
+    forceScrollEnabled()
+
+    // Keep forcing every 500ms to override any modal/component that sets overflow:hidden
+    const interval = setInterval(forceScrollEnabled, 500)
+
     return () => {
+      clearInterval(interval)
       document.documentElement.classList.remove('members-dark')
       document.body.classList.remove('members-dark')
-      document.body.style.backgroundColor = ''
-      document.body.style.overflow = ''
-      document.body.style.overflowX = ''
-      document.documentElement.style.overflow = ''
-      document.documentElement.style.overflowX = ''
+      document.documentElement.style.cssText = ''
+      document.body.style.cssText = ''
     }
   }, [])
 
