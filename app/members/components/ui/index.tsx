@@ -886,7 +886,7 @@ export function WistiaPlayer({ wistiaId, onVideoEnd, onProgress, resumeTime = 0,
 
     const timeout = setTimeout(() => { clearInterval(checkWistia); setIsLoading(false) }, 10000)
     return () => { clearInterval(checkWistia); clearTimeout(timeout); if (containerRef.current) containerRef.current.innerHTML = '' }
-  }, [wistiaId, resumeTime])
+  }, [wistiaId, resumeTime, isActivated, onVideoEnd, onProgress])
 
   // Handle speed change
   const changeSpeed = useCallback((speed: number) => {
