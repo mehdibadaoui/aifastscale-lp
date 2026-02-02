@@ -1803,7 +1803,7 @@ export default function PlasticSurgeonLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study-michael') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Facial Rejuvenation Success</span>
@@ -1815,7 +1815,7 @@ export default function PlasticSurgeonLandingPage() {
             </div>
 
             {/* Dr. Michael Case Study Card - Light Theme */}
-            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study-michael') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Top: Profile + Before Situation */}
               <div className="p-4 sm:p-8 border-b border-gray-100">
