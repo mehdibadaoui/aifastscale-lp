@@ -41,6 +41,12 @@ export default function PlasticSurgeonCheckout() {
                 theme="light"
                 returnUrl="https://aifastscale.com/plastic-surgeons/thank-you"
                 hideAddressForm
+                fallback={
+                  <div className="flex flex-col items-center justify-center py-12 px-4">
+                    <div className="w-8 h-8 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin mb-4" />
+                    <p className="text-gray-600 text-sm">Loading secure checkout...</p>
+                  </div>
+                }
               />
             </div>
           </div>
