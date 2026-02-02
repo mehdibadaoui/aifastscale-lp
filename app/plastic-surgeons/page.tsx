@@ -544,7 +544,7 @@ export default function PlasticSurgeonLandingPage() {
 
   return (
     <main
-      className="min-h-screen noise-overlay font-sans relative plastic-surgeon-theme"
+      className="noise-overlay font-sans relative plastic-surgeon-theme"
       style={{
         background: `
           radial-gradient(ellipse at 20% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 50%),
