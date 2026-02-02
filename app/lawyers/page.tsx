@@ -3301,6 +3301,10 @@ export default function PlasticAttorneyLandingPage() {
                 <span>Instant Access</span>
               </div>
             </div>
+            {/* Contact & Support */}
+            <p className="text-gray-400 text-xs sm:text-sm mb-3">
+              Questions? <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:text-amber-300 underline">support@aifastscale.com</a>
+            </p>
             {/* Wyoming LLC Identification */}
             <p className="text-gray-600 text-[10px] sm:text-xs mb-1">
               Velon LLC, a Wyoming Limited Liability Company
