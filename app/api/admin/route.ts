@@ -5,7 +5,7 @@ import { getUser, createUser, getAllUsers, deleteUser, getUsersCount } from '@/l
 import { Resend } from 'resend'
 
 // Simple password protection
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'agentclone2024'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'cloneyourself2024'
 
 function getRedis(): Redis {
   const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
@@ -62,7 +62,9 @@ export async function GET(request: NextRequest) {
     // Fetch all users for admin dashboard
     const allUsers = await getAllUsers()
     const dentistUsers = await getAllUsers('dentist')
-    const realestateUsers = await getAllUsers('realestate')
+    const lawyerUsers = await getAllUsers('lawyer')
+    const psychologistUsers = await getAllUsers('psychologist')
+    const plasticSurgeonUsers = await getAllUsers('plastic-surgeon')
 
     // Calculate user stats
     const now = new Date()
@@ -78,7 +80,9 @@ export async function GET(request: NextRequest) {
     const userStats = {
       total: allUsers.length,
       dentist: dentistUsers.length,
-      realestate: realestateUsers.length,
+      lawyer: lawyerUsers.length,
+      psychologist: psychologistUsers.length,
+      plasticSurgeon: plasticSurgeonUsers.length,
       activeUsersLast24h,
       activeUsersLast7d,
       activeUsersLast30d,
@@ -175,13 +179,13 @@ export async function POST(request: NextRequest) {
       }
 
       const resend = getResend()
-      const productConfig = user.product === 'dentist' ? {
-        membersUrl: 'https://aifastscale.com/dentists/members',
-        productName: 'CloneYourself for Dentists'
-      } : {
-        membersUrl: 'https://aifastscale.com/members',
-        productName: '7-Minute AgentClone'
+      const productConfigs: Record<string, { membersUrl: string; productName: string }> = {
+        dentist: { membersUrl: 'https://aifastscale.com/members', productName: 'CloneYourself for Dentists' },
+        lawyer: { membersUrl: 'https://aifastscale.com/members', productName: 'CloneYourself for Lawyers' },
+        psychologist: { membersUrl: 'https://aifastscale.com/members', productName: 'CloneYourself for Psychologists' },
+        'plastic-surgeon': { membersUrl: 'https://aifastscale.com/members', productName: 'CloneYourself for Plastic Surgeons' },
       }
+      const productConfig = productConfigs[user.product] || productConfigs.dentist
 
       // Simple email template
       await resend.emails.send({

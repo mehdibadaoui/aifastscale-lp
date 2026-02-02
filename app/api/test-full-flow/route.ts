@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   const password = url.searchParams.get('password')
 
-  if (password !== 'agentclone2024') {
+  if (password !== 'cloneyourself2024') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

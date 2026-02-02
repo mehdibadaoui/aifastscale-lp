@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Redis } from '@upstash/redis'
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'agentclone2024'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'cloneyourself2024'
 
 function getRedis(): Redis {
   const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL

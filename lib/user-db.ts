@@ -27,7 +27,7 @@ export interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
   lastLogin?: string
   loginCount?: number
   // Extended fields for admin
@@ -47,7 +47,7 @@ export interface User {
 
 // Generate a unique, readable password
 // Format: clone-random6chars (e.g., "clone-x7k9m2") - UNIVERSAL for all products
-export function generateUniquePassword(product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer' = 'dentist'): string {
+export function generateUniquePassword(product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' = 'dentist'): string {
   const prefix = 'clone' // Universal prefix for all products
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789' // No confusing chars (0,o,1,l,i)
   let randomPart = ''
@@ -64,7 +64,7 @@ export async function createUser(userData: {
   email: string
   name: string
   planId: string
-  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
 }): Promise<{ success: boolean; password?: string; error?: string }> {
   try {
     const redis = getRedis()
@@ -189,7 +189,7 @@ export async function userExists(email: string): Promise<boolean> {
 }
 
 // Get all users count (for admin)
-export async function getUsersCount(product?: 'dentist' | 'realestate' | 'plastic-surgeon'): Promise<number> {
+export async function getUsersCount(product?: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'): Promise<number> {
   try {
     const redis = getRedis()
     if (!redis) return 0
@@ -204,7 +204,7 @@ export async function getUsersCount(product?: 'dentist' | 'realestate' | 'plasti
 }
 
 // Get all users (for admin dashboard)
-export async function getAllUsers(product?: 'dentist' | 'realestate' | 'plastic-surgeon'): Promise<User[]> {
+export async function getAllUsers(product?: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'): Promise<User[]> {
   try {
     const redis = getRedis()
     if (!redis) return []

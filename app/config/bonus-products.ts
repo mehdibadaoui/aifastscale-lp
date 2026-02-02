@@ -30,12 +30,12 @@ export const BONUS_PRODUCTS: BonusProduct[] = [
   {
     id: 'organic-leads-mastery',
     title: 'Organic Leads Mastery',
-    subtitle: 'The Zero-Ad Blueprint: Get Free Buyer Leads from Instagram & TikTok',
+    subtitle: 'The Zero-Ad Blueprint: Get Free Client Leads from Instagram & TikTok',
     value: 197,
-    description: 'The complete system for attracting international buyers and sellers WITHOUT spending a single dollar on ads. Learn exactly how to create viral content that reaches worldwide buyers, turn views into DMs, and DMs into signed deals. This is the missing piece most agents never figure out.',
+    description: 'The complete system for attracting new clients WITHOUT spending a single dollar on ads. Learn exactly how to create viral content that reaches your ideal audience, turn views into DMs, and DMs into booked appointments. This is the missing piece most professionals never figure out.',
     highlights: [
       'The Viral Content Formula (beat the algorithm)',
-      'Reach worldwide buyers with $0 ad spend',
+      'Reach ideal clients with $0 ad spend',
       'Content-to-DM Pipeline (views → conversations)',
       '30-Day Viral Content Calendar (just post)',
     ],
@@ -55,7 +55,7 @@ export const BONUS_PRODUCTS: BonusProduct[] = [
     title: 'The Script Vault',
     subtitle: '100+ Viral Hooks, Scripts & Captions That Stop The Scroll',
     value: 97,
-    description: 'Never stare at a blank screen again. This vault contains 100+ proven hooks tested on 10M+ views, ready-to-use video scripts for every scenario, and captions that drive engagement. Just copy, paste, and post. Organized by category: listings, market updates, buyer tips, seller secrets, and viral trends.',
+    description: 'Never stare at a blank screen again. This vault contains 100+ proven hooks tested on 10M+ views, ready-to-use video scripts for every scenario, and captions that drive engagement. Just copy, paste, and post. Organized by category: educational content, client testimonials, tips & advice, and viral trends.',
     highlights: [
       '45 scroll-stopping hooks (tested on 10M+ views)',
       '30 ready-to-film video scripts',
@@ -75,10 +75,10 @@ export const BONUS_PRODUCTS: BonusProduct[] = [
   // ═══════════════════════════════════════════════════════════════════
   {
     id: 'ai-mentor',
-    title: 'AI Real Estate Mentor',
+    title: 'AI Business Mentor',
     subtitle: 'Your 24/7 Expert Coach Trained on Top Producer Strategies',
     value: 97,
-    description: 'Get instant answers to any real estate question at 3am or 3pm. This custom AI is trained on strategies from agents who close $10M+ annually. Ask about scripts, objection handling, pricing strategy, difficult clients, or market positioning. It\'s like having a mentor who never sleeps and never charges hourly.',
+    description: 'Get instant answers to any business question at 3am or 3pm. This custom AI is trained on strategies from top professionals in your field. Ask about scripts, objection handling, pricing strategy, difficult clients, or market positioning. It\'s like having a mentor who never sleeps and never charges hourly.',
     highlights: [
       'Instant answers on scripts & objections',
       'Pricing strategy & negotiation tactics',
@@ -100,7 +100,7 @@ export const BONUS_PRODUCTS: BonusProduct[] = [
     title: 'DM-to-Deal System',
     subtitle: '89 Copy-Paste Messages That Turn Followers Into Clients',
     value: 67,
-    description: 'The exact messages top agents use to convert DMs into signed deals. Includes first-touch openers, follow-up sequences, objection handlers, and appointment setters. Each script has been tested to achieve 40%+ response rates. Stop winging your DMs and start closing.',
+    description: 'The exact messages top professionals use to convert DMs into booked appointments. Includes first-touch openers, follow-up sequences, objection handlers, and appointment setters. Each script has been tested to achieve 40%+ response rates. Stop winging your DMs and start closing.',
     highlights: [
       'First-touch messages that get replies',
       'Follow-up sequences (day 1, 3, 7, 14)',
@@ -120,9 +120,9 @@ export const BONUS_PRODUCTS: BonusProduct[] = [
   {
     id: 'authority-accelerator',
     title: '90-Day Authority Accelerator',
-    subtitle: 'The Week-by-Week Roadmap to Becoming THE Agent in Your Market',
+    subtitle: 'The Week-by-Week Roadmap to Becoming THE Expert in Your Market',
     value: 47,
-    description: 'Stop guessing what to do next. This 90-day blueprint breaks down exactly what to post, when to post, and how to position yourself as the go-to agent in your market. Includes weekly action items, milestone checkpoints, and the 17-minute daily ritual that compounds into market dominance.',
+    description: 'Stop guessing what to do next. This 90-day blueprint breaks down exactly what to post, when to post, and how to position yourself as the go-to expert in your market. Includes weekly action items, milestone checkpoints, and the 17-minute daily ritual that compounds into market dominance.',
     highlights: [
       'Week-by-week action plan (no guessing)',
       '17-minute daily ritual for consistency',

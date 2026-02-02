@@ -457,7 +457,6 @@ export const acceptedProductIds = [
   'lawyer',
   'psychologist',
   'plastic-surgeon',
-  'realestate',
 ]
 
 // ============================================

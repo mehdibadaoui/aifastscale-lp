@@ -450,20 +450,36 @@ export default function PrivacyPolicy() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                15. Contact Us
+                15. Contact Us & Data Protection
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 If you have any questions about this Privacy Policy, please
                 contact us:
               </p>
-              <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
+              <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6 mb-6">
                 <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
                 <p className="text-gray-700">Phone: +1 (307) 335-5058</p>
               </div>
+
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Data Processing Agreements (DPA)
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                <strong>For Business Customers:</strong> If you require a Data Processing Agreement (DPA) for GDPR compliance or other regulatory requirements, please contact us at support@aifastscale.com with the subject line &quot;DPA Request&quot;.
+              </p>
+              <p className="leading-relaxed text-gray-700">
+                We work with enterprise customers and can provide appropriate data processing documentation upon request. DPA requests are typically processed within 5-10 business days.
+              </p>
             </section>
+
+            <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-gray-500">
+              <p>Document Version: 1.0</p>
+              <p>Last Updated: February 2, 2026</p>
+              <p>Previous versions available upon request at support@aifastscale.com</p>
+            </div>
           </div>
         </div>
       </div>

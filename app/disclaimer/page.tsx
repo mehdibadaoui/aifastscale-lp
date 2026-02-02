@@ -177,8 +177,15 @@ export default function Disclaimer() {
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
                 4.3 Testimonial Editing
               </h3>
-              <p className="leading-relaxed text-gray-700">
+              <p className="mb-4 leading-relaxed text-gray-700">
                 Testimonials may have been edited for clarity, grammar, or length. All testimonials are voluntary and reflect genuine user feedback based on individual experiences.
+              </p>
+
+              <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
+                4.4 Testimonial Consent & Verification
+              </h3>
+              <p className="leading-relaxed text-gray-700">
+                All testimonials displayed on this website were submitted voluntarily by customers who provided explicit consent for their testimonial to be used in our marketing materials. Testimonials were collected during the period of 2024-2026 and results were verified at the time of submission. We maintain records of testimonial consent and can provide verification upon legitimate request. If you are a customer and would like to provide a testimonial or revoke a previously submitted testimonial, please contact support@aifastscale.com.
               </p>
             </section>
 
@@ -258,6 +265,22 @@ export default function Disclaimer() {
                 <li>Third-party platforms may discontinue services without notice</li>
                 <li>We do not control quality, accuracy, or safety of third-party tools</li>
               </ul>
+
+              <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
+                6.3 Third-Party Tool Links & Resources
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                The following third-party tools are referenced in our course materials. Please review their respective terms of service and privacy policies:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li><strong>HeyGen:</strong> <a href="https://www.heygen.com/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://www.heygen.com/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
+                <li><strong>ElevenLabs:</strong> <a href="https://elevenlabs.io/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
+                <li><strong>CapCut:</strong> <a href="https://www.capcut.com/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://www.capcut.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
+                <li><strong>Canva:</strong> <a href="https://www.canva.com/policies/terms-of-use/" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Use</a> | <a href="https://www.canva.com/policies/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
+              </ul>
+              <p className="leading-relaxed text-gray-700">
+                <strong>Note:</strong> These links are provided for convenience. We are not responsible for the content of third-party websites and recommend reviewing their policies before use.
+              </p>
             </section>
 
             <section className="mb-8">
@@ -366,6 +389,12 @@ export default function Disclaimer() {
               <p className="mb-0 text-gray-700">
                 By purchasing and using the CloneYourself Video System, you acknowledge that you have read, understood, and fully agree to this disclaimer. You accept full responsibility for your use of the course materials and any results, consequences, or outcomes thereof. You understand that success with this course depends on your own effort, implementation, and market conditions.
               </p>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-gray-500">
+              <p>Document Version: 1.0</p>
+              <p>Last Updated: February 2, 2026</p>
+              <p>Previous versions available upon request at support@aifastscale.com</p>
             </div>
           </div>
         </div>

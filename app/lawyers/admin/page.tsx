@@ -20,7 +20,7 @@ interface Member {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
   lastLogin?: string
   loginCount?: number
   notes?: string

@@ -115,12 +115,6 @@ const PRODUCTS = {
     price: '47.00',
     accentColor: '#d4af37' // Gold (universal)
   },
-  realestate: {
-    membersUrl: 'https://aifastscale.com/members',
-    productName: 'CloneYourself AI Video Mastery',
-    price: '47.82',
-    accentColor: '#d4af37'
-  },
   'plastic-surgeon': {
     membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
     productName: 'CloneYourself AI Video Mastery',
@@ -163,7 +157,7 @@ const PLANS = {
 }
 
 // Get plan info from plan ID
-function getPlanInfo(planId: string): { product: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer', type: 'main' | 'upsell' | 'downsell', price: number } | null {
+function getPlanInfo(planId: string): { product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer', type: 'main' | 'upsell' | 'downsell', price: number } | null {
   // Dentist plans
   if (planId === PLANS.DENTIST_MAIN.id) return { product: 'dentist', type: 'main', price: PLANS.DENTIST_MAIN.price }
   if (planId === PLANS.DENTIST_UPSELL.id) return { product: 'dentist', type: 'upsell', price: PLANS.DENTIST_UPSELL.price }
@@ -185,7 +179,7 @@ function getPlanInfo(planId: string): { product: 'dentist' | 'realestate' | 'pla
 
 // Determine product type from webhook data (for main course only - backward compatibility)
 // ROBUST VERSION - checks multiple paths and patterns
-function getProductType(fullData: any, productData: any): 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | null {
+function getProductType(fullData: any, productData: any): 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | null {
   // Collect ALL possible name sources from the webhook
   const possibleNames = [
     productData?.name,
@@ -270,17 +264,6 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
     }
   }
 
-  // Check names for real estate keywords
-  const realEstateKeywords = ['agent', 'real estate', 'realestate', 'realtor', 'property']
-  for (const name of possibleNames) {
-    for (const keyword of realEstateKeywords) {
-      if (name.includes(keyword)) {
-        console.log(`✅ Matched realestate by name: "${name}" contains "${keyword}"`)
-        return 'realestate'
-      }
-    }
-  }
-
   // Price-based fallback detection
   if (priceNum >= 95 && priceNum <= 100) {
     console.log(`✅ Matched plastic-surgeon by price: $${priceNum} (in $95-100 range)`)
@@ -289,10 +272,6 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'realestat
   if (priceNum >= 45 && priceNum <= 50) {
     console.log(`✅ Matched dentist by price: $${priceNum} (in $45-50 range)`)
     return 'dentist'
-  }
-  if (priceNum >= 35 && priceNum <= 40) {
-    console.log(`✅ Matched realestate by price: $${priceNum} (in $35-40 range)`)
-    return 'realestate'
   }
 
   console.log(`❌ No product match found`)
@@ -306,7 +285,7 @@ function generateWelcomeEmail(
   userPassword: string,
   userEmail: string,
   buyerName?: string,
-  productType?: 'dentist' | 'realestate' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  productType?: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
 ) {
   const firstName = buyerName ? buyerName.split(' ')[0] : ''
 

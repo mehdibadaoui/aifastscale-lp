@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Redis } from '@upstash/redis'
 import { Resend } from 'resend'
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'agentclone2024'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'cloneyourself2024'
 
 interface User {
   email: string
@@ -10,7 +10,7 @@ interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
   lastLogin?: string
   loginCount?: number
   notes?: string

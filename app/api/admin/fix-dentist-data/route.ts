@@ -7,7 +7,7 @@ interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
   lastLogin?: string
   loginCount?: number
   notes?: string

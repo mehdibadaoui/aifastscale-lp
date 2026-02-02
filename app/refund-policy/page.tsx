@@ -431,6 +431,12 @@ export default function RefundPolicy() {
                 We built the CloneYourself Video System to genuinely help professionals like you succeed with AI video marketing. If the course doesn't work for you, we don't want your money. Simple as that. Your satisfaction and success are what matter most to us. We believe in our product so much that we're willing to stand behind it 100% with this generous guarantee.
               </p>
             </div>
+
+            <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-gray-500">
+              <p>Document Version: 1.0</p>
+              <p>Last Updated: February 2, 2026</p>
+              <p>Previous versions available upon request at support@aifastscale.com</p>
+            </div>
           </div>
         </div>
       </div>

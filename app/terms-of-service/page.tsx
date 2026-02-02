@@ -71,7 +71,7 @@ export default function TermsOfService() {
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 The CloneYourself Video System is a digital educational product
-                designed for professionals including lawyers, dentists, psychologists, plastic surgeons, real estate agents, and other service professionals. The course includes:
+                designed for professionals including lawyers, dentists, psychologists, plastic surgeons, and other service professionals. The course includes:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
@@ -429,17 +429,39 @@ export default function TermsOfService() {
 
             <section className="mb-8">
               <h2 className="mb-4 text-2xl font-black text-gray-900">
-                19. Contact Information
+                19. Contact Information & Response Times
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
                 For questions about these Terms of Service, please contact us:
               </p>
-              <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
+              <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6 mb-4">
                 <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
+                <p className="text-gray-700">Phone: +1 (307) 335-5058</p>
               </div>
+              <h3 className="mb-3 text-xl font-bold text-gray-900">
+                Response Time SLA
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                We are committed to responding to all customer inquiries promptly:
+              </p>
+              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
+                <li><strong>General Inquiries:</strong> Within 24-48 business hours</li>
+                <li><strong>Refund Requests:</strong> Within 24 business hours</li>
+                <li><strong>Technical Support:</strong> Within 24-48 business hours</li>
+                <li><strong>Urgent Issues:</strong> Same business day when possible</li>
+              </ul>
+              <p className="leading-relaxed text-gray-700">
+                <strong>Business Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM MST (excluding US federal holidays)
+              </p>
             </section>
+
+            <div className="mt-8 pt-6 border-t border-gray-200 text-sm text-gray-500">
+              <p>Document Version: 1.0</p>
+              <p>Last Updated: February 2, 2026</p>
+              <p>Previous versions available upon request at support@aifastscale.com</p>
+            </div>
 
             <div className="mt-8 rounded-xl border-2 border-yellow-400 bg-gradient-to-r from-yellow-100 to-orange-100 p-6">
               <p className="mb-2 font-bold text-gray-900">

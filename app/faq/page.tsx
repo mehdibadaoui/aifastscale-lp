@@ -85,7 +85,7 @@ export default function FAQPage() {
         },
         {
           q: 'What industries is this for?',
-          a: 'The CloneYourself Video System is designed for service professionals including lawyers, dentists, psychologists, plastic surgeons, real estate agents, and other professionals who want to leverage AI video for marketing.',
+          a: 'The CloneYourself Video System is designed for service professionals including lawyers, dentists, psychologists, plastic surgeons, and other professionals who want to leverage AI video for marketing.',
         },
         {
           q: 'Is the content updated?',

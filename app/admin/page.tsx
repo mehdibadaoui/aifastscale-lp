@@ -28,7 +28,7 @@ interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'realestate'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
   lastLogin?: string
   loginCount?: number
 }
@@ -36,7 +36,9 @@ interface User {
 interface UserStats {
   total: number
   dentist: number
-  realestate: number
+  lawyer: number
+  psychologist: number
+  plasticSurgeon: number
   activeUsersLast24h: number
   activeUsersLast7d: number
   activeUsersLast30d: number
@@ -72,7 +74,7 @@ export default function AdminPage() {
 
   // User management
   const [userSearchTerm, setUserSearchTerm] = useState('')
-  const [productFilter, setProductFilter] = useState<'all' | 'dentist' | 'realestate'>('all')
+  const [productFilter, setProductFilter] = useState<'all' | 'dentist' | 'lawyer' | 'psychologist' | 'plastic-surgeon'>('all')
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showUserDetails, setShowUserDetails] = useState<User | null>(null)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
@@ -80,7 +82,7 @@ export default function AdminPage() {
   // Create user form
   const [newUserEmail, setNewUserEmail] = useState('')
   const [newUserName, setNewUserName] = useState('')
-  const [newUserProduct, setNewUserProduct] = useState<'dentist' | 'realestate'>('dentist')
+  const [newUserProduct, setNewUserProduct] = useState<'dentist' | 'lawyer' | 'psychologist' | 'plastic-surgeon'>('dentist')
 
   const fetchVideo = async (videoId: string) => {
     setLoadingVideo(true)
@@ -395,8 +397,10 @@ export default function AdminPage() {
         {data?.userStats && activeTab === 'users' && (
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
             <StatCard icon={Users} label="Total Users" value={data.userStats.total} color="teal" />
-            <StatCard icon={Users} label="Dentist" value={data.userStats.dentist} color="cyan" />
-            <StatCard icon={Users} label="Real Estate" value={data.userStats.realestate} color="purple" />
+            <StatCard icon={Users} label="Dentists" value={data.userStats.dentist} color="cyan" />
+            <StatCard icon={Users} label="Lawyers" value={data.userStats.lawyer} color="purple" />
+            <StatCard icon={Users} label="Psychologists" value={data.userStats.psychologist} color="blue" />
+            <StatCard icon={Users} label="Plastic Surgeons" value={data.userStats.plasticSurgeon} color="indigo" />
             <StatCard icon={Activity} label="Active 24h" value={data.userStats.activeUsersLast24h} color="green" />
             <StatCard icon={Activity} label="Active 7d" value={data.userStats.activeUsersLast7d} color="blue" />
             <StatCard icon={Activity} label="Active 30d" value={data.userStats.activeUsersLast30d} color="indigo" />
@@ -516,18 +520,18 @@ export default function AdminPage() {
               />
             </div>
 
-            <div className="flex gap-2">
-              {(['all', 'dentist', 'realestate'] as const).map(filter => (
+            <div className="flex flex-wrap gap-2">
+              {(['all', 'dentist', 'lawyer', 'psychologist', 'plastic-surgeon'] as const).map(filter => (
                 <button
                   key={filter}
                   onClick={() => setProductFilter(filter)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  className={`px-3 py-2 rounded-lg font-medium transition-colors text-sm ${
                     productFilter === filter
                       ? 'bg-teal-500 text-white'
                       : 'bg-white/5 text-white/60 hover:text-white border border-white/20'
                   }`}
                 >
-                  {filter === 'all' ? 'All' : filter === 'dentist' ? 'Dentist' : 'Real Estate'}
+                  {filter === 'all' ? 'All' : filter === 'dentist' ? 'Dentist' : filter === 'lawyer' ? 'Lawyer' : filter === 'psychologist' ? 'Psychologist' : 'Plastic Surgeon'}
                 </button>
               ))}
             </div>
@@ -580,11 +584,12 @@ export default function AdminPage() {
                         </td>
                         <td className="px-4 py-3 hidden lg:table-cell">
                           <span className={`px-2 py-1 rounded text-xs font-medium ${
-                            user.product === 'dentist'
-                              ? 'bg-cyan-500/20 text-cyan-400'
-                              : 'bg-purple-500/20 text-purple-400'
+                            user.product === 'dentist' ? 'bg-cyan-500/20 text-cyan-400' :
+                            user.product === 'lawyer' ? 'bg-purple-500/20 text-purple-400' :
+                            user.product === 'psychologist' ? 'bg-blue-500/20 text-blue-400' :
+                            'bg-indigo-500/20 text-indigo-400'
                           }`}>
-                            {user.product === 'dentist' ? 'Dentist' : 'Real Estate'}
+                            {user.product === 'dentist' ? 'Dentist' : user.product === 'lawyer' ? 'Lawyer' : user.product === 'psychologist' ? 'Psychologist' : 'Plastic Surgeon'}
                           </span>
                         </td>
                         <td className="px-4 py-3 hidden lg:table-cell text-white/60 text-sm">
@@ -792,10 +797,10 @@ export default function AdminPage() {
 
               <div>
                 <label className="block text-white/60 text-sm mb-1">Product</label>
-                <div className="flex gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setNewUserProduct('dentist')}
-                    className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
+                    className={`py-2 rounded-lg font-medium transition-colors text-sm ${
                       newUserProduct === 'dentist'
                         ? 'bg-cyan-500 text-white'
                         : 'bg-white/10 text-white/60 hover:text-white'
@@ -804,14 +809,34 @@ export default function AdminPage() {
                     Dentist
                   </button>
                   <button
-                    onClick={() => setNewUserProduct('realestate')}
-                    className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
-                      newUserProduct === 'realestate'
+                    onClick={() => setNewUserProduct('lawyer')}
+                    className={`py-2 rounded-lg font-medium transition-colors text-sm ${
+                      newUserProduct === 'lawyer'
                         ? 'bg-purple-500 text-white'
                         : 'bg-white/10 text-white/60 hover:text-white'
                     }`}
                   >
-                    Real Estate
+                    Lawyer
+                  </button>
+                  <button
+                    onClick={() => setNewUserProduct('psychologist')}
+                    className={`py-2 rounded-lg font-medium transition-colors text-sm ${
+                      newUserProduct === 'psychologist'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white/10 text-white/60 hover:text-white'
+                    }`}
+                  >
+                    Psychologist
+                  </button>
+                  <button
+                    onClick={() => setNewUserProduct('plastic-surgeon')}
+                    className={`py-2 rounded-lg font-medium transition-colors text-sm ${
+                      newUserProduct === 'plastic-surgeon'
+                        ? 'bg-indigo-500 text-white'
+                        : 'bg-white/10 text-white/60 hover:text-white'
+                    }`}
+                  >
+                    Plastic Surgeon
                   </button>
                 </div>
               </div>
@@ -858,7 +883,12 @@ export default function AdminPage() {
               <DetailRow label="Email" value={showUserDetails.email} onCopy={() => copyToClipboard(showUserDetails.email)} />
               <DetailRow label="Password" value={showUserDetails.password} onCopy={() => copyToClipboard(showUserDetails.password)} />
               <DetailRow label="Name" value={showUserDetails.name || '-'} />
-              <DetailRow label="Product" value={showUserDetails.product === 'dentist' ? 'CloneYourself Dentist' : '7-Minute AgentClone'} />
+              <DetailRow label="Product" value={
+                showUserDetails.product === 'dentist' ? 'CloneYourself Dentist' :
+                showUserDetails.product === 'lawyer' ? 'CloneYourself Lawyer' :
+                showUserDetails.product === 'psychologist' ? 'CloneYourself Psychologist' :
+                'CloneYourself Plastic Surgeon'
+              } />
               <DetailRow label="Plan ID" value={showUserDetails.planId} />
               <DetailRow label="Purchased" value={formatDate(showUserDetails.purchaseDate)} />
               <DetailRow label="Last Login" value={showUserDetails.lastLogin ? formatDate(showUserDetails.lastLogin) : 'Never'} />

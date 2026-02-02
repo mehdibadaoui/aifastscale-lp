@@ -560,6 +560,7 @@ export default function PsychologistLandingPage() {
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
+              <p className="text-gray-500 text-[10px] sm:text-xs mt-1">Must be 18+ years old to purchase</p>
             </div>
 
             {/* What is CloneYourself? - Collapsible */}
@@ -1706,7 +1707,7 @@ export default function PsychologistLandingPage() {
             </div>
             {/* Testimonial Disclosure - FTC Compliance */}
             <p className="text-gray-600 text-[10px] sm:text-xs mt-3 max-w-2xl mx-auto">
-              *Testimonials reflect individual experiences and are not guaranteed results. Individual results vary based on effort, market conditions, and other factors. See our <a href="/disclaimer" className="text-teal-500 hover:text-teal-400 underline">full disclaimer</a>.
+              *Testimonials collected 2024-2026. Results verified at time of submission. Testimonials reflect individual experiences and are not guaranteed results. Individual results vary based on effort, market conditions, and other factors. See our <a href="/disclaimer" className="text-teal-500 hover:text-teal-400 underline">full disclaimer</a>.
             </p>
           </div>
         </div>
@@ -2773,6 +2774,12 @@ export default function PsychologistLandingPage() {
               <a href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</a>
               <span className="hidden sm:inline">•</span>
               <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/contact" className="hover:text-white transition-colors">Contact</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/accessibility" className="hover:text-white transition-colors">Accessibility</a>
+              <span className="hidden sm:inline">•</span>
+              <a href="/do-not-sell" className="hover:text-white transition-colors">Do Not Sell My Info</a>
             </div>
             {/* FTC Earnings & Professional Disclaimer */}
             <div className="max-w-3xl mx-auto text-[9px] sm:text-[10px] text-gray-600 leading-relaxed space-y-2">

@@ -12,24 +12,20 @@ function getRedis(): Redis {
 }
 
 // Product configuration for emails
-const PRODUCTS = {
+const PRODUCTS: Record<string, { membersUrl: string; productName: string }> = {
   dentist: {
     membersUrl: 'https://aifastscale.com/members',
     productName: 'CloneYourself AI Video Mastery',
   },
-  realestate: {
-    membersUrl: 'https://aifastscale.com/members',
-    productName: 'CloneYourself AI Video Mastery',
-  },
   'plastic-surgeon': {
-    membersUrl: 'https://aifastscale.com/plastic-surgeons/members',
-    productName: 'CloneYourself AI Video Mastery',
-  },
-  'psychologist': {
     membersUrl: 'https://aifastscale.com/members',
     productName: 'CloneYourself AI Video Mastery',
   },
-  'lawyer': {
+  psychologist: {
+    membersUrl: 'https://aifastscale.com/members',
+    productName: 'CloneYourself AI Video Mastery',
+  },
+  lawyer: {
     membersUrl: 'https://aifastscale.com/members',
     productName: 'CloneYourself AI Video Mastery',
   }
