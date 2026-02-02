@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Gift,
   Shield,
@@ -53,6 +55,38 @@ import { AnimatedBackground } from '../components/AnimatedBackground'
 
 // Checkout link
 const CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
+
+// ===========================================
+// BLUR PLACEHOLDERS FOR IMAGES (Performance)
+// ===========================================
+const BLUR_PLACEHOLDER = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIRAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQWH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABkRAAIDAQAAAAAAAAAAAAAAAAECAAMRIf/aAAwDAQACEQMRAD8AzPTtP1C7upUtrWSSSJd7qsZJUdZPH2qn4/5TrWlXkl1b3bJI8ZjJESn0n7x0f3vXzilKlONdlWc5GhOyuxuf/9k='
+
+// ===========================================
+// FRAMER MOTION ANIMATION VARIANTS (TypeScript compatible)
+// ===========================================
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+} as const
+
+const fadeInScale = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1 }
+} as const
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+} as const
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+} as const
+
+// Hover/tap animations
+const buttonHover = { scale: 1.03, boxShadow: '0 10px 40px rgba(245, 158, 11, 0.4)' }
+const buttonTap = { scale: 0.97 }
 
 // ===========================================
 // META PIXEL TRACKING (No duplicates)
@@ -597,12 +631,17 @@ export default function PlasticSurgeonLandingPage() {
 
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Main Headline - PREMIUM TYPOGRAPHY */}
-            <h1 className={`font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
+            {/* Main Headline - PREMIUM TYPOGRAPHY with Framer Motion */}
+            <motion.h1
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+              className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 sm:mb-8 leading-[1.05] tracking-tight"
+            >
               <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
               <br />
               <span className="relative inline-block">
-                <span className="text-gradient-premium drop-shadow-2xl">
+                <span className="text-gradient-premium drop-shadow-2xl gradient-text-animated">
                   Talking AI Video
                 </span>
                 {/* Glow effect */}
@@ -615,26 +654,44 @@ export default function PlasticSurgeonLandingPage() {
               <span className="text-gradient-premium">
                 {' '}Get 100+ New Patients
               </span>
-            </h1>
+            </motion.h1>
 
             {/* Subtitle - Larger & More Visible */}
-            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <motion.p
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+              transition={{ delay: 0.15 }}
+              className="text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto font-medium"
+            >
               Even if you've never edited a video in your life —
               <br className="hidden sm:block" />
               <span className="text-white font-semibold">all you need is your phone</span>
-            </p>
+            </motion.p>
 
             {/* Expert Trust Line - Premium Badge */}
-            <div className={`mb-5 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-250' : ''}`}>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+              transition={{ delay: 0.25 }}
+              className="mb-5 sm:mb-8"
+            >
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-amber-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
                 <span className="text-amber-300 font-semibold text-xs sm:text-sm">Dr. Sofia Martinez, MD, FACS — Board-Certified Plastic Surgeon</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Hero Image - Premium Glass Container - Mobile Optimized */}
-            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-scale-in animation-delay-300' : ''}`}>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeInScale}
+              transition={{ delay: 0.35 }}
+              className="relative max-w-5xl mx-auto mb-4 sm:mb-6"
+            >
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift img-zoom">
                 {/* Mobile: 22KB optimized hero */}
                 <Image
@@ -645,6 +702,8 @@ export default function PlasticSurgeonLandingPage() {
                   className="w-full h-auto sm:hidden"
                   priority
                   quality={95}
+                  placeholder="blur"
+                  blurDataURL={BLUR_PLACEHOLDER}
                 />
                 {/* Desktop: Full quality hero */}
                 <Image
@@ -656,57 +715,75 @@ export default function PlasticSurgeonLandingPage() {
                   priority
                   quality={95}
                   sizes="(max-width: 1024px) 80vw, 800px"
+                  placeholder="blur"
+                  blurDataURL={BLUR_PLACEHOLDER}
                 />
               </div>
-            </div>
+            </motion.div>
 
-            {/* Trust badges - Premium Glass Cards */}
-            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 stagger-fast ${visibleSections.has('hero') ? 'visible' : ''}`}>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
+            {/* Trust badges - Premium Glass Cards with Stagger Animation */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+              className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8"
+            >
+              <motion.div variants={staggerItem} className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                 <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> plastic surgeons</span>
-              </div>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
+              </motion.div>
+              <motion.div variants={staggerItem} className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 <div className="relative">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                   <div className="absolute inset-0 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
                 </div>
                 <span className="text-gray-300 text-xs sm:text-sm"><span className="text-emerald-400 font-bold">{memberStats.activeNow.toLocaleString()}</span> active now</span>
-              </div>
-              <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full hover-scale">
+              </motion.div>
+              <motion.div variants={staggerItem} className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
                 ))}
                 <span className="ml-1 text-white font-bold text-xs sm:text-sm">4.9/5</span>
-              </div>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
+              </motion.div>
+              <motion.div variants={staggerItem} className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full hover-scale">
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
-              </div>
+              </motion.div>
               {/* Countdown Badge */}
-              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
+              <motion.div variants={staggerItem} className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
                 <span className="text-red-300 text-xs sm:text-sm font-bold">
                   {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
                 </span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            {/* CTA - Premium Button with Glow */}
-            <a
+            {/* CTA - Premium Button with Framer Motion */}
+            <motion.a
               href={CHECKOUT_LINK}
               onClick={trackInitiateCheckout}
-              className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.4, ease: 'easeOut' }}
+              whileHover={buttonHover}
+              whileTap={buttonTap}
+              className="group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal"
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                 <span className="sm:hidden">Get Instant Access</span>
                 <span className="hidden sm:inline">Start Creating AI Videos</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </span>
-            </a>
+            </motion.a>
 
             {/* PRICE TEASER - Premium Glass Style */}
-            <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+              transition={{ delay: 0.6 }}
+              className="mt-5 sm:mt-6 flex flex-col items-center gap-3"
+            >
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getPlasticSurgeonTotalBonusValue() + 98}</span>
                 <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82</span>
@@ -714,7 +791,7 @@ export default function PlasticSurgeonLandingPage() {
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
               <p className="text-gray-500 text-[10px] sm:text-xs mt-1">Must be 18+ years old to purchase</p>
-            </div>
+            </motion.div>
 
             {/* What is CloneYourself? - Collapsible */}
             <div className={`max-w-xl mx-auto mt-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
@@ -1325,12 +1402,33 @@ export default function PlasticSurgeonLandingPage() {
               </div>
             </div>
 
-            {/* ALL 12 BONUS PRODUCTS */}
-            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+            {/* ALL 12 BONUS PRODUCTS - With Stagger Animation */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className="space-y-3 sm:space-y-4 mb-6 sm:mb-8"
+            >
               {allBonuses.map((bonus, index) => (
-                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-amber-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <motion.div
+                  key={bonus.id}
+                  variants={staggerItem}
+                  whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
+                  className="bg-gradient-to-br from-white/8 to-white/3 border border-amber-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 transition-colors duration-300"
+                >
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/plastic-surgeon/course-demo.webp'} alt={bonus.title} fill className="object-cover" loading="lazy" quality={95} sizes="(max-width: 640px) 100vw, 600px" />
+                    <Image
+                      src={bonus.image || '/images/plastic-surgeon/course-demo.webp'}
+                      alt={bonus.title}
+                      fill
+                      className="object-cover"
+                      loading="lazy"
+                      quality={95}
+                      sizes="(max-width: 640px) 100vw, 600px"
+                      placeholder="blur"
+                      blurDataURL={BLUR_PLACEHOLDER}
+                    />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
@@ -1344,9 +1442,9 @@ export default function PlasticSurgeonLandingPage() {
                       {bonus.description.substring(0, 150)}...
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* EXTRA BONUSES - Support & Updates */}
             <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
@@ -2549,10 +2647,17 @@ export default function PlasticSurgeonLandingPage() {
               </h2>
             </div>
 
-            <div className={`space-y-2 sm:space-y-3 stagger-children ${visibleSections.has('faq') ? 'visible' : ''}`}>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className="space-y-2 sm:space-y-3"
+            >
               {faqs.map((faq, i) => (
-                <div
+                <motion.div
                   key={i}
+                  variants={staggerItem}
                   className="bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden hover:border-amber-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/10"
                 >
                   <button
@@ -2560,24 +2665,47 @@ export default function PlasticSurgeonLandingPage() {
                     className="w-full flex items-center justify-between p-3.5 sm:p-5 text-left hover:bg-amber-50/50 transition-colors"
                   >
                     <span className="font-semibold pr-3 text-gray-900 text-sm sm:text-base">{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0 transition-transform ${expandedFaq === i ? 'rotate-180' : ''}`} />
+                    <motion.div
+                      animate={{ rotate: expandedFaq === i ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0" />
+                    </motion.div>
                   </button>
-                  {expandedFaq === i && (
-                    <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5">
-                      <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{faq.a}</p>
-                    </div>
-                  )}
-                </div>
+                  <AnimatePresence>
+                    {expandedFaq === i && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5">
+                          <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{faq.a}</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* CTA - After FAQ */}
-            <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-bounce-in animation-delay-500' : ''}`}>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="mt-8 sm:mt-12 text-center"
+            >
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
-              <a
+              <motion.a
                 href={CHECKOUT_LINK}
-              onClick={trackInitiateCheckout}
-                  className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-amber-500/30"
+                onClick={trackInitiateCheckout}
+                whileHover={buttonHover}
+                whileTap={buttonTap}
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-amber-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press transition-all shadow-2xl shadow-amber-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -2585,9 +2713,9 @@ export default function PlasticSurgeonLandingPage() {
                   <span className="hidden sm:inline">Try It Risk-Free for 30 Days</span>
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
-              </a>
+              </motion.a>
               <p className="text-gray-500 text-xs mt-3">30-day money-back guarantee • No questions asked</p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
