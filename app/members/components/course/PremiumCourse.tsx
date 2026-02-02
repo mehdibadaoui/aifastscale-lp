@@ -327,13 +327,13 @@ const PremiumVideoPlayer = memo(function PremiumVideoPlayer({
 
   return (
     <div className="relative group">
-      {/* Ambient glow effect */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Ambient glow effect - pointer-events-none to not block video clicks */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
       {/* Video container with glass effect */}
       <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-500/20 shadow-2xl shadow-amber-500/10 bg-black">
-        {/* Module indicator overlay */}
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
+        {/* Module indicator overlay - pointer-events-none to not block video clicks */}
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 pointer-events-none">
           <span className="text-xs font-bold text-amber-400">Module {moduleNumber}</span>
           <span className="w-1 h-1 rounded-full bg-white/30" />
           <span className="text-xs text-white/70 line-clamp-1 max-w-[150px] sm:max-w-[250px]">{title}</span>
