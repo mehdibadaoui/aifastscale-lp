@@ -1497,7 +1497,7 @@ video {
   /* Optimize mobile scrolling */
   body {
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
+    /* REMOVED overscroll-behavior-y: none - was blocking scroll */
   }
 
   /* Prevent layout shift on mobile */
