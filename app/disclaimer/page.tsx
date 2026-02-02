@@ -324,7 +324,7 @@ export default function Disclaimer() {
                 9.2 Maximum Liability
               </h3>
               <p className="leading-relaxed text-gray-700">
-                Our total liability for any claim shall not exceed the amount you paid for the course (up to $50 USD maximum), regardless of the nature of the claim.
+                Our total liability for any claim shall not exceed the amount you paid for the course, regardless of the nature of the claim.
               </p>
             </section>
 

@@ -137,45 +137,6 @@ export default function RefundPolicy() {
                 <li>No restocking fees</li>
               </ul>
 
-              <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
-                2.5 The $50 &quot;Better Than Risk-Free&quot; Guarantee
-              </h3>
-              <p className="mb-4 leading-relaxed text-gray-700">
-                In addition to our standard 30-day money-back guarantee, we offer a $50 cash bonus guarantee:
-              </p>
-
-              <div className="rounded-xl border-2 border-violet-300 bg-gradient-to-r from-violet-50 to-indigo-50 p-6 mb-4">
-                <h4 className="font-bold text-gray-900 mb-3">How It Works:</h4>
-                <p className="mb-3 leading-relaxed text-gray-700">If you:</p>
-                <ol className="list-decimal space-y-2 pl-6 text-gray-700 mb-4">
-                  <li>Complete the full CloneYourself Video System training</li>
-                  <li>Create and post at least 5 AI videos following our framework</li>
-                  <li>Implement the strategies for a minimum of 14 days</li>
-                  <li>Still don&apos;t see any improvement in leads or engagement</li>
-                </ol>
-                <p className="font-bold text-violet-800">
-                  We will refund your FULL purchase price PLUS send you an additional $50 via PayPal.
-                </p>
-              </div>
-
-              <h4 className="font-bold text-gray-900 mb-3">To Claim the $50 Bonus:</h4>
-              <p className="mb-3 leading-relaxed text-gray-700">
-                Email support@aifastscale.com with:
-              </p>
-              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>Subject line: &quot;$50 Guarantee Claim&quot;</li>
-                <li>Links to your 5 posted videos</li>
-                <li>Brief description of your implementation efforts</li>
-                <li>Your PayPal email for the $50 bonus</li>
-              </ul>
-
-              <h4 className="font-bold text-gray-900 mb-3">Important Notes:</h4>
-              <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li>This guarantee requires proof of implementation (video links)</li>
-                <li>The $50 bonus is paid via PayPal within 7 business days of approval</li>
-                <li>This offer is limited to one claim per customer</li>
-                <li>Standard 30-day refund (without $50 bonus) requires NO proof of implementation</li>
-              </ul>
             </section>
 
             <section className="mb-8">

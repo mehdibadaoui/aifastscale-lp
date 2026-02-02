@@ -274,7 +274,7 @@ export default function TermsOfService() {
               </p>
               <p className="leading-relaxed text-gray-700">
                 Our total liability shall not exceed the amount you paid for the
-                course (up to $50 USD maximum).
+                course.
               </p>
             </section>
 

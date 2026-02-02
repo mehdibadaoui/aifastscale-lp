@@ -86,10 +86,6 @@ export default function PsychologistLandingPage() {
   // Sticky mobile CTA - shows after scrolling past hero (DOM-driven, no re-renders)
   const stickyCTARef = useRef<HTMLDivElement>(null)
 
-  // Live viewers count for urgency (realistic range)
-  const liveViewersRef = useRef(0)
-
-
   // Update member stats every minute
   useEffect(() => {
     const interval = setInterval(() => {
@@ -123,21 +119,6 @@ export default function PsychologistLandingPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Live viewers count - realistic fluctuation (direct DOM, no re-renders)
-  useEffect(() => {
-    liveViewersRef.current = Math.floor(Math.random() * 8) + 12
-    const el = document.querySelector('[data-live-viewers]')
-    if (el) el.textContent = String(liveViewersRef.current)
-
-    const interval = setInterval(() => {
-      const change = Math.floor(Math.random() * 5) - 2
-      liveViewersRef.current = Math.max(8, Math.min(24, liveViewersRef.current + change))
-      const el = document.querySelector('[data-live-viewers]')
-      if (el) el.textContent = String(liveViewersRef.current)
-    }, Math.random() * 10000 + 5000)
-
-    return () => clearInterval(interval)
-  }, [])
 
   const faqs = [
     {
@@ -2268,7 +2249,7 @@ export default function PsychologistLandingPage() {
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
-              <p className="text-gray-500 text-xs mt-3">Full refund + $50 if it doesn't work</p>
+              <p className="text-gray-500 text-xs mt-3">30-day money-back guarantee • No questions asked</p>
             </div>
           </div>
         </div>
@@ -2467,7 +2448,7 @@ export default function PsychologistLandingPage() {
                 {
                   num: '4',
                   title: 'I\'m Betting On You',
-                  desc: 'The $50 guarantee isn\'t a loss leader. It\'s me saying: "I\'m confident this works. I\'ll literally pay you $50 if it doesn\'t." That confidence only works if the price is low enough that you\'ll actually TRY it.',
+                  desc: 'The 30-day guarantee isn\'t marketing fluff. It\'s me saying: "I\'m confident this works. Try it risk-free." That confidence only works if the price is low enough that you\'ll actually TRY it.',
                 },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4 bg-white/5 border border-teal-500/20 rounded-xl p-4 sm:p-5">
@@ -2637,7 +2618,7 @@ export default function PsychologistLandingPage() {
                   <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-teal-200">
-                  <p className="text-teal-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: refund + $50</p>
+                  <p className="text-teal-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: full refund, no questions asked</p>
                 </div>
               </div>
             </div>
@@ -2648,7 +2629,7 @@ export default function PsychologistLandingPage() {
               <div className="space-y-2 text-gray-600 text-sm">
                 <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new client</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
                 <p>• If you get <span className="font-bold text-gray-900">5 new clients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $47.82.</p>
-                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you're up $50</span> and lost nothing.</p>
+                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you get 100% back</span> and lost nothing.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
             </div>
@@ -2679,7 +2660,7 @@ export default function PsychologistLandingPage() {
               {/* Guarantee */}
               <div className="flex items-center justify-center gap-2 mt-4 text-gray-400 text-xs sm:text-sm">
                 <Shield className="w-4 h-4 text-green-500" />
-                <span>30-Day Money Back + $50 Cash Guarantee</span>
+                <span>30-Day Money-Back Guarantee • No Questions Asked</span>
               </div>
             </div>
 
@@ -3220,8 +3201,8 @@ export default function PsychologistLandingPage() {
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              <span data-live-viewers>0</span> viewing now
+              <Zap className="w-3 h-3" />
+              Instant Access
             </span>
           </div>
         </div>
