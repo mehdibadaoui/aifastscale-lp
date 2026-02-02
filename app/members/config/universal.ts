@@ -445,12 +445,19 @@ const auth: AuthConfig = {
 }
 
 // All accepted product IDs for login (old + new)
+// Includes both database format and legacy format
 export const acceptedProductIds = [
   'clone-yourself-pro',        // New universal
-  'clone-yourself-lawyers',    // Old - lawyers
-  'clone-yourself-dentists',   // Old - dentists
-  'clone-yourself-psychologists', // Old - psychologists
-  'clone-yourself-plastic-surgeons', // Old - plastic surgeons
+  'clone-yourself-lawyers',    // Legacy - lawyers
+  'clone-yourself-dentists',   // Legacy - dentists
+  'clone-yourself-psychologists', // Legacy - psychologists
+  'clone-yourself-plastic-surgeons', // Legacy - plastic surgeons
+  // Database format (actual stored values)
+  'dentist',
+  'lawyer',
+  'psychologist',
+  'plastic-surgeon',
+  'realestate',
 ]
 
 // ============================================
