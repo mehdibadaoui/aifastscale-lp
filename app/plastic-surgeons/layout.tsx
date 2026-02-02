@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import MetaPixelLoader from './MetaPixelLoader'
+import CookieConsent from '../components/CookieConsent'
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Plastic Surgeons | AI Video Marketing System | $47',
@@ -53,6 +54,9 @@ export default function PlasticSurgeonLayout({
 
       {/* Meta Pixel - Loads only after cookie consent */}
       <MetaPixelLoader />
+
+      {/* Cookie Consent Banner */}
+      <CookieConsent />
 
       {children}
     </>

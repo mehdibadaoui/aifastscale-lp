@@ -970,7 +970,7 @@ export default function PlasticSurgeonLandingPage() {
                     <div className="w-full md:flex-1 md:text-right md:order-1">
                       <div className="bg-gradient-to-r from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Email support@aifastscale.com with "I want a refund" - that's it!</p>
                       </div>
                     </div>
                     {/* Desktop spacer */}
@@ -2647,7 +2647,7 @@ export default function PlasticSurgeonLandingPage() {
                     <div className="w-full md:flex-1 md:text-right md:order-1">
                       <div className="bg-gradient-to-r from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Email support@aifastscale.com with "I want a refund" - that's it!</p>
                       </div>
                     </div>
                     {/* Desktop spacer */}
@@ -3092,7 +3092,7 @@ export default function PlasticSurgeonLandingPage() {
             </div>
             {/* Contact & Support */}
             <p className="text-gray-400 text-xs sm:text-sm mb-3">
-              Questions? <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:text-amber-300 underline">support@aifastscale.com</a>
+              Questions? <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:text-amber-300 underline">support@aifastscale.com</a> | <a href="tel:+13073355058" className="text-amber-400 hover:text-amber-300 underline">+1 (307) 335-5058</a>
             </p>
             {/* Wyoming LLC Identification */}
             <p className="text-gray-600 text-[10px] sm:text-xs mb-1">

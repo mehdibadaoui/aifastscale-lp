@@ -126,9 +126,9 @@ export default function CookieConsent() {
               <Cookie className="w-5 h-5 text-amber-400" />
             </div>
             <div>
-              <h3 className="text-white font-bold text-base mb-1">We use cookies</h3>
+              <h3 className="text-white font-bold text-base mb-1">Cookie Notice</h3>
               <p id="cookie-description" className="text-white/70 text-sm leading-relaxed">
-                Essential cookies are required for site functionality. Marketing cookies (Meta Pixel) help us improve our advertising.{' '}
+                We use cookies to enhance your experience.{' '}
                 <Link href="/privacy-policy" className="text-amber-400 hover:text-amber-300 underline">
                   Privacy Policy
                 </Link>
