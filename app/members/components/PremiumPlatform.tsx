@@ -549,14 +549,23 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
   }, [state.soundEnabled])
 
   // Set dark background on body to prevent white flash on scroll (for all devices)
+  // Also ensure body allows scrolling (fix for Android/mobile)
   useEffect(() => {
     document.documentElement.classList.add('members-dark')
     document.body.classList.add('members-dark')
     document.body.style.backgroundColor = '#09090b'
+    document.body.style.overflow = 'auto'
+    document.body.style.overflowX = 'hidden'
+    document.documentElement.style.overflow = 'auto'
+    document.documentElement.style.overflowX = 'hidden'
     return () => {
       document.documentElement.classList.remove('members-dark')
       document.body.classList.remove('members-dark')
       document.body.style.backgroundColor = ''
+      document.body.style.overflow = ''
+      document.body.style.overflowX = ''
+      document.documentElement.style.overflow = ''
+      document.documentElement.style.overflowX = ''
     }
   }, [])
 
@@ -604,7 +613,7 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
 
   // Main platform (responsive for all devices)
   return (
-    <div className="min-h-screen relative bg-gradient-premium transition-colors duration-300 overflow-y-auto">
+    <div className="min-h-screen relative bg-gradient-premium transition-colors duration-300">
       <ThemeStyles />
 
       {/* Floating Gradient Orbs */}
