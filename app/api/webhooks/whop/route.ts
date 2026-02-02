@@ -433,7 +433,7 @@ function generateWelcomeEmail(
                     <table width="100%" cellpadding="0" cellspacing="0">
                       <tr>
                         <td style="background-color: ${buttonColor}; border-radius: 12px; text-align: center;">
-                          <a href="${product.membersUrl}" style="display: block; padding: 20px 24px; color: ${textWhite}; text-decoration: none; font-size: 16px; font-weight: 700; letter-spacing: 0.5px;">
+                          <a href="${product.membersUrl}?email=${encodeURIComponent(userEmail)}&password=${encodeURIComponent(userPassword)}" style="display: block; padding: 20px 24px; color: ${textWhite}; text-decoration: none; font-size: 16px; font-weight: 700; letter-spacing: 0.5px;">
                             ENTER MEMBERS AREA →
                           </a>
                         </td>

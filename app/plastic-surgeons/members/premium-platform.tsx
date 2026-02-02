@@ -35,6 +35,20 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
   const [isResending, setIsResending] = React.useState(false)
   const [resendMessage, setResendMessage] = React.useState<string | null>(null)
 
+  // Auto-fill from URL params (from welcome email)
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const urlEmail = params.get('email')
+    const urlPassword = params.get('password')
+    if (urlEmail) setEmail(decodeURIComponent(urlEmail))
+    if (urlPassword) setPassword(decodeURIComponent(urlPassword))
+    // Clean URL without reload
+    if (urlEmail || urlPassword) {
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     await onLogin(email.trim(), password, rememberMe)
