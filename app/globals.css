@@ -597,6 +597,11 @@ body {
 body.members-dark,
 html.members-dark {
   background-color: #09090b !important;
+  /* CRITICAL: Ensure scrolling works on all devices */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100% !important;
   /* Prevent iOS Safari bounce/overscroll showing white background */
   overscroll-behavior: none;
   overscroll-behavior-y: none;
@@ -608,6 +613,9 @@ html.members-dark {
   background-color: #09090b !important;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
   min-height: 100vh; /* Fallback for older browsers */
+  /* CRITICAL: Allow content to grow and scroll */
+  height: auto !important;
+  overflow: visible !important;
   /* Extend background beyond viewport for overscroll */
   padding-bottom: env(safe-area-inset-bottom);
   /* Prevent content shift during overscroll */
