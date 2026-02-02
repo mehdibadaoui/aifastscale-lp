@@ -548,29 +548,17 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
     }
   }, [state.soundEnabled])
 
-  // CRITICAL: Force scroll to work - reset any blocking styles
-  // This runs on mount AND continuously to override any modal/component that sets overflow:hidden
+  // Set dark background and ensure scroll works
   useEffect(() => {
-    const forceScrollEnabled = () => {
-      // Reset all potentially blocking styles
-      document.documentElement.style.cssText = 'overflow: auto !important; overflow-x: hidden !important; height: auto !important; position: static !important;'
-      document.body.style.cssText = 'overflow: auto !important; overflow-x: hidden !important; height: auto !important; position: static !important; background-color: #09090b !important;'
-      document.documentElement.classList.add('members-dark')
-      document.body.classList.add('members-dark')
-    }
-
-    // Force scroll on mount
-    forceScrollEnabled()
-
-    // Keep forcing every 500ms to override any modal/component that sets overflow:hidden
-    const interval = setInterval(forceScrollEnabled, 500)
+    document.documentElement.classList.add('members-dark')
+    document.body.classList.add('members-dark')
+    // Simple styles - let CSS handle the rest
+    document.body.style.backgroundColor = '#09090b'
 
     return () => {
-      clearInterval(interval)
       document.documentElement.classList.remove('members-dark')
       document.body.classList.remove('members-dark')
-      document.documentElement.style.cssText = ''
-      document.body.style.cssText = ''
+      document.body.style.backgroundColor = ''
     }
   }, [])
 

@@ -602,10 +602,9 @@ html.members-dark {
   overflow-x: hidden !important;
   height: auto !important;
   min-height: 100% !important;
-  /* Prevent iOS Safari bounce/overscroll showing white background */
-  overscroll-behavior: none;
-  overscroll-behavior-y: none;
+  /* Allow smooth scrolling */
   -webkit-overflow-scrolling: touch;
+  /* REMOVED overscroll-behavior: none - was blocking mouse wheel scroll */
 }
 
 /* Members layout wrapper - ensures dark background on iOS Safari overscroll */
