@@ -212,173 +212,34 @@ const PremiumVideoPlayer = memo(function PremiumVideoPlayer({
   title: string
   moduleNumber: number
 }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<any>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [showControls, setShowControls] = useState(true)
-  const [showShortcuts, setShowShortcuts] = useState(false)
-  const [playbackSpeed, setPlaybackSpeed] = useState(1)
-  const [showSpeedMenu, setShowSpeedMenu] = useState(false)
-
-  const speeds = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
-
-  // Initialize Wistia player
-  useEffect(() => {
-    if (!wistiaId || !containerRef.current) return
-
-    containerRef.current.innerHTML = ''
-
-    const wistiaDiv = document.createElement('div')
-    wistiaDiv.className = 'wistia_responsive_padding'
-    wistiaDiv.style.padding = '56.25% 0 0 0'
-    wistiaDiv.style.position = 'relative'
-
-    const innerDiv = document.createElement('div')
-    innerDiv.className = 'wistia_responsive_wrapper'
-    innerDiv.style.cssText = 'height:100%;left:0;position:absolute;top:0;width:100%;'
-
-    const embedDiv = document.createElement('div')
-    embedDiv.className = `wistia_embed wistia_async_${wistiaId} seo=true videoFoam=true`
-    embedDiv.style.cssText = 'height:100%;position:relative;width:100%;'
-
-    innerDiv.appendChild(embedDiv)
-    wistiaDiv.appendChild(innerDiv)
-    containerRef.current.appendChild(wistiaDiv)
-
-    // Load Wistia script
-    const script = document.createElement('script')
-    script.src = 'https://fast.wistia.com/assets/external/E-v1.js'
-    script.async = true
-    document.head.appendChild(script)
-
-    // Initialize video
-    const checkWistia = setInterval(() => {
-      if ((window as any).Wistia) {
-        const video = (window as any).Wistia.api(wistiaId)
-        if (video) {
-          clearInterval(checkWistia)
-          videoRef.current = video
-
-          video.bind('play', () => setIsPlaying(true))
-          video.bind('pause', () => setIsPlaying(false))
-          video.bind('end', onVideoEnd)
-          video.bind('secondchange', (s: number) => {
-            if (s % 5 === 0) {
-              const duration = video.duration()
-              const percent = duration > 0 ? (s / duration) * 100 : 0
-              onProgress(percent, s)
-            }
-          })
-
-          if (resumeTime > 0) {
-            video.time(resumeTime)
-          }
-        }
-      }
-    }, 100)
-
-    return () => {
-      clearInterval(checkWistia)
-      if (videoRef.current) {
-        videoRef.current.unbind()
-      }
-    }
-  }, [wistiaId, onVideoEnd, onProgress, resumeTime])
-
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeydown = (e: KeyboardEvent) => {
-      if (!videoRef.current) return
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
-
-      switch (e.key.toLowerCase()) {
-        case ' ':
-          e.preventDefault()
-          videoRef.current.playing() ? videoRef.current.pause() : videoRef.current.play()
-          break
-        case 'arrowleft':
-          e.preventDefault()
-          videoRef.current.time(Math.max(0, videoRef.current.time() - 10))
-          break
-        case 'arrowright':
-          e.preventDefault()
-          videoRef.current.time(videoRef.current.time() + 10)
-          break
-        case 'm':
-          videoRef.current.muted(!videoRef.current.muted())
-          break
-        case 'f':
-          videoRef.current.requestFullscreen()
-          break
-      }
-    }
-
-    window.addEventListener('keydown', handleKeydown)
-    return () => window.removeEventListener('keydown', handleKeydown)
-  }, [])
-
-  const handleSpeedChange = (speed: number) => {
-    setPlaybackSpeed(speed)
-    if (videoRef.current) {
-      videoRef.current.playbackRate(speed)
-    }
-    setShowSpeedMenu(false)
-  }
+  // Use simple iframe embed - most reliable method
+  const iframeSrc = `https://fast.wistia.net/embed/iframe/${wistiaId}?videoFoam=true`
 
   return (
     <div className="relative group">
-      {/* Ambient glow effect - pointer-events-none to not block video clicks */}
+      {/* Ambient glow effect */}
       <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-yellow-500/10 to-amber-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-      {/* Video container with glass effect */}
+      {/* Video container */}
       <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-500/20 shadow-2xl shadow-amber-500/10 bg-black">
-        {/* Module indicator overlay - pointer-events-none to not block video clicks */}
+        {/* Module indicator overlay */}
         <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 pointer-events-none">
           <span className="text-xs font-bold text-amber-400">Module {moduleNumber}</span>
           <span className="w-1 h-1 rounded-full bg-white/30" />
           <span className="text-xs text-white/70 line-clamp-1 max-w-[150px] sm:max-w-[250px]">{title}</span>
         </div>
 
-        {/* Keyboard shortcuts toggle */}
-        <div className="absolute bottom-4 right-4 z-10">
-          <button
-            onClick={() => setShowShortcuts(!showShortcuts)}
-            className="p-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-white/60 hover:text-white hover:bg-black/80 transition-all"
-          >
-            <Keyboard className="w-4 h-4" />
-          </button>
-          <KeyboardShortcuts isOpen={showShortcuts} onClose={() => setShowShortcuts(false)} />
+        {/* Wistia iframe embed - simple and reliable */}
+        <div className="aspect-video">
+          <iframe
+            src={iframeSrc}
+            title={title}
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            className="w-full h-full"
+            style={{ border: 'none' }}
+          />
         </div>
-
-        {/* Speed control */}
-        <div className="absolute bottom-4 right-16 z-10">
-          <button
-            onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-            className="px-2 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-white/80 hover:text-white text-xs font-bold hover:bg-black/80 transition-all"
-          >
-            {playbackSpeed}x
-          </button>
-          {showSpeedMenu && (
-            <div className="absolute bottom-full right-0 mb-2 bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-xl p-2 shadow-xl animate-fade-in">
-              {speeds.map(speed => (
-                <button
-                  key={speed}
-                  onClick={() => handleSpeedChange(speed)}
-                  className={`block w-full text-left px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                    playbackSpeed === speed
-                      ? 'bg-amber-500/20 text-amber-400'
-                      : 'text-white/70 hover:bg-white/10'
-                  }`}
-                >
-                  {speed}x
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Wistia embed container */}
-        <div ref={containerRef} className="aspect-video" />
       </div>
     </div>
   )
