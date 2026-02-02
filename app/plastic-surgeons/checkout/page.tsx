@@ -38,7 +38,7 @@ export default function PlasticSurgeonCheckout() {
             <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
               <WhopCheckoutEmbed
                 planId="plan_OGprA4gd4Lr7N"
-                theme="dark"
+                theme="light"
                 returnUrl="https://aifastscale.com/plastic-surgeons/thank-you"
                 hideAddressForm
               />
