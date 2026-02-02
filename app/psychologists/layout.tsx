@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import MetaPixelLoader from './MetaPixelLoader'
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Psychologists | AI Video Marketing System | $47',
@@ -49,6 +50,9 @@ export default function PsychologistLayout({
         fetchPriority="high"
         media="(min-width: 640px)"
       />
+
+      {/* Meta Pixel - Loads only after cookie consent */}
+      <MetaPixelLoader />
 
       {children}
     </>
