@@ -3,6 +3,41 @@
 @tailwind utilities;
 
 /* ============================================================================
+   SMOOTH SCROLL & REDUCED MOTION
+   ============================================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   GRADIENT TEXT ANIMATION
+   ============================================================================ */
+
+.gradient-text-animated {
+  background: linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s linear infinite;
+}
+
+/* ============================================================================
    PREMIUM $2000 DESIGN SYSTEM - 2025
    Ultra-luxury visual language for high-converting landing pages
    ============================================================================ */

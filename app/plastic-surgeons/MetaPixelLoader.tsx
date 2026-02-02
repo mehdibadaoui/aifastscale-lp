@@ -5,10 +5,12 @@ import Script from 'next/script'
 import { getCookieConsent } from '../components/CookieConsent'
 
 const META_PIXEL_ID = '1526841625273321'
+const LOAD_DELAY_MS = 3000 // Defer loading by 3 seconds for better performance
 
 export default function MetaPixelLoader() {
   const [hasConsent, setHasConsent] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
     // Check initial consent
@@ -30,13 +32,23 @@ export default function MetaPixelLoader() {
     }
   }, [])
 
-  // Don't load if no consent or already loaded
-  if (!hasConsent || loaded) return null
+  // Defer pixel loading by 3 seconds after consent
+  useEffect(() => {
+    if (hasConsent && !loaded) {
+      const timer = setTimeout(() => {
+        setShouldLoad(true)
+      }, LOAD_DELAY_MS)
+      return () => clearTimeout(timer)
+    }
+  }, [hasConsent, loaded])
+
+  // Don't load if no consent, already loaded, or not ready
+  if (!hasConsent || loaded || !shouldLoad) return null
 
   return (
     <Script
       id="meta-pixel"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       onLoad={() => setLoaded(true)}
       dangerouslySetInnerHTML={{
         __html: `
