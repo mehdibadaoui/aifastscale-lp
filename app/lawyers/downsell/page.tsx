@@ -5,8 +5,8 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { getLawyerUpsellBonuses } from '../../config/lawyer-bonus-products'
 
-// Whop checkout link for Downsell
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_sdONQXGabaCd0'
+// Whop checkout link for Downsell (redirects to members after purchase)
+const CHECKOUT_LINK = 'https://whop.com/checkout/plan_sdONQXGabaCd0?d=https://aifastscale.com/lawyers/members'
 
 export default function LawyerDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency

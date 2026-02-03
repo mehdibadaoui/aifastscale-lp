@@ -3,8 +3,8 @@
 import { useEffect } from 'react'
 import { Loader2, Lock } from 'lucide-react'
 
-// Whop checkout URL
-const WHOP_CHECKOUT_URL = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'
+// Whop checkout URL with redirect back to thank-you page
+const WHOP_CHECKOUT_URL = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj?d=https://aifastscale.com/lawyers/thank-you'
 
 // Track InitiateCheckout before redirect
 const trackInitiateCheckout = () => {
