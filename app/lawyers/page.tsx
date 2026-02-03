@@ -246,7 +246,7 @@ const SUPPORTED_LANGUAGES = [
 // Number of languages to show initially
 const INITIAL_LANGUAGES_COUNT = 24
 
-export default function PlasticAttorneyLandingPage() {
+export default function LawyerLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
@@ -1638,7 +1638,7 @@ export default function PlasticAttorneyLandingPage() {
                     'Turn any photo into a talking AI video',
                     'Create your personal AI avatar that looks like you',
                     'Clone your voice so the AI speaks exactly like you',
-                    'Put yourself anywhere — your office, treatment rooms, anywhere',
+                    'Put yourself anywhere — your office, conference room, courthouse steps',
                     'All free tools included — zero monthly fees',
                     'Ready-to-use AI scriptwriter (writes viral scripts for you)',
                     'Every prompt you need — just copy & paste',
@@ -2675,24 +2675,24 @@ export default function PlasticAttorneyLandingPage() {
 
                 {/* Bonuses */}
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Dental Video Scripts</span>
-                  <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
+                  <span className="text-gray-300 text-sm sm:text-base">100 Viral Legal Video Scripts</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$497</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
                   <span className="text-gray-300 text-sm sm:text-base">365 Days Social Media Content</span>
-                  <span className="text-gray-400 font-bold text-sm sm:text-base">$197</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">High-Converting Website Template</span>
                   <span className="text-gray-400 font-bold text-sm sm:text-base">$397</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">Dental Profit Simulator</span>
-                  <span className="text-gray-400 font-bold text-sm sm:text-base">$247</span>
+                  <span className="text-gray-300 text-sm sm:text-base">High-Converting Website Templates</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$497</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-gray-300 text-sm sm:text-base">Front Desk Conversion Scripts</span>
-                  <span className="text-gray-400 font-bold text-sm sm:text-base">$297</span>
+                  <span className="text-gray-300 text-sm sm:text-base">Law Practice Profit Tracker</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$397</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-gray-300 text-sm sm:text-base">Legal Intake Specialist Scripts</span>
+                  <span className="text-gray-400 font-bold text-sm sm:text-base">$497</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
                   <span className="text-gray-300 text-sm sm:text-base">+ 5 More Premium Bonuses</span>
@@ -2957,10 +2957,10 @@ export default function PlasticAttorneyLandingPage() {
                 <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Meet Your Expert</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                The Clinical Mind <span className="text-amber-500">Behind This System</span>
+                The Legal Mind <span className="text-amber-500">Behind This System</span>
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
-                Learn from an internationally trained specialist who understands both clinical excellence and modern client acquisition.
+                Learn from a seasoned trial attorney who understands both legal excellence and modern client acquisition.
               </p>
             </div>
 
@@ -3181,7 +3181,7 @@ export default function PlasticAttorneyLandingPage() {
                   <p>→ By tomorrow, it's live on Instagram Reels</p>
                   <p>→ By day 3, first client inquiry comes in</p>
                   <p>→ By week 2, schedule starts filling up</p>
-                  <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
+                  <p>→ By month 2? Booked 6 weeks out like Lisa Chen</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-amber-200">
                   <p className="text-amber-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: full refund, no questions asked</p>
