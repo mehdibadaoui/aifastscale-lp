@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle, Copy, ArrowRight, Mail, Loader2, Gift, Lock, Zap, Users } from 'lucide-react'
+import { CheckCircle, Copy, ArrowRight, Mail, Loader2, Gift, Lock, Zap, Users, Sparkles, Crown, Star, Shield, Rocket } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState, useCallback } from 'react'
 
@@ -26,6 +26,57 @@ const trackPurchase = () => {
   }
 }
 
+// Confetti Component
+const Confetti = () => {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
+      {[...Array(50)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute animate-confetti"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: '-10px',
+            animationDelay: `${Math.random() * 3}s`,
+            animationDuration: `${3 + Math.random() * 2}s`,
+          }}
+        >
+          <div
+            className="w-3 h-3 rotate-45"
+            style={{
+              backgroundColor: ['#F59E0B', '#FBBF24', '#FDE68A', '#10B981', '#6366F1', '#EC4899'][Math.floor(Math.random() * 6)],
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// Animated Success Icon
+const SuccessIcon = () => (
+  <div className="relative">
+    {/* Outer glow rings */}
+    <div className="absolute inset-0 animate-ping-slow">
+      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-amber-500/20 to-emerald-500/20 blur-xl" />
+    </div>
+    <div className="absolute inset-0 animate-pulse">
+      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-amber-500/30 to-emerald-500/30 blur-lg" />
+    </div>
+
+    {/* Main icon */}
+    <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600 flex items-center justify-center shadow-2xl shadow-emerald-500/50 animate-bounce-gentle">
+      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
+      <CheckCircle className="w-16 h-16 md:w-20 md:h-20 text-white drop-shadow-lg" strokeWidth={2.5} />
+    </div>
+
+    {/* Sparkles around */}
+    <Sparkles className="absolute -top-2 -right-2 w-8 h-8 text-amber-400 animate-pulse" />
+    <Star className="absolute -bottom-1 -left-3 w-6 h-6 text-amber-400 animate-pulse" style={{ animationDelay: '0.5s' }} />
+    <Sparkles className="absolute top-1/2 -right-6 w-5 h-5 text-emerald-400 animate-pulse" style={{ animationDelay: '1s' }} />
+  </div>
+)
+
 function ThankYouContent() {
   const router = useRouter()
   const [copiedPassword, setCopiedPassword] = useState(false)
@@ -33,6 +84,13 @@ function ThankYouContent() {
   const [isLoading, setIsLoading] = useState(true)
   const [showFallback, setShowFallback] = useState(false)
   const [hasVisited, setHasVisited] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(true)
+
+  // Hide confetti after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowConfetti(false), 5000)
+    return () => clearTimeout(timer)
+  }, [])
 
   // Check if already visited (prevent double view)
   useEffect(() => {
@@ -138,188 +196,270 @@ function ThankYouContent() {
 
   if (hasVisited) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1500] to-[#2a1a3e] flex items-center justify-center">
+      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1500] to-[#2a1a3e]">
-      <div className="container mx-auto px-4 py-8 md:py-12 max-w-2xl">
+    <div className="min-h-screen bg-[#030303] relative overflow-hidden">
+      {/* Confetti */}
+      {showConfetti && <Confetti />}
+
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Gradient orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-amber-500/5 to-emerald-500/5 rounded-full blur-[100px]" />
+
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '50px 50px'
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 py-8 md:py-16 max-w-2xl">
 
         {/* SUCCESS HEADER */}
-        <div className="text-center mb-8">
-          <div className="relative inline-block mb-6">
-            <div className="absolute inset-0 rounded-full bg-amber-500/30 blur-xl animate-pulse"></div>
-            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
-              <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-white" strokeWidth={2.5} />
-            </div>
+        <div className="text-center mb-10 md:mb-12">
+          {/* Success Icon */}
+          <div className="flex justify-center mb-8">
+            <SuccessIcon />
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-3">
-            You're In!
-          </h1>
-          <p className="text-xl md:text-2xl font-bold text-amber-400 mb-4">
-            Payment Successful
-          </p>
+          {/* Congratulations Text */}
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-amber-500/20 border border-emerald-500/30 mb-4">
+              <Crown className="w-4 h-4 text-amber-400" />
+              <span className="text-sm font-bold text-amber-300 uppercase tracking-wider">Welcome to the Family</span>
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-black">
+              <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
+                Congratulations!
+              </span>
+            </h1>
+
+            <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">
+              Your Purchase is Complete
+            </p>
+
+            <p className="text-lg text-white/60 max-w-md mx-auto">
+              You've made an incredible decision. Get ready to transform your practice with AI-powered video content.
+            </p>
+          </div>
 
           {/* Social Proof */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-            <Users className="w-4 h-4 text-amber-400" />
-            <span className="text-white text-sm font-medium">
-              You joined <span className="text-amber-400 font-bold">850+</span> plastic surgeons
-            </span>
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
+            <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+              <Users className="w-4 h-4 text-amber-400" />
+              <span className="text-white text-sm font-medium">
+                Joined <span className="text-amber-400 font-bold">850+</span> surgeons
+              </span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+              <Shield className="w-4 h-4 text-emerald-400" />
+              <span className="text-white text-sm font-medium">
+                Lifetime Access
+              </span>
+            </div>
           </div>
         </div>
 
         {/* LOADING STATE */}
         {isLoading && (
-          <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/30 p-8 backdrop-blur-sm text-center">
-            <Loader2 className="w-12 h-12 text-amber-400 animate-spin mx-auto mb-4" />
-            <p className="text-white text-xl font-bold">Setting up your account...</p>
-            <p className="text-white/60 mt-2">This only takes a few seconds</p>
+          <div className="rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-10 backdrop-blur-xl text-center">
+            <div className="relative inline-block mb-6">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/10 flex items-center justify-center">
+                <Loader2 className="w-10 h-10 text-amber-400 animate-spin" />
+              </div>
+            </div>
+            <p className="text-white text-2xl font-bold mb-2">Setting Up Your Account</p>
+            <p className="text-white/50">This only takes a moment...</p>
+
+            {/* Progress dots */}
+            <div className="flex items-center justify-center gap-2 mt-6">
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"
+                  style={{ animationDelay: `${i * 0.2}s` }}
+                />
+              ))}
+            </div>
           </div>
         )}
 
         {/* CREDENTIALS DISPLAY */}
         {credentials && !isLoading && (
           <>
-            {/* Login Card */}
-            <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500 p-6 md:p-8 backdrop-blur-sm mb-6">
-
-              <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-6">
-                Your Login Details
-              </h2>
-
-              {/* Credentials Box */}
-              <div className="bg-[#0a0a0a]/80 rounded-xl p-5 mb-6 border border-amber-500/30">
-
-                {/* Email */}
-                <div className="mb-4">
-                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">Email</p>
-                  <div className="bg-white/5 rounded-lg px-4 py-3 border border-white/10">
-                    <p className="text-white text-base font-medium">{credentials.email}</p>
+            {/* Main Card */}
+            <div className="rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 overflow-hidden backdrop-blur-xl mb-6">
+              {/* Card Header */}
+              <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-b border-white/10 px-6 py-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30">
+                    <Rocket className="w-6 h-6 text-white" />
                   </div>
-                </div>
-
-                {/* Password */}
-                <div>
-                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">Password</p>
-                  <div className="bg-white/5 rounded-lg px-4 py-3 border border-amber-500/50 flex items-center justify-between gap-3">
-                    <p className="text-white text-base font-medium">{credentials.password}</p>
-                    <button
-                      onClick={copyPassword}
-                      className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
-                        copiedPassword
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-amber-500 hover:bg-amber-400 text-white'
-                      }`}
-                    >
-                      {copiedPassword ? (
-                        <><CheckCircle className="w-4 h-4" /> Copied</>
-                      ) : (
-                        <><Copy className="w-4 h-4" /> Copy</>
-                      )}
-                    </button>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">Your Access Credentials</h2>
+                    <p className="text-white/50 text-sm">Save these to login anytime</p>
                   </div>
                 </div>
               </div>
 
-              {/* Login Button - Disabled until password copied */}
-              <button
-                onClick={handleLoginClick}
-                disabled={!copiedPassword}
-                className={`w-full font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${
-                  copiedPassword
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-500 hover:from-amber-400 hover:to-amber-400 text-white shadow-lg shadow-amber-500/30 cursor-pointer'
-                    : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
-                }`}
-              >
-                {copiedPassword ? (
-                  <>
-                    <Zap className="w-5 h-5" />
-                    Login to Members Area
-                    <ArrowRight className="w-5 h-5" />
-                  </>
-                ) : (
-                  <>
-                    <Lock className="w-5 h-5" />
-                    Copy Password First
-                  </>
-                )}
-              </button>
+              {/* Card Body */}
+              <div className="p-6 md:p-8">
+                {/* Credentials */}
+                <div className="space-y-4 mb-8">
+                  {/* Email */}
+                  <div>
+                    <label className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      <Mail className="w-3.5 h-3.5" />
+                      Your Email
+                    </label>
+                    <div className="bg-black/40 rounded-xl px-5 py-4 border border-white/10">
+                      <p className="text-white text-lg font-medium">{credentials.email}</p>
+                    </div>
+                  </div>
 
-              {!copiedPassword && (
-                <p className="text-center text-white/50 text-sm mt-3">
-                  Click "Copy" above to enable login
-                </p>
-              )}
+                  {/* Password */}
+                  <div>
+                    <label className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      <Lock className="w-3.5 h-3.5" />
+                      Your Password
+                    </label>
+                    <div className="bg-black/40 rounded-xl px-5 py-4 border border-amber-500/30 flex items-center justify-between gap-4">
+                      <p className="text-white text-lg font-mono font-medium tracking-wider">{credentials.password}</p>
+                      <button
+                        onClick={copyPassword}
+                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all ${
+                          copiedPassword
+                            ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                            : 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105'
+                        }`}
+                      >
+                        {copiedPassword ? (
+                          <><CheckCircle className="w-4 h-4" /> Copied!</>
+                        ) : (
+                          <><Copy className="w-4 h-4" /> Copy</>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Login Button */}
+                <button
+                  onClick={handleLoginClick}
+                  disabled={!copiedPassword}
+                  className={`group w-full font-bold text-lg py-5 rounded-2xl transition-all flex items-center justify-center gap-3 ${
+                    copiedPassword
+                      ? 'bg-gradient-to-r from-amber-500 via-amber-500 to-amber-600 text-white shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.02]'
+                      : 'bg-white/5 text-white/30 cursor-not-allowed border border-white/10'
+                  }`}
+                >
+                  {copiedPassword ? (
+                    <>
+                      <Zap className="w-6 h-6" />
+                      <span>Access Your Members Area</span>
+                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-5 h-5" />
+                      <span>Copy Password to Continue</span>
+                    </>
+                  )}
+                </button>
+
+                {!copiedPassword && (
+                  <p className="text-center text-white/40 text-sm mt-4 flex items-center justify-center gap-2">
+                    <ArrowRight className="w-4 h-4 rotate-90" />
+                    Click "Copy" above to enable access
+                  </p>
+                )}
+              </div>
             </div>
 
-            {/* 3 QUICK STEPS */}
-            <div className="bg-white/5 rounded-xl p-5 border border-white/10 mb-6">
-              <h3 className="text-base font-bold text-white mb-4 text-center">
-                3 Quick Steps to Get Started
+            {/* What's Included */}
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 mb-6">
+              <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                <Gift className="w-5 h-5 text-amber-400" />
+                What's Waiting For You
               </h3>
 
-              <div className="flex items-center justify-between gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 {[
-                  { num: '1', icon: Copy, text: 'Copy password', active: !copiedPassword },
-                  { num: '2', icon: ArrowRight, text: 'Login above', active: copiedPassword },
-                  { num: '3', icon: Zap, text: 'Create videos', active: false },
-                ].map((step, i) => (
-                  <div key={i} className="flex flex-col items-center text-center flex-1">
-                    <div className={`w-11 h-11 rounded-full flex items-center justify-center mb-2 transition-all ${
-                      step.active
-                        ? 'bg-amber-500 shadow-lg shadow-amber-500/30'
-                        : i < (copiedPassword ? 2 : 1) ? 'bg-amber-500/70' : 'bg-white/10'
-                    }`}>
-                      <step.icon className={`w-5 h-5 ${step.active ? 'text-white' : 'text-white/70'}`} />
-                    </div>
-                    <span className="text-xs text-white/70 font-medium">{step.text}</span>
+                  { icon: '🎬', text: 'AI Video Training' },
+                  { icon: '📝', text: '100+ Viral Scripts' },
+                  { icon: '🤖', text: 'AI Content Generator' },
+                  { icon: '📅', text: '365-Day Content Plan' },
+                  { icon: '⭐', text: 'Review System' },
+                  { icon: '📞', text: 'Phone Scripts' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-white/80 text-sm font-medium">{item.text}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* INFO CARDS */}
-            <div className="space-y-4">
+            {/* Info Cards */}
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
               {/* Email Backup */}
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-amber-400" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">Login Saved to Your Email</p>
-                  <p className="text-white/60 text-sm">
-                    We sent the same login details to your email. Access them anytime you need.
-                  </p>
+              <div className="rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 p-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold mb-1">Email Backup Sent</p>
+                    <p className="text-white/50 text-sm">
+                      Login details also sent to your email for safekeeping.
+                    </p>
+                  </div>
                 </div>
               </div>
 
               {/* Free Updates */}
-              <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl p-4 border border-amber-500/20 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <Gift className="w-5 h-5 text-amber-400" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">Stay Tuned — Free Updates</p>
-                  <p className="text-white/60 text-sm">
-                    We add new courses & bonuses every month. 100% free forever. No subscriptions. No hidden fees.
-                  </p>
+              <div className="rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 p-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold mb-1">Free Forever Updates</p>
+                    <p className="text-white/50 text-sm">
+                      New courses & bonuses added monthly. No extra fees.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Lifetime Access Badge */}
-            <div className="mt-6 rounded-xl bg-gradient-to-r from-emerald-500/20 to-amber-500/20 border border-emerald-500/30 p-4 text-center">
-              <p className="text-white font-semibold flex items-center justify-center gap-2">
+            {/* Lifetime Badge */}
+            <div className="rounded-2xl bg-gradient-to-r from-emerald-500/20 via-emerald-500/10 to-amber-500/20 border border-emerald-500/30 p-5 text-center">
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-white font-bold text-lg mt-3 flex items-center justify-center gap-2">
                 <CheckCircle className="w-5 h-5 text-emerald-400" />
                 Lifetime Access Activated
               </p>
               <p className="text-emerald-300/70 text-sm mt-1">
-                One-time payment. Free updates forever.
+                One-time payment · Free updates forever · No subscriptions
               </p>
             </div>
           </>
@@ -328,22 +468,24 @@ function ThankYouContent() {
         {/* FALLBACK - Check Email */}
         {showFallback && !credentials && !isLoading && (
           <>
-            <div className="rounded-2xl bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500 p-6 md:p-8 backdrop-blur-sm mb-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-500 flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8 text-white" />
+            <div className="rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-8 md:p-10 backdrop-blur-xl mb-6 text-center">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-amber-500/30">
+                <Mail className="w-10 h-10 text-white" />
               </div>
 
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
                 Check Your Email
               </h2>
-              <p className="text-white/70 mb-6">
-                Your login details have been sent to your email.
+              <p className="text-white/60 text-lg mb-8">
+                Your login credentials have been sent to your inbox.
               </p>
 
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10 mb-6 text-left">
-                <p className="text-white/50 text-xs mb-1">Look for email from:</p>
-                <p className="text-white font-semibold">hello@mail.aifastscale.com</p>
-                <p className="text-amber-400 text-sm mt-2">Check spam/promotions if not in inbox</p>
+              <div className="bg-black/40 rounded-xl p-5 border border-white/10 mb-8 text-left max-w-sm mx-auto">
+                <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Look for email from:</p>
+                <p className="text-white font-bold text-lg">hello@mail.aifastscale.com</p>
+                <p className="text-amber-400 text-sm mt-3 flex items-center gap-2">
+                  <span>💡</span> Check spam/promotions if not in inbox
+                </p>
               </div>
 
               <button
@@ -352,32 +494,34 @@ function ThankYouContent() {
                   window.history.replaceState(null, '', '/plastic-surgeons/members')
                   router.push('/plastic-surgeons/members')
                 }}
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
+                className="w-full max-w-sm mx-auto bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.02] transition-all"
               >
-                <Zap className="w-5 h-5" />
+                <Zap className="w-6 h-6" />
                 Go to Login Page
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-6 h-6" />
               </button>
             </div>
 
-            {/* 3 Quick Steps for Fallback */}
-            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
-              <h3 className="text-base font-bold text-white mb-4 text-center">
-                3 Quick Steps
+            {/* 3 Quick Steps */}
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6">
+              <h3 className="text-lg font-bold text-white mb-5 text-center">
+                3 Quick Steps to Get Started
               </h3>
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between gap-4">
                 {[
-                  { num: '1', icon: Mail, text: 'Check email' },
-                  { num: '2', icon: Copy, text: 'Copy password' },
-                  { num: '3', icon: Zap, text: 'Login & create' },
+                  { num: '1', icon: Mail, text: 'Check email', color: 'amber' },
+                  { num: '2', icon: Copy, text: 'Copy password', color: 'amber' },
+                  { num: '3', icon: Rocket, text: 'Start creating', color: 'emerald' },
                 ].map((step, i) => (
                   <div key={i} className="flex flex-col items-center text-center flex-1">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-1 ${
-                      i === 0 ? 'bg-amber-500' : i === 1 ? 'bg-amber-500/60' : 'bg-amber-500/30'
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-3 ${
+                      i === 0
+                        ? 'bg-gradient-to-br from-amber-500 to-amber-600 shadow-lg shadow-amber-500/30'
+                        : 'bg-white/10'
                     }`}>
-                      <step.icon className="w-4 h-4 text-white" />
+                      <step.icon className="w-6 h-6 text-white" />
                     </div>
-                    <span className="text-xs text-white/70 font-medium">{step.text}</span>
+                    <span className="text-sm text-white/70 font-medium">{step.text}</span>
                   </div>
                 ))}
               </div>
@@ -386,14 +530,55 @@ function ThankYouContent() {
         )}
 
         {/* Support */}
-        <p className="text-center text-white/40 text-sm mt-8">
+        <p className="text-center text-white/30 text-sm mt-10">
           Need help? Email us at{' '}
-          <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:underline">
+          <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:text-amber-300 transition-colors">
             support@aifastscale.com
           </a>
         </p>
 
       </div>
+
+      {/* CSS for animations */}
+      <style jsx global>{`
+        @keyframes confetti {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
+          }
+        }
+        .animate-confetti {
+          animation: confetti linear forwards;
+        }
+        @keyframes ping-slow {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.5;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.3;
+          }
+        }
+        .animate-ping-slow {
+          animation: ping-slow 2s ease-in-out infinite;
+        }
+        @keyframes bounce-gentle {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+        .animate-bounce-gentle {
+          animation: bounce-gentle 2s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }
@@ -401,7 +586,7 @@ function ThankYouContent() {
 export default function PlasticSurgeonThankYouPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1500] to-[#2a1a3e] flex items-center justify-center">
+      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
       </div>
     }>
