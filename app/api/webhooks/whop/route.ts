@@ -128,7 +128,7 @@ const PRODUCTS = {
     accentColor: '#d4af37'
   },
   'lawyer': {
-    membersUrl: 'https://aifastscale.com/lawyers/members',
+    membersUrl: 'https://aifastscale.com/members',
     productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
     accentColor: '#d4af37'
