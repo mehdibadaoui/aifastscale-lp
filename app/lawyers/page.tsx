@@ -1506,13 +1506,13 @@ export default function PlasticAttorneyLandingPage() {
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">31</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">New Cases</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">New Clients</div>
                       <div className="text-gray-500 text-[9px]">in 8 weeks</div>
                     </div>
                     <div>
-                      <div className="text-amber-400 text-xl sm:text-2xl font-black">7</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Minutes</div>
-                      <div className="text-gray-500 text-[9px]">per video</div>
+                      <div className="text-amber-400 text-xl sm:text-2xl font-black">$800K+</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Case Value</div>
+                      <div className="text-gray-500 text-[9px]">in pipeline</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">$0</div>
@@ -1525,15 +1525,15 @@ export default function PlasticAttorneyLandingPage() {
                 {/* Timeline */}
                 <div className="p-4 sm:p-5 border-t border-white/10">
                   <div className="text-center mb-3">
-                    <span className="text-amber-400 text-[10px] sm:text-xs font-bold bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-full">FROM SKEPTIC TO $112K</span>
+                    <span className="text-amber-400 text-[10px] sm:text-xs font-bold bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-full">FROM SKEPTIC TO 31 SIGNED CLIENTS</span>
                   </div>
                   <div className="space-y-2">
                     {[
                       { time: 'Day 1', event: 'Created AI video: "5 things to do after a car accident"', color: 'gray' },
                       { time: 'Day 2', event: 'Posted to TikTok before bed', color: 'gray' },
                       { time: 'Week 1', event: 'Video hit 340K views • 23 voicemails Monday AM', color: 'gold' },
-                      { time: 'Week 4', event: '18 signed cases • Hired second paralegal', color: 'gold' },
-                      { time: 'Week 8', event: '31 total cases • $112,000 in projected fees', color: 'green' },
+                      { time: 'Week 4', event: '18 signed clients • Hired second paralegal', color: 'gold' },
+                      { time: 'Week 8', event: '31 total clients • Pipeline worth $800K+ in case value', color: 'green' },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
