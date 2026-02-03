@@ -1042,6 +1042,159 @@ export default function PlasticAttorneyLandingPage() {
       </section>
 
       {/* ================================================================
+          SEE WHAT'S POSSIBLE - VIDEO TRANSFORMATION SHOWCASE
+          Real attorney transformations: Photo → AI Video
+          ================================================================ */}
+      <section className="py-12 sm:py-20 bg-gradient-to-b from-black via-[#0a0a0a] to-black relative overflow-hidden">
+        {/* Subtle background effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="w-full px-4 sm:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-8 sm:mb-12">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
+                <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+                <span className="text-white font-bold text-xs sm:text-sm">Real Transformations</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-3 leading-tight">
+                See What's <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">Possible</span>
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
+                Real attorneys. Real photos. <span className="text-white font-semibold">AI-generated videos</span> that sign clients.
+              </p>
+            </div>
+
+            {/* Video Case Studies Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+
+              {/* Case Study 1 - Criminal Defense Attorney */}
+              <div className="group">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl overflow-hidden hover:border-amber-500/40 transition-all duration-300">
+                  {/* Video Container */}
+                  <div className="relative aspect-[9/16] sm:aspect-video bg-black">
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    >
+                      <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
+                    </video>
+                    {/* Play indicator overlay */}
+                    <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-2.5 py-1.5 rounded-full">
+                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                      <span className="text-white text-xs font-medium">AI Video</span>
+                    </div>
+                    {/* Transformation badge */}
+                    <div className="absolute bottom-3 right-3 bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1.5 rounded-full">
+                      <span className="text-white text-xs font-bold">Photo → Video</span>
+                    </div>
+                  </div>
+
+                  {/* Case Study Info */}
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm sm:text-base">JR</span>
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-sm sm:text-base">James Richardson, Esq.</h4>
+                        <p className="text-gray-400 text-xs sm:text-sm">Criminal Defense • Houston, TX</p>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                      "Posted my first AI video on a Tuesday morning. By Friday, I had <span className="text-amber-400 font-semibold">3 DUI consultations booked</span> — all from people who said they 'felt like they already knew me' from the video."
+                    </p>
+
+                    <div className="flex items-center gap-4 pt-3 border-t border-white/10">
+                      <div className="flex items-center gap-1.5">
+                        <Eye className="w-4 h-4 text-amber-400" />
+                        <span className="text-white text-xs sm:text-sm font-semibold">127K views</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <MessageSquare className="w-4 h-4 text-amber-400" />
+                        <span className="text-white text-xs sm:text-sm font-semibold">89 inquiries</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Case Study 2 - Family Law Attorney */}
+              <div className="group">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl overflow-hidden hover:border-amber-500/40 transition-all duration-300">
+                  {/* Video Container */}
+                  <div className="relative aspect-[9/16] sm:aspect-video bg-black">
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    >
+                      <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
+                    </video>
+                    {/* Play indicator overlay */}
+                    <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-2.5 py-1.5 rounded-full">
+                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                      <span className="text-white text-xs font-medium">AI Video</span>
+                    </div>
+                    {/* Transformation badge */}
+                    <div className="absolute bottom-3 right-3 bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1.5 rounded-full">
+                      <span className="text-white text-xs font-bold">Photo → Video</span>
+                    </div>
+                  </div>
+
+                  {/* Case Study Info */}
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm sm:text-base">SP</span>
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-sm sm:text-base">Sarah Patel, Esq.</h4>
+                        <p className="text-gray-400 text-xs sm:text-sm">Family Law • Chicago, IL</p>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                      "I was skeptical at first. Then one video explaining child custody basics hit <span className="text-amber-400 font-semibold">340K views</span>. My paralegal now screens 15+ calls a week from that single video."
+                    </p>
+
+                    <div className="flex items-center gap-4 pt-3 border-t border-white/10">
+                      <div className="flex items-center gap-1.5">
+                        <Eye className="w-4 h-4 text-amber-400" />
+                        <span className="text-white text-xs sm:text-sm font-semibold">340K views</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <CalendarCheck className="w-4 h-4 text-amber-400" />
+                        <span className="text-white text-xs sm:text-sm font-semibold">15+ calls/week</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom CTA hint */}
+            <div className="text-center mt-8 sm:mt-10">
+              <p className="text-gray-500 text-sm">
+                These videos took <span className="text-amber-400 font-semibold">less than 5 minutes</span> to create. No filming. No editing. Just AI.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
           LANGUAGE SUPPORT - PREMIUM HIGH-CVR SECTION
           Global coverage with search, stats & social proof
           ================================================================ */}
