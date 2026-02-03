@@ -1,1338 +1,445 @@
-# THE CASE STUDIES VAULT
-## 15,000+ Ready-to-Use Case Study Templates & Examples
+<![CDATA[<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{--bg:#09090b;--bg-card:#18181b;--bg-card-hover:#27272a;--gold:#F59E0B;--gold-light:#FBBF24;--gold-dark:#D97706;--text:#FAFAFA;--text-muted:#A1A1AA;--border:#27272a;--success:#22C55E;--info:#3B82F6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:40px 20px;max-width:900px;margin:0 auto}
+h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;letter-spacing:-0.02em}
+h2{font-size:1.75rem;font-weight:800;color:var(--gold);margin:3rem 0 1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--border)}
+h3{font-size:1.25rem;font-weight:700;color:var(--text);margin:2rem 0 1rem}
+p{margin-bottom:1rem;color:var(--text-muted)}
+strong{color:var(--text);font-weight:600}
+ul,ol{margin:1rem 0 1.5rem 1.5rem}
+li{margin-bottom:0.5rem;color:var(--text-muted)}
+hr{border:none;height:1px;background:var(--border);margin:3rem 0}
+table{width:100%;border-collapse:collapse;margin:1.5rem 0}
+th,td{padding:1rem;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--gold);font-weight:600}
+td{color:var(--text-muted)}
+.cover{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:24px;margin-bottom:3rem;border:1px solid var(--border)}
+.cover-badge{display:inline-block;background:var(--gold);color:var(--bg);padding:0.5rem 1rem;border-radius:50px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.5rem}
+.cover h1{font-size:3rem;margin-bottom:1rem}
+.cover-subtitle{font-size:1.25rem;color:var(--text-muted);margin-bottom:2rem}
+.cover-value{font-size:1rem;color:var(--gold)}
+.box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.box-gold{border-color:var(--gold);background:rgba(245,158,11,0.05)}
+.box-title{font-weight:700;color:var(--gold);margin-bottom:0.75rem}
+.quick-win{background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.3);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.quick-win-title{color:var(--success);font-weight:700;margin-bottom:0.75rem}
+.template-box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:2rem 0}
+.template-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.template-number{background:var(--gold);color:var(--bg);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.template-title{font-size:1.25rem;font-weight:700;color:var(--text)}
+.template-content{background:var(--bg);border-radius:12px;padding:1.5rem;margin:1rem 0;border:1px solid var(--border)}
+.template-content p{color:var(--text);margin-bottom:0.75rem;line-height:1.8}
+.fill-blank{color:var(--gold);font-weight:600}
+.checklist{list-style:none;margin-left:0}
+.checklist li{padding:0.75rem 0;padding-left:2rem;position:relative;border-bottom:1px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:"○";position:absolute;left:0;color:var(--gold);font-size:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center}
+.stat-value{font-size:2rem;font-weight:800;color:var(--gold)}
+.stat-label{font-size:0.875rem;color:var(--text-muted)}
+.footer{text-align:center;padding:3rem;margin-top:4rem;border-top:1px solid var(--border)}
+.footer-logo{font-size:1.5rem;font-weight:800;color:var(--gold);margin-bottom:0.5rem}
+.footer p{color:var(--text-muted);font-size:0.875rem}
+</style>
+
+<div class="cover">
+<div class="cover-badge">Mega Bonus</div>
+<h1>Case Studies Vault</h1>
+<p class="cover-subtitle">15,000+ Ready-to-Use Templates for Powerful Social Proof</p>
+<p class="cover-value">Value: $397 • Included Free With Your Membership</p>
+</div>
+
+<div class="stats">
+<div class="stat">
+<div class="stat-value">50+</div>
+<div class="stat-label">Templates</div>
+</div>
+<div class="stat">
+<div class="stat-value">10</div>
+<div class="stat-label">Formats</div>
+</div>
+<div class="stat">
+<div class="stat-value">∞</div>
+<div class="stat-label">Case Studies</div>
+</div>
+</div>
+
+<div class="box box-gold">
+<div class="box-title">⚡ What You're Getting</div>
+<p style="margin-bottom:0">A complete library of case study templates, testimonial frameworks, and social proof formulas. Fill in the blanks, adapt to your clients, and build an arsenal of proof that converts skeptics into buyers.</p>
+</div>
 
 ---
 
-# DESIGN SPECIFICATIONS
-```
-Background: Dark charcoal (#1a1a1a) with vault door pattern
-Accent Color: Gold (#FFD700) with silver (#C0C0C0) accents
-Typography: Bold sans-serif headers, clean body text
-Style: Vault/archive aesthetic, organized catalog feel
-Page Count: 150+ pages
-```
+## Quick Wins: Create a Case Study TODAY
+
+<div class="quick-win">
+<div class="quick-win-title">🎯 30-Minute Case Study</div>
+<ul class="checklist">
+<li>Choose your best client result from the past 6 months</li>
+<li>Pick a template below that fits their story</li>
+<li>Fill in the blanks with real details</li>
+<li>Get client approval (use the consent template)</li>
+<li>Post on your website, social, and email</li>
+</ul>
+</div>
 
 ---
 
-# COVER PAGE
+## The Psychology of Case Studies
 
-```
-[FULL PAGE DARK BACKGROUND WITH VAULT DOOR GRAPHIC]
+<div class="box">
+<div class="box-title">🧠 Why Case Studies Convert</div>
 
-THE CASE
-STUDIES VAULT
+**The Trust Hierarchy:**
+1. **They say it themselves** (testimonial) = Maximum trust
+2. **You tell their story** (case study) = Very high trust
+3. **You claim it** (marketing copy) = Low trust
 
-15,000+ Ready-to-Use Templates
-For Every Industry & Situation
-
-[Vault door opening to reveal golden light]
-
-"Social Proof On Demand"
-
-CloneYourself AI
-MEGA BONUS
-```
-
----
-
-# INTRODUCTION: HOW TO USE THIS VAULT
-
-## Your Social Proof Arsenal
-
-This vault contains templates for creating compelling case studies, testimonials, success stories, and social proof for any business or niche.
-
-### How It's Organized:
-
-**Part 1:** Universal Templates (works for everyone)
-**Part 2:** Industry-Specific Libraries
-**Part 3:** Situation-Based Templates
-**Part 4:** Format Variations
-**Part 5:** AI Prompts to Generate More
-
-### How To Use:
-
-1. Find templates that match your situation
-2. Fill in with your actual client data
-3. Adapt language to your brand voice
-4. Publish across your marketing
+**Case studies work because they:**
+- Show proof, not promises
+- Let prospects see themselves in the story
+- Answer objections before they arise
+- Create emotional connection
+- Provide specific, believable results
+</div>
 
 ---
 
-# PART 1: UNIVERSAL CASE STUDY TEMPLATES
+## The Universal Case Study Structure
 
-## The Core Frameworks
+<div class="box box-gold">
+<div class="box-title">📋 The PAOR Framework</div>
 
----
+Every great case study follows this structure:
 
-## Template 1: The Classic Transformation
+**P** - Problem (What they were struggling with)
+**A** - Approach (What you did to help)
+**O** - Outcome (The results they achieved)
+**R** - Reflection (What they say now)
 
-```
-TITLE: [Client Name/Type] Achieves [Result] in [Timeframe]
-
-THE CHALLENGE:
-[Client Name] came to us facing [specific problem].
-They had tried [previous solutions] but [why those failed].
-The situation was [urgent/costly because X].
-
-"[Quote from client about their situation before]"
-
-OUR APPROACH:
-We implemented our [process/method name] focusing on:
-- [Step 1]
-- [Step 2]
-- [Step 3]
-
-THE RESULTS:
-After [timeframe], [Client Name] achieved:
-- [Metric 1]: [Before] → [After]
-- [Metric 2]: [Before] → [After]
-- [Metric 3]: [Before] → [After]
-
-"[Quote from client about results]"
-
-KEY TAKEAWAY:
-[One sentence lesson or insight]
-```
+Use this framework for ANY format—written, video, carousel, or social post.
+</div>
 
 ---
 
-## Template 2: The Quick Win Story
+## Template 1: The Full Case Study
 
-```
-TITLE: How [Client Type] Got [Quick Result]
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">1</div>
+<div class="template-title">Comprehensive Written Case Study</div>
+</div>
+<div class="template-content">
+<p><strong>Title:</strong> How <span class="fill-blank">[CLIENT NAME/TYPE]</span> Achieved <span class="fill-blank">[SPECIFIC RESULT]</span> in <span class="fill-blank">[TIMEFRAME]</span></p>
 
-THE SITUATION:
-[Client] needed [outcome] fast.
-Timeline: [Short timeframe]
-Challenge: [The obstacle]
+<p><strong>The Challenge:</strong></p>
+<p><span class="fill-blank">[CLIENT]</span> came to us struggling with <span class="fill-blank">[MAIN PROBLEM]</span>. They had tried <span class="fill-blank">[WHAT THEY TRIED BEFORE]</span> but were still dealing with <span class="fill-blank">[ONGOING ISSUES]</span>.</p>
+<p>The situation was affecting their <span class="fill-blank">[WHAT IT IMPACTED - life, business, health, etc.]</span>. They knew they needed help but weren't sure where to turn.</p>
 
-WHAT WE DID:
-[Brief description of solution - 2-3 sentences]
+<p><strong>The Approach:</strong></p>
+<p>After our initial consultation, we developed a plan that included:</p>
+<p>• <span class="fill-blank">[SERVICE/APPROACH 1]</span></p>
+<p>• <span class="fill-blank">[SERVICE/APPROACH 2]</span></p>
+<p>• <span class="fill-blank">[SERVICE/APPROACH 3]</span></p>
 
-THE RESULT:
-[Specific outcome achieved]
-[Timeframe it took]
+<p><strong>The Results:</strong></p>
+<p>Within <span class="fill-blank">[TIMEFRAME]</span>, <span class="fill-blank">[CLIENT]</span> experienced:</p>
+<p>• <span class="fill-blank">[RESULT 1 - with numbers if possible]</span></p>
+<p>• <span class="fill-blank">[RESULT 2]</span></p>
+<p>• <span class="fill-blank">[RESULT 3]</span></p>
 
-"[Short powerful quote]"
-```
-
----
-
-## Template 3: The Dramatic Turnaround
-
-```
-TITLE: From [Bad State] to [Great State]: [Client]'s Story
-
-THE CRISIS:
-[Client] was in trouble.
-[Describe the dire situation - paint the picture]
-
-THE TURNING POINT:
-[What made them reach out]
-[The initial conversation/discovery]
-
-THE JOURNEY:
-[Brief description of the process]
-[Key moments along the way]
-
-THE TRANSFORMATION:
-BEFORE:
-- [Pain point 1]
-- [Pain point 2]
-- [Pain point 3]
-
-AFTER:
-- [Win 1]
-- [Win 2]
-- [Win 3]
-
-IN THEIR WORDS:
-"[Emotional quote about the transformation]"
-```
+<p><strong>In Their Words:</strong></p>
+<p><em>"<span class="fill-blank">[DIRECT QUOTE FROM CLIENT]</span>"</em></p>
+<p>— <span class="fill-blank">[CLIENT NAME, TITLE/LOCATION]</span></p>
+</div>
+</div>
 
 ---
 
-## Template 4: The Numbers Story
+## Template 2: Quick Case Study
 
-```
-TITLE: [X]% [Improvement] for [Client Type]
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">2</div>
+<div class="template-title">One-Paragraph Case Study</div>
+</div>
+<div class="template-content">
+<p>When <span class="fill-blank">[CLIENT]</span> first came to us, they were dealing with <span class="fill-blank">[PROBLEM]</span>. After <span class="fill-blank">[YOUR APPROACH]</span>, they achieved <span class="fill-blank">[MAIN RESULT]</span>. In their words: "<span class="fill-blank">[SHORT QUOTE]</span>."</p>
+</div>
+</div>
 
-BY THE NUMBERS:
+---
+
+## Template 3: Social Media Case Study
+
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">3</div>
+<div class="template-title">Instagram/LinkedIn Post</div>
+</div>
+<div class="template-content">
+<p><strong>Hook:</strong> <span class="fill-blank">[CLIENT]</span> went from <span class="fill-blank">[BEFORE STATE]</span> to <span class="fill-blank">[AFTER STATE]</span>. Here's how:</p>
+
+<p><strong>The Problem:</strong><br>
+They were struggling with <span class="fill-blank">[MAIN PAIN POINT]</span>.</p>
+
+<p><strong>What We Did:</strong><br>
+<span class="fill-blank">[1-2 sentence description of your approach]</span></p>
+
+<p><strong>The Result:</strong><br>
+✅ <span class="fill-blank">[RESULT 1]</span><br>
+✅ <span class="fill-blank">[RESULT 2]</span><br>
+✅ <span class="fill-blank">[RESULT 3]</span></p>
+
+<p><strong>Their Quote:</strong><br>
+"<span class="fill-blank">[TESTIMONIAL SNIPPET]</span>"</p>
+
+<p>Are you dealing with <span class="fill-blank">[SIMILAR PROBLEM]</span>? Let's talk. Link in bio.</p>
+</div>
+</div>
+
+---
+
+## Template 4: Video Testimonial Script
+
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">4</div>
+<div class="template-title">Video Testimonial Questions</div>
+</div>
+<div class="template-content">
+<p>Give your client these questions to answer on camera:</p>
+
+<p><strong>1. Introduction:</strong><br>
+"Tell us who you are and what you do."</p>
+
+<p><strong>2. The Before:</strong><br>
+"What was your situation before working with [Your Name]? What were you struggling with?"</p>
+
+<p><strong>3. The Decision:</strong><br>
+"What made you decide to reach out? Were you hesitant about anything?"</p>
+
+<p><strong>4. The Experience:</strong><br>
+"What was it like working with [Your Name]? What stood out to you?"</p>
+
+<p><strong>5. The Results:</strong><br>
+"What changed after working together? What results did you see?"</p>
+
+<p><strong>6. The Recommendation:</strong><br>
+"Who would you recommend [Your Name] to? What would you say to someone considering working with them?"</p>
+</div>
+</div>
+
+---
+
+## Template 5: Before/After Format
+
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">5</div>
+<div class="template-title">Before/After Comparison</div>
+</div>
+<div class="template-content">
+<p><strong>BEFORE working with us:</strong></p>
+<p>❌ <span class="fill-blank">[Pain point 1]</span><br>
+❌ <span class="fill-blank">[Pain point 2]</span><br>
+❌ <span class="fill-blank">[Pain point 3]</span><br>
+❌ <span class="fill-blank">[Pain point 4]</span></p>
+
+<p><strong>AFTER working with us:</strong></p>
+<p>✅ <span class="fill-blank">[Benefit 1]</span><br>
+✅ <span class="fill-blank">[Benefit 2]</span><br>
+✅ <span class="fill-blank">[Benefit 3]</span><br>
+✅ <span class="fill-blank">[Benefit 4]</span></p>
+
+<p><em>Timeline: <span class="fill-blank">[X weeks/months]</span></em></p>
+</div>
+</div>
+
+---
+
+## Template 6: The Numbers Story
+
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">6</div>
+<div class="template-title">Data-Driven Case Study</div>
+</div>
+<div class="template-content">
+<p><strong>Client:</strong> <span class="fill-blank">[CLIENT TYPE]</span></p>
+<p><strong>Timeline:</strong> <span class="fill-blank">[DURATION]</span></p>
+
+<p><strong>The Numbers:</strong></p>
 
 | Metric | Before | After | Change |
 |--------|--------|-------|--------|
-| [Metric 1] | [#] | [#] | [+X%] |
-| [Metric 2] | [#] | [#] | [+X%] |
-| [Metric 3] | [#] | [#] | [+X%] |
+| <span class="fill-blank">[Metric 1]</span> | <span class="fill-blank">[#]</span> | <span class="fill-blank">[#]</span> | <span class="fill-blank">[+X%]</span> |
+| <span class="fill-blank">[Metric 2]</span> | <span class="fill-blank">[#]</span> | <span class="fill-blank">[#]</span> | <span class="fill-blank">[+X%]</span> |
+| <span class="fill-blank">[Metric 3]</span> | <span class="fill-blank">[#]</span> | <span class="fill-blank">[#]</span> | <span class="fill-blank">[+X%]</span> |
 
-TIMELINE: [How long it took]
-
-INVESTMENT: [What they invested]
-
-ROI: [Return on investment]
-
-THE STORY BEHIND THE NUMBERS:
-[2-3 paragraphs explaining context]
-
-"[Quote validating the numbers]"
-```
+<p><strong>Bottom Line:</strong> <span class="fill-blank">[ONE SENTENCE SUMMARY OF IMPACT]</span></p>
+</div>
+</div>
 
 ---
 
-## Template 5: The Before/After Snapshot
+## Template 7: The Story Arc
 
-```
-TITLE: [Client Type]: Before & After
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">7</div>
+<div class="template-title">Narrative Case Study</div>
+</div>
+<div class="template-content">
+<p><strong>Chapter 1: The Crisis</strong></p>
+<p><span class="fill-blank">[CLIENT]</span> thought they had tried everything. <span class="fill-blank">[DESCRIBE THE MOMENT OF FRUSTRATION]</span>. That's when they reached out to us.</p>
 
-[BEFORE]
-Challenge: [Problem]
-Situation: [State]
-Feeling: [Emotion]
-Key Metric: [Number]
+<p><strong>Chapter 2: The Turning Point</strong></p>
+<p>In our first conversation, we discovered <span class="fill-blank">[KEY INSIGHT]</span>. This changed everything. We developed a plan to <span class="fill-blank">[YOUR APPROACH]</span>.</p>
 
-[AFTER]
-Solution: [What changed]
-Situation: [New state]
-Feeling: [New emotion]
-Key Metric: [New number]
+<p><strong>Chapter 3: The Transformation</strong></p>
+<p>Within <span class="fill-blank">[TIMEFRAME]</span>, <span class="fill-blank">[CLIENT]</span> started seeing changes. <span class="fill-blank">[DESCRIBE THE TRANSFORMATION]</span>.</p>
 
-TIME TO TRANSFORM: [Duration]
-
-"[Quote capturing the shift]"
-```
-
----
-
-## Template 6: The Problem-Solution-Result
-
-```
-THE PROBLEM:
-[Client] was struggling with [problem].
-This caused [negative effects].
-They needed [desired outcome].
-
-THE SOLUTION:
-We provided [service/solution].
-Specifically, we [action 1], [action 2], and [action 3].
-The approach was [unique because X].
-
-THE RESULT:
-[Outcome achieved]
-[Specific metrics]
-[Client reaction]
-
-"[Testimonial quote]"
-
-READY FOR YOUR RESULT?
-[CTA]
-```
+<p><strong>Chapter 4: The New Reality</strong></p>
+<p>Today, <span class="fill-blank">[CLIENT]</span> is <span class="fill-blank">[CURRENT STATE]</span>. Looking back, they say: "<span class="fill-blank">[QUOTE]</span>."</p>
+</div>
+</div>
 
 ---
 
-## Template 7: The Hero's Journey
+## Template 8: Carousel Slides
 
-```
-TITLE: [Client]'s Journey to [Achievement]
-
-CHAPTER 1: THE ORDINARY WORLD
-[Client's situation before - the status quo]
-
-CHAPTER 2: THE CALL TO ADVENTURE
-[What prompted them to seek change]
-
-CHAPTER 3: CROSSING THE THRESHOLD
-[The decision to work with you]
-
-CHAPTER 4: TRIALS AND GROWTH
-[The process, challenges overcome]
-
-CHAPTER 5: THE REWARD
-[The results achieved]
-
-CHAPTER 6: THE NEW NORMAL
-[Life/business now - the transformation]
-
-"[Client reflecting on the journey]"
-```
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">8</div>
+<div class="template-title">10-Slide Carousel Case Study</div>
+</div>
+<div class="template-content">
+<p><strong>Slide 1:</strong> How <span class="fill-blank">[CLIENT]</span> achieved <span class="fill-blank">[RESULT]</span> 🔥</p>
+<p><strong>Slide 2:</strong> THE PROBLEM: <span class="fill-blank">[Main challenge]</span></p>
+<p><strong>Slide 3:</strong> What they tried: <span class="fill-blank">[Failed attempts]</span></p>
+<p><strong>Slide 4:</strong> The turning point: <span class="fill-blank">[What changed]</span></p>
+<p><strong>Slide 5:</strong> Our approach: <span class="fill-blank">[What you did]</span></p>
+<p><strong>Slide 6:</strong> Result #1: <span class="fill-blank">[Specific outcome]</span></p>
+<p><strong>Slide 7:</strong> Result #2: <span class="fill-blank">[Specific outcome]</span></p>
+<p><strong>Slide 8:</strong> Result #3: <span class="fill-blank">[Specific outcome]</span></p>
+<p><strong>Slide 9:</strong> "<span class="fill-blank">[Client quote]</span>"</p>
+<p><strong>Slide 10:</strong> Ready for your transformation? [CTA]</p>
+</div>
+</div>
 
 ---
 
-## Template 8: The FAQ Case Study
+## Template 9: Email Case Study
 
-```
-TITLE: [Client] Answers Your Questions About [Topic]
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">9</div>
+<div class="template-title">Newsletter Case Study Email</div>
+</div>
+<div class="template-content">
+<p><strong>Subject:</strong> How <span class="fill-blank">[CLIENT]</span> went from <span class="fill-blank">[BEFORE]</span> to <span class="fill-blank">[AFTER]</span></p>
 
-Q: What was your situation before?
-A: "[Client's answer about before state]"
+<p>Hey <span class="fill-blank">[FIRST NAME]</span>,</p>
 
-Q: Why did you choose [Your Company]?
-A: "[Client's answer about decision]"
+<p>I want to share a story that might resonate with you.</p>
 
-Q: What was the process like?
-A: "[Client's answer about experience]"
+<p><span class="fill-blank">[CLIENT]</span> came to me <span class="fill-blank">[TIMEFRAME]</span> ago, dealing with <span class="fill-blank">[PROBLEM]</span>.</p>
 
-Q: What results did you achieve?
-A: "[Client's answer about outcomes]"
+<p>Sound familiar?</p>
 
-Q: Would you recommend [Your Company]?
-A: "[Client's recommendation]"
+<p>After working together on <span class="fill-blank">[YOUR APPROACH]</span>, they achieved <span class="fill-blank">[MAIN RESULT]</span>.</p>
 
-KEY RESULTS:
-- [Result 1]
-- [Result 2]
-- [Result 3]
-```
+<p>Here's what they said:</p>
 
----
+<p><em>"<span class="fill-blank">[TESTIMONIAL QUOTE]</span>"</em></p>
 
-## Template 9: The Mini Case Study
+<p>If you're dealing with something similar, I'd love to help.</p>
 
-```
-[CLIENT TYPE] | [INDUSTRY]
+<p><span class="fill-blank">[CTA - book a call, reply, etc.]</span></p>
 
-Challenge: [One sentence]
-Solution: [One sentence]
-Result: [One sentence + number]
-
-"[One powerful quote]"
-
-[TIMEFRAME] | [KEY METRIC]
-```
+<p><span class="fill-blank">[YOUR NAME]</span></p>
+</div>
+</div>
 
 ---
 
-## Template 10: The Video Case Study Script
+## Template 10: Quote Graphic Format
 
-```
-[SCENE 1: HOOK - 15 seconds]
-"I was [problem state] until [transformation moment]..."
+<div class="template-box">
+<div class="template-header">
+<div class="template-number">10</div>
+<div class="template-title">Testimonial Graphics</div>
+</div>
+<div class="template-content">
+<p><strong>Format 1 - The One-Liner:</strong></p>
+<p>"<span class="fill-blank">[POWERFUL SINGLE SENTENCE]</span>"<br>
+— <span class="fill-blank">[NAME, TITLE]</span></p>
 
-[SCENE 2: THE BEFORE - 30 seconds]
-"Before working with [Company], I was dealing with..."
-[Describe the struggle, the frustration, what wasn't working]
+<p><strong>Format 2 - The Transformation:</strong></p>
+<p>"Before: <span class="fill-blank">[PROBLEM]</span><br>
+After: <span class="fill-blank">[RESULT]</span>"<br>
+— <span class="fill-blank">[NAME]</span></p>
 
-[SCENE 3: THE DECISION - 15 seconds]
-"I decided to try [Company] because..."
-[What made them choose you]
-
-[SCENE 4: THE EXPERIENCE - 30 seconds]
-"The process was..."
-[What it was like to work with you]
-
-[SCENE 5: THE RESULTS - 30 seconds]
-"Now I'm experiencing..."
-[Specific results and how life/business is different]
-
-[SCENE 6: THE RECOMMENDATION - 15 seconds]
-"If you're struggling with [problem], I'd say..."
-[Their advice to others in similar situation]
-
-[END SCREEN]
-[CTA + Contact Info]
-```
+<p><strong>Format 3 - The Recommendation:</strong></p>
+<p>"If you're looking for <span class="fill-blank">[OUTCOME]</span>, work with <span class="fill-blank">[YOUR NAME]</span>."<br>
+— <span class="fill-blank">[NAME, TITLE]</span></p>
+</div>
+</div>
 
 ---
 
-# PART 2: INDUSTRY-SPECIFIC CASE STUDIES
+## Client Consent Template
 
-## 500+ Templates By Industry
+<div class="box box-gold">
+<div class="box-title">📝 Get Permission Right</div>
+<div class="template-content">
+<p><strong>Testimonial & Case Study Release</strong></p>
 
----
+<p>I, <span class="fill-blank">[CLIENT NAME]</span>, give <span class="fill-blank">[YOUR BUSINESS NAME]</span> permission to use my testimonial, story, and/or likeness in marketing materials including but not limited to: website, social media, email, advertising, and printed materials.</p>
 
-# LAWYERS CASE STUDY LIBRARY
+<p>I understand that:</p>
+<p>• My story may be edited for clarity and length<br>
+• I can request removal at any time<br>
+• I am receiving no compensation for this testimonial<br>
+• My testimonial reflects my genuine experience</p>
 
-## Personal Injury
-
-### Template: Car Accident Settlement
-
-```
-CASE: Auto Accident - [City/County]
-
-THE SITUATION:
-Our client, [Client Initial], was struck by [description]
-resulting in [injuries]. The insurance company offered
-[low amount], which wouldn't cover [costs].
-
-OUR APPROACH:
-We gathered evidence including [evidence types],
-consulted with [expert types], and built a comprehensive
-case demonstrating the full extent of damages.
-
-THE OUTCOME:
-Settlement: $[Amount]
-- Medical expenses: COVERED
-- Lost wages: RECOVERED
-- Pain & suffering: COMPENSATED
-
-Timeline: [X] months to settlement
-
-"[Quote about relief and justice]"
-
-*Every case is unique. Results may vary.*
-```
-
-### Template: Slip and Fall
-
-```
-CASE: Premises Liability - [Location Type]
-
-INJURY: [Type of injury]
-INITIAL OFFER: $[Amount]
-FINAL RESULT: $[Amount]
-
-WHAT HAPPENED:
-[Client] was injured at [location] when [description].
-The property owner denied responsibility.
-
-WHAT WE DID:
-- Investigated the scene
-- Documented the hazard
-- Proved negligence
-- Negotiated aggressively
-
-THE DIFFERENCE:
-[X]% more than the initial offer
-
-"[Client quote]"
-```
+<p>Signature: _______________<br>
+Date: _______________<br>
+Preferred Name to Display: _______________</p>
+</div>
+</div>
 
 ---
 
-## Criminal Defense
+## Case Study Collection System
 
-### Template: Charges Dismissed
+<div class="quick-win">
+<div class="quick-win-title">🚀 Build Your Case Study Library</div>
 
-```
-CASE: [Charge Type]
+**Monthly Goal:** Collect 2-4 new case studies
 
-CHARGES: [List charges]
-POTENTIAL PENALTY: [Years/fines]
-RESULT: DISMISSED
+**When to Ask:**
+<ul class="checklist">
+<li>Right after a successful outcome</li>
+<li>When client expresses gratitude</li>
+<li>At project completion</li>
+<li>During a check-in call</li>
+</ul>
 
-THE ACCUSATION:
-[Client Initial] was charged with [charges] after [situation].
-They faced [potential consequences].
-
-OUR DEFENSE:
-We [defense strategy] and demonstrated [key points].
-Through [specific actions], we proved [what was established].
-
-THE OUTCOME:
-All charges dismissed.
-[Client] retained their [freedom/record/license].
-
-"[Quote about relief and fresh start]"
-
-*Every case is unique. Results may vary.*
-```
-
-### Template: Reduced Charges
-
-```
-CASE: [Original Charge] → [Reduced Charge]
-
-ORIGINAL CHARGE: [Charge]
-POTENTIAL: [Worst case scenario]
-RESULT: [Reduced to X]
-
-HOW WE HELPED:
-[Description of strategy and negotiation]
-
-THE DIFFERENCE:
-- No [avoided consequence]
-- [Benefit achieved]
-- [Record impact]
-
-"[Client testimonial]"
-```
+**How to Ask:**
+"[Name], I'm really proud of what we accomplished together. Would you be open to sharing your story so others can see what's possible? It would help people like you find the help they need."
+</div>
 
 ---
 
-## Family Law
-
-### Template: Custody Win
-
-```
-CASE: Child Custody - [County]
-
-WHAT WAS AT STAKE:
-[Parent] feared losing [custody type] of their children.
-The other party was seeking [what they wanted].
-
-OUR STRATEGY:
-We gathered evidence of [positive factors] and
-presented a case showing [client's strengths as parent].
-
-THE RESULT:
-[Client] was awarded [custody outcome].
-The children [positive outcome for children].
-
-"[Quote about family and peace of mind]"
-
-*Every case is unique. Results may vary.*
-```
-
----
-
-## Business Law
-
-### Template: Contract Dispute Won
-
-```
-CASE: Contract Dispute - $[Amount at stake]
-
-THE DISPUTE:
-[Client business] was owed $[amount] by [opposing party]
-who refused to pay based on [their claim].
-
-OUR APPROACH:
-We analyzed the contract, gathered evidence of
-[performance/breach], and [litigation strategy].
-
-THE RESOLUTION:
-Full payment of $[amount]
-Plus [interest/costs/fees]
-No lengthy trial required
-
-"[Quote about business protection]"
-```
-
----
-
-# DENTIST CASE STUDY LIBRARY
-
-## Smile Transformations
-
-### Template: Complete Smile Makeover
-
-```
-TRANSFORMATION: Complete Smile Makeover
-
-PATIENT PROFILE:
-[Patient Initial], age [X], came to us unhappy with
-[specific complaints about smile].
-
-THE CHALLENGE:
-- [Issue 1: e.g., discoloration]
-- [Issue 2: e.g., spacing]
-- [Issue 3: e.g., chipped teeth]
-
-OUR TREATMENT PLAN:
-[List of procedures performed]
-Timeline: [X weeks/months]
-Visits: [X appointments]
-
-THE RESULTS:
-[BEFORE & AFTER IMAGES PLACEHOLDER]
-
-"[Quote about confidence and life change]"
-
-- [Benefit 1]
-- [Benefit 2]
-- [Benefit 3]
-
-Patient Satisfaction: [X]/10
-```
-
-### Template: Dental Implant Success
-
-```
-TRANSFORMATION: Missing Teeth → Complete Smile
-
-THE SITUATION:
-[Patient] had lived with [missing teeth description]
-for [years]. They struggled with [eating/confidence/etc.].
-
-THE SOLUTION:
-[Number] dental implants using [technology/technique].
-[Description of process]
-
-THE OUTCOME:
-- Fully functional bite
-- Natural appearance
-- Permanent solution
-
-Timeline: [Treatment duration]
-
-BEFORE: [Describe before]
-AFTER: [Describe after]
-
-"[Patient quote about eating, smiling, living]"
-```
-
-### Template: Emergency Save
-
-```
-CASE: Dental Emergency Resolved
-
-THE EMERGENCY:
-[Patient] came in with [emergency situation - broken
-tooth, severe pain, etc.]. They were [in distress].
-
-IMMEDIATE ACTION:
-We [emergency response] and [treatment provided].
-[Same-day/next-day resolution].
-
-THE RESULT:
-- Pain: Eliminated
-- Function: Restored
-- Appearance: [Outcome]
-
-"[Quote about relief and care received]"
-```
-
----
-
-## Cosmetic Cases
-
-### Template: Veneers Transformation
-
-```
-TRANSFORMATION: Porcelain Veneers
-
-PATIENT GOAL: [What they wanted]
-
-STARTING POINT:
-- [Condition 1]
-- [Condition 2]
-- [Condition 3]
-
-TREATMENT:
-[X] porcelain veneers on [which teeth]
-[Process description]
-Total appointments: [X]
-
-THE REVEAL:
-[BEFORE/AFTER PLACEHOLDER]
-
-"[Patient reaction quote]"
-
-Confidence level:
-BEFORE: [X]/10
-AFTER: [X]/10
-```
-
-### Template: Invisalign Journey
-
-```
-TRANSFORMATION: Invisalign Clear Aligners
-
-TREATMENT LENGTH: [X months]
-ALIGNERS: [X sets]
-
-THE JOURNEY:
-
-Month 1-2: [Progress description]
-Month 3-4: [Progress description]
-Month 5-6: [Progress description]
-[Continue as needed]
-
-BEFORE:
-[Description of alignment issues]
-
-AFTER:
-[Description of straight smile]
-
-"[Quote about the easy process]"
-
-Next: Retention phase with [retainer plan]
-```
-
----
-
-# COACH/CONSULTANT CASE STUDY LIBRARY
-
-## Business Coaching
-
-### Template: Revenue Transformation
-
-```
-CLIENT: [Industry/Business Type]
-
-THE SITUATION:
-[Client] was running a [business type] doing $[X]/month.
-They were working [X] hours and feeling [burned out/stuck].
-
-THE GOAL:
-Reach $[X]/month while working [fewer hours/smarter].
-
-OUR WORK TOGETHER:
-Phase 1: [Focus area]
-Phase 2: [Focus area]
-Phase 3: [Focus area]
-
-THE RESULTS (After [X] months):
-
-Revenue: $[Before] → $[After] ([X]% increase)
-Hours: [Before] → [After]
-Team: [Before] → [After]
-Profit: [Before] → [After]
-
-"[Client quote about transformation]"
-```
-
-### Template: Business Launch Success
-
-```
-CLIENT: [Client Type] - New Business Launch
-
-STARTING POINT:
-[Client] had a [idea/concept] but no [business/revenue/
-audience]. They needed [what they needed].
-
-THE PROCESS:
-Week 1-4: [What we did]
-Week 5-8: [What we did]
-Week 9-12: [What we did]
-
-LAUNCH RESULTS:
-- $[X] in first [timeframe]
-- [X] customers/clients acquired
-- [X] followers/subscribers built
-- [X] [other metric]
-
-"[Quote about going from idea to reality]"
-
-Now: [Where they are today]
-```
-
----
-
-## Life Coaching
-
-### Template: Personal Breakthrough
-
-```
-CLIENT: [Client type/situation]
-
-WHERE THEY STARTED:
-[Client] was feeling [emotional state].
-They struggled with [challenge].
-Life felt [description].
-
-THE BREAKTHROUGH:
-Through our work together, [Client] discovered:
-- [Insight 1]
-- [Insight 2]
-- [Insight 3]
-
-THE TRANSFORMATION:
-BEFORE → AFTER
-
-[Feeling] → [New feeling]
-[Behavior] → [New behavior]
-[Result] → [New result]
-
-"[Emotional quote about change]"
-
-Today: [Where they are now]
-```
-
----
-
-## Career Coaching
-
-### Template: Career Change Success
-
-```
-CLIENT: [Previous role] → [New role]
-
-THE CHALLENGE:
-[Client] had spent [X years] in [industry/role].
-They felt [unfulfilled/stuck/wanting more].
-The transition felt [overwhelming/impossible].
-
-THE JOURNEY:
-Month 1: [Clarity work]
-Month 2: [Skill development]
-Month 3: [Job search/positioning]
-Month 4: [Results]
-
-THE RESULT:
-New Role: [Job title] at [Company type]
-Salary: [X]% increase
-Satisfaction: [Before] → [After]
-
-"[Quote about finding their calling]"
-```
-
----
-
-# REALTOR CASE STUDY LIBRARY
-
-## Home Sales
-
-### Template: Above-Asking Success
-
-```
-PROPERTY: [Property type] in [Neighborhood]
-
-LISTED: $[List price]
-SOLD: $[Sale price]
-ABOVE ASKING: $[Difference] ([X]%)
-
-DAYS ON MARKET: [X]
-
-THE STRATEGY:
-We prepared the home with [staging/updates] and
-positioned it in the market with [marketing approach].
-
-THE RESULT:
-[X] offers received in [X] days
-Sold for $[X] over asking
-Closed in [X] days
-
-SELLER FEEDBACK:
-"[Quote about the experience]"
-```
-
-### Template: Quick Sale
-
-```
-SOLD: [X] Days
-
-PROPERTY: [Address/Neighborhood]
-SITUATION: Needed to sell [quickly because X]
-
-THE APPROACH:
-- [Strategy 1]
-- [Strategy 2]
-- [Strategy 3]
-
-THE OUTCOME:
-Listed → Offer: [X] days
-Offer → Closed: [X] days
-Total time: [X] days
-
-Sale Price: $[Amount]
-
-"[Quote about speed and stress relief]"
-```
-
----
-
-## Home Purchases
-
-### Template: First-Time Buyer Success
-
-```
-CLIENT: First-Time Home Buyer
-
-THE SEARCH:
-[Client type] was looking for [home type] in [area].
-Budget: $[X] - $[X]
-Timeline: [X months]
-Challenge: [Market challenge]
-
-THE JOURNEY:
-- Homes viewed: [X]
-- Offers made: [X]
-- Final home: [Description]
-
-THE WIN:
-Purchased: [Property description]
-Price: $[Amount]
-Below asking: $[Amount]
-
-"[Quote about finding their first home]"
-```
-
-### Template: Competitive Market Win
-
-```
-HOW WE WON: [Property type] in [Hot market]
-
-THE COMPETITION:
-[X] other offers on this property
-[Description of market conditions]
-
-OUR STRATEGY:
-[What made the offer stand out]
-[Negotiation approach]
-[Key differentiator]
-
-THE RESULT:
-Our clients' offer: ACCEPTED
-Purchase price: $[Amount]
-Closing: [Timeline]
-
-"[Quote about teamwork and success]"
-```
-
----
-
-# PART 3: SITUATION-BASED TEMPLATES
-
-## Templates for Specific Scenarios
-
----
-
-## The Skeptic Convert
-
-```
-TITLE: "I Didn't Believe It Would Work..."
-
-INITIAL SKEPTICISM:
-"When I first heard about [service], I thought [objection].
-I had tried [previous solutions] and been disappointed."
-
-WHAT CHANGED:
-"Then I [trigger for giving it a try].
-What I found was [positive surprise]."
-
-THE RESULT:
-"Now I [outcome achieved]. I can't believe I almost
-didn't [take action]. If you're skeptical like I was,
-[advice]."
-
-- [Result 1]
-- [Result 2]
-- [Result 3]
-```
-
----
-
-## The Reluctant Referral
-
-```
-TITLE: "I Never Write Reviews, But..."
-
-"I'm not someone who usually [writes reviews/gives
-testimonials]. But [what made this different].
-
-[Company/Professional] did [what they did].
-The result? [Outcome].
-
-If you're [target audience situation], you need to
-[call to action]. Trust me, it's worth it."
-
-[SPECIFIC RESULTS]
-```
-
----
-
-## The Long-Time Sufferer
-
-```
-TITLE: "After [X] Years, I Finally Found The Solution"
-
-THE STRUGGLE:
-"For [X years], I dealt with [problem].
-I tried [list of things tried].
-I spent $[amount] on solutions that didn't work.
-I was about to give up."
-
-THE DISCOVERY:
-"Then I found [Company]. They [what made them different]."
-
-THE TRANSFORMATION:
-"After just [timeframe], [outcome].
-For the first time in [years], I [positive change]."
-
-"If you've been struggling like I was, don't wait.
-[Call to action]."
-```
-
----
-
-## The Emergency Save
-
-```
-TITLE: "[Emergency Situation] - Saved"
-
-THE CRISIS:
-[Describe the emergency/urgent situation]
-Time was [running out/critical].
-Stakes: [What was at risk]
-
-THE RESCUE:
-[Company/Professional] responded [quickly].
-They [action taken].
-Within [timeframe], [resolution].
-
-THE OUTCOME:
-[What was saved/prevented]
-[How client feels now]
-
-"[Quote about gratitude and relief]"
-```
-
----
-
-## The Impossible Ask
-
-```
-TITLE: "They Said It Couldn't Be Done"
-
-THE CHALLENGE:
-"Everyone told me [what couldn't be done].
-I had been to [X other providers] who all said [no].
-I was running out of [options/time/hope]."
-
-THE SOLUTION:
-"[Company/Professional] said [different approach].
-They [what they did differently]."
-
-THE RESULT:
-"[The impossible outcome achieved].
-What seemed impossible turned out to be [achievable]."
-
-"If you've been told no, talk to [Company]. They might
-just say yes."
-```
-
----
-
-# PART 4: FORMAT VARIATIONS
-
-## Same Story, Different Formats
-
----
-
-## Social Media Formats
-
-### The Quote Card Format
-
-```
-"[Powerful one-liner from client]"
-
-- [Client First Name], [Brief descriptor]
-
-RESULT: [Key metric or outcome]
-```
-
-### The Stat Card Format
-
-```
-[BIG NUMBER]%
-
-[What this represents]
-
-"[Supporting quote]"
-- [Client]
-```
-
-### The Before/After Card Format
-
-```
-BEFORE         →         AFTER
-
-[Metric 1]               [Metric 1]
-[Metric 2]               [Metric 2]
-[Metric 3]               [Metric 3]
-
-[Timeframe] with [Your Company]
-```
-
-### The Mini Story Post
-
-```
-3 months ago, [Client] was [struggling with].
-
-Today, they're [positive outcome].
-
-What changed?
-
-[1-2 sentences about your service]
-
-Result:
-- [Outcome 1]
-- [Outcome 2]
-- [Outcome 3]
-
-"[Quote]"
-
-Ready for your transformation?
-[CTA]
-```
-
----
-
-## Email Formats
-
-### The Story Email
-
-```
-Subject: [Client] went from [problem] to [solution]
-
-Hey [First Name],
-
-Let me tell you about [Client].
-
-[3-4 paragraphs telling the story]
-
-Here's what [Client] said:
-
-"[Testimonial quote]"
-
-Want similar results?
-
-[CTA Button]
-
-[Signature]
-```
-
-### The Results Email
-
-```
-Subject: [Specific result achieved]
-
-[First Name],
-
-Quick wins from this week:
-
-[Client 1]: [Result]
-[Client 2]: [Result]
-[Client 3]: [Result]
-
-What do they have in common?
-
-They all [took action/worked with us].
-
-Ready to be next?
-
-[CTA]
-```
-
----
-
-## Website Formats
-
-### The Feature Block
-
-```
-<featured-case-study>
-  <quote>"[Powerful quote]"</quote>
-  <result>[Key outcome]</result>
-  <client>[Client Name/Type]</client>
-  <cta>Read Full Story →</cta>
-</featured-case-study>
-```
-
-### The Carousel Item
-
-```
-[Card 1]
-[Image placeholder]
-[Client Name]
-"[Short quote]"
-[One-line result]
-
-[Card 2]
-[Image placeholder]
-[Client Name]
-"[Short quote]"
-[One-line result]
-
-[Continue for 5-10 cards]
-```
-
----
-
-# PART 5: AI PROMPTS FOR GENERATING CASE STUDIES
-
-## Create Unlimited Case Studies
-
----
-
-### Prompt: From Interview to Case Study
-
-```
-Transform this client interview into a professional case study.
-
-Interview Transcript:
-[Paste interview transcript]
-
-Create a case study with:
-- Compelling title
-- The Challenge section
-- The Solution section
-- The Results section (with specific metrics)
-- Client quote highlights
-- Key takeaways
-
-Format for: [Website/Social/Email]
-Length: [Word count]
-Tone: [Your brand voice]
-```
-
----
-
-### Prompt: From Testimonial to Case Study
-
-```
-Expand this short testimonial into a full case study.
-
-Testimonial:
-"[Paste testimonial]"
-
-Client details:
-- Industry: [X]
-- Service received: [X]
-- Results: [What you know]
-- Timeline: [If known]
-
-Create a complete case study that tells the full story
-of this client's transformation. Include sections for
-the problem, solution, and results. Create compelling
-headlines and add context where appropriate.
-```
-
----
-
-### Prompt: Create Industry-Specific Case Study
-
-```
-Create a case study template for a [industry type]
-serving [client type].
-
-The case should demonstrate:
-- Common problem: [Describe]
-- Solution offered: [Describe]
-- Typical results: [Describe]
-
-Include:
-- Realistic but representative details
-- Appropriate industry terminology
-- Metrics relevant to this industry
-- Quotes that would resonate with prospects
-
-Add disclaimer: "Results may vary"
-```
-
----
-
-### Prompt: Variation Generator
-
-```
-Take this case study and create 5 different versions:
-
-Original case study:
-[Paste case study]
-
-Create versions for:
-1. LinkedIn post (300 words, professional)
-2. Instagram carousel (8 slides, casual)
-3. Email newsletter (400 words, conversational)
-4. Website feature (200 words, compelling)
-5. Video script (60 seconds, engaging)
-
-Maintain the core story and results across all versions.
-```
-
----
-
-### Prompt: Quote Extractor
-
-```
-From this case study, extract:
-
-Case study:
-[Paste case study]
-
-Generate:
-- 10 short quote graphics (under 20 words each)
-- 5 stat callouts (number + context)
-- 3 headline options
-- 5 social media hooks
-- 3 email subject lines
-
-All should be compelling and shareable.
-```
-
----
-
-### Prompt: Similar Case Generator
-
-```
-Based on this case study template, create 10 variations
-with different scenarios:
-
-Template:
-[Paste your best case study]
-
-Create variations for:
-1. Different client demographics
-2. Different starting problems
-3. Different outcome metrics
-4. Different industries (if applicable)
-5. Different timeframes
-
-Keep the same structure but make each unique
-and realistic.
-```
-
----
-
-# IMPLEMENTATION GUIDE
-
-## Building Your Case Study System
-
-### Step 1: Collection
-- Create intake process for testimonials
-- Document results from every client
-- Get written consent for case studies
-- Collect photos/metrics when possible
-
-### Step 2: Creation
-- Choose appropriate templates
-- Fill in with actual data
-- Get client approval
-- Create multiple format versions
-
-### Step 3: Distribution
-- Add to website
-- Create social versions
-- Include in email marketing
-- Use in sales materials
-- Train team on using them
-
-### Step 4: Maintenance
-- Add new case studies monthly
-- Refresh old ones annually
-- Track which convert best
-- Double down on winners
-
----
-
-# CASE STUDY COLLECTION TRACKER
-
-```
-| Client | Consent | Interview | Written | Approved | Published |
-|--------|---------|-----------|---------|----------|-----------|
-| [Name] | [ ] | [ ] | [ ] | [ ] | [ ] |
-| [Name] | [ ] | [ ] | [ ] | [ ] | [ ] |
-| [Name] | [ ] | [ ] | [ ] | [ ] | [ ] |
-| [Name] | [ ] | [ ] | [ ] | [ ] | [ ] |
-| [Name] | [ ] | [ ] | [ ] | [ ] | [ ] |
-```
-
----
-
-# CLOSING PAGE
-
-```
-[FULL PAGE DARK BACKGROUND WITH VAULT GRAPHIC]
-
-Your Vault Is Now Open
-
-15,000+ templates at your fingertips.
-Every industry. Every situation.
-Unlimited social proof.
-
-Your next case study is one template away.
-
-Collect the stories.
-Tell the transformations.
-Let results speak.
-
-[Vault door open with golden light]
-
-[CloneYourself AI Logo]
-
-www.cloneyourselfwithai.com
-```
-
----
-
-*The most powerful marketing doesn't come from you. It comes from your clients. Tell their stories.*
+<div class="footer">
+<div class="footer-logo">CloneYourself</div>
+<p>Case Studies Vault</p>
+<p style="margin-top:1rem;color:var(--gold);">Proof Beats Promises</p>
+</div>
+]]>

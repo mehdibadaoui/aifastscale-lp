@@ -1,1114 +1,511 @@
-# OFFER & FUNNEL BLUEPRINT
-## Build Irresistible Offers & High-Converting Funnels
+<![CDATA[<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{--bg:#09090b;--bg-card:#18181b;--bg-card-hover:#27272a;--gold:#F59E0B;--gold-light:#FBBF24;--gold-dark:#D97706;--text:#FAFAFA;--text-muted:#A1A1AA;--border:#27272a;--success:#22C55E;--info:#3B82F6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:40px 20px;max-width:900px;margin:0 auto}
+h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;letter-spacing:-0.02em}
+h2{font-size:1.75rem;font-weight:800;color:var(--gold);margin:3rem 0 1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--border)}
+h3{font-size:1.25rem;font-weight:700;color:var(--text);margin:2rem 0 1rem}
+p{margin-bottom:1rem;color:var(--text-muted)}
+strong{color:var(--text);font-weight:600}
+ul,ol{margin:1rem 0 1.5rem 1.5rem}
+li{margin-bottom:0.5rem;color:var(--text-muted)}
+hr{border:none;height:1px;background:var(--border);margin:3rem 0}
+table{width:100%;border-collapse:collapse;margin:1.5rem 0}
+th,td{padding:1rem;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--gold);font-weight:600}
+td{color:var(--text-muted)}
+.cover{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:24px;margin-bottom:3rem;border:1px solid var(--border)}
+.cover-badge{display:inline-block;background:var(--gold);color:var(--bg);padding:0.5rem 1rem;border-radius:50px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.5rem}
+.cover h1{font-size:3rem;margin-bottom:1rem}
+.cover-subtitle{font-size:1.25rem;color:var(--text-muted);margin-bottom:2rem}
+.cover-value{font-size:1rem;color:var(--gold)}
+.box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.box-gold{border-color:var(--gold);background:rgba(245,158,11,0.05)}
+.box-title{font-weight:700;color:var(--gold);margin-bottom:0.75rem}
+.quick-win{background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.3);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.quick-win-title{color:var(--success);font-weight:700;margin-bottom:0.75rem}
+.step-box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:2rem 0}
+.step-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.step-number{background:var(--gold);color:var(--bg);width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.25rem;flex-shrink:0}
+.step-title{font-size:1.5rem;font-weight:700;color:var(--text)}
+.formula-box{background:var(--bg);border-radius:12px;padding:1.5rem;margin:1rem 0;border:1px solid var(--border);text-align:center}
+.formula-box p{color:var(--gold);font-size:1.25rem;font-weight:700;margin:0}
+.checklist{list-style:none;margin-left:0}
+.checklist li{padding:0.75rem 0;padding-left:2rem;position:relative;border-bottom:1px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:"○";position:absolute;left:0;color:var(--gold);font-size:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center}
+.stat-value{font-size:2rem;font-weight:800;color:var(--gold)}
+.stat-label{font-size:0.875rem;color:var(--text-muted)}
+.funnel-visual{display:flex;flex-direction:column;gap:0.5rem;margin:2rem 0}
+.funnel-stage{background:var(--bg-card);border:1px solid var(--border);padding:1rem 2rem;text-align:center;font-weight:600;color:var(--text)}
+.funnel-stage:nth-child(1){border-radius:16px 16px 0 0;background:var(--gold);color:var(--bg)}
+.funnel-stage:nth-child(2){margin:0 5%}
+.funnel-stage:nth-child(3){margin:0 10%}
+.funnel-stage:nth-child(4){margin:0 15%;border-radius:0 0 16px 16px}
+.footer{text-align:center;padding:3rem;margin-top:4rem;border-top:1px solid var(--border)}
+.footer-logo{font-size:1.5rem;font-weight:800;color:var(--gold);margin-bottom:0.5rem}
+.footer p{color:var(--text-muted);font-size:0.875rem}
+</style>
+
+<div class="cover">
+<div class="cover-badge">Premium Resource</div>
+<h1>Offer & Funnel Blueprint</h1>
+<p class="cover-subtitle">Build Irresistible Offers & High-Converting Funnels</p>
+<p class="cover-value">Value: $497 • Included Free With Your Membership</p>
+</div>
+
+<div class="stats">
+<div class="stat">
+<div class="stat-value">10X</div>
+<div class="stat-label">Offer Power</div>
+</div>
+<div class="stat">
+<div class="stat-value">5</div>
+<div class="stat-label">Funnel Types</div>
+</div>
+<div class="stat">
+<div class="stat-value">$0</div>
+<div class="stat-label">Tech Required</div>
+</div>
+</div>
+
+<div class="box box-gold">
+<div class="box-title">⚡ What You're Getting</div>
+<p style="margin-bottom:0">A complete blueprint for creating offers people can't refuse and funnels that convert strangers into paying clients. No complicated tech—just proven frameworks that work for any service professional.</p>
+</div>
 
 ---
 
-# DESIGN SPECIFICATIONS
-```
-Background: Dark charcoal (#1a1a1a) with funnel flow pattern
-Accent Color: Orange (#FF6B00) with gold (#FFD700) accents
-Typography: Bold sans-serif headers, clean body text
-Style: Funnel diagrams, step-by-step flows
-Page Count: 70-80 pages
-```
+## Quick Wins: Make Your Offer Better TODAY
+
+<div class="quick-win">
+<div class="quick-win-title">🎯 5-Minute Offer Upgrade</div>
+<ul class="checklist">
+<li>Add a clear outcome to your offer name</li>
+<li>List 3 bonuses you can include for free</li>
+<li>Create urgency with limited spots/time</li>
+<li>Add a guarantee to reduce risk</li>
+<li>Stack the value so price feels small</li>
+</ul>
+</div>
 
 ---
 
-# COVER PAGE
+## Part 1: The Irresistible Offer
 
-```
-[FULL PAGE DARK BACKGROUND WITH FUNNEL DIAGRAM]
+### Why Your Offer Is Everything
 
-OFFER &
-FUNNEL
-BLUEPRINT
-
-Build Offers They Can't Refuse
-& Funnels That Convert
-
-[Funnel diagram with money flowing through]
-
-"The Architecture of Revenue"
-
-CloneYourself AI
-Premium Resource
-```
-
----
-
-# PAGE 2: THE OFFER EQUATION
-
-## Why Your Offer Is Everything
+<div class="box">
+<div class="box-title">📊 The Offer Equation</div>
 
 **The Truth:**
-
 The best marketing in the world can't sell a bad offer.
 But a great offer can succeed with mediocre marketing.
 
+<div class="formula-box">
+<p>Great Offer × Average Marketing = Success</p>
+<p>Average Offer × Great Marketing = Struggle</p>
+</div>
+
 **Your offer is the multiplier of all your efforts.**
-
-Bad offer x Great marketing = Struggle
-Great offer x Okay marketing = Success
-Great offer x Great marketing = Explosion
-
-This blueprint teaches you to create offers so good
-people feel stupid saying no.
-
----
-
-# PART 1: THE IRRESISTIBLE OFFER FRAMEWORK
-
-## Anatomy of an Offer They Can't Refuse
+</div>
 
 ---
 
 ## The Value Equation
 
-```
-VALUE = (Dream Outcome × Perceived Likelihood of Achievement)
-        ────────────────────────────────────────────────────
-        (Time Delay × Effort & Sacrifice)
-```
+<div class="box box-gold">
+<div class="box-title">💎 The 4 Elements of Perceived Value</div>
 
-**To increase value:**
-- Increase the dream outcome
-- Increase the perceived likelihood
-- Decrease the time delay
-- Decrease effort required
+<div class="formula-box">
+<p>Value = (Dream Outcome × Likelihood) ÷ (Time × Effort)</p>
+</div>
 
----
+**To increase value, you can:**
+- **Increase the dream outcome** (bigger promise, more results)
+- **Increase likelihood** (proof, guarantees, track record)
+- **Decrease time** (faster results)
+- **Decrease effort** (done-for-you, simpler process)
 
-## The Offer Stack Method
-
-### Layer 1: The Core Offer
-What they're actually buying
-
-### Layer 2: The Bonuses
-Additional value that increases desire
-
-### Layer 3: The Risk Reversal
-Guarantee that removes fear
-
-### Layer 4: The Urgency
-Reason to act now
-
-### Layer 5: The Premium
-Optional upgrade for serious buyers
+Most people only focus on price. Focus on VALUE instead.
+</div>
 
 ---
 
-## Core Offer Development
+## The Offer Stack Framework
 
-### Identify The Dream Outcome
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">1</div>
+<div class="step-title">The Core Offer</div>
+</div>
 
-What do they REALLY want?
-(Not features - the end result)
+This is your main service—what you're actually selling.
 
-**For Different Industries:**
+**Template:**
+- **Name:** [Outcome-Focused Name]
+- **What it is:** [Clear description of the service]
+- **Who it's for:** [Specific target client]
+- **The transformation:** From [before] → To [after]
+- **Timeline:** [How long it takes]
 
-Lawyers: "Peace of mind and favorable outcome"
-Dentists: "Beautiful smile and confidence"
-Coaches: "More money, less stress"
-Realtors: "Dream home, smooth process"
-Service: "Problem solved, life easier"
+**Example:**
+- **Name:** The Client Magnet System
+- **What it is:** A done-with-you content creation program
+- **Who it's for:** Professionals who want to attract clients with video
+- **Transformation:** From invisible online → To booking calls from content
+- **Timeline:** 90 days to first results
+</div>
 
-### The Outcome Prompt:
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">2</div>
+<div class="step-title">The Bonus Stack</div>
+</div>
 
-```
-For my [ideal client], the ultimate dream outcome is:
-_____________________________________________
+Bonuses increase perceived value without increasing your cost.
 
-This matters to them because:
-_____________________________________________
+### Types of Bonuses:
+- **Information:** Templates, scripts, guides
+- **Access:** Group calls, community, you
+- **Tools:** Software, resources, shortcuts
+- **Fast-start:** Quickstart materials to get wins early
 
-If they achieve this, their life changes by:
-_____________________________________________
-```
+### Bonus Rules:
+- Each bonus should have a clear value ($ amount)
+- Bonuses should solve adjacent problems
+- Total bonus value should exceed core offer price
+- Include "surprise" bonuses to exceed expectations
 
----
+**Example Bonus Stack:**
 
-## Crafting Your Core Promise
+| Bonus | Value |
+|-------|-------|
+| 100 Viral Video Scripts | $497 |
+| AI Content Generator Prompts | $397 |
+| Weekly Group Coaching Calls | $297 |
+| Private Community Access | $197 |
+| Phone Scripts That Book | $197 |
+| **Total Bonus Value** | **$1,585** |
+</div>
 
-### The Formula:
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">3</div>
+<div class="step-title">The Guarantee</div>
+</div>
 
-"I help [who] achieve [outcome] in [timeframe] without [pain point]"
-
-### Examples:
-
-Lawyer: "I help injured victims get maximum compensation
-in 90 days or less without dealing with insurance companies"
-
-Dentist: "I help self-conscious professionals get the smile
-they deserve in as few as 2 visits without the anxiety"
-
-Coach: "I help established entrepreneurs double their revenue
-in 6 months without working more hours"
-
-Realtor: "I help first-time buyers find their perfect home
-in 30 days without losing bidding wars"
-
-### Your Core Promise:
-
-"I help _________________________________ achieve
-_________________________________ in ________________
-without _________________________________"
-
----
-
-## The Bonus Stack Strategy
-
-### Why Bonuses Work:
-
-Bonuses increase perceived value without increasing price.
-Each bonus makes the offer feel like a better deal.
-
-### The Bonus Rules:
-
-1. **Relevant:** Bonuses should support the core outcome
-2. **Valuable:** Each should have standalone value
-3. **Different:** Address different needs/learning styles
-4. **Priced:** Give each bonus a dollar value
-
----
-
-### Bonus Types:
-
-**Speed Bonus:** Helps them get results faster
-- "Quick Start Guide" ($197 value)
-- "Done-For-You Templates" ($297 value)
-
-**Effort Reduction Bonus:** Makes it easier
-- "Swipe Files" ($97 value)
-- "Step-by-Step Checklists" ($147 value)
-
-**Success Bonus:** Increases likelihood of success
-- "Private Community Access" ($397 value)
-- "1-on-1 Strategy Call" ($500 value)
-
-**Transformation Bonus:** Addresses related problems
-- "Bonus Training: [Related Topic]" ($297 value)
-- "Guest Expert Interviews" ($497 value)
-
----
-
-### Bonus Stack Template:
-
-```
-WHAT YOU'RE GETTING:
-
-Core Offer: [Name].........................$[Price]
-
-PLUS These Bonuses (FREE when you enroll today):
-
-Bonus #1: [Name]
-[1-sentence description].................$[Value] FREE
-
-Bonus #2: [Name]
-[1-sentence description].................$[Value] FREE
-
-Bonus #3: [Name]
-[1-sentence description].................$[Value] FREE
-
-Bonus #4: [Name]
-[1-sentence description].................$[Value] FREE
-
-TOTAL VALUE: $[Combined total]
-
-TODAY'S PRICE: $[Your price]
-```
-
----
-
-## The Risk Reversal
+Guarantees remove risk and increase conversion.
 
 ### Types of Guarantees:
 
-**Unconditional (Strongest):**
-"100% money back if you're not satisfied. No questions."
+**Unconditional:**
+> "If you're not happy for any reason within 30 days, get a full refund."
 
 **Conditional:**
-"If you [do the work/complete X] and don't see [result],
-we'll [refund/redo/continue free]."
+> "Complete the program, implement the strategies, and if you don't see results within 90 days, I'll work with you for free until you do."
 
-**Anti-Guarantee:**
-"No refunds because I'm so confident in our results that
-I don't work with anyone I can't help."
+**Outcome-Based:**
+> "If you don't [specific result] within [timeframe], I'll refund 100%."
 
-**Performance:**
-"If you don't get [result], I'll [work for free/refund/
-continue until you do]."
+### Choose Based On:
+- Your confidence in results
+- Your ability to deliver
+- Client commitment requirements
+</div>
 
----
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">4</div>
+<div class="step-title">Urgency & Scarcity</div>
+</div>
 
-### Guarantee Templates:
+People need a reason to act NOW.
 
-**The Triple Guarantee:**
-```
-1. 30-DAY SATISFACTION GUARANTEE
-   Try it for 30 days. If you're not thrilled, get
-   every penny back.
+### Legitimate Urgency:
+- **Time-based:** "Price goes up Friday at midnight"
+- **Quantity-based:** "Only 5 spots available this month"
+- **Bonus-based:** "These bonuses are only available until [date]"
+- **Season-based:** "Before the new year / summer / etc."
 
-2. RESULTS GUARANTEE
-   If you follow the system and don't see [result],
-   we'll work with you for free until you do.
-
-3. LIFETIME ACCESS GUARANTEE
-   Your access never expires. Updates included forever.
-```
-
-**The Reverse Risk:**
-```
-YOUR RISK: ZERO
-MY RISK: EVERYTHING
-
-If you're not completely satisfied, I don't deserve
-your money. Period.
-
-You have [X days] to try this. If it's not everything
-I promised, one email gets you a full refund.
-
-I'm betting on you. Will you bet on yourself?
-```
+### Rules:
+- Must be TRUE (fake scarcity destroys trust)
+- Must be CLEAR (specific deadlines)
+- Must be ENFORCED (actually raise prices, remove bonuses)
+</div>
 
 ---
 
-## Creating Urgency
+## The Pricing Strategy
 
-### Legitimate Urgency Types:
+<div class="box">
+<div class="box-title">💰 Price Presentation Framework</div>
 
-**Deadline:**
-"Enrollment closes Friday at midnight"
-"Price goes up in 48 hours"
+### The Value Stack Method:
 
-**Scarcity:**
-"Only accepting 10 new clients this month"
-"Limited seats available"
+1. **State the total value:** "The total value of everything you're getting is $X"
+2. **Compare to alternatives:** "If you tried to do this yourself, you'd spend $Y"
+3. **Reveal the price:** "But your investment today is just $Z"
+4. **Justify the gap:** "Because [reason for the discount]"
+5. **Break it down:** "That's less than $X per day/week"
 
-**Bonus Deadline:**
-"Bonuses only available until [date]"
-"Early bird pricing ends [date]"
-
-**Season/Timing:**
-"Tax season deadline approaching"
-"Before the market shifts"
+### Example:
+> "The total value of this program plus all the bonuses is over $3,000. If you tried to figure this out yourself, you'd spend months and thousands in trial and error. But your investment today is just $497. That's less than $17 per day for the next month—less than coffee and lunch."
+</div>
 
 ---
 
-### Urgency Scripting:
+## Part 2: The Simple Funnel
 
-```
-WHY YOU SHOULD DECIDE NOW:
+### What Is a Funnel?
 
-[Urgency reason]
+<div class="box">
+<div class="box-title">🔄 The Journey From Stranger to Client</div>
 
-Here's why this matters:
-[Consequence of waiting]
+A funnel is simply the path people take from first hearing about you to becoming a paying client.
 
-When [deadline], this offer [changes how].
+<div class="funnel-visual">
+<div class="funnel-stage">AWARENESS - They discover you exist</div>
+<div class="funnel-stage">INTEREST - They consume your content</div>
+<div class="funnel-stage">DECISION - They evaluate working with you</div>
+<div class="funnel-stage">ACTION - They become a client</div>
+</div>
 
-Don't let [problem] continue another [time period].
-The best time to start was yesterday.
-The second best time is right now.
-
-[CTA]
-```
-
----
-
-# PART 2: OFFER TEMPLATES BY INDUSTRY
-
-## Ready-to-Customize Offers
+**Your job:** Make each stage as easy as possible.
+</div>
 
 ---
 
-## Professional Services Offer Template
+## The 5 Simple Funnels
 
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">1</div>
+<div class="step-title">The Direct Booking Funnel</div>
+</div>
+
+**Best for:** High-ticket services, consultations
+
+**The Flow:**
 ```
-═══════════════════════════════════════════════
-[YOUR SERVICE NAME]
-═══════════════════════════════════════════════
-
-You're Getting:
-
-✓ [Core Service]
-  - [Deliverable 1]
-  - [Deliverable 2]
-  - [Deliverable 3]
-
-✓ Bonus #1: [Name] ($[Value] value)
-  [Description]
-
-✓ Bonus #2: [Name] ($[Value] value)
-  [Description]
-
-✓ Bonus #3: [Name] ($[Value] value)
-  [Description]
-
-───────────────────────────────────────────────
-
-TOTAL VALUE: $[Total]
-
-YOUR INVESTMENT: $[Price]
-
-───────────────────────────────────────────────
-
-MY GUARANTEE:
-[Your guarantee statement]
-
-───────────────────────────────────────────────
-
-⚠️ [Urgency element]
-
-[CTA BUTTON]
-═══════════════════════════════════════════════
+Content → Profile/Bio → Calendar Link → Consultation → Sale
 ```
+
+**What You Need:**
+- Clear call-to-action in all content
+- Optimized bio with one link
+- Calendar scheduling tool (Calendly, Cal.com)
+- Consultation script
+
+**Example:**
+Video ends with "Link in bio to book a free call" → Bio has Calendly link → They book → You close on the call
+</div>
+
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">2</div>
+<div class="step-title">The Lead Magnet Funnel</div>
+</div>
+
+**Best for:** Building an email list, nurturing leads
+
+**The Flow:**
+```
+Content → Free Resource → Email Sequence → Offer → Sale
+```
+
+**What You Need:**
+- Valuable free resource (PDF, video, template)
+- Simple landing page
+- Email follow-up sequence
+- Offer presentation
+
+**Example:**
+Video mentions "Free guide: 10 Scripts That Convert" → Landing page collects email → 5-email sequence delivers value → Final email presents offer
+</div>
+
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">3</div>
+<div class="step-title">The DM Funnel</div>
+</div>
+
+**Best for:** Personal touch, high-engagement platforms
+
+**The Flow:**
+```
+Content → Comment "X" → DM Conversation → Qualify → Book Call
+```
+
+**What You Need:**
+- Engaging content with clear CTA
+- DM scripts
+- Qualification questions
+- Transition to call
+
+**Example:**
+Post says "Comment 'VIDEO' for my free strategy" → They comment → You DM with the resource → Ask qualifying questions → Invite to call if good fit
+</div>
+
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">4</div>
+<div class="step-title">The Webinar Funnel</div>
+</div>
+
+**Best for:** Education-based selling, group presentations
+
+**The Flow:**
+```
+Ad/Content → Registration → Webinar → Offer → Sale
+```
+
+**What You Need:**
+- Webinar topic that attracts ideal clients
+- Registration page
+- Presentation slides
+- Offer presentation at the end
+
+**Example:**
+Ad for "Free Training: How to Get Clients from Video" → They register → Attend live or watch replay → You present offer at the end
+</div>
+
+<div class="step-box">
+<div class="step-header">
+<div class="step-number">5</div>
+<div class="step-title">The Low-Ticket Funnel</div>
+</div>
+
+**Best for:** Self-qualifying buyers, scaling
+
+**The Flow:**
+```
+Content → Low-Ticket Offer → Delivery → Upsell to High-Ticket
+```
+
+**What You Need:**
+- Low-priced digital product ($7-$97)
+- Simple checkout page
+- Delivery system
+- Upsell sequence
+
+**Example:**
+Sell a $47 mini-course → Buyers get access → Email sequence offers 1:1 consulting → Serious buyers book calls
+</div>
 
 ---
 
-## Course/Program Offer Template
+## Building Your First Funnel
 
-```
-═══════════════════════════════════════════════
-[PROGRAM NAME]
-[Tagline: The X-Week Program to Achieve Y]
-═══════════════════════════════════════════════
+<div class="quick-win">
+<div class="quick-win-title">🚀 Start Here: The Minimum Viable Funnel</div>
 
-WHAT'S INCLUDED:
+**For most professionals, start with this:**
 
-MODULE 1: [Name]
-→ [Outcome 1]
-→ [Outcome 2]
+<ul class="checklist">
+<li><strong>Step 1:</strong> Create one piece of valuable content per week</li>
+<li><strong>Step 2:</strong> End every piece with a clear CTA</li>
+<li><strong>Step 3:</strong> Link to a simple calendar booking page</li>
+<li><strong>Step 4:</strong> Have a consultation script ready</li>
+<li><strong>Step 5:</strong> Make your offer on the call</li>
+</ul>
 
-MODULE 2: [Name]
-→ [Outcome 1]
-→ [Outcome 2]
-
-[Continue for all modules...]
-
-───────────────────────────────────────────────
-
-BONUS STACK:
-
-🎁 BONUS #1: [Name] ($[Value])
-[Description]
-
-🎁 BONUS #2: [Name] ($[Value])
-[Description]
-
-🎁 BONUS #3: [Name] ($[Value])
-[Description]
-
-───────────────────────────────────────────────
-
-INVESTMENT OPTIONS:
-
-□ FULL PAY: $[Price] (Best Value)
-
-□ PAYMENT PLAN: [X] payments of $[Amount]
-
-───────────────────────────────────────────────
-
-[GUARANTEE BADGE]
-[Guarantee details]
-
-───────────────────────────────────────────────
-
-⏰ [Urgency: Deadline or scarcity]
-
-[ENROLL NOW BUTTON]
-═══════════════════════════════════════════════
-```
+**That's it.** You don't need fancy software, automated sequences, or complex funnels to start getting clients.
+</div>
 
 ---
 
-## Consultation/Call Offer Template
+## The Offer + Funnel Checklist
 
-```
-═══════════════════════════════════════════════
-FREE [STRATEGY/DISCOVERY/CONSULTATION] CALL
-═══════════════════════════════════════════════
+<div class="box box-gold">
+<div class="box-title">✅ Before You Launch</div>
 
-ON THIS CALL, WE'LL:
+**Your Offer:**
+<ul class="checklist">
+<li>Clear, outcome-focused name</li>
+<li>Specific target client defined</li>
+<li>Before → After transformation clear</li>
+<li>3-5 bonuses stacked</li>
+<li>Guarantee in place</li>
+<li>Urgency/scarcity element</li>
+<li>Price presented with value stack</li>
+</ul>
 
-✓ [Benefit 1 - What they'll learn/get]
-✓ [Benefit 2 - What they'll learn/get]
-✓ [Benefit 3 - What they'll learn/get]
-✓ [Benefit 4 - What they'll learn/get]
-
-───────────────────────────────────────────────
-
-THIS IS FOR YOU IF:
-
-• You're [qualifier 1]
-• You're experiencing [problem]
-• You want [outcome]
-• You're ready to [commitment]
-
-───────────────────────────────────────────────
-
-NEXT STEPS:
-
-1. Click below to see available times
-2. Choose a slot that works for you
-3. Answer a few quick questions
-4. Show up ready to [get results]
-
-───────────────────────────────────────────────
-
-[BOOK YOUR CALL BUTTON]
-
-⚠️ Only [X] spots available this week
-
-═══════════════════════════════════════════════
-```
+**Your Funnel:**
+<ul class="checklist">
+<li>One consistent content platform</li>
+<li>Clear call-to-action in every piece</li>
+<li>Working booking/contact method</li>
+<li>Consultation script prepared</li>
+<li>Follow-up system ready</li>
+</ul>
+</div>
 
 ---
 
-# PART 3: FUNNEL ARCHITECTURE
+## Common Mistakes to Avoid
 
-## The Complete Funnel System
+<div class="box">
+<div class="box-title">❌ Don't Do These</div>
 
----
+**Offer Mistakes:**
+- Describing features instead of outcomes
+- No bonuses (leaving value on the table)
+- No guarantee (leaving money on the table)
+- No urgency (leaving action on the table)
 
-## What Is A Funnel?
-
-A funnel is a series of steps that guide someone from:
-- Stranger → Aware → Interested → Desiring → Action
-
-Each step filters and qualifies while building trust.
-
----
-
-## Core Funnel Types
-
-### Funnel 1: Lead Magnet Funnel
-
-```
-[AD/CONTENT]
-     ↓
-[LANDING PAGE]
-Headline + Lead Magnet Offer + Opt-in Form
-     ↓
-[THANK YOU PAGE]
-Delivery + Next Step Offer
-     ↓
-[EMAIL SEQUENCE]
-Nurture → Value → Soft Pitch → Offer
-```
+**Funnel Mistakes:**
+- Too many steps (keep it simple)
+- Unclear CTA (one action per piece)
+- No follow-up (most sales happen in follow-up)
+- Overcomplicating tech (start simple, optimize later)
+</div>
 
 ---
 
-### Funnel 2: Webinar/Video Funnel
+## Your Implementation Plan
 
-```
-[AD/CONTENT]
-     ↓
-[REGISTRATION PAGE]
-Webinar Promise + Register Form
-     ↓
-[CONFIRMATION PAGE]
-What to Expect + Consumption Bump
-     ↓
-[WEBINAR/VIDEO]
-Value + Pitch
-     ↓
-[OFFER PAGE]
-Full Offer Stack + CTA
-     ↓
-[APPLICATION/CHECKOUT]
-```
+<div class="quick-win">
+<div class="quick-win-title">📅 7-Day Launch Plan</div>
 
----
+**Day 1-2: Build Your Offer**
+<ul class="checklist">
+<li>Define your core offer and transformation</li>
+<li>Create your bonus stack</li>
+<li>Write your guarantee</li>
+<li>Set your price and value stack</li>
+</ul>
 
-### Funnel 3: Book-A-Call Funnel
+**Day 3-4: Build Your Funnel**
+<ul class="checklist">
+<li>Set up your calendar link</li>
+<li>Write your consultation script</li>
+<li>Prepare your offer presentation</li>
+</ul>
 
-```
-[AD/CONTENT]
-     ↓
-[LANDING PAGE]
-Promise + Book Call CTA
-     ↓
-[APPLICATION FORM]
-Qualifying Questions
-     ↓
-[CALENDAR BOOKING]
-Schedule Call
-     ↓
-[CONFIRMATION]
-Pre-Call Instructions
-     ↓
-[CALL]
-Discovery + Pitch
-     ↓
-[FOLLOW-UP SEQUENCE]
-If not closed on call
-```
+**Day 5-6: Create Content**
+<ul class="checklist">
+<li>Create 3 pieces of content with CTA</li>
+<li>Optimize your bio/profile</li>
+<li>Write your DM scripts</li>
+</ul>
+
+**Day 7: Launch**
+<ul class="checklist">
+<li>Post your first content piece</li>
+<li>Respond to all engagement</li>
+<li>Book your first calls</li>
+</ul>
+</div>
 
 ---
 
-### Funnel 4: Direct Sale Funnel
-
-```
-[AD/CONTENT]
-     ↓
-[SALES PAGE]
-Full Long-Form Sales Page
-     ↓
-[CHECKOUT]
-Payment Collection
-     ↓
-[UPSELL PAGE]
-One-Click Upsell Offer
-     ↓
-[THANK YOU/ACCESS]
-Delivery + Next Steps
-```
-
----
-
-## Page-By-Page Blueprints
-
-### Landing Page Formula
-
-```
-SECTION 1: HERO
-- Headline (Promise or Pain Point)
-- Subheadline (Expand/Clarify)
-- Visual (Image/Video)
-- CTA Button
-
-SECTION 2: PROBLEM
-- Agitate the pain
-- "If you're experiencing..."
-- The cost of status quo
-
-SECTION 3: SOLUTION
-- Introduce your solution
-- What makes it different
-- Why it works
-
-SECTION 4: FEATURES/BENEFITS
-- What they get
-- How it helps
-- Visual breakdown
-
-SECTION 5: SOCIAL PROOF
-- Testimonials
-- Case studies
-- Logos/credentials
-
-SECTION 6: OFFER STACK
-- What's included
-- Bonuses
-- Total value
-
-SECTION 7: GUARANTEE
-- Remove risk
-- Build confidence
-
-SECTION 8: FINAL CTA
-- Recap the offer
-- Urgency
-- Big button
-- FAQ below
-```
-
----
-
-### Sales Page Long-Form Blueprint
-
-```
-PART 1: ATTENTION (The Hook)
-├── Headline that stops them
-├── Opening story/problem
-└── Promise of transformation
-
-PART 2: PROBLEM AWARENESS
-├── Name the problem clearly
-├── Agitate consequences
-├── Empathize with struggle
-└── Identify failed solutions
-
-PART 3: SOLUTION INTRODUCTION
-├── Introduce your solution
-├── Explain why it works
-├── Share your story/credentials
-└── Present the mechanism
-
-PART 4: PROOF
-├── Case studies
-├── Testimonials
-├── Results/data
-└── Credentials/authority
-
-PART 5: THE OFFER
-├── What they're getting
-├── Feature → Benefit breakdown
-├── Bonus stack
-├── Total value calculation
-└── Price reveal
-
-PART 6: RISK REVERSAL
-├── Guarantee statement
-├── Why you can offer this
-└── Zero risk messaging
-
-PART 7: URGENCY/SCARCITY
-├── Why now
-├── What happens if they wait
-└── Deadline/limitation
-
-PART 8: FINAL CTA
-├── Recap the opportunity
-├── Choice framework
-├── Last testimonial
-└── Button + next steps
-
-PART 9: FAQ
-├── Common objections answered
-├── Practical questions
-└── Final concerns addressed
-```
-
----
-
-### Email Sequence Blueprint
-
-#### Welcome Sequence (5 Emails)
-
-**Email 1: Delivery + Welcome**
-```
-Subject: Here's your [lead magnet]!
-
-- Deliver the promised item
-- Quick personal intro
-- What to expect from you
-- One valuable tip from the lead magnet
-```
-
-**Email 2: Quick Win**
-```
-Subject: Do this first for [quick result]
-
-- Immediate actionable tip
-- Something they can do today
-- Small win to build momentum
-```
-
-**Email 3: Story/Connection**
-```
-Subject: Why I do what I do
-
-- Personal story
-- Build connection
-- Establish credibility through experience
-```
-
-**Email 4: Value/Education**
-```
-Subject: [Specific problem]? Here's the fix
-
-- Teach something valuable
-- Position your expertise
-- Soft mention of how you help
-```
-
-**Email 5: Offer Introduction**
-```
-Subject: The next step for you
-
-- Transition to offer
-- What you provide
-- How it helps
-- Clear CTA
-```
-
----
-
-#### Nurture Sequence (Ongoing)
-
-**Weekly Value Email:**
-```
-Subject: [Topic-based or curiosity-driven]
-
-- Personal opening (1-2 sentences)
-- Main value content (3-5 paragraphs)
-- Key takeaway
-- Soft pitch or CTA
-- Sign off
-```
-
----
-
-#### Promo Sequence (5-7 Emails)
-
-**Email 1: Announcement**
-```
-Subject: [Big news/Opening/Launching]
-
-- Announce the offer
-- What it is
-- Why now
-- Overview of what's included
-```
-
-**Email 2: Problem Focus**
-```
-Subject: Are you stuck with [problem]?
-
-- Deep dive on the problem
-- Cost of not solving
-- Transition to solution
-```
-
-**Email 3: Social Proof**
-```
-Subject: [Client] did it, so can you
-
-- Client story
-- Their transformation
-- How they got results
-```
-
-**Email 4: Objection Handling**
-```
-Subject: "But what if..."
-
-- Address main objections
-- FAQ format works well
-- Remove barriers to yes
-```
-
-**Email 5: Bonus/Urgency**
-```
-Subject: Added bonus + deadline reminder
-
-- Introduce special bonus
-- Remind of deadline
-- What they lose by waiting
-```
-
-**Email 6: Last Chance**
-```
-Subject: Last call for [offer]
-
-- Final reminder
-- Everything included
-- Urgency maximum
-- Clear CTA
-```
-
-**Email 7: Closed/Recap**
-```
-Subject: We're closed (what's next)
-
-- Announce close
-- Thank those who joined
-- For those who didn't: What's next
-- Keep relationship warm
-```
-
----
-
-# PART 4: CONVERSION OPTIMIZATION
-
-## Making Your Funnel Convert Higher
-
----
-
-## The Conversion Checklist
-
-### Landing Page
-
-- [ ] Headline promises specific outcome
-- [ ] Subheadline clarifies or expands
-- [ ] CTA above the fold
-- [ ] Social proof visible early
-- [ ] Benefits before features
-- [ ] Only ONE call to action
-- [ ] Mobile optimized
-- [ ] Fast loading (<3 seconds)
-- [ ] No navigation/distractions
-
----
-
-### Sales Page
-
-- [ ] Hook grabs attention immediately
-- [ ] Problem clearly articulated
-- [ ] Solution logically presented
-- [ ] Proof throughout
-- [ ] Offer clearly structured
-- [ ] Value exceeds price (obvious)
-- [ ] Guarantee removes risk
-- [ ] Urgency creates action
-- [ ] Multiple CTAs throughout
-- [ ] FAQ addresses objections
-- [ ] P.S. summarizes offer
-
----
-
-### Emails
-
-- [ ] Subject lines create curiosity
-- [ ] Preview text optimized
-- [ ] Personal tone
-- [ ] One main message per email
-- [ ] Clear CTA
-- [ ] Mobile friendly
-- [ ] Appropriate length
-- [ ] Value in every email
-
----
-
-## The Testing Framework
-
-### What To Test:
-
-**Headlines:** The #1 impact factor
-- Different angles (pain vs. gain)
-- Different specificity
-- Questions vs. statements
-
-**CTAs:** Direct impact on conversions
-- Button color
-- Button text
-- Button placement
-
-**Social Proof:** Trust building
-- Types (video vs. text)
-- Placement
-- Quantity
-
-**Offer Structure:**
-- Price points
-- Bonus combinations
-- Guarantee types
-
----
-
-# PART 5: FUNNEL TEMPLATES
-
-## Copy-Paste Funnel Copy
-
----
-
-### Lead Magnet Landing Page
-
-```
-═══════════════════════════════════════════════
-FREE [LEAD MAGNET TYPE]: [TITLE]
-═══════════════════════════════════════════════
-
-[HEADLINE: Promise of what they'll get/learn]
-
-[SUBHEADLINE: Expand on the promise]
-
-───────────────────────────────────────────────
-
-GET INSTANT ACCESS:
-
-[Email field]
-
-[BUTTON: Get My Free [Lead Magnet]]
-
-───────────────────────────────────────────────
-
-INSIDE THIS [TYPE], YOU'LL DISCOVER:
-
-✓ [Benefit/Thing #1]
-✓ [Benefit/Thing #2]
-✓ [Benefit/Thing #3]
-✓ [Benefit/Thing #4]
-✓ [Benefit/Thing #5]
-
-───────────────────────────────────────────────
-
-[Your photo]
-
-HI, I'M [NAME]
-
-[2-3 sentences about who you are and why you
-created this resource]
-
-───────────────────────────────────────────────
-
-[TESTIMONIAL OR SOCIAL PROOF]
-
-"[Quote from someone who used the resource]"
-- [Name, description]
-
-───────────────────────────────────────────────
-
-[BUTTON: Yes, Send Me The Free [Lead Magnet]]
-
-═══════════════════════════════════════════════
-```
-
----
-
-### Thank You Page (With Bump)
-
-```
-═══════════════════════════════════════════════
-AWESOME! CHECK YOUR INBOX FOR [LEAD MAGNET]
-═══════════════════════════════════════════════
-
-Your [lead magnet] is on its way.
-
-While you wait... want to fast-track your results?
-
-───────────────────────────────────────────────
-
-SPECIAL ONE-TIME OFFER:
-
-[PRODUCT NAME]
-
-[Headline: What it does for them]
-
-Regular Price: $[Higher]
-YOUR PRICE: $[Lower]
-
-[BUTTON: Yes, Add This To My Order]
-
-[Small link: No thanks, I'll skip this]
-
-───────────────────────────────────────────────
-
-WHAT'S NEXT?
-
-1. Check your email for [lead magnet]
-2. [Next step instruction]
-3. [Next step instruction]
-
-Questions? Email [email]
-
-═══════════════════════════════════════════════
-```
-
----
-
-### Book-A-Call Page
-
-```
-═══════════════════════════════════════════════
-LET'S TALK ABOUT [THEIR GOAL]
-═══════════════════════════════════════════════
-
-[HEADLINE: Promise of what the call will do]
-
-[SUBHEADLINE: Who this is for]
-
-[VIDEO OR IMAGE: You or the call]
-
-[BUTTON: Book Your Free Call]
-
-───────────────────────────────────────────────
-
-ON THIS CALL, WE'LL:
-
-✓ [What you'll do/discuss #1]
-✓ [What you'll do/discuss #2]
-✓ [What you'll do/discuss #3]
-✓ [What you'll leave with]
-
-───────────────────────────────────────────────
-
-THIS CALL IS FOR YOU IF:
-
-• [Qualifier #1]
-• [Qualifier #2]
-• [Qualifier #3]
-• [Qualifier #4]
-
-THIS IS NOT FOR YOU IF:
-
-• [Disqualifier #1]
-• [Disqualifier #2]
-
-───────────────────────────────────────────────
-
-[TESTIMONIALS]
-
-"[Quote about working with you]"
-- [Client name/descriptor]
-
-───────────────────────────────────────────────
-
-[Your photo]
-
-ABOUT [YOUR NAME]
-
-[2-3 sentences credibility and connection]
-
-───────────────────────────────────────────────
-
-READY?
-
-[BUTTON: Book Your Free Strategy Call]
-
-Limited spots available this week.
-
-═══════════════════════════════════════════════
-```
-
----
-
-# IMPLEMENTATION CHECKLIST
-
-## Build Your First Funnel
-
-### Week 1: Offer Development
-- [ ] Define dream outcome
-- [ ] Craft core promise
-- [ ] Build bonus stack
-- [ ] Create guarantee
-- [ ] Design urgency
-
-### Week 2: Page Creation
-- [ ] Build landing/sales page
-- [ ] Set up thank you page
-- [ ] Create email sequences
-- [ ] Connect everything
-
-### Week 3: Traffic
-- [ ] Create content driving to funnel
-- [ ] Set up tracking
-- [ ] Launch to warm audience
-- [ ] Gather initial data
-
-### Week 4: Optimization
-- [ ] Review metrics
-- [ ] Identify weak points
-- [ ] Test improvements
-- [ ] Scale what works
-
----
-
-# CLOSING PAGE
-
-```
-[FULL PAGE DARK BACKGROUND WITH FUNNEL GRAPHIC]
-
-Your Offer Is Your Foundation.
-Your Funnel Is Your Machine.
-
-Build an offer so good it sells itself.
-Build a funnel that works while you sleep.
-
-This is the architecture of scalable revenue.
-
-Start with your offer.
-Build your funnel.
-Watch the transformation.
-
-[Funnel with money flowing through]
-
-[CloneYourself AI Logo]
-
-www.cloneyourselfwithai.com
-```
-
----
-
-*A great offer + clear funnel = predictable revenue. Build yours today.*
+<div class="footer">
+<div class="footer-logo">CloneYourself</div>
+<p>Offer & Funnel Blueprint</p>
+<p style="margin-top:1rem;color:var(--gold);">The Architecture of Revenue</p>
+</div>
+]]>

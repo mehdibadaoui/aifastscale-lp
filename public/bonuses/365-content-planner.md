@@ -1,1081 +1,671 @@
-# 365 DAYS OF CONTENT PLANNER
-## Never Run Out of Content Ideas Again
+<![CDATA[<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{--bg:#09090b;--bg-card:#18181b;--bg-card-hover:#27272a;--gold:#F59E0B;--gold-light:#FBBF24;--gold-dark:#D97706;--text:#FAFAFA;--text-muted:#A1A1AA;--border:#27272a;--success:#22C55E;--info:#3B82F6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:40px 20px;max-width:900px;margin:0 auto}
+h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;letter-spacing:-0.02em}
+h2{font-size:1.75rem;font-weight:800;color:var(--gold);margin:3rem 0 1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--border)}
+h3{font-size:1.25rem;font-weight:700;color:var(--text);margin:2rem 0 1rem}
+h4{font-size:1.1rem;font-weight:600;color:var(--gold-light);margin:1.5rem 0 0.75rem}
+p{margin-bottom:1rem;color:var(--text-muted)}
+strong{color:var(--text);font-weight:600}
+ul,ol{margin:1rem 0 1.5rem 1.5rem}
+li{margin-bottom:0.5rem;color:var(--text-muted)}
+li strong{color:var(--text)}
+blockquote{border-left:4px solid var(--gold);background:var(--bg-card);padding:1.5rem;margin:1.5rem 0;border-radius:0 12px 12px 0}
+blockquote p{margin:0;color:var(--text);font-style:italic}
+hr{border:none;height:1px;background:var(--border);margin:3rem 0}
+table{width:100%;border-collapse:collapse;margin:1.5rem 0}
+th,td{padding:1rem;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--gold);font-weight:600;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em}
+td{color:var(--text-muted)}
+.cover{text-align:center;padding:4rem 2rem;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(251,191,36,0.05));border-radius:24px;margin-bottom:3rem;border:1px solid var(--border)}
+.cover-badge{display:inline-block;background:var(--gold);color:var(--bg);padding:0.5rem 1rem;border-radius:50px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.5rem}
+.cover h1{font-size:3rem;margin-bottom:1rem}
+.cover-subtitle{font-size:1.25rem;color:var(--text-muted);margin-bottom:2rem}
+.cover-value{font-size:1rem;color:var(--gold)}
+.box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.box-gold{border-color:var(--gold);background:rgba(245,158,11,0.05)}
+.box-title{font-weight:700;color:var(--gold);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem}
+.quick-win{background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.3);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.quick-win-title{color:var(--success);font-weight:700;margin-bottom:0.75rem}
+.month-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:2rem 0}
+.month-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.month-number{background:var(--gold);color:var(--bg);width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.25rem}
+.month-theme{font-size:1.25rem;font-weight:700;color:var(--text)}
+.week-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1rem 0}
+.week-title{font-weight:600;color:var(--gold-light);margin-bottom:1rem}
+.day-item{padding:0.75rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;align-items:flex-start}
+.day-item:last-child{border-bottom:none}
+.day-label{color:var(--gold);font-weight:600;min-width:60px}
+.checklist{list-style:none;margin-left:0}
+.checklist li{padding:0.75rem 0;padding-left:2rem;position:relative;border-bottom:1px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:"○";position:absolute;left:0;color:var(--gold);font-size:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center}
+.stat-value{font-size:2rem;font-weight:800;color:var(--gold)}
+.stat-label{font-size:0.875rem;color:var(--text-muted)}
+.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:2rem 0}
+.toc-title{font-weight:700;color:var(--gold);margin-bottom:1rem;font-size:1.1rem}
+.toc-list{list-style:none;margin:0}
+.toc-list li{padding:0.5rem 0;border-bottom:1px solid var(--border)}
+.toc-list li:last-child{border-bottom:none}
+.footer{text-align:center;padding:3rem;margin-top:4rem;border-top:1px solid var(--border)}
+.footer-logo{font-size:1.5rem;font-weight:800;color:var(--gold);margin-bottom:0.5rem}
+.footer p{color:var(--text-muted);font-size:0.875rem}
+</style>
+
+<div class="cover">
+<div class="cover-badge">Premium Resource</div>
+<h1>365 Days of Content</h1>
+<p class="cover-subtitle">Never Run Out of Ideas. Post Consistently. Grow Your Audience.</p>
+<p class="cover-value">Value: $297 • Included Free With Your Membership</p>
+</div>
+
+<div class="stats">
+<div class="stat">
+<div class="stat-value">365</div>
+<div class="stat-label">Content Ideas</div>
+</div>
+<div class="stat">
+<div class="stat-value">52</div>
+<div class="stat-label">Weekly Themes</div>
+</div>
+<div class="stat">
+<div class="stat-value">12</div>
+<div class="stat-label">Monthly Pillars</div>
+</div>
+</div>
+
+<div class="box box-gold">
+<div class="box-title">⚡ What You're Getting</div>
+<p style="margin-bottom:0">A complete year of content planned out for you. Each day has a specific content idea, hook, and format suggestion. Works for any professional niche. Just adapt the topic to your industry and post.</p>
+</div>
 
 ---
 
-# DESIGN SPECIFICATIONS
-```
-Background: Dark charcoal (#1a1a1a) with subtle grid pattern
-Accent Color: Electric blue (#00D4FF) with gold highlights (#FFD700)
-Typography: Bold sans-serif headers, clean body text
-Style: Premium calendar layouts, visual monthly spreads
-Page Count: 80-100 pages
-```
+## Quick Wins: Start TODAY
+
+<div class="quick-win">
+<div class="quick-win-title">🎯 This Week's Content</div>
+<ul class="checklist">
+<li><strong>Monday:</strong> Share your #1 tip for clients (60-second video)</li>
+<li><strong>Tuesday:</strong> Debunk a common myth in your industry</li>
+<li><strong>Wednesday:</strong> Behind-the-scenes of your work process</li>
+<li><strong>Thursday:</strong> Answer a FAQ you get from clients</li>
+<li><strong>Friday:</strong> Share a quick win story or testimonial</li>
+</ul>
+</div>
 
 ---
 
-# COVER PAGE
+## The 12-Month Content Architecture
 
-```
-[FULL PAGE DARK BACKGROUND]
-
-365 DAYS
-OF CONTENT
-PLANNER
-
-The Complete Annual Content Strategy
-That Prints Money on Autopilot
-
-[Calendar icon with checkmarks - electric blue glow]
-
-"Plan Once. Create Forever."
-
-CloneYourself AI
-Premium Resource
-```
-
----
-
-# PAGE 2: THE CONTENT CRISIS
-
-## Why Most Professionals Fail at Content
-
-**The Numbers Don't Lie:**
-- 73% of businesses quit content marketing within 90 days
-- #1 reason: "Ran out of ideas"
-- Average professional spends 4.2 hours/week THINKING about what to post
-- That's 218 hours per year WASTED on planning
-
-**The Real Problem:**
-You don't have a content problem.
-You have a PLANNING problem.
-
-**This Planner Solves It Forever.**
+<div class="toc">
+<div class="toc-title">📅 Monthly Themes Overview</div>
+<ul class="toc-list">
+<li><strong>Month 1:</strong> Foundation & Credibility - Establish Your Expertise</li>
+<li><strong>Month 2:</strong> Problem Awareness - Highlight Pain Points</li>
+<li><strong>Month 3:</strong> Solution Education - Your Unique Approach</li>
+<li><strong>Month 4:</strong> Social Proof - Results & Testimonials</li>
+<li><strong>Month 5:</strong> Deep Expertise - Advanced Knowledge</li>
+<li><strong>Month 6:</strong> Myth Busting - Challenge the Status Quo</li>
+<li><strong>Month 7:</strong> Personal Connection - Behind the Scenes</li>
+<li><strong>Month 8:</strong> Client Spotlights - Success Stories</li>
+<li><strong>Month 9:</strong> Industry Trends - Thought Leadership</li>
+<li><strong>Month 10:</strong> Objection Handling - Overcome Resistance</li>
+<li><strong>Month 11:</strong> Urgency & Action - Drive Conversions</li>
+<li><strong>Month 12:</strong> Year Review & Future - Celebrate Growth</li>
+</ul>
+</div>
 
 ---
 
-# PAGE 3: HOW TO USE THIS PLANNER
+## Month 1: Foundation & Credibility
 
-## Your Content Command Center
-
-### Step 1: Monthly Theme Selection
-Each month has a pre-assigned theme that builds authority progressively.
-
-### Step 2: Weekly Content Blocks
-4-5 content pieces per week, already categorized by type.
-
-### Step 3: Daily Prompts
-Specific ideas you can execute immediately or feed to your AI clone.
-
-### Step 4: Adaptation
-Every idea includes niche adaptation notes for ANY industry.
-
----
-
-# THE ANNUAL CONTENT ARCHITECTURE
-
-## 12-Month Authority Building System
-
-| Month | Theme | Authority Goal |
-|-------|-------|----------------|
-| 1 | Foundation & Credibility | Establish expertise |
-| 2 | Problem Awareness | Identify pain points |
-| 3 | Solution Introduction | Present your method |
-| 4 | Social Proof | Share results |
-| 5 | Deep Expertise | Advanced knowledge |
-| 6 | Myth Busting | Challenge status quo |
-| 7 | Behind the Scenes | Build connection |
-| 8 | Client Spotlights | Showcase success |
-| 9 | Industry Trends | Show thought leadership |
-| 10 | Objection Handling | Overcome resistance |
-| 11 | Urgency & Scarcity | Drive action |
-| 12 | Year in Review | Celebrate + set up next year |
-
----
-
-# MONTH 1: FOUNDATION & CREDIBILITY
-## Theme: "Why You Should Listen To Me"
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">1</div>
+<div class="month-theme">Theme: "Why You Should Listen To Me"</div>
+</div>
 
 ### Week 1: Introduction Arc
 
-**Day 1 - Monday: Origin Story**
-- Content Type: Video/Post
-- Prompt: "Share your journey into your profession. What moment made you realize this was your calling?"
-- Hook: "I never planned to become a [profession]..."
-- Niche Adaptations:
-  - Lawyer: "The case that changed everything"
-  - Dentist: "Why I chose teeth over medicine"
-  - Coach: "My rock bottom moment"
-  - Realtor: "My first impossible sale"
-
-**Day 2 - Tuesday: Credentials Display**
-- Content Type: Carousel/Infographic
-- Prompt: "List your qualifications, certifications, years of experience in a visual format"
-- Hook: "Here's what qualifies me to help you..."
-- Design: Timeline format with logos/badges
-
-**Day 3 - Wednesday: Philosophy Statement**
-- Content Type: Text post with image
-- Prompt: "What's your core belief about your industry that others might disagree with?"
-- Hook: "Unpopular opinion in [industry]..."
-- Example: "I believe most [service] is overpriced and overcomplicated"
-
-**Day 4 - Thursday: Quick Win Content**
-- Content Type: Short video/Reel
-- Prompt: "Share one tip someone can implement in 60 seconds"
-- Hook: "Do this TODAY and see results by tomorrow..."
-- Format: Problem → Solution → Result
-
-**Day 5 - Friday: Week 1 Recap + CTA**
-- Content Type: Story/Post
-- Prompt: "Summarize week's content, invite questions"
-- Hook: "This week you learned..."
-- CTA: "DM me 'START' for a free [resource]"
-
----
+<div class="week-box">
+<div class="week-title">Days 1-7: Establish Your Presence</div>
+<div class="day-item"><span class="day-label">Day 1</span><span>Who you are and who you serve (personal intro video)</span></div>
+<div class="day-item"><span class="day-label">Day 2</span><span>Why you got into this profession (origin story)</span></div>
+<div class="day-item"><span class="day-label">Day 3</span><span>Your #1 philosophy or approach that sets you apart</span></div>
+<div class="day-item"><span class="day-label">Day 4</span><span>The biggest misconception about your industry</span></div>
+<div class="day-item"><span class="day-label">Day 5</span><span>Your credentials in 60 seconds (without bragging)</span></div>
+<div class="day-item"><span class="day-label">Day 6</span><span>What clients can expect when working with you</span></div>
+<div class="day-item"><span class="day-label">Day 7</span><span>Quick tip that provides immediate value</span></div>
+</div>
 
 ### Week 2: Expertise Demonstration
 
-**Day 6 - Monday: Common Mistake #1**
-- Content Type: Educational video
-- Prompt: "What's the #1 mistake you see people make in your area?"
-- Hook: "Stop doing this immediately..."
-- Structure: Mistake → Why it's wrong → What to do instead
+<div class="week-box">
+<div class="week-title">Days 8-14: Show Your Knowledge</div>
+<div class="day-item"><span class="day-label">Day 8</span><span>The most common mistake people make in your field</span></div>
+<div class="day-item"><span class="day-label">Day 9</span><span>A question you get asked every single week</span></div>
+<div class="day-item"><span class="day-label">Day 10</span><span>3 signs someone needs your services</span></div>
+<div class="day-item"><span class="day-label">Day 11</span><span>What I wish everyone knew about [your topic]</span></div>
+<div class="day-item"><span class="day-label">Day 12</span><span>The first thing I tell every new client</span></div>
+<div class="day-item"><span class="day-label">Day 13</span><span>Industry news or update with your take</span></div>
+<div class="day-item"><span class="day-label">Day 14</span><span>Weekend reflection: A lesson from this week</span></div>
+</div>
 
-**Day 7 - Tuesday: Industry Insider Knowledge**
-- Content Type: Thread/Carousel
-- Prompt: "Share something clients don't know about your industry"
-- Hook: "What [professionals] won't tell you..."
-- Creates: Trust through transparency
+### Week 3: Value Bombs
 
-**Day 8 - Wednesday: Tool/Resource Share**
-- Content Type: List post
-- Prompt: "What 3 tools/resources do you recommend to everyone?"
-- Hook: "My top 3 [industry] resources..."
-- Include: Brief why for each
+<div class="week-box">
+<div class="week-title">Days 15-21: Educate Your Audience</div>
+<div class="day-item"><span class="day-label">Day 15</span><span>Step-by-step guide to [common task]</span></div>
+<div class="day-item"><span class="day-label">Day 16</span><span>The cost of NOT solving [problem you fix]</span></div>
+<div class="day-item"><span class="day-label">Day 17</span><span>Comparison: Option A vs Option B in your industry</span></div>
+<div class="day-item"><span class="day-label">Day 18</span><span>Red flags to watch out for when [related decision]</span></div>
+<div class="day-item"><span class="day-label">Day 19</span><span>Questions to ask before hiring a [your profession]</span></div>
+<div class="day-item"><span class="day-label">Day 20</span><span>Timeline: What to expect during [your process]</span></div>
+<div class="day-item"><span class="day-label">Day 21</span><span>Myth vs Reality carousel or video</span></div>
+</div>
 
-**Day 9 - Thursday: Mini Case Study**
-- Content Type: Before/After post
-- Prompt: "Share a quick client transformation"
-- Hook: "[Client type] went from [problem] to [result]..."
-- Privacy: Use initials or get permission
+### Week 4: Trust Building
 
-**Day 10 - Friday: Q&A Invitation**
-- Content Type: Interactive story/post
-- Prompt: "Open the floor for questions"
-- Hook: "What's your biggest [topic] question?"
-- Purpose: Content mining for future posts
-
----
-
-### Week 3: Problem Expertise
-
-**Day 11 - Monday: Problem Deep Dive**
-- Content Type: Long-form video
-- Prompt: "Explain the biggest problem your clients face in detail"
-- Hook: "If you're struggling with [problem], watch this..."
-- Duration: 3-5 minutes
-
-**Day 12 - Tuesday: Problem Symptoms**
-- Content Type: Checklist post
-- Prompt: "What are the warning signs that someone needs your help?"
-- Hook: "You need a [professional] if..."
-- Format: 5-7 checkbox items
-
-**Day 13 - Wednesday: Cost of Inaction**
-- Content Type: Data-driven post
-- Prompt: "What happens if someone ignores this problem?"
-- Hook: "Waiting to fix [problem] costs you..."
-- Include: Statistics, real examples
-
-**Day 14 - Thursday: Quick Diagnostic**
-- Content Type: Self-assessment
-- Prompt: "Create a simple quiz/assessment"
-- Hook: "Rate yourself 1-10 on these..."
-- Purpose: Self-identification as prospect
-
-**Day 15 - Friday: Week 3 Value Bomb**
-- Content Type: Free resource offer
-- Prompt: "Offer your best free resource"
-- Hook: "FREE: My [resource] that helped [X clients]..."
-- CTA: Lead magnet delivery
+<div class="week-box">
+<div class="week-title">Days 22-28/30: Solidify Credibility</div>
+<div class="day-item"><span class="day-label">Day 22</span><span>A case study (anonymized): Before and After</span></div>
+<div class="day-item"><span class="day-label">Day 23</span><span>Testimonial highlight with your commentary</span></div>
+<div class="day-item"><span class="day-label">Day 24</span><span>Behind the scenes of your workspace/process</span></div>
+<div class="day-item"><span class="day-label">Day 25</span><span>Something most professionals won't tell you</span></div>
+<div class="day-item"><span class="day-label">Day 26</span><span>Your morning routine or daily workflow</span></div>
+<div class="day-item"><span class="day-label">Day 27</span><span>A tool or resource you recommend to everyone</span></div>
+<div class="day-item"><span class="day-label">Day 28</span><span>Month recap: Top lessons and what's coming</span></div>
+</div>
+</div>
 
 ---
 
-### Week 4: Authority Positioning
+## Month 2: Problem Awareness
 
-**Day 16 - Monday: Hot Take**
-- Content Type: Opinion piece
-- Prompt: "What do you believe that most in your industry don't?"
-- Hook: "Most [professionals] are wrong about..."
-- Purpose: Differentiation
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">2</div>
+<div class="month-theme">Theme: "You Have a Problem (Here's Proof)"</div>
+</div>
 
-**Day 17 - Tuesday: Media/Speaking Mention**
-- Content Type: Credibility post
-- Prompt: "Share any media appearances, publications, speaking"
-- Hook: "Had the honor of [speaking at/being featured in]..."
-- If none: Share industry event attendance
+### Week 1: Identify Pain Points
 
-**Day 18 - Wednesday: Client Testimonial**
-- Content Type: Video testimonial or quote graphic
-- Prompt: "Feature your best client feedback"
-- Hook: "[Client] said this and it made my day..."
-- Include: Specific results if possible
+<div class="week-box">
+<div class="week-title">Days 29-35: Surface the Problems</div>
+<div class="day-item"><span class="day-label">Day 29</span><span>5 warning signs you're ignoring about [problem]</span></div>
+<div class="day-item"><span class="day-label">Day 30</span><span>Story: A client who waited too long</span></div>
+<div class="day-item"><span class="day-label">Day 31</span><span>The hidden costs of [common problem]</span></div>
+<div class="day-item"><span class="day-label">Day 32</span><span>Why DIY often makes [problem] worse</span></div>
+<div class="day-item"><span class="day-label">Day 33</span><span>The emotional toll of dealing with [issue]</span></div>
+<div class="day-item"><span class="day-label">Day 34</span><span>How [problem] affects other areas of life</span></div>
+<div class="day-item"><span class="day-label">Day 35</span><span>Quiz: Do you have [problem]? (engagement post)</span></div>
+</div>
 
-**Day 19 - Thursday: Teaching Moment**
-- Content Type: How-to video
-- Prompt: "Teach something valuable step-by-step"
-- Hook: "Here's exactly how to [achieve result]..."
-- Give: Real actionable value
+### Week 2: Agitate the Problem
 
-**Day 20 - Friday: Month 1 Recap**
-- Content Type: Celebration post
-- Prompt: "Recap the month, celebrate consistency"
-- Hook: "20 days of content. Here's what you learned..."
-- CTA: Next month teaser
+<div class="week-box">
+<div class="week-title">Days 36-42: Deepen the Pain</div>
+<div class="day-item"><span class="day-label">Day 36</span><span>What happens if you ignore [problem] for 6 months</span></div>
+<div class="day-item"><span class="day-label">Day 37</span><span>The worst case scenario I've seen</span></div>
+<div class="day-item"><span class="day-label">Day 38</span><span>Why most solutions don't actually work</span></div>
+<div class="day-item"><span class="day-label">Day 39</span><span>The lie you're telling yourself about [problem]</span></div>
+<div class="day-item"><span class="day-label">Day 40</span><span>Statistics that will shock you about [topic]</span></div>
+<div class="day-item"><span class="day-label">Day 41</span><span>The one thing making [problem] worse</span></div>
+<div class="day-item"><span class="day-label">Day 42</span><span>A question that reveals if you need help</span></div>
+</div>
 
----
+### Week 3: Create Urgency
 
-# MONTH 2: PROBLEM AWARENESS
-## Theme: "I Understand Your Pain"
+<div class="week-box">
+<div class="week-title">Days 43-49: Time-Sensitive Awareness</div>
+<div class="day-item"><span class="day-label">Day 43</span><span>Why timing matters for [your service]</span></div>
+<div class="day-item"><span class="day-label">Day 44</span><span>The ideal time to address [problem]</span></div>
+<div class="day-item"><span class="day-label">Day 45</span><span>How waiting costs you [money/time/health]</span></div>
+<div class="day-item"><span class="day-label">Day 46</span><span>Seasonal consideration for [your topic]</span></div>
+<div class="day-item"><span class="day-label">Day 47</span><span>Signs it's time to finally take action</span></div>
+<div class="day-item"><span class="day-label">Day 48</span><span>What my fastest-moving clients have in common</span></div>
+<div class="day-item"><span class="day-label">Day 49</span><span>The decision that changed everything for [client]</span></div>
+</div>
 
-### Week 1: Pain Point Exploration
+### Week 4: Solution Preview
 
-**Day 21 - Monday: The Hidden Problem**
-- Content Type: Revelation video
-- Prompt: "What problem do people have that they don't even realize?"
-- Hook: "You have a problem you don't know about..."
-- Creates: Awareness of need
-
-**Day 22 - Tuesday: Survey Results**
-- Content Type: Data visualization
-- Prompt: "Share insights from client conversations"
-- Hook: "I asked 100 [clients] their biggest struggle..."
-- If no data: Share observations
-
-**Day 23 - Wednesday: Day in the Life**
-- Content Type: Story-style content
-- Prompt: "Describe a typical day for someone with the problem"
-- Hook: "If this sounds like your morning..."
-- Creates: Relatability
-
-**Day 24 - Thursday: Comparison Content**
-- Content Type: Split-screen/comparison
-- Prompt: "Show with vs. without your solution"
-- Hook: "Two types of [target audience]..."
-- Visual: Side by side contrast
-
-**Day 25 - Friday: Community Question**
-- Content Type: Engagement post
-- Prompt: "Ask your audience about their struggles"
-- Hook: "Be honest: What's your biggest [topic] challenge?"
-- Purpose: Engagement + content ideas
+<div class="week-box">
+<div class="week-title">Days 50-56: Hint at the Answer</div>
+<div class="day-item"><span class="day-label">Day 50</span><span>There IS a solution (and it's simpler than you think)</span></div>
+<div class="day-item"><span class="day-label">Day 51</span><span>What solving [problem] actually looks like</span></div>
+<div class="day-item"><span class="day-label">Day 52</span><span>The relief my clients describe after [your solution]</span></div>
+<div class="day-item"><span class="day-label">Day 53</span><span>Life before vs. life after [your service]</span></div>
+<div class="day-item"><span class="day-label">Day 54</span><span>The first step toward fixing [problem]</span></div>
+<div class="day-item"><span class="day-label">Day 55</span><span>You don't have to figure this out alone</span></div>
+<div class="day-item"><span class="day-label">Day 56</span><span>Month recap: Problems identified, solutions coming</span></div>
+</div>
+</div>
 
 ---
 
-### Week 2: Empathy Building
+## Month 3: Solution Education
 
-**Day 26 - Monday: "I've Been There"**
-- Content Type: Vulnerability post
-- Prompt: "Share when you experienced the same problem"
-- Hook: "Before I learned [solution], I struggled with..."
-- Creates: Connection through shared experience
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">3</div>
+<div class="month-theme">Theme: "Here's How I Fix It"</div>
+</div>
 
-**Day 27 - Tuesday: Client Story (Struggle Phase)**
-- Content Type: Narrative post
-- Prompt: "Tell a client's story focusing on their struggle"
-- Hook: "[Client initial] came to me feeling..."
-- Part 1 of transformation arc
+### Week 1: Your Unique Approach
 
-**Day 28 - Wednesday: Misconceptions**
-- Content Type: Myth-busting
-- Prompt: "What do people wrongly believe about their problem?"
-- Hook: "You've been lied to about..."
-- Clears: Mental obstacles
+<div class="week-box">
+<div class="week-title">Days 57-63: Introduce Your Method</div>
+<div class="day-item"><span class="day-label">Day 57</span><span>The [Your Name] Method explained</span></div>
+<div class="day-item"><span class="day-label">Day 58</span><span>Why my approach is different from others</span></div>
+<div class="day-item"><span class="day-label">Day 59</span><span>The 3 pillars of my process</span></div>
+<div class="day-item"><span class="day-label">Day 60</span><span>What I do that others skip</span></div>
+<div class="day-item"><span class="day-label">Day 61</span><span>How I developed my current approach</span></div>
+<div class="day-item"><span class="day-label">Day 62</span><span>The philosophy behind my work</span></div>
+<div class="day-item"><span class="day-label">Day 63</span><span>Client perspective on my process</span></div>
+</div>
 
-**Day 29 - Thursday: The Real Cost**
-- Content Type: Calculator/breakdown
-- Prompt: "Quantify what the problem costs them"
-- Hook: "This problem costs you $X every month..."
-- Make: Pain tangible
+### Week 2: Step-by-Step Process
 
-**Day 30 - Friday: Hope Teaser**
-- Content Type: Inspirational
-- Prompt: "Hint that a solution exists"
-- Hook: "What if I told you there's a better way..."
-- Setup: Next week's solution content
+<div class="week-box">
+<div class="week-title">Days 64-70: Walk Through Your Service</div>
+<div class="day-item"><span class="day-label">Day 64</span><span>Step 1: Initial consultation explained</span></div>
+<div class="day-item"><span class="day-label">Day 65</span><span>Step 2: Assessment/diagnosis phase</span></div>
+<div class="day-item"><span class="day-label">Day 66</span><span>Step 3: Planning and strategy</span></div>
+<div class="day-item"><span class="day-label">Day 67</span><span>Step 4: Implementation/treatment</span></div>
+<div class="day-item"><span class="day-label">Day 68</span><span>Step 5: Follow-up and support</span></div>
+<div class="day-item"><span class="day-label">Day 69</span><span>Timeline: What to expect week by week</span></div>
+<div class="day-item"><span class="day-label">Day 70</span><span>Common questions about the process</span></div>
+</div>
 
----
+### Week 3: Differentiation
 
-[Weeks 3-4 continue with Problem Awareness themes...]
+<div class="week-box">
+<div class="week-title">Days 71-77: Why Choose You</div>
+<div class="day-item"><span class="day-label">Day 71</span><span>Me vs. the competition (respectfully)</span></div>
+<div class="day-item"><span class="day-label">Day 72</span><span>What I refuse to do that others do</span></div>
+<div class="day-item"><span class="day-label">Day 73</span><span>The extra mile I always go</span></div>
+<div class="day-item"><span class="day-label">Day 74</span><span>Technology/tools I use and why</span></div>
+<div class="day-item"><span class="day-label">Day 75</span><span>My ongoing education and training</span></div>
+<div class="day-item"><span class="day-label">Day 76</span><span>The team behind the work</span></div>
+<div class="day-item"><span class="day-label">Day 77</span><span>Certifications and credentials that matter</span></div>
+</div>
 
----
+### Week 4: Results Preview
 
-# MONTH 3: SOLUTION INTRODUCTION
-## Theme: "Here's How I Can Help"
-
-### Week 1: Method Reveal
-
-**Day 41 - Monday: The Framework Introduction**
-- Content Type: Educational video
-- Prompt: "Introduce your unique process/method"
-- Hook: "My [X]-step system that transforms [problem] into [result]..."
-- Name: Give your method a memorable name
-
-**Day 42 - Tuesday: Step 1 Deep Dive**
-- Content Type: Carousel/Thread
-- Prompt: "Explain the first step of your process"
-- Hook: "Step 1 of [Your Method]: [Name]..."
-- Include: What, why, how
-
-**Day 43 - Wednesday: Step 2 Deep Dive**
-- Content Type: Carousel/Thread
-- Prompt: "Explain step two"
-- Hook: "Once you've done Step 1, here's Step 2..."
-- Build: Progressive revelation
-
-**Day 44 - Thursday: Step 3 Deep Dive**
-- Content Type: Carousel/Thread
-- Prompt: "Explain step three"
-- Hook: "This is where the magic happens..."
-- Include: Client examples
-
-**Day 45 - Friday: Full Method Overview**
-- Content Type: Comprehensive video
-- Prompt: "Walk through entire method start to finish"
-- Hook: "The complete [Your Method] explained..."
-- CTA: "Want help implementing this?"
+<div class="week-box">
+<div class="week-title">Days 78-84: What Success Looks Like</div>
+<div class="day-item"><span class="day-label">Day 78</span><span>Typical results after [timeframe]</span></div>
+<div class="day-item"><span class="day-label">Day 79</span><span>Best case scenario outcomes</span></div>
+<div class="day-item"><span class="day-label">Day 80</span><span>Realistic expectations conversation</span></div>
+<div class="day-item"><span class="day-label">Day 81</span><span>What clients say changed most</span></div>
+<div class="day-item"><span class="day-label">Day 82</span><span>The ripple effect of solving [problem]</span></div>
+<div class="day-item"><span class="day-label">Day 83</span><span>Long-term benefits of my approach</span></div>
+<div class="day-item"><span class="day-label">Day 84</span><span>Month recap: Your solution roadmap</span></div>
+</div>
+</div>
 
 ---
 
-### Week 2: Proof It Works
+## Month 4: Social Proof
 
-**Day 46 - Monday: Case Study #1**
-- Content Type: Results story
-- Prompt: "Share detailed client transformation"
-- Hook: "[Client] achieved [result] using this method..."
-- Include: Timeline, specifics, quote
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">4</div>
+<div class="month-theme">Theme: "Don't Take My Word For It"</div>
+</div>
 
-**Day 47 - Tuesday: Before/After Showcase**
-- Content Type: Visual comparison
-- Prompt: "Show tangible transformation"
-- Hook: "The difference [timeframe] makes..."
-- Niche adaptations:
-  - Lawyer: Case outcome comparison
-  - Dentist: Smile transformation
-  - Coach: Revenue/life metrics
-  - Realtor: Home sale results
+### Week 1: Testimonials
 
-**Day 48 - Wednesday: Client Interview**
-- Content Type: Video testimonial
-- Prompt: "Interview a satisfied client"
-- Questions: Problem → Solution → Result → Recommendation
-- Format: 2-3 minute edited version
+<div class="week-box">
+<div class="week-title">Days 85-91: Let Clients Speak</div>
+<div class="day-item"><span class="day-label">Day 85</span><span>Video testimonial with intro</span></div>
+<div class="day-item"><span class="day-label">Day 86</span><span>Written review breakdown</span></div>
+<div class="day-item"><span class="day-label">Day 87</span><span>Before/after story from client</span></div>
+<div class="day-item"><span class="day-label">Day 88</span><span>Screenshots of positive messages</span></div>
+<div class="day-item"><span class="day-label">Day 89</span><span>Client milestone celebration</span></div>
+<div class="day-item"><span class="day-label">Day 90</span><span>Compilation: What clients say about working with me</span></div>
+<div class="day-item"><span class="day-label">Day 91</span><span>"In their own words" client feature</span></div>
+</div>
 
-**Day 49 - Thursday: Results Compilation**
-- Content Type: Statistics post
-- Prompt: "Aggregate your results data"
-- Hook: "In the last [timeframe], my clients have..."
-- Include: Numbers, percentages, outcomes
+### Week 2: Case Studies
 
-**Day 50 - Friday: Implementation Story**
-- Content Type: Behind-the-scenes
-- Prompt: "Show yourself working with a client"
-- Hook: "Here's what working with me actually looks like..."
-- Creates: Service tangibility
+<div class="week-box">
+<div class="week-title">Days 92-98: Deep Dive Results</div>
+<div class="day-item"><span class="day-label">Day 92</span><span>Case Study #1: The Problem</span></div>
+<div class="day-item"><span class="day-label">Day 93</span><span>Case Study #1: The Process</span></div>
+<div class="day-item"><span class="day-label">Day 94</span><span>Case Study #1: The Result</span></div>
+<div class="day-item"><span class="day-label">Day 95</span><span>Case Study #2: Complex situation overview</span></div>
+<div class="day-item"><span class="day-label">Day 96</span><span>Case Study #2: How we solved it</span></div>
+<div class="day-item"><span class="day-label">Day 97</span><span>Case Study #2: Outcome and lessons</span></div>
+<div class="day-item"><span class="day-label">Day 98</span><span>Pattern: What successful clients have in common</span></div>
+</div>
 
----
+### Week 3: Numbers & Data
 
-[Months 3-12 continue with full daily content prompts...]
+<div class="week-box">
+<div class="week-title">Days 99-105: Quantifiable Results</div>
+<div class="day-item"><span class="day-label">Day 99</span><span>By the numbers: My track record</span></div>
+<div class="day-item"><span class="day-label">Day 100</span><span>Average outcomes for clients</span></div>
+<div class="day-item"><span class="day-label">Day 101</span><span>Success rate statistics</span></div>
+<div class="day-item"><span class="day-label">Day 102</span><span>Timeline data: How fast clients see results</span></div>
+<div class="day-item"><span class="day-label">Day 103</span><span>ROI breakdown for typical client</span></div>
+<div class="day-item"><span class="day-label">Day 104</span><span>Comparison: Clients who act vs. wait</span></div>
+<div class="day-item"><span class="day-label">Day 105</span><span>Milestone: [X] clients served celebration</span></div>
+</div>
 
----
+### Week 4: Recognition & Awards
 
-# MONTH 4: SOCIAL PROOF MONTH
-## Theme: "See What's Possible"
-
-### Content Focus Areas:
-- Week 1: Client Spotlights (5 different clients)
-- Week 2: Result Statistics & Data
-- Week 3: Testimonial Deep Dives
-- Week 4: Community & Social Proof
-
-### Sample Day Prompts:
-
-**Day 61: The Skeptic Turned Believer**
-- Content Type: Story arc
-- Prompt: "Share about a client who was initially doubtful"
-- Hook: "[Client] almost didn't work with me..."
-- Arc: Skepticism → Experience → Transformation → Advocacy
-
-**Day 65: By The Numbers**
-- Content Type: Infographic
-- Prompt: "Create a visual of your aggregate results"
-- Include: Total clients, total results, average outcomes
-- Design: Dark background, gold numbers, blue accents
-
-**Day 70: The Unexpected Win**
-- Content Type: Surprise result story
-- Prompt: "Share a client who got MORE than expected"
-- Hook: "[Client] came for [X] but also got [Y]..."
-- Shows: Additional value
+<div class="week-box">
+<div class="week-title">Days 106-112: External Validation</div>
+<div class="day-item"><span class="day-label">Day 106</span><span>Awards or recognition received</span></div>
+<div class="day-item"><span class="day-label">Day 107</span><span>Media features or mentions</span></div>
+<div class="day-item"><span class="day-label">Day 108</span><span>Professional association involvement</span></div>
+<div class="day-item"><span class="day-label">Day 109</span><span>Speaking engagements or teaching</span></div>
+<div class="day-item"><span class="day-label">Day 110</span><span>Peer recognition in your field</span></div>
+<div class="day-item"><span class="day-label">Day 111</span><span>Google/Yelp review highlights</span></div>
+<div class="day-item"><span class="day-label">Day 112</span><span>Month recap: Proof compiled</span></div>
+</div>
+</div>
 
 ---
 
-# MONTH 5: DEEP EXPERTISE
-## Theme: "I Know More Than Most"
+## Month 5: Deep Expertise
 
-### Content Focus Areas:
-- Week 1: Advanced Concepts
-- Week 2: Nuance & Complexity
-- Week 3: Industry Deep Knowledge
-- Week 4: Expert-Level Tips
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">5</div>
+<div class="month-theme">Theme: "Let Me Teach You"</div>
+</div>
 
-### Sample Day Prompts:
+### Week 1-4 Content Ideas
 
-**Day 81: The Counterintuitive Truth**
-- Content Type: Mind-shift content
-- Prompt: "Share an advanced concept that seems backwards"
-- Hook: "What I'm about to say goes against everything you've heard..."
-- Establishes: Deep expertise
-
-**Day 88: The 1% Advantage**
-- Content Type: Advanced tip
-- Prompt: "Share something only experts know"
-- Hook: "Here's what separates good from great..."
-- Creates: Aspiration
-
----
-
-# MONTH 6: MYTH BUSTING
-## Theme: "Let Me Set The Record Straight"
-
-### Weekly Themes:
-- Week 1: Industry Myths
-- Week 2: DIY Myths
-- Week 3: Pricing/Value Myths
-- Week 4: Process Myths
-
-### Sample Day Prompts:
-
-**Day 101: The Biggest Lie**
-- Content Type: Controversial take
-- Prompt: "What's the biggest myth in your industry?"
-- Hook: "The [industry] industry has been lying to you..."
-- Creates: Trust through honesty
-
-**Day 105: Why DIY Fails**
-- Content Type: Comparison
-- Prompt: "Show why professional help beats DIY"
-- Hook: "You CAN do this yourself. Here's why you shouldn't..."
-- Overcomes: "I'll just do it myself" objection
-
-**Day 112: The Price Myth**
-- Content Type: Value reframe
-- Prompt: "Address the 'too expensive' belief"
-- Hook: "People say [service] is expensive. Here's the truth..."
-- Reframe: Cost vs. investment
+<div class="box">
+<div class="box-title">📚 Days 113-140 Topics</div>
+<ul>
+<li>Advanced techniques in your field</li>
+<li>Technical explanations made simple</li>
+<li>Industry terminology decoded</li>
+<li>Deep dive into specific procedures/services</li>
+<li>The science behind your approach</li>
+<li>Expert-level tips and tricks</li>
+<li>Common misconceptions debunked with data</li>
+<li>Research and studies you follow</li>
+<li>Your continuing education journey</li>
+<li>Cutting-edge developments in your field</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# MONTH 7: BEHIND THE SCENES
-## Theme: "Get To Know The Real Me"
+## Month 6: Myth Busting
 
-### Weekly Themes:
-- Week 1: Daily Life
-- Week 2: Team & Culture
-- Week 3: Process Reveal
-- Week 4: Personal Stories
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">6</div>
+<div class="month-theme">Theme: "Everything You've Been Told Is Wrong"</div>
+</div>
 
-### Sample Day Prompts:
+### Week 1-4 Content Ideas
 
-**Day 121: Morning Routine**
-- Content Type: Day-in-life video
-- Prompt: "Show your morning routine"
-- Hook: "My morning routine that keeps me sharp..."
-- Creates: Personal connection
-
-**Day 127: Office Tour**
-- Content Type: Behind-scenes video
-- Prompt: "Tour your workspace"
-- Hook: "Where the magic happens..."
-- Shows: Professionalism + personality
-
-**Day 133: Why I Do This**
-- Content Type: Purpose piece
-- Prompt: "Share your deeper motivation"
-- Hook: "Money isn't why I wake up every day..."
-- Creates: Emotional connection
+<div class="box">
+<div class="box-title">🔥 Days 141-168 Topics</div>
+<ul>
+<li>Top 10 myths in your industry</li>
+<li>"Everyone says X, but actually..."</li>
+<li>Old advice that no longer applies</li>
+<li>Internet misinformation corrections</li>
+<li>Why cheap options cost more long-term</li>
+<li>The truth about [controversial topic]</li>
+<li>What your competitors won't tell you</li>
+<li>Debunking viral TikTok advice</li>
+<li>Facts vs. fiction series</li>
+<li>The biggest lie in your industry</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# MONTH 8: CLIENT SPOTLIGHTS
-## Theme: "Your Success Is My Success"
+## Month 7: Personal Connection
 
-### Weekly Structure:
-- Each week features a different client journey
-- Mix of industries/situations
-- Varying result types
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">7</div>
+<div class="month-theme">Theme: "Get To Know Me"</div>
+</div>
 
-### Sample Day Prompts:
+### Week 1-4 Content Ideas
 
-**Day 141: Client Journey Day 1 - The Struggle**
-- Content Type: Story introduction
-- Prompt: "Introduce a client's starting point"
-- Hook: "When [Client] first came to me..."
-- Part 1 of weekly arc
-
-**Day 145: Client Journey Day 5 - The Celebration**
-- Content Type: Results celebration
-- Prompt: "Show the transformation complete"
-- Hook: "Fast forward to today..."
-- Include: Specific metrics + emotional wins
-
----
-
-# MONTH 9: INDUSTRY TRENDS
-## Theme: "Stay Ahead Of The Curve"
-
-### Weekly Themes:
-- Week 1: Current Trends
-- Week 2: Future Predictions
-- Week 3: What's Working Now
-- Week 4: Preparation Strategies
-
-### Sample Day Prompts:
-
-**Day 161: The Shift Nobody's Talking About**
-- Content Type: Trend analysis
-- Prompt: "Identify an emerging trend in your field"
-- Hook: "Nobody's talking about this yet, but..."
-- Positions: Thought leader
-
-**Day 168: 2024 Predictions**
-- Content Type: Forecast content
-- Prompt: "Make bold predictions for the coming year"
-- Hook: "Here's what's coming in [industry]..."
-- Creates: Authority through foresight
-
-**Day 173: What's Working RIGHT NOW**
-- Content Type: Current strategies
-- Prompt: "Share what's producing results today"
-- Hook: "Forget what worked last year. Here's what's working now..."
-- Provides: Immediate value
+<div class="box">
+<div class="box-title">🎬 Days 169-196 Topics</div>
+<ul>
+<li>Day in my life</li>
+<li>Office/workspace tour</li>
+<li>My morning routine</li>
+<li>Why I chose this profession</li>
+<li>My biggest professional failure and lesson</li>
+<li>What I do outside of work</li>
+<li>My family and what motivates me</li>
+<li>A client who changed my perspective</li>
+<li>My journey: Then vs. Now</li>
+<li>What most people don't know about me</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# MONTH 10: OBJECTION HANDLING
-## Theme: "Let Me Address Your Concerns"
+## Month 8: Client Spotlights
 
-### Weekly Themes:
-- Week 1: Price Objections
-- Week 2: Time Objections
-- Week 3: Trust Objections
-- Week 4: Readiness Objections
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">8</div>
+<div class="month-theme">Theme: "Your Success Stories"</div>
+</div>
 
-### Sample Day Prompts:
+### Week 1-4 Content Ideas
 
-**Day 181: "It's Too Expensive"**
-- Content Type: Value demonstration
-- Prompt: "Address the price objection head-on"
-- Hook: "When someone says I'm too expensive, I say this..."
-- Reframe: Investment vs. cost
-
-**Day 185: "I Don't Have Time"**
-- Content Type: Time reframe
-- Prompt: "Show how NOT doing this costs more time"
-- Hook: "You don't have time NOT to do this..."
-- Include: Time-lost calculations
-
-**Day 191: "How Do I Know You're Legit?"**
-- Content Type: Trust building
-- Prompt: "Address skepticism about your credibility"
-- Hook: "You're right to be skeptical. Here's proof..."
-- Include: Credentials, results, guarantees
-
-**Day 195: "I'm Not Ready Yet"**
-- Content Type: Urgency creation
-- Prompt: "Address the 'later' objection"
-- Hook: "When IS the right time?"
-- Show: Cost of waiting
+<div class="box">
+<div class="box-title">⭐ Days 197-224 Topics</div>
+<ul>
+<li>Client transformation stories</li>
+<li>Before and after compilations</li>
+<li>Client interview series</li>
+<li>Unexpected outcomes clients experienced</li>
+<li>"Where are they now" updates</li>
+<li>Client appreciation features</li>
+<li>Success celebration posts</li>
+<li>Client-submitted content reshares</li>
+<li>Anniversary milestones with clients</li>
+<li>Dream client success story</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# MONTH 11: URGENCY & SCARCITY
-## Theme: "The Time To Act Is Now"
+## Month 9: Industry Trends
 
-### Weekly Themes:
-- Week 1: Cost of Delay
-- Week 2: Limited Opportunities
-- Week 3: Season/Timing
-- Week 4: Call to Action
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">9</div>
+<div class="month-theme">Theme: "What's Coming Next"</div>
+</div>
 
-### Sample Day Prompts:
+### Week 1-4 Content Ideas
 
-**Day 201: Every Day Costs You**
-- Content Type: Urgency calculation
-- Prompt: "Calculate daily cost of inaction"
-- Hook: "Every day you wait costs you $X..."
-- Make: Delay painful
-
-**Day 208: Spots Are Limited**
-- Content Type: Scarcity announcement
-- Prompt: "Explain capacity constraints"
-- Hook: "I can only take X clients because..."
-- Reason: Quality over quantity
-
-**Day 215: The Perfect Timing Myth**
-- Content Type: Action encouragement
-- Prompt: "Debunk waiting for 'the right time'"
-- Hook: "Stop waiting for the perfect moment..."
-- Push: Action over perfection
+<div class="box">
+<div class="box-title">📈 Days 225-252 Topics</div>
+<ul>
+<li>Industry predictions for next year</li>
+<li>New technologies affecting your field</li>
+<li>Regulatory changes to watch</li>
+<li>Market trends and their impact</li>
+<li>Your take on industry news</li>
+<li>Conference/event insights</li>
+<li>Emerging best practices</li>
+<li>What leading experts are saying</li>
+<li>How AI is changing your industry</li>
+<li>Preparing for future changes</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# MONTH 12: YEAR IN REVIEW
-## Theme: "Celebrate & Continue"
+## Month 10: Objection Handling
 
-### Weekly Themes:
-- Week 1: Year Highlights
-- Week 2: Client Celebrations
-- Week 3: Lessons Learned
-- Week 4: Next Year Preview
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">10</div>
+<div class="month-theme">Theme: "Let's Talk About Your Concerns"</div>
+</div>
 
-### Sample Day Prompts:
+### Week 1-4 Content Ideas
 
-**Day 221: Our Best Year Yet**
-- Content Type: Celebration post
-- Prompt: "Share aggregate year results"
-- Hook: "In 2024, together we achieved..."
-- Include: Total clients, total impact
-
-**Day 227: Top 10 Transformations**
-- Content Type: Compilation
-- Prompt: "Highlight best client results"
-- Hook: "The 10 most incredible transformations this year..."
-- Carousel: One per slide
-
-**Day 233: What I Learned**
-- Content Type: Reflection
-- Prompt: "Share your professional growth"
-- Hook: "The biggest lesson I learned this year..."
-- Creates: Relatability
-
-**Day 240: What's Coming Next Year**
-- Content Type: Preview/Teaser
-- Prompt: "Build excitement for next year"
-- Hook: "2025 is going to be even bigger because..."
-- CTA: Start engagement for new year
+<div class="box">
+<div class="box-title">💬 Days 253-280 Topics</div>
+<ul>
+<li>"I can't afford it" response</li>
+<li>"I don't have time" response</li>
+<li>"I need to think about it" response</li>
+<li>"I've tried before and it didn't work" response</li>
+<li>"My situation is different" response</li>
+<li>"I'm scared/nervous" response</li>
+<li>"Is it really worth it?" response</li>
+<li>"I'll do it later" response</li>
+<li>"I need to ask my spouse" response</li>
+<li>Addressing every common hesitation</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# CONTENT TYPE REFERENCE GUIDE
+## Month 11: Urgency & Action
 
-## Video Content Formulas
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">11</div>
+<div class="month-theme">Theme: "The Time Is NOW"</div>
+</div>
 
-### The Hook-Value-CTA (60 seconds)
-```
-0-5s: Pattern interrupt hook
-5-45s: Deliver one clear value point
-45-60s: Simple call to action
-```
+### Week 1-4 Content Ideas
 
-### The Story Arc (2-3 minutes)
-```
-0-15s: Set the scene
-15-60s: Build the problem/tension
-60-120s: Reveal the solution/transformation
-120-180s: Lesson + CTA
-```
-
-### The Tutorial (3-5 minutes)
-```
-0-30s: What you'll learn + why it matters
-30s-4m: Step-by-step teaching
-4m-5m: Recap + next steps
-```
-
----
-
-## Carousel/Slide Formulas
-
-### The Numbered List
-```
-Slide 1: "[Number] [Topic] to [Result]"
-Slides 2-8: One point per slide
-Final Slide: CTA
-```
-
-### The Before/After
-```
-Slide 1: Hook question
-Slide 2: The "before" state
-Slide 3-5: The transformation steps
-Slide 6: The "after" state
-Slide 7: Your CTA
-```
-
-### The Story Carousel
-```
-Slide 1: Opening hook
-Slides 2-6: Story progression
-Slide 7: The lesson
-Slide 8: CTA
-```
+<div class="box">
+<div class="box-title">⚡ Days 281-308 Topics</div>
+<ul>
+<li>Why waiting is costing you</li>
+<li>Limited availability announcements</li>
+<li>End of year deadline content</li>
+<li>Special offers with deadlines</li>
+<li>Price increase warnings</li>
+<li>Capacity updates</li>
+<li>Seasonal urgency factors</li>
+<li>Success stories of quick decision makers</li>
+<li>The true cost of delay</li>
+<li>Final call content series</li>
+</ul>
+</div>
+</div>
 
 ---
 
-## Text Post Formulas
+## Month 12: Year Review & Future
 
-### The Hot Take
-```
-Line 1: Controversial statement
-Lines 2-5: Supporting argument
-Line 6: Invitation to discuss
-```
+<div class="month-card">
+<div class="month-header">
+<div class="month-number">12</div>
+<div class="month-theme">Theme: "Celebrating & Looking Ahead"</div>
+</div>
 
-### The Value Thread
-```
-Line 1: Promise of value
-Lines 2-10: Deliver numbered points
-Final: CTA or discussion prompt
-```
+### Week 1-4 Content Ideas
 
-### The Story Post
-```
-Line 1: Hook into story
-Lines 2-8: Story arc
-Line 9: Lesson/moral
-Line 10: Engagement question
-```
-
----
-
-# NICHE ADAPTATION GUIDE
-
-## For Every Prompt, Consider:
-
-### Lawyers
-- Replace "clients" with "cases" when relevant
-- Focus on outcomes: settlements, wins, resolutions
-- Emphasize trust, confidentiality, expertise
-- Use legal terminology appropriately
-
-### Dentists
-- Visual transformations are powerful
-- Focus on comfort, technology, results
-- Address fear and anxiety openly
-- Emphasize health + aesthetics balance
-
-### Coaches/Consultants
-- Results = revenue, clarity, transformation
-- Personal stories resonate strongly
-- Focus on methodology and frameworks
-- Emphasize accountability and support
-
-### Real Estate
-- Results = sales price, speed, experience
-- Market knowledge is key differentiator
-- Local expertise matters
-- Visual content (properties) works well
-
-### E-commerce
-- Results = revenue, conversions, growth
-- Data and metrics are crucial
-- Before/after revenue comparisons
-- Scale and efficiency themes
-
-### General Service Providers
-- Focus on problem → solution → result
-- Testimonials are gold
-- Process transparency builds trust
-- Emphasize convenience and expertise
+<div class="box">
+<div class="box-title">🎉 Days 309-365 Topics</div>
+<ul>
+<li>Year in review highlights</li>
+<li>Best moments from this year</li>
+<li>Lessons learned</li>
+<li>Client success compilation</li>
+<li>Thank you to your community</li>
+<li>Goals for next year</li>
+<li>Predictions for the coming year</li>
+<li>New services/offerings preview</li>
+<li>Holiday-themed content</li>
+<li>New Year's resolution content</li>
+<li>End of year special offers</li>
+<li>Countdown to new year</li>
+</ul>
+</div>
+</div>
 
 ---
 
-# CONTENT BATCHING STRATEGY
+## Content Format Rotation
 
-## The 4-Hour Content Week
-
-### Hour 1: Planning
-- Review week's prompts
-- Gather any needed resources
-- Outline all content
-
-### Hour 2: Long-Form Creation
-- Record main video (1-2 pieces)
-- Write detailed posts (2-3 pieces)
-
-### Hour 3: Short-Form Creation
-- Create reels/shorts
-- Design carousels
-- Write quick posts
-
-### Hour 4: Scheduling
-- Load into scheduler
-- Set publish times
-- Queue stories
+<div class="box box-gold">
+<div class="box-title">📱 Mix These Formats Weekly</div>
+<table>
+<tr><th>Format</th><th>When to Use</th><th>Goal</th></tr>
+<tr><td>Talking Head Video</td><td>Tips, stories, responses</td><td>Build connection</td></tr>
+<tr><td>Text on Screen</td><td>Stats, quotes, hooks</td><td>Quick engagement</td></tr>
+<tr><td>Carousel/Slides</td><td>Lists, steps, comparisons</td><td>Save and share</td></tr>
+<tr><td>B-Roll with Voiceover</td><td>Process demos</td><td>Show expertise</td></tr>
+<tr><td>Screen Recording</td><td>Tutorials</td><td>Teach something</td></tr>
+<tr><td>Duet/Stitch</td><td>Reactions, corrections</td><td>Ride trends</td></tr>
+<tr><td>Interview Style</td><td>Client features</td><td>Social proof</td></tr>
+</table>
+</div>
 
 ---
 
-## Optimal Posting Schedule
+## Weekly Posting Schedule Template
 
-### Monday
-- Time: 8-9am
-- Content: Educational/value-heavy
-- Purpose: Start week strong
-
-### Tuesday
-- Time: 12-1pm
-- Content: Social proof/testimonial
-- Purpose: Build credibility
-
-### Wednesday
-- Time: 6-7pm
-- Content: Behind-scenes/personal
-- Purpose: Connection building
-
-### Thursday
-- Time: 10-11am
-- Content: Quick tips/actionable
-- Purpose: Provide quick wins
-
-### Friday
-- Time: 3-4pm
-- Content: Engagement/fun
-- Purpose: Weekend interaction
+<div class="box">
+<div class="box-title">📅 Optimal Posting Rhythm</div>
+<table>
+<tr><th>Day</th><th>Content Type</th><th>Purpose</th></tr>
+<tr><td>Monday</td><td>Educational/Value</td><td>Start week strong with expertise</td></tr>
+<tr><td>Tuesday</td><td>Story/Personal</td><td>Build connection mid-week</td></tr>
+<tr><td>Wednesday</td><td>Myth-Bust/Controversial</td><td>Drive engagement and shares</td></tr>
+<tr><td>Thursday</td><td>Social Proof</td><td>Build trust with results</td></tr>
+<tr><td>Friday</td><td>Call-to-Action</td><td>Weekend decision time</td></tr>
+<tr><td>Weekend</td><td>Behind-the-Scenes/Casual</td><td>Humanize your brand</td></tr>
+</table>
+</div>
 
 ---
 
-# MONTHLY PLANNING TEMPLATE
+## Quick-Start Prompts for Any Day
 
-## Month: _____________
-
-### Theme: _____________
-
-### Goals:
-1. _____________
-2. _____________
-3. _____________
-
-### Key Content Pieces:
-- Main video topic: _____________
-- Case study to feature: _____________
-- Behind-scenes idea: _____________
-
-### Promotions/Offers:
-- What's available: _____________
-- When to push: _____________
-
-### Content to Repurpose:
-- From: _____________
-- Into: _____________
+<div class="box box-gold">
+<div class="box-title">💡 Stuck? Use These Starters</div>
+<ul>
+<li>"The #1 thing I wish you knew about [topic]..."</li>
+<li>"Stop doing [common mistake] right now. Here's why..."</li>
+<li>"I see this mistake every single day..."</li>
+<li>"Here's what happens when you ignore [problem]..."</li>
+<li>"Most [professionals] won't tell you this, but..."</li>
+<li>"The question I get asked most often is..."</li>
+<li>"If you're dealing with [problem], watch this..."</li>
+<li>"This changed everything for my client..."</li>
+<li>"I was wrong about [topic]. Here's the truth..."</li>
+<li>"3 signs you need [your service]..."</li>
+</ul>
+</div>
 
 ---
 
-# WEEKLY TRACKING SHEET
-
-| Day | Content Type | Topic | Posted | Engagement |
-|-----|--------------|-------|--------|------------|
-| Mon | | | [ ] | |
-| Tue | | | [ ] | |
-| Wed | | | [ ] | |
-| Thu | | | [ ] | |
-| Fri | | | [ ] | |
-
-### Weekly Notes:
-- What worked: _____________
-- What didn't: _____________
-- Ideas for next week: _____________
-
----
-
-# CONTENT IDEA BANK
-
-## Emergency Content Ideas
-When you're stuck, use these:
-
-1. Answer a recent DM question publicly
-2. Share a client win from this week
-3. Record a day-in-the-life
-4. React to industry news
-5. Share a tool you love
-6. Post a throwback to an old win
-7. Share a mistake you made
-8. Answer "How did you get started?"
-9. Share your workspace
-10. Post your morning routine
-
-## Evergreen Topics to Recycle
-These work any time:
-
-1. "X mistakes to avoid"
-2. "How to [achieve result]"
-3. "What I wish I knew when..."
-4. "[Number] tips for [topic]"
-5. "The truth about [myth]"
-6. "Why [common belief] is wrong"
-7. "My process for [task]"
-8. "Client transformation story"
-9. "Day in the life"
-10. "FAQ answers"
-
----
-
-# HASHTAG STRATEGY
-
-## Tier 1: Broad Industry (2-3 per post)
-Large reach, high competition
-- #[Industry]Tips
-- #[Profession]Life
-- #[Service]Expert
-
-## Tier 2: Niche Specific (3-4 per post)
-Medium reach, medium competition
-- #[City][Profession]
-- #[Specific Service]
-- #[Target Audience]
-
-## Tier 3: Branded (1-2 per post)
-Your unique hashtags
-- #YourMethodName
-- #YourBrandTag
-
-## Tier 4: Trending (0-1 per post)
-When relevant only
-- Check current trends
-- Use ONLY if genuinely relevant
-
----
-
-# ENGAGEMENT STRATEGY
-
-## The 15-Minute Rule
-
-Before posting:
-- 5 min: Engage on your niche's content
-- 5 min: Reply to comments on your posts
-- 5 min: Send DMs to engaged followers
-
-After posting:
-- 15 min: Stay active, reply to comments
-- Every hour for 3 hours: Check + reply
-
----
-
-## Comment Response Templates
-
-### For Positive Comments:
-"Thank you [Name]! [Specific response to what they said]. What's your experience with [topic]?"
-
-### For Questions:
-"Great question [Name]! [Brief answer]. Want me to do a full video on this?"
-
-### For Skepticism:
-"I hear you [Name]. [Acknowledge concern]. Happy to share more context - what specifically would help?"
-
----
-
-# REPURPOSING MATRIX
-
-## From One Video, Create:
-
-1. Full video → YouTube/IGTV
-2. Key clip 1 → Reel/TikTok
-3. Key clip 2 → Reel/TikTok
-4. Key clip 3 → Reel/TikTok
-5. Transcript → Blog post
-6. Key points → Carousel
-7. Quote → Image post
-8. Hook → Twitter/Thread
-9. Behind-scenes → Story
-10. Topic → Newsletter
-
-**One video = 10+ pieces of content**
-
----
-
-# AI CLONE CONTENT PROMPTS
-
-## Video Script Generation
-```
-"Create a 60-second video script about [topic] for a [profession] targeting [audience]. Include a hook that grabs attention in the first 3 seconds, deliver one clear valuable tip, and end with a call to action to [desired action]."
-```
-
-## Carousel Creation
-```
-"Create an 8-slide carousel about [topic]. Slide 1 should be a hook question. Slides 2-7 should each contain one key point with a brief explanation. Slide 8 should be a CTA. Keep each slide to under 20 words."
-```
-
-## Caption Writing
-```
-"Write a caption for a post about [topic] targeting [audience]. Start with a hook, provide value in the middle, and end with a question to drive engagement. Include a CTA to [action]. Keep it under 150 words."
-```
-
----
-
-# FINAL NOTES
-
-## The Compound Effect
-
-Day 1: 1 piece of content = 1 impression
-Day 30: 30 pieces = growing audience
-Day 90: 90 pieces = real momentum
-Day 180: 180 pieces = authority established
-Day 365: 365 pieces = dominant presence
-
-**Consistency beats perfection.**
-
-## Your Only Job
-
-Pick the day's prompt.
-Adapt it to your niche.
-Create. Post. Engage.
-Repeat.
-
-**That's it. That's the system.**
-
----
-
-# CLOSING PAGE
-
-```
-[FULL PAGE DARK BACKGROUND]
-
-"Content is king, but consistency is the kingdom."
-
-You now have:
-- 365 days of content ideas
-- Zero excuses
-- Complete system
-
-Your Next Step:
-Open to Month 1, Day 1.
-Create that piece of content.
-Post it today.
-
-Then do it again tomorrow.
-
-See you at the top.
-
-[CloneYourself AI Logo]
-
-www.cloneyourselfwithai.com
-```
-
----
-
-# APPENDIX: QUICK-REFERENCE CALENDARS
-
-[Include 12 monthly calendar grids with daily content type icons]
-
-## Legend:
-- V = Video content
-- C = Carousel
-- T = Text post
-- S = Story only
-- L = Live/interactive
-- R = Repurposed content
-
----
-
-*This planner is your content roadmap. Follow it and you'll never struggle with "what should I post?" again.*
+<div class="footer">
+<div class="footer-logo">CloneYourself</div>
+<p>365 Days of Content Planner</p>
+<p style="margin-top:1rem;color:var(--gold);">Plan Once. Create Forever.</p>
+</div>
+]]>
