@@ -32,7 +32,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'Your website is your 24/7 intake specialist. These 2 premium templates are specifically designed for law firms - one for lead generation, one for portfolio showcase. Just drag, drop, and customize. One attorney launched his new site in 2 hours and signed 8 new clients the first week. No developers. No coding. No waiting.',
     icon: 'Globe',
     iconColor: '#d4af37', // Gold
-    image: '/images/bonuses/website-templates.jpeg',
+    image: '/images/bonuses/website-templates.webp',
     category: 'marketing',
   },
   {
@@ -43,7 +43,7 @@ export const LAWYER_BONUS_PRODUCTS: LawyerBonusProduct[] = [
     description: 'Track your income, expenses, and profit in one beautiful dashboard. See your 6-month trends, profit margins, and streaks at a glance. Set monthly goals and watch your practice grow. One attorney discovered he was losing $5,800/month on underpriced services - and fixed it in a week. Know your numbers. Grow your profits.',
     icon: 'TrendingUp',
     iconColor: '#22c55e', // Green
-    image: '/images/bonuses/profit-tracker.jpeg',
+    image: '/images/bonuses/profit-tracker.webp',
     category: 'operations',
   },
   {
