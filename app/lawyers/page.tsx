@@ -1745,7 +1745,7 @@ export default function LawyerLandingPage() {
                                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                Secure Firm Access
+                Claim Your Complete Bundle
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
 
@@ -2023,8 +2023,8 @@ export default function LawyerLandingPage() {
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <span className="sm:hidden">Secure Firm Access</span>
-                  <span className="hidden sm:inline">Secure Firm Access</span>
+                  <span className="sm:hidden">Start Creating Now</span>
+                  <span className="hidden sm:inline">Start Creating AI Videos</span>
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
@@ -2588,7 +2588,7 @@ export default function LawyerLandingPage() {
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-amber-500/25"
               >
                 <Zap className="w-5 h-5" />
-                Secure Firm Access
+                Choose the Optimal Path
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -2743,7 +2743,7 @@ export default function LawyerLandingPage() {
                                 className="w-full max-w-md mx-auto bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                Secure Firm Access
+                Invest in Your Practice
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
@@ -3222,7 +3222,7 @@ export default function LawyerLandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
-                  Secure Firm Access
+                  Eliminate the Friction Now
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
@@ -3294,7 +3294,7 @@ export default function LawyerLandingPage() {
                                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
-                Secure Firm Access
+                Reclaim Your Billable Hours
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -3374,7 +3374,7 @@ export default function LawyerLandingPage() {
             onClick={trackInitiateCheckout}
                         className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/30 active:scale-[0.98] transition-transform"
           >
-            <span>Secure Firm Access</span>
+            <span>Get Started</span>
             <span className="text-amber-200 font-bold">$47.82</span>
             <ArrowRight className="w-5 h-5" />
           </a>
