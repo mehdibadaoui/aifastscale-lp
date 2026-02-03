@@ -5,8 +5,8 @@ import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { getLawyerUpsellBonuses } from '../../config/lawyer-bonus-products'
 
-// Whop checkout link for Upsell (redirects to universal members after purchase)
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_97EdLFRTEConC?d=https://aifastscale.com/members'
+// Whop checkout link for Upsell (Whop settings redirect to thank-you)
+const CHECKOUT_LINK = 'https://whop.com/checkout/plan_97EdLFRTEConC'
 
 export default function LawyerUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

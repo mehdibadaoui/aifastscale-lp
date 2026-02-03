@@ -3,8 +3,8 @@
 import { useEffect } from 'react'
 import { Loader2, Lock } from 'lucide-react'
 
-// Whop checkout URL - redirects to UPSELL after main purchase
-const WHOP_CHECKOUT_URL = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj?d=https://aifastscale.com/lawyers/upsell'
+// Whop checkout URL (Whop settings redirect to upsell)
+const WHOP_CHECKOUT_URL = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'
 
 // Track InitiateCheckout before redirect
 const trackInitiateCheckout = () => {
