@@ -546,8 +546,15 @@ function ThankYouContent() {
 
       </div>
 
-      {/* CSS for animations */}
+      {/* CSS for animations and browser compatibility */}
       <style jsx global>{`
+        /* Fallback for browsers without backdrop-filter */
+        @supports not (backdrop-filter: blur(1px)) {
+          .backdrop-blur-sm, .backdrop-blur-xl {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+          }
+        }
+
         @keyframes confetti {
           0% {
             transform: translateY(0) rotate(0deg);
