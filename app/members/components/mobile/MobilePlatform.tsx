@@ -6,13 +6,14 @@ import { MobileDashboard } from './MobileDashboard'
 import { MobileCourse } from './MobileCourse'
 import { MobileTracker } from './MobileTracker'
 import { MobileBonuses } from './MobileBonuses'
-import { Trophy, Settings, HelpCircle, ArrowLeft } from 'lucide-react'
+import { ResourcesSection } from '../resources/ResourcesSection'
+import { Trophy, Settings, HelpCircle, ArrowLeft, Wrench } from 'lucide-react'
 
 // ============================================
 // MOBILE PLATFORM WRAPPER
 // ============================================
 
-type MobileSection = 'dashboard' | 'course' | 'tracker' | 'bonuses' | 'achievements' | 'settings' | 'support'
+type MobileSection = 'dashboard' | 'course' | 'tracker' | 'bonuses' | 'achievements' | 'resources' | 'settings' | 'support'
 
 interface MobilePlatformProps {
   state: {
@@ -187,6 +188,13 @@ export const MobilePlatform = memo(function MobilePlatform({ state }: MobilePlat
           />
         )}
 
+        {mobileSection === 'resources' && (
+          <MobileResources
+            state={state}
+            onBack={() => handleSectionChange('dashboard')}
+          />
+        )}
+
         {mobileSection === 'achievements' && (
           <MobileAchievements
             achievements={state.achievements || []}
@@ -288,6 +296,48 @@ const MobileAchievements = memo(function MobileAchievements({
             )}
           </div>
         ))}
+      </div>
+    </div>
+  )
+})
+
+// ============================================
+// MOBILE RESOURCES PAGE
+// ============================================
+
+const MobileResources = memo(function MobileResources({
+  state,
+  onBack
+}: {
+  state: any
+  onBack: () => void
+}) {
+  return (
+    <div className="min-h-screen pb-24 bg-zinc-950" style={{ backgroundColor: '#09090b', minHeight: '100dvh', overscrollBehavior: 'none' }}>
+      {/* Header */}
+      <div className="sticky top-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10 px-4 py-4">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBack}
+            className="p-2 rounded-xl bg-white/5 border border-white/10 active:bg-white/10 transition-all"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+              <Wrench className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-black text-white">AI Tools & Resources</h1>
+              <p className="text-sm text-white/50">ChatGPT, prompts & downloads</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Resources Content */}
+      <div className="px-4 py-6">
+        <ResourcesSection state={{ config: state.config }} />
       </div>
     </div>
   )

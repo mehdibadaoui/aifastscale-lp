@@ -22,6 +22,10 @@ import { PremiumCourse } from '../course/PremiumCourse'
 import { PremiumDashboard } from '../dashboard/PremiumDashboard'
 import { PremiumBonuses } from '../bonuses/PremiumBonuses'
 import { MobilePlatform } from '../mobile/MobilePlatform'
+import { ResourcesSection } from '../resources/ResourcesSection'
+
+// Re-export ResourcesSection
+export { ResourcesSection }
 
 // ============================================
 // MOBILE DETECTION HOOK

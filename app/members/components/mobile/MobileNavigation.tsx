@@ -3,7 +3,7 @@
 import { memo, useState, useEffect } from 'react'
 import {
   Home, Video, PiggyBank, Gift, User, MoreHorizontal,
-  Settings, HelpCircle, LogOut, Trophy, X
+  Settings, HelpCircle, LogOut, Trophy, X, Wrench
 } from 'lucide-react'
 
 // ============================================
@@ -168,6 +168,7 @@ const MoreMenuSheet = memo(function MoreMenuSheet({
   const haptic = useHapticFeedback()
 
   const menuItems = [
+    { icon: Wrench, label: 'AI Tools & Resources', section: 'resources', desc: 'ChatGPT, prompts & downloads' },
     { icon: Trophy, label: 'Achievements', section: 'achievements', badge: `${unlockedBadges}/${totalBadges}` },
     { icon: Settings, label: 'Settings', section: 'settings' },
     { icon: HelpCircle, label: 'Help & Support', section: 'support' },
@@ -208,6 +209,9 @@ const MoreMenuSheet = memo(function MoreMenuSheet({
                 </div>
                 <div className="flex-1 text-left">
                   <p className="font-bold text-white">{item.label}</p>
+                  {item.desc && (
+                    <p className="text-sm text-white/50">{item.desc}</p>
+                  )}
                 </div>
                 {item.badge && (
                   <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold">

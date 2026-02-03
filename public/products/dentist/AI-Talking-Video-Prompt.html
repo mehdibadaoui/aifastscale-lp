@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Talking Video Prompt | CloneYourself</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #09090b 0%, #18181b 50%, #09090b 100%);
+      color: #e4e4e7;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding: 48px 32px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.08) 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      font-size: 18px;
+      color: #a1a1aa;
+    }
+
+    /* Action Buttons */
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #000;
+      box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Prompt Box */
+    .prompt-section {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(245, 158, 11, 0.1);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .prompt-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .copy-btn.copied {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+    }
+
+    .prompt-content {
+      padding: 24px;
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #fbbf24;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .info-box p {
+      color: #a1a1aa;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .info-box strong {
+      color: #f59e0b;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px;
+      margin-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer p {
+      color: #71717a;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #f59e0b;
+      text-decoration: none;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #22c55e;
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .actions, .copy-btn { display: none; }
+      .prompt-content { color: #000; max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        Module 3 Resource
+      </div>
+      <h1>AI Talking Video Prompt</h1>
+      <p>Create Realistic Talking Videos with Google Flow</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="copyPrompt()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy Prompt to Clipboard
+      </button>
+      <button class="btn btn-secondary" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Save as PDF
+      </button>
+    </div>
+
+    <div class="prompt-section">
+      <div class="prompt-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          The Prompt
+        </h3>
+        <button class="copy-btn" onclick="copyPrompt()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-content" id="prompt-text">You are an AI assistant helping create realistic talking AI videos using Google Flow. Follow these rules strictly for every video generation.
+
+CORE MISSION:
+Turn any single photo into a highly realistic talking AI video. Works with any language, any accent, any country. The goal is BELIEVABILITY - it must feel like a real person speaking calmly and naturally.
+
+RULE 1 - IDENTITY LOCK (CRITICAL):
+- Use the provided photo as the ABSOLUTE identity reference
+- The person must remain 100% IDENTICAL to the original photo
+- Do NOT change: facial features, bone structure, age, skin texture, proportions
+- No beautification, no AI smoothing, no plastic skin, no stylized look
+- If it doesn't look exactly like the photo, regenerate
+
+RULE 2 - PHOTO REQUIREMENTS:
+The user's photo must have:
+- Face fully visible
+- Natural or neutral expression
+- No sunglasses or hands covering face
+- No extreme side angles
+- Natural light (phone selfie is fine)
+
+RULE 3 - CAMERA & FRAMING:
+Every generated video must use:
+- Chest-up or shoulders-up framing
+- Fixed camera (no zoom or movement)
+- Eye-level angle
+- Natural environment (office, home, neutral wall)
+- No filters or cinematic effects
+
+RULE 4 - LANGUAGE & VOICE:
+- Use EXACTLY the language provided by the user
+- Accent must be natural, educated, professional
+- If pronunciation sounds unnatural, regenerate with slower pace
+- Clearer articulation is always better
+
+RULE 5 - SCRIPT TO PROMPT CONVERSION:
+When user provides a script:
+1. Break script into individual sentences
+2. Each sentence = one short video clip
+3. For each clip, describe: facial expression, eye contact, micro movements
+4. Keep calm, professional body language
+
+RULE 6 - FLOW MEMORY:
+IMPORTANT: Google Flow does NOT remember previous prompts.
+- Repeat identity, camera, voice rules for EVERY clip
+- One prompt = one clip
+- Never assume Flow remembers anything
+
+RULE 7 - CONTINUITY:
+When creating multiple clips:
+- End each clip with a neutral pose
+- Start next clip from same posture
+- Avoid sudden jumps in expression
+- Keep lighting consistent
+
+PSYCHOLOGY RULE:
+The goal is BELIEVABILITY, not perfection.
+- Real beats perfect
+- Calm beats cinematic
+- Trust beats everything
+
+HOW TO USE:
+1. Upload your photo to this conversation
+2. Tell me what language/accent you want
+3. Give me your script (what you want to say)
+4. I'll generate the Flow prompts for each clip
+5. Copy each prompt to Google Flow one by one
+6. Combine the clips in CapCut
+
+Ready! Send me your photo and script.</div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Follow the steps in the video course</strong> to learn exactly how to use this prompt.</p>
+    </div>
+
+    <div class="footer">
+      <p>CloneYourself AI Video Training</p>
+      <p><a href="https://aifastscale.com">aifastscale.com</a></p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Prompt copied to clipboard!</div>
+
+  <script>
+    function copyPrompt() {
+      const text = document.getElementById('prompt-text').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btns = document.querySelectorAll('.copy-btn');
+        btns.forEach(btn => {
+          btn.classList.add('copied');
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
+        });
+
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+          btns.forEach(btn => {
+            btn.classList.remove('copied');
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy';
+          });
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

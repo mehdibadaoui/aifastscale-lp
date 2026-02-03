@@ -99,7 +99,7 @@ export const dentistsConfig: NicheConfig = {
       thumbnail: '/images/dentist/module-3-photo-talk.webp',
       lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
       resources: [
-        { name: 'Dentist AI Talking Video Prompt (for ChatGPT)', url: '/products/dentist/Dentist_AI_Video_Prompt.txt', type: 'file' },
+        { name: 'AI Talking Video Prompt', url: '/products/dentist/AI-Talking-Video-Prompt.html', type: 'file' },
       ],
     },
     {
@@ -113,7 +113,7 @@ export const dentistsConfig: NicheConfig = {
       thumbnail: '/images/dentist/module-4-edit-video.webp',
       lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
       resources: [
-        { name: 'Background Music Collection', url: '/products/dentist/Background music/', type: 'folder' },
+        { name: 'Background Music Collection', url: '/products/dentist/background-music/', type: 'folder' },
       ],
     },
     {
@@ -127,7 +127,7 @@ export const dentistsConfig: NicheConfig = {
       thumbnail: '/images/dentist/module-5-realistic-images.webp',
       lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
       resources: [
-        { name: 'Dentist AI Image Generation Prompt', url: '/products/dentist/Dentist_AI_Image_Prompt.txt', type: 'file' },
+        { name: 'AI Image Generation Prompt', url: '/products/dentist/AI-Image-Generation-Prompt.html', type: 'file' },
       ],
     },
     {

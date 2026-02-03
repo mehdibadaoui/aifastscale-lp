@@ -115,11 +115,11 @@ export function usePlatformState(config: NicheConfig) {
   const [isBlocked, setIsBlocked] = useState(false)
 
   // Navigation
-  const [activeSection, setActiveSectionRaw] = useState<'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker'>('dashboard')
+  const [activeSection, setActiveSectionRaw] = useState<'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker' | 'resources'>('dashboard')
   const [currentModuleIndex, setCurrentModuleIndexRaw] = useState(0)
 
   // Wrapper to scroll to top when changing sections
-  const setActiveSection = useCallback((section: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker') => {
+  const setActiveSection = useCallback((section: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker' | 'resources') => {
     setActiveSectionRaw(section)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])

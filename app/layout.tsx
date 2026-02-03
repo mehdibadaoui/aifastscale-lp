@@ -323,8 +323,8 @@ export default function RootLayout({
         className={`${inter.variable} ${plusJakarta.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
         {children}
-        {/* GDPR-compliant cookie consent banner */}
-        <CookieConsent />
+        {/* Cookie consent disabled - was bothering users */}
+        {/* <CookieConsent /> */}
       </body>
     </html>
   )

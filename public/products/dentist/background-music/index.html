@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Music Collection | CloneYourself</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #09090b 0%, #18181b 50%, #09090b 100%);
+      color: #e4e4e7;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 48px 32px;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #22c55e, #10b981);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      font-size: 18px;
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+
+    .track-count {
+      font-size: 14px;
+      color: #22c55e;
+      margin-bottom: 24px;
+    }
+
+    /* Download All Button */
+    .download-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #22c55e, #10b981);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+    }
+
+    .download-all:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(34, 197, 94, 0.4);
+    }
+
+    .download-all svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Track List */
+    .tracks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .track {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s;
+    }
+
+    .track:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .track-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .track-icon svg {
+      width: 24px;
+      height: 24px;
+      color: #fff;
+    }
+
+    /* Different colors for each track type */
+    .icon-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .icon-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .icon-purple { background: linear-gradient(135deg, #a855f7, #9333ea); }
+    .icon-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .icon-green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .icon-pink { background: linear-gradient(135deg, #ec4899, #db2777); }
+    .icon-cyan { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    .icon-orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .icon-indigo { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+    .icon-teal { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+    .icon-rose { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+    .icon-lime { background: linear-gradient(135deg, #84cc16, #65a30d); }
+    .icon-sky { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+    .icon-violet { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .icon-fuchsia { background: linear-gradient(135deg, #d946ef, #c026d3); }
+    .icon-emerald { background: linear-gradient(135deg, #10b981, #059669); }
+
+    .track-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .track-desc {
+      font-size: 13px;
+      color: #71717a;
+    }
+
+    .track-actions {
+      flex-shrink: 0;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-download:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-download svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Info Box */
+    .info-box {
+      margin-top: 40px;
+      padding: 24px;
+      background: rgba(34, 197, 94, 0.05);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .info-box p {
+      color: #a1a1aa;
+      font-size: 15px;
+    }
+
+    .info-box strong {
+      color: #22c55e;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer p {
+      color: #71717a;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #22c55e;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .track {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .track-actions {
+        width: 100%;
+      }
+
+      .btn-download {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+        Module 4 Resource
+      </div>
+      <h1>Background Music Collection</h1>
+      <p>Royalty-free music for your AI videos</p>
+      <div class="track-count">16 Premium Tracks Included</div>
+
+      <a href="All-Background-Music.zip" download class="download-all">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download All (ZIP)
+      </a>
+    </div>
+
+    <div class="tracks">
+      <!-- Track 1 -->
+      <div class="track">
+        <div class="track-icon icon-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Soft Piano</div>
+          <div class="track-desc">Calm, professional - Perfect for educational content</div>
+        </div>
+        <div class="track-actions">
+          <a href="01-Soft-Piano.m4a" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 2 -->
+      <div class="track">
+        <div class="track-icon icon-red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Energetic Phonk</div>
+          <div class="track-desc">High energy - Great for TikTok & Reels</div>
+        </div>
+        <div class="track-actions">
+          <a href="02-Energetic-Phonk.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 3 -->
+      <div class="track">
+        <div class="track-icon icon-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Modern Phonk</div>
+          <div class="track-desc">Trendy vibes - Perfect for transformations</div>
+        </div>
+        <div class="track-actions">
+          <a href="03-Modern-Phonk.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 4 -->
+      <div class="track">
+        <div class="track-icon icon-amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Cinematic Time</div>
+          <div class="track-desc">Emotional & inspiring - Great for intros</div>
+        </div>
+        <div class="track-actions">
+          <a href="04-Cinematic-Time.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 5 -->
+      <div class="track">
+        <div class="track-icon icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Smooth Jazz</div>
+          <div class="track-desc">Relaxed & sophisticated - Great for testimonials</div>
+        </div>
+        <div class="track-actions">
+          <a href="05-Smooth-Jazz.m4a" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 6 -->
+      <div class="track">
+        <div class="track-icon icon-pink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Hip-Hop Instrumental</div>
+          <div class="track-desc">Cool & confident - Perfect for brand content</div>
+        </div>
+        <div class="track-actions">
+          <a href="06-Hip-Hop-Instrumental.m4a" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 7 -->
+      <div class="track">
+        <div class="track-icon icon-cyan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Drill Beat</div>
+          <div class="track-desc">Hard-hitting - Great for before/after reveals</div>
+        </div>
+        <div class="track-actions">
+          <a href="07-Drill-Beat.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 8 -->
+      <div class="track">
+        <div class="track-icon icon-orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">UK Drill</div>
+          <div class="track-desc">Intense energy - Perfect for hype content</div>
+        </div>
+        <div class="track-actions">
+          <a href="08-UK-Drill.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 9 -->
+      <div class="track">
+        <div class="track-icon icon-indigo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Infinity</div>
+          <div class="track-desc">Atmospheric & dreamy - Great for storytelling</div>
+        </div>
+        <div class="track-actions">
+          <a href="09-Infinity.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 10 -->
+      <div class="track">
+        <div class="track-icon icon-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Brazilian Phonk</div>
+          <div class="track-desc">Latin vibes - Perfect for energetic edits</div>
+        </div>
+        <div class="track-actions">
+          <a href="10-Brazilian-Phonk.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 11 -->
+      <div class="track">
+        <div class="track-icon icon-rose">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Phonk Vibes</div>
+          <div class="track-desc">Classic phonk sound - Great for short clips</div>
+        </div>
+        <div class="track-actions">
+          <a href="11-Phonk-Vibes.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 12 -->
+      <div class="track">
+        <div class="track-icon icon-lime">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Epic Cinematic</div>
+          <div class="track-desc">Inspirational & powerful - Perfect for big reveals</div>
+        </div>
+        <div class="track-actions">
+          <a href="12-Epic-Cinematic.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 13 -->
+      <div class="track">
+        <div class="track-icon icon-sky">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Emotional Flow</div>
+          <div class="track-desc">Soft & touching - Great for heartfelt content</div>
+        </div>
+        <div class="track-actions">
+          <a href="13-Emotional-Flow.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 14 -->
+      <div class="track">
+        <div class="track-icon icon-violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Mood One</div>
+          <div class="track-desc">Versatile background - Works with any content</div>
+        </div>
+        <div class="track-actions">
+          <a href="14-Mood-One.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 15 -->
+      <div class="track">
+        <div class="track-icon icon-fuchsia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Mood Two</div>
+          <div class="track-desc">Upbeat background - Perfect for tutorials</div>
+        </div>
+        <div class="track-actions">
+          <a href="15-Mood-Two.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 16 -->
+      <div class="track">
+        <div class="track-icon icon-emerald">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+        </div>
+        <div class="track-info">
+          <div class="track-name">Mood Three</div>
+          <div class="track-desc">Chill background - Great for relaxed content</div>
+        </div>
+        <div class="track-actions">
+          <a href="16-Mood-Three.mp3" download class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Follow the steps in the video course</strong> to learn how to add background music to your videos in CapCut. All tracks are royalty-free and safe for commercial use!</p>
+    </div>
+
+    <div class="footer">
+      <p>CloneYourself AI Video Training</p>
+      <p><a href="https://aifastscale.com">aifastscale.com</a></p>
+    </div>
+  </div>
+</body>
+</html>

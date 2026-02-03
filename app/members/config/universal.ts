@@ -96,7 +96,7 @@ const modules: CourseModule[] = [
       'Create unlimited variations',
     ],
     resources: [
-      { name: 'AI Script Mentor GPT', url: 'https://chatgpt.com', type: 'link' },
+      { name: 'Expert Copywriter GPT', url: 'https://chatgpt.com/g/g-693ff08b15208191b94265efd521f783-dentist-expert-copywriter', type: 'link' },
     ],
   },
   {
@@ -115,7 +115,8 @@ const modules: CourseModule[] = [
       'Creating your first video',
     ],
     resources: [
-      { name: 'Google Flow', url: 'https://labs.google/fx/tools/flow', type: 'link' },
+      { name: 'Google AI Pro (1-month free trial)', url: 'https://one.google.com/about/google-ai-plans/', type: 'link' },
+      { name: 'Google Flow (AI Video Tool)', url: 'https://labs.google/fx/tools/flow', type: 'link' },
     ],
   },
   {
@@ -133,7 +134,9 @@ const modules: CourseModule[] = [
       'Generating the video',
       'Downloading and sharing',
     ],
-    resources: [],
+    resources: [
+      { name: 'AI Talking Video Prompt', url: '/products/dentist/AI-Talking-Video-Prompt.html', type: 'file' },
+    ],
   },
   {
     id: 'module-4',
@@ -151,7 +154,8 @@ const modules: CourseModule[] = [
       'Exporting for social media',
     ],
     resources: [
-      { name: 'CapCut', url: 'https://www.capcut.com', type: 'link' },
+      { name: 'CapCut (Free Video Editor)', url: 'https://www.capcut.com', type: 'link' },
+      { name: 'Background Music Collection', url: '/products/dentist/background-music/', type: 'folder' },
     ],
   },
   {
@@ -169,7 +173,9 @@ const modules: CourseModule[] = [
       'Creating variety in your content',
       'Best practices for realism',
     ],
-    resources: [],
+    resources: [
+      { name: 'AI Image Generation Prompt', url: '/products/dentist/AI-Image-Generation-Prompt.html', type: 'file' },
+    ],
   },
 ]
 

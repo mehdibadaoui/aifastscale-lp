@@ -192,7 +192,7 @@ export interface PlatformState {
   loginError: string | null
 
   // Navigation
-  activeSection: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker'
+  activeSection: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker' | 'resources'
   currentModuleIndex: number
 
   // Progress

@@ -4,7 +4,7 @@ import React, { memo, useCallback, useState, useEffect } from 'react'
 import {
   GraduationCap, Home, Video, Gift, Trophy, Star, Flame, Moon, Sun,
   Settings, LogOut, Sparkles, ArrowRight, HelpCircle, Crown, ChevronUp,
-  Eye, EyeOff, Mail, PiggyBank
+  Eye, EyeOff, Mail, PiggyBank, Wrench
 } from 'lucide-react'
 import { NicheConfig, computeDerivedConfig } from '../config'
 import { usePlatformState, useKeyboardShortcuts, PlatformStateType } from '../hooks'
@@ -13,7 +13,7 @@ import {
   KeyboardShortcutsModal, SettingsModal, CertificateModal, OnboardingTour,
   ErrorBoundary
 } from './ui'
-import { DashboardSection, CourseSection, BonusesSection, AchievementsSection } from './sections'
+import { DashboardSection, CourseSection, BonusesSection, AchievementsSection, ResourcesSection } from './sections'
 import { MobileTracker } from './mobile/MobileTracker'
 
 // ============================================
@@ -313,8 +313,8 @@ const WelcomeScreen = memo(function WelcomeScreen({ config, onStart, studentName
 
 interface NavigationProps {
   config: NicheConfig
-  activeSection: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker'
-  setActiveSection: (section: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker') => void
+  activeSection: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker' | 'resources'
+  setActiveSection: (section: 'dashboard' | 'course' | 'bonuses' | 'achievements' | 'tracker' | 'resources') => void
   totalPoints: number
   streak: number
   darkMode: boolean
@@ -335,6 +335,7 @@ const Navigation = memo(function Navigation({
   const tabs = [
     { id: 'dashboard' as const, label: 'Dashboard', icon: Home },
     { id: 'course' as const, label: 'Course', icon: Video },
+    { id: 'resources' as const, label: 'Resources', icon: Wrench },
     { id: 'tracker' as const, label: 'Tracker', icon: PiggyBank },
     { id: 'bonuses' as const, label: 'Bonuses', icon: Gift },
     { id: 'achievements' as const, label: 'Achievements', icon: Trophy },
@@ -680,6 +681,7 @@ function PremiumCoursePlatformInner({ config }: PremiumPlatformProps) {
       <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-4 sm:py-8 pb-20 sm:pb-8" role="main">
         {state.activeSection === 'dashboard' && <DashboardSection state={state} />}
         {state.activeSection === 'course' && <CourseSection state={state} />}
+        {state.activeSection === 'resources' && <ResourcesSection state={state} />}
         {state.activeSection === 'bonuses' && <BonusesSection state={state} />}
         {state.activeSection === 'achievements' && <AchievementsSection state={state} />}
         {state.activeSection === 'tracker' && <MobileTracker />}

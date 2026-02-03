@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generation Prompt | CloneYourself</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #09090b 0%, #18181b 50%, #09090b 100%);
+      color: #e4e4e7;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding: 48px 32px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.08) 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      font-size: 18px;
+      color: #a1a1aa;
+    }
+
+    /* Action Buttons */
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #000;
+      box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Prompt Box */
+    .prompt-section {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(245, 158, 11, 0.1);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .prompt-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .copy-btn.copied {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+    }
+
+    .prompt-content {
+      padding: 24px;
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #fbbf24;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .info-box p {
+      color: #a1a1aa;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .info-box strong {
+      color: #f59e0b;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px;
+      margin-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer p {
+      color: #71717a;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #f59e0b;
+      text-decoration: none;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #22c55e;
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .actions, .copy-btn { display: none; }
+      .prompt-content { color: #000; max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+        Module 5 Resource
+      </div>
+      <h1>AI Image Generation Prompt</h1>
+      <p>Generate Multiple Realistic Images of Yourself</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="copyPrompt()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy Prompt to Clipboard
+      </button>
+      <button class="btn btn-secondary" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Save as PDF
+      </button>
+    </div>
+
+    <div class="prompt-section">
+      <div class="prompt-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          The Prompt
+        </h3>
+        <button class="copy-btn" onclick="copyPrompt()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-content" id="prompt-text">You are an expert AI image director and realism specialist. Your task is to generate THREE completely different image prompts for the SAME real person, based on the reference image I upload.
+
+ABSOLUTE RULES (NON-NEGOTIABLE):
+- Use the uploaded image as the absolute identity reference
+- The face MUST remain 100% identical in all variations
+- Do NOT change: facial features, bone structure, age, skin texture, ethnicity
+- No beautification, no model look, no AI/plastic skin, no filters
+- If the face looks even slightly different, the result is WRONG
+
+OBJECTIVE:
+Create ultra-realistic images that look like a real person photographed in different real-life situations. The images must look so real that no one can tell they are AI-generated.
+
+VARIATION RULES:
+Generate 3 TOTALLY DIFFERENT PROMPTS. Each must change:
+- Location
+- Outfit
+- Vibe / context
+
+But always keep: Same face, same identity, same realism level.
+
+STYLE: Professional, trustworthy, calm, human, natural.
+NOT influencer. NOT fashion model. NOT cinematic.
+
+CAMERA & REALISM:
+- Camera: smartphone / natural
+- Framing: chest-up or shoulders-up
+- Lighting: natural, soft, real shadows
+- Background: realistic environment
+- Details: natural pores, slight imperfections
+
+OUTPUT FORMAT:
+Respond with ONLY:
+Variation 1: (full detailed image prompt)
+Variation 2: (full detailed image prompt)
+Variation 3: (full detailed image prompt)
+
+Do NOT add explanations or tips.</div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Follow the steps in the video course</strong> to learn exactly how to use this prompt.</p>
+    </div>
+
+    <div class="footer">
+      <p>CloneYourself AI Video Training</p>
+      <p><a href="https://aifastscale.com">aifastscale.com</a></p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Prompt copied to clipboard!</div>
+
+  <script>
+    function copyPrompt() {
+      const text = document.getElementById('prompt-text').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btns = document.querySelectorAll('.copy-btn');
+        btns.forEach(btn => {
+          btn.classList.add('copied');
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
+        });
+
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+          btns.forEach(btn => {
+            btn.classList.remove('copied');
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy';
+          });
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
