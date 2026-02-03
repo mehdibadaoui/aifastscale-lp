@@ -122,16 +122,16 @@ function ThankYouContent() {
     sessionStorage.setItem('lawyer_thankyou_visited', 'true')
 
     // Replace current history entry so user can't go back to thank-you
-    window.history.replaceState(null, '', '/lawyers/members')
+    window.history.replaceState(null, '', '/members')
 
     // Navigate to members page
-    router.push('/lawyers/members')
+    router.push('/members')
   }
 
   // If user already visited and tries to come back, redirect to members
   useEffect(() => {
     if (hasVisited) {
-      router.replace('/lawyers/members')
+      router.replace('/members')
     }
   }, [hasVisited, router])
 
@@ -349,8 +349,8 @@ function ThankYouContent() {
               <button
                 onClick={() => {
                   sessionStorage.setItem('lawyer_thankyou_visited', 'true')
-                  window.history.replaceState(null, '', '/lawyers/members')
-                  router.push('/lawyers/members')
+                  window.history.replaceState(null, '', '/members')
+                  router.push('/members')
                 }}
                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2"
               >
