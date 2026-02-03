@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
 
-const META_PIXEL_ID = '1421386846399394'
+// Lawyers LP - Two Meta Pixels
+const META_PIXEL_ID_1 = '1421386846399394'
+const META_PIXEL_ID_2 = '2660533017679840'
 
 export default function MetaPixelLoader() {
   const [loaded, setLoaded] = useState(false)
@@ -14,7 +16,7 @@ export default function MetaPixelLoader() {
   return (
     <Script
       id="meta-pixel-lawyer"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       onLoad={() => setLoaded(true)}
       dangerouslySetInnerHTML={{
         __html: `
@@ -26,7 +28,8 @@ export default function MetaPixelLoader() {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '${META_PIXEL_ID}');
+          fbq('init', '${META_PIXEL_ID_1}');
+          fbq('init', '${META_PIXEL_ID_2}');
           fbq('track', 'PageView');
         `,
       }}

@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { motion, AnimatePresence } from 'framer-motion'
 import {
   Gift,
   Shield,
@@ -47,11 +46,12 @@ import {
   Languages,
   BadgeCheck,
   Mic,
+  Scale,
 } from 'lucide-react'
 import { LAWYER_BONUS_PRODUCTS, getLawyerTotalBonusValue } from '../config/lawyer-bonus-products'
 import { getMemberStats } from './members/components/config'
 import { ExpertPersona, ExpertMention, ALEX_VOSS_LAWYER_DATA } from '../components/ExpertPersona'
-import { AnimatedBackground } from '../components/AnimatedBackground'
+const AnimatedBackground = dynamic(() => import('../components/AnimatedBackground').then(mod => ({ default: mod.AnimatedBackground })), { ssr: false })
 
 // Alex Morgan, Esq. - Expert Attorney Persona (imported from ExpertPersona component)
 
@@ -887,10 +887,10 @@ export default function LawyerLandingPage() {
           }} />
         </div>
 
-        {/* Premium floating orbs - larger and more visible */}
-        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-amber-600/20 to-amber-500/10 rounded-full blur-[100px] floating-slow" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-yellow-500/15 to-orange-500/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-amber-500/10 to-yellow-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
+        {/* Premium floating orbs - HIDDEN ON MOBILE for performance */}
+        <div className="hidden sm:block absolute top-10 right-0 w-[500px] h-[500px] bg-gradient-to-br from-amber-600/20 to-amber-500/10 rounded-full blur-[100px] floating-slow" />
+        <div className="hidden sm:block absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-br from-yellow-500/15 to-orange-500/10 rounded-full blur-[80px] floating" style={{ animationDelay: '2s' }} />
+        <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-amber-500/10 to-yellow-500/5 rounded-full blur-[120px] floating-slow" style={{ animationDelay: '4s' }} />
 
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
@@ -941,6 +941,7 @@ export default function LawyerLandingPage() {
                   height={358}
                   className="w-full h-auto sm:hidden"
                   priority
+                  sizes="100vw"
                 />
                 {/* Desktop: Full quality hero */}
                 <Image
@@ -978,12 +979,15 @@ export default function LawyerLandingPage() {
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
               </div>
-              {/* Countdown Badge */}
-              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
-                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-                <span className="text-red-300 text-xs sm:text-sm font-bold">
-                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
-                </span>
+              {/* Countdown Badge - Introductory Pricing Timer */}
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                  <span className="text-red-300 text-xs sm:text-sm font-bold">
+                    {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
+                  </span>
+                </div>
+                <span className="text-gray-500 text-[10px] sm:text-xs">Introductory price of $47.82 expires • Regular: $97</span>
               </div>
             </div>
 
@@ -1051,8 +1055,8 @@ export default function LawyerLandingPage() {
       >
         {/* Background glow effects - hidden on mobile for performance */}
         <div className="absolute inset-0 pointer-events-none hidden sm:block">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl" />
+          <div className="hidden sm:block absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
+          <div className="hidden sm:block absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl" />
         </div>
 
         <div className="w-full px-3 sm:px-6 relative z-10">
@@ -1241,71 +1245,71 @@ export default function LawyerLandingPage() {
                 </p>
               </div>
 
-              {/* Creative Animated Steps - Timeline Style */}
+              {/* Creative Animated Steps - Timeline Style - SAME ON MOBILE & DESKTOP */}
               <div className="relative">
-                {/* Connecting Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-yellow-500 to-green-500 -translate-x-1/2 hidden md:block" />
+                {/* Connecting Line - Visible on all screens */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-yellow-500 to-green-500 -translate-x-1/2" />
 
-                {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
-                <div className="space-y-4">
-                  {/* Step 1 */}
-                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''}`}>
-                    {/* Icon - shown first on mobile */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 md:order-2">
+                {/* Zigzag layout on all screens */}
+                <div className="space-y-3 sm:space-y-4">
+                  {/* Step 1 - Content LEFT, Icon RIGHT */}
+                  <div className={`relative flex flex-row items-center gap-2 sm:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up' : ''}`}>
+                    {/* Content - Left side */}
+                    <div className="flex-1 text-right">
+                      <div className="bg-gradient-to-r from-amber-500/20 to-transparent rounded-lg sm:rounded-xl p-3 sm:p-4 border border-amber-500/30">
+                        <h3 className="text-white font-black text-sm sm:text-lg mb-0.5 sm:mb-1">Send a Quick Email</h3>
+                        <p className="text-gray-400 text-[11px] sm:text-sm">Simply write "I want a refund" — complete.</p>
+                      </div>
+                    </div>
+                    {/* Icon - Center */}
+                    <div className="relative z-10 w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/40 flex-shrink-0">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
-                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-amber-600 font-black text-xs sm:text-sm">1</span>
+                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-amber-600 font-black text-[10px] sm:text-xs">1</span>
                       </div>
                     </div>
-                    {/* Content */}
-                    <div className="w-full md:flex-1 md:text-right md:order-1">
-                      <div className="bg-gradient-to-r from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
-                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Simply write "I want a refund" — complete.</p>
-                      </div>
-                    </div>
-                    {/* Desktop spacer */}
-                    <div className="hidden md:block md:flex-1 md:order-3" />
+                    {/* Spacer - Right side */}
+                    <div className="flex-1" />
                   </div>
 
-                  {/* Step 2 */}
-                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-                    {/* Icon */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-yellow-500/40 md:order-2">
+                  {/* Step 2 - Icon LEFT, Content RIGHT */}
+                  <div className={`relative flex flex-row items-center gap-2 sm:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+                    {/* Spacer - Left side */}
+                    <div className="flex-1" />
+                    {/* Icon - Center */}
+                    <div className="relative z-10 w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-yellow-500/40 flex-shrink-0">
                       <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
-                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-yellow-600 font-black text-xs sm:text-sm">2</span>
+                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-yellow-600 font-black text-[10px] sm:text-xs">2</span>
                       </div>
                     </div>
-                    {/* Desktop spacer */}
-                    <div className="hidden md:block md:flex-1 md:order-1" />
-                    {/* Content */}
-                    <div className="w-full md:flex-1 md:order-3">
-                      <div className="bg-gradient-to-l from-yellow-500/20 to-transparent rounded-xl p-4 border border-yellow-500/30">
-                        <h3 className="text-white font-black text-base sm:text-lg mb-1">We Process Instantly</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">No questions, no forms, no waiting period</p>
+                    {/* Content - Right side */}
+                    <div className="flex-1 text-left">
+                      <div className="bg-gradient-to-l from-yellow-500/20 to-transparent rounded-lg sm:rounded-xl p-3 sm:p-4 border border-yellow-500/30">
+                        <h3 className="text-white font-black text-sm sm:text-lg mb-0.5 sm:mb-1">We Process Instantly</h3>
+                        <p className="text-gray-400 text-[11px] sm:text-sm">No questions, no forms, no waiting period</p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Step 3 */}
-                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
-                    {/* Icon */}
-                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/40 md:order-2">
+                  {/* Step 3 - Content LEFT, Icon RIGHT */}
+                  <div className={`relative flex flex-row items-center gap-2 sm:gap-4 ${visibleSections.has('refund-policy-top') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+                    {/* Content - Left side */}
+                    <div className="flex-1 text-right">
+                      <div className="bg-gradient-to-r from-green-500/20 to-transparent rounded-lg sm:rounded-xl p-3 sm:p-4 border border-green-500/30">
+                        <h3 className="text-white font-black text-sm sm:text-lg mb-0.5 sm:mb-1">Money Back in Your Account</h3>
+                        <p className="text-gray-400 text-[11px] sm:text-sm">Full refund processed within 24-48 hours.</p>
+                      </div>
+                    </div>
+                    {/* Icon - Center */}
+                    <div className="relative z-10 w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/40 flex-shrink-0">
                       <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
-                      <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-green-600 font-black text-xs sm:text-sm">3</span>
+                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-green-600 font-black text-[10px] sm:text-xs">3</span>
                       </div>
                     </div>
-                    {/* Content */}
-                    <div className="w-full md:flex-1 md:text-right md:order-1">
-                      <div className="bg-gradient-to-r from-green-500/20 to-transparent rounded-xl p-4 border border-green-500/30">
-                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Money Back in Your Account</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Full refund processed within 24-48 hours.</p>
-                      </div>
-                    </div>
-                    {/* Desktop spacer */}
-                    <div className="hidden md:block md:flex-1 md:order-3" />
+                    {/* Spacer - Right side */}
+                    <div className="flex-1" />
                   </div>
                 </div>
               </div>
@@ -1793,8 +1797,8 @@ export default function LawyerLandingPage() {
         className="py-10 sm:py-20 bg-white relative overflow-hidden"
       >
         {/* Decorative background elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-yellow-500/5 rounded-full blur-3xl" />
+        <div className="hidden sm:block absolute top-20 left-10 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl" />
+        <div className="hidden sm:block absolute bottom-20 right-10 w-40 h-40 bg-yellow-500/5 rounded-full blur-3xl" />
 
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
@@ -2222,18 +2226,6 @@ export default function LawyerLandingPage() {
             </div>
           </div>
 
-          {/* FTC Disclaimer after Case Study - PROMINENT */}
-          <div className="mt-6 max-w-2xl mx-auto bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-amber-800 font-bold text-xs sm:text-sm mb-1">*RESULTS NOT TYPICAL</p>
-                <p className="text-amber-700 text-xs sm:text-sm leading-relaxed">
-                  This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, practice area, geographic location, and circumstances. We do not guarantee any specific income, client acquisition, or business results. Individual outcomes depend on many factors outside our control. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline font-medium">See full disclaimer</a>.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -2267,20 +2259,6 @@ export default function LawyerLandingPage() {
           </div>
         </div>
 
-        {/* PROMINENT FTC EARNINGS DISCLAIMER - COMPLIANCE */}
-        <div className="max-w-4xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
-          <div className="bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-amber-400 font-bold text-xs sm:text-sm mb-1">IMPORTANT EARNINGS DISCLOSURE</p>
-                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                  The testimonials and examples displayed represent individual results only. Your results will vary based on your effort, market conditions, practice area, geographic location, and other factors. We make no guarantees regarding specific income, client acquisition, or business outcomes. The figures mentioned are individual experiences, not promises of what you will achieve. Please review our <a href="/disclaimer" className="text-amber-500 hover:text-amber-400 underline">complete earnings disclaimer</a> before purchasing.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Infinite Scroll Carousel with fade shadows */}
         <div className="testimonial-carousel-wrapper-lawyer">
@@ -3080,8 +3058,8 @@ export default function LawyerLandingPage() {
               visibleSections.has('guarantee3') ? 'animate-fade-in-up' : ''
             }`}>
               {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+              <div className="hidden sm:block absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="hidden sm:block absolute bottom-0 left-0 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
@@ -3330,6 +3308,72 @@ export default function LawyerLandingPage() {
       </section>
 
       {/* ================================================================
+          ABOUT VELON LLC - Corporate Credibility Section
+          ================================================================ */}
+      <section className="py-12 sm:py-16 bg-gradient-to-br from-stone-100 via-white to-stone-50 border-t border-gray-200">
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-3">About Velon LLC</h2>
+              <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
+                Velon LLC is a Wyoming-registered legal technology and education company founded in 2025.
+                We develop AI-powered practice management tools designed specifically for legal professionals
+                who want to modernize client acquisition without compromising professional ethics.
+              </p>
+            </div>
+
+            {/* Company Stats */}
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 mb-8">
+              <div className="text-center p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                <span className="block text-2xl sm:text-3xl font-black text-amber-500">2025</span>
+                <span className="text-gray-600 text-xs sm:text-sm">Founded</span>
+              </div>
+              <div className="text-center p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                <span className="block text-2xl sm:text-3xl font-black text-amber-500">Sheridan, WY</span>
+                <span className="text-gray-600 text-xs sm:text-sm">Headquarters</span>
+              </div>
+              <div className="text-center p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+                <span className="block text-2xl sm:text-3xl font-black text-amber-500">500+</span>
+                <span className="text-gray-600 text-xs sm:text-sm">Attorneys Served</span>
+              </div>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6">
+              <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-full text-xs sm:text-sm text-gray-700">
+                <Shield className="w-4 h-4 text-green-500" />
+                <span>Wyoming Registered LLC</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-full text-xs sm:text-sm text-gray-700">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>PCI-DSS Compliant Payments</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-full text-xs sm:text-sm text-gray-700">
+                <Scale className="w-4 h-4 text-amber-500" />
+                <span>ABA Ethics Rule 7.1 Compliant Templates</span>
+              </div>
+            </div>
+
+            {/* Support Commitment */}
+            <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 text-center">
+              <h3 className="font-bold text-gray-900 mb-3">Support & Response Times</h3>
+              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-amber-500" />
+                  <span>Email: 24-48 hour response (M-F)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-amber-500" />
+                  <span>+1 (307) 335-5058</span>
+                </div>
+              </div>
+              <p className="text-gray-500 text-xs mt-3">Our support team is Wyoming-based and handles all inquiries in-house.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
           FOOTER - BLACK (with extra padding for sticky CTA)
           ================================================================ */}
       <footer className="py-6 sm:py-10 pb-24 sm:pb-10 bg-black border-t border-gray-900">
@@ -3366,7 +3410,7 @@ export default function LawyerLandingPage() {
               </p>
             </div>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
-              © {new Date().getFullYear()} Velon LLC. All rights reserved.
+              © {new Date().getFullYear()} Velon LLC. All Rights Reserved.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -3414,23 +3458,6 @@ export default function LawyerLandingPage() {
           </div>
         </div>
       </footer>
-
-      {/* ================================================================
-          STICKY MOBILE CTA - Always visible on mobile
-          ================================================================ */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-safe">
-        <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-          <a
-            href={CHECKOUT_LINK}
-            onClick={trackInitiateCheckout}
-                        className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/30 active:scale-[0.98] transition-transform"
-          >
-            <span>Get Started</span>
-            <span className="text-amber-200 font-bold">$47.82</span>
-            <ArrowRight className="w-5 h-5" />
-          </a>
-        </div>
-      </div>
 
       {/* Animation Styles - Modern, smooth, GPU-accelerated */}
       <style jsx global>{`
@@ -3663,6 +3690,13 @@ export default function LawyerLandingPage() {
             -webkit-backdrop-filter: none !important;
           }
 
+          /* CRITICAL: Hide all large blur decorative elements */
+          [class*="blur-["],
+          [class*="blur-2xl"],
+          [class*="blur-3xl"] {
+            display: none !important;
+          }
+
           /* Replace blurred backgrounds with solid ones on mobile */
           .bg-white\\/10,
           .bg-white\\/5,
@@ -3670,35 +3704,55 @@ export default function LawyerLandingPage() {
             background-color: rgba(0, 0, 0, 0.95) !important;
           }
 
-          /* Reduce animation complexity on mobile */
-          .animate-fade-in-up {
-            animation-duration: 0.4s !important;
+          /* CRITICAL: Disable ALL floating/pulse animations on mobile */
+          .floating,
+          .floating-slow,
+          .animate-pulse,
+          .animate-pulse-soft,
+          .animate-pulse-glow,
+          .animate-bounce,
+          .animate-bounce-in,
+          .animate-blur-in {
+            animation: none !important;
           }
 
-          .animate-scale-up,
-          .animate-scale-in {
+          /* Reduce animation complexity on mobile */
+          .animate-fade-in-up {
             animation-duration: 0.3s !important;
           }
 
-          /* Disable will-change on mobile to save memory */
-          .animate-fade-in-up,
           .animate-scale-up,
           .animate-scale-in {
+            animation-duration: 0.2s !important;
+          }
+
+          /* Disable will-change on mobile to save memory */
+          * {
             will-change: auto !important;
           }
 
           /* Slow down carousel on mobile for smoother performance */
           .testimonial-scroll-track-lawyer {
-            animation-duration: 45s !important;
+            animation-duration: 60s !important;
           }
 
           /* Disable complex shadows on mobile */
-          .shadow-2xl {
+          .shadow-2xl,
+          .shadow-glow-gold,
+          [class*="shadow-glow"] {
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
           }
 
           .shadow-xl {
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+          }
+
+          /* Disable infinite gradient animation on hero for faster LCP */
+          #hero {
+            animation: none !important;
+          }
+          #hero > .animate-gradient-xy {
+            animation: none !important;
           }
 
           /* Simplify gradients on mobile */
@@ -3713,14 +3767,25 @@ export default function LawyerLandingPage() {
           .transition-colors,
           .transition-transform,
           .transition-opacity {
-            transition-duration: 0.15s !important;
+            transition-duration: 0.1s !important;
           }
 
-          /* Hide decorative animated elements on mobile */
-          .animate-pulse:not(button):not(a),
-          .animate-bounce:not(button):not(a),
-          .animate-spin-slow {
-            animation: none !important;
+          /* Enable smooth scrolling with GPU acceleration */
+          html, body {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+          }
+
+          /* Force GPU compositing for main content */
+          main {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+          }
+
+          /* Simplify section containment */
+          section {
+            contain: layout style paint;
+            transform: translateZ(0);
           }
 
           /* Optimize font rendering */
@@ -3820,7 +3885,7 @@ export default function LawyerLandingPage() {
           <a
             href={CHECKOUT_LINK}
             onClick={trackInitiateCheckout}
-            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30 animate-pulse"
+            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30"
           >
             <Zap className="w-5 h-5" />
             Secure Access — $47.82

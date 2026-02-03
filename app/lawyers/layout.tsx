@@ -33,10 +33,13 @@ export default function LawyerLayout({
 }) {
   return (
     <>
+      {/* Preconnect to Facebook for Meta Pixel */}
+      <link rel="preconnect" href="https://connect.facebook.net" />
+
       {/* Preload hero images - Mobile and Desktop separately for optimal LCP */}
       <link
         rel="preload"
-        href="/images/lawyer/lawyer-hero-mobile.webp"
+        href="/images/lawyer/attorney-hero-mobile.webp"
         as="image"
         type="image/webp"
         fetchPriority="high"
@@ -44,7 +47,7 @@ export default function LawyerLayout({
       />
       <link
         rel="preload"
-        href="/images/lawyer/lawyer-hero.webp"
+        href="/images/lawyer/attorney-hero.webp"
         as="image"
         type="image/webp"
         fetchPriority="high"
