@@ -247,7 +247,7 @@ export default function Disclaimer() {
                 6.1 Independent Services
               </h3>
               <p className="mb-4 leading-relaxed text-gray-700">
-                This course teaches you how to use various third-party AI tools and platforms (such as HeyGen, ElevenLabs, D-ID, Synthesia, and similar AI video generation services). We are NOT affiliated with, endorsed by, or sponsored by these third-party services unless explicitly stated in writing.
+                This course teaches you how to use various third-party AI tools and platforms (such as Google Flow, CapCut, and similar AI video generation services). We are NOT affiliated with, endorsed by, or sponsored by these third-party services unless explicitly stated in writing.
               </p>
 
               <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
@@ -273,7 +273,7 @@ export default function Disclaimer() {
                 The following third-party tools are referenced in our course materials. Please review their respective terms of service and privacy policies:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li><strong>HeyGen:</strong> <a href="https://www.heygen.com/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://www.heygen.com/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
+                <li><strong>Google Flow:</strong> <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
                 <li><strong>ElevenLabs:</strong> <a href="https://elevenlabs.io/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
                 <li><strong>CapCut:</strong> <a href="https://www.capcut.com/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Service</a> | <a href="https://www.capcut.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>
                 <li><strong>Canva:</strong> <a href="https://www.canva.com/policies/terms-of-use/" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Terms of Use</a> | <a href="https://www.canva.com/policies/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">Privacy Policy</a></li>

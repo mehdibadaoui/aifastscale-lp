@@ -64,7 +64,7 @@ export default function FAQPage() {
         },
         {
           q: 'Are there any additional costs?',
-          a: 'The course teaches you to use third-party AI tools (like HeyGen, ElevenLabs, etc.). These tools may have their own pricing. The course itself is a one-time $47.82 payment with no additional fees from us.',
+          a: 'The course teaches you to use third-party AI tools (like Google Flow, CapCut, etc.). These tools may have their own pricing or free tiers. The course itself is a one-time $47.82 payment with no additional fees from us.',
         },
       ],
     },

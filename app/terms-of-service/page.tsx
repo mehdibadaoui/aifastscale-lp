@@ -324,7 +324,7 @@ export default function TermsOfService() {
                 13. Third-Party Dependencies & AI Tools
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Important Notice:</strong> This course teaches you to use third-party AI platforms and tools (such as HeyGen, ElevenLabs, D-ID, Synthesia, or similar services). You acknowledge and agree that:
+                <strong>Important Notice:</strong> This course teaches you to use third-party AI platforms and tools (such as Google Flow, CapCut, or similar services). You acknowledge and agree that:
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>These AI platforms are independent third-party services NOT owned or controlled by Velon LLC</li>
