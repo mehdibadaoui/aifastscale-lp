@@ -309,28 +309,28 @@ export default function LawyerLandingPage() {
 
   const faqs = [
     {
-      q: 'Does this really take only 7 minutes?',
-      a: 'Yes. Upload photo (1 min), type script (2 min), AI generates (4 min). Done. Zero editing needed. I timed it myself.',
+      q: 'What is the actual time investment per video?',
+      a: 'Approximately 7-10 minutes. The workflow: select headshot (1 min), input script (2-3 min), AI renders video (4-5 min). No post-production required. The system eliminates the hours typically spent on filming, lighting, and editing.',
     },
     {
-      q: 'Will clients know it\'s AI?',
-      a: `Most can't tell. The lip-sync is incredibly realistic. Your clients care about your message and expertise, not how you made it. ${memberStats.totalMembers.toLocaleString()}+ attorneys are already using this successfully.`,
+      q: 'Can viewers detect that this is AI-generated content?',
+      a: `Current AI lip-sync technology is remarkably sophisticated — the output is indistinguishable from traditional video to most viewers. More importantly: your prospective clients are evaluating your expertise and communication style, not your production methods. ${memberStats.totalMembers.toLocaleString()}+ attorneys are deploying this successfully.`,
     },
     {
-      q: 'Is this ethical for attorneys to use?',
-      a: 'Absolutely. You\'re creating educational content about legal topics - that\'s allowed and encouraged. You\'re not misrepresenting anything. Many bar associations actually encourage attorneys to educate the public.',
+      q: 'What are the ethical considerations under bar rules?',
+      a: 'This falls squarely within permissible attorney advertising and public education. You are creating content that explains legal concepts — not misrepresenting your identity or credentials. Many state bars actively encourage attorneys to produce educational content. As with any marketing, ensure compliance with your jurisdiction\'s specific advertising rules.',
     },
     {
-      q: 'Do I need expensive AI tools?',
-      a: 'No. Everything is included. The system shows you exactly which free/cheap tools to use. No hidden costs.',
+      q: 'What are the ongoing costs after purchase?',
+      a: 'The core AI tools we recommend are free or extremely low-cost (under $20/month for premium features). The system explicitly avoids recommending expensive enterprise software. No hidden licensing fees or mandatory subscriptions.',
     },
     {
-      q: 'Will this work for my type of law practice?',
-      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ attorneys across the US, UK, Canada, and Australia use this daily. Works for personal injury, family law, criminal defense, immigration, estate planning, business law, and all practice areas.`,
+      q: 'Is this applicable to my specific practice area?',
+      a: `The framework is practice-area agnostic. ${memberStats.totalMembers.toLocaleString()}+ attorneys across PI, family law, criminal defense, immigration, estate planning, corporate, and litigation have implemented this. If your practice benefits from client trust and authority positioning — this applies.`,
     },
     {
-      q: 'When do I get access?',
-      a: 'Immediately after signing up. Check your email for login details. You can create your first video in the next 10 minutes.',
+      q: 'What happens immediately after purchase?',
+      a: 'Instant access via email. The complete system is available within 60 seconds of payment confirmation. Most attorneys produce their first video within 20 minutes of enrollment.',
     },
   ]
 
@@ -341,8 +341,8 @@ export default function LawyerLandingPage() {
       role: 'Personal Injury Attorney',
       location: 'Los Angeles, CA',
       image: '/images/lawyer/review-1.webp',
-      review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 14 new case inquiries that same week. Signed 3 new PI cases.",
-      results: '14 inquiries, 3 signed cases',
+      review: "I approached this with healthy skepticism. The data changed my mind: 14 qualified inquiries in week one, 3 signed retainers. My cost per acquisition dropped from $800 to effectively zero.",
+      results: '3 signed retainers, Week 1',
     },
     {
       id: 2,
@@ -350,8 +350,8 @@ export default function LawyerLandingPage() {
       role: 'Family Law Partner',
       location: 'Chicago, IL',
       image: '/images/lawyer/review-2.webp',
-      review: "After 22 years in family law, I thought I'd seen it all. My consultation calendar is now booked 8 weeks out - all from AI video leads. Best investment I've made.",
-      results: 'Booked 8 weeks out',
+      review: "22 years in practice taught me to evaluate opportunities on merit. My intake calendar is now scheduled 8 weeks out — exclusively from organic video content. The math speaks for itself.",
+      results: '8-week booking backlog',
     },
     {
       id: 3,
@@ -359,8 +359,8 @@ export default function LawyerLandingPage() {
       role: 'Criminal Defense Attorney',
       location: 'Miami, FL',
       image: '/images/lawyer/review-3.webp',
-      review: "As a Miami criminal defense attorney, I need to stand out. These AI videos make my firm look elite. Went from 3-4 consultations to 18+ per week.",
-      results: '18+ consultations/week',
+      review: "In a saturated market, differentiation is everything. These videos positioned my practice as the authority. Consultation volume increased from 3-4 to 18+ weekly — same ad spend.",
+      results: '350% consultation increase',
     },
     {
       id: 4,
@@ -368,8 +368,8 @@ export default function LawyerLandingPage() {
       role: 'Immigration Attorney',
       location: 'New York, NY',
       image: '/images/lawyer/review-4.webp',
-      review: "Was spending $3,500/month on video production. Now I create better content myself in minutes. My visa explainer video got 2.1M views. ROI was immediate.",
-      results: '2.1M views, 50x ROI',
+      review: "Previously allocated $3,500/month to video production agencies. Now I produce superior content in-house, in minutes. One visa explainer reached 2.1M views. The ROI calculation is straightforward.",
+      results: '2.1M reach, $0 ad spend',
     },
     {
       id: 5,
@@ -377,8 +377,8 @@ export default function LawyerLandingPage() {
       role: 'Estate Planning Attorney',
       location: 'Dallas, TX',
       image: '/images/lawyer/review-5.webp',
-      review: "My TikTok video about wills got 156K views. Signed 31 new estate planning clients that month. This system pays for itself every single day.",
-      results: '31 new clients from 1 video',
+      review: "One educational video on testamentary basics generated 156K views and 31 new estate planning engagements. The system has paid for itself approximately 600 times over.",
+      results: '31 engagements from 1 video',
     },
     {
       id: 6,
@@ -386,8 +386,8 @@ export default function LawyerLandingPage() {
       role: 'Medical Malpractice Attorney',
       location: 'Boston, MA',
       image: '/images/lawyer/review-6.webp',
-      review: "28 years practicing law and I wish I had this sooner. 6 new high-value malpractice cases last month from social media alone. Each worth $50K+ in fees.",
-      results: '6 high-value cases from social',
+      review: "28 years of practice, and I've never seen a client acquisition channel this efficient. 6 high-value med-mal cases last month via social content alone. Each represents $50K+ in projected fees.",
+      results: '$300K+ pipeline from social',
     },
   ]
 
@@ -896,37 +896,37 @@ export default function LawyerLandingPage() {
           <div className="max-w-5xl mx-auto text-center">
             {/* Main Headline - PREMIUM TYPOGRAPHY */}
             <h1 className={`font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
-              <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
+              <span className="text-white drop-shadow-lg">Reclaim Your Billable Hours.</span>
               <br />
               <span className="relative inline-block">
                 <span className="text-gradient-premium drop-shadow-2xl">
-                  Talking AI Video
+                  The Agentic AI System
                 </span>
                 {/* Glow effect */}
                 <span className="absolute inset-0 text-gradient-premium blur-2xl opacity-50 -z-10">
-                  Talking AI Video
+                  The Agentic AI System
                 </span>
               </span>
               <br />
-              <span className="text-white drop-shadow-lg">&</span>
+              <span className="text-white drop-shadow-lg">for</span>
               <span className="text-gradient-premium">
-                {' '}Get 100+ New Clients
+                {' '}High-Volume Client Acquisition.
               </span>
             </h1>
 
             {/* Subtitle - Larger & More Visible */}
-            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              Even if you've never edited a video in your life —
+            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-3xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+              Stop trading your limited time for content creation. Deploy hyper-realistic AI video clones to generate high-value leads on autopilot—
               <br className="hidden sm:block" />
-              <span className="text-white font-semibold">all you need is your phone</span>
+              <span className="text-white font-semibold">with zero filming, zero camera time, and zero technical overhead.</span>
             </p>
 
             {/* Expert Trust Line - Premium Badge */}
             <div className={`mb-5 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-250' : ''}`}>
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-amber-400" />
-                <span className="text-gray-300 text-xs sm:text-sm">Expert framework by</span>
-                <span className="text-amber-300 font-semibold text-xs sm:text-sm">Alex Morgan, Esq. — Trial Attorney, 18 Years Experience</span>
+                <span className="text-gray-300 text-xs sm:text-sm">Developed by</span>
+                <span className="text-amber-300 font-semibold text-xs sm:text-sm">Alex Morgan, Esq. — Trial Attorney, 18 Years in Private Practice</span>
               </div>
             </div>
 
@@ -959,7 +959,7 @@ export default function LawyerLandingPage() {
             <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 stagger-fast ${visibleSections.has('hero') ? 'visible' : ''}`}>
               <div className="flex items-center gap-2 glass-gold px-4 py-2.5 rounded-full hover-scale">
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> lawyers</span>
+                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> attorneys</span>
               </div>
               <div className="flex items-center gap-2 glass-gold px-4 py-2.5 rounded-full hover-scale">
                 <div className="relative">
@@ -994,8 +994,8 @@ export default function LawyerLandingPage() {
                             className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-gold animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
-                <span className="sm:hidden">Get Instant Access</span>
-                <span className="hidden sm:inline">Start Creating AI Videos</span>
+                <span className="sm:hidden">Secure Firm Access</span>
+                <span className="hidden sm:inline">Secure Firm Access</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
@@ -1005,10 +1005,10 @@ export default function LawyerLandingPage() {
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getLawyerTotalBonusValue() + 98}</span>
                 <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82</span>
-                <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
+                <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">One-Time</span>
               </div>
-              <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
-              <p className="text-gray-500 text-[10px] sm:text-xs mt-1">Must be 18+ years old to purchase</p>
+              <p className="text-gray-400 text-xs sm:text-sm font-medium">Single investment • Perpetual license • 30-day risk elimination</p>
+              <p className="text-gray-500 text-[10px] sm:text-xs mt-1">Leverage AI to arbitrage your time. Must be 18+ to purchase.</p>
             </div>
 
             {/* What is CloneYourself? - Collapsible */}
@@ -1018,7 +1018,7 @@ export default function LawyerLandingPage() {
                 className="group flex items-center justify-center gap-2 mx-auto text-sm"
               >
                 <span className="text-amber-400 font-medium border-b border-dashed border-amber-400/40 group-hover:border-amber-400 transition-colors">
-                  What is the CloneYourself System?
+                  How does this work, exactly?
                 </span>
                 <ChevronDown className={`w-4 h-4 text-amber-400 transition-transform duration-300 ${expandedFaq === -1 ? 'rotate-180' : ''}`} />
               </button>
@@ -1026,13 +1026,13 @@ export default function LawyerLandingPage() {
               <div className={`overflow-hidden transition-all duration-500 ease-out ${expandedFaq === -1 ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
                 <div className="bg-gradient-to-br from-amber-500/10 to-white/5 backdrop-blur-sm border border-amber-500/20 rounded-xl p-5 text-left">
                   <p className="text-white text-sm leading-relaxed mb-3">
-                    You upload <span className="text-amber-400 font-bold">one clear selfie</span> to a free AI software — the #1 tool for generating realistic talking videos in {new Date().getFullYear()}.
+                    <span className="text-amber-400 font-bold">The mechanism:</span> You provide a professional headshot. AI software generates a hyper-realistic video of you delivering any script — with precise lip-sync and natural movement. You leverage technology to scale your presence without sacrificing billable hours.
                   </p>
                   <p className="text-white/80 text-sm leading-relaxed mb-3">
-                    The AI transforms your photo into a <span className="text-amber-400 font-bold">talking video of YOU</span> — your face moves, your lips sync perfectly, it looks 100% real. No filming. No editing. No experience needed.
+                    The outcome: <span className="text-amber-400 font-bold">an automated content pipeline</span> that positions you as the authority in your practice area. Prospective clients see you explaining their exact legal situation — building trust and rapport before they ever contact your office.
                   </p>
                   <p className="text-white/80 text-sm leading-relaxed">
-                    Inside the CloneYourself System, you get the <span className="text-white font-bold">complete A-to-Z video course</span> that shows you exactly how to do this — even if you've never touched AI before. Just follow along, copy-paste, and create professional videos that bring in new clients.
+                    This system delivers the <span className="text-white font-bold">complete implementation framework</span> — from AI tool configuration to content strategy to distribution automation. Engineered for attorneys with zero technical background. Every step documented. Every template provided. Every hour you spend on non-billable content creation is an hour you cannot bill. This system eliminates that friction.
                   </p>
                 </div>
               </div>
@@ -1061,13 +1061,13 @@ export default function LawyerLandingPage() {
             <div className="text-center mb-6 sm:mb-12">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
                 <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-white font-bold text-xs sm:text-sm">Used by 3,247+ Attorneys in 100+ Countries</span>
+                <span className="text-white font-bold text-xs sm:text-sm">Deployed by 3,247+ Attorneys Across 100+ Jurisdictions</span>
               </div>
               <h2 className="text-xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-3 leading-tight">
-                Works in <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">Your Language</span>
+                Native Fluency in <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">100+ Languages</span>
               </h2>
               <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
-                AI generates videos with <span className="text-white font-semibold">perfect native pronunciation</span> in 100+ languages.
+                Serve multilingual clients without interpreters. The AI delivers <span className="text-white font-semibold">native-level pronunciation</span> — critical for building trust.
               </p>
             </div>
 
@@ -1075,15 +1075,15 @@ export default function LawyerLandingPage() {
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
                 <div className="text-lg sm:text-3xl font-black text-amber-400">3,247+</div>
-                <div className="text-gray-400 text-[10px] sm:text-sm">Attorneys Worldwide</div>
+                <div className="text-gray-400 text-[10px] sm:text-sm">Attorneys Enrolled</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
                 <div className="text-lg sm:text-3xl font-black text-yellow-400">100+</div>
-                <div className="text-gray-400 text-[10px] sm:text-sm">Languages</div>
+                <div className="text-gray-400 text-[10px] sm:text-sm">Languages Supported</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
                 <div className="text-lg sm:text-3xl font-black text-green-400">127K+</div>
-                <div className="text-gray-400 text-[10px] sm:text-sm">Videos Created</div>
+                <div className="text-gray-400 text-[10px] sm:text-sm">Videos Deployed</div>
               </div>
             </div>
 
@@ -1261,7 +1261,7 @@ export default function LawyerLandingPage() {
                     <div className="w-full md:flex-1 md:text-right md:order-1">
                       <div className="bg-gradient-to-r from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Simply write "I want a refund" — complete.</p>
                       </div>
                     </div>
                     {/* Desktop spacer */}
@@ -1301,7 +1301,7 @@ export default function LawyerLandingPage() {
                     <div className="w-full md:flex-1 md:text-right md:order-1">
                       <div className="bg-gradient-to-r from-green-500/20 to-transparent rounded-xl p-4 border border-green-500/30">
                         <h3 className="text-white font-black text-base sm:text-lg mb-1">Money Back in Your Account</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Full refund within 24-48 hours. Done!</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Full refund processed within 24-48 hours.</p>
                       </div>
                     </div>
                     {/* Desktop spacer */}
@@ -1348,12 +1348,12 @@ export default function LawyerLandingPage() {
             <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-down' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 px-4 py-2 rounded-full mb-4 hover-scale">
                 <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-                <span className="text-amber-700 font-bold text-xs uppercase tracking-wide">Real Results • Licensed Attorneys</span>
+                <span className="text-amber-700 font-bold text-xs uppercase tracking-wide">Documented Results • Verified Attorneys</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                See How Attorneys Are <span className="text-amber-600">Signing Cases</span>
+                The Economics of <span className="text-amber-600">Zero-Effort Content</span>
               </h2>
-              <p className="text-lg sm:text-xl text-gray-600">Without filming a single video themselves.</p>
+              <p className="text-lg sm:text-xl text-gray-600">Two attorneys. Zero hours of filming. Measurable intake increases.</p>
             </div>
 
             {/* Two Case Studies Grid */}
@@ -1367,9 +1367,9 @@ export default function LawyerLandingPage() {
                 {/* Video Section */}
                 <div className="relative p-4 sm:p-6">
                   <div className="text-center mb-4">
-                    <p className="text-gray-400 text-xs sm:text-sm mb-1">Yes, that's him talking. But here's the thing...</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This is him presenting. Here's the critical detail:</p>
                     <p className="text-white text-lg sm:text-xl font-black leading-tight">
-                      He Never Filmed a Single Video.
+                      Zero Camera Time. Zero Studio Costs.
                     </p>
                   </div>
 
@@ -1392,7 +1392,7 @@ export default function LawyerLandingPage() {
                   </div>
 
                   <p className="text-amber-400 text-xs sm:text-sm font-medium text-center mt-3">
-                    One photo. AI cloned his voice and face. Posted Tuesday — 3 consults by Friday.
+                    Input: One headshot. Output: 3 consultation requests within 72 hours of posting.
                   </p>
                 </div>
 
@@ -1401,18 +1401,18 @@ export default function LawyerLandingPage() {
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">19</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">New Cases</div>
-                      <div className="text-gray-500 text-[9px]">in 6 weeks</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Signed Retainers</div>
+                      <div className="text-gray-500 text-[9px]">6-week period</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">5</div>
                       <div className="text-white text-[10px] sm:text-xs font-bold">Minutes</div>
-                      <div className="text-gray-500 text-[9px]">per video</div>
+                      <div className="text-gray-500 text-[9px]">production time</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">$0</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Ad Spend</div>
-                      <div className="text-gray-500 text-[9px]">100% organic</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Paid Media</div>
+                      <div className="text-gray-500 text-[9px]">organic only</div>
                     </div>
                   </div>
                 </div>
@@ -1420,15 +1420,15 @@ export default function LawyerLandingPage() {
                 {/* Timeline */}
                 <div className="p-4 sm:p-5 border-t border-white/10">
                   <div className="text-center mb-3">
-                    <span className="text-amber-400 text-[10px] sm:text-xs font-bold bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-full">FROM ZERO TO 19 CASES</span>
+                    <span className="text-amber-400 text-[10px] sm:text-xs font-bold bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-full">DOCUMENTED PROGRESSION</span>
                   </div>
                   <div className="space-y-2">
                     {[
-                      { time: 'Day 1', event: 'Created AI video: "What to do if pulled over for DUI"', color: 'gray' },
-                      { time: 'Day 3', event: 'Posted to TikTok & Instagram Reels', color: 'gray' },
-                      { time: 'Week 1', event: 'Video hit 89K views • 7 consultation requests', color: 'gold' },
-                      { time: 'Week 3', event: '14 signed retainers • $42K in fees', color: 'gold' },
-                      { time: 'Week 6', event: '19 total cases • $67,000 in retainers', color: 'green' },
+                      { time: 'Day 1', event: 'Generated AI video: "Your rights during a DUI stop"', color: 'gray' },
+                      { time: 'Day 3', event: 'Distributed via TikTok and Instagram Reels', color: 'gray' },
+                      { time: 'Week 1', event: '89K organic views • 7 qualified consultation requests', color: 'gold' },
+                      { time: 'Week 3', event: '14 executed retainer agreements • $42K collected', color: 'gold' },
+                      { time: 'Week 6', event: '19 total matters • $67,000 in retainer revenue', color: 'green' },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
@@ -1445,7 +1445,7 @@ export default function LawyerLandingPage() {
                 {/* Quote */}
                 <div className="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 to-amber-500/5 border-t border-amber-500/30">
                   <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
-                    "I was spending <span className="text-gray-400">$2,800/month</span> on Google Ads with mediocre results. Now I get <span className="text-amber-400 font-bold">3-4 DUI inquiries every week</span> from one 5-minute AI video. Clients say they 'feel like they already know me.'"
+                    "My previous client acquisition cost was <span className="text-gray-400">$2,800/month</span> in Google Ads — with inconsistent results. One AI video now generates <span className="text-amber-400 font-bold">3-4 qualified DUI consultations weekly</span>. Prospective clients arrive pre-sold because they've already seen me explain their situation."
                   </p>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
@@ -1472,9 +1472,9 @@ export default function LawyerLandingPage() {
                 {/* Video Section */}
                 <div className="relative p-4 sm:p-6">
                   <div className="text-center mb-4">
-                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This video got 340K views. But...</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This content reached 340K views. The key detail:</p>
                     <p className="text-white text-lg sm:text-xl font-black leading-tight">
-                      He Was in Court When It Went Viral.
+                      He Was Taking Depositions When It Went Viral.
                     </p>
                   </div>
 
@@ -1497,7 +1497,7 @@ export default function LawyerLandingPage() {
                   </div>
 
                   <p className="text-amber-400 text-xs sm:text-sm font-medium text-center mt-3">
-                    Uploaded a headshot Sunday night. Monday morning his paralegal had 23 voicemails.
+                    Deployed Sunday evening. Monday 9 AM: 23 voicemails from qualified prospects.
                   </p>
                 </div>
 
@@ -1506,18 +1506,18 @@ export default function LawyerLandingPage() {
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">31</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">New Clients</div>
-                      <div className="text-gray-500 text-[9px]">in 8 weeks</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Signed Clients</div>
+                      <div className="text-gray-500 text-[9px]">8-week period</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">$800K+</div>
                       <div className="text-white text-[10px] sm:text-xs font-bold">Case Value</div>
-                      <div className="text-gray-500 text-[9px]">in pipeline</div>
+                      <div className="text-gray-500 text-[9px]">active pipeline</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">$0</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Ad Spend</div>
-                      <div className="text-gray-500 text-[9px]">100% organic</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Paid Media</div>
+                      <div className="text-gray-500 text-[9px]">organic only</div>
                     </div>
                   </div>
                 </div>
@@ -1525,15 +1525,15 @@ export default function LawyerLandingPage() {
                 {/* Timeline */}
                 <div className="p-4 sm:p-5 border-t border-white/10">
                   <div className="text-center mb-3">
-                    <span className="text-amber-400 text-[10px] sm:text-xs font-bold bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-full">FROM SKEPTIC TO 31 SIGNED CLIENTS</span>
+                    <span className="text-amber-400 text-[10px] sm:text-xs font-bold bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-full">DOCUMENTED PROGRESSION</span>
                   </div>
                   <div className="space-y-2">
                     {[
-                      { time: 'Day 1', event: 'Created AI video: "5 things to do after a car accident"', color: 'gray' },
-                      { time: 'Day 2', event: 'Posted to TikTok before bed', color: 'gray' },
-                      { time: 'Week 1', event: 'Video hit 340K views • 23 voicemails Monday AM', color: 'gold' },
-                      { time: 'Week 4', event: '18 signed clients • Hired second paralegal', color: 'gold' },
-                      { time: 'Week 8', event: '31 total clients • Pipeline worth $800K+ in case value', color: 'green' },
+                      { time: 'Day 1', event: 'Generated AI video: "5 critical steps after an auto accident"', color: 'gray' },
+                      { time: 'Day 2', event: 'Published to TikTok — total effort: 8 minutes', color: 'gray' },
+                      { time: 'Week 1', event: '340K organic views • 23 voicemails awaiting Monday', color: 'gold' },
+                      { time: 'Week 4', event: '18 signed contingency agreements • Expanded paralegal staff', color: 'gold' },
+                      { time: 'Week 8', event: '31 active matters • $800K+ aggregate case value', color: 'green' },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
@@ -1550,7 +1550,7 @@ export default function LawyerLandingPage() {
                 {/* Quote */}
                 <div className="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 to-amber-500/5 border-t border-amber-500/30">
                   <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
-                    "I was skeptical — who trusts AI? Then my 'car accident tips' video hit 340K views while I was in depositions. <span className="text-amber-400 font-bold">My paralegal now screens 15+ calls a week</span> from that single video. Had to hire help."
+                    "I evaluated this with appropriate skepticism. Then my educational video on post-accident protocol reached 340K views while I was in depositions. <span className="text-amber-400 font-bold">My paralegal now pre-screens 15+ weekly inquiries</span> from that single piece of content. We expanded staff to handle volume."
                   </p>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
@@ -1599,9 +1599,9 @@ export default function LawyerLandingPage() {
           <div className="max-w-4xl mx-auto">
             <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-blur-in' : ''}`}>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-                Here's What You Get <span className="text-amber-400">Today</span>
+                The Complete <span className="text-amber-400">Implementation System</span>
               </h2>
-              <p className="text-gray-400 text-sm sm:text-lg">Everything you need to start getting new clients with AI videos</p>
+              <p className="text-gray-400 text-sm sm:text-lg">Everything required to deploy AI-powered client acquisition — documented, templated, and ready to execute</p>
             </div>
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
@@ -1612,7 +1612,7 @@ export default function LawyerLandingPage() {
               <div className="relative w-full aspect-video">
                 <Image
                   src="/images/lawyer/video-course-mockup.webp"
-                  alt="CloneYourself 7-Minute Video System for Lawyers"
+                  alt="CloneYourself Implementation System for Attorneys"
                   fill
                   className="object-cover"
                   loading="lazy"
@@ -1623,26 +1623,26 @@ export default function LawyerLandingPage() {
               {/* Course Details */}
               <div className="p-4 sm:p-8">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <span className="bg-amber-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">MAIN TRAINING</span>
+                  <span className="bg-amber-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-black">CORE TRAINING</span>
                   <span className="text-gray-400 line-through text-xs sm:text-sm">$497</span>
                   <span className="text-amber-400 font-black text-xs sm:text-base">INCLUDED</span>
                 </div>
 
-                <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">CloneYourself 7-Minute Video System</h3>
+                <h3 className="text-xl sm:text-3xl font-black text-white mb-2 sm:mb-3">The AI Video Implementation Framework</h3>
                 <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed">
-                  Even if you've never touched AI before — follow along and create your first talking video today.
-                  No tech skills needed. I show you everything click-by-click.
+                  A complete system designed for attorneys with zero technical background.
+                  Every step documented. Every decision made for you. Deploy your first video within 20 minutes of enrollment.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
                   {[
-                    'Turn any photo into a talking AI video',
-                    'Create your personal AI avatar that looks like you',
-                    'Clone your voice so the AI speaks exactly like you',
-                    'Put yourself anywhere — your office, conference room, courthouse steps',
-                    'All free tools included — zero monthly fees',
-                    'Ready-to-use AI scriptwriter (writes viral scripts for you)',
-                    'Every prompt you need — just copy & paste',
-                    'Edit videos on your phone in minutes (no experience needed)',
+                    'Transform any headshot into professional AI-generated video',
+                    'Create a personalized AI avatar that mirrors your appearance',
+                    'Voice cloning technology for authentic audio output',
+                    'Virtual environment positioning — office, conference room, any setting',
+                    'Free/low-cost tool stack — no enterprise software required',
+                    'Pre-built script templates optimized for legal content',
+                    'Every AI prompt pre-written and tested',
+                    'Mobile-first editing workflow (no desktop required)',
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
                       <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 flex-shrink-0" />
@@ -1655,7 +1655,7 @@ export default function LawyerLandingPage() {
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
                     <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                    <span>Attorney-focused lessons and strategies created with input from <span className="text-amber-400 font-medium">Alex Morgan, Esq.</span>, Trial Attorney with 18 Years Experience</span>
+                    <span>Framework developed in collaboration with <span className="text-amber-400 font-medium">Alex Morgan, Esq.</span> — 18 years in private practice</span>
                   </p>
                 </div>
               </div>
@@ -1665,7 +1665,7 @@ export default function LawyerLandingPage() {
             <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
                 <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                <span className="text-amber-400 font-black text-sm sm:text-base">+ 12 BONUSES (${totalBonusValue} Value)</span>
+                <span className="text-amber-400 font-black text-sm sm:text-base">+ 12 SUPPLEMENTARY RESOURCES (${totalBonusValue} Value)</span>
               </div>
             </div>
 
@@ -1745,7 +1745,7 @@ export default function LawyerLandingPage() {
                                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                Get Instant Access Now
+                Secure Firm Access
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
 
@@ -1806,15 +1806,15 @@ export default function LawyerLandingPage() {
             <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-zoom-in' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 px-4 py-2 rounded-full mb-4 hover-scale">
                 <Zap className="w-4 h-4 text-amber-500 animate-pulse" />
-                <span className="text-amber-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
+                <span className="text-amber-600 font-black text-xs uppercase tracking-wide">The Workflow</span>
                 <span className="text-gray-400 text-xs">•</span>
-                <span className="text-yellow-600 font-bold text-xs">~20 min total</span>
+                <span className="text-yellow-600 font-bold text-xs">~20 minutes to first video</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
-                From Zero to <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">AI Video</span> in Minutes
+                Four Steps. <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">Zero Technical Expertise.</span>
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">
-                Even if you've never touched AI before. Works <span className="font-bold text-gray-800">only for lawyers</span>.
+                A streamlined process designed for attorneys who bill by the hour — <span className="font-bold text-gray-800">not IT professionals</span>.
               </p>
             </div>
 
@@ -1852,16 +1852,16 @@ export default function LawyerLandingPage() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Generate Script</h3>
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Draft Your Script</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Use our <span className="text-amber-600 font-semibold">ChatGPT specialist</span> built for law practices. Just describe your topic.
+                      Use our <span className="text-amber-600 font-semibold">legal-specific AI prompts</span> to generate compliant, engaging content. Input your topic — receive a polished script.
                     </p>
 
                     {/* Mini feature */}
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <div className="flex items-center gap-2 text-xs text-gray-400">
                         <CheckCircle className="w-3.5 h-3.5 text-green-500" />
-                        <span>100+ ready templates included</span>
+                        <span>100+ practice-area templates included</span>
                       </div>
                     </div>
                   </div>
@@ -1892,16 +1892,16 @@ export default function LawyerLandingPage() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Pick Your Image</h3>
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Select Your Image</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Upload a selfie <span className="text-yellow-600 font-semibold">OR</span> generate your personalized AI model from scratch.
+                      Upload a professional headshot <span className="text-yellow-600 font-semibold">or</span> use AI to generate a custom avatar. Both produce identical quality output.
                     </p>
 
                     {/* Mini feature */}
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <div className="flex items-center gap-2 text-xs text-gray-400">
                         <CheckCircle className="w-3.5 h-3.5 text-green-500" />
-                        <span>Works with any headshot</span>
+                        <span>Any standard headshot works</span>
                       </div>
                     </div>
                   </div>
@@ -1935,16 +1935,16 @@ export default function LawyerLandingPage() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Make It Talk</h3>
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Generate Video</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      AI generates a <span className="text-amber-600 font-semibold">realistic talking video</span> with perfect lip-sync. Like magic.
+                      AI synthesizes a <span className="text-amber-600 font-semibold">professional talking-head video</span> with precise lip-synchronization.
                     </p>
 
                     {/* Mini feature */}
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <div className="flex items-center gap-2 text-xs text-gray-400">
                         <CheckCircle className="w-3.5 h-3.5 text-green-500" />
-                        <span>Ultra-realistic results</span>
+                        <span>Broadcast-quality output</span>
                       </div>
                     </div>
                   </div>
@@ -1981,16 +1981,16 @@ export default function LawyerLandingPage() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Edit & Post</h3>
+                    <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Publish & Convert</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      Quick edit, add captions, post to <span className="text-green-600 font-semibold">Instagram/TikTok</span>. Watch clients call.
+                      Apply captions, distribute to <span className="text-green-600 font-semibold">Instagram/TikTok/LinkedIn</span>. Prospects reach out.
                     </p>
 
                     {/* Mini feature */}
                     <div className="mt-4 pt-3 border-t border-green-100">
                       <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
                         <CheckCircle className="w-3.5 h-3.5 text-green-500" />
-                        <span>Your calendar fills up!</span>
+                        <span>Consultation requests increase</span>
                       </div>
                     </div>
                   </div>
@@ -2009,7 +2009,7 @@ export default function LawyerLandingPage() {
                     <span className="text-gray-400 text-sm sm:text-lg font-medium">minutes total</span>
                   </div>
                   <div className="hidden sm:block w-px h-8 bg-gray-700" />
-                  <span className="hidden sm:block text-gray-500 text-sm">That's it. Done.</span>
+                  <span className="hidden sm:block text-gray-500 text-sm">Total time investment.</span>
                 </div>
               </div>
             </div>
@@ -2023,12 +2023,12 @@ export default function LawyerLandingPage() {
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                   <Video className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <span className="sm:hidden">Start Creating Now</span>
-                  <span className="hidden sm:inline">Start Creating My AI Videos</span>
+                  <span className="sm:hidden">Secure Firm Access</span>
+                  <span className="hidden sm:inline">Secure Firm Access</span>
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
-              <p className="text-gray-500 text-xs sm:text-sm mt-3">73% off today • 100% refund if not satisfied</p>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">98% discount • 30-day risk-free evaluation</p>
             </div>
           </div>
         </div>
@@ -2051,9 +2051,9 @@ export default function LawyerLandingPage() {
                 <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Estate Planning Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                Her First AI Video Generated <span className="text-amber-500">$52,000</span> in New Clients
+                One AI Video. <span className="text-amber-500">$52,000</span> in Signed Retainers.
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From invisible solo practitioner to the go-to estate planning attorney in San Diego</p>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">How a solo practitioner outperformed BigLaw marketing budgets with a 6-minute video</p>
             </div>
 
             {/* Lisa Chen Case Study Card - Light Theme */}
@@ -2088,10 +2088,10 @@ export default function LawyerLandingPage() {
                       <span className="text-red-600 text-xs font-bold">THE PROBLEM</span>
                     </div>
                     <p className="text-gray-700 leading-relaxed">
-                      "I was spending <span className="text-gray-900 font-bold">$2,800 every month</span> on Google Ads.
-                      After 6 months, I had <span className="text-gray-900 font-bold">$16,800 spent</span> and
-                      <span className="text-red-600 font-bold"> only 3 estate plans completed</span>. Big firms dominated all the search results.
-                      I was a solo practitioner drowning in a sea of competitors. I felt invisible..."
+                      "I was allocating <span className="text-gray-900 font-bold">$2,800 monthly</span> to Google Ads.
+                      After 6 months: <span className="text-gray-900 font-bold">$16,800 invested</span>,
+                      <span className="text-red-600 font-bold"> only 3 estate plans closed</span>. That's $5,600 per client acquisition. BigLaw dominated every search result.
+                      As a solo practitioner, I was statistically invisible in my own market."
                     </p>
                   </div>
                 </div>
@@ -2117,7 +2117,7 @@ export default function LawyerLandingPage() {
                 </div>
 
                 <p className="text-gray-500 text-sm mt-3 text-center">
-                  Created in <span className="text-amber-600 font-bold">6 minutes</span> • Posted on Instagram Reels • Her phone blew up with DMs
+                  Production time: <span className="text-amber-600 font-bold">6 minutes</span> • Platform: Instagram Reels • Result: 23 direct inquiries within 48 hours
                 </p>
               </div>
 
@@ -2129,9 +2129,9 @@ export default function LawyerLandingPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    { number: '48', label: 'Hours to First Lead', sub: 'posted Sunday, calls Monday' },
-                    { number: '$0', label: 'Ad Spend Now', sub: 'vs $2,800/mo before' },
-                    { number: '14', label: 'Estate Plans Signed', sub: 'in first 3 weeks' },
+                    { number: '48', label: 'Hours to First Inquiry', sub: 'Sunday post → Monday calls' },
+                    { number: '$0', label: 'Current Ad Spend', sub: 'Previously $2,800/mo' },
+                    { number: '14', label: 'Retainers Signed', sub: 'First 21 days' },
                   ].map((stat, i) => (
                     <div key={i} className="bg-gradient-to-br from-amber-50 to-white border border-amber-500/30 rounded-xl p-4 text-center">
                       <div className="text-amber-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
@@ -2151,11 +2151,11 @@ export default function LawyerLandingPage() {
                 {/* Timeline */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Sunday', event: 'Posted her first AI video: "3 Estate Planning Mistakes That Cost Families Everything"', icon: Upload, color: 'gray' },
-                    { time: 'Monday AM', event: '23 Instagram DMs waiting. Her paralegal couldn\'t believe it.', icon: MessageSquare, color: 'gold' },
-                    { time: 'Week 1', event: '8 estate planning consultations booked ($3,500-$5,000 packages)', icon: Calendar, color: 'gold' },
-                    { time: 'Week 3', event: '14 estate plans signed • $52,000 in new revenue', icon: FileText, color: 'gold' },
-                    { time: 'Month 2', event: 'Calendar booked 6 weeks out • Cancelled Google Ads completely', icon: DollarSign, color: 'green' },
+                    { time: 'Sunday', event: 'Published first AI video: "3 Estate Planning Errors That Destroy Family Wealth"', icon: Upload, color: 'gray' },
+                    { time: 'Monday AM', event: '23 direct messages received. Paralegal overwhelmed with inquiry volume.', icon: MessageSquare, color: 'gold' },
+                    { time: 'Week 1', event: '8 consultations scheduled (average retainer: $3,500-$5,000)', icon: Calendar, color: 'gold' },
+                    { time: 'Week 3', event: '14 retainers signed • $52,000 in documented revenue', icon: FileText, color: 'gold' },
+                    { time: 'Month 2', event: 'Calendar booked 6 weeks out • Google Ads budget reallocated to $0', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -2188,9 +2188,9 @@ export default function LawyerLandingPage() {
                   <div className="text-amber-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      Three weeks of AI videos. <span className="text-amber-600 font-bold">$52,000 in signed estate plans</span>.
-                      I spent $16,800 on Google Ads over 6 months and signed 3 clients. This system cost me $47.82 and
-                      I signed 14 clients in three weeks. The big firms can't compete with personal connection.
+                      Three weeks. <span className="text-amber-600 font-bold">$52,000 in signed retainers</span>.
+                      My previous Google Ads investment: $16,800 over 6 months, 3 clients. This system: $47.82 investment,
+                      14 clients in 21 days. BigLaw budgets cannot replicate authentic personal connection at scale.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
@@ -2250,12 +2250,12 @@ export default function LawyerLandingPage() {
               <span className="text-amber-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
             </div>
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-              Real Lawyers. <span className="text-amber-400">Real Results.</span>
+              Verified Outcomes. <span className="text-amber-400">Documented Results.</span>
             </h2>
             <div className="flex items-center justify-center gap-3 sm:gap-6 text-gray-400 text-xs sm:text-base">
-              <span><span className="text-amber-400 font-bold">500+</span> success stories</span>
+              <span><span className="text-amber-400 font-bold">500+</span> practitioners</span>
               <span>•</span>
-              <span><span className="text-amber-400 font-bold">20+</span> countries</span>
+              <span><span className="text-amber-400 font-bold">20+</span> jurisdictions</span>
             </div>
             {/* Testimonial Disclosure - FTC Compliance */}
             <p className="text-gray-600 text-[10px] sm:text-xs mt-3 max-w-2xl mx-auto">
@@ -2352,12 +2352,12 @@ export default function LawyerLandingPage() {
             <div className={`text-center mb-8 sm:mb-12 ${visibleSections.has('who-is-this-for') ? 'animate-blur-in' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full mb-3 hover-scale">
                 <Users className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-amber-400 font-bold text-xs uppercase tracking-wide">Is This Right For You?</span>
+                <span className="text-amber-400 font-bold text-xs uppercase tracking-wide">Qualification Criteria</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
-                This System Is <span className="text-amber-400">NOT</span> For Everyone
+                This System Is <span className="text-amber-400">NOT</span> For Every Practice
               </h2>
-              <p className="text-gray-400 text-sm sm:text-base">Be honest with yourself before you invest</p>
+              <p className="text-gray-400 text-sm sm:text-base">Evaluate honestly before proceeding</p>
             </div>
 
             {/* Two Columns */}
@@ -2372,12 +2372,12 @@ export default function LawyerLandingPage() {
                 </div>
                 <ul className="space-y-3">
                   {[
-                    "You want more high-value legal services clients",
-                    "You're willing to spend 7 minutes creating content",
-                    "You understand social media drives cases",
-                    "You're ready to stand out from competitors",
-                    "You want to stop paying agencies $3,000+/month",
-                    "You believe in taking action, not just learning",
+                    "You want to increase qualified consultation requests",
+                    "You can allocate 7 minutes per video to content creation",
+                    "You recognize that digital presence influences client decisions",
+                    "You want differentiation in a saturated market",
+                    "You're prepared to reduce $3,000+/month agency dependency",
+                    "You prioritize implementation over perpetual research",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -2397,12 +2397,12 @@ export default function LawyerLandingPage() {
                 </div>
                 <ul className="space-y-3">
                   {[
-                    "You expect results without creating any content",
-                    "You think AI is \"beneath\" your practice",
-                    "You're not willing to post on social media",
-                    "You want someone else to do everything for you",
-                    "You're looking for a magic pill with zero effort",
-                    "You'll buy this and let it collect digital dust",
+                    "You expect client acquisition without any content output",
+                    "You consider AI tools inconsistent with your practice standards",
+                    "You're unwilling to establish a social media presence",
+                    "You require a fully-managed, done-for-you solution",
+                    "You seek passive results without active participation",
+                    "You purchase educational resources but rarely implement them",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
@@ -2416,7 +2416,7 @@ export default function LawyerLandingPage() {
             {/* Bottom Note */}
             <div className={`text-center mt-6 sm:mt-8 ${visibleSections.has('who-is-this-for') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <p className="text-gray-400 text-sm sm:text-base">
-                If you checked more boxes on the <span className="text-emerald-400 font-bold">left side</span>, you're exactly who we built this for.
+                If the <span className="text-emerald-400 font-bold">left column</span> describes your practice, this system was engineered for you.
               </p>
             </div>
           </div>
@@ -2441,14 +2441,13 @@ export default function LawyerLandingPage() {
 
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
-                  <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4 animate-bounce">
-                    <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
-                    <span className="text-green-600 font-bold text-xs sm:text-sm uppercase">30-Day Guarantee</span>
+                  <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
+                    <span className="text-amber-600 font-bold text-xs sm:text-sm uppercase">Professional Indemnity Guarantee</span>
                   </div>
                   <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                    100% Satisfaction or <span className="text-amber-500">Full Refund</span>
+                    Risk-Free. <span className="text-amber-500">No Questions Asked.</span>
                   </h2>
-                  <p className="text-gray-600 text-sm sm:text-base">No questions. No hassle. 30 days to decide.</p>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
@@ -2477,12 +2476,13 @@ export default function LawyerLandingPage() {
                   <div className="flex-1">
                     <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-amber-500/20 shadow-lg">
                       <p className="text-gray-800 text-sm sm:text-lg leading-relaxed font-medium">
-                        If you&apos;re not completely satisfied with the CloneYourself Video System for any reason,
-                        I&apos;ll refund <span className="text-amber-500 font-black">every single penny</span> — no questions asked.
+                        Integrate the <span className="text-amber-500 font-black">CloneYourself™</span> System into your practice for 30 days.
+                        If the reclaimed billable hours aren&apos;t worth 100x the cost, or if you aren&apos;t satisfied for any reason,
+                        we will issue a <span className="text-amber-500 font-black">full refund</span>—no questions asked.
                       </p>
                       <div className="mt-3 pt-3 border-t border-gray-200">
                         <p className="text-gray-600 text-xs sm:text-sm">
-                          Try the system risk-free for 30 days. If it&apos;s not right for you, get a full refund.
+                          No friction. No cross-examination.
                         </p>
                       </div>
                     </div>
@@ -2521,12 +2521,12 @@ export default function LawyerLandingPage() {
             <div className={`text-center mb-8 sm:mb-10 ${visibleSections.has('comparison') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full mb-3">
                 <TrendingUp className="w-3.5 h-3.5 text-amber-600" />
-                <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Compare Your Options</span>
+                <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Cost-Benefit Analysis</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                Why <span className="text-amber-500">CloneYourself</span> Beats Everything Else
+                The <span className="text-amber-500">Economic Argument</span> for CloneYourself
               </h2>
-              <p className="text-gray-500 text-sm sm:text-base">See the difference for yourself</p>
+              <p className="text-gray-500 text-sm sm:text-base">Compare alternatives objectively</p>
             </div>
 
             {/* Comparison Table */}
@@ -2588,7 +2588,7 @@ export default function LawyerLandingPage() {
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-amber-500/25"
               >
                 <Zap className="w-5 h-5" />
-                Get CloneYourself Now
+                Secure Firm Access
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -2609,10 +2609,10 @@ export default function LawyerLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-zoom-in' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4 hover-scale animate-pulse-soft">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires in {timeLeft.days}d {timeLeft.hours}h</span>
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Introductory pricing expires: {timeLeft.days}d {timeLeft.hours}h</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-                Get Everything Today For
+                Complete Access Today For
               </h2>
             </div>
 
@@ -2622,40 +2622,40 @@ export default function LawyerLandingPage() {
                 {/* Old Way */}
                 <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-red-500/30 relative flex-shrink-0 w-[200px] sm:w-auto hover-lift">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
-                    Expensive
+                    High Cost
                   </div>
                   <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
                     <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" />
-                    <h3 className="font-bold text-white text-sm sm:text-base">Hire Videographer</h3>
+                    <h3 className="font-bold text-white text-sm sm:text-base">Professional Videographer</h3>
                   </div>
                   <div className="text-2xl sm:text-3xl font-black text-red-400 mb-1 sm:mb-2">$500<span className="text-sm sm:text-lg text-gray-500">/video</span></div>
-                  <p className="text-gray-500 text-xs sm:text-sm">50 videos = $25,000</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">50 videos = $25,000 investment</p>
                 </div>
 
                 {/* DIY */}
                 <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-gray-600 relative flex-shrink-0 w-[200px] sm:w-auto hover-lift">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-gray-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
-                    Time Sink
+                    Time Intensive
                   </div>
                   <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
                     <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
-                    <h3 className="font-bold text-white text-sm sm:text-base">Learn Video Editing</h3>
+                    <h3 className="font-bold text-white text-sm sm:text-base">Self-Taught Editing</h3>
                   </div>
                   <div className="text-2xl sm:text-3xl font-black text-gray-400 mb-1 sm:mb-2">$3,000+</div>
-                  <p className="text-gray-500 text-xs sm:text-sm">+ 100 hours learning</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">+ 100 hours non-billable time</p>
                 </div>
 
                 {/* Smart Way */}
                 <div className="bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl p-4 sm:p-6 border-2 border-white/20 relative shadow-xl sm:scale-105 flex-shrink-0 w-[200px] sm:w-auto hover-lift hover-glow">
                   <div className="absolute -top-2 sm:-top-3 right-3 sm:right-4 bg-black text-amber-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black">
-                    Best Value
+                    Optimal ROI
                   </div>
                   <div className="flex items-center gap-2 mb-3 sm:mb-4 mt-1">
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                    <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
+                    <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself System</h3>
                   </div>
                   <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.82<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
-                  <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
+                  <p className="text-white/70 text-xs sm:text-sm">Unlimited output, perpetual license</p>
                 </div>
               </div>
             </div>
@@ -2664,7 +2664,7 @@ export default function LawyerLandingPage() {
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-amber-500/30 mb-6 card-hover ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
-              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.82 Actually Includes:</h3>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Complete System Breakdown — Your $47.82 Investment:</h3>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 {/* Main Course */}
@@ -2743,7 +2743,7 @@ export default function LawyerLandingPage() {
                                 className="w-full max-w-md mx-auto bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                Get Instant Access Now
+                Secure Firm Access
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
@@ -2774,7 +2774,7 @@ export default function LawyerLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-down' : ''}`}>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2 sm:mb-4">
-                Common <span className="text-amber-500">Questions</span>
+                Frequently Asked <span className="text-amber-500">Questions</span>
               </h2>
             </div>
 
@@ -2802,7 +2802,7 @@ export default function LawyerLandingPage() {
 
             {/* CTA - After FAQ */}
             <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-bounce-in animation-delay-500' : ''}`}>
-              <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
+              <p className="text-gray-600 text-sm mb-4">Additional questions? The most efficient path forward: evaluate the system firsthand.</p>
               <a
                 href={CHECKOUT_LINK}
                 onClick={trackInitiateCheckout}
@@ -2844,15 +2844,16 @@ export default function LawyerLandingPage() {
             }`}>
               <div className="text-center mb-6 sm:mb-10">
                 <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-                  <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 animate-bounce" />
-                  <span className="text-amber-400 font-bold text-xs sm:text-sm uppercase">No Hassle Policy</span>
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+                  <span className="text-amber-400 font-bold text-xs sm:text-sm uppercase">Professional Indemnity Guarantee</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-white mb-2 sm:mb-4">
-                  Need a Refund? <span className="text-amber-400">It's THIS Easy</span>
+                  Risk-Free. <span className="text-amber-400">No Questions Asked.</span>
                 </h2>
                 <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto">
-                  We made the refund process so simple, you can do it in 30 seconds.
-                  No phone calls. No guilt trips. No waiting.
+                  Integrate the <span className="text-amber-400 font-bold">CloneYourself™</span> System into your practice for 30 days.
+                  If the reclaimed billable hours aren&apos;t worth 100x the cost, or if you aren&apos;t satisfied for any reason,
+                  we will issue a full refund—no questions asked. No friction. No cross-examination.
                 </p>
               </div>
 
@@ -2875,8 +2876,8 @@ export default function LawyerLandingPage() {
                     {/* Content */}
                     <div className="w-full md:flex-1 md:text-right md:order-1">
                       <div className="bg-gradient-to-r from-amber-500/20 to-transparent rounded-xl p-4 border border-amber-500/30">
-                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Send a Quick Email</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Just write "I want a refund" - that's it!</p>
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Submit Refund Request</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">One email stating "refund requested" — complete.</p>
                       </div>
                     </div>
                     {/* Desktop spacer */}
@@ -2897,8 +2898,8 @@ export default function LawyerLandingPage() {
                     {/* Content */}
                     <div className="w-full md:flex-1 md:order-3">
                       <div className="bg-gradient-to-l from-yellow-500/20 to-transparent rounded-xl p-4 border border-yellow-500/30">
-                        <h3 className="text-white font-black text-base sm:text-lg mb-1">We Process Instantly</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">No questions, no forms, no waiting period</p>
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Immediate Processing</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">No interrogation, no documentation, no holding period</p>
                       </div>
                     </div>
                   </div>
@@ -2915,8 +2916,8 @@ export default function LawyerLandingPage() {
                     {/* Content */}
                     <div className="w-full md:flex-1 md:text-right md:order-1">
                       <div className="bg-gradient-to-r from-green-500/20 to-transparent rounded-xl p-4 border border-green-500/30">
-                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Money Back in Your Account</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm">Full refund within 24-48 hours. Done!</p>
+                        <h3 className="text-white font-black text-base sm:text-lg mb-1">Funds Returned to Account</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">Complete refund processed within 24-48 hours. Transaction closed.</p>
                       </div>
                     </div>
                     {/* Desktop spacer */}
@@ -2929,10 +2930,10 @@ export default function LawyerLandingPage() {
               <div className="mt-6 sm:mt-10 text-center">
                 <div className="inline-block bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-green-500/20 rounded-xl p-4 sm:p-6 border border-white/10">
                   <p className="text-white font-bold text-sm sm:text-lg mb-2">
-                    That's it. <span className="text-amber-400">3 simple steps.</span>
+                    Complete process. <span className="text-amber-400">Three steps. Zero friction.</span>
                   </p>
                   <p className="text-gray-400 text-xs sm:text-sm">
-                    We respect your decision and value your trust. No hard feelings, ever.
+                    We respect professional judgment and value the trust you place in us. No pressure, no complications.
                   </p>
                 </div>
               </div>
@@ -2989,32 +2990,32 @@ export default function LawyerLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
-                Why Is This Only <span className="text-gradient-premium">$47.82</span>?
+                The Pricing Logic: Why <span className="text-gradient-premium">$47.82</span>?
               </h2>
-              <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
+              <p className="text-gray-400 text-sm sm:text-base">A legitimate question that deserves a transparent answer...</p>
             </div>
 
             <div className={`space-y-4 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               {[
                 {
                   num: '1',
-                  title: 'I Use This Every Day',
-                  desc: 'I built this system for my own practice first. I use it to create 3-5 videos weekly. This works because it solves MY problem before it solves yours.',
+                  title: 'I Operate This System Daily',
+                  desc: 'I developed this system for my own practice before productizing it. I produce 3-5 videos weekly using this exact methodology. It functions because it solved my client acquisition problem first.',
                 },
                 {
                   num: '2',
-                  title: 'I Don\'t Need To Charge You A Lot',
-                  desc: 'Unlike software companies that need recurring revenue, my success comes from helping lawyers succeed. When you win, I win. So I price based on value delivered, not what I can get away with.',
+                  title: 'Revenue Model Alignment',
+                  desc: 'Unlike SaaS companies requiring recurring subscriptions, my business model ties success to attorney outcomes. When your practice grows, reputation compounds. Pricing reflects value delivered, not maximum extraction.',
                 },
                 {
                   num: '3',
-                  title: 'High Volume = Better For Both Of Us',
-                  desc: `At $47.82, I can reach ${memberStats.totalMembers.toLocaleString()}+ lawyers. Even if only 10% create videos and 5% get results, that's hundreds of lawyers getting new clients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 lawyers.`,
+                  title: 'Volume Economics Favor Both Parties',
+                  desc: `At $47.82, I reach ${memberStats.totalMembers.toLocaleString()}+ attorneys. If 10% implement and 5% document significant results — that's hundreds of practitioners acquiring clients through this system. Hundreds of documented outcomes outweigh $497 from 50 attorneys.`,
                 },
                 {
                   num: '4',
-                  title: 'I\'m Betting On You',
-                  desc: 'The 30-day guarantee isn\'t marketing fluff. It\'s me saying: "I\'m confident this works. Try it risk-free." That confidence only works if the price is low enough that you\'ll actually TRY it.',
+                  title: 'The Guarantee Reflects Confidence',
+                  desc: 'The 30-day refund policy isn\'t positioning — it\'s conviction. The guarantee communicates: "I\'m certain this delivers. Evaluate it without risk." That confidence only functions if the entry barrier is low enough to encourage implementation.',
                 },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4 bg-white/5 border border-amber-500/20 rounded-xl p-4 sm:p-5">
@@ -3031,7 +3032,7 @@ export default function LawyerLandingPage() {
 
             <div className={`mt-6 text-center ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
               <p className="text-amber-400 font-bold text-sm sm:text-base">
-                Bottom line: This is priced to be tried, not priced to be expensive.
+                The economic logic: priced for implementation, not for margin optimization.
               </p>
             </div>
           </div>
@@ -3058,14 +3059,16 @@ export default function LawyerLandingPage() {
               <div className="relative z-10">
                 <div className="text-center mb-5 sm:mb-8">
                   <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 animate-pulse" />
-                    <span className="text-amber-600 font-bold text-xs sm:text-sm uppercase">Zero Risk Promise</span>
+                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
+                    <span className="text-amber-600 font-bold text-xs sm:text-sm uppercase">Professional Indemnity Guarantee</span>
                   </div>
                   <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2">
-                    Don't Love It? <span className="text-amber-500">Full Refund.</span>
+                    Risk-Free. <span className="text-amber-500">No Questions Asked.</span>
                   </h2>
                   <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto">
-                    If you feel it doesn't work for you, seems complicated, or simply isn't what you expected — you get every penny back.
+                    Integrate the <span className="text-amber-500 font-bold">CloneYourself™</span> System into your practice for 30 days.
+                    If the reclaimed billable hours aren&apos;t worth 100x the cost, or if you aren&apos;t satisfied for any reason,
+                    we will issue a full refund—no questions asked. No friction. No cross-examination.
                   </p>
                 </div>
 
@@ -3078,10 +3081,10 @@ export default function LawyerLandingPage() {
                         <div className="absolute inset-0 rounded-full border-4 border-dashed border-amber-500/40 animate-spin-slow" />
                         <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-500 shadow-2xl shadow-amber-500/30 flex flex-col items-center justify-center">
                           <div className="absolute inset-2 rounded-full bg-white flex flex-col items-center justify-center text-center p-2">
-                            <Heart className="w-5 h-5 sm:w-7 sm:h-7 text-amber-500 mb-1" />
-                            <span className="text-amber-600 font-black text-xs sm:text-sm leading-none">NO</span>
-                            <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Questions</span>
-                            <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Asked</span>
+                            <Shield className="w-5 h-5 sm:w-7 sm:h-7 text-amber-500 mb-1" />
+                            <span className="text-amber-600 font-black text-xs sm:text-sm leading-none">100%</span>
+                            <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Risk</span>
+                            <span className="text-gray-800 font-bold text-[7px] sm:text-[9px] uppercase tracking-wider">Free</span>
                           </div>
                         </div>
                         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-[7px] sm:text-[9px] px-2.5 py-0.5 rounded-full shadow-lg whitespace-nowrap">
@@ -3094,21 +3097,21 @@ export default function LawyerLandingPage() {
                     <div className="flex-1 text-center md:text-left">
                       <div className="space-y-3 sm:space-y-4">
                         <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0 mt-0.5" />
                           <p className="text-gray-700 text-sm sm:text-base">
-                            <span className="font-bold text-gray-900">Think it's too complicated?</span> Refund.
+                            <span className="font-bold text-gray-900">Billable hours not reclaimed?</span> Full refund.
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0 mt-0.5" />
                           <p className="text-gray-700 text-sm sm:text-base">
-                            <span className="font-bold text-gray-900">Doesn't fit your practice?</span> Refund.
+                            <span className="font-bold text-gray-900">ROI below 100x?</span> Full refund.
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0 mt-0.5" />
                           <p className="text-gray-700 text-sm sm:text-base">
-                            <span className="font-bold text-gray-900">Changed your mind?</span> Still a refund.
+                            <span className="font-bold text-gray-900">Any reason whatsoever?</span> Full refund.
                           </p>
                         </div>
                       </div>
@@ -3118,10 +3121,10 @@ export default function LawyerLandingPage() {
                   {/* Bottom highlight */}
                   <div className="mt-5 sm:mt-8 pt-5 sm:pt-6 border-t border-gray-100 text-center">
                     <p className="text-gray-900 font-bold text-sm sm:text-lg">
-                      We only want happy customers. <span className="text-amber-500">Period.</span>
+                      No friction. <span className="text-amber-500">No cross-examination.</span>
                     </p>
                     <p className="text-gray-500 text-xs sm:text-sm mt-1">
-                      Try the entire system for 30 days. If it's not for you, one email and you're refunded.
+                      One email within 30 days initiates your complete refund.
                     </p>
                   </div>
                 </div>
@@ -3143,7 +3146,7 @@ export default function LawyerLandingPage() {
           <div className={`max-w-2xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : ''}`}>
             {/* Hormozi-Style Last Chance Copy */}
             <h2 className="font-heading text-2xl sm:text-4xl font-extrabold text-gray-900 mb-3 sm:mb-4">
-              You Have Two Options Right Now...
+              The Opportunity Cost Calculation.
             </h2>
 
             {/* Option 1 vs Option 2 - CLEAN CARDS */}
@@ -3154,17 +3157,17 @@ export default function LawyerLandingPage() {
                   <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
                     <X className="w-5 h-5 text-red-500" />
                   </div>
-                  <span className="font-black text-gray-900 text-base sm:text-lg">Option 1: Leave</span>
+                  <span className="font-black text-gray-900 text-base sm:text-lg">Path A: Maintain Status Quo</span>
                 </div>
                 <div className="space-y-2 text-gray-600 text-xs sm:text-sm">
-                  <p>→ Your schedule stays half-empty</p>
-                  <p>→ You watch TikTok lawyers book clients</p>
-                  <p>→ Keep spending $2,000/month on ads that barely convert</p>
-                  <p>→ Your team sits around bored</p>
-                  <p>→ Next year? Same problem. Still struggling.</p>
+                  <p>→ Continue trading billable hours for content creation</p>
+                  <p>→ Competitors automate while you stay trapped in administrative friction</p>
+                  <p>→ $2,000/month in ads with diminishing returns</p>
+                  <p>→ Non-billable time compounds against your bottom line</p>
+                  <p>→ Q4 next year: same constraints, same revenue ceiling</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-gray-200">
-                  <p className="text-red-600 font-bold text-xs">Cost: $24K/year in marketing + lost revenue</p>
+                  <p className="text-red-600 font-bold text-xs">Opportunity cost: $24K/year marketing + 200+ hours non-billable administrative friction</p>
                 </div>
               </div>
 
@@ -3174,30 +3177,30 @@ export default function LawyerLandingPage() {
                   <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
                     <Check className="w-5 h-5 text-amber-600" />
                   </div>
-                  <span className="font-black text-gray-900 text-base sm:text-lg">Option 2: Get Access</span>
+                  <span className="font-black text-gray-900 text-base sm:text-lg">Path B: Leverage the System</span>
                 </div>
                 <div className="space-y-2 text-gray-700 text-xs sm:text-sm">
-                  <p>→ In 7 minutes, create your first AI video</p>
-                  <p>→ By tomorrow, it's live on Instagram Reels</p>
-                  <p>→ By day 3, first client inquiry comes in</p>
-                  <p>→ By week 2, schedule starts filling up</p>
-                  <p>→ By month 2? Booked 6 weeks out like Lisa Chen</p>
+                  <p>→ Day 1: Automate your first AI video in 7 minutes</p>
+                  <p>→ Day 2: Scale content distribution across platforms</p>
+                  <p>→ Day 3-7: Arbitrage your time — leads arrive while you bill</p>
+                  <p>→ Week 2-3: Consultation calendar fills on autopilot</p>
+                  <p>→ Month 2: Operating at capacity, reclaimed billable hours</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-amber-200">
-                  <p className="text-amber-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: full refund, no questions asked</p>
+                  <p className="text-amber-700 font-bold text-xs">Investment: $47.82 one-time. Risk elimination: complete refund, no justification required</p>
                 </div>
               </div>
             </div>
 
             {/* The Math Section */}
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
-              <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
+              <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Billable Hour Arbitrage:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new client</span> in month 1... that's <span className="text-amber-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
-                <p>• If you get <span className="font-bold text-gray-900">5 new clients</span> (average result)... that's <span className="text-amber-600 font-bold">$10,000-25,000</span> from $47.82.</p>
-                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-amber-600 font-bold">you get 100% back</span> and lost nothing.</p>
+                <p>• If Path B produces <span className="font-bold text-gray-900">1 additional retainer</span> in month 1 → that is <span className="text-amber-600 font-bold">$2,000-5,000</span> revenue from a $47.82 investment.</p>
+                <p>• If you acquire <span className="font-bold text-gray-900">5 new clients</span> (documented average) → that is <span className="text-amber-600 font-bold">$10,000-25,000</span> from $47.82.</p>
+                <p>• If you evaluate for 30 days and request a refund → <span className="text-amber-600 font-bold">100% capital returned</span>, zero net cost.</p>
               </div>
-              <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
+              <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">Every hour spent on non-billable content creation is an hour you cannot bill. This system eliminates that friction.</p>
             </div>
 
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
@@ -3219,7 +3222,7 @@ export default function LawyerLandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 <span className="relative flex items-center gap-2">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
-                  Get Instant Access Now
+                  Secure Firm Access
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
@@ -3233,7 +3236,7 @@ export default function LawyerLandingPage() {
 
             {/* Final Reassurance */}
             <p className="text-black/60 text-xs sm:text-sm">
-              Join {memberStats.totalMembers.toLocaleString()}+ lawyers • Instant access • No risk
+              Join {memberStats.totalMembers.toLocaleString()}+ attorneys • Immediate access • Zero-risk evaluation
             </p>
           </div>
         </div>
@@ -3251,38 +3254,38 @@ export default function LawyerLandingPage() {
           <div className="max-w-2xl mx-auto">
             <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-amber-500/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 ${visibleSections.has('still-thinking') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-xl sm:text-2xl font-black text-white text-center mb-4 sm:mb-6">
-                Still Thinking About It?
+                The Cost of Deliberation.
               </h2>
 
               <div className="text-gray-400 text-sm sm:text-base leading-relaxed space-y-3 mb-6">
-                <p>Here's what usually happens:</p>
-                <p>You leave this page. You think about it tonight. You wake up tomorrow thinking <span className="text-white">"Yeah, I should try that."</span></p>
-                <p>But you get busy. Clients to see. Staff drama. Insurance calls.</p>
-                <p>Two weeks later you forgot about this completely.</p>
-                <p>Three months later you're frustrated your schedule is slow again.</p>
-                <p className="text-amber-400 font-bold">You regret not trying it when you saw it.</p>
+                <p>The predictable pattern for attorneys who delay:</p>
+                <p>You close this tab. Consider it tomorrow. Wake up thinking <span className="text-white">"I should have acted on that."</span></p>
+                <p>Then: client emergencies, court deadlines, non-billable administrative friction.</p>
+                <p>Two weeks pass. This page is forgotten. You remain trapped in the same constraints.</p>
+                <p>Q3 arrives. Same client acquisition ceiling. Same hours traded for content you could have automated.</p>
+                <p className="text-amber-400 font-bold">Every day you delay is another day you choose to stay trapped in non-billable administrative friction.</p>
               </div>
 
               <div className="bg-black/30 rounded-xl p-4 sm:p-5 mb-6">
-                <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
+                <p className="text-white font-bold text-center text-sm sm:text-base mb-3">The Opportunity Cost Framework:</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
                     <p className="text-amber-400 font-black text-lg sm:text-xl">$47.82</p>
-                    <p className="text-gray-500 text-xs">Cost</p>
+                    <p className="text-gray-500 text-xs">One-time investment</p>
                   </div>
                   <div>
                     <p className="text-amber-400 font-black text-lg sm:text-xl">$0</p>
-                    <p className="text-gray-500 text-xs">Risk</p>
+                    <p className="text-gray-500 text-xs">Downside risk</p>
                   </div>
                   <div>
                     <p className="text-red-400 font-black text-lg sm:text-xl">$$$</p>
-                    <p className="text-gray-500 text-xs">Regret of NOT trying</p>
+                    <p className="text-gray-500 text-xs">Lost billable hours</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-white font-bold text-center text-sm sm:text-base mb-4">
-                Click now. Decide later. You have 30 days.
+                Leverage the system. Automate your content. Reclaim your billable hours. 30-day risk elimination.
               </p>
 
               <a
@@ -3291,7 +3294,7 @@ export default function LawyerLandingPage() {
                                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
-                Get Instant Access Now
+                Secure Firm Access
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -3308,15 +3311,15 @@ export default function LawyerLandingPage() {
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 mb-3 sm:mb-6 text-gray-500 text-xs sm:text-sm">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>500+ Lawyers</span>
+                <span>500+ Practitioners</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Shield className="w-4 h-4 text-amber-400" />
-                <span>SSL Secured</span>
+                <span>SSL Encrypted</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Zap className="w-4 h-4 text-amber-400" />
-                <span>Instant Access</span>
+                <span>Immediate Access</span>
               </div>
             </div>
             {/* Contact & Support */}
@@ -3371,7 +3374,7 @@ export default function LawyerLandingPage() {
             onClick={trackInitiateCheckout}
                         className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/30 active:scale-[0.98] transition-transform"
           >
-            <span>Get Access</span>
+            <span>Secure Firm Access</span>
             <span className="text-amber-200 font-bold">$47.82</span>
             <ArrowRight className="w-5 h-5" />
           </a>
@@ -3769,7 +3772,7 @@ export default function LawyerLandingPage() {
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />
-            Get Instant Access — $47.82
+            Secure Access — $47.82
             <ArrowRight className="w-5 h-5" />
           </a>
           <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">
