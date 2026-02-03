@@ -1155,10 +1155,10 @@ export default function PlasticAttorneyLandingPage() {
                   <div className="p-4 sm:p-5">
                     <div className="flex items-start gap-3 mb-3">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-sm sm:text-base">SP</span>
+                        <span className="text-white font-bold text-sm sm:text-base">MP</span>
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-sm sm:text-base">Sarah Patel, Esq.</h4>
+                        <h4 className="text-white font-bold text-sm sm:text-base">Marcus Patterson, Esq.</h4>
                         <p className="text-gray-400 text-xs sm:text-sm">Family Law • Chicago, IL</p>
                       </div>
                     </div>
