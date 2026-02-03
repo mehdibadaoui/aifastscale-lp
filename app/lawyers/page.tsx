@@ -1374,13 +1374,13 @@ export default function PlasticAttorneyLandingPage() {
                   </div>
 
                   {/* Video Container */}
-                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-amber-500/30 shadow-xl bg-black aspect-[9/16] max-w-[280px] mx-auto">
+                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-amber-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
                     <video
                       autoPlay
                       loop
                       muted
                       playsInline
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     >
                       <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
                     </video>
@@ -1479,13 +1479,13 @@ export default function PlasticAttorneyLandingPage() {
                   </div>
 
                   {/* Video Container */}
-                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-amber-500/30 shadow-xl bg-black aspect-[9/16] max-w-[280px] mx-auto">
+                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-amber-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
                     <video
                       autoPlay
                       loop
                       muted
                       playsInline
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     >
                       <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
                     </video>
