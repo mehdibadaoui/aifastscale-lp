@@ -2035,10 +2035,10 @@ export default function PlasticAttorneyLandingPage() {
       </section>
 
       {/* ================================================================
-          5. CASE STUDY #2 - DR. MICHAEL - CREAM/WHITE SECTION (CBT Specialist)
+          5. CASE STUDY #2 - LISA CHEN - ESTATE PLANNING ATTORNEY
           ================================================================ */}
       <section
-        id="case-study-michael"
+        id="case-study-lisa"
         data-animate
         className="py-10 sm:py-24 bg-gradient-to-b from-amber-50 to-white"
       >
@@ -2048,15 +2048,15 @@ export default function PlasticAttorneyLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Anxiety Treatment Success</span>
+                <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Estate Planning Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-amber-500">$47,000</span> in New Clients
+                Her First AI Video Generated <span className="text-amber-500">$52,000</span> in New Clients
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From struggling with content creation to dominating local social media</p>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From invisible solo practitioner to the go-to estate planning attorney in San Diego</p>
             </div>
 
-            {/* Dr. Michael Case Study Card - Light Theme */}
+            {/* Lisa Chen Case Study Card - Light Theme */}
             <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Top: Profile + Before Situation */}
@@ -2066,18 +2066,18 @@ export default function PlasticAttorneyLandingPage() {
                   <div className="flex items-center gap-4 sm:flex-col sm:items-center sm:text-center">
                     <div className="relative">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-amber-500 shadow-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-                        <span className="text-white font-bold text-2xl">MC</span>
+                        <span className="text-white font-bold text-2xl">LC</span>
                       </div>
                       <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
                         VERIFIED
                       </div>
                     </div>
                     <div className="sm:mt-2">
-                      <h3 className="text-gray-900 font-black text-lg">Dr. Michael Chen</h3>
-                      <p className="text-amber-600 text-sm font-medium">CBT Specialist</p>
+                      <h3 className="text-gray-900 font-black text-lg">Lisa Chen, Esq.</h3>
+                      <p className="text-amber-600 text-sm font-medium">Estate Planning Attorney</p>
                       <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
                         <MapPin className="w-3 h-3" />
-                        <span>Los Angeles, CA</span>
+                        <span>San Diego, CA</span>
                       </div>
                     </div>
                   </div>
@@ -2088,10 +2088,10 @@ export default function PlasticAttorneyLandingPage() {
                       <span className="text-red-600 text-xs font-bold">THE PROBLEM</span>
                     </div>
                     <p className="text-gray-700 leading-relaxed">
-                      "I was spending <span className="text-gray-900 font-bold">$3,500 every month</span> on a marketing agency.
-                      After 8 months, I had <span className="text-gray-900 font-bold">$28,000 spent</span> and
-                      <span className="text-red-600 font-bold"> only 4 premium legal packages</span>. Meanwhile, younger attorneys were
-                      going viral on TikTok and filling their schedules. I felt invisible..."
+                      "I was spending <span className="text-gray-900 font-bold">$2,800 every month</span> on Google Ads.
+                      After 6 months, I had <span className="text-gray-900 font-bold">$16,800 spent</span> and
+                      <span className="text-red-600 font-bold"> only 3 estate plans completed</span>. Big firms dominated all the search results.
+                      I was a solo practitioner drowning in a sea of competitors. I felt invisible..."
                     </p>
                   </div>
                 </div>
@@ -2100,47 +2100,38 @@ export default function PlasticAttorneyLandingPage() {
               {/* Video Section */}
               <div className="p-6 sm:p-8 bg-gray-50">
                 <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full mb-4">
-                  <span className="text-amber-600 text-xs font-bold">HIS FIRST AI VIDEO</span>
+                  <span className="text-amber-600 text-xs font-bold">HER FIRST AI VIDEO</span>
                 </div>
 
                 <div className="relative rounded-xl overflow-hidden border-2 border-amber-500/40 shadow-2xl">
-                  {/* Mobile: 27KB optimized image */}
                   <Image
-                    src="/images/lawyer/case-study-legal-mobile.webp"
-                    alt="Dr. Michael Chen - AI Video Success"
-                    width={480}
-                    height={270}
-                    className="w-full h-auto object-cover sm:hidden"
-                    loading="lazy"
-                  />
-                  {/* Desktop: Full quality image */}
-                  <Image
-                    src="/images/lawyer/case-study-legal.webp"
-                    alt="Dr. Michael Chen - AI Video Success"
+                    src="/images/lawyer/case-study-lisa.webp"
+                    alt="Lisa Chen - AI Video Success"
                     width={1376}
                     height={768}
-                    className="w-full h-auto object-cover hidden sm:block"
+                    className="w-full h-auto object-cover"
                     loading="lazy"
                     sizes="(max-width: 1024px) 90vw, 700px"
+                    quality={90}
                   />
                 </div>
 
                 <p className="text-gray-500 text-sm mt-3 text-center">
-                  Created in <span className="text-amber-600 font-bold">7 minutes</span> • Posted on Instagram Reels • Day 1 of using the system
+                  Created in <span className="text-amber-600 font-bold">6 minutes</span> • Posted on Instagram Reels • Her phone blew up with DMs
                 </p>
               </div>
 
               {/* The Speed Stats */}
               <div className="p-6 sm:p-8 bg-white border-t border-gray-100">
                 <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full mb-4">
-                  <span className="text-amber-600 text-xs font-bold">THE SPEED OF AI CONTENT</span>
+                  <span className="text-amber-600 text-xs font-bold">THE TRANSFORMATION</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    { number: '72', label: 'Hours to First Lead', sub: 'not weeks' },
-                    { number: '$0', label: 'Marketing Cost', sub: 'vs $3,500/mo before' },
-                    { number: '6', label: 'New Clients', sub: 'from 2 weeks of videos' },
+                    { number: '48', label: 'Hours to First Lead', sub: 'posted Sunday, calls Monday' },
+                    { number: '$0', label: 'Ad Spend Now', sub: 'vs $2,800/mo before' },
+                    { number: '14', label: 'Estate Plans Signed', sub: 'in first 3 weeks' },
                   ].map((stat, i) => (
                     <div key={i} className="bg-gradient-to-br from-amber-50 to-white border border-amber-500/30 rounded-xl p-4 text-center">
                       <div className="text-amber-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
@@ -2157,14 +2148,14 @@ export default function PlasticAttorneyLandingPage() {
                   <span className="text-amber-600 text-xs font-bold">THE TIMELINE</span>
                 </div>
 
-                {/* Timeline - improved mobile layout */}
+                {/* Timeline */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { time: 'Day 1', event: 'Posted his first AI video about managing anxiety naturally (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 3', event: 'Instagram DM: "I\'ve been researching legal for months. Your video answered all my questions."', icon: MessageSquare, color: 'gold' },
-                    { time: 'Day 7', event: '4 premium legal packages scheduled ($2,500-$4,000 each)', icon: Calendar, color: 'gold' },
-                    { time: 'Week 2', event: '18 clients booked • $47,000 in new clients', icon: FileText, color: 'gold' },
-                    { time: 'Month 2', event: 'OR booked 8 weeks out • Fired marketing agency', icon: DollarSign, color: 'green' },
+                    { time: 'Sunday', event: 'Posted her first AI video: "3 Estate Planning Mistakes That Cost Families Everything"', icon: Upload, color: 'gray' },
+                    { time: 'Monday AM', event: '23 Instagram DMs waiting. Her paralegal couldn\'t believe it.', icon: MessageSquare, color: 'gold' },
+                    { time: 'Week 1', event: '8 estate planning consultations booked ($3,500-$5,000 packages)', icon: Calendar, color: 'gold' },
+                    { time: 'Week 3', event: '14 estate plans signed • $52,000 in new revenue', icon: FileText, color: 'gold' },
+                    { time: 'Month 2', event: 'Calendar booked 6 weeks out • Cancelled Google Ads completely', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -2197,16 +2188,16 @@ export default function PlasticAttorneyLandingPage() {
                   <div className="text-amber-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      Two weeks of AI videos. <span className="text-amber-600 font-bold">$47,000 in new clients</span>.
-                      I spent $28,000 on marketing agencies over 8 months and got 4 cases. This system cost me $47.82 and
-                      I booked 6 surgeries in two weeks. My only regret is not starting sooner.
+                      Three weeks of AI videos. <span className="text-amber-600 font-bold">$52,000 in signed estate plans</span>.
+                      I spent $16,800 on Google Ads over 6 months and signed 3 clients. This system cost me $47.82 and
+                      I signed 14 clients in three weeks. The big firms can't compete with personal connection.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">MC</span>
+                        <span className="text-white font-bold text-sm">LC</span>
                       </div>
                       <div>
-                        <p className="text-gray-900 font-bold">Dr. Michael Chen</p>
+                        <p className="text-gray-900 font-bold">Lisa Chen, Esq.</p>
                         <p className="text-gray-500 text-sm">2 months after joining</p>
                       </div>
                       <div className="ml-auto flex items-center gap-1">
@@ -2223,8 +2214,8 @@ export default function PlasticAttorneyLandingPage() {
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
                   { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$189K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '1,932x', label: 'ROI', sub: 'Return' },
+                  { value: '$52K', label: 'Revenue', sub: '3 weeks' },
+                  { value: '1,088x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-amber-500' : 'text-gray-900'}`}>{stat.value}</div>
