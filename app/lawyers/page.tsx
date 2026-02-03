@@ -1580,18 +1580,6 @@ export default function LawyerLandingPage() {
             </div>
           </div>
 
-          {/* FTC Disclaimer - PROMINENT */}
-          <div className="mt-6 max-w-2xl mx-auto bg-gray-100 border border-gray-200 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-gray-800 font-bold text-xs sm:text-sm mb-1">*RESULTS NOT TYPICAL</p>
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                  These testimonials represent individual experiences only. Income and results vary significantly based on effort, market conditions, practice area, geographic location, skills, and circumstances. We do not guarantee any specific income, client acquisition, or business results. Individual outcomes depend on many factors outside our control. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline font-medium">See full disclaimer</a>.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
