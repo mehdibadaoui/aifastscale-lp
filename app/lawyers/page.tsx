@@ -314,7 +314,7 @@ export default function LawyerLandingPage() {
     },
     {
       q: 'Can viewers detect that this is AI-generated content?',
-      a: `Current AI lip-sync technology is remarkably sophisticated — the output is indistinguishable from traditional video to most viewers. More importantly: your prospective clients are evaluating your expertise and communication style, not your production methods. ${memberStats.totalMembers.toLocaleString()}+ attorneys are deploying this successfully.`,
+      a: `Current AI lip-sync technology is remarkably sophisticated — the output is indistinguishable from traditional video to most viewers. More importantly: your prospective clients are evaluating your expertise and communication style, not your production methods. Hundreds of attorneys are deploying this successfully.`,
     },
     {
       q: 'What are the ethical considerations under bar rules?',
@@ -326,7 +326,7 @@ export default function LawyerLandingPage() {
     },
     {
       q: 'Is this applicable to my specific practice area?',
-      a: `The framework is practice-area agnostic. ${memberStats.totalMembers.toLocaleString()}+ attorneys across PI, family law, criminal defense, immigration, estate planning, corporate, and litigation have implemented this. If your practice benefits from client trust and authority positioning — this applies.`,
+      a: `The framework is practice-area agnostic. Attorneys across PI, family law, criminal defense, immigration, estate planning, corporate, and litigation have implemented this. If your practice benefits from client trust and authority positioning — this applies.`,
     },
     {
       q: 'What happens immediately after purchase?',
@@ -959,7 +959,7 @@ export default function LawyerLandingPage() {
             <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 stagger-fast ${visibleSections.has('hero') ? 'visible' : ''}`}>
               <div className="flex items-center gap-2 glass-gold px-4 py-2.5 rounded-full hover-scale">
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> attorneys</span>
+                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">500+</span> attorneys</span>
               </div>
               <div className="flex items-center gap-2 glass-gold px-4 py-2.5 rounded-full hover-scale">
                 <div className="relative">
@@ -1061,7 +1061,7 @@ export default function LawyerLandingPage() {
             <div className="text-center mb-6 sm:mb-12">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
                 <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-white font-bold text-xs sm:text-sm">Deployed by 3,247+ Attorneys Across 100+ Jurisdictions</span>
+                <span className="text-white font-bold text-xs sm:text-sm">Deployed by Attorneys Across 100+ Jurisdictions</span>
               </div>
               <h2 className="text-xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-3 leading-tight">
                 Native Fluency in <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">100+ Languages</span>
@@ -1074,7 +1074,7 @@ export default function LawyerLandingPage() {
             {/* Live stats bar */}
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
-                <div className="text-lg sm:text-3xl font-black text-amber-400">3,247+</div>
+                <div className="text-lg sm:text-3xl font-black text-amber-400">500+</div>
                 <div className="text-gray-400 text-[10px] sm:text-sm">Attorneys Enrolled</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center">
@@ -3049,7 +3049,7 @@ export default function LawyerLandingPage() {
                 {
                   num: '3',
                   title: 'Volume Economics Favor Both Parties',
-                  desc: `At $47.82, I reach ${memberStats.totalMembers.toLocaleString()}+ attorneys. If 10% implement and 5% document significant results — that's hundreds of practitioners acquiring clients through this system. Hundreds of documented outcomes outweigh $497 from 50 attorneys.`,
+                  desc: `At $47.82, I reach hundreds of attorneys. When practitioners implement and document their results, that creates real-world validation. Volume of documented outcomes matters more than premium pricing from fewer attorneys.`,
                 },
                 {
                   num: '4',
@@ -3201,12 +3201,12 @@ export default function LawyerLandingPage() {
                 <div className="space-y-2 text-gray-600 text-xs sm:text-sm">
                   <p>→ Continue trading billable hours for content creation</p>
                   <p>→ Competitors automate while you stay trapped in administrative friction</p>
-                  <p>→ $2,000/month in ads with diminishing returns</p>
+                  <p>→ Continued paid advertising with uncertain returns</p>
                   <p>→ Non-billable time compounds against your bottom line</p>
                   <p>→ Q4 next year: same constraints, same revenue ceiling</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-gray-200">
-                  <p className="text-red-600 font-bold text-xs">Opportunity cost: $24K/year marketing + 200+ hours non-billable administrative friction</p>
+                  <p className="text-red-600 font-bold text-xs">Opportunity cost: ongoing marketing spend + significant non-billable administrative friction</p>
                 </div>
               </div>
 
@@ -3275,7 +3275,7 @@ export default function LawyerLandingPage() {
 
             {/* Final Reassurance */}
             <p className="text-black/60 text-xs sm:text-sm">
-              Join {memberStats.totalMembers.toLocaleString()}+ attorneys • Immediate access • Zero-risk evaluation
+              Join 500+ attorneys • Immediate access • Zero-risk evaluation
             </p>
           </div>
         </div>
