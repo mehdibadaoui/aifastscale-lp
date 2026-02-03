@@ -2,48 +2,26 @@
 
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
-import { getCookieConsent } from '../components/CookieConsent'
 
 const META_PIXEL_ID = '1526841625273321'
-const LOAD_DELAY_MS = 3000 // Defer loading by 3 seconds for better performance
+const LOAD_DELAY_MS = 2000 // Defer loading by 2 seconds for better performance
 
 export default function MetaPixelLoader() {
-  const [hasConsent, setHasConsent] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [shouldLoad, setShouldLoad] = useState(false)
 
+  // Defer pixel loading by 2 seconds for better page performance
   useEffect(() => {
-    // Check initial consent
-    const consent = getCookieConsent()
-    if (consent?.marketing) {
-      setHasConsent(true)
-    }
-
-    // Listen for consent updates
-    const handleConsentUpdate = (event: CustomEvent) => {
-      if (event.detail?.marketing) {
-        setHasConsent(true)
-      }
-    }
-
-    window.addEventListener('cookieConsentUpdated', handleConsentUpdate as EventListener)
-    return () => {
-      window.removeEventListener('cookieConsentUpdated', handleConsentUpdate as EventListener)
-    }
-  }, [])
-
-  // Defer pixel loading by 3 seconds after consent
-  useEffect(() => {
-    if (hasConsent && !loaded) {
+    if (!loaded) {
       const timer = setTimeout(() => {
         setShouldLoad(true)
       }, LOAD_DELAY_MS)
       return () => clearTimeout(timer)
     }
-  }, [hasConsent, loaded])
+  }, [loaded])
 
-  // Don't load if no consent, already loaded, or not ready
-  if (!hasConsent || loaded || !shouldLoad) return null
+  // Don't load if already loaded or not ready
+  if (loaded || !shouldLoad) return null
 
   return (
     <Script

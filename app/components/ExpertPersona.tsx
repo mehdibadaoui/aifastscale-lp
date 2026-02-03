@@ -69,13 +69,13 @@ export const DR_SOFIA_DATA: ExpertPersonaProps = {
   accentColor: 'gold',
 }
 
-// Expert data for Alex Voss (Lawyers) - Same persona style as Dr. Voss for dentists
+// Expert data for Alex Morgan (Lawyers)
 export const ALEX_VOSS_LAWYER_DATA: ExpertPersonaProps = {
-  name: 'Alex Voss, Esq.',
+  name: 'Alex Morgan, Esq.',
   title: 'Trial Attorney & Legal Marketing Specialist',
-  credentials: 'JD, 15+ Years Trial Experience',
+  credentials: 'JD, 18+ Years Trial Experience',
   imageUrl: '/images/lawyer/alex-voss.webp',
-  positioningStatement: 'For 15 years, I spent $3,000-4,000/month on marketing. Got 3-5 new clients monthly. Hired videographers at $800/video. Then I built this AI system for my own firm. Now I get 25+ qualified leads monthly, spend $0 on marketing, and my calendar is booked 8 weeks out. I\'m teaching 600+ attorneys how to do the same.',
+  positioningStatement: 'For 18 years, I spent $3,000-4,000/month on marketing. Got 3-5 new clients monthly. Hired videographers at $800/video. Then I built this AI system for my own firm. Now I get 25+ qualified leads monthly, spend $0 on marketing, and my calendar is booked 8 weeks out. I\'m teaching 600+ attorneys how to do the same.',
   bulletPoints: [
     'Built this for my OWN practice first — I use it daily',
     'Went from 3-5 new clients/month to 25+ qualified leads/month',
@@ -86,7 +86,7 @@ export const ALEX_VOSS_LAWYER_DATA: ExpertPersonaProps = {
   philosophy: 'I created this system because I was YOU. Spending thousands on marketing, getting minimal results, watching younger attorneys on TikTok fill their calendars. Clients don\'t hire based on your bar credentials — they hire because they trust you. This framework bridges that gap with simple AI videos that build trust and fill your calendar. If it didn\'t work for me personally, I wouldn\'t be teaching it.',
   trustElement: 'My practice went from 2-3 consults/week to 10-12/week after using this system',
   stats: [
-    { value: '15+', label: 'Years Trial' },
+    { value: '18+', label: 'Years Trial' },
     { value: '$0', label: 'Marketing Now' },
     { value: '600+', label: 'Attorneys Taught' },
     { value: '25+', label: 'Leads/Month' },

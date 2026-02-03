@@ -128,7 +128,7 @@ const PRODUCTS = {
     accentColor: '#d4af37'
   },
   'lawyer': {
-    membersUrl: 'https://aifastscale.com/members',
+    membersUrl: 'https://aifastscale.com/lawyers/members',
     productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
     accentColor: '#d4af37'
@@ -151,9 +151,9 @@ const PLANS = {
   PSYCHOLOGIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
   PSYCHOLOGIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
   // Lawyer products
-  LAWYER_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
-  LAWYER_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
-  LAWYER_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
+  LAWYER_MAIN: { id: 'plan_GpUjd1q7kN6pj', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
+  LAWYER_UPSELL: { id: 'plan_97EdLFRTEConC', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
+  LAWYER_DOWNSELL: { id: 'plan_sdONQXGabaCd0', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
 }
 
 // Get plan info from plan ID

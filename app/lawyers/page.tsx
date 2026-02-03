@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Gift,
   Shield,
@@ -51,10 +53,76 @@ import { getMemberStats } from './members/components/config'
 import { ExpertPersona, ExpertMention, ALEX_VOSS_LAWYER_DATA } from '../components/ExpertPersona'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
-// Alex Voss, Esq. - Expert Attorney Persona (imported from ExpertPersona component)
+// Alex Morgan, Esq. - Expert Attorney Persona (imported from ExpertPersona component)
 
-// Checkout link placeholder (tracking removed)
-const CHECKOUT_LINK = '#'
+// Checkout link - embedded checkout for better CVR
+const CHECKOUT_LINK = '/lawyers/checkout'
+
+// ===========================================
+// BLUR PLACEHOLDERS FOR IMAGES (Performance)
+// ===========================================
+const BLUR_PLACEHOLDER = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIRAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQWH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABkRAAIDAQAAAAAAAAAAAAAAAAECAAMRIf/aAAwDAQACEQMRAD8AzPTtP1C7upUtrWSSSJd7qsZJUdZPH2qn4/5TrWlXkl1b3bJI8ZjJESn0n7x0f3vXzilKlONdlWc5GhOyuxuf/9k='
+
+// ===========================================
+// FRAMER MOTION ANIMATION VARIANTS (TypeScript compatible)
+// ===========================================
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+} as const
+
+const fadeInScale = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1 }
+} as const
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+} as const
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+} as const
+
+// Hover/tap animations
+const buttonHover = { scale: 1.03, boxShadow: '0 10px 40px rgba(245, 158, 11, 0.4)' }
+const buttonTap = { scale: 0.97 }
+
+// ===========================================
+// META PIXEL TRACKING (No duplicates)
+// ===========================================
+
+// Track ViewContent (fires once per session)
+const trackViewContent = () => {
+  if (typeof window === 'undefined') return
+  if (sessionStorage.getItem('lawyer_vc_tracked')) return
+
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'ViewContent', {
+      content_name: 'CloneYourself for Lawyers',
+      content_type: 'product',
+      value: 47.82,
+      currency: 'USD',
+    })
+    sessionStorage.setItem('lawyer_vc_tracked', '1')
+  }
+}
+
+// Track InitiateCheckout (fires on CTA click)
+const trackInitiateCheckout = () => {
+  if (typeof window === 'undefined') return
+
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'InitiateCheckout', {
+      content_name: 'CloneYourself for Lawyers',
+      content_type: 'product',
+      value: 47.82,
+      currency: 'USD',
+    })
+  }
+}
 
 // 100+ World Languages - With comprehensive country aliases
 // Users can search by language name OR country name
@@ -219,6 +287,9 @@ export default function PlasticAttorneyLandingPage() {
 
   // Update member stats every minute
   useEffect(() => {
+    // Track ViewContent for Meta Pixel
+    trackViewContent()
+
     const interval = setInterval(() => {
       setMemberStats(getMemberStats())
     }, 60000)
@@ -855,7 +926,7 @@ export default function PlasticAttorneyLandingPage() {
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-amber-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Expert framework by</span>
-                <span className="text-amber-300 font-semibold text-xs sm:text-sm">Alex Voss, Esq. — Trial Attorney, 15 Years Experience</span>
+                <span className="text-amber-300 font-semibold text-xs sm:text-sm">Alex Morgan, Esq. — Trial Attorney, 18 Years Experience</span>
               </div>
             </div>
 
@@ -919,6 +990,7 @@ export default function PlasticAttorneyLandingPage() {
             {/* CTA - Premium Button with Glow */}
             <a
               href={CHECKOUT_LINK}
+              onClick={trackInitiateCheckout}
                             className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-gold animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -1534,7 +1606,7 @@ export default function PlasticAttorneyLandingPage() {
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-gray-400 text-xs sm:text-sm flex items-center gap-2">
                     <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                    <span>Attorney-focused lessons and strategies created with input from <span className="text-amber-400 font-medium">Alex Voss, Esq.</span>, Trial Attorney with 15 Years Experience</span>
+                    <span>Attorney-focused lessons and strategies created with input from <span className="text-amber-400 font-medium">Alex Morgan, Esq.</span>, Trial Attorney with 18 Years Experience</span>
                   </p>
                 </div>
               </div>
@@ -1620,6 +1692,7 @@ export default function PlasticAttorneyLandingPage() {
               {/* CTA Button */}
               <Link
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1896,6 +1969,7 @@ export default function PlasticAttorneyLandingPage() {
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-amber-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -2572,6 +2646,7 @@ export default function PlasticAttorneyLandingPage() {
             <div className={`text-center mt-8 ${visibleSections.has('comparison') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <a
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg shadow-amber-500/25"
               >
                 <Zap className="w-5 h-5" />
@@ -2726,6 +2801,7 @@ export default function PlasticAttorneyLandingPage() {
 
               <Link
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                                 className="w-full max-w-md mx-auto bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 text-white py-3.5 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 btn-press hover-glow animate-pulse-glow transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -2791,6 +2867,7 @@ export default function PlasticAttorneyLandingPage() {
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl btn-press hover-glow animate-pulse-glow transition-all shadow-2xl shadow-amber-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -2927,7 +3004,7 @@ export default function PlasticAttorneyLandingPage() {
       </section>
 
       {/* ================================================================
-          10. MEET YOUR EXPERT - WHITE SECTION (Alex Voss, Esq.)
+          10. MEET YOUR EXPERT - WHITE SECTION (Alex Morgan, Esq.)
           ================================================================ */}
       <section
         id="meet-instructor"
@@ -2956,7 +3033,7 @@ export default function PlasticAttorneyLandingPage() {
 
             {/* SEO-friendly expert description */}
             <p className="sr-only">
-              Alex Voss, Esq. is a seasoned trial attorney with over 15 years of private practice experience, specializing in personal injury, family law, and business litigation. He has helped attorneys and lawyers across 20+ countries attract high-value clients and build thriving practices using AI video marketing.
+              Alex Morgan, Esq. is a seasoned trial attorney with over 18 years of private practice experience, specializing in personal injury, family law, and business litigation. He has helped attorneys and lawyers across 20+ countries attract high-value clients and build thriving practices using AI video marketing.
             </p>
           </div>
         </div>
@@ -3198,6 +3275,7 @@ export default function PlasticAttorneyLandingPage() {
               {/* CTA Button */}
               <Link
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                                 className="group relative w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -3271,6 +3349,7 @@ export default function PlasticAttorneyLandingPage() {
 
               <a
                 href={CHECKOUT_LINK}
+                onClick={trackInitiateCheckout}
                                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base sm:text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-5 h-5" />
@@ -3351,6 +3430,7 @@ export default function PlasticAttorneyLandingPage() {
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
             href={CHECKOUT_LINK}
+            onClick={trackInitiateCheckout}
                         className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
@@ -3747,6 +3827,7 @@ export default function PlasticAttorneyLandingPage() {
         <div className="bg-gradient-to-t from-black via-black/95 to-transparent pt-4 pb-4 px-4">
           <a
             href={CHECKOUT_LINK}
+            onClick={trackInitiateCheckout}
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30 animate-pulse"
           >
             <Zap className="w-5 h-5" />
