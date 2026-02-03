@@ -26,11 +26,19 @@ const trackPurchase = () => {
   }
 }
 
-// Confetti Component
+// Confetti Component - Optimized for mobile (fewer particles)
 const Confetti = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
+
+  const particleCount = isMobile ? 25 : 50
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
-      {[...Array(50)].map((_, i) => (
+      {[...Array(particleCount)].map((_, i) => (
         <div
           key={i}
           className="absolute animate-confetti"
@@ -42,7 +50,7 @@ const Confetti = () => {
           }}
         >
           <div
-            className="w-3 h-3 rotate-45"
+            className="w-2 h-2 sm:w-3 sm:h-3 rotate-45"
             style={{
               backgroundColor: ['#F59E0B', '#FBBF24', '#FDE68A', '#10B981', '#6366F1', '#EC4899'][Math.floor(Math.random() * 6)],
             }}
@@ -53,27 +61,27 @@ const Confetti = () => {
   )
 }
 
-// Animated Success Icon
+// Animated Success Icon - Mobile optimized
 const SuccessIcon = () => (
   <div className="relative">
-    {/* Outer glow rings */}
+    {/* Outer glow rings - reduced blur on mobile for performance */}
     <div className="absolute inset-0 animate-ping-slow">
-      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-amber-500/20 to-emerald-500/20 blur-xl" />
+      <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-amber-500/20 to-emerald-500/20 blur-lg sm:blur-xl" />
     </div>
     <div className="absolute inset-0 animate-pulse">
-      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-amber-500/30 to-emerald-500/30 blur-lg" />
+      <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-amber-500/30 to-emerald-500/30 blur-md sm:blur-lg" />
     </div>
 
     {/* Main icon */}
-    <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600 flex items-center justify-center shadow-2xl shadow-emerald-500/50 animate-bounce-gentle">
+    <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600 flex items-center justify-center shadow-2xl shadow-emerald-500/50 animate-bounce-gentle">
       <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-      <CheckCircle className="w-16 h-16 md:w-20 md:h-20 text-white drop-shadow-lg" strokeWidth={2.5} />
+      <CheckCircle className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white drop-shadow-lg" strokeWidth={2.5} />
     </div>
 
-    {/* Sparkles around */}
-    <Sparkles className="absolute -top-2 -right-2 w-8 h-8 text-amber-400 animate-pulse" />
-    <Star className="absolute -bottom-1 -left-3 w-6 h-6 text-amber-400 animate-pulse" style={{ animationDelay: '0.5s' }} />
-    <Sparkles className="absolute top-1/2 -right-6 w-5 h-5 text-emerald-400 animate-pulse" style={{ animationDelay: '1s' }} />
+    {/* Sparkles around - hidden on very small screens */}
+    <Sparkles className="hidden sm:block absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 text-amber-400 animate-pulse" />
+    <Star className="hidden sm:block absolute -bottom-1 -left-3 w-5 h-5 sm:w-6 sm:h-6 text-amber-400 animate-pulse" style={{ animationDelay: '0.5s' }} />
+    <Sparkles className="hidden md:block absolute top-1/2 -right-6 w-5 h-5 text-emerald-400 animate-pulse" style={{ animationDelay: '1s' }} />
   </div>
 )
 
@@ -203,20 +211,19 @@ function ThankYouContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#030303] relative overflow-hidden">
+    <div className="min-h-screen bg-[#030303] relative overflow-x-hidden">
       {/* Confetti */}
       {showConfetti && <Confetti />}
 
-      {/* Animated Background */}
+      {/* Animated Background - Optimized for mobile */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[150px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-amber-500/5 to-emerald-500/5 rounded-full blur-[100px]" />
+        {/* Gradient orbs - smaller and less blur on mobile */}
+        <div className="absolute top-0 left-1/4 w-[300px] sm:w-[400px] md:w-[600px] h-[300px] sm:h-[400px] md:h-[600px] bg-amber-500/10 rounded-full blur-[80px] sm:blur-[100px] md:blur-[150px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[350px] md:w-[500px] h-[250px] sm:h-[350px] md:h-[500px] bg-emerald-500/10 rounded-full blur-[60px] sm:blur-[80px] md:blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
 
-        {/* Grid pattern */}
+        {/* Grid pattern - hidden on mobile for performance */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="hidden sm:block absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
             backgroundSize: '50px 50px'
@@ -224,39 +231,39 @@ function ThankYouContent() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-8 md:py-16 max-w-2xl">
+      <div className="relative z-10 container mx-auto px-4 py-6 sm:py-8 md:py-16 max-w-2xl">
 
         {/* SUCCESS HEADER */}
-        <div className="text-center mb-10 md:mb-12">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
           {/* Success Icon */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6 sm:mb-8">
             <SuccessIcon />
           </div>
 
           {/* Congratulations Text */}
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-amber-500/20 border border-emerald-500/30 mb-4">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-amber-500/20 border border-emerald-500/30 mb-2 sm:mb-4">
               <Crown className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-bold text-amber-300 uppercase tracking-wider">Welcome to the Family</span>
+              <span className="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider">Welcome to the Family</span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-black">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black">
               <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
                 Congratulations!
               </span>
             </h1>
 
-            <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">
               Your Purchase is Complete
             </p>
 
-            <p className="text-lg text-white/60 max-w-md mx-auto">
+            <p className="text-base sm:text-lg text-white/60 max-w-md mx-auto px-2">
               You've made an incredible decision. Get ready to transform your practice with AI-powered video content.
             </p>
           </div>
 
-          {/* Social Proof */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
+          {/* Social Proof - Stack on mobile */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mt-6 sm:mt-8">
             <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
               <Users className="w-4 h-4 text-amber-400" />
               <span className="text-white text-sm font-medium">
@@ -274,17 +281,17 @@ function ThankYouContent() {
 
         {/* LOADING STATE */}
         {isLoading && (
-          <div className="rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-10 backdrop-blur-xl text-center">
-            <div className="relative inline-block mb-6">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/10 flex items-center justify-center">
-                <Loader2 className="w-10 h-10 text-amber-400 animate-spin" />
+          <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-6 sm:p-8 md:p-10 backdrop-blur-xl text-center">
+            <div className="relative inline-block mb-4 sm:mb-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/10 flex items-center justify-center">
+                <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 text-amber-400 animate-spin" />
               </div>
             </div>
-            <p className="text-white text-2xl font-bold mb-2">Setting Up Your Account</p>
-            <p className="text-white/50">This only takes a moment...</p>
+            <p className="text-white text-xl sm:text-2xl font-bold mb-2">Setting Up Your Account</p>
+            <p className="text-white/50 text-sm sm:text-base">This only takes a moment...</p>
 
             {/* Progress dots */}
-            <div className="flex items-center justify-center gap-2 mt-6">
+            <div className="flex items-center justify-center gap-2 mt-4 sm:mt-6">
               {[0, 1, 2].map((i) => (
                 <div
                   key={i}
@@ -300,57 +307,59 @@ function ThankYouContent() {
         {credentials && !isLoading && (
           <>
             {/* Main Card */}
-            <div className="rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 overflow-hidden backdrop-blur-xl mb-6">
+            <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 overflow-hidden backdrop-blur-xl mb-4 sm:mb-6">
               {/* Card Header */}
-              <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-b border-white/10 px-6 py-5">
+              <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-b border-white/10 px-4 sm:px-6 py-4 sm:py-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30">
-                    <Rocket className="w-6 h-6 text-white" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30 flex-shrink-0">
+                    <Rocket className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">Your Access Credentials</h2>
-                    <p className="text-white/50 text-sm">Save these to login anytime</p>
+                    <h2 className="text-lg sm:text-xl font-bold text-white">Your Access Credentials</h2>
+                    <p className="text-white/50 text-xs sm:text-sm">Save these to login anytime</p>
                   </div>
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 md:p-8">
+              <div className="p-4 sm:p-6 md:p-8">
                 {/* Credentials */}
-                <div className="space-y-4 mb-8">
+                <div className="space-y-4 mb-6 sm:mb-8">
                   {/* Email */}
                   <div>
                     <label className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
                       <Mail className="w-3.5 h-3.5" />
                       Your Email
                     </label>
-                    <div className="bg-black/40 rounded-xl px-5 py-4 border border-white/10">
-                      <p className="text-white text-lg font-medium">{credentials.email}</p>
+                    <div className="bg-black/40 rounded-lg sm:rounded-xl px-4 sm:px-5 py-3 sm:py-4 border border-white/10">
+                      <p className="text-white text-sm sm:text-base md:text-lg font-medium break-all">{credentials.email}</p>
                     </div>
                   </div>
 
-                  {/* Password */}
+                  {/* Password - Stack button on mobile */}
                   <div>
                     <label className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
                       <Lock className="w-3.5 h-3.5" />
                       Your Password
                     </label>
-                    <div className="bg-black/40 rounded-xl px-5 py-4 border border-amber-500/30 flex items-center justify-between gap-4">
-                      <p className="text-white text-lg font-mono font-medium tracking-wider">{credentials.password}</p>
-                      <button
-                        onClick={copyPassword}
-                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all ${
-                          copiedPassword
-                            ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
-                            : 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105'
-                        }`}
-                      >
-                        {copiedPassword ? (
-                          <><CheckCircle className="w-4 h-4" /> Copied!</>
-                        ) : (
-                          <><Copy className="w-4 h-4" /> Copy</>
-                        )}
-                      </button>
+                    <div className="bg-black/40 rounded-lg sm:rounded-xl px-4 sm:px-5 py-3 sm:py-4 border border-amber-500/30">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <p className="text-white text-base sm:text-lg font-mono font-medium tracking-wider">{credentials.password}</p>
+                        <button
+                          onClick={copyPassword}
+                          className={`flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-sm transition-all min-h-[44px] ${
+                            copiedPassword
+                              ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                              : 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/30 active:scale-95 sm:hover:shadow-amber-500/50 sm:hover:scale-105'
+                          }`}
+                        >
+                          {copiedPassword ? (
+                            <><CheckCircle className="w-5 h-5" /> Copied!</>
+                          ) : (
+                            <><Copy className="w-5 h-5" /> Copy Password</>
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -359,86 +368,86 @@ function ThankYouContent() {
                 <button
                   onClick={handleLoginClick}
                   disabled={!copiedPassword}
-                  className={`group w-full font-bold text-lg py-5 rounded-2xl transition-all flex items-center justify-center gap-3 ${
+                  className={`group w-full font-bold text-base sm:text-lg py-4 sm:py-5 rounded-xl sm:rounded-2xl transition-all flex items-center justify-center gap-2 sm:gap-3 min-h-[56px] ${
                     copiedPassword
-                      ? 'bg-gradient-to-r from-amber-500 via-amber-500 to-amber-600 text-white shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.02]'
+                      ? 'bg-gradient-to-r from-amber-500 via-amber-500 to-amber-600 text-white shadow-xl shadow-amber-500/30 active:scale-[0.98] sm:hover:shadow-amber-500/50 sm:hover:scale-[1.02]'
                       : 'bg-white/5 text-white/30 cursor-not-allowed border border-white/10'
                   }`}
                 >
                   {copiedPassword ? (
                     <>
-                      <Zap className="w-6 h-6" />
-                      <span>Access Your Members Area</span>
-                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                      <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <span>Access Members Area</span>
+                      <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                     </>
                   ) : (
                     <>
                       <Lock className="w-5 h-5" />
-                      <span>Copy Password to Continue</span>
+                      <span>Copy Password First</span>
                     </>
                   )}
                 </button>
 
                 {!copiedPassword && (
-                  <p className="text-center text-white/40 text-sm mt-4 flex items-center justify-center gap-2">
-                    <ArrowRight className="w-4 h-4 rotate-90" />
-                    Click "Copy" above to enable access
+                  <p className="text-center text-white/40 text-xs sm:text-sm mt-3 sm:mt-4 flex items-center justify-center gap-2">
+                    <ArrowRight className="w-4 h-4 -rotate-90" />
+                    Tap "Copy Password" above to continue
                   </p>
                 )}
               </div>
             </div>
 
             {/* What's Included */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 mb-6">
-              <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
+            <div className="rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/10 p-4 sm:p-6 mb-4 sm:mb-6">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-4 sm:mb-5 flex items-center gap-2">
                 <Gift className="w-5 h-5 text-amber-400" />
                 What's Waiting For You
               </h3>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {[
                   { icon: '🎬', text: 'AI Video Training' },
                   { icon: '📝', text: '100+ Viral Scripts' },
                   { icon: '🤖', text: 'AI Content Generator' },
-                  { icon: '📅', text: '365-Day Content Plan' },
+                  { icon: '📅', text: '365-Day Content' },
                   { icon: '⭐', text: 'Review System' },
                   { icon: '📞', text: 'Phone Scripts' },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5">
-                    <span className="text-xl">{item.icon}</span>
-                    <span className="text-white/80 text-sm font-medium">{item.text}</span>
+                  <div key={i} className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-white/[0.03] border border-white/5">
+                    <span className="text-lg sm:text-xl">{item.icon}</span>
+                    <span className="text-white/80 text-xs sm:text-sm font-medium">{item.text}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Info Cards */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
+            {/* Info Cards - Stack on mobile */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
               {/* Email Backup */}
-              <div className="rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 p-5">
-                <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+              <div className="rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 p-4 sm:p-5">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                     <Mail className="w-5 h-5 text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-white font-bold mb-1">Email Backup Sent</p>
-                    <p className="text-white/50 text-sm">
-                      Login details also sent to your email for safekeeping.
+                    <p className="text-white font-bold text-sm sm:text-base mb-1">Email Backup Sent</p>
+                    <p className="text-white/50 text-xs sm:text-sm">
+                      Login details sent to your email too.
                     </p>
                   </div>
                 </div>
               </div>
 
               {/* Free Updates */}
-              <div className="rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 p-5">
-                <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <div className="rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 p-4 sm:p-5">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
                     <Sparkles className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-white font-bold mb-1">Free Forever Updates</p>
-                    <p className="text-white/50 text-sm">
-                      New courses & bonuses added monthly. No extra fees.
+                    <p className="text-white font-bold text-sm sm:text-base mb-1">Free Forever Updates</p>
+                    <p className="text-white/50 text-xs sm:text-sm">
+                      New content added monthly. No fees.
                     </p>
                   </div>
                 </div>
@@ -446,20 +455,18 @@ function ThankYouContent() {
             </div>
 
             {/* Lifetime Badge */}
-            <div className="rounded-2xl bg-gradient-to-r from-emerald-500/20 via-emerald-500/10 to-amber-500/20 border border-emerald-500/30 p-5 text-center">
-              <div className="flex items-center justify-center gap-3">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
-                  ))}
-                </div>
+            <div className="rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-500/20 via-emerald-500/10 to-amber-500/20 border border-emerald-500/30 p-4 sm:p-5 text-center">
+              <div className="flex items-center justify-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-amber-400" />
+                ))}
               </div>
-              <p className="text-white font-bold text-lg mt-3 flex items-center justify-center gap-2">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
+              <p className="text-white font-bold text-base sm:text-lg mt-2 sm:mt-3 flex items-center justify-center gap-2">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
                 Lifetime Access Activated
               </p>
-              <p className="text-emerald-300/70 text-sm mt-1">
-                One-time payment · Free updates forever · No subscriptions
+              <p className="text-emerald-300/70 text-xs sm:text-sm mt-1">
+                One-time payment · Free updates forever
               </p>
             </div>
           </>
@@ -468,22 +475,22 @@ function ThankYouContent() {
         {/* FALLBACK - Check Email */}
         {showFallback && !credentials && !isLoading && (
           <>
-            <div className="rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-8 md:p-10 backdrop-blur-xl mb-6 text-center">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-amber-500/30">
-                <Mail className="w-10 h-10 text-white" />
+            <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-6 sm:p-8 md:p-10 backdrop-blur-xl mb-4 sm:mb-6 text-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl shadow-amber-500/30">
+                <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
               </div>
 
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3">
                 Check Your Email
               </h2>
-              <p className="text-white/60 text-lg mb-8">
+              <p className="text-white/60 text-base sm:text-lg mb-6 sm:mb-8">
                 Your login credentials have been sent to your inbox.
               </p>
 
-              <div className="bg-black/40 rounded-xl p-5 border border-white/10 mb-8 text-left max-w-sm mx-auto">
+              <div className="bg-black/40 rounded-lg sm:rounded-xl p-4 sm:p-5 border border-white/10 mb-6 sm:mb-8 text-left max-w-sm mx-auto">
                 <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Look for email from:</p>
-                <p className="text-white font-bold text-lg">hello@mail.aifastscale.com</p>
-                <p className="text-amber-400 text-sm mt-3 flex items-center gap-2">
+                <p className="text-white font-bold text-base sm:text-lg">hello@mail.aifastscale.com</p>
+                <p className="text-amber-400 text-xs sm:text-sm mt-3 flex items-center gap-2">
                   <span>💡</span> Check spam/promotions if not in inbox
                 </p>
               </div>
@@ -494,34 +501,34 @@ function ThankYouContent() {
                   window.history.replaceState(null, '', '/plastic-surgeons/members')
                   router.push('/plastic-surgeons/members')
                 }}
-                className="w-full max-w-sm mx-auto bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.02] transition-all"
+                className="w-full max-w-sm mx-auto bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-base sm:text-lg py-4 sm:py-5 rounded-xl sm:rounded-2xl flex items-center justify-center gap-2 sm:gap-3 shadow-xl shadow-amber-500/30 active:scale-[0.98] sm:hover:shadow-amber-500/50 sm:hover:scale-[1.02] transition-all min-h-[56px]"
               >
-                <Zap className="w-6 h-6" />
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
                 Go to Login Page
-                <ArrowRight className="w-6 h-6" />
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
 
             {/* 3 Quick Steps */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6">
-              <h3 className="text-lg font-bold text-white mb-5 text-center">
+            <div className="rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/10 p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-4 sm:mb-5 text-center">
                 3 Quick Steps to Get Started
               </h3>
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center justify-between gap-2 sm:gap-4">
                 {[
-                  { num: '1', icon: Mail, text: 'Check email', color: 'amber' },
-                  { num: '2', icon: Copy, text: 'Copy password', color: 'amber' },
-                  { num: '3', icon: Rocket, text: 'Start creating', color: 'emerald' },
+                  { icon: Mail, text: 'Check email' },
+                  { icon: Copy, text: 'Copy password' },
+                  { icon: Rocket, text: 'Start creating' },
                 ].map((step, i) => (
                   <div key={i} className="flex flex-col items-center text-center flex-1">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-3 ${
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-3 ${
                       i === 0
                         ? 'bg-gradient-to-br from-amber-500 to-amber-600 shadow-lg shadow-amber-500/30'
                         : 'bg-white/10'
                     }`}>
-                      <step.icon className="w-6 h-6 text-white" />
+                      <step.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <span className="text-sm text-white/70 font-medium">{step.text}</span>
+                    <span className="text-xs sm:text-sm text-white/70 font-medium">{step.text}</span>
                   </div>
                 ))}
               </div>
@@ -530,7 +537,7 @@ function ThankYouContent() {
         )}
 
         {/* Support */}
-        <p className="text-center text-white/30 text-sm mt-10">
+        <p className="text-center text-white/30 text-xs sm:text-sm mt-8 sm:mt-10 px-4">
           Need help? Email us at{' '}
           <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:text-amber-300 transition-colors">
             support@aifastscale.com
