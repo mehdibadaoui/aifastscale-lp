@@ -341,8 +341,8 @@ export default function LawyerLandingPage() {
       role: 'Personal Injury Attorney',
       location: 'Los Angeles, CA',
       image: '/images/lawyer/review-1.webp',
-      review: "I approached this with healthy skepticism. The data changed my mind: 14 qualified inquiries in week one, 3 signed retainers. My cost per acquisition dropped from $800 to effectively zero.",
-      results: '3 signed retainers, Week 1',
+      review: "I approached this with healthy skepticism. The data changed my mind: multiple qualified inquiries in the first week, leading to signed retainers. My client acquisition efficiency improved significantly.*",
+      results: 'Multiple retainers signed*',
     },
     {
       id: 2,
@@ -350,8 +350,8 @@ export default function LawyerLandingPage() {
       role: 'Family Law Partner',
       location: 'Chicago, IL',
       image: '/images/lawyer/review-2.webp',
-      review: "22 years in practice taught me to evaluate opportunities on merit. My intake calendar is now scheduled 8 weeks out — exclusively from organic video content. The math speaks for itself.",
-      results: '8-week booking backlog',
+      review: "22 years in practice taught me to evaluate opportunities on merit. My intake calendar filled up significantly — driven by organic video content. The efficiency improvement speaks for itself.*",
+      results: 'Fully booked calendar*',
     },
     {
       id: 3,
@@ -359,8 +359,8 @@ export default function LawyerLandingPage() {
       role: 'Criminal Defense Attorney',
       location: 'Miami, FL',
       image: '/images/lawyer/review-3.webp',
-      review: "In a saturated market, differentiation is everything. These videos positioned my practice as the authority. Consultation volume increased from 3-4 to 18+ weekly — same ad spend.",
-      results: '350% consultation increase',
+      review: "In a saturated market, differentiation is everything. These videos positioned my practice as the authority. Consultation volume increased substantially — with the same ad spend.*",
+      results: 'Significant consultation increase*',
     },
     {
       id: 4,
@@ -368,8 +368,8 @@ export default function LawyerLandingPage() {
       role: 'Immigration Attorney',
       location: 'New York, NY',
       image: '/images/lawyer/review-4.webp',
-      review: "Previously allocated $3,500/month to video production agencies. Now I produce superior content in-house, in minutes. One visa explainer reached 2.1M views. The ROI calculation is straightforward.",
-      results: '2.1M reach, $0 ad spend',
+      review: "Previously allocated significant budget to video production agencies. Now I produce content in-house, in minutes. One visa explainer achieved substantial reach organically.*",
+      results: 'High organic reach*',
     },
     {
       id: 5,
@@ -377,8 +377,8 @@ export default function LawyerLandingPage() {
       role: 'Estate Planning Attorney',
       location: 'Dallas, TX',
       image: '/images/lawyer/review-5.webp',
-      review: "One educational video on testamentary basics generated 156K views and 31 new estate planning engagements. The system has paid for itself approximately 600 times over.",
-      results: '31 engagements from 1 video',
+      review: "One educational video on testamentary basics generated substantial views and multiple new estate planning engagements. The system delivered strong ROI for my practice.*",
+      results: 'Multiple engagements*',
     },
     {
       id: 6,
@@ -386,8 +386,8 @@ export default function LawyerLandingPage() {
       role: 'Medical Malpractice Attorney',
       location: 'Boston, MA',
       image: '/images/lawyer/review-6.webp',
-      review: "28 years of practice, and I've never seen a client acquisition channel this efficient. 6 high-value med-mal cases last month via social content alone. Each represents $50K+ in projected fees.",
-      results: '$300K+ pipeline from social',
+      review: "28 years of practice, and I've found this to be an efficient client acquisition channel. Multiple high-value cases came through social content alone.*",
+      results: 'Strong case pipeline*',
     },
   ]
 
@@ -1400,9 +1400,9 @@ export default function LawyerLandingPage() {
                 <div className="bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 border-y border-amber-500/30 py-3 px-4">
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
-                      <div className="text-amber-400 text-xl sm:text-2xl font-black">19</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Signed Retainers</div>
-                      <div className="text-gray-500 text-[9px]">6-week period</div>
+                      <div className="text-amber-400 text-xl sm:text-2xl font-black">15+</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Signed Retainers*</div>
+                      <div className="text-gray-500 text-[9px]">first 6 weeks</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">5</div>
@@ -1426,9 +1426,9 @@ export default function LawyerLandingPage() {
                     {[
                       { time: 'Day 1', event: 'Generated AI video: "Your rights during a DUI stop"', color: 'gray' },
                       { time: 'Day 3', event: 'Distributed via TikTok and Instagram Reels', color: 'gray' },
-                      { time: 'Week 1', event: '89K organic views • 7 qualified consultation requests', color: 'gold' },
-                      { time: 'Week 3', event: '14 executed retainer agreements • $42K collected', color: 'gold' },
-                      { time: 'Week 6', event: '19 total matters • $67,000 in retainer revenue', color: 'green' },
+                      { time: 'Week 1', event: 'Strong organic reach • Multiple qualified consultation requests*', color: 'gold' },
+                      { time: 'Week 3', event: 'Multiple executed retainer agreements*', color: 'gold' },
+                      { time: 'Week 6', event: 'Significant new matters • Strong retainer revenue*', color: 'green' },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
@@ -1445,7 +1445,7 @@ export default function LawyerLandingPage() {
                 {/* Quote */}
                 <div className="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 to-amber-500/5 border-t border-amber-500/30">
                   <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
-                    "My previous client acquisition cost was <span className="text-gray-400">$2,800/month</span> in Google Ads — with inconsistent results. One AI video now generates <span className="text-amber-400 font-bold">3-4 qualified DUI consultations weekly</span>. Prospective clients arrive pre-sold because they've already seen me explain their situation."
+                    "My previous paid advertising delivered inconsistent results at high cost. AI video content now generates <span className="text-amber-400 font-bold">consistent qualified consultations</span>. Prospective clients arrive pre-sold because they've already seen me explain their situation.*"
                   </p>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
@@ -1505,14 +1505,14 @@ export default function LawyerLandingPage() {
                 <div className="bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 border-y border-amber-500/30 py-3 px-4">
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
-                      <div className="text-amber-400 text-xl sm:text-2xl font-black">31</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Signed Clients</div>
-                      <div className="text-gray-500 text-[9px]">8-week period</div>
+                      <div className="text-amber-400 text-xl sm:text-2xl font-black">30+</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Signed Clients*</div>
+                      <div className="text-gray-500 text-[9px]">first 2 months</div>
                     </div>
                     <div>
-                      <div className="text-amber-400 text-xl sm:text-2xl font-black">$800K+</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Case Value</div>
-                      <div className="text-gray-500 text-[9px]">active pipeline</div>
+                      <div className="text-amber-400 text-xl sm:text-2xl font-black">Strong</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Pipeline*</div>
+                      <div className="text-gray-500 text-[9px]">active matters</div>
                     </div>
                     <div>
                       <div className="text-amber-400 text-xl sm:text-2xl font-black">$0</div>
@@ -1531,9 +1531,9 @@ export default function LawyerLandingPage() {
                     {[
                       { time: 'Day 1', event: 'Generated AI video: "5 critical steps after an auto accident"', color: 'gray' },
                       { time: 'Day 2', event: 'Published to TikTok — total effort: 8 minutes', color: 'gray' },
-                      { time: 'Week 1', event: '340K organic views • 23 voicemails awaiting Monday', color: 'gold' },
-                      { time: 'Week 4', event: '18 signed contingency agreements • Expanded paralegal staff', color: 'gold' },
-                      { time: 'Week 8', event: '31 active matters • $800K+ aggregate case value', color: 'green' },
+                      { time: 'Week 1', event: 'Strong organic reach • Multiple voicemails from prospects*', color: 'gold' },
+                      { time: 'Week 4', event: 'Multiple signed agreements • Expanded team capacity*', color: 'gold' },
+                      { time: 'Week 8', event: 'Significant active matters • Strong case pipeline*', color: 'green' },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
@@ -1550,7 +1550,7 @@ export default function LawyerLandingPage() {
                 {/* Quote */}
                 <div className="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 to-amber-500/5 border-t border-amber-500/30">
                   <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
-                    "I evaluated this with appropriate skepticism. Then my educational video on post-accident protocol reached 340K views while I was in depositions. <span className="text-amber-400 font-bold">My paralegal now pre-screens 15+ weekly inquiries</span> from that single piece of content. We expanded staff to handle volume."
+                    "I evaluated this with appropriate skepticism. Then my educational video gained substantial reach while I was in depositions. <span className="text-amber-400 font-bold">My paralegal now handles consistent weekly inquiries</span> from that content. We expanded capacity to handle volume.*"
                   </p>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
@@ -1580,10 +1580,18 @@ export default function LawyerLandingPage() {
             </div>
           </div>
 
-          {/* FTC Disclaimer */}
-          <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-gray-300 bg-gray-100/50">
-            *RESULTS NOT TYPICAL: These testimonials represent individual experiences. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline">See full disclaimer</a>.
-          </p>
+          {/* FTC Disclaimer - PROMINENT */}
+          <div className="mt-6 max-w-2xl mx-auto bg-gray-100 border border-gray-200 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-gray-800 font-bold text-xs sm:text-sm mb-1">*RESULTS NOT TYPICAL</p>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  These testimonials represent individual experiences only. Income and results vary significantly based on effort, market conditions, practice area, geographic location, skills, and circumstances. We do not guarantee any specific income, client acquisition, or business results. Individual outcomes depend on many factors outside our control. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline font-medium">See full disclaimer</a>.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1731,7 +1739,7 @@ export default function LawyerLandingPage() {
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
                   <span className="text-4xl sm:text-6xl font-black text-amber-400">$47.82</span>
                   <div className="text-left">
-                    <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
+                    <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">BEST VALUE</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
                   </div>
                 </div>
@@ -2028,7 +2036,7 @@ export default function LawyerLandingPage() {
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
-              <p className="text-gray-500 text-xs sm:text-sm mt-3">98% discount • 30-day risk-free evaluation</p>
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">Special introductory pricing • 30-day risk-free evaluation</p>
             </div>
           </div>
         </div>
@@ -2051,9 +2059,9 @@ export default function LawyerLandingPage() {
                 <span className="text-amber-600 font-bold text-xs uppercase tracking-wide">Estate Planning Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                One AI Video. <span className="text-amber-500">$52,000</span> in Signed Retainers.
+                One AI Video. <span className="text-amber-500">Significant</span> New Revenue.*
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">How a solo practitioner outperformed BigLaw marketing budgets with a 6-minute video</p>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">How a solo practitioner improved client acquisition with a 6-minute video*</p>
             </div>
 
             {/* Lisa Chen Case Study Card - Light Theme */}
@@ -2088,10 +2096,9 @@ export default function LawyerLandingPage() {
                       <span className="text-red-600 text-xs font-bold">THE PROBLEM</span>
                     </div>
                     <p className="text-gray-700 leading-relaxed">
-                      "I was allocating <span className="text-gray-900 font-bold">$2,800 monthly</span> to Google Ads.
-                      After 6 months: <span className="text-gray-900 font-bold">$16,800 invested</span>,
-                      <span className="text-red-600 font-bold"> only 3 estate plans closed</span>. That's $5,600 per client acquisition. BigLaw dominated every search result.
-                      As a solo practitioner, I was statistically invisible in my own market."
+                      "I was allocating significant budget to Google Ads with limited results.
+                      My cost per client acquisition was unsustainably high. BigLaw dominated every search result.
+                      As a solo practitioner, I struggled to gain visibility in my own market."*
                     </p>
                   </div>
                 </div>
@@ -2130,8 +2137,8 @@ export default function LawyerLandingPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
                     { number: '48', label: 'Hours to First Inquiry', sub: 'Sunday post → Monday calls' },
-                    { number: '$0', label: 'Current Ad Spend', sub: 'Previously $2,800/mo' },
-                    { number: '14', label: 'Retainers Signed', sub: 'First 21 days' },
+                    { number: '$0', label: 'Current Ad Spend', sub: 'Reduced significantly' },
+                    { number: '14+', label: 'Retainers Signed*', sub: 'First month' },
                   ].map((stat, i) => (
                     <div key={i} className="bg-gradient-to-br from-amber-50 to-white border border-amber-500/30 rounded-xl p-4 text-center">
                       <div className="text-amber-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
@@ -2152,10 +2159,10 @@ export default function LawyerLandingPage() {
                 <div className="space-y-3 sm:space-y-4">
                   {[
                     { time: 'Sunday', event: 'Published first AI video: "3 Estate Planning Errors That Destroy Family Wealth"', icon: Upload, color: 'gray' },
-                    { time: 'Monday AM', event: '23 direct messages received. Paralegal overwhelmed with inquiry volume.', icon: MessageSquare, color: 'gold' },
-                    { time: 'Week 1', event: '8 consultations scheduled (average retainer: $3,500-$5,000)', icon: Calendar, color: 'gold' },
-                    { time: 'Week 3', event: '14 retainers signed • $52,000 in documented revenue', icon: FileText, color: 'gold' },
-                    { time: 'Month 2', event: 'Calendar booked 6 weeks out • Google Ads budget reallocated to $0', icon: DollarSign, color: 'green' },
+                    { time: 'Monday AM', event: 'Multiple direct messages received. Team handling increased inquiry volume.', icon: MessageSquare, color: 'gold' },
+                    { time: 'Week 1', event: 'Multiple consultations scheduled from organic content', icon: Calendar, color: 'gold' },
+                    { time: 'Week 3', event: 'Multiple retainers signed • Significant revenue documented*', icon: FileText, color: 'gold' },
+                    { time: 'Month 2', event: 'Calendar filling consistently • Reduced paid ad dependency', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -2188,9 +2195,9 @@ export default function LawyerLandingPage() {
                   <div className="text-amber-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      Three weeks. <span className="text-amber-600 font-bold">$52,000 in signed retainers</span>.
-                      My previous Google Ads investment: $16,800 over 6 months, 3 clients. This system: $47.82 investment,
-                      14 clients in 21 days. BigLaw budgets cannot replicate authentic personal connection at scale.
+                      Within weeks, I saw <span className="text-amber-600 font-bold">significant new revenue</span> from organic content.
+                      My previous paid advertising delivered inconsistent results at high cost. This system delivered strong ROI
+                      with multiple new clients. Authentic personal connection scales in ways BigLaw budgets cannot replicate.*
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-500 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
@@ -2214,8 +2221,8 @@ export default function LawyerLandingPage() {
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
                   { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$52K', label: 'Revenue', sub: '3 weeks' },
-                  { value: '1,088x', label: 'ROI', sub: 'Return' },
+                  { value: 'Strong', label: 'Results*', sub: 'Individual' },
+                  { value: '30-Day', label: 'Guarantee', sub: 'Risk-Free' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-amber-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -2227,10 +2234,18 @@ export default function LawyerLandingPage() {
             </div>
           </div>
 
-          {/* FTC Disclaimer after Case Study */}
-          <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-amber-500/30 bg-amber-50/30">
-            *RESULTS NOT TYPICAL: This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline">See full disclaimer</a>.
-          </p>
+          {/* FTC Disclaimer after Case Study - PROMINENT */}
+          <div className="mt-6 max-w-2xl mx-auto bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-amber-800 font-bold text-xs sm:text-sm mb-1">*RESULTS NOT TYPICAL</p>
+                <p className="text-amber-700 text-xs sm:text-sm leading-relaxed">
+                  This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, practice area, geographic location, and circumstances. We do not guarantee any specific income, client acquisition, or business results. Individual outcomes depend on many factors outside our control. <a href="/disclaimer" className="text-amber-600 hover:text-amber-700 underline font-medium">See full disclaimer</a>.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -2261,6 +2276,21 @@ export default function LawyerLandingPage() {
             <p className="text-gray-600 text-[10px] sm:text-xs mt-3 max-w-2xl mx-auto">
               *Testimonials collected 2024-2026. Results verified at time of submission. Testimonials reflect individual experiences and are not guaranteed results. Individual results vary based on effort, market conditions, and other factors. See our <a href="/disclaimer" className="text-amber-500 hover:text-amber-400 underline">full disclaimer</a>.
             </p>
+          </div>
+        </div>
+
+        {/* PROMINENT FTC EARNINGS DISCLAIMER - COMPLIANCE */}
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
+          <div className="bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-amber-400 font-bold text-xs sm:text-sm mb-1">IMPORTANT EARNINGS DISCLOSURE</p>
+                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                  The testimonials and examples displayed represent individual results only. Your results will vary based on your effort, market conditions, practice area, geographic location, and other factors. We make no guarantees regarding specific income, client acquisition, or business outcomes. The figures mentioned are individual experiences, not promises of what you will achieve. Please review our <a href="/disclaimer" className="text-amber-500 hover:text-amber-400 underline">complete earnings disclaimer</a> before purchasing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2477,7 +2507,7 @@ export default function LawyerLandingPage() {
                     <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-amber-500/20 shadow-lg">
                       <p className="text-gray-800 text-sm sm:text-lg leading-relaxed font-medium">
                         Integrate the <span className="text-amber-500 font-black">CloneYourself™</span> System into your practice for 30 days.
-                        If the reclaimed billable hours aren&apos;t worth 100x the cost, or if you aren&apos;t satisfied for any reason,
+                        If you are not completely satisfied with your experience for any reason,
                         we will issue a <span className="text-amber-500 font-black">full refund</span>—no questions asked.
                       </p>
                       <div className="mt-3 pt-3 border-t border-gray-200">
@@ -2718,7 +2748,7 @@ export default function LawyerLandingPage() {
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
                   <div className="flex items-center gap-2">
                     <span className="text-green-400 font-black text-lg sm:text-xl">${(497 + totalBonusValue + 494 - 98).toLocaleString()}</span>
-                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">98% OFF</span>
+                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded">BEST VALUE</span>
                   </div>
                 </div>
               </div>
@@ -2731,7 +2761,7 @@ export default function LawyerLandingPage() {
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
                 <span className="text-4xl sm:text-6xl font-black text-amber-400">$47.82</span>
                 <div className="text-left">
-                  <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
+                  <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">BEST VALUE</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
                 </div>
               </div>
@@ -2749,14 +2779,23 @@ export default function LawyerLandingPage() {
 
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-gray-400 text-[10px] sm:text-sm">
                 <div className="flex items-center gap-1">
-                  <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-amber-400" />
+                  <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-green-500" />
                   <span>30-Day Guarantee</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <CheckCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-amber-400" />
-                  <span>SSL Secured</span>
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-green-500" />
+                  <span>256-bit SSL</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-green-500" />
+                  <span>PCI Compliant</span>
                 </div>
               </div>
+
+              {/* Compliance Note */}
+              <p className="text-gray-600 text-[9px] sm:text-[10px] mt-4 max-w-lg mx-auto">
+                *Individual results vary. See our <a href="/disclaimer" className="text-amber-500 hover:text-amber-400 underline">earnings disclaimer</a> for details.
+              </p>
             </div>
           </div>
         </div>
@@ -3067,7 +3106,7 @@ export default function LawyerLandingPage() {
                   </h2>
                   <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto">
                     Integrate the <span className="text-amber-500 font-bold">CloneYourself™</span> System into your practice for 30 days.
-                    If the reclaimed billable hours aren&apos;t worth 100x the cost, or if you aren&apos;t satisfied for any reason,
+                    If you are not completely satisfied with your experience for any reason,
                     we will issue a full refund—no questions asked. No friction. No cross-examination.
                   </p>
                 </div>
@@ -3099,13 +3138,13 @@ export default function LawyerLandingPage() {
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0 mt-0.5" />
                           <p className="text-gray-700 text-sm sm:text-base">
-                            <span className="font-bold text-gray-900">Billable hours not reclaimed?</span> Full refund.
+                            <span className="font-bold text-gray-900">Not satisfied with the system?</span> Full refund.
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0 mt-0.5" />
                           <p className="text-gray-700 text-sm sm:text-base">
-                            <span className="font-bold text-gray-900">ROI below 100x?</span> Full refund.
+                            <span className="font-bold text-gray-900">Doesn&apos;t meet your expectations?</span> Full refund.
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
@@ -3196,9 +3235,9 @@ export default function LawyerLandingPage() {
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
               <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Billable Hour Arbitrage:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Path B produces <span className="font-bold text-gray-900">1 additional retainer</span> in month 1 → that is <span className="text-amber-600 font-bold">$2,000-5,000</span> revenue from a $47.82 investment.</p>
-                <p>• If you acquire <span className="font-bold text-gray-900">5 new clients</span> (documented average) → that is <span className="text-amber-600 font-bold">$10,000-25,000</span> from $47.82.</p>
-                <p>• If you evaluate for 30 days and request a refund → <span className="text-amber-600 font-bold">100% capital returned</span>, zero net cost.</p>
+                <p>• If Path B produces <span className="font-bold text-gray-900">additional client inquiries</span> → potential new revenue from a $47.82 investment.*</p>
+                <p>• If you acquire <span className="font-bold text-gray-900">new clients</span> through improved content → potential significant practice growth.*</p>
+                <p>• If you evaluate for 30 days and request a refund → <span className="text-amber-600 font-bold">full refund returned</span>, zero net cost.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">Every hour spent on non-billable content creation is an hour you cannot bill. This system eliminates that friction.</p>
             </div>
@@ -3326,13 +3365,18 @@ export default function LawyerLandingPage() {
             <p className="text-gray-400 text-xs sm:text-sm mb-3">
               Questions? <a href="mailto:support@aifastscale.com" className="text-amber-400 hover:text-amber-300 underline">support@aifastscale.com</a>
             </p>
-            {/* Wyoming LLC Identification */}
-            <p className="text-gray-600 text-[10px] sm:text-xs mb-1">
-              Velon LLC, a Wyoming Limited Liability Company
-            </p>
-            <p className="text-gray-700 text-[9px] sm:text-[10px] mb-2">
-              30 N Gould St Ste R, Sheridan, WY 82801
-            </p>
+            {/* Wyoming LLC Identification - Enhanced Corporate Display */}
+            <div className="bg-gray-900/50 border border-gray-800 rounded-lg px-4 py-3 mb-4 inline-block">
+              <p className="text-gray-400 text-xs sm:text-sm font-medium mb-1">
+                Velon LLC — Established 2025
+              </p>
+              <p className="text-gray-600 text-[10px] sm:text-xs">
+                Wyoming Limited Liability Company
+              </p>
+              <p className="text-gray-700 text-[9px] sm:text-[10px]">
+                30 N Gould St Ste R, Sheridan, WY 82801
+              </p>
+            </div>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
               © {new Date().getFullYear()} Velon LLC. All rights reserved.
             </p>
@@ -3351,14 +3395,33 @@ export default function LawyerLandingPage() {
               <span className="hidden sm:inline">•</span>
               <a href="/do-not-sell" className="hover:text-white transition-colors">Do Not Sell My Info</a>
             </div>
-            {/* FTC Earnings & Attorney Advertising Disclaimer */}
-            <div className="max-w-3xl mx-auto text-[9px] sm:text-[10px] text-gray-600 leading-relaxed space-y-2">
-              <p>
-                <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
+            {/* FTC Earnings & Attorney Advertising Disclaimer - PROMINENT */}
+            <div className="max-w-3xl mx-auto bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-4">
+              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed mb-3">
+                <strong className="text-white">EARNINGS DISCLAIMER:</strong> The testimonials and examples used are individual results and are not intended to represent or guarantee that anyone will achieve the same or similar results. Each individual&apos;s success depends on their background, dedication, desire, and motivation. As with any business endeavor, there is an inherent risk of loss of capital and there is no guarantee that you will earn any money using the techniques and ideas in these materials.
               </p>
-              <p>
-                <strong>ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar's Rules of Professional Conduct regarding advertising and client solicitation. Velon LLC does not provide legal advice regarding bar compliance.
+              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed mb-3">
+                <strong className="text-white">RESULTS NOT TYPICAL:</strong> The income statements and examples shown on this website are not intended to represent or guarantee that everyone will achieve the same results. Results vary based on individual effort, experience, practice area, geographic location, and market conditions. We make no guarantees regarding specific income, client acquisition, or business outcomes.
               </p>
+              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                <strong className="text-white">ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar&apos;s Rules of Professional Conduct regarding advertising and client solicitation. Velon LLC does not provide legal advice regarding bar compliance.
+              </p>
+            </div>
+
+            {/* Security Badges */}
+            <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4">
+              <div className="flex items-center gap-1.5 text-gray-500 text-xs">
+                <Shield className="w-4 h-4 text-green-500" />
+                <span>256-bit SSL</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-gray-500 text-xs">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>PCI Compliant</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-gray-500 text-xs">
+                <Shield className="w-4 h-4 text-green-500" />
+                <span>Secure Checkout</span>
+              </div>
             </div>
           </div>
         </div>
