@@ -33,6 +33,9 @@ export default function DentistLayout({
 }) {
   return (
     <>
+      {/* Preconnect to Facebook for Meta Pixel */}
+      <link rel="preconnect" href="https://connect.facebook.net" />
+
       {/* Preload hero image for faster LCP */}
       <link
         rel="preload"
@@ -42,7 +45,7 @@ export default function DentistLayout({
         fetchPriority="high"
       />
 
-      {/* Meta Pixel - Loads only after cookie consent */}
+      {/* Meta Pixel - Loads after browser idle */}
       <MetaPixelLoader />
 
       {children}

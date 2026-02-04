@@ -3,12 +3,12 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import {
   Gift,
   Shield,
   CheckCircle,
   ArrowRight,
-  ArrowDown,
   Clock,
   Users,
   Video,
@@ -25,7 +25,6 @@ import {
   MapPin,
   Award,
   DollarSign,
-  Volume2,
   VolumeX,
   Eye,
   Heart,
@@ -44,10 +43,10 @@ import {
 import { DENTIST_BONUS_PRODUCTS, getDentistTotalBonusValue } from '../config/dentist-bonus-products'
 import { getMemberStats } from './members/components/config'
 import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/ExpertPersona'
-import { AnimatedBackground } from '../components/AnimatedBackground'
+const AnimatedBackground = dynamic(() => import('../components/AnimatedBackground').then(mod => ({ default: mod.AnimatedBackground })), { ssr: false })
 
 // Checkout link placeholder
-const CHECKOUT_LINK = '#'
+const CHECKOUT_LINK = '/dentists/checkout'
 
 export default function DentistCleanLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -345,6 +344,7 @@ export default function DentistCleanLandingPage() {
                   className="w-full h-auto"
                   priority
                   fetchPriority="high"
+                  sizes="(max-width: 1024px) 100vw, 1024px"
                 />
               </div>
             </div>

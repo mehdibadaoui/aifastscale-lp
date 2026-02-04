@@ -14,7 +14,7 @@ export default function MetaPixelLoader() {
   return (
     <Script
       id="meta-pixel-dentist"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       onLoad={() => setLoaded(true)}
       dangerouslySetInnerHTML={{
         __html: `

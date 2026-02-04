@@ -5,8 +5,8 @@ import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 
-// Whop checkout link for OTO
-const CHECKOUT_LINK = '#'
+// Whop checkout link for OTO (same as upsell)
+const CHECKOUT_LINK = 'https://whop.com/checkout/plan_piIlcIeKKia85'
 
 export default function DentistOtoPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 
 // Whop checkout link for Downsell
-const CHECKOUT_LINK = '#'
+const CHECKOUT_LINK = 'https://whop.com/checkout/plan_fEnYsa70KFAWW'
 
 export default function DentistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
