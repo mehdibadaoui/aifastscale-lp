@@ -3,32 +3,11 @@
 import { useEffect } from 'react'
 import { Loader2, Lock } from 'lucide-react'
 
-// Whop checkout URL (Whop settings redirect to upsell)
 const WHOP_CHECKOUT_URL = 'https://whop.com/checkout/plan_GpUjd1q7kN6pj'
-
-// Track InitiateCheckout before redirect
-const trackInitiateCheckout = () => {
-  if (typeof window === 'undefined') return
-
-  if ((window as any).fbq) {
-    (window as any).fbq('track', 'InitiateCheckout', {
-      content_name: 'CloneYourself for Lawyers',
-      content_type: 'product',
-      value: 47.82,
-      currency: 'USD',
-    })
-  }
-}
 
 export default function LawyerCheckout() {
   useEffect(() => {
-    trackInitiateCheckout()
-
-    const timer = setTimeout(() => {
-      window.location.href = WHOP_CHECKOUT_URL
-    }, 500)
-
-    return () => clearTimeout(timer)
+    window.location.href = WHOP_CHECKOUT_URL
   }, [])
 
   return (
