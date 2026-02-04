@@ -139,9 +139,9 @@ const PRODUCTS = {
 // TODO: Configure your payment gateway plan IDs
 const PLANS = {
   // Dentist products
-  DENTIST_MAIN: { id: '', price: 47, type: 'main' as const, product: 'dentist' as const },
-  DENTIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
-  DENTIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
+  DENTIST_MAIN: { id: 'plan_chOBDoTBxc7NH', price: 47.82, type: 'main' as const, product: 'dentist' as const },
+  DENTIST_UPSELL: { id: 'plan_piIlcIeKKia85', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
+  DENTIST_DOWNSELL: { id: 'plan_fEnYsa70KFAWW', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
   // Plastic Surgeon products
   PLASTIC_SURGEON_MAIN: { id: 'plan_OGprA4gd4Lr7N', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
   PLASTIC_SURGEON_UPSELL: { id: 'plan_c7mDkR3oBXE7n', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
