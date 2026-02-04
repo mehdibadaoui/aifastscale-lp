@@ -314,7 +314,7 @@ const WelcomeScreen = memo(function WelcomeScreen({ onStart, studentName, setStu
         </h1>
 
         <p className="text-base sm:text-xl text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
-          Transform your dental practice with AI video marketing.
+          Transform your dermatology practice with AI video marketing.
         </p>
 
         {/* Student Name Input - LP Glass Style */}

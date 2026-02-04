@@ -483,7 +483,7 @@ export const DashboardSection = memo(function DashboardSection({ state }: Dashbo
                 <Sparkles className="w-6 h-6 text-amber-400" />
                 Coming Soon
               </h2>
-              <p className="text-slate-400 mt-1">New courses for dentists. Join the waitlist!</p>
+              <p className="text-slate-400 mt-1">New courses for dermatologists. Join the waitlist!</p>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-teal border border-amber-500/30">
               <Bell className="w-4 h-4 text-amber-400" />

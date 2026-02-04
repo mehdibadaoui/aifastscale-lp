@@ -17,9 +17,9 @@ import {
 
 const COURSE_CONFIG = {
   title: "AI Video Mastery",
-  subtitle: "for Dentists",
-  description: "Transform your dental practice with AI-powered video marketing",
-  password: "im the best dentist in the world",
+  subtitle: "for Dermatologists",
+  description: "Transform your dermatology practice with AI-powered video marketing",
+  password: "dermatologist2026",
 }
 
 // DEV MODE: Auto-login for testing (set to false for production)
@@ -109,14 +109,14 @@ const COURSE_MODULES = [
 
 // Bonuses - placeholder for your actual bonuses
 const BONUSES = [
-  { id: 'bonus-1', name: '100 Viral Dental Scripts', value: 97, icon: FileText, description: 'Copy-paste scripts that go viral', file: null },
+  { id: 'bonus-1', name: '100 Viral Dermatology Scripts', value: 97, icon: FileText, description: 'Copy-paste scripts that go viral', file: null },
   { id: 'bonus-2', name: '365-Day Content Calendar', value: 197, icon: Target, description: 'Never run out of content ideas', file: null },
-  { id: 'bonus-3', name: 'High-Converting Website Template', value: 297, icon: Rocket, description: 'Proven dental website blueprint', file: null },
+  { id: 'bonus-3', name: 'High-Converting Website Template', value: 297, icon: Rocket, description: 'Proven dermatology website blueprint', file: null },
   { id: 'bonus-4', name: 'Profit Calculator Tool', value: 47, icon: TrendingUp, description: 'Find hidden profits in your practice', file: null },
   { id: 'bonus-5', name: 'Front Desk Scripts', value: 67, icon: MessageCircle, description: 'Convert more calls to appointments', file: null },
   { id: 'bonus-6', name: 'Patient Forms Bundle', value: 47, icon: FileText, description: 'Professional intake forms', file: null },
   { id: 'bonus-7', name: 'Referral Machine System', value: 97, icon: Users, description: 'Turn patients into referrals', file: null },
-  { id: 'bonus-8', name: 'AI Content Generator', value: 147, icon: Brain, description: '500+ dental AI prompts', file: null },
+  { id: 'bonus-8', name: 'AI Content Generator', value: 147, icon: Brain, description: '500+ dermatology AI prompts', file: null },
   { id: 'bonus-9', name: '5-Star Review System', value: 97, icon: Star, description: 'Get 15+ reviews monthly', file: null },
   { id: 'bonus-10', name: 'Before/After Kit', value: 77, icon: Sparkles, description: 'Viral transformation content', file: null },
 ]
@@ -557,38 +557,38 @@ export default function PremiumCoursePlatform() {
 
   // Load saved state + DEV auto-login
   useEffect(() => {
-    const savedTheme = localStorage.getItem('dentist_theme')
+    const savedTheme = localStorage.getItem('dermatologist_theme')
     if (savedTheme) setIsDark(savedTheme === 'dark')
 
-    const savedCompleted = localStorage.getItem('dentist_completed_modules')
+    const savedCompleted = localStorage.getItem('dermatologist_completed_modules')
     if (savedCompleted) setCompletedModules(JSON.parse(savedCompleted))
 
-    const savedBonuses = localStorage.getItem('dentist_completed_bonuses')
+    const savedBonuses = localStorage.getItem('dermatologist_completed_bonuses')
     if (savedBonuses) setCompletedBonuses(JSON.parse(savedBonuses))
 
     // DEV MODE: Auto-login for testing
     if (DEV_AUTO_LOGIN) {
       setIsAuthenticated(true)
     } else {
-      const savedAuth = localStorage.getItem('dentistMemberAuth')
+      const savedAuth = localStorage.getItem('dermatologistMemberAuth')
       if (savedAuth === 'true') setIsAuthenticated(true)
     }
 
-    const savedAchievements = localStorage.getItem('dentist_achievements')
+    const savedAchievements = localStorage.getItem('dermatologist_achievements')
     if (savedAchievements) setLastUnlockedAchievements(JSON.parse(savedAchievements))
   }, [])
 
   // Save state changes
   useEffect(() => {
-    localStorage.setItem('dentist_theme', isDark ? 'dark' : 'light')
+    localStorage.setItem('dermatologist_theme', isDark ? 'dark' : 'light')
   }, [isDark])
 
   useEffect(() => {
-    localStorage.setItem('dentist_completed_modules', JSON.stringify(completedModules))
+    localStorage.setItem('dermatologist_completed_modules', JSON.stringify(completedModules))
   }, [completedModules])
 
   useEffect(() => {
-    localStorage.setItem('dentist_completed_bonuses', JSON.stringify(completedBonuses))
+    localStorage.setItem('dermatologist_completed_bonuses', JSON.stringify(completedBonuses))
   }, [completedBonuses])
 
   // Check for new achievements
@@ -609,7 +609,7 @@ export default function PremiumCoursePlatform() {
         setCelebrationAchievement(newAchievement)
       }
       setLastUnlockedAchievements(unlockedAchievements)
-      localStorage.setItem('dentist_achievements', JSON.stringify(unlockedAchievements))
+      localStorage.setItem('dermatologist_achievements', JSON.stringify(unlockedAchievements))
     }
   }, [completedModules, completedBonuses, lastUnlockedAchievements, totalLessons])
 
@@ -618,7 +618,7 @@ export default function PremiumCoursePlatform() {
     e.preventDefault()
     if (password.toLowerCase().trim() === COURSE_CONFIG.password) {
       setIsAuthenticated(true)
-      localStorage.setItem('dentistMemberAuth', 'true')
+      localStorage.setItem('dermatologistMemberAuth', 'true')
       setError('')
     } else {
       setError('Invalid password. Please check your email for the correct password.')
