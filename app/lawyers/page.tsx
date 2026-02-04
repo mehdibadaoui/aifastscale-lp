@@ -544,6 +544,7 @@ export default function LawyerLandingPage() {
   }
 
   return (
+    <>
     <main
       className="min-h-screen noise-overlay font-sans relative lawyer-theme"
       style={{
@@ -3875,9 +3876,9 @@ export default function LawyerLandingPage() {
         }
       `}</style>
 
-      {/* ================================================================
-          STICKY MOBILE CTA - Shows after scrolling
-          ================================================================ */}
+    </main>
+
+      {/* Sticky CTA - outside main so position:fixed works with transform */}
       <div className={`fixed bottom-0 left-0 right-0 z-50 sm:hidden transition-all duration-300 ${
         showStickyCTA ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
       }`}>
@@ -3903,6 +3904,6 @@ export default function LawyerLandingPage() {
           </div>
         </div>
       </div>
-    </main>
+    </>
   )
 }
