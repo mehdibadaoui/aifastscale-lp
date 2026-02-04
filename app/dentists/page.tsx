@@ -629,7 +629,7 @@ export default function DentistCleanLandingPage() {
 
                 <div className="relative p-4 sm:p-6">
                   <div className="text-center mb-4">
-                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This is her presenting. Here&apos;s the critical detail:</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This is him presenting. Here&apos;s the critical detail:</p>
                     <p className="text-white text-lg sm:text-xl font-black leading-tight">
                       Zero Camera Time. Zero Studio Costs.
                     </p>
