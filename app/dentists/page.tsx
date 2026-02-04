@@ -166,18 +166,14 @@ export default function DentistCleanLandingPage() {
           }
         })
       },
-      { threshold: 0, rootMargin: '50px 0px 200px 0px' } // Trigger 200px before entering viewport
+      { threshold: 0, rootMargin: '100px 0px 600px 0px' } // Trigger 600px before entering viewport to prevent blank sections on fast mobile scroll
     )
 
-    // Small delay to ensure DOM is ready
-    const initTimer = setTimeout(() => {
-      const animatedElements = document.querySelectorAll('[data-animate]')
-      animatedElements.forEach((el) => observer.observe(el))
-    }, 100)
+    const animatedElements = document.querySelectorAll('[data-animate]')
+    animatedElements.forEach((el) => observer.observe(el))
 
     return () => {
       observer.disconnect()
-      clearTimeout(initTimer)
     }
   }, [])
 
@@ -2592,6 +2588,17 @@ export default function DentistCleanLandingPage() {
 
         .animate-spin-slow {
           animation: spin-slow 20s linear infinite;
+        }
+
+        /* Safety net: ensure sections become visible even if IntersectionObserver misses them on fast scroll */
+        [data-animate] {
+          animation: fallbackReveal 0s 1.5s forwards;
+        }
+        [data-animate].visible {
+          animation: none;
+        }
+        @keyframes fallbackReveal {
+          to { opacity: 1; transform: none; }
         }
 
         /* Respect user motion preferences */
