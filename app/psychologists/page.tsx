@@ -531,12 +531,15 @@ export default function PsychologistLandingPage() {
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
               </div>
-              {/* Countdown Badge */}
-              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
-                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-                <span className="text-red-300 text-xs sm:text-sm font-bold">
-                  <span data-countdown="days">00</span>d <span data-countdown="hours">00</span>h <span data-countdown="minutes">00</span>m left
-                </span>
+              {/* Countdown Badge - Introductory Pricing Timer */}
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                  <span className="text-red-300 text-xs sm:text-sm font-bold">
+                    <span data-countdown="days">00</span>d <span data-countdown="hours">00</span>h <span data-countdown="minutes">00</span>m left
+                  </span>
+                </div>
+                <span className="text-gray-500 text-[10px] sm:text-xs">Introductory price of $47.82 expires • Regular: $97</span>
               </div>
             </div>
 

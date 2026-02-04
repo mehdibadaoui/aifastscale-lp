@@ -22,10 +22,8 @@ const trackInitiateCheckout = () => {
 
 export default function LawyerCheckout() {
   useEffect(() => {
-    // Track the checkout initiation
     trackInitiateCheckout()
 
-    // Redirect to Whop checkout after a brief delay for tracking
     const timer = setTimeout(() => {
       window.location.href = WHOP_CHECKOUT_URL
     }, 500)

@@ -150,6 +150,16 @@ export default function PrivacyPolicy() {
                 <li><strong>Consent:</strong> Marketing communications and non-essential cookies (you may withdraw consent anytime via our cookie banner or unsubscribe links)</li>
                 <li><strong>Legal Obligation:</strong> Tax records, regulatory compliance, responding to legal requests</li>
               </ul>
+
+              <h3 className="mt-6 mb-3 text-xl font-bold text-gray-900">
+                AI Model Training Disclosure:
+              </h3>
+              <p className="mb-4 leading-relaxed text-gray-700">
+                We do <strong>NOT</strong> use your personal information, uploaded content, or user data to train artificial intelligence models, machine learning systems, or similar technologies. Your data is used solely for the purposes described in this Privacy Policy: delivering course materials, providing customer support, and sending communications (with your consent).
+              </p>
+              <p className="leading-relaxed text-gray-700">
+                Anonymized, aggregated analytics data (such as page views and general usage patterns) may be used to improve our services but is never used for AI training purposes.
+              </p>
             </section>
 
             <section className="mb-8">

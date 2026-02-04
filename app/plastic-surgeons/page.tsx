@@ -749,12 +749,15 @@ export default function PlasticSurgeonLandingPage() {
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
               </motion.div>
-              {/* Countdown Badge */}
-              <motion.div variants={staggerItem} className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
-                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-                <span className="text-red-300 text-xs sm:text-sm font-bold">
-                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
-                </span>
+              {/* Countdown Badge - Introductory Pricing Timer */}
+              <motion.div variants={staggerItem} className="flex flex-col items-center gap-1">
+                <div className="flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 px-4 py-2.5 rounded-full hover-scale animate-pulse-soft">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                  <span className="text-red-300 text-xs sm:text-sm font-bold">
+                    {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
+                  </span>
+                </div>
+                <span className="text-gray-500 text-[10px] sm:text-xs">Introductory price of $47.82 expires • Regular: $97</span>
               </motion.div>
             </motion.div>
 
