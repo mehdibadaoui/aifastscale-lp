@@ -637,7 +637,7 @@ export default function DentistCleanLandingPage() {
 
                   <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
                     <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
-                      <source src="/videos/dentist-case-study-mobile.mp4" type="video/mp4" />
+                      <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
                     </video>
                     <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
                       <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
@@ -729,7 +729,7 @@ export default function DentistCleanLandingPage() {
 
                   <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
                     <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
-                      <source src="/videos/dentist-case-study.mp4" type="video/mp4" />
+                      <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
                     </video>
                     <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
                       <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
