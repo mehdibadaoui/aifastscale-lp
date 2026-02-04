@@ -29,7 +29,7 @@ export const dermatologistsConfig: NicheConfig = {
 
   // Expert
   expert: {
-    name: 'Dr. Alexander Voss',
+    name: 'Dr. Priya Kapoor',
     title: 'MD, FAAD',
     image: '/images/dentist/dr-voss.webp',
     quote: "I created this system because I was YOU. Spending thousands on marketing with unpredictable results. Now I want to help you achieve the same transformation.",

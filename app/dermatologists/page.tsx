@@ -42,7 +42,7 @@ import {
 } from 'lucide-react'
 import { DERMATOLOGIST_BONUS_PRODUCTS, getDermatologistTotalBonusValue } from '../config/dermatologist-bonus-products'
 import { getMemberStats } from './members/components/config'
-import { ExpertPersona, ExpertMention, DR_VOSS_DATA } from '../components/ExpertPersona'
+import { ExpertPersona, ExpertMention, DR_KAPOOR_DATA } from '../components/ExpertPersona'
 const AnimatedBackground = dynamic(() => import('../components/AnimatedBackground').then(mod => ({ default: mod.AnimatedBackground })), { ssr: false })
 
 // Checkout link placeholder
@@ -2026,7 +2026,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             <div className={`${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-              <ExpertPersona {...DR_VOSS_DATA} />
+              <ExpertPersona {...DR_KAPOOR_DATA} />
             </div>
 
 
