@@ -7,6 +7,7 @@ import { lawyersConfig } from './niches/lawyers'
 import { dentistsConfig } from './niches/dentists'
 import { psychologistsConfig } from './niches/psychologists'
 import { plasticSurgeonsConfig } from './niches/plastic-surgeons'
+import { dermatologistsConfig } from './niches/dermatologists'
 
 // All available niche configurations
 const configs: Record<NicheSlug, NicheConfig> = {
@@ -14,10 +15,11 @@ const configs: Record<NicheSlug, NicheConfig> = {
   dentists: dentistsConfig,
   psychologists: psychologistsConfig,
   'plastic-surgeons': plasticSurgeonsConfig,
+  dermatologists: dermatologistsConfig,
 }
 
 // Valid niche slugs for route validation
-export const validNicheSlugs: NicheSlug[] = ['lawyers', 'dentists', 'psychologists', 'plastic-surgeons']
+export const validNicheSlugs: NicheSlug[] = ['lawyers', 'dentists', 'psychologists', 'plastic-surgeons', 'dermatologists']
 
 /**
  * Check if a string is a valid niche slug
@@ -55,6 +57,7 @@ export function mapOldPathToNiche(path: string): NicheSlug | null {
     '/dentists/members': 'dentists',
     '/psychologists/members': 'psychologists',
     '/plastic-surgeons/members': 'plastic-surgeons',
+    '/dermatologists/members': 'dermatologists',
   }
   return pathMap[path] || null
 }
@@ -67,3 +70,4 @@ export { lawyersConfig } from './niches/lawyers'
 export { dentistsConfig } from './niches/dentists'
 export { psychologistsConfig } from './niches/psychologists'
 export { plasticSurgeonsConfig } from './niches/plastic-surgeons'
+export { dermatologistsConfig } from './niches/dermatologists'

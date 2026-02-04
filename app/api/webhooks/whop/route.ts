@@ -132,6 +132,12 @@ const PRODUCTS = {
     productName: 'CloneYourself AI Video Mastery',
     price: '47.82',
     accentColor: '#d4af37'
+  },
+  'dermatologist': {
+    membersUrl: 'https://aifastscale.com/members',
+    productName: 'CloneYourself AI Video Mastery',
+    price: '47.81',
+    accentColor: '#d4af37'
   }
 }
 
@@ -154,10 +160,14 @@ const PLANS = {
   LAWYER_MAIN: { id: 'plan_GpUjd1q7kN6pj', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
   LAWYER_UPSELL: { id: 'plan_97EdLFRTEConC', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
   LAWYER_DOWNSELL: { id: 'plan_sdONQXGabaCd0', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
+  // Dermatologist products
+  DERMATOLOGIST_MAIN: { id: 'plan_vFSZPaRpLxAx7', price: 47.81, type: 'main' as const, product: 'dermatologist' as const },
+  DERMATOLOGIST_UPSELL: { id: 'plan_GfTKoexeqt9Mb', price: 9.95, type: 'upsell' as const, product: 'dermatologist' as const },
+  DERMATOLOGIST_DOWNSELL: { id: 'plan_SlklTW5v9meJ6', price: 4.95, type: 'downsell' as const, product: 'dermatologist' as const },
 }
 
 // Get plan info from plan ID
-function getPlanInfo(planId: string): { product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer', type: 'main' | 'upsell' | 'downsell', price: number } | null {
+function getPlanInfo(planId: string): { product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | 'dermatologist', type: 'main' | 'upsell' | 'downsell', price: number } | null {
   // Dentist plans
   if (planId === PLANS.DENTIST_MAIN.id) return { product: 'dentist', type: 'main', price: PLANS.DENTIST_MAIN.price }
   if (planId === PLANS.DENTIST_UPSELL.id) return { product: 'dentist', type: 'upsell', price: PLANS.DENTIST_UPSELL.price }
@@ -174,12 +184,16 @@ function getPlanInfo(planId: string): { product: 'dentist' | 'plastic-surgeon' |
   if (planId === PLANS.LAWYER_MAIN.id) return { product: 'lawyer', type: 'main', price: PLANS.LAWYER_MAIN.price }
   if (planId === PLANS.LAWYER_UPSELL.id) return { product: 'lawyer', type: 'upsell', price: PLANS.LAWYER_UPSELL.price }
   if (planId === PLANS.LAWYER_DOWNSELL.id) return { product: 'lawyer', type: 'downsell', price: PLANS.LAWYER_DOWNSELL.price }
+  // Dermatologist plans
+  if (planId === PLANS.DERMATOLOGIST_MAIN.id) return { product: 'dermatologist', type: 'main', price: PLANS.DERMATOLOGIST_MAIN.price }
+  if (planId === PLANS.DERMATOLOGIST_UPSELL.id) return { product: 'dermatologist', type: 'upsell', price: PLANS.DERMATOLOGIST_UPSELL.price }
+  if (planId === PLANS.DERMATOLOGIST_DOWNSELL.id) return { product: 'dermatologist', type: 'downsell', price: PLANS.DERMATOLOGIST_DOWNSELL.price }
   return null
 }
 
 // Determine product type from webhook data (for main course only - backward compatibility)
 // ROBUST VERSION - checks multiple paths and patterns
-function getProductType(fullData: any, productData: any): 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | null {
+function getProductType(fullData: any, productData: any): 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | 'dermatologist' | null {
   // Collect ALL possible name sources from the webhook
   const possibleNames = [
     productData?.name,
@@ -253,6 +267,17 @@ function getProductType(fullData: any, productData: any): 'dentist' | 'plastic-s
     }
   }
 
+  // Check names for dermatologist keywords
+  const dermatologistKeywords = ['dermatologist', 'dermatology', 'derm', 'skin', 'skincare']
+  for (const name of possibleNames) {
+    for (const keyword of dermatologistKeywords) {
+      if (name.includes(keyword)) {
+        console.log(`✅ Matched dermatologist by name: "${name}" contains "${keyword}"`)
+        return 'dermatologist'
+      }
+    }
+  }
+
   // Check names for dentist keywords
   const dentistKeywords = ['dentist', 'clone yourself - dentist', 'dental', 'dr.', 'doctor']
   for (const name of possibleNames) {
@@ -285,7 +310,7 @@ function generateWelcomeEmail(
   userPassword: string,
   userEmail: string,
   buyerName?: string,
-  productType?: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  productType?: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | 'dermatologist'
 ) {
   const firstName = buyerName ? buyerName.split(' ')[0] : ''
 
@@ -678,6 +703,7 @@ export async function POST(request: NextRequest) {
     // Record main course purchase with revenue
     let mainPrice = 47.82 // Default price
     if (productType === 'dentist') mainPrice = 47.82
+    if (productType === 'dermatologist') mainPrice = 47.81
     await recordPurchase(buyerEmail, 'main', mainPrice, planId)
 
     // Send welcome email with personalized credentials

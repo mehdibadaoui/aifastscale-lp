@@ -151,6 +151,40 @@ export const updatesByNiche: Record<NicheSlug, Update[]> = {
       badge: 'FREE',
     },
   ],
+  dermatologists: [
+    {
+      id: 'update-1',
+      type: 'new',
+      title: 'New Before/After Showcase Template',
+      description: 'HIPAA-compliant before/after presentations for skin treatments and procedures.',
+      date: 'This week',
+      badge: 'NEW',
+    },
+    {
+      id: 'update-2',
+      type: 'improvement',
+      title: 'Updated Cosmetic Consultation Scripts',
+      description: 'New scripts for Botox, fillers, and laser treatment consultations.',
+      date: 'This week',
+      badge: 'UPDATED',
+    },
+    {
+      id: 'update-3',
+      type: 'coming-soon',
+      title: 'Coming: Medical Spa Marketing Module',
+      description: 'Complete system for marketing your med spa services. Launching soon!',
+      date: 'Next week',
+      badge: 'SOON',
+    },
+    {
+      id: 'update-4',
+      type: 'bonus',
+      title: 'Free Bonus: Skincare Routine Content Scripts',
+      description: 'Educational content scripts about daily skincare routines and product recommendations.',
+      date: '2 days ago',
+      badge: 'FREE',
+    },
+  ],
 }
 
 // Helper to get updates for a niche
@@ -179,5 +213,10 @@ export const upcomingTeasers: Record<NicheSlug, string[]> = {
     'New rhinoplasty consultation scripts dropping Friday',
     'Advanced AI prompt training coming this week',
     'Exclusive case study from Beverly Hills practice',
+  ],
+  dermatologists: [
+    'New laser treatment marketing scripts dropping Friday',
+    'Advanced AI prompt training coming this week',
+    'Exclusive case study from cosmetic derm practice',
   ],
 }

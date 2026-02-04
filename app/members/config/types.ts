@@ -5,7 +5,7 @@
 import { LucideIcon } from 'lucide-react'
 
 // Valid niche slugs
-export type NicheSlug = 'lawyers' | 'dentists' | 'psychologists' | 'plastic-surgeons'
+export type NicheSlug = 'lawyers' | 'dentists' | 'psychologists' | 'plastic-surgeons' | 'dermatologists'
 
 // Theme configuration
 export interface ThemeConfig {

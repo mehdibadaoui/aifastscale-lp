@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
-import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
+import { DERMATOLOGIST_BONUS_PRODUCTS } from '../../config/dermatologist-bonus-products'
 
 // Whop checkout link for Downsell
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_fEnYsa70KFAWW'
+const CHECKOUT_LINK = 'https://whop.com/checkout/plan_SlklTW5v9meJ6'
 
-export default function DentistDownsellPage() {
+export default function DermatologistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
 
   // Capture user info from URL params for thank-you page
@@ -18,15 +18,15 @@ export default function DentistDownsellPage() {
     const userId = params.get('user_id') || params.get('whop_user_id')
 
     if (email) {
-      sessionStorage.setItem('dentist_purchase_email', email.toLowerCase().trim())
+      sessionStorage.setItem('dermatologist_purchase_email', email.toLowerCase().trim())
     }
     if (userId) {
-      sessionStorage.setItem('dentist_purchase_user_id', userId)
+      sessionStorage.setItem('dermatologist_purchase_user_id', userId)
     }
   }, [])
 
   // Get the 5 upsell products (same as upsell - user declined those)
-  const downsellProducts = DENTIST_BONUS_PRODUCTS.slice(5, 10)
+  const downsellProducts = DERMATOLOGIST_BONUS_PRODUCTS.slice(5, 10)
   const totalOriginalValue = downsellProducts.reduce((sum, b) => sum + b.value, 0)
   const downsellPrice = 4.95
   const pricePerItem = 0.99
@@ -52,7 +52,7 @@ export default function DentistDownsellPage() {
   }
 
   const handleFinalDecline = () => {
-    window.location.href = "/dentists/thank-you"
+    window.location.href = "/dermatologists/thank-you"
   }
 
   return (

@@ -20,11 +20,13 @@ export function middleware(request: NextRequest) {
     '/dentists/members',
     '/psychologists/members',
     '/plastic-surgeons/members',
+    '/dermatologists/members',
     // Old unified routes (from previous implementation)
     '/members/lawyers',
     '/members/dentists',
     '/members/psychologists',
     '/members/plastic-surgeons',
+    '/members/dermatologists',
   ]
 
   // Check if this route should redirect to /members
@@ -32,6 +34,13 @@ export function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/members'
     return NextResponse.redirect(url, 308) // 308 = Permanent Redirect
+  }
+
+  // Case-insensitive fallback: /Dermatologists/* → /dermatologists/*
+  if (pathname.startsWith('/Dermatologists')) {
+    const url = request.nextUrl.clone()
+    url.pathname = pathname.replace('/Dermatologists', '/dermatologists')
+    return NextResponse.redirect(url, 308)
   }
 
   return NextResponse.next()
@@ -44,9 +53,12 @@ export const config = {
     '/dentists/members',
     '/psychologists/members',
     '/plastic-surgeons/members',
+    '/dermatologists/members',
     '/members/lawyers',
     '/members/dentists',
     '/members/psychologists',
     '/members/plastic-surgeons',
+    '/members/dermatologists',
+    '/Dermatologists/:path*',
   ],
 }

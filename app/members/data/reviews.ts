@@ -223,6 +223,57 @@ export const reviewsByNiche: Record<NicheSlug, Review[]> = {
       date: '1 week ago',
     },
   ],
+  dermatologists: [
+    {
+      id: 'derm-1',
+      name: 'Dr. Priya K.',
+      profession: 'Cosmetic Dermatologist',
+      location: 'Beverly Hills, CA',
+      rating: 5,
+      text: "Botox and filler consultations tripled after implementing the AI video system. Patients come in pre-sold on treatments.",
+      result: '$120K in cosmetic revenue',
+      date: '3 days ago',
+    },
+    {
+      id: 'derm-2',
+      name: 'Dr. Ryan S.',
+      profession: 'Medical Dermatologist',
+      location: 'Austin, TX',
+      rating: 5,
+      text: "Educational skin care content built incredible trust. New patient bookings went from 8/week to 22/week.",
+      result: '22 new patients/week',
+      date: '1 week ago',
+    },
+    {
+      id: 'derm-3',
+      name: 'Dr. Monica L.',
+      profession: 'Laser & Aesthetics',
+      location: 'San Diego, CA',
+      rating: 5,
+      text: "Our laser treatment bookings exploded. The before/after content system is perfect for dermatology.",
+      result: '3x laser bookings',
+      date: '5 days ago',
+    },
+    {
+      id: 'derm-4',
+      name: 'Dr. James W.',
+      profession: 'Skin Cancer Specialist',
+      location: 'Phoenix, AZ',
+      rating: 5,
+      text: "Patients find us through our educational content and trust us immediately. The AI system handles all our video creation.",
+      date: '4 days ago',
+    },
+    {
+      id: 'derm-5',
+      name: 'Dr. Sarah T.',
+      profession: 'Cosmetic Dermatology',
+      location: 'Chicago, IL',
+      rating: 5,
+      text: "Went from spending $4K/month on ads to $0. Organic patient inquiries are now 30+ per month.",
+      result: '30+ inquiries/month',
+      date: '1 week ago',
+    },
+  ],
 }
 
 // Helper to get reviews for a niche
@@ -247,6 +298,7 @@ export function generateActivityFeed(niche: NicheSlug): string[] {
     dentists: ['Dr. James', 'Dr. Lisa', 'Dr. Kevin', 'Dr. Amanda', 'Dr. Chris', 'Dr. Sarah', 'Dr. Michael'],
     psychologists: ['Dr. Emily', 'Dr. Marcus', 'Dr. Rachel', 'Dr. James', 'Dr. Nina', 'Dr. Sarah', 'Dr. Michael'],
     'plastic-surgeons': ['Dr. Alexander', 'Dr. Sofia', 'Dr. Richard', 'Dr. Jennifer', 'Dr. Michael', 'Dr. Sarah'],
+    dermatologists: ['Dr. Priya', 'Dr. Ryan', 'Dr. Monica', 'Dr. James', 'Dr. Sarah', 'Dr. Kevin', 'Dr. Lisa'],
   }
 
   const names = firstNames[niche] || firstNames.lawyers

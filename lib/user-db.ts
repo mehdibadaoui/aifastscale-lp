@@ -27,7 +27,7 @@ export interface User {
   name: string
   purchaseDate: string
   planId: string
-  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | 'dermatologist'
   lastLogin?: string
   loginCount?: number
   // Extended fields for admin
@@ -47,7 +47,7 @@ export interface User {
 
 // Generate a unique, readable password
 // Format: clone-random6chars (e.g., "clone-x7k9m2") - UNIVERSAL for all products
-export function generateUniquePassword(product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' = 'dentist'): string {
+export function generateUniquePassword(product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | 'dermatologist' = 'dentist'): string {
   const prefix = 'clone' // Universal prefix for all products
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789' // No confusing chars (0,o,1,l,i)
   let randomPart = ''
@@ -64,7 +64,7 @@ export async function createUser(userData: {
   email: string
   name: string
   planId: string
-  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer'
+  product: 'dentist' | 'plastic-surgeon' | 'psychologist' | 'lawyer' | 'dermatologist'
 }): Promise<{ success: boolean; password?: string; error?: string }> {
   try {
     const redis = getRedis()
