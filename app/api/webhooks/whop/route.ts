@@ -110,9 +110,9 @@ const getResend = () => new Resend(process.env.RESEND_API_KEY)
 // Product configuration - ALL products point to universal /members
 const PRODUCTS = {
   dentist: {
-    membersUrl: 'https://aifastscale.com/members',
+    membersUrl: 'https://aifastscale.com/dentists/members',
     productName: 'CloneYourself AI Video Mastery',
-    price: '47.00',
+    price: '47.82',
     accentColor: '#d4af37' // Gold (universal)
   },
   'plastic-surgeon': {
