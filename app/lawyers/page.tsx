@@ -998,8 +998,8 @@ export default function LawyerLandingPage() {
                             className={`group relative inline-flex items-center justify-center btn-premium btn-press text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-gold animate-pulse-glow hover-glow ${visibleSections.has('hero') ? 'animate-bounce-in animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
-                <span className="sm:hidden">Secure Firm Access</span>
-                <span className="hidden sm:inline">Secure Firm Access</span>
+                <span className="sm:hidden">Get Your Instant Access</span>
+                <span className="hidden sm:inline">Get Your Instant Access</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
@@ -3888,7 +3888,7 @@ export default function LawyerLandingPage() {
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30"
           >
             <Zap className="w-5 h-5" />
-            Secure Access — $47.82
+            Get Your Instant Access — $47.82
             <ArrowRight className="w-5 h-5" />
           </a>
           <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">
