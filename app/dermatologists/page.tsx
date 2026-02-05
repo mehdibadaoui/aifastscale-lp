@@ -41,8 +41,8 @@ export default function DermatologistCleanLandingPage() {
   const [memberStats, setMemberStats] = useState({ totalMembers: 1247, activeNow: 687, todayNewMembers: 23, activePercent: 55 })
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Animation refs for scroll detection - initialize with hero visible for instant animation
-  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
+  // Animation refs for scroll detection - initialize ALL sections visible to prevent mobile blank flash
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero', 'case-study', 'whats-inside', 'how-it-works', 'pricing', 'faq', 'guarantee', 'guarantee1', 'guarantee2', 'guarantee3', 'meet-instructor', 'reasons-why', 'testimonials', 'final-cta', 'still-thinking']))
 
   // Update member stats AFTER page is interactive
   useEffect(() => {
@@ -154,15 +154,16 @@ export default function DermatologistCleanLandingPage() {
 
   // Scroll animation observer - DESKTOP ONLY
   // Mobile: All content visible immediately (no animations blocking content)
+  // Initial state has ALL sections visible to prevent mobile blank flash on first paint
   useEffect(() => {
-    // Skip on mobile - content is always visible via CSS
+    // Skip on mobile - content stays visible (initial state already has all sections)
     if (window.innerWidth < 768) {
-      // On mobile, mark all sections as visible immediately
-      setVisibleSections(new Set(['hero', 'case-study', 'whats-inside', 'how-it-works', 'pricing', 'faq', 'guarantee', 'guarantee2', 'meet-instructor', 'reasons-why']))
       return
     }
 
-    // Desktop: Use simple observer for subtle animations
+    // Desktop: Reset to only hero visible, then animate others on scroll
+    setVisibleSections(new Set(['hero']))
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -255,8 +256,15 @@ export default function DermatologistCleanLandingPage() {
   const allBonuses = DERMATOLOGIST_BONUS_PRODUCTS
   const totalBonusValue = getDermatologistTotalBonusValue()
 
+  // Mobile detection for animation bypass
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
   // Animation class helper
   const getAnimClass = (sectionId: string, delay: number = 0) => {
+    // Mobile: always visible, no animations (prevents blank sections)
+    if (isMobile) {
+      return 'opacity-100 translate-y-0'
+    }
     const isVisible = visibleSections.has(sectionId)
     return `transition-all duration-700 ${delay ? `delay-[${delay}ms]` : ''} ${
       isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -295,7 +303,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-4 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             {/* Main Headline - PREMIUM TYPOGRAPHY */}
-            <h1 className={`font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 sm:mb-8 leading-[1.05] tracking-tight ${visibleSections.has('hero') ? 'animate-fade-in-up' : ''}`}>
+            <h1 className={`font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 sm:mb-8 leading-[1.05] tracking-tight ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up' : ''}`}>
               <span className="text-white drop-shadow-lg">Turn Any Photo Into a</span>
               <br />
               <span className="relative inline-block">
@@ -315,14 +323,14 @@ export default function DermatologistCleanLandingPage() {
             </h1>
 
             {/* Subtitle - Larger & More Visible */}
-            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto font-medium ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <p className={`text-base sm:text-xl md:text-2xl text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto font-medium ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               Even if you've never edited a video in your life —
               <br className="hidden sm:block" />
               <span className="text-white font-semibold">all you need is your phone</span>
             </p>
 
             {/* Expert Trust Line - Premium Badge */}
-            <div className={`mb-5 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-250' : ''}`}>
+            <div className={`mb-5 sm:mb-8 ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-250' : ''}`}>
               <div className="inline-flex items-center gap-2 badge-premium badge-glow">
                 <Award className="w-4 h-4 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm">Clinically-inspired framework by</span>
@@ -331,7 +339,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* Hero Image - Premium Glass Container - OPTIMIZED FOR LCP */}
-            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+            <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift hero-image-container">
                 <Image
                   src="/images/dentist/dentist-vdc-hero.webp"
@@ -349,7 +357,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* Trust badges - Premium Glass Cards */}
-            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+            <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-400' : ''}`}>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
                 <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
                 <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> dermatologists</span>
@@ -377,7 +385,7 @@ export default function DermatologistCleanLandingPage() {
             <a
               href={CHECKOUT_LINK}
               onClick={trackCheckout}
-              className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
+              className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                 <span className="sm:hidden">Get Instant Access</span>
@@ -387,7 +395,7 @@ export default function DermatologistCleanLandingPage() {
             </a>
 
             {/* PRICE TEASER - Premium Glass Style */}
-            <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
+            <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getDermatologistTotalBonusValue() + 47}</span>
                 <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.81</span>
@@ -398,7 +406,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* What is CloneYourself? - Collapsible */}
-            <div className={`max-w-xl mx-auto mt-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+            <div className={`max-w-xl mx-auto mt-8 ${(isMobile || visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <button
                 onClick={() => setExpandedFaq(expandedFaq === -1 ? null : -1)}
                 className="group flex items-center justify-center gap-2 mx-auto text-sm"
@@ -446,7 +454,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header - Attention Grabbing */}
-            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${(isMobile || visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
                 <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
                 <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dermatologist</span>
@@ -458,7 +466,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* Dr. Marcus Case Study Card - Premium Modern Design */}
-            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(isMobile || visibleSections.has('case-study')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
@@ -610,7 +618,7 @@ export default function DermatologistCleanLandingPage() {
 
           {/* ========== TWO MORE CASE STUDIES - SIDE BY SIDE ========== */}
           <div className="max-w-6xl mx-auto mt-10 sm:mt-16">
-            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${(isMobile || visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
                 <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
                 <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Documented Results • Verified Dermatologists</span>
@@ -624,7 +632,7 @@ export default function DermatologistCleanLandingPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
 
               {/* CASE STUDY 2: Dr. Sarah Chen - Cosmetic Dermatology */}
-              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-scale-in animation-delay-200' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(isMobile || visibleSections.has('case-study')) ? 'animate-scale-in animation-delay-200' : ''}`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
 
                 <div className="relative p-4 sm:p-6">
@@ -716,7 +724,7 @@ export default function DermatologistCleanLandingPage() {
               </div>
 
               {/* CASE STUDY 3: Dr. Ryan Mitchell - General Dermatology */}
-              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${visibleSections.has('case-study') ? 'animate-scale-in animation-delay-400' : ''}`}>
+              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(isMobile || visibleSections.has('case-study')) ? 'animate-scale-in animation-delay-400' : ''}`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
 
                 <div className="relative p-4 sm:p-6">
@@ -830,7 +838,7 @@ export default function DermatologistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-12 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-12 ${(isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Here's What You Get <span className="text-teal-400">Today</span>
               </h2>
@@ -839,7 +847,7 @@ export default function DermatologistCleanLandingPage() {
 
             {/* PRODUCT #1 - THE MAIN COURSE */}
             <div className={`bg-gradient-to-br from-teal-500/15 to-teal-500/5 border-2 border-teal-500 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-200' : ''
+              (isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up animation-delay-200' : ''
             }`}>
               {/* Large Course Thumbnail */}
               <div className="relative w-full aspect-video">
@@ -894,7 +902,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* BONUSES HEADER */}
-            <div className={`text-center mb-4 sm:mb-6 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
+            <div className={`text-center mb-4 sm:mb-6 ${(isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up animation-delay-300' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full">
                 <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
                 <span className="text-teal-400 font-black text-sm sm:text-base">+ 12 BONUSES (${totalBonusValue} Value)</span>
@@ -904,7 +912,7 @@ export default function DermatologistCleanLandingPage() {
             {/* ALL 12 BONUS PRODUCTS */}
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {allBonuses.map((bonus, index) => (
-                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+                <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${(isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
                     <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" />
                   </div>
@@ -925,7 +933,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* EXTRA BONUSES - Support & Updates */}
-            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 ${(isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up' : ''}`}>
               <div className="bg-gradient-to-br from-teal-500/10 to-transparent border border-teal-500/30 rounded-xl p-5">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 bg-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -955,7 +963,7 @@ export default function DermatologistCleanLandingPage() {
 
             {/* TOTAL VALUE + CTA - Compact on mobile */}
             <div className={`bg-gradient-to-br from-teal-500/20 to-black rounded-2xl border-2 border-teal-500 p-4 sm:p-8 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
+              (isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up' : ''
             }`}>
               {/* Price Box - Compact */}
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
@@ -996,7 +1004,7 @@ export default function DermatologistCleanLandingPage() {
 
             {/* What Happens After - Hormozi Style */}
             <div className={`mt-6 sm:mt-8 bg-white/5 rounded-xl border border-white/10 p-4 sm:p-6 ${
-              visibleSections.has('whats-inside') ? 'animate-fade-in-up' : ''
+              (isMobile || visibleSections.has('whats-inside')) ? 'animate-fade-in-up' : ''
             }`}>
               <h4 className="text-white font-bold text-base sm:text-lg mb-4 text-center">What Happens After You Click The Button?</h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
@@ -1035,7 +1043,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
-            <div className={`text-center mb-8 sm:mb-14 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-8 sm:mb-14 ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/30 px-4 py-2 rounded-full mb-4">
                 <Zap className="w-4 h-4 text-teal-500 animate-pulse" />
                 <span className="text-teal-600 font-black text-xs uppercase tracking-wide">4 Simple Steps</span>
@@ -1057,7 +1065,7 @@ export default function DermatologistCleanLandingPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 {/* Step 1 - Generate Script */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '0ms' }}>
+                <div className={`group relative ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '0ms' }}>
                   <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 h-full">
                     {/* Step number - floating */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
@@ -1100,7 +1108,7 @@ export default function DermatologistCleanLandingPage() {
                 </div>
 
                 {/* Step 2 - Select Image / Create AI Model */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '100ms' }}>
+                <div className={`group relative ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '100ms' }}>
                   <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 h-full">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
@@ -1140,7 +1148,7 @@ export default function DermatologistCleanLandingPage() {
                 </div>
 
                 {/* Step 3 - Make It Talk */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '200ms' }}>
+                <div className={`group relative ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '200ms' }}>
                   <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-gray-100 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 h-full">
                     {/* Step number */}
                     <div className="absolute -top-3 -left-2 sm:-top-4 sm:-left-3">
@@ -1183,7 +1191,7 @@ export default function DermatologistCleanLandingPage() {
                 </div>
 
                 {/* Step 4 - Edit & Post */}
-                <div className={`group relative ${visibleSections.has('how-it-works') ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '300ms' }}>
+                <div className={`group relative ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: '300ms' }}>
                   <div className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-5 sm:p-6 border-2 border-green-100 hover:border-green-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 h-full relative overflow-hidden">
                     {/* Success glow */}
                     <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/10 rounded-full blur-2xl" />
@@ -1231,7 +1239,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* Total time banner */}
-            <div className={`flex justify-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+            <div className={`flex justify-center mt-8 sm:mt-12 ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full blur-xl opacity-20 animate-pulse" />
                 <div className="relative flex items-center gap-4 sm:gap-6 bg-gradient-to-r from-gray-900 to-gray-800 rounded-full px-6 sm:px-10 py-3 sm:py-4 shadow-2xl">
@@ -1247,7 +1255,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* CTA */}
-            <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
+            <div className={`flex flex-col items-center mt-8 sm:mt-12 ${(isMobile || visibleSections.has('how-it-works')) ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                   href={CHECKOUT_LINK}
                   onClick={trackCheckout}
@@ -1277,7 +1285,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${(isMobile || visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Play className="w-3.5 h-3.5 text-teal-500" />
                 <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Cosmetic Dermatology Success</span>
@@ -1289,7 +1297,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* Dr. David Case Study Card - Light Theme */}
-            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${visibleSections.has('case-study') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`bg-white border border-gray-200 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl ${(isMobile || visibleSections.has('case-study')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
 
               {/* Top: Profile + Before Situation */}
               <div className="p-4 sm:p-8 border-b border-gray-100">
@@ -1484,7 +1492,7 @@ export default function DermatologistCleanLandingPage() {
       >
         {/* Header */}
         <div className="max-w-6xl mx-auto px-3 sm:px-6 mb-6 sm:mb-10">
-          <div className={`text-center ${visibleSections.has('testimonials') ? 'animate-fade-in-up' : ''}`}>
+          <div className={`text-center ${(isMobile || visibleSections.has('testimonials')) ? 'animate-fade-in-up' : ''}`}>
             <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
               <Stethoscope className="w-3.5 h-3.5 text-teal-400" />
               <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
@@ -1589,7 +1597,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className={`bg-gradient-to-br from-teal-500/10 to-white border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
-              visibleSections.has('guarantee1') ? 'animate-fade-in-up' : ''
+              (isMobile || visibleSections.has('guarantee1')) ? 'animate-fade-in-up' : ''
             }`}>
               {/* Animated background pulse */}
               <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-cyan-500/10 to-teal-500/5 animate-pulse" />
@@ -1672,7 +1680,7 @@ export default function DermatologistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${(isMobile || visibleSections.has('pricing')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
                 <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires December 20th</span>
@@ -1683,7 +1691,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* Price Comparison - horizontal scroll on mobile */}
-            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:overflow-visible mb-6 sm:mb-10 ${(isMobile || visibleSections.has('pricing')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               <div className="flex gap-3 sm:grid sm:grid-cols-3 sm:gap-4" style={{ minWidth: 'max-content' }}>
                 {/* Old Way */}
                 <div className="bg-white/5 rounded-xl p-4 sm:p-6 border border-red-500/30 relative flex-shrink-0 w-[200px] sm:w-auto">
@@ -1728,7 +1736,7 @@ export default function DermatologistCleanLandingPage() {
 
             {/* VISUAL VALUE STACK - Hormozi Style */}
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-teal-500/30 mb-6 ${
-              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
+              (isMobile || visibleSections.has('pricing')) ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
               <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.81 Actually Includes:</h3>
 
@@ -1792,7 +1800,7 @@ export default function DermatologistCleanLandingPage() {
 
             {/* Main Price Box - Compact on mobile */}
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-10 text-center border-2 border-teal-500/50 shadow-2xl ${
-              visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
+              (isMobile || visibleSections.has('pricing')) ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
                 <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
@@ -1837,7 +1845,7 @@ export default function DermatologistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-3xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('faq') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${(isMobile || visibleSections.has('faq')) ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-2 sm:mb-4">
                 Common <span className="text-teal-500">Questions</span>
               </h2>
@@ -1848,7 +1856,7 @@ export default function DermatologistCleanLandingPage() {
                 <div
                   key={i}
                   className={`bg-gray-50 border border-gray-200 rounded-lg sm:rounded-xl overflow-hidden ${
-                    visibleSections.has('faq') ? 'animate-fade-in-up' : ''
+                    (isMobile || visibleSections.has('faq')) ? 'animate-fade-in-up' : ''
                   }`}
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
@@ -1869,7 +1877,7 @@ export default function DermatologistCleanLandingPage() {
             </div>
 
             {/* CTA - After FAQ */}
-            <div className={`mt-8 sm:mt-12 text-center ${visibleSections.has('faq') ? 'animate-fade-in-up animation-delay-500' : ''}`}>
+            <div className={`mt-8 sm:mt-12 text-center ${(isMobile || visibleSections.has('faq')) ? 'animate-fade-in-up animation-delay-500' : ''}`}>
               <p className="text-gray-600 text-sm mb-4">Still have questions? The best answer is trying it risk-free.</p>
               <a
                   href={CHECKOUT_LINK}
@@ -1907,7 +1915,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className={`bg-gradient-to-br from-white/10 to-white/5 border-2 border-teal-500/40 rounded-xl sm:rounded-2xl p-5 sm:p-10 backdrop-blur-sm ${
-              visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''
+              (isMobile || visibleSections.has('guarantee2')) ? 'animate-fade-in-up' : ''
             }`}>
               <div className="text-center mb-6 sm:mb-10">
                 <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
@@ -1931,7 +1939,7 @@ export default function DermatologistCleanLandingPage() {
                 {/* Mobile: Simple stacked layout | Desktop: Zigzag with line */}
                 <div className="space-y-4">
                   {/* Step 1 */}
-                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up' : ''}`}>
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${(isMobile || visibleSections.has('guarantee2')) ? 'animate-fade-in-up' : ''}`}>
                     {/* Icon - shown first on mobile */}
                     <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-500/40 md:order-2">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
@@ -1951,7 +1959,7 @@ export default function DermatologistCleanLandingPage() {
                   </div>
 
                   {/* Step 2 */}
-                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${(isMobile || visibleSections.has('guarantee2')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                     {/* Icon */}
                     <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/40 md:order-2">
                       <Send className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
@@ -1971,7 +1979,7 @@ export default function DermatologistCleanLandingPage() {
                   </div>
 
                   {/* Step 3 */}
-                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${visibleSections.has('guarantee2') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+                  <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-4 ${(isMobile || visibleSections.has('guarantee2')) ? 'animate-fade-in-up animation-delay-400' : ''}`}>
                     {/* Icon */}
                     <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/40 md:order-2">
                       <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
@@ -2018,7 +2026,7 @@ export default function DermatologistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-5xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('meet-instructor') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-10 ${(isMobile || visibleSections.has('meet-instructor')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full mb-3">
                 <Award className="w-3.5 h-3.5 text-teal-500" />
                 <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Meet Your Expert</span>
@@ -2031,7 +2039,7 @@ export default function DermatologistCleanLandingPage() {
               </p>
             </div>
 
-            <div className={`${visibleSections.has('meet-instructor') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`${(isMobile || visibleSections.has('meet-instructor')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               <ExpertPersona {...DR_VOSS_DERM_DATA} />
             </div>
 
@@ -2054,14 +2062,14 @@ export default function DermatologistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-3xl mx-auto">
-            <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`text-center mb-6 sm:mb-8 ${(isMobile || visibleSections.has('reasons-why')) ? 'animate-fade-in-up' : ''}`}>
               <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
                 Why Is This Only <span className="text-gradient-premium">$47.81</span>?
               </h2>
               <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
             </div>
 
-            <div className={`space-y-4 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+            <div className={`space-y-4 ${(isMobile || visibleSections.has('reasons-why')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
               {[
                 {
                   num: '1',
@@ -2096,7 +2104,7 @@ export default function DermatologistCleanLandingPage() {
               ))}
             </div>
 
-            <div className={`mt-6 text-center ${visibleSections.has('reasons-why') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
+            <div className={`mt-6 text-center ${(isMobile || visibleSections.has('reasons-why')) ? 'animate-fade-in-up animation-delay-400' : ''}`}>
               <p className="text-teal-400 font-bold text-sm sm:text-base">
                 Bottom line: This is priced to be tried, not priced to be expensive.
               </p>
@@ -2116,7 +2124,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className={`bg-gradient-to-br from-teal-500/5 via-white to-cyan-500/5 border-2 border-teal-500/30 rounded-xl sm:rounded-2xl p-5 sm:p-10 relative overflow-hidden ${
-              visibleSections.has('guarantee3') ? 'animate-fade-in-up' : ''
+              (isMobile || visibleSections.has('guarantee3')) ? 'animate-fade-in-up' : ''
             }`}>
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -2207,7 +2215,7 @@ export default function DermatologistCleanLandingPage() {
         className="py-10 sm:py-24 bg-gradient-to-b from-gray-50 to-white"
       >
         <div className="w-full px-3 sm:px-6">
-          <div className={`max-w-2xl mx-auto text-center ${visibleSections.has('final-cta') ? 'animate-fade-in-up' : ''}`}>
+          <div className={`max-w-2xl mx-auto text-center ${(isMobile || visibleSections.has('final-cta')) ? 'animate-fade-in-up' : ''}`}>
             {/* Hormozi-Style Last Chance Copy */}
             <h2 className="font-heading text-2xl sm:text-4xl font-extrabold text-gray-900 mb-3 sm:mb-4">
               You Have Two Options Right Now...
@@ -2316,7 +2324,7 @@ export default function DermatologistCleanLandingPage() {
       >
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-2xl mx-auto">
-            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-teal-500/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 ${visibleSections.has('still-thinking') ? 'animate-fade-in-up' : ''}`}>
+            <div className={`bg-gradient-to-br from-white/5 to-white/[0.02] border border-teal-500/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 ${(isMobile || visibleSections.has('still-thinking')) ? 'animate-fade-in-up' : ''}`}>
               <h2 className="text-xl sm:text-2xl font-black text-white text-center mb-4 sm:mb-6">
                 Still Thinking About It?
               </h2>
