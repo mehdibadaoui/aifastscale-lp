@@ -68,6 +68,17 @@ export default function DermatologistCleanLandingPage() {
     return () => clearInterval(interval)
   }, [])
 
+  // Track InitiateCheckout event for Meta Pixel
+  const trackCheckout = () => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout', {
+        value: 47.81,
+        currency: 'USD',
+        content_name: 'CloneYourself for Dermatologists',
+        content_type: 'product',
+      })
+    }
+  }
 
   const faqs = [
     {
@@ -373,6 +384,7 @@ export default function DermatologistCleanLandingPage() {
             {/* CTA - Premium Button with Glow */}
             <a
               href={CHECKOUT_LINK}
+              onClick={trackCheckout}
               className={`group relative inline-flex items-center justify-center btn-premium text-white px-8 sm:px-14 py-4 sm:py-5 rounded-2xl font-black text-base sm:text-xl shadow-glow-teal animate-pulse-glow ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-500' : ''}`}
             >
               <span className="relative flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -969,6 +981,7 @@ export default function DermatologistCleanLandingPage() {
               {/* CTA Button */}
               <Link
                   href={CHECKOUT_LINK}
+                  onClick={trackCheckout}
                 className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl shadow-xl flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -1245,6 +1258,7 @@ export default function DermatologistCleanLandingPage() {
             <div className={`flex flex-col items-center mt-8 sm:mt-12 ${visibleSections.has('how-it-works') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <a
                   href={CHECKOUT_LINK}
+                  onClick={trackCheckout}
                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-black text-base sm:text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-teal-500/30"
               >
                 <span className="relative flex items-center gap-2 sm:gap-3 whitespace-nowrap">
@@ -2274,6 +2288,7 @@ export default function DermatologistCleanLandingPage() {
               {/* CTA Button */}
               <Link
                   href={CHECKOUT_LINK}
+                  onClick={trackCheckout}
                 className="group relative w-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 text-black py-4 sm:py-5 rounded-xl font-black text-lg sm:text-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -2427,6 +2442,7 @@ export default function DermatologistCleanLandingPage() {
         <div className="px-4 pb-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <a
             href={CHECKOUT_LINK}
+            onClick={trackCheckout}
             className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>

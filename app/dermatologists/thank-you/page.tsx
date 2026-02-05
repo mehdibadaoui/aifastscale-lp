@@ -4,6 +4,9 @@ import { CheckCircle, Copy, ArrowRight, Mail, Loader2, Gift, Lock, Zap, Users } 
 import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState, useCallback, useRef } from 'react'
 
+// Meta Pixel ID for dermatologists
+const META_PIXEL_ID = '1435824824556725'
+
 interface Credentials {
   email: string
   password: string
@@ -39,6 +42,17 @@ function ThankYouContent() {
       if (data.found) {
         setCredentials({ email: data.email, password: data.password, name: data.name || '' })
         setIsLoading(false)
+
+        // Fire Meta Pixel Purchase event for conversion tracking
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Purchase', {
+            value: 47.81,
+            currency: 'USD',
+            content_name: 'CloneYourself for Dermatologists',
+            content_type: 'product',
+          })
+        }
+
         return true
       }
       return false
