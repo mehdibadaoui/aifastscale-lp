@@ -4207,20 +4207,50 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
   }
 }
 
-/* Extra small screens - maximum performance */
-@media (max-width: 380px) {
-  /* Disable all scroll animations for very small screens */
-  [data-animate] {
+/* =============================================================================
+   MOBILE: KILL ALL ANIMATIONS - Content must be visible instantly
+   Covers all phones/tablets under 768px. No opacity:0, no transforms, no delays.
+   This MUST stay at the end of the file to win cascade priority.
+   ============================================================================= */
+@media (max-width: 767px) {
+  [data-animate],
+  html.js-ready [data-animate],
+  html.js-ready [data-animate]:not(.animate-visible):not(#hero),
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-fade-in-down,
+  .animate-scale-in,
+  .animate-scale-up,
+  .animate-scale-reveal,
+  .animate-slide-left,
+  .animate-slide-right,
+  .scroll-animate,
+  .scroll-animate-scale,
+  .scroll-animate-left,
+  .scroll-animate-right,
+  .scroll-card,
+  .animate-card,
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .reveal,
+  .reveal-scale,
+  .lazy-animate,
+  .animate-on-scroll,
+  .stagger-children > *,
+  .stagger-fast > *,
+  .luxury-stagger-1,
+  .luxury-stagger-2,
+  .luxury-stagger-3,
+  .luxury-stagger-4,
+  .luxury-stagger-5 {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+    animation: none !important;
     transition: none !important;
-  }
-
-  .stagger-children > * {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+    visibility: visible !important;
   }
 }
 
