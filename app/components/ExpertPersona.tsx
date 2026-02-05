@@ -44,6 +44,31 @@ export const DR_VOSS_DATA: ExpertPersonaProps = {
   accentColor: 'teal',
 }
 
+// Expert data for Dr. Alexander Voss (Dermatologists) - Same person, dermatology credentials
+export const DR_VOSS_DERM_DATA: ExpertPersonaProps = {
+  name: 'Dr. Alexander Voss',
+  title: 'Board-Certified Dermatologist & Cosmetic Skin Specialist',
+  credentials: 'MD, FAAD',
+  imageUrl: '/images/dentist/dr-voss.webp',
+  positioningStatement: 'For 14 years, I spent $3,000-4,000/month on marketing. Got 5-7 new cosmetic dermatology patients monthly. Hired videographers at $600/video. Then I built this AI system for my own practice. Now I get 30+ new patient inquiries monthly, spend $0 on marketing, and my treatment schedule is booked 2-3 months out. I\'m teaching 500+ dermatologists how to do the same.',
+  bulletPoints: [
+    'Built this for my OWN practice first — I use it daily',
+    'Went from 5-7 new patients/month to 30+ inquiries/month',
+    'Cut marketing costs from $3,500/month to $0 (organic only)',
+    'Cosmetic treatments increased from 35% to 60% of practice revenue',
+    'Now helping 500+ dermatologists across 15+ countries replicate results',
+  ],
+  philosophy: 'I created this system because I was YOU. Spending thousands on marketing, getting minimal results, watching younger dermatologists on TikTok fill their schedules. Patients don\'t care about your board certifications — they want to see real results and feel confident in your expertise. This framework bridges that gap with simple AI videos that build trust and fill your appointment book. If it didn\'t work for me personally, I wouldn\'t be teaching it.',
+  trustElement: 'My practice went from 3-4 consults/week to 10-12/week after using this system',
+  stats: [
+    { value: '14+', label: 'Years Clinical' },
+    { value: '$0', label: 'Marketing Now' },
+    { value: '500+', label: 'Derms Taught' },
+    { value: '30+', label: 'Leads/Month' },
+  ],
+  accentColor: 'teal',
+}
+
 // Expert data for Dr. Sofia Martinez (Plastic Surgeons)
 export const DR_SOFIA_DATA: ExpertPersonaProps = {
   name: 'Dr. Sofia Martinez',

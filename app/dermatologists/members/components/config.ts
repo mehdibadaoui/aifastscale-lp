@@ -85,7 +85,7 @@ export const COURSE_CONFIG = {
     duration: "2 min",
   },
   drVoss: {
-    name: "Dr. Priya Kapoor",
+    name: "Dr. Alexander Voss",
     title: "MD, FAAD",
     image: "/images/dentist/dr-voss.webp",
     quote: "I created this system because I was YOU. Spending thousands on marketing with unpredictable results. Now I want to help you achieve the same transformation.",

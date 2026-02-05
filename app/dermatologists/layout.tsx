@@ -4,7 +4,7 @@ import MetaPixelLoader from './MetaPixelLoader'
 export const metadata: Metadata = {
   title: 'CloneYourself for Dermatologists | AI Video Marketing System | $47',
   description:
-    'Dermatologists: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic dermatology patients. No filming needed. Created by Dr. Priya Kapoor.',
+    'Dermatologists: Turn your photo into AI talking videos in 7 minutes. Attract more cosmetic dermatology patients. No filming needed. Created by Dr. Alexander Voss.',
   keywords:
     'dermatologist marketing, dermatology AI videos, cosmetic dermatologist marketing, patient acquisition, dermatology practice growth, AI video marketing, skincare marketing',
   openGraph: {
