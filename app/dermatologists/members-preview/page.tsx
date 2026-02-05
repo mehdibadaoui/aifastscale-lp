@@ -1,9 +1,8 @@
-// Preview page for testing the new premium platform
-// Access at: http://localhost:3000/dermatologists/members-preview
-// Production /dermatologists/members still shows maintenance mode
+// Preview page redirects to universal /members platform
+// All niches share one members area
 
-import PremiumCoursePlatform from '../members/premium-platform'
+import { redirect } from 'next/navigation'
 
 export default function MembersPreviewPage() {
-  return <PremiumCoursePlatform />
+  redirect('/members')
 }

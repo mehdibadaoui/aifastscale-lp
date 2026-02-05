@@ -1,5 +1,5 @@
 // ============================================
-// COURSE CONFIGURATION
+// COURSE CONFIGURATION (DERMATOLOGISTS)
 // ============================================
 
 import {
@@ -10,12 +10,12 @@ import {
 
 // Dynamic member count calculation
 const MEMBER_STATS_CONFIG = {
-  baseMembers: 1750,           // Starting count
-  startDate: new Date('2024-12-01'), // When we "started" counting
-  dailyGrowthMin: 40,          // Min new members per day
-  dailyGrowthMax: 70,          // Max new members per day
-  activeMin: 1233,             // Min active users (fixed range)
-  activeMax: 2931,             // Max active users (fixed range)
+  baseMembers: 850,           // Starting count (smaller for newer niche)
+  startDate: new Date('2025-01-15'), // When we "started" counting
+  dailyGrowthMin: 25,          // Min new members per day
+  dailyGrowthMax: 45,          // Max new members per day
+  activeMin: 433,             // Min active users (fixed range)
+  activeMax: 931,             // Max active users (fixed range)
 }
 
 // Seeded random for consistent daily values
@@ -32,7 +32,7 @@ export function getMemberStats() {
   // Calculate total members (base + daily growth)
   let totalMembers = MEMBER_STATS_CONFIG.baseMembers
   for (let i = 0; i < daysSinceStart; i++) {
-    const daySeed = i + 1000 // Seed for this day
+    const daySeed = i + 2000 // Different seed for dermatologists
     const dailyGrowth = Math.floor(
       MEMBER_STATS_CONFIG.dailyGrowthMin +
       seededRandom(daySeed) * (MEMBER_STATS_CONFIG.dailyGrowthMax - MEMBER_STATS_CONFIG.dailyGrowthMin)
@@ -40,15 +40,15 @@ export function getMemberStats() {
     totalMembers += dailyGrowth
   }
 
-  // Calculate active users (fluctuates smoothly within fixed range 1233-2931)
+  // Calculate active users (fluctuates smoothly within fixed range)
   // Changes every few minutes for "live" feel, using sine wave for smooth transitions
   const minuteOfDay = now.getHours() * 60 + now.getMinutes()
   const daySeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
 
   // Use sine wave for smooth natural fluctuation + small random variance
   const wavePosition = Math.sin((minuteOfDay / 1440) * Math.PI * 4) // 4 cycles per day
-  const baseActive = (MEMBER_STATS_CONFIG.activeMin + MEMBER_STATS_CONFIG.activeMax) / 2 // ~2082
-  const amplitude = (MEMBER_STATS_CONFIG.activeMax - MEMBER_STATS_CONFIG.activeMin) / 2 // ~849
+  const baseActive = (MEMBER_STATS_CONFIG.activeMin + MEMBER_STATS_CONFIG.activeMax) / 2
+  const amplitude = (MEMBER_STATS_CONFIG.activeMax - MEMBER_STATS_CONFIG.activeMin) / 2
 
   // Add small variance based on minute (changes every ~5 mins)
   const variance = seededRandom(daySeed + Math.floor(minuteOfDay / 5)) * 200 - 100 // -100 to +100
@@ -91,10 +91,10 @@ export const COURSE_CONFIG = {
     quote: "I created this system because I was YOU. Spending thousands on marketing with unpredictable results. Now I want to help you achieve the same transformation.",
   },
   socialProof: {
-    studentCount: 847, // Fallback, use getMemberStats() for dynamic
+    studentCount: 347, // Fallback, use getMemberStats() for dynamic
     rating: 4.9,
-    reviewCount: 156,
-    countriesServed: 23,
+    reviewCount: 89,
+    countriesServed: 18,
   },
 }
 
@@ -149,7 +149,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/dentist/module-3-photo-talk.webp',
     lessons: ['The exact process', 'Right settings to use', 'Avoiding common errors'],
     resources: [
-      { name: 'Dermatologist AI Talking Video Prompt (for ChatGPT)', url: '/products/dentist/Dentist_AI_Video_Prompt.txt', type: 'file' as const },
+      { name: 'Dermatologist AI Talking Video Prompt (for ChatGPT)', url: '/products/dermatologist/Dermatologist_AI_Video_Prompt.txt', type: 'file' as const },
     ],
   },
   {
@@ -163,7 +163,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/dentist/module-4-edit-video.webp',
     lessons: ['Combine clips easily', 'Add captions & music', 'Export ready-to-post video'],
     resources: [
-      { name: 'Background Music Collection', url: '/products/dentist/Background music/', type: 'folder' as const },
+      { name: 'Background Music Collection', url: '/products/dermatologist/Background music/', type: 'folder' as const },
     ],
   },
   {
@@ -177,7 +177,7 @@ export const COURSE_MODULES = [
     thumbnail: '/images/dentist/module-5-realistic-images.webp',
     lessons: ['Generate realistic images', 'Different styles & locations', 'Keep same identity'],
     resources: [
-      { name: 'Dermatologist AI Image Generation Prompt', url: '/products/dentist/Dentist_AI_Image_Prompt.txt', type: 'file' as const },
+      { name: 'Dermatologist AI Image Generation Prompt', url: '/products/dermatologist/Dermatologist_AI_Image_Prompt.txt', type: 'file' as const },
     ],
   },
   {
@@ -264,16 +264,16 @@ export const TOTAL_RUNTIME = COURSE_MODULES.filter(m => !m.comingSoon).reduce((a
 
 // Bonuses
 export const BONUSES = [
-  { id: 'bonus-1', name: '100 Viral Dermatology Scripts', value: 297, icon: FileText, description: 'Copy-paste scripts that go viral on social media', category: 'Content', url: '/products/dentist/bonuses/100-viral-scripts.pdf', image: '/images/dentist/viral-scripts.webp' },
-  { id: 'bonus-2', name: '365-Day Content Calendar', value: 197, icon: Calendar, description: 'Never run out of content ideas for a whole year', category: 'Planning', url: '/products/dentist/bonuses/365-content-calendar.pdf', image: '/images/dentist/social-templates.webp' },
-  { id: 'bonus-3', name: 'Website Template (Canva)', value: 397, icon: Rocket, description: 'Professional dermatology website template for Canva', category: 'Website', url: '/products/dentist/bonuses/website-template-canva.pdf', image: '/images/dentist/website-template.webp' },
-  { id: 'bonus-3b', name: 'FREE BONUS: Elementor Template', value: 0, icon: Rocket, description: 'Extra free WordPress Elementor theme - EverBright', category: 'Website', url: '/products/dentist/bonuses/website-template-elementor.zip', image: '/images/dentist/website-template.webp', isFreeBonus: true },
-  { id: 'bonus-4', name: 'Profit Calculator Spreadsheet', value: 247, icon: TrendingUp, description: 'Find hidden profits in your practice instantly', category: 'Tools', url: '/products/dentist/bonuses/profit-calculator.xlsx', image: '/images/dentist/profit-simulator.webp' },
-  { id: 'bonus-5', name: 'Front Desk Phone Scripts', value: 297, icon: Headphones, description: 'Convert more phone calls into booked appointments', category: 'Scripts', url: '/products/dentist/bonuses/front-desk-scripts.pdf', image: '/images/dentist/front-desk-scripts.webp' },
-  { id: 'bonus-6', name: 'Patient Forms Bundle', value: 147, icon: FileText, description: 'Professional intake forms that save hours', category: 'Forms', url: '/products/dentist/bonuses/patient-forms.zip', image: '/images/dentist/patient-forms.webp' },
-  { id: 'bonus-7', name: 'Referral Machine System', value: 347, icon: Users, description: 'Turn happy patients into your best referral source', category: 'Marketing', url: '/products/dentist/bonuses/referral-system.pdf', image: '/images/dentist/referral-machine.webp' },
+  { id: 'bonus-1', name: '100 Viral Dermatology Scripts', value: 297, icon: FileText, description: 'Copy-paste scripts that go viral on social media', category: 'Content', url: '/products/dermatologist/bonuses/100-viral-scripts.pdf', image: '/images/dentist/viral-scripts.webp' },
+  { id: 'bonus-2', name: '365-Day Content Calendar', value: 197, icon: Calendar, description: 'Never run out of content ideas for a whole year', category: 'Planning', url: '/products/dermatologist/bonuses/365-content-calendar.pdf', image: '/images/dentist/social-templates.webp' },
+  { id: 'bonus-3', name: 'Website Template (Canva)', value: 397, icon: Rocket, description: 'Professional dermatology website template for Canva', category: 'Website', url: '/products/dermatologist/bonuses/website-template-canva.pdf', image: '/images/dentist/website-template.webp' },
+  { id: 'bonus-3b', name: 'FREE BONUS: Elementor Template', value: 0, icon: Rocket, description: 'Extra free WordPress Elementor theme - EverBright', category: 'Website', url: '/products/dermatologist/bonuses/website-template-elementor.zip', image: '/images/dentist/website-template.webp', isFreeBonus: true },
+  { id: 'bonus-4', name: 'Profit Calculator Spreadsheet', value: 247, icon: TrendingUp, description: 'Find hidden profits in your practice instantly', category: 'Tools', url: '/products/dermatologist/bonuses/profit-calculator.xlsx', image: '/images/dentist/profit-simulator.webp' },
+  { id: 'bonus-5', name: 'Front Desk Phone Scripts', value: 297, icon: Headphones, description: 'Convert more phone calls into booked appointments', category: 'Scripts', url: '/products/dermatologist/bonuses/front-desk-scripts.pdf', image: '/images/dentist/front-desk-scripts.webp' },
+  { id: 'bonus-6', name: 'Patient Forms Bundle', value: 147, icon: FileText, description: 'Professional intake forms that save hours', category: 'Forms', url: '/products/dermatologist/bonuses/patient-forms.zip', image: '/images/dentist/patient-forms.webp' },
+  { id: 'bonus-7', name: 'Referral Machine System', value: 347, icon: Users, description: 'Turn happy patients into your best referral source', category: 'Marketing', url: '/products/dermatologist/bonuses/referral-system.pdf', image: '/images/dentist/referral-machine.webp' },
   { id: 'bonus-8', name: 'AI Content Generator (500+ Prompts)', value: 197, icon: Brain, description: 'Never write content from scratch again', category: 'AI Tools', url: 'https://chatgpt.com/g/g-693ff08b15208191b94265efd521f783-dentist-expert-copywriter', image: '/images/dentist/ai-generator.webp' },
-  { id: 'bonus-9', name: '5-Star Review System', value: 297, icon: Star, description: 'Get 15+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/dentist/bonuses/review-system.pdf', image: '/images/dentist/review-explosion.webp' },
+  { id: 'bonus-9', name: '5-Star Review System', value: 297, icon: Star, description: 'Get 15+ Google reviews every month on autopilot', category: 'Reviews', url: '/products/dermatologist/bonuses/review-system.pdf', image: '/images/dentist/review-explosion.webp' },
 ]
 
 export const BONUS_CATEGORIES = ['All', ...Array.from(new Set(BONUSES.map(b => b.category)))]
@@ -303,7 +303,7 @@ export const COMING_SOON_COURSES = [
     color: 'from-blue-500 to-indigo-600',
     features: ['Facebook & Instagram Ads', 'Targeting local patients', 'Ad creatives that convert', 'Budget optimization'],
     estimatedLaunch: 'Q1 2025',
-    waitlistCount: 312,
+    waitlistCount: 187,
     price: 297,
   },
   {
@@ -315,7 +315,7 @@ export const COMING_SOON_COURSES = [
     color: 'from-emerald-500 to-teal-600',
     features: ['Search ads setup', 'Local service ads', 'Keyword research', 'Landing page secrets'],
     estimatedLaunch: 'Q1 2025',
-    waitlistCount: 287,
+    waitlistCount: 156,
     price: 297,
   },
   {
@@ -327,19 +327,19 @@ export const COMING_SOON_COURSES = [
     color: 'from-amber-500 to-orange-600',
     features: ['Automated review requests', 'Response templates', 'Handling negative reviews', 'Review generation scripts'],
     estimatedLaunch: 'Q2 2025',
-    waitlistCount: 456,
+    waitlistCount: 234,
     price: 197,
   },
   {
     id: 'course-case-acceptance',
     title: 'High-Ticket Case Acceptance',
     subtitle: 'for Dermatologists',
-    description: 'Close more cosmetic procedures and premium treatments. Turn consultations into high-value bookings.',
+    description: 'Close more Botox, fillers, and laser treatments. Turn consultations into $5K+ procedures.',
     icon: DollarSign,
     color: 'from-green-500 to-emerald-600',
     features: ['Case presentation mastery', 'Overcoming objections', 'Payment plan scripts', 'Follow-up sequences'],
     estimatedLaunch: 'Q2 2025',
-    waitlistCount: 523,
+    waitlistCount: 289,
     price: 397,
   },
   {
@@ -351,7 +351,7 @@ export const COMING_SOON_COURSES = [
     color: 'from-pink-500 to-rose-600',
     features: ['Viral content formulas', 'Trending sounds & hooks', 'Before/after showcases', 'Building your brand'],
     estimatedLaunch: 'Q2 2025',
-    waitlistCount: 389,
+    waitlistCount: 198,
     price: 247,
   },
   {
@@ -363,7 +363,7 @@ export const COMING_SOON_COURSES = [
     color: 'from-violet-500 to-purple-600',
     features: ['Email sequences', 'SMS campaigns', 'Recall scripts', 'Re-engagement offers'],
     estimatedLaunch: 'Q3 2025',
-    waitlistCount: 234,
+    waitlistCount: 145,
     price: 197,
   },
 ]
