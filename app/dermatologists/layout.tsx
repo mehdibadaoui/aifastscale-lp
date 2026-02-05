@@ -41,19 +41,28 @@ export default function DermatologistLayout({
         fetchPriority="high"
       />
 
-      {/* Critical CSS for above-the-fold hero - INLINED for zero render blocking */}
+      {/* Critical CSS - MOBILE FIRST - All content visible immediately */}
       <style dangerouslySetInnerHTML={{ __html: `
+        /* Base styles */
         .bg-gradient-hero{background:linear-gradient(135deg,#000 0%,#0a1628 50%,#000 100%)}
         .text-gradient-premium{background:linear-gradient(135deg,#2dd4bf,#22d3ee,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .glass-premium{background:rgba(20,184,166,.08);border:1px solid rgba(20,184,166,.2)}
-        .glass-teal{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.25)}
         .btn-premium{background:linear-gradient(135deg,#14b8a6,#06b6d4,#14b8a6)}
-        .shadow-glow-teal{box-shadow:0 0 30px rgba(20,184,166,.4)}
-        .badge-premium{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);padding:.5rem 1rem;border-radius:9999px}
-        .hero-image-container{aspect-ratio:1365/768;width:100%;max-width:1024px;margin:0 auto;contain:layout style paint}
-        .animate-fade-in-up{opacity:1;transform:none}
-        [data-animate]{opacity:1}
-        .section-premium{contain:layout style}
+        .shadow-glow-teal{box-shadow:0 0 20px rgba(20,184,166,.3)}
+        .badge-premium{background:rgba(20,184,166,.15);border:1px solid rgba(20,184,166,.3);padding:.5rem 1rem;border-radius:9999px}
+        .hero-image-container{aspect-ratio:1365/768;width:100%;max-width:1024px;margin:0 auto}
+
+        /* CRITICAL: All content visible by default - NO hidden content */
+        .animate-fade-in-up,.animate-scale-in,.animate-scale-up,[data-animate]{opacity:1!important;transform:none!important}
+
+        /* Mobile: No blur effects (performance) */
+        @media(max-width:767px){
+          .glass-premium,.glass-teal{background:rgba(20,184,166,.15)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+          .backdrop-blur-sm,.backdrop-blur-md,.backdrop-blur-lg,.backdrop-blur-xl{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+        }
+        @media(min-width:768px){
+          .glass-premium{background:rgba(20,184,166,.08);border:1px solid rgba(20,184,166,.2);backdrop-filter:blur(8px)}
+          .glass-teal{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.25);backdrop-filter:blur(4px)}
+        }
       `}} />
 
       {children}

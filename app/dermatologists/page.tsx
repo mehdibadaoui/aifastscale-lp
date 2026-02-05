@@ -152,50 +152,30 @@ export default function DermatologistCleanLandingPage() {
     },
   ]
 
-  // Scroll animation observer - DEFERRED to not block initial render
+  // Scroll animation observer - DESKTOP ONLY
+  // Mobile: All content visible immediately (no animations blocking content)
   useEffect(() => {
-    // Use requestIdleCallback for non-critical observer setup (better mobile perf)
-    const setupObserver = () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible')
-              if (entry.target.id) {
-                setVisibleSections((prev) => new Set([...prev, entry.target.id]))
-              }
-            }
-          })
-        },
-        { threshold: 0, rootMargin: '100px 0px 600px 0px' }
-      )
-
-      const animatedElements = document.querySelectorAll('[data-animate]')
-      animatedElements.forEach((el) => observer.observe(el))
-
-      return observer
+    // Skip on mobile - content is always visible via CSS
+    if (window.innerWidth < 768) {
+      // On mobile, mark all sections as visible immediately
+      setVisibleSections(new Set(['hero', 'case-study', 'whats-inside', 'how-it-works', 'pricing', 'faq', 'guarantee', 'guarantee2', 'meet-instructor', 'reasons-why']))
+      return
     }
 
-    // Defer observer setup to after first paint
-    let observer: IntersectionObserver | null = null
-    if ('requestIdleCallback' in window) {
-      const id = requestIdleCallback(() => {
-        observer = setupObserver()
-      }, { timeout: 100 })
-      return () => {
-        cancelIdleCallback(id)
-        observer?.disconnect()
-      }
-    } else {
-      // Fallback for Safari
-      const id = setTimeout(() => {
-        observer = setupObserver()
-      }, 50)
-      return () => {
-        clearTimeout(id)
-        observer?.disconnect()
-      }
-    }
+    // Desktop: Use simple observer for subtle animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.id) {
+            setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
   }, [])
 
   // Countdown timer - REAL deadline: December 20th for Premium Bundle bonus
@@ -2548,96 +2528,100 @@ export default function DermatologistCleanLandingPage() {
           }
         }
 
-        /* Modern cubic-bezier for buttery smooth feel */
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* ============================================
+           MOBILE-FIRST: ALL CONTENT VISIBLE BY DEFAULT
+           Animations are ENHANCEMENTS, not reveal mechanisms
+           ============================================ */
+
+        /* CRITICAL: Everything visible by default */
+        .animate-fade-in-up,
+        .animate-scale-up,
+        .animate-scale-in,
+        [data-animate] {
+          opacity: 1 !important;
+          transform: none !important;
         }
 
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          will-change: opacity, transform;
-        }
-
-        .animation-delay-100 { animation-delay: 100ms; }
-        .animation-delay-200 { animation-delay: 200ms; }
-        .animation-delay-300 { animation-delay: 300ms; }
-        .animation-delay-400 { animation-delay: 400ms; }
-        .animation-delay-500 { animation-delay: 500ms; }
-        .animation-delay-600 { animation-delay: 600ms; }
-
-        /* Scale up animation */
-        @keyframes scaleUp {
-          from {
-            opacity: 0;
-            transform: scale(0.92);
+        /* Animations ONLY on desktop with good connection */
+        @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
           }
-          to {
-            opacity: 1;
-            transform: scale(1);
+
+          .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
           }
-        }
 
-        .animate-scale-up {
-          animation: scaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        /* Modal scale in animation */
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95) translateY(10px);
+          @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
           }
-          to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
+
+          .animate-scale-in {
+            animation: scaleIn 0.4s ease-out forwards;
           }
+
+          .animation-delay-100 { animation-delay: 50ms; }
+          .animation-delay-200 { animation-delay: 100ms; }
+          .animation-delay-300 { animation-delay: 150ms; }
+          .animation-delay-400 { animation-delay: 200ms; }
+          .animation-delay-500 { animation-delay: 250ms; }
+          .animation-delay-600 { animation-delay: 300ms; }
         }
 
-        .animate-scale-in {
-          animation: scaleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        /* Slow spin for guarantee badge */
+        /* Slow spin for guarantee badge - works everywhere */
         @keyframes spin-slow {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
-
         .animate-spin-slow {
           animation: spin-slow 20s linear infinite;
         }
 
-        /* Safety net: ensure sections become visible even if IntersectionObserver misses them on fast scroll */
-        [data-animate] {
-          animation: fallbackReveal 0s 1.5s forwards;
-        }
-        [data-animate].visible {
-          animation: none;
-        }
-        @keyframes fallbackReveal {
-          to { opacity: 1; transform: none; }
+        /* MOBILE: Disable all blur/backdrop-filter for performance */
+        @media (max-width: 767px) {
+          .backdrop-blur-sm,
+          .backdrop-blur-md,
+          .backdrop-blur-lg,
+          .backdrop-blur-xl,
+          .glass-premium,
+          .glass-teal {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
+
+          /* Simpler backgrounds without blur */
+          .glass-premium {
+            background: rgba(20, 184, 166, 0.15) !important;
+          }
+          .glass-teal {
+            background: rgba(20, 184, 166, 0.2) !important;
+          }
+
+          /* Disable will-change on mobile (saves memory) */
+          * {
+            will-change: auto !important;
+          }
+
+          /* Smooth scrolling */
+          html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          /* Prevent layout shifts */
+          img, video {
+            content-visibility: auto;
+          }
         }
 
         /* Respect user motion preferences */
         @media (prefers-reduced-motion: reduce) {
-          .animate-fade-in-up,
-          .animate-scale-up,
-          .animate-scale-in,
-          .testimonial-scroll-track-dermatologist {
-            animation: none;
-            opacity: 1;
-            transform: none;
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
           }
         }
       `}</style>
