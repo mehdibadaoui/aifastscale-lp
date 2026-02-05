@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import MetaPixelLoader from './MetaPixelLoader'
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Dermatologists | AI Video Marketing System | $47',
@@ -33,11 +32,7 @@ export default function DermatologistLayout({
 }) {
   return (
     <>
-      {/* DNS Prefetch & Preconnect for faster resource loading */}
-      <link rel="dns-prefetch" href="https://connect.facebook.net" />
-      <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
-
-      {/* Preload hero image for faster LCP - CRITICAL */}
+      {/* Preload hero image for faster LCP - CRITICAL - must be first */}
       <link
         rel="preload"
         href="/images/dentist/dentist-vdc-hero.webp"
@@ -46,28 +41,37 @@ export default function DermatologistLayout({
         fetchPriority="high"
       />
 
-      {/* Critical CSS for above-the-fold hero - prevents layout shift */}
+      {/* Critical CSS for above-the-fold hero - INLINED for zero render blocking */}
       <style dangerouslySetInnerHTML={{ __html: `
-        /* Critical hero styles - inlined for instant render */
         .bg-gradient-hero{background:linear-gradient(135deg,#000 0%,#0a1628 50%,#000 100%)}
         .text-gradient-premium{background:linear-gradient(135deg,#2dd4bf,#22d3ee,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .glass-premium{background:rgba(20,184,166,.08);border:1px solid rgba(20,184,166,.2);backdrop-filter:blur(8px)}
+        .glass-premium{background:rgba(20,184,166,.08);border:1px solid rgba(20,184,166,.2)}
         .glass-teal{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.25)}
-        .btn-premium{background:linear-gradient(135deg,#14b8a6,#06b6d4,#14b8a6);background-size:200% 200%}
-        .shadow-glow-teal{box-shadow:0 0 30px rgba(20,184,166,.4),0 0 60px rgba(20,184,166,.2)}
+        .btn-premium{background:linear-gradient(135deg,#14b8a6,#06b6d4,#14b8a6)}
+        .shadow-glow-teal{box-shadow:0 0 30px rgba(20,184,166,.4)}
         .badge-premium{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);padding:.5rem 1rem;border-radius:9999px}
-        .section-premium{min-height:auto}
-        /* Prevent CLS - reserve space for hero image */
-        .hero-image-container{aspect-ratio:1365/768;width:100%;max-width:1024px;margin:0 auto}
-        /* Initial animation state */
-        .animate-fade-in-up{opacity:0;transform:translateY(30px)}
+        .hero-image-container{aspect-ratio:1365/768;width:100%;max-width:1024px;margin:0 auto;contain:layout style paint}
+        .animate-fade-in-up{opacity:1;transform:none}
         [data-animate]{opacity:1}
+        .section-premium{contain:layout style}
       `}} />
 
-      {/* Meta Pixel - Loads after browser idle */}
-      <MetaPixelLoader />
-
       {children}
+
+      {/* Meta Pixel - Deferred to AFTER page interactive - won't block anything */}
+      <script
+        defer
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.addEventListener('load',function(){
+              setTimeout(function(){
+                !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init','1435824824556725');fbq('track','PageView');
+              },1000);
+            });
+          `,
+        }}
+      />
     </>
   )
 }
