@@ -317,7 +317,7 @@ export default function RootLayout({
         className={`${inter.variable} ${plusJakarta.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
         {children}
-        <CookieConsent />
+        {/* <CookieConsent /> */}
       </body>
     </html>
   )
