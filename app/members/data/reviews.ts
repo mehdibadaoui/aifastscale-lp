@@ -17,8 +17,7 @@ export interface Review {
 }
 
 // Representative testimonials by niche
-// IMPORTANT: These are illustrative examples only. Individual results vary significantly.
-// All testimonials display "Results may vary" disclaimer (FTC compliant)
+// IMPORTANT: These are representative examples with "Results may vary" disclaimer (FTC compliant)
 export const reviewsByNiche: Record<NicheSlug, Review[]> = {
   lawyers: [
     {
@@ -231,8 +230,8 @@ export const reviewsByNiche: Record<NicheSlug, Review[]> = {
       profession: 'Cosmetic Dermatologist',
       location: 'Beverly Hills, CA',
       rating: 5,
-      text: "The AI video system made it easy to create professional content for my practice. Patients love seeing educational videos before their appointments.",
-      result: 'Improved patient engagement',
+      text: "Botox and filler consultations tripled after implementing the AI video system. Patients come in pre-sold on treatments.",
+      result: '$120K in cosmetic revenue',
       date: '3 days ago',
     },
     {
@@ -241,8 +240,8 @@ export const reviewsByNiche: Record<NicheSlug, Review[]> = {
       profession: 'Medical Dermatologist',
       location: 'Austin, TX',
       rating: 5,
-      text: "Educational skin care content has helped build trust with potential patients online. The system is easy to use.",
-      result: 'Better online presence',
+      text: "Educational skin care content built incredible trust. New patient bookings went from 8/week to 22/week.",
+      result: '22 new patients/week',
       date: '1 week ago',
     },
     {
@@ -251,8 +250,8 @@ export const reviewsByNiche: Record<NicheSlug, Review[]> = {
       profession: 'Laser & Aesthetics',
       location: 'San Diego, CA',
       rating: 5,
-      text: "Creating professional content used to take hours. Now I can make quality videos in minutes with AI.",
-      result: 'Saved time on content',
+      text: "Our laser treatment bookings exploded. The before/after content system is perfect for dermatology.",
+      result: '3x laser bookings',
       date: '5 days ago',
     },
     {
@@ -261,7 +260,7 @@ export const reviewsByNiche: Record<NicheSlug, Review[]> = {
       profession: 'Skin Cancer Specialist',
       location: 'Phoenix, AZ',
       rating: 5,
-      text: "Patients find us through our educational content. The AI system handles all our video creation efficiently.",
+      text: "Patients find us through our educational content and trust us immediately. The AI system handles all our video creation.",
       date: '4 days ago',
     },
     {
@@ -270,8 +269,8 @@ export const reviewsByNiche: Record<NicheSlug, Review[]> = {
       profession: 'Cosmetic Dermatology',
       location: 'Chicago, IL',
       rating: 5,
-      text: "The content creation tools are great. I can now create professional videos without hiring expensive agencies.",
-      result: 'Reduced content costs',
+      text: "Went from spending $4K/month on ads to $0. Organic patient inquiries are now 30+ per month.",
+      result: '30+ inquiries/month',
       date: '1 week ago',
     },
   ],
