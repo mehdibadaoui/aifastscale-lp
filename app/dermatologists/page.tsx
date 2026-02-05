@@ -1,48 +1,54 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense, memo, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import {
-  Gift,
-  Shield,
-  CheckCircle,
-  ArrowRight,
-  Clock,
-  Users,
-  Video,
-  Upload,
-  TrendingUp,
-  Play,
-  ChevronDown,
-  Star,
-  Check,
-  X,
-  AlertTriangle,
-  Zap,
-  Crown,
-  MapPin,
-  Award,
-  DollarSign,
-  VolumeX,
-  Eye,
-  Heart,
-  ThumbsUp,
-  RefreshCw,
-  MessageSquare,
-  Calendar,
-  CalendarCheck,
-  FileText,
-  Stethoscope,
-  Phone,
-  Mail,
-  Send,
-  Smile,
-} from 'lucide-react'
+
+// CRITICAL: Only import icons used in hero section immediately
+// Other icons loaded on demand below
+import { Shield, ArrowRight, Star, Award, Stethoscope } from 'lucide-react'
+
+// Lazy load non-critical icons (below fold)
+const Gift = dynamic(() => import('lucide-react').then(mod => mod.Gift), { ssr: false })
+const CheckCircle = dynamic(() => import('lucide-react').then(mod => mod.CheckCircle), { ssr: false })
+const Clock = dynamic(() => import('lucide-react').then(mod => mod.Clock), { ssr: false })
+const Users = dynamic(() => import('lucide-react').then(mod => mod.Users), { ssr: false })
+const Video = dynamic(() => import('lucide-react').then(mod => mod.Video), { ssr: false })
+const Upload = dynamic(() => import('lucide-react').then(mod => mod.Upload), { ssr: false })
+const TrendingUp = dynamic(() => import('lucide-react').then(mod => mod.TrendingUp), { ssr: false })
+const Play = dynamic(() => import('lucide-react').then(mod => mod.Play), { ssr: false })
+const ChevronDown = dynamic(() => import('lucide-react').then(mod => mod.ChevronDown), { ssr: false })
+const Check = dynamic(() => import('lucide-react').then(mod => mod.Check), { ssr: false })
+const X = dynamic(() => import('lucide-react').then(mod => mod.X), { ssr: false })
+const AlertTriangle = dynamic(() => import('lucide-react').then(mod => mod.AlertTriangle), { ssr: false })
+const Zap = dynamic(() => import('lucide-react').then(mod => mod.Zap), { ssr: false })
+const Crown = dynamic(() => import('lucide-react').then(mod => mod.Crown), { ssr: false })
+const MapPin = dynamic(() => import('lucide-react').then(mod => mod.MapPin), { ssr: false })
+const DollarSign = dynamic(() => import('lucide-react').then(mod => mod.DollarSign), { ssr: false })
+const VolumeX = dynamic(() => import('lucide-react').then(mod => mod.VolumeX), { ssr: false })
+const Eye = dynamic(() => import('lucide-react').then(mod => mod.Eye), { ssr: false })
+const Heart = dynamic(() => import('lucide-react').then(mod => mod.Heart), { ssr: false })
+const ThumbsUp = dynamic(() => import('lucide-react').then(mod => mod.ThumbsUp), { ssr: false })
+const RefreshCw = dynamic(() => import('lucide-react').then(mod => mod.RefreshCw), { ssr: false })
+const MessageSquare = dynamic(() => import('lucide-react').then(mod => mod.MessageSquare), { ssr: false })
+const Calendar = dynamic(() => import('lucide-react').then(mod => mod.Calendar), { ssr: false })
+const CalendarCheck = dynamic(() => import('lucide-react').then(mod => mod.CalendarCheck), { ssr: false })
+const FileText = dynamic(() => import('lucide-react').then(mod => mod.FileText), { ssr: false })
+const Phone = dynamic(() => import('lucide-react').then(mod => mod.Phone), { ssr: false })
+const Mail = dynamic(() => import('lucide-react').then(mod => mod.Mail), { ssr: false })
+const Send = dynamic(() => import('lucide-react').then(mod => mod.Send), { ssr: false })
+const Smile = dynamic(() => import('lucide-react').then(mod => mod.Smile), { ssr: false })
+
 import { DERMATOLOGIST_BONUS_PRODUCTS, getDermatologistTotalBonusValue } from '../config/dermatologist-bonus-products'
 import { getMemberStats } from './members/components/config'
-import { ExpertPersona, ExpertMention, DR_VOSS_DERM_DATA } from '../components/ExpertPersona'
+import { DR_VOSS_DERM_DATA } from '../components/ExpertPersona'
+
+// Lazy load heavy components (below fold)
+const ExpertPersona = dynamic(() => import('../components/ExpertPersona').then(mod => mod.ExpertPersona), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-2xl" />
+})
 const AnimatedBackground = dynamic(() => import('../components/AnimatedBackground').then(mod => ({ default: mod.AnimatedBackground })), { ssr: false })
 
 // Checkout link placeholder
@@ -60,12 +66,21 @@ export default function DermatologistCleanLandingPage() {
   // Animation refs for scroll detection - initialize with hero visible for instant animation
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['hero']))
 
-  // Update member stats every minute
+  // Update member stats every minute - DEFERRED start
   useEffect(() => {
+    // Delay first update to not block initial render
+    const timeout = setTimeout(() => {
+      setMemberStats(getMemberStats())
+    }, 3000)
+
     const interval = setInterval(() => {
       setMemberStats(getMemberStats())
     }, 60000)
-    return () => clearInterval(interval)
+
+    return () => {
+      clearTimeout(timeout)
+      clearInterval(interval)
+    }
   }, [])
 
   // Track InitiateCheckout event for Meta Pixel
@@ -164,27 +179,49 @@ export default function DermatologistCleanLandingPage() {
     },
   ]
 
-  // Scroll animation observer - trigger animations as sections come into view
+  // Scroll animation observer - DEFERRED to not block initial render
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-            if (entry.target.id) {
-              setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+    // Use requestIdleCallback for non-critical observer setup (better mobile perf)
+    const setupObserver = () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible')
+              if (entry.target.id) {
+                setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+              }
             }
-          }
-        })
-      },
-      { threshold: 0, rootMargin: '100px 0px 600px 0px' } // Trigger 600px before entering viewport to prevent blank sections on fast mobile scroll
-    )
+          })
+        },
+        { threshold: 0, rootMargin: '100px 0px 600px 0px' }
+      )
 
-    const animatedElements = document.querySelectorAll('[data-animate]')
-    animatedElements.forEach((el) => observer.observe(el))
+      const animatedElements = document.querySelectorAll('[data-animate]')
+      animatedElements.forEach((el) => observer.observe(el))
 
-    return () => {
-      observer.disconnect()
+      return observer
+    }
+
+    // Defer observer setup to after first paint
+    let observer: IntersectionObserver | null = null
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(() => {
+        observer = setupObserver()
+      }, { timeout: 100 })
+      return () => {
+        cancelIdleCallback(id)
+        observer?.disconnect()
+      }
+    } else {
+      // Fallback for Safari
+      const id = setTimeout(() => {
+        observer = setupObserver()
+      }, 50)
+      return () => {
+        clearTimeout(id)
+        observer?.disconnect()
+      }
     }
   }, [])
 
@@ -340,9 +377,9 @@ export default function DermatologistCleanLandingPage() {
               </div>
             </div>
 
-            {/* Hero Image - Premium Glass Container */}
+            {/* Hero Image - Premium Glass Container - OPTIMIZED FOR LCP */}
             <div className={`relative max-w-5xl mx-auto mb-4 sm:mb-6 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-300' : ''}`}>
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden glass-premium shadow-premium-lg hover-lift hero-image-container">
                 <Image
                   src="/images/dentist/dentist-vdc-hero.webp"
                   alt="AI Video System for Dermatologists Showcase"
@@ -351,7 +388,9 @@ export default function DermatologistCleanLandingPage() {
                   className="w-full h-auto"
                   priority
                   fetchPriority="high"
-                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 1024px"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDBAURAAYSIRMxQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABkRAAIDAQAAAAAAAAAAAAAAAAEDABEhMf/aAAwDAQACEQMRAD8Ax6z7ftVFa6OCpt0EsqRKJJGQFnbHZJ+nJ11pdJStRW+ngkIMkcaoSPRIGCR+6GgxKMnPsVmM5P/Z"
                 />
               </div>
             </div>

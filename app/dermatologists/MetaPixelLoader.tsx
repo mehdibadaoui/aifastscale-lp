@@ -1,21 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Script from 'next/script'
 
 const META_PIXEL_ID = '1435824824556725'
 
 export default function MetaPixelLoader() {
-  const [loaded, setLoaded] = useState(false)
-
-  // Don't load twice
-  if (loaded) return null
-
   return (
     <Script
       id="meta-pixel-dermatologist"
-      strategy="lazyOnload"
-      onLoad={() => setLoaded(true)}
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: `
           !function(f,b,e,v,n,t,s)
