@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import MetaPixelLoader from './MetaPixelLoader'
+// import MetaPixelLoader from './MetaPixelLoader'
 import CookieConsent from '../components/CookieConsent'
 
 export const metadata: Metadata = {
@@ -53,7 +53,7 @@ export default function PlasticSurgeonLayout({
       />
 
       {/* Meta Pixel - Loads only after cookie consent */}
-      <MetaPixelLoader />
+      {/* <MetaPixelLoader /> */}
 
       {/* Cookie Consent Banner */}
       <CookieConsent />

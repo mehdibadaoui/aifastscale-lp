@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import MetaPixelLoader from './MetaPixelLoader'
+// import MetaPixelLoader from './MetaPixelLoader'
 
 export const metadata: Metadata = {
   title: 'CloneYourself for Lawyers | AI Video Marketing System | $47',
@@ -55,7 +55,7 @@ export default function LawyerLayout({
       />
 
       {/* Meta Pixel - Loads only after cookie consent */}
-      <MetaPixelLoader />
+      {/* <MetaPixelLoader /> */}
 
       {children}
     </>
