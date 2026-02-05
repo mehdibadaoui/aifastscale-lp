@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Terms of Service | AI FastScale',
@@ -86,7 +87,7 @@ export default function TermsOfService() {
                 </li>
               </ul>
               <p className="leading-relaxed text-gray-700">
-                <strong>Pricing:</strong> The standard price is $47.82 USD (one-time payment). Upsell products are available at $9.95 USD and downsell products at $4.95 USD. All prices are clearly displayed at checkout before purchase. Promotional pricing may be offered from time to time.
+                <strong>Pricing:</strong> The standard price is $47.81 USD (one-time payment). Upsell products are available at $9.95 USD and downsell products at $4.95 USD. All prices are clearly displayed at checkout before purchase. Promotional pricing may be offered from time to time.
               </p>
             </section>
 
@@ -472,6 +473,7 @@ export default function TermsOfService() {
             </div>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

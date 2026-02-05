@@ -386,7 +386,7 @@ export default function DentistCleanLandingPage() {
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getDentistTotalBonusValue() + 47}</span>
-                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.81</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
@@ -562,7 +562,7 @@ export default function DentistCleanLandingPage() {
                     <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
                       I was skeptical at first. <span className="text-teal-400 font-bold">31 new patients in 4 weeks</span> changed my mind.
                       No filming. No editing. Just results.
-                      Best $47.82 I ever spent on my practice.
+                      Best $47.81 I ever spent on my practice.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
@@ -585,7 +585,7 @@ export default function DentistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
                 {[
-                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
+                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
                   { value: '31', label: 'New Patients', sub: '4 weeks' },
                   { value: '$62K', label: 'Revenue', sub: '2 months' },
                 ].map((stat, i) => (
@@ -957,7 +957,7 @@ export default function DentistCleanLandingPage() {
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
                 <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82</span>
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -1277,7 +1277,7 @@ export default function DentistCleanLandingPage() {
                 <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Implant Specialist Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-teal-500">$47.82,000</span> in Implant Cases
+                His First AI Video Generated <span className="text-teal-500">$47.81,000</span> in Implant Cases
               </h2>
               <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From spending $2,000/month on marketing to getting patients for free</p>
             </div>
@@ -1388,7 +1388,7 @@ export default function DentistCleanLandingPage() {
                     { time: 'Day 1', event: 'Posted his first AI video about implant benefits (took 7 minutes)', icon: Upload, color: 'gray' },
                     { time: 'Day 2', event: 'Instagram inquiry: "I need implants, are you accepting patients?"', icon: MessageSquare, color: 'teal' },
                     { time: 'Day 5', event: '3 implant consultations scheduled', icon: Calendar, color: 'teal' },
-                    { time: 'Week 2', event: '5 implant cases accepted • $47.82,000 in treatment plans', icon: FileText, color: 'teal' },
+                    { time: 'Week 2', event: '5 implant cases accepted • $47.81,000 in treatment plans', icon: FileText, color: 'teal' },
                     { time: 'Month 2', event: 'All 5 cases completed • Cancelled marketing agency', icon: DollarSign, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -1422,8 +1422,8 @@ export default function DentistCleanLandingPage() {
                   <div className="text-teal-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      One week of AI videos. <span className="text-teal-600 font-bold">$47.82,000 in implant cases</span>.
-                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $47.82 and
+                      One week of AI videos. <span className="text-teal-600 font-bold">$47.81,000 in implant cases</span>.
+                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $47.81 and
                       I had 5 cases in a week. The ROI is unreal.
                     </p>
                     <div className="flex items-center gap-3">
@@ -1447,8 +1447,8 @@ export default function DentistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
-                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$47.82K', label: 'Revenue', sub: '2 weeks' },
+                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
+                  { value: '$47.81K', label: 'Revenue', sub: '2 weeks' },
                   { value: '810x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
@@ -1714,7 +1714,7 @@ export default function DentistCleanLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.82<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.81<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
                   <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
                 </div>
               </div>
@@ -1724,7 +1724,7 @@ export default function DentistCleanLandingPage() {
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-teal-500/30 mb-6 ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
-              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.82 Actually Includes:</h3>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.81 Actually Includes:</h3>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 {/* Main Course */}
@@ -1772,7 +1772,7 @@ export default function DentistCleanLandingPage() {
                 </div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-teal-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.82</span>
+                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.81</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
@@ -1789,7 +1789,7 @@ export default function DentistCleanLandingPage() {
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82</span>
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
@@ -2039,7 +2039,7 @@ export default function DentistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          REASONS WHY - Why Is This Only $47.82? (Hormozi Principle)
+          REASONS WHY - Why Is This Only $47.81? (Hormozi Principle)
           ================================================================ */}
       <section
         id="reasons-why"
@@ -2050,7 +2050,7 @@ export default function DentistCleanLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
-                Why Is This Only <span className="text-gradient-premium">$47.82</span>?
+                Why Is This Only <span className="text-gradient-premium">$47.81</span>?
               </h2>
               <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
             </div>
@@ -2070,7 +2070,7 @@ export default function DentistCleanLandingPage() {
                 {
                   num: '3',
                   title: 'High Volume = Better For Both Of Us',
-                  desc: `At $47.82, I can reach ${memberStats.totalMembers.toLocaleString()}+ dentists. Even if only 10% create videos and 5% get results, that's hundreds of dentists getting new patients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 dentists.`,
+                  desc: `At $47.81, I can reach ${memberStats.totalMembers.toLocaleString()}+ dentists. Even if only 10% create videos and 5% get results, that's hundreds of dentists getting new patients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 dentists.`,
                 },
                 {
                   num: '4',
@@ -2245,7 +2245,7 @@ export default function DentistCleanLandingPage() {
                   <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-teal-200">
-                  <p className="text-teal-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: full refund, no questions asked</p>
+                  <p className="text-teal-700 font-bold text-xs">Cost: $47.81 one-time. Worst case: full refund, no questions asked</p>
                 </div>
               </div>
             </div>
@@ -2254,8 +2254,8 @@ export default function DentistCleanLandingPage() {
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
               <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
-                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $47.82.</p>
+                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $47.81 investment.</p>
+                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $47.81.</p>
                 <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you get 100% back</span> and lost nothing.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
@@ -2264,7 +2264,7 @@ export default function DentistCleanLandingPage() {
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.82</span>
+                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.81</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -2327,7 +2327,7 @@ export default function DentistCleanLandingPage() {
                 <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-teal-400 font-black text-lg sm:text-xl">$47.82</p>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$47.81</p>
                     <p className="text-gray-500 text-xs">Cost</p>
                   </div>
                   <div>
@@ -2430,7 +2430,7 @@ export default function DentistCleanLandingPage() {
             className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
-            <span className="text-teal-200 font-bold">$47.82</span>
+            <span className="text-teal-200 font-bold">$47.81</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>

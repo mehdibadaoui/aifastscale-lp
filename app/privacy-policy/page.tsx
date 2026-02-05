@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Privacy Policy | AI FastScale',
@@ -492,6 +493,7 @@ export default function PrivacyPolicy() {
             </div>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

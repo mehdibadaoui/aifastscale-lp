@@ -8,70 +8,13 @@ import {
   Megaphone, Search, MessageSquare, DollarSign, Video, Bell
 } from 'lucide-react'
 
-// Dynamic member count calculation
-const MEMBER_STATS_CONFIG = {
-  baseMembers: 850,           // Starting count (smaller for newer niche)
-  startDate: new Date('2025-01-15'), // When we "started" counting
-  dailyGrowthMin: 25,          // Min new members per day
-  dailyGrowthMax: 45,          // Max new members per day
-  activeMin: 433,             // Min active users (fixed range)
-  activeMax: 931,             // Max active users (fixed range)
-}
-
-// Seeded random for consistent daily values
-function seededRandom(seed: number): number {
-  const x = Math.sin(seed) * 10000
-  return x - Math.floor(x)
-}
-
-// Get dynamic member stats
+// Static member stats - no artificial inflation
 export function getMemberStats() {
-  const now = new Date()
-  const daysSinceStart = Math.floor((now.getTime() - MEMBER_STATS_CONFIG.startDate.getTime()) / (1000 * 60 * 60 * 24))
-
-  // Calculate total members (base + daily growth)
-  let totalMembers = MEMBER_STATS_CONFIG.baseMembers
-  for (let i = 0; i < daysSinceStart; i++) {
-    const daySeed = i + 2000 // Different seed for dermatologists
-    const dailyGrowth = Math.floor(
-      MEMBER_STATS_CONFIG.dailyGrowthMin +
-      seededRandom(daySeed) * (MEMBER_STATS_CONFIG.dailyGrowthMax - MEMBER_STATS_CONFIG.dailyGrowthMin)
-    )
-    totalMembers += dailyGrowth
-  }
-
-  // Calculate active users (fluctuates smoothly within fixed range)
-  // Changes every few minutes for "live" feel, using sine wave for smooth transitions
-  const minuteOfDay = now.getHours() * 60 + now.getMinutes()
-  const daySeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
-
-  // Use sine wave for smooth natural fluctuation + small random variance
-  const wavePosition = Math.sin((minuteOfDay / 1440) * Math.PI * 4) // 4 cycles per day
-  const baseActive = (MEMBER_STATS_CONFIG.activeMin + MEMBER_STATS_CONFIG.activeMax) / 2
-  const amplitude = (MEMBER_STATS_CONFIG.activeMax - MEMBER_STATS_CONFIG.activeMin) / 2
-
-  // Add small variance based on minute (changes every ~5 mins)
-  const variance = seededRandom(daySeed + Math.floor(minuteOfDay / 5)) * 200 - 100 // -100 to +100
-
-  const activeNowRaw = Math.floor(baseActive + (wavePosition * amplitude * 0.7) + variance)
-  // Cap active users to never exceed total members
-  const activeNow = Math.min(activeNowRaw, totalMembers)
-  const activePercent = Math.round((activeNow / totalMembers) * 100)
-
-  // Today's new members (partial day)
-  const todaySeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
-  const todayFullGrowth = Math.floor(
-    MEMBER_STATS_CONFIG.dailyGrowthMin +
-    seededRandom(todaySeed) * (MEMBER_STATS_CONFIG.dailyGrowthMax - MEMBER_STATS_CONFIG.dailyGrowthMin)
-  )
-  const hourProgress = now.getHours() / 24
-  const todayNewMembers = Math.floor(todayFullGrowth * hourProgress)
-
   return {
-    totalMembers: totalMembers + todayNewMembers,
-    activeNow,
-    todayNewMembers,
-    activePercent: Math.round(activePercent),
+    totalMembers: 347,
+    activeNow: 0,
+    todayNewMembers: 0,
+    activePercent: 0,
   }
 }
 
@@ -180,87 +123,10 @@ export const COURSE_MODULES = [
       { name: 'Dermatologist AI Image Generation Prompt', url: '/products/dermatologist/Dermatologist_AI_Image_Prompt.txt', type: 'file' as const },
     ],
   },
-  {
-    id: 'module-6',
-    number: 6,
-    title: 'Scaling & Automation',
-    description: 'Build a content machine that runs on autopilot. Batch create videos and scale your production.',
-    duration: '5 min',
-    durationMinutes: 5,
-    wistiaId: null,
-    thumbnail: null,
-    lessons: ['Batch creation', 'Content calendar', 'Scale without burnout'],
-    comingSoon: true,
-    resources: [],
-  },
-  {
-    id: 'module-7',
-    number: 7,
-    title: 'Turn Reviews into Video Testimonials',
-    description: 'Transform your written Google reviews into powerful AI video testimonials that build instant trust.',
-    duration: '6 min',
-    durationMinutes: 6,
-    wistiaId: null,
-    thumbnail: null,
-    lessons: ['Extract best reviews', 'Create AI spokesperson', 'Add to your website & ads'],
-    comingSoon: true,
-    resources: [],
-  },
-  {
-    id: 'module-8',
-    number: 8,
-    title: 'Before & After Transformations',
-    description: 'Create stunning before/after content that showcases your work and attracts high-value patients.',
-    duration: '5 min',
-    durationMinutes: 5,
-    wistiaId: null,
-    thumbnail: null,
-    lessons: ['Capture perfect befores', 'AI-enhanced presentations', 'HIPAA-compliant sharing'],
-    comingSoon: true,
-    resources: [],
-  },
-  {
-    id: 'module-9',
-    number: 9,
-    title: 'Educational Content That Converts',
-    description: 'Create educational videos about procedures that position you as the expert and drive bookings.',
-    duration: '7 min',
-    durationMinutes: 7,
-    wistiaId: null,
-    thumbnail: null,
-    lessons: ['Procedure explainers', 'FAQ video series', 'Treatment option comparisons'],
-    comingSoon: true,
-    resources: [],
-  },
-  {
-    id: 'module-10',
-    number: 10,
-    title: 'Platform-Specific Strategies',
-    description: 'Master TikTok, Instagram Reels, YouTube Shorts, and Facebook with dermatologist-specific strategies.',
-    duration: '8 min',
-    durationMinutes: 8,
-    wistiaId: null,
-    thumbnail: null,
-    lessons: ['Best times to post', 'Platform algorithms', 'Hashtag strategies for dermatologists'],
-    comingSoon: true,
-    resources: [],
-  },
-  {
-    id: 'module-11',
-    number: 11,
-    title: 'AI Receptionist & Follow-ups',
-    description: 'Automate patient communication with AI-powered scripts for calls, texts, and appointment reminders.',
-    duration: '6 min',
-    durationMinutes: 6,
-    wistiaId: null,
-    thumbnail: null,
-    lessons: ['AI phone scripts', 'Automated text sequences', 'No-show recovery system'],
-    comingSoon: true,
-    resources: [],
-  },
+  // Modules 6-11 removed — will be added when content is ready
 ]
 
-export const TOTAL_RUNTIME = COURSE_MODULES.filter(m => !m.comingSoon).reduce((acc, m) => acc + m.durationMinutes, 0)
+export const TOTAL_RUNTIME = COURSE_MODULES.reduce((acc, m) => acc + m.durationMinutes, 0)
 
 // Bonuses
 export const BONUSES = [

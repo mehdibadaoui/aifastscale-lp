@@ -130,7 +130,7 @@ export default function Home() {
       location: 'Miami, FL',
       image: '/images/Reviews/Review REA 1.jpeg',
       rating: 5,
-      review: 'I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 4 qualified leads that same week. My Instagram engagement went up 340%. Best $47.82 I ever spent.',
+      review: 'I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 4 qualified leads that same week. My Instagram engagement went up 340%. Best $47.81 I ever spent.',
       results: '4 leads in first week',
       verified: true,
     },
@@ -437,7 +437,7 @@ export default function Home() {
               className="bg-gradient-to-r from-gold-premium to-gold-dark text-navy-deep px-3 sm:px-5 py-2 rounded-lg font-black text-xs sm:text-sm hover:scale-105 active:scale-95 transition-transform shadow-lg"
             >
               <Gift className="w-3.5 h-3.5 inline mr-1" />
-              $47.82 - Spin To Win
+              $47.81 - Spin To Win
             </button>
           </div>
         </div>
@@ -1317,7 +1317,7 @@ export default function Home() {
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 sm:p-3 mb-2 sm:mb-3 border border-white/20">
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-2xl sm:text-3xl md:text-4xl font-black text-white">$47.82</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-black text-white">$47.81</span>
                   </div>
                   <p className="text-center text-[9px] sm:text-[10px] text-emerald-100 mt-0.5 sm:mt-1 font-semibold">one-time payment</p>
                 </div>
@@ -1472,7 +1472,7 @@ export default function Home() {
                     SAVE 97%
                   </div>
                 </div>
-                <span className="text-4xl sm:text-5xl font-black text-gold-premium">$47.82</span>
+                <span className="text-4xl sm:text-5xl font-black text-gold-premium">$47.81</span>
               </div>
             </div>
 
@@ -1727,7 +1727,7 @@ export default function Home() {
             {/* Price Display */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 mb-6 sm:mb-8 shadow-2xl">
               <p className="text-gray-600 text-sm sm:text-lg mb-1 sm:mb-2">Total Value: <span className="line-through">$2,085</span></p>
-              <p className="text-4xl sm:text-5xl md:text-6xl font-black text-navy-deep mb-1 sm:mb-2">$47.82</p>
+              <p className="text-4xl sm:text-5xl md:text-6xl font-black text-navy-deep mb-1 sm:mb-2">$47.81</p>
               <p className="text-emerald-600 font-bold text-sm sm:text-lg">98% OFF - BLACK FRIDAY ONLY</p>
               <p className="text-xs sm:text-sm text-gray-600 mt-2 sm:mt-3 flex items-center justify-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -1741,7 +1741,7 @@ export default function Home() {
               className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-navy-deep to-navy-rich text-white px-8 sm:px-10 py-4 sm:py-5 md:py-6 rounded-xl sm:rounded-2xl font-black text-base sm:text-xl md:text-2xl hover:scale-105 active:scale-95 transition-transform shadow-2xl border-2 sm:border-4 border-white w-full sm:w-auto mb-3 sm:mb-4"
             >
               <Gift className="w-5 h-5 sm:w-6 sm:h-6" />
-              YES! Give Me Everything For $47.82
+              YES! Give Me Everything For $47.81
               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 

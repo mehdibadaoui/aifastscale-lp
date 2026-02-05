@@ -20,15 +20,7 @@ const OWNER_EMAILS = [
 ]
 
 // VIP Guest accounts (manual special access)
-const VIP_GUESTS = [
-  {
-    id: 'whop-reviewer',
-    name: 'Whop Reviewer',
-    password: 'whop-review-2025',
-    welcomeMessage: 'Welcome! Thank you for reviewing CloneYourself for Dermatologists.',
-    badge: 'Reviewer',
-  },
-]
+const VIP_GUESTS: { id: string; name: string; password: string; welcomeMessage: string; badge: string }[] = []
 
 export async function POST(request: NextRequest) {
   try {

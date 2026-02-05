@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft, ShieldCheck, Mail, Phone, CheckCircle, XCircle } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Do Not Sell My Personal Information | AI FastScale',
@@ -212,6 +213,7 @@ export default function DoNotSellPage() {
             </div>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

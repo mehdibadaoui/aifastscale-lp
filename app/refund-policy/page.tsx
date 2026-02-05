@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Refund Policy | AI FastScale',
@@ -439,6 +440,7 @@ export default function RefundPolicy() {
             </div>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

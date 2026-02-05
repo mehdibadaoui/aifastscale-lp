@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -214,6 +215,7 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

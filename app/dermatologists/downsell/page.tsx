@@ -9,7 +9,19 @@ import { DERMATOLOGIST_BONUS_PRODUCTS } from '../../config/dermatologist-bonus-p
 const CHECKOUT_LINK = 'https://whop.com/checkout/plan_SlklTW5v9meJ6'
 
 export default function DermatologistDownsellPage() {
-  const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
+  // Use sessionStorage to persist timer - does NOT reset on page refresh
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('derm_downsell_timer_end')
+      if (stored) {
+        const remaining = Math.floor((parseInt(stored) - Date.now()) / 1000)
+        return remaining > 0 ? remaining : 0
+      }
+      const endTime = Date.now() + 10 * 60 * 1000
+      sessionStorage.setItem('derm_downsell_timer_end', endTime.toString())
+    }
+    return 10 * 60
+  })
 
   // Capture user info from URL params for thank-you page
   useEffect(() => {
@@ -63,8 +75,8 @@ export default function DermatologistDownsellPage() {
         {/* Header - Timer - Orange/Red for urgency */}
         <div className="bg-gradient-to-r from-orange-600 to-red-600 px-3 md:px-4 py-2 md:py-2.5">
           <div className="flex items-center justify-center gap-1.5 md:gap-2">
-            <AlertTriangle className="w-3 h-3 md:w-4 md:h-4 text-white animate-pulse" />
-            <span className="text-white/90 text-[10px] md:text-xs font-bold">WAIT! PRICE DROP - EXPIRES IN</span>
+            <Gift className="w-3 h-3 md:w-4 md:h-4 text-white" />
+            <span className="text-white/90 text-[10px] md:text-xs font-bold">OPTIONAL ADD-ON - SPECIAL PRICE</span>
             <span className="text-white text-sm md:text-lg font-black tabular-nums">{formatTime(timeLeft)}</span>
           </div>
         </div>
@@ -184,14 +196,22 @@ export default function DermatologistDownsellPage() {
             </button>
           </div>
 
-          {/* Trust badges */}
-          <div className="flex items-center justify-center gap-1.5 md:gap-2 text-white/30 text-[9px] md:text-[10px] mt-2 md:mt-3">
-            <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <span>SSL Encrypted</span>
-            <span>•</span>
-            <span>Instant Access</span>
+          {/* Disclosures */}
+          <div className="text-center mt-3 md:mt-4 space-y-2">
+            <div className="flex items-center justify-center gap-1.5 md:gap-2 text-white/30 text-[9px] md:text-[10px]">
+              <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span>SSL Encrypted</span>
+              <span>•</span>
+              <span>One-time payment</span>
+              <span>•</span>
+              <span>Instant Access</span>
+            </div>
+            <p className="text-white/25 text-[9px] md:text-[10px]">
+              This add-on is optional. 30-day money-back guarantee applies.{' '}
+              <a href="/refund-policy" className="underline hover:text-white/40">Refund Policy</a>
+            </p>
           </div>
 
         </div>

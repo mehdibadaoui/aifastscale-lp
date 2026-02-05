@@ -103,7 +103,7 @@ const trackViewContent = () => {
     (window as any).fbq('track', 'ViewContent', {
       content_name: 'CloneYourself for Lawyers',
       content_type: 'product',
-      value: 47.82,
+      value: 47.81,
       currency: 'USD',
     })
     sessionStorage.setItem('lawyer_vc_tracked', '1')
@@ -118,7 +118,7 @@ const trackInitiateCheckout = () => {
     (window as any).fbq('track', 'InitiateCheckout', {
       content_name: 'CloneYourself for Lawyers',
       content_type: 'product',
-      value: 47.82,
+      value: 47.81,
       currency: 'USD',
     })
   }
@@ -988,7 +988,7 @@ export default function LawyerLandingPage() {
                     {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m left
                   </span>
                 </div>
-                <span className="text-gray-500 text-[10px] sm:text-xs">Introductory price of $47.82 expires • Regular: $97</span>
+                <span className="text-gray-500 text-[10px] sm:text-xs">Introductory price of $47.81 expires • Regular: $97</span>
               </div>
             </div>
 
@@ -1009,7 +1009,7 @@ export default function LawyerLandingPage() {
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getLawyerTotalBonusValue() + 98}</span>
-                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.81</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">One-Time</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">Single investment • Perpetual license • 30-day risk elimination</p>
@@ -1730,7 +1730,7 @@ export default function LawyerLandingPage() {
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-amber-500/30">
                 <p className="text-amber-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-amber-400">$47.82</span>
+                  <span className="text-4xl sm:text-6xl font-black text-amber-400">$47.81</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">BEST VALUE</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -2213,7 +2213,7 @@ export default function LawyerLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
-                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
+                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
                   { value: 'Strong', label: 'Results*', sub: 'Individual' },
                   { value: '30-Day', label: 'Guarantee', sub: 'Risk-Free' },
                 ].map((stat, i) => (
@@ -2542,7 +2542,7 @@ export default function LawyerLandingPage() {
                     </th>
                     <th className="text-center py-4 px-3 sm:px-4 bg-amber-50">
                       <div className="text-amber-600 font-bold text-sm">CloneYourself</div>
-                      <div className="text-amber-400 text-xs">$47.82 one-time</div>
+                      <div className="text-amber-400 text-xs">$47.81 one-time</div>
                     </th>
                   </tr>
                 </thead>
@@ -2550,7 +2550,7 @@ export default function LawyerLandingPage() {
                   {[
                     { feature: 'Time to create 1 video', agency: '1-2 weeks', diy: '4-8 hours', us: '7 minutes', winner: true },
                     { feature: 'Monthly cost', agency: '$3,000+', diy: '$0 (your time)', us: '$0', winner: true },
-                    { feature: 'Upfront investment', agency: '$3,000+', diy: '$500+ software', us: '$47.82', winner: true },
+                    { feature: 'Upfront investment', agency: '$3,000+', diy: '$500+ software', us: '$47.81', winner: true },
                     { feature: 'Videos per month', agency: '4-8', diy: '2-4', us: 'Unlimited', winner: true },
                     { feature: 'Need to be on camera', agency: 'Yes', diy: 'Yes', us: 'No', winner: true },
                     { feature: 'Learning curve', agency: 'None', diy: 'Steep', us: 'None', winner: true },
@@ -2651,7 +2651,7 @@ export default function LawyerLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself System</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.82<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.81<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
                   <p className="text-white/70 text-xs sm:text-sm">Unlimited output, perpetual license</p>
                 </div>
               </div>
@@ -2661,7 +2661,7 @@ export default function LawyerLandingPage() {
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-amber-500/30 mb-6 card-hover ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
-              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Complete System Breakdown — Your $47.82 Investment:</h3>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Complete System Breakdown — Your $47.81 Investment:</h3>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 {/* Main Course */}
@@ -2709,7 +2709,7 @@ export default function LawyerLandingPage() {
                 </div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-amber-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-amber-400 font-black text-2xl sm:text-3xl">$47.82</span>
+                  <span className="text-amber-400 font-black text-2xl sm:text-3xl">$47.81</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
@@ -2726,7 +2726,7 @@ export default function LawyerLandingPage() {
               visibleSections.has('pricing') ? 'animate-bounce-in animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-amber-400">$47.82</span>
+                <span className="text-4xl sm:text-6xl font-black text-amber-400">$47.81</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">BEST VALUE</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
@@ -2985,7 +2985,7 @@ export default function LawyerLandingPage() {
       </section>
 
       {/* ================================================================
-          REASONS WHY - Why Is This Only $47.82? (Hormozi Principle)
+          REASONS WHY - Why Is This Only $47.81? (Hormozi Principle)
           ================================================================ */}
       <section
         id="reasons-why"
@@ -2996,7 +2996,7 @@ export default function LawyerLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
-                The Pricing Logic: Why <span className="text-gradient-premium">$47.82</span>?
+                The Pricing Logic: Why <span className="text-gradient-premium">$47.81</span>?
               </h2>
               <p className="text-gray-400 text-sm sm:text-base">A legitimate question that deserves a transparent answer...</p>
             </div>
@@ -3016,7 +3016,7 @@ export default function LawyerLandingPage() {
                 {
                   num: '3',
                   title: 'Volume Economics Favor Both Parties',
-                  desc: `At $47.82, I reach hundreds of attorneys. When practitioners implement and document their results, that creates real-world validation. Volume of documented outcomes matters more than premium pricing from fewer attorneys.`,
+                  desc: `At $47.81, I reach hundreds of attorneys. When practitioners implement and document their results, that creates real-world validation. Volume of documented outcomes matters more than premium pricing from fewer attorneys.`,
                 },
                 {
                   num: '4',
@@ -3193,7 +3193,7 @@ export default function LawyerLandingPage() {
                   <p>→ Month 2: Operating at capacity, reclaimed billable hours</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-amber-200">
-                  <p className="text-amber-700 font-bold text-xs">Investment: $47.82 one-time. Risk elimination: complete refund, no justification required</p>
+                  <p className="text-amber-700 font-bold text-xs">Investment: $47.81 one-time. Risk elimination: complete refund, no justification required</p>
                 </div>
               </div>
             </div>
@@ -3202,7 +3202,7 @@ export default function LawyerLandingPage() {
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
               <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Billable Hour Arbitrage:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Path B produces <span className="font-bold text-gray-900">additional client inquiries</span> → potential new revenue from a $47.82 investment.*</p>
+                <p>• If Path B produces <span className="font-bold text-gray-900">additional client inquiries</span> → potential new revenue from a $47.81 investment.*</p>
                 <p>• If you acquire <span className="font-bold text-gray-900">new clients</span> through improved content → potential significant practice growth.*</p>
                 <p>• If you evaluate for 30 days and request a refund → <span className="text-amber-600 font-bold">full refund returned</span>, zero net cost.</p>
               </div>
@@ -3212,7 +3212,7 @@ export default function LawyerLandingPage() {
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-amber-400">$47.82</span>
+                <span className="text-3xl sm:text-5xl font-black text-amber-400">$47.81</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -3276,7 +3276,7 @@ export default function LawyerLandingPage() {
                 <p className="text-white font-bold text-center text-sm sm:text-base mb-3">The Opportunity Cost Framework:</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-amber-400 font-black text-lg sm:text-xl">$47.82</p>
+                    <p className="text-amber-400 font-black text-lg sm:text-xl">$47.81</p>
                     <p className="text-gray-500 text-xs">One-time investment</p>
                   </div>
                   <div>
@@ -3889,7 +3889,7 @@ export default function LawyerLandingPage() {
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl font-black text-base shadow-2xl shadow-amber-500/30"
           >
             <Zap className="w-5 h-5" />
-            Get Your Instant Access — $47.82
+            Get Your Instant Access — $47.81
             <ArrowRight className="w-5 h-5" />
           </a>
           <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">

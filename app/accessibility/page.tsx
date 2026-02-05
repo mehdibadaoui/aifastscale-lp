@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle, Mail, Phone } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Accessibility Statement | AI FastScale',
@@ -201,6 +202,7 @@ export default function AccessibilityPage() {
             </div>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

@@ -67,17 +67,25 @@ export default function DermatologistLayout({
 
       {children}
 
-      {/* Meta Pixel - Deferred to AFTER page interactive - won't block anything */}
+      {/* Meta Pixel - Only loads after cookie consent for marketing */}
       <script
         defer
         dangerouslySetInnerHTML={{
           __html: `
-            window.addEventListener('load',function(){
-              setTimeout(function(){
-                !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init','1435824824556725');fbq('track','PageView');
-              },1000);
-            });
+            function loadDermMetaPixel(){
+              if(window.__dermPixelLoaded)return;
+              window.__dermPixelLoaded=true;
+              !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init','1435824824556725');fbq('track','PageView');
+            }
+            // Check existing consent
+            try{
+              var c=localStorage.getItem('cookie_consent');
+              if(c){var p=JSON.parse(c);if(p&&p.marketing===true){window.addEventListener('load',function(){setTimeout(loadDermMetaPixel,1000)})}}
+            }catch(e){}
+            // Listen for future consent
+            window.addEventListener('cookieConsentUpdated',function(e){if(e.detail&&e.detail.marketing===true){loadDermMetaPixel()}});
+            window.addEventListener('loadMetaPixel',function(){loadDermMetaPixel()});
           `,
         }}
       />

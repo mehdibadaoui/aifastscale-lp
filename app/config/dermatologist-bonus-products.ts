@@ -22,7 +22,7 @@ export interface DermatologistBonusProduct {
 }
 
 export const DERMATOLOGIST_BONUS_PRODUCTS: DermatologistBonusProduct[] = [
-  // ===== FIRST 5: FREE BONUSES (INCLUDED WITH MAIN OFFER) =====
+  // ===== FREE BONUSES (INCLUDED WITH MAIN OFFER) =====
 
   {
     id: 'website-templates',
@@ -67,28 +67,6 @@ export const DERMATOLOGIST_BONUS_PRODUCTS: DermatologistBonusProduct[] = [
     iconColor: '#ec4899', // Pink (Instagram vibes)
     image: '/images/dentist/social-templates.webp',
     category: 'marketing',
-  },
-  {
-    id: 'website-template',
-    title: 'High-Converting Dermatology Website Template',
-    subtitle: 'Turn Visitors Into Booked Appointments',
-    value: 397,
-    description: 'Your website is losing you patients right now. Visitors land, get confused, leave. This template is built from analyzing 200+ dermatology websites that actually convert. The result? One practice switched and booked 34 new patients in 30 days - from the SAME traffic they already had. No more "I\'ll call you back."',
-    icon: 'Globe',
-    iconColor: '#3b82f6', // Blue
-    image: '/images/dentist/website-template.webp',
-    category: 'marketing',
-  },
-  {
-    id: 'profit-simulator',
-    title: 'Dermatology Profit Simulator & Tracker',
-    subtitle: 'Find $50K Hidden in Your Practice',
-    value: 247,
-    description: 'Most dermatologists are leaking $3,000-$8,000 every month and don\'t even know it. This simulator shows you EXACTLY where the money is going - which procedures lose money, which provider produces most, which days are costing you. One dermatologist found $67,000 in annual profit hiding in plain sight. How much are YOU leaving on the table?',
-    icon: 'TrendingUp',
-    iconColor: '#22c55e', // Green
-    image: '/images/dentist/profit-simulator.webp',
-    category: 'operations',
   },
   {
     id: 'front-desk-scripts',
@@ -166,12 +144,12 @@ export const getDermatologistTotalBonusValue = (): number => {
   return DERMATOLOGIST_BONUS_PRODUCTS.reduce((total, product) => total + product.value, 0)
 }
 
-// Get first 7 (free bonuses)
+// Get first 5 (free bonuses)
 export const getDermatologistFreeBonuses = () => {
-  return DERMATOLOGIST_BONUS_PRODUCTS.slice(0, 7)
+  return DERMATOLOGIST_BONUS_PRODUCTS.slice(0, 5)
 }
 
 // Get last 5 (upsell bonuses)
 export const getDermatologistUpsellBonuses = () => {
-  return DERMATOLOGIST_BONUS_PRODUCTS.slice(7, 12)
+  return DERMATOLOGIST_BONUS_PRODUCTS.slice(5, 10)
 }

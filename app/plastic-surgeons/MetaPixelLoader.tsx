@@ -2,11 +2,32 @@
 
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
+import { getCookieConsent } from '../components/CookieConsent'
 
 const META_PIXEL_ID = '1526841625273321'
 const LOAD_DELAY_MS = 2000 // Defer loading by 2 seconds for better performance
 
 export default function MetaPixelLoader() {
+  // Check cookie consent before loading
+  const [hasConsent, setHasConsent] = useState(false)
+
+  useEffect(() => {
+    const consent = getCookieConsent()
+    if (consent?.marketing === true) {
+      setHasConsent(true)
+    }
+
+    // Listen for consent updates
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail
+      if (detail?.marketing === true) setHasConsent(true)
+    }
+    window.addEventListener('cookieConsentUpdated', handler)
+    return () => window.removeEventListener('cookieConsentUpdated', handler)
+  }, [])
+
+  if (!hasConsent) return null
+
   const [loaded, setLoaded] = useState(false)
   const [shouldLoad, setShouldLoad] = useState(false)
 

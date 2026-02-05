@@ -25,9 +25,9 @@ const plusJakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'CloneYourself Video System | AI Videos for Professionals | $47.82',
+  title: 'CloneYourself Video System | AI Videos for Professionals | $47.81',
   description:
-    'Create AI talking videos in minutes. Perfect for lawyers, dentists, psychologists, and professionals. One-time $47.82 payment, lifetime access.',
+    'Create AI talking videos in minutes. Perfect for lawyers, dentists, psychologists, and professionals. One-time $47.81 payment, lifetime access.',
   keywords:
     'AI video, professional marketing, talking AI videos, lead generation, lawyer marketing, dentist marketing, AI video course',
   authors: [{ name: 'Velon LLC' }],
@@ -191,7 +191,7 @@ export default function RootLayout({
                     '@type': 'Offer',
                     url: 'https://aifastscale.com',
                     priceCurrency: 'USD',
-                    price: '47.82',
+                    price: '47.81',
                     availability: 'https://schema.org/InStock',
                     priceValidUntil: '2026-12-31',
                     seller: {
@@ -199,13 +199,7 @@ export default function RootLayout({
                       name: 'Velon LLC',
                     },
                   },
-                  aggregateRating: {
-                    '@type': 'AggregateRating',
-                    ratingValue: '4.9',
-                    reviewCount: '500',
-                    bestRating: '5',
-                    worstRating: '1',
-                  },
+                  // aggregateRating removed - no verified review data to substantiate
                 },
                 {
                   '@type': 'FAQPage',
@@ -248,7 +242,7 @@ export default function RootLayout({
                       name: 'How many videos can I create?',
                       acceptedAnswer: {
                         '@type': 'Answer',
-                        text: 'Unlimited! After the one-time $47.82 investment, create as many AI talking videos as you want at no extra cost. No monthly subscriptions.',
+                        text: 'Unlimited! After the one-time $47.81 investment, create as many AI talking videos as you want at no extra cost. No monthly subscriptions.',
                       },
                     },
                   ],
@@ -299,7 +293,7 @@ export default function RootLayout({
                     latitude: 44.7972,
                     longitude: -106.9561,
                   },
-                  priceRange: '$47.82',
+                  priceRange: '$47.81',
                   openingHours: 'Mo-Su 00:00-23:59',
                 },
                 {
@@ -323,8 +317,7 @@ export default function RootLayout({
         className={`${inter.variable} ${plusJakarta.variable} min-h-screen bg-white text-black antialiased font-sans`}
       >
         {children}
-        {/* Cookie consent disabled - was bothering users */}
-        {/* <CookieConsent /> */}
+        <CookieConsent />
       </body>
     </html>
   )

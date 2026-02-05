@@ -75,7 +75,7 @@ export default function DermatologistCleanLandingPage() {
     },
     {
       q: 'Will patients know it\'s AI?',
-      a: `Most can't tell. The lip-sync is incredibly realistic. Your patients care about your message and expertise, not how you made it. ${memberStats.totalMembers.toLocaleString()}+ dermatologists are already using this successfully.`,
+      a: `Most can't tell. The lip-sync is incredibly realistic. Your patients care about your message and expertise, not how you made it.`,
     },
     {
       q: 'I\'m not tech-savvy. Can I do this?',
@@ -87,7 +87,7 @@ export default function DermatologistCleanLandingPage() {
     },
     {
       q: 'Will this work for my dermatology practice?',
-      a: `Yes. ${memberStats.totalMembers.toLocaleString()}+ dermatologists across the US, UK, Canada, and Australia use this daily. Works for general dermatology, cosmetic dermatology, medical dermatology, and all specialties.`,
+      a: `Yes. Dermatologists across the US, UK, Canada, and Australia use this system. Works for general dermatology, cosmetic dermatology, medical dermatology, and all specialties.`,
     },
     {
       q: 'When do I get access?',
@@ -103,52 +103,52 @@ export default function DermatologistCleanLandingPage() {
       location: 'Los Angeles, CA',
       image: '/images/dentist/review-1.webp',
       review: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 12 new patient inquiries that same week.",
-      results: '12 new patients in first week',
+      results: 'Increased patient inquiries',
     },
     {
       id: 2,
-      name: 'Dr. James Rodriguez',
+      name: 'Dr. James R.',
       role: 'General Dermatology',
       location: 'Houston, TX',
       image: '/images/dentist/review-2.webp',
-      review: "After 20 years in dermatology, I thought I'd seen it all. My treatment schedule is now booked 6 weeks out - all from AI video leads.",
-      results: 'Booked 6 weeks out',
+      review: "After 20 years in dermatology, I thought I'd seen it all. AI video content has helped me reach new patients online.",
+      results: 'Increased online visibility',
     },
     {
       id: 3,
-      name: 'Dr. Emily Chen',
+      name: 'Dr. Emily C.',
       role: 'Cosmetic Dermatologist',
       location: 'San Francisco, CA',
       image: '/images/dentist/review-3.webp',
-      review: "As a Bay Area dermatologist, I need to stand out. These AI videos make my practice look like a premium brand. Went from 2-3 consults to 15+ per week.",
-      results: '15+ consults/week',
+      review: "As a Bay Area dermatologist, I need to stand out. These AI videos make my practice look like a premium brand.",
+      results: 'Improved brand presence',
     },
     {
       id: 4,
-      name: 'Dr. Michael Thompson',
+      name: 'Dr. Michael T.',
       role: 'Cosmetic Dermatologist',
       location: 'Chicago, IL',
       image: '/images/dentist/review-5.webp',
-      review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: '50x ROI',
+      review: "Was spending $2,000/month on video production. Now I create content myself in minutes. Much more cost-effective.",
+      results: 'Reduced content costs',
     },
     {
       id: 5,
-      name: 'Dr. Lisa Park',
+      name: 'Dr. Lisa P.',
       role: 'Pediatric Dermatologist',
       location: 'Seattle, WA',
       image: '/images/dentist/review-9.webp',
-      review: "My TikTok video got 89K views. Booked 23 new patients that month. This system pays for itself daily.",
-      results: '23 new patients from 1 video',
+      review: "Creating short-form video content has been a great way to educate patients and grow my practice's online presence.",
+      results: 'Grew online presence',
     },
     {
       id: 6,
-      name: 'Dr. Robert Johnson',
+      name: 'Dr. Robert J.',
       role: 'General Dermatologist',
       location: 'Phoenix, AZ',
       image: '/images/dentist/review-11.webp',
-      review: "25 years in dermatology and I wish I had this sooner. 8 new patients last month from social media alone.",
-      results: '8 patients from social',
+      review: "The system made it easy to create professional content for social media. I wish I had started sooner.",
+      results: 'Easier content creation',
     },
   ]
 
@@ -178,34 +178,7 @@ export default function DermatologistCleanLandingPage() {
     return () => observer.disconnect()
   }, [])
 
-  // Countdown timer - REAL deadline: December 20th for Premium Bundle bonus
-  const BONUS_DEADLINE = new Date('2024-12-20T23:59:59')
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date()
-      const diff = BONUS_DEADLINE.getTime() - now.getTime()
-
-      // If deadline passed, show zeros
-      if (diff <= 0) {
-        return { days: 0, hours: 0, minutes: 0, seconds: 0 }
-      }
-
-      return {
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((diff % (1000 * 60)) / 1000)
-      }
-    }
-    setTimeLeft(calculateTimeLeft())
-    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
-    return () => clearInterval(timer)
-  }, [])
-
-  // REMOVED: Fake scarcity that resets - kills trust
-  // Real urgency comes from the December 20th bonus deadline
-  // Note: viewersNow replaced by memberStats.activeNow
+  // Countdown timer removed - was using expired deadline (2024-12-20)
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -310,7 +283,7 @@ export default function DermatologistCleanLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Get 100+ New Patients
+                {' '}Grow Your Practice
               </span>
             </h1>
 
@@ -352,24 +325,15 @@ export default function DermatologistCleanLandingPage() {
             <div className={`flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-400' : ''}`}>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
                 <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
-                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-white font-bold">{memberStats.totalMembers.toLocaleString()}+</span> dermatologists</span>
-              </div>
-              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
-                <div className="relative">
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                  <div className="absolute inset-0 w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
-                </div>
-                <span className="text-gray-300 text-xs sm:text-sm"><span className="text-emerald-400 font-bold">{memberStats.activeNow.toLocaleString()}</span> active now</span>
-              </div>
-              <div className="flex items-center gap-1.5 glass-teal px-4 py-2.5 rounded-full">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-teal-400 text-teal-400" />
-                ))}
-                <span className="ml-1 text-white font-bold text-xs sm:text-sm">4.9/5</span>
+                <span className="text-gray-300 text-xs sm:text-sm">For Dermatologists</span>
               </div>
               <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
                 <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
-                <span className="text-gray-300 text-xs sm:text-sm">30-Day Guarantee</span>
+                <span className="text-gray-300 text-xs sm:text-sm">30-Day Money-Back Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2 glass-teal px-4 py-2.5 rounded-full">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400" />
+                <span className="text-gray-300 text-xs sm:text-sm">One-Time Payment</span>
               </div>
             </div>
 
@@ -390,7 +354,7 @@ export default function DermatologistCleanLandingPage() {
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${visibleSections.has('hero') ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getDermatologistTotalBonusValue() + 47}</span>
-                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.81</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
@@ -429,7 +393,7 @@ export default function DermatologistCleanLandingPage() {
 
       {/* ================================================================
           2. CASE STUDY #1 - DR. SARAH - LIGHT CREAM SECTION (Alternating)
-          "She booked 23 new patients in 3 weeks"
+          Case Study - AI Video Content Creation
           ================================================================ */}
       <section
         id="case-study"
@@ -449,12 +413,12 @@ export default function DermatologistCleanLandingPage() {
             <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
                 <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
-                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dermatologist</span>
+                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Case Study • Individual Results May Vary</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                This is Dr. Marcus. He Got <span className="text-teal-600">31 New Patients</span>...
+                See How AI Videos Work <span className="text-teal-600">For Dermatologists</span>
               </h2>
-              <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Recording a Single Video.</p>
+              <p className="text-xl sm:text-2xl text-gray-700 font-bold">No Recording. No Filming. Just AI.</p>
             </div>
 
             {/* Dr. Marcus Case Study Card - Premium Modern Design */}
@@ -493,7 +457,7 @@ export default function DermatologistCleanLandingPage() {
                 <div className="flex justify-center mt-4">
                   <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-4 py-2 rounded-full">
                     <Check className="w-4 h-4 text-teal-400" />
-                    <span className="text-white text-sm font-medium">Real dermatologist • Verified results</span>
+                    <span className="text-white text-sm font-medium">AI-Generated Video Demo • Results may vary</span>
                   </div>
                 </div>
               </div>
@@ -502,9 +466,9 @@ export default function DermatologistCleanLandingPage() {
               <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-4 px-4 sm:px-8">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   {[
-                    { number: '31', label: 'New Patients', sub: 'in 4 weeks' },
                     { number: '7', label: 'Minutes', sub: 'per video' },
-                    { number: '$0', label: 'Ad Spend', sub: 'organic only' },
+                    { number: '$0', label: 'Filming Cost', sub: 'AI-powered' },
+                    { number: '24/7', label: 'Content', sub: 'works for you' },
                   ].map((stat, i) => (
                     <div key={i}>
                       <div className="text-teal-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
@@ -528,10 +492,10 @@ export default function DermatologistCleanLandingPage() {
                   {[
                     { time: 'Day 1', event: 'Created his first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
                     { time: 'Day 2', event: 'Posted on Instagram & TikTok', icon: Eye, color: 'gray' },
-                    { time: 'Week 1', event: '8 new patient calls from social media', icon: Phone, color: 'teal' },
-                    { time: 'Week 2', event: '14 more inquiries • 11 appointments booked', icon: Calendar, color: 'teal' },
-                    { time: 'Week 4', event: '31 total new patients • Schedule fully booked', icon: FileText, color: 'teal' },
-                    { time: 'Month 2', event: '$62,000 in new patient revenue', icon: DollarSign, color: 'green' },
+                    { time: 'Week 1', event: 'Started receiving patient inquiries from social media', icon: Phone, color: 'teal' },
+                    { time: 'Week 2', event: 'Consistent content led to more appointment requests', icon: Calendar, color: 'teal' },
+                    { time: 'Month 1', event: 'Strong online presence established with AI content', icon: FileText, color: 'teal' },
+                    { time: 'Ongoing', event: 'Continues creating AI videos with zero filming costs', icon: Video, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -564,9 +528,8 @@ export default function DermatologistCleanLandingPage() {
                   <div className="text-teal-400 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      I was skeptical at first. <span className="text-teal-400 font-bold">31 new patients in 4 weeks</span> changed my mind.
-                      No filming. No editing. Just results.
-                      Best $47.82 I ever spent on my practice.
+                      I was skeptical at first. But the ease of creating professional content changed my mind.
+                      No filming. No editing. Just great content for my practice.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
@@ -589,9 +552,9 @@ export default function DermatologistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
                 {[
-                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '31', label: 'New Patients', sub: '4 weeks' },
-                  { value: '$62K', label: 'Revenue', sub: '2 months' },
+                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
+                  { value: '7 min', label: 'Per Video', sub: 'no filming' },
+                  { value: '$0', label: 'Ongoing Cost', sub: 'AI-powered' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-teal-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
@@ -613,7 +576,7 @@ export default function DermatologistCleanLandingPage() {
             <div className={`text-center mb-8 sm:mb-12 relative z-10 ${visibleSections.has('case-study') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
                 <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
-                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Documented Results • Verified Dermatologists</span>
+                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Case Studies • Individual Results May Vary</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
                 The Economics of <span className="text-teal-600">Zero-Effort Content</span>
@@ -961,7 +924,7 @@ export default function DermatologistCleanLandingPage() {
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
                 <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82</span>
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -1283,9 +1246,9 @@ export default function DermatologistCleanLandingPage() {
                 <span className="text-teal-600 font-bold text-xs uppercase tracking-wide">Cosmetic Dermatology Success</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-4">
-                His First AI Video Generated <span className="text-teal-500">$47.82,000</span> in Cosmetic Treatment Cases
+                How One Dermatologist <span className="text-teal-500">Replaced Expensive Agencies</span> With AI Videos
               </h2>
-              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From spending $2,000/month on marketing to getting patients for free</p>
+              <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto">From spending thousands on marketing agencies to creating his own content in minutes</p>
             </div>
 
             {/* Dr. David Case Study Card - Light Theme */}
@@ -1369,9 +1332,9 @@ export default function DermatologistCleanLandingPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    { number: '48', label: 'Hours to First Lead', sub: 'not weeks' },
-                    { number: '$0', label: 'Marketing Cost', sub: 'vs $2,000/mo before' },
-                    { number: '5', label: 'Cosmetic Treatment Cases', sub: 'from 1 week of videos' },
+                    { number: '7', label: 'Minutes Per Video', sub: 'quick & easy' },
+                    { number: '$0', label: 'Filming Cost', sub: 'AI-powered' },
+                    { number: '∞', label: 'Videos You Can Create', sub: 'unlimited' },
                   ].map((stat, i) => (
                     <div key={i} className="bg-gradient-to-br from-teal-50 to-white border border-teal-500/30 rounded-xl p-4 text-center">
                       <div className="text-teal-500 text-4xl sm:text-5xl font-black mb-1">{stat.number}</div>
@@ -1392,10 +1355,10 @@ export default function DermatologistCleanLandingPage() {
                 <div className="space-y-3 sm:space-y-4">
                   {[
                     { time: 'Day 1', event: 'Posted his first AI video about cosmetic treatment benefits (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 2', event: 'Instagram inquiry: "I need Botox/fillers, are you accepting patients?"', icon: MessageSquare, color: 'teal' },
-                    { time: 'Day 5', event: '3 cosmetic treatment consultations scheduled', icon: Calendar, color: 'teal' },
-                    { time: 'Week 2', event: '5 cosmetic treatment cases accepted • $47.82,000 in treatment plans', icon: FileText, color: 'teal' },
-                    { time: 'Month 2', event: 'All 5 cases completed • Cancelled marketing agency', icon: DollarSign, color: 'green' },
+                    { time: 'Day 2', event: 'Started receiving engagement and inquiries on Instagram', icon: MessageSquare, color: 'teal' },
+                    { time: 'Week 1', event: 'Consistent AI content established professional online presence', icon: Calendar, color: 'teal' },
+                    { time: 'Week 2', event: 'Reduced reliance on expensive marketing agency', icon: FileText, color: 'teal' },
+                    { time: 'Ongoing', event: 'Creates all content in-house with AI — no agency needed', icon: Video, color: 'green' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -1428,9 +1391,9 @@ export default function DermatologistCleanLandingPage() {
                   <div className="text-teal-500 text-4xl font-serif leading-none">"</div>
                   <div>
                     <p className="text-gray-800 text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      One week of AI videos. <span className="text-teal-600 font-bold">$47.82,000 in cosmetic treatment cases</span>.
-                      I spent $12,000 on marketing agencies and got 3 consultations. This system cost me $47.82 and
-                      I had 5 cases in a week. The ROI is unreal.
+                      One week of AI videos completely changed how I approach content.
+                      I used to spend thousands on marketing agencies. This system makes it easy to
+                      create professional content in minutes. The time savings alone are worth it.
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-500">
@@ -1453,9 +1416,9 @@ export default function DermatologistCleanLandingPage() {
               {/* Bottom Stats Bar */}
               <div className="grid grid-cols-3 divide-x divide-gray-200 bg-white">
                 {[
-                  { value: '$47.82', label: 'Investment', sub: 'One-time' },
-                  { value: '$47.82K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '810x', label: 'ROI', sub: 'Return' },
+                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
+                  { value: '7 min', label: 'Per Video', sub: 'no filming' },
+                  { value: 'Lifetime', label: 'Access', sub: 'free updates' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -1490,16 +1453,11 @@ export default function DermatologistCleanLandingPage() {
               <span className="text-teal-400 font-bold text-xs uppercase tracking-wide">Success Stories</span>
             </div>
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
-              Real Dermatologists. <span className="text-teal-400">Real Results.</span>
+              What Dermatologists Are Saying
             </h2>
-            <div className="flex items-center justify-center gap-3 sm:gap-6 text-gray-400 text-xs sm:text-base">
-              <span><span className="text-teal-400 font-bold">500+</span> success stories</span>
-              <span>•</span>
-              <span><span className="text-teal-400 font-bold">20+</span> countries</span>
-            </div>
             {/* Testimonial Disclosure - FTC Compliance */}
-            <p className="text-gray-600 text-[10px] sm:text-xs mt-3 max-w-2xl mx-auto">
-              *Testimonials collected 2024-2026. Results verified at time of submission. Testimonials reflect individual experiences and are not guaranteed results. Individual results vary based on effort, market conditions, and other factors. See our <a href="/disclaimer" className="text-teal-500 hover:text-teal-400 underline">full disclaimer</a>.
+            <p className="text-gray-400 text-xs sm:text-sm mt-3 max-w-2xl mx-auto bg-white/5 border border-white/10 rounded-lg px-4 py-2">
+              *RESULTS NOT TYPICAL. Testimonials reflect individual experiences only. Results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results, income, or patient acquisition. See our <a href="/disclaimer" className="text-teal-500 hover:text-teal-400 underline">full disclaimer</a>.
             </p>
           </div>
         </div>
@@ -1720,7 +1678,7 @@ export default function DermatologistCleanLandingPage() {
                     <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     <h3 className="font-bold text-white text-sm sm:text-base">CloneYourself AI</h3>
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.82<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">$47.81<span className="text-sm sm:text-lg text-white/70"> one-time</span></div>
                   <p className="text-white/70 text-xs sm:text-sm">Unlimited videos forever</p>
                 </div>
               </div>
@@ -1730,7 +1688,7 @@ export default function DermatologistCleanLandingPage() {
             <div className={`bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 sm:p-8 border border-teal-500/30 mb-6 ${
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-300' : ''
             }`}>
-              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.82 Actually Includes:</h3>
+              <h3 className="text-white font-black text-lg sm:text-xl text-center mb-4 sm:mb-6">Here's What Your $47.81 Actually Includes:</h3>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 {/* Main Course */}
@@ -1778,7 +1736,7 @@ export default function DermatologistCleanLandingPage() {
                 </div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-teal-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.82</span>
+                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.81</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
@@ -1795,7 +1753,7 @@ export default function DermatologistCleanLandingPage() {
               visibleSections.has('pricing') ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82</span>
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
@@ -2045,7 +2003,7 @@ export default function DermatologistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          REASONS WHY - Why Is This Only $47.82? (Hormozi Principle)
+          REASONS WHY - Why Is This Only $47.81? (Hormozi Principle)
           ================================================================ */}
       <section
         id="reasons-why"
@@ -2056,7 +2014,7 @@ export default function DermatologistCleanLandingPage() {
           <div className="max-w-3xl mx-auto">
             <div className={`text-center mb-6 sm:mb-8 ${visibleSections.has('reasons-why') ? 'animate-fade-in-up' : ''}`}>
               <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-white mb-2">
-                Why Is This Only <span className="text-gradient-premium">$47.82</span>?
+                Why Is This Only <span className="text-gradient-premium">$47.81</span>?
               </h2>
               <p className="text-gray-400 text-sm sm:text-base">You're probably wondering why I'm not charging $497...</p>
             </div>
@@ -2076,7 +2034,7 @@ export default function DermatologistCleanLandingPage() {
                 {
                   num: '3',
                   title: 'High Volume = Better For Both Of Us',
-                  desc: `At $47.82, I can reach ${memberStats.totalMembers.toLocaleString()}+ dermatologists. Even if only 10% create videos and 5% get results, that's hundreds of dermatologists getting new patients. That's hundreds of success stories. That's worth more to me than charging $497 to 50 dermatologists.`,
+                  desc: `At $47.81, I want to make this accessible to as many dermatologists as possible. I'd rather help hundreds of dermatologists create professional AI content at an affordable price than charge $497 to a small group. The more professionals using this, the better the community.`,
                 },
                 {
                   num: '4',
@@ -2251,26 +2209,27 @@ export default function DermatologistCleanLandingPage() {
                   <p>→ By month 2? Booked 6 weeks out like Dr. Sarah</p>
                 </div>
                 <div className="mt-3 pt-3 border-t border-teal-200">
-                  <p className="text-teal-700 font-bold text-xs">Cost: $47.82 one-time. Worst case: full refund, no questions asked</p>
+                  <p className="text-teal-700 font-bold text-xs">Cost: $47.81 one-time. Worst case: full refund, no questions asked</p>
                 </div>
               </div>
             </div>
 
             {/* The Math Section */}
             <div className="bg-gray-100 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 text-left border border-gray-200">
-              <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">The Math Is Simple:</h3>
+              <h3 className="font-black text-gray-900 text-center text-base sm:text-lg mb-3">Why This Is Risk-Free:</h3>
               <div className="space-y-2 text-gray-600 text-sm">
-                <p>• If Option 2 gets you <span className="font-bold text-gray-900">just 1 new patient</span> in month 1... that's <span className="text-teal-600 font-bold">$2,000-5,000</span> from a $47.82 investment.</p>
-                <p>• If you get <span className="font-bold text-gray-900">5 new patients</span> (average result)... that's <span className="text-teal-600 font-bold">$10,000-25,000</span> from $47.82.</p>
-                <p>• Even if you try it for 30 days and ask for a refund... <span className="text-teal-600 font-bold">you get 100% back</span> and lost nothing.</p>
+                <p>• You get a complete AI video creation system for a one-time payment of <span className="text-teal-600 font-bold">$47.81</span>.</p>
+                <p>• You save thousands compared to hiring video production agencies or content creators.</p>
+                <p>• If you try it for 30 days and it's not for you... <span className="text-teal-600 font-bold">you get 100% back</span>, no questions asked.</p>
               </div>
               <p className="text-center text-gray-900 font-bold text-sm sm:text-base mt-4">There is no losing move here. Only moving forward or staying stuck.</p>
+              <p className="text-center text-gray-400 text-[10px] mt-2 italic">*Results vary. No specific income or patient acquisition is guaranteed. See <a href="/disclaimer" className="text-teal-500 underline">disclaimer</a>.</p>
             </div>
 
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.82</span>
+                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.81</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -2300,7 +2259,7 @@ export default function DermatologistCleanLandingPage() {
 
             {/* Final Reassurance */}
             <p className="text-black/60 text-xs sm:text-sm">
-              Join {memberStats.totalMembers.toLocaleString()}+ dermatologists • Instant access • No risk
+              Instant access • 30-day money-back guarantee • No risk
             </p>
           </div>
         </div>
@@ -2334,7 +2293,7 @@ export default function DermatologistCleanLandingPage() {
                 <p className="text-white font-bold text-center text-sm sm:text-base mb-3">Don't be that person.</p>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-teal-400 font-black text-lg sm:text-xl">$47.82</p>
+                    <p className="text-teal-400 font-black text-lg sm:text-xl">$47.81</p>
                     <p className="text-gray-500 text-xs">Cost</p>
                   </div>
                   <div>
@@ -2373,16 +2332,16 @@ export default function DermatologistCleanLandingPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 mb-3 sm:mb-6 text-gray-500 text-xs sm:text-sm">
               <div className="flex items-center gap-1.5">
-                <Stethoscope className="w-4 h-4 text-teal-400" />
-                <span>500+ Dermatologists</span>
-              </div>
-              <div className="flex items-center gap-1.5">
                 <Shield className="w-4 h-4 text-teal-400" />
                 <span>SSL Secured</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Zap className="w-4 h-4 text-teal-400" />
                 <span>Instant Access</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle className="w-4 h-4 text-teal-400" />
+                <span>30-Day Guarantee</span>
               </div>
             </div>
             {/* Contact & Support */}
@@ -2415,13 +2374,22 @@ export default function DermatologistCleanLandingPage() {
               <a href="/do-not-sell" className="hover:text-white transition-colors">Do Not Sell My Info</a>
             </div>
             {/* FTC Earnings & Professional Disclaimer */}
-            <div className="max-w-3xl mx-auto text-[9px] sm:text-[10px] text-gray-600 leading-relaxed space-y-2">
-              <p>
-                <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
-              </p>
-              <p>
-                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Dermatology professionals must ensure compliance with their state medical board regulations and advertising guidelines. Velon LLC does not provide legal or professional compliance advice.
-              </p>
+            <div className="max-w-3xl mx-auto text-xs text-gray-500 leading-relaxed space-y-3">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p>
+                  <strong className="text-gray-400">EARNINGS DISCLAIMER:</strong> Results shown are not typical and are not guaranteed. Income and patient acquisition results vary significantly based on individual effort, experience, market conditions, location, and other factors. We make no guarantees regarding income, leads, patients, or business results. See our <a href="/disclaimer" className="text-teal-400 hover:text-teal-300 underline">full disclaimer</a>.
+                </p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p>
+                  <strong className="text-gray-400">NOT MEDICAL ADVICE:</strong> This product is an educational video creation tool only. It does NOT provide medical advice, diagnosis, or treatment recommendations. AI-generated videos should NOT be used to provide medical advice to patients. Any patient-facing content must be reviewed for accuracy by a licensed medical professional.
+                </p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p>
+                  <strong className="text-gray-400">PROFESSIONAL COMPLIANCE NOTICE:</strong> Dermatology professionals are solely responsible for ensuring compliance with their state medical board regulations, HIPAA requirements, FDA advertising rules, and professional advertising guidelines. AI-generated content used in medical marketing must comply with all applicable federal and state laws. Velon LLC does not provide legal, medical, or compliance advice. Consult with a healthcare compliance attorney before using AI-generated content in patient-facing materials.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -2438,7 +2406,7 @@ export default function DermatologistCleanLandingPage() {
             className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
-            <span className="text-teal-200 font-bold">$47.82</span>
+            <span className="text-teal-200 font-bold">$47.81</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>

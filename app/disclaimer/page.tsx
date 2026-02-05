@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Disclaimer | AI FastScale',
@@ -398,6 +399,7 @@ export default function Disclaimer() {
             </div>
           </div>
         </div>
+        <ComplianceFooter />
       </div>
     </div>
   )

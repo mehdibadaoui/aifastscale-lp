@@ -156,11 +156,11 @@ function ThankYouContent() {
             Payment Successful
           </p>
 
-          {/* Social Proof */}
+          {/* Welcome message */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
             <Users className="w-4 h-4 text-rose-400" />
             <span className="text-white text-sm font-medium">
-              You joined <span className="text-rose-400 font-bold">21,000+</span> dermatologists
+              Welcome to CloneYourself for Dermatologists
             </span>
           </div>
         </div>

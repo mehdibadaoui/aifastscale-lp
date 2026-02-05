@@ -48,11 +48,11 @@ export default function FAQPage() {
       questions: [
         {
           q: 'How much does the CloneYourself Video System cost?',
-          a: '$47.82 USD one-time payment for lifetime access. This is NOT a subscription—you pay once and get access forever. No monthly fees, no hidden costs, no recurring charges.',
+          a: '$47.81 USD one-time payment for lifetime access. This is NOT a subscription—you pay once and get access forever. No monthly fees, no hidden costs, no recurring charges.',
         },
         {
           q: 'Is this a subscription?',
-          a: 'NO. This is a ONE-TIME payment of $47.82. You pay once and get lifetime access to all course materials and future updates. There are NO recurring charges or monthly fees.',
+          a: 'NO. This is a ONE-TIME payment of $47.81. You pay once and get lifetime access to all course materials and future updates. There are NO recurring charges or monthly fees.',
         },
         {
           q: 'What payment methods do you accept?',
@@ -64,7 +64,7 @@ export default function FAQPage() {
         },
         {
           q: 'Are there any additional costs?',
-          a: 'The course teaches you to use third-party AI tools (like Google Flow, CapCut, etc.). These tools may have their own pricing or free tiers. The course itself is a one-time $47.82 payment with no additional fees from us.',
+          a: 'The course teaches you to use third-party AI tools (like Google Flow, CapCut, etc.). These tools may have their own pricing or free tiers. The course itself is a one-time $47.81 payment with no additional fees from us.',
         },
       ],
     },
