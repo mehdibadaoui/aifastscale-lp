@@ -178,7 +178,7 @@ export default function PsychologistLandingPage() {
       role: 'Trauma Recovery Specialist',
       location: 'Chicago, IL',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: 'Strong ROI',
+      results: '50x ROI',
     },
     {
       id: 5,
@@ -461,7 +461,7 @@ export default function PsychologistLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Attract More New Clients
+                {' '}Get 100+ New Clients
               </span>
             </h1>
 

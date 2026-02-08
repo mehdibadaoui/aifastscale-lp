@@ -174,8 +174,8 @@ export default function Home() {
       location: 'London, UK',
       image: '/images/Reviews/Review REA 5.jpeg',
       rating: 5,
-      review: 'I was spending £800/month on video production. Now I create better content myself in minutes. ROI was immediate. Already recovered my investment many times over. This is the future of real estate marketing.',
-      results: 'Strong ROI',
+      review: 'I was spending £800/month on video production. Now I create better content myself in minutes. ROI was immediate. Already recovered my investment 50x over. This is the future of real estate marketing.',
+      results: '50x ROI',
       verified: true,
     },
     {

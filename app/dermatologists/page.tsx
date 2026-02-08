@@ -130,7 +130,7 @@ export default function DermatologistCleanLandingPage() {
       location: 'Chicago, IL',
       image: '/images/dentist/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: 'Strong ROI',
+      results: '50x ROI',
     },
     {
       id: 5,
@@ -326,7 +326,7 @@ export default function DermatologistCleanLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Attract More New Patients
+                {' '}Get 100+ New Patients
               </span>
             </h1>
 
@@ -453,404 +453,7 @@ export default function DermatologistCleanLandingPage() {
       </section>
 
       {/* ================================================================
-          2. CASE STUDY #1 - DR. SARAH - LIGHT CREAM SECTION (Alternating)
-          "She booked 23 new patients in 3 weeks"
-          ================================================================ */}
-      <section
-        id="case-study"
-        data-animate
-        className="py-10 sm:py-24 bg-gradient-to-br from-stone-100 via-white to-stone-50 relative overflow-hidden"
-      >
-        {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0)',
-            backgroundSize: '32px 32px'
-          }} />
-        </div>
-        <div className="w-full px-3 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            {/* Section Header - Attention Grabbing */}
-            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${(!isMobile && visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
-                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
-                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dermatologist</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                This is Dr. Marcus. He Got <span className="text-teal-600">31 New Patients</span>...
-              </h2>
-              <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Recording a Single Video.</p>
-            </div>
-
-            {/* Dr. Marcus Case Study Card - Premium Modern Design */}
-            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(!isMobile && visibleSections.has('case-study')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
-
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
-
-              {/* Hero Section - Big Visual */}
-              <div className="relative p-4 sm:p-8">
-                {/* The Hook Text */}
-                <div className="text-center mb-6">
-                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see him talking on camera...</p>
-                  <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
-                    He Never Filmed Anything.
-                  </p>
-                  <p className="text-teal-400 text-base sm:text-lg font-medium">
-                    He just uploaded his photo, and the AI created a ready-to-post video for him.
-                  </p>
-                </div>
-
-                {/* Video - Autoplay, Loop, Muted - Mobile-optimized (183KB) - preload="none" for faster LCP */}
-                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black aspect-square max-w-md mx-auto">
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="none"
-                    className="w-full h-full object-cover"
-                  >
-                    <source src="/videos/dentist-case-study-mobile.webm" type="video/webm" />
-                    <source src="/videos/dentist-case-study-mobile.mp4" type="video/mp4" />
-                  </video>
-                </div>
-
-                {/* Verified Badge */}
-                <div className="flex justify-center mt-4">
-                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-4 py-2 rounded-full">
-                    <Check className="w-4 h-4 text-teal-400" />
-                    <span className="text-white text-sm font-medium">Real dermatologist • Verified results</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Results Strip */}
-              <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-4 px-4 sm:px-8">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  {[
-                    { number: '31', label: 'New Patients', sub: 'in 4 weeks' },
-                    { number: '7', label: 'Minutes', sub: 'per video' },
-                    { number: '$0', label: 'Ad Spend', sub: 'organic only' },
-                  ].map((stat, i) => (
-                    <div key={i}>
-                      <div className="text-teal-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
-                      <div className="text-white text-xs sm:text-sm font-bold">{stat.label}</div>
-                      <div className="text-gray-500 text-[10px] sm:text-xs">{stat.sub}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Timeline / Results */}
-              <div className="p-4 sm:p-8 border-t border-white/10">
-                <div className="text-center mb-4 sm:mb-6">
-                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full">
-                    <span className="text-teal-400 text-xs font-bold">WHAT HAPPENED NEXT</span>
-                  </div>
-                </div>
-
-                {/* Timeline - improved mobile layout */}
-                <div className="space-y-3 sm:space-y-4">
-                  {[
-                    { time: 'Day 1', event: 'Created his first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
-                    { time: 'Day 2', event: 'Posted on Instagram & TikTok', icon: Eye, color: 'gray' },
-                    { time: 'Week 1', event: '8 new patient calls from social media', icon: Phone, color: 'teal' },
-                    { time: 'Week 2', event: '14 more inquiries • 11 appointments booked', icon: Calendar, color: 'teal' },
-                    { time: 'Week 4', event: '31 total new patients • Schedule fully booked', icon: FileText, color: 'teal' },
-                    { time: 'Month 2', event: '$62,000 in new patient revenue', icon: DollarSign, color: 'green' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        item.color === 'green' ? 'bg-green-500/20 border border-green-500/40' :
-                        item.color === 'teal' ? 'bg-teal-500/20 border border-teal-500/40' :
-                        'bg-white/5 border border-white/20'
-                      }`}>
-                        <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                          item.color === 'green' ? 'text-green-400' :
-                          item.color === 'teal' ? 'text-teal-400' :
-                          'text-gray-400'
-                        }`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
-                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
-                          item.color === 'teal' ? 'bg-teal-500/20 text-teal-400' :
-                          'bg-white/10 text-gray-400'
-                        }`}>{item.time}</span>
-                        <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Final Quote */}
-              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
-                <div className="flex items-start gap-4">
-                  <div className="text-teal-400 text-4xl font-serif leading-none">"</div>
-                  <div>
-                    <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
-                      I was skeptical at first. <span className="text-teal-400 font-bold">31 new patients in 4 weeks</span> changed my mind.
-                      No filming. No editing. Just results.
-                      Best $47.81 I ever spent on my practice.
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
-                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" loading="lazy" />
-                      </div>
-                      <div>
-                        <p className="text-white font-bold">Dr. Marcus Bennett</p>
-                        <p className="text-gray-400 text-sm">General Dermatologist, Austin TX</p>
-                      </div>
-                      <div className="ml-auto flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-teal-400 text-teal-400" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Stats Bar */}
-              <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
-                {[
-                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
-                  { value: '31', label: 'New Patients', sub: '4 weeks' },
-                  { value: '$62K', label: 'Revenue', sub: '2 months' },
-                ].map((stat, i) => (
-                  <div key={i} className="p-4 sm:p-6 text-center">
-                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-teal-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
-                    <div className="text-gray-400 text-xs font-semibold">{stat.label}</div>
-                    <div className="text-gray-600 text-[10px]">{stat.sub}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* FTC Disclaimer after Case Study */}
-          <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-gray-300 bg-gray-100/50">
-            *RESULTS NOT TYPICAL: This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-teal-600 hover:text-teal-700 underline">See full disclaimer</a>.
-          </p>
-
-          {/* ========== TWO MORE CASE STUDIES - SIDE BY SIDE ========== */}
-          <div className="max-w-6xl mx-auto mt-10 sm:mt-16">
-            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${(!isMobile && visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
-              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
-                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
-                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Documented Results • Verified Dermatologists</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
-                The Economics of <span className="text-teal-600">Zero-Effort Content</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-gray-600">Two dermatologists. Zero hours of filming. Measurable patient increases.</p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-
-              {/* CASE STUDY 2: Dr. Sarah Chen - Cosmetic Dermatology */}
-              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(!isMobile && visibleSections.has('case-study')) ? 'animate-scale-in animation-delay-200' : ''}`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
-
-                <div className="relative p-4 sm:p-6">
-                  <div className="text-center mb-4">
-                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This is him presenting. Here&apos;s the critical detail:</p>
-                    <p className="text-white text-lg sm:text-xl font-black leading-tight">
-                      Zero Camera Time. Zero Studio Costs.
-                    </p>
-                  </div>
-
-                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
-                    <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
-                      <source src="/videos/lawyer/case-study-1.webm" type="video/webm" />
-                      <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
-                    </video>
-                    <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
-                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                      <span className="text-white text-[10px] font-medium">AI Generated</span>
-                    </div>
-                  </div>
-
-                  <p className="text-teal-400 text-xs sm:text-sm font-medium text-center mt-3">
-                    Input: One headshot. Output: 12 Botox/filler consultations within the first week.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-3 px-4">
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <div className="text-teal-400 text-xl sm:text-2xl font-black">22+</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">New Patients*</div>
-                      <div className="text-gray-500 text-[9px]">first 5 weeks</div>
-                    </div>
-                    <div>
-                      <div className="text-teal-400 text-xl sm:text-2xl font-black">7</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Minutes</div>
-                      <div className="text-gray-500 text-[9px]">production time</div>
-                    </div>
-                    <div>
-                      <div className="text-teal-400 text-xl sm:text-2xl font-black">$0</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Paid Media</div>
-                      <div className="text-gray-500 text-[9px]">organic only</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 sm:p-5 border-t border-white/10">
-                  <div className="text-center mb-3">
-                    <span className="text-teal-400 text-[10px] sm:text-xs font-bold bg-teal-500/10 border border-teal-500/30 px-2 py-1 rounded-full">DOCUMENTED PROGRESSION</span>
-                  </div>
-                  <div className="space-y-2">
-                    {[
-                      { time: 'Day 1', event: 'Generated AI video: "What Botox/fillers actually cost in 2026"', color: 'gray' },
-                      { time: 'Day 3', event: 'Distributed via Instagram Reels and TikTok', color: 'gray' },
-                      { time: 'Week 1', event: 'Strong organic reach • 12 Botox/filler consultation requests*', color: 'gold' },
-                      { time: 'Week 3', event: 'Multiple cosmetic dermatology cases booked • Revenue growing*', color: 'gold' },
-                      { time: 'Week 5', event: 'Significant cosmetic revenue • Booked 3 weeks out*', color: 'green' },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
-                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
-                          item.color === 'gold' ? 'bg-teal-500/20 text-teal-400' :
-                          'bg-white/10 text-gray-400'
-                        }`}>{item.time}</span>
-                        <p className={`text-[10px] sm:text-xs ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="p-4 sm:p-5 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
-                  <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
-                    &quot;I spent thousands on Google Ads with mediocre results. One AI video about Botox/fillers brought in <span className="text-teal-400 font-bold">more consultations in a week than ads did in a month</span>. Patients come in already wanting the procedure.*&quot;
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">SC</span>
-                    </div>
-                    <div>
-                      <p className="text-white font-bold text-sm">Dr. Sarah Chen, MD</p>
-                      <p className="text-gray-400 text-xs">Cosmetic Dermatology • San Diego, CA</p>
-                    </div>
-                    <div className="ml-auto flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-teal-400 text-teal-400" />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CASE STUDY 3: Dr. Ryan Mitchell - General Dermatology */}
-              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(!isMobile && visibleSections.has('case-study')) ? 'animate-scale-in animation-delay-400' : ''}`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
-
-                <div className="relative p-4 sm:p-6">
-                  <div className="text-center mb-4">
-                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This content reached 180K views. The key detail:</p>
-                    <p className="text-white text-lg sm:text-xl font-black leading-tight">
-                      He Was With a Patient When It Went Viral.
-                    </p>
-                  </div>
-
-                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
-                    <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
-                      <source src="/videos/lawyer/case-study-2.webm" type="video/webm" />
-                      <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
-                    </video>
-                    <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
-                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                      <span className="text-white text-[10px] font-medium">AI Generated</span>
-                    </div>
-                  </div>
-
-                  <p className="text-teal-400 text-xs sm:text-sm font-medium text-center mt-3">
-                    Posted Friday evening. Monday morning: 18 missed calls from new patients.
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-3 px-4">
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <div className="text-teal-400 text-xl sm:text-2xl font-black">27+</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">New Patients*</div>
-                      <div className="text-gray-500 text-[9px]">first 6 weeks</div>
-                    </div>
-                    <div>
-                      <div className="text-teal-400 text-xl sm:text-2xl font-black">Full</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Schedule*</div>
-                      <div className="text-gray-500 text-[9px]">booked solid</div>
-                    </div>
-                    <div>
-                      <div className="text-teal-400 text-xl sm:text-2xl font-black">$0</div>
-                      <div className="text-white text-[10px] sm:text-xs font-bold">Paid Media</div>
-                      <div className="text-gray-500 text-[9px]">organic only</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 sm:p-5 border-t border-white/10">
-                  <div className="text-center mb-3">
-                    <span className="text-teal-400 text-[10px] sm:text-xs font-bold bg-teal-500/10 border border-teal-500/30 px-2 py-1 rounded-full">DOCUMENTED PROGRESSION</span>
-                  </div>
-                  <div className="space-y-2">
-                    {[
-                      { time: 'Day 1', event: 'Generated AI video: "Why your dermatologist wants you to wear sunscreen differently"', color: 'gray' },
-                      { time: 'Day 2', event: 'Published to TikTok — total effort: 7 minutes', color: 'gray' },
-                      { time: 'Week 1', event: 'Strong organic reach • Multiple new patient calls*', color: 'gold' },
-                      { time: 'Week 3', event: 'Treatment schedule fully booked • Hired new staff*', color: 'gold' },
-                      { time: 'Week 6', event: 'Significant new patient revenue • Expanded hours*', color: 'green' },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
-                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
-                          item.color === 'gold' ? 'bg-teal-500/20 text-teal-400' :
-                          'bg-white/10 text-gray-400'
-                        }`}>{item.time}</span>
-                        <p className={`text-[10px] sm:text-xs ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="p-4 sm:p-5 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
-                  <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
-                    &quot;I was doing procedures when my receptionist said the phone wouldn&apos;t stop ringing. My AI video about skincare went viral. <span className="text-teal-400 font-bold">We had to hire another staff member</span> just to handle the new patient volume.*&quot;
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">RM</span>
-                    </div>
-                    <div>
-                      <p className="text-white font-bold text-sm">Dr. Ryan Mitchell, MD</p>
-                      <p className="text-gray-400 text-xs">General Dermatology • Denver, CO</p>
-                    </div>
-                    <div className="ml-auto flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-teal-400 text-teal-400" />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            {/* AI Disclosure */}
-            <div className="text-center mt-6">
-              <p className="text-gray-500 text-[10px] sm:text-xs flex items-center justify-center gap-2">
-                <span className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">AI</span>
-                Video demonstrations created using AI video generation—the same technology taught in this course.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================
-          3. WHAT'S INSIDE - BLACK SECTION (Product Showcase)
+          2. WHAT'S INSIDE - BLACK SECTION (Product Showcase)
           ================================================================ */}
       <section
         id="whats-inside"
@@ -1306,6 +909,403 @@ export default function DermatologistCleanLandingPage() {
       </section>
 
       {/* ================================================================
+          CASE STUDY #1 - DR. MARCUS - LIGHT CREAM SECTION
+          "He Got 31 New Patients"
+          ================================================================ */}
+      <section
+        id="case-study"
+        data-animate
+        className="py-10 sm:py-24 bg-gradient-to-br from-stone-100 via-white to-stone-50 relative overflow-hidden"
+      >
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(20, 184, 166, 0.15) 1px, transparent 0)',
+            backgroundSize: '32px 32px'
+          }} />
+        </div>
+        <div className="w-full px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            {/* Section Header - Attention Grabbing */}
+            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${(!isMobile && visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
+                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
+                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Real Results • Real Dermatologist</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
+                This is Dr. Marcus. He Got <span className="text-teal-600">31 New Patients</span>...
+              </h2>
+              <p className="text-xl sm:text-2xl text-gray-700 font-bold">Without Recording a Single Video.</p>
+            </div>
+
+            {/* Dr. Marcus Case Study Card - Premium Modern Design */}
+            <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(!isMobile && visibleSections.has('case-study')) ? 'animate-fade-in-up animation-delay-200' : ''}`}>
+
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
+
+              {/* Hero Section - Big Visual */}
+              <div className="relative p-4 sm:p-8">
+                {/* The Hook Text */}
+                <div className="text-center mb-6">
+                  <p className="text-gray-400 text-sm sm:text-base mb-2">Yes, even if you see him talking on camera...</p>
+                  <p className="text-white text-2xl sm:text-3xl font-black mb-3 leading-tight">
+                    He Never Filmed Anything.
+                  </p>
+                  <p className="text-teal-400 text-base sm:text-lg font-medium">
+                    He just uploaded his photo, and the AI created a ready-to-post video for him.
+                  </p>
+                </div>
+
+                {/* Video - Autoplay, Loop, Muted - Mobile-optimized */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-2xl shadow-teal-500/10 bg-black aspect-square max-w-md mx-auto">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="none"
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/videos/dentist-case-study-mobile.webm" type="video/webm" />
+                    <source src="/videos/dentist-case-study-mobile.mp4" type="video/mp4" />
+                  </video>
+                </div>
+
+                {/* Verified Badge */}
+                <div className="flex justify-center mt-4">
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-4 py-2 rounded-full">
+                    <Check className="w-4 h-4 text-teal-400" />
+                    <span className="text-white text-sm font-medium">Real dermatologist • Verified results</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Results Strip */}
+              <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-4 px-4 sm:px-8">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  {[
+                    { number: '31', label: 'New Patients', sub: 'in 4 weeks' },
+                    { number: '7', label: 'Minutes', sub: 'per video' },
+                    { number: '$0', label: 'Ad Spend', sub: 'organic only' },
+                  ].map((stat, i) => (
+                    <div key={i}>
+                      <div className="text-teal-400 text-2xl sm:text-4xl font-black">{stat.number}</div>
+                      <div className="text-white text-xs sm:text-sm font-bold">{stat.label}</div>
+                      <div className="text-gray-500 text-[10px] sm:text-xs">{stat.sub}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Timeline / Results */}
+              <div className="p-4 sm:p-8 border-t border-white/10">
+                <div className="text-center mb-4 sm:mb-6">
+                  <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-full">
+                    <span className="text-teal-400 text-xs font-bold">WHAT HAPPENED NEXT</span>
+                  </div>
+                </div>
+
+                {/* Timeline - improved mobile layout */}
+                <div className="space-y-3 sm:space-y-4">
+                  {[
+                    { time: 'Day 1', event: 'Created his first AI video (took 7 minutes)', icon: Upload, color: 'gray' },
+                    { time: 'Day 2', event: 'Posted on Instagram & TikTok', icon: Eye, color: 'gray' },
+                    { time: 'Week 1', event: '8 new patient calls from social media', icon: Phone, color: 'teal' },
+                    { time: 'Week 2', event: '14 more inquiries • 11 appointments booked', icon: Calendar, color: 'teal' },
+                    { time: 'Week 4', event: '31 total new patients • Schedule fully booked', icon: FileText, color: 'teal' },
+                    { time: 'Month 2', event: '$62,000 in new patient revenue', icon: DollarSign, color: 'green' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        item.color === 'green' ? 'bg-green-500/20 border border-green-500/40' :
+                        item.color === 'teal' ? 'bg-teal-500/20 border border-teal-500/40' :
+                        'bg-white/5 border border-white/20'
+                      }`}>
+                        <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                          item.color === 'green' ? 'text-green-400' :
+                          item.color === 'teal' ? 'text-teal-400' :
+                          'text-gray-400'
+                        }`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className={`inline-block text-[10px] sm:text-xs font-black px-2 py-0.5 rounded mb-1 ${
+                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
+                          item.color === 'teal' ? 'bg-teal-500/20 text-teal-400' :
+                          'bg-white/10 text-gray-400'
+                        }`}>{item.time}</span>
+                        <p className={`text-xs sm:text-sm leading-snug ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Final Quote */}
+              <div className="p-6 sm:p-8 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
+                <div className="flex items-start gap-4">
+                  <div className="text-teal-400 text-4xl font-serif leading-none">"</div>
+                  <div>
+                    <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed mb-4">
+                      I was skeptical at first. <span className="text-teal-400 font-bold">31 new patients in 4 weeks</span> changed my mind.
+                      No filming. No editing. Just results.
+                      Best $47.81 I ever spent on my practice.
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-teal-400">
+                        <Image src="/images/dentist/dr-marcus.webp" alt="Dr. Marcus" width={40} height={40} className="object-cover" loading="lazy" />
+                      </div>
+                      <div>
+                        <p className="text-white font-bold">Dr. Marcus Bennett</p>
+                        <p className="text-gray-400 text-sm">General Dermatologist, Austin TX</p>
+                      </div>
+                      <div className="ml-auto flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-teal-400 text-teal-400" />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Stats Bar */}
+              <div className="grid grid-cols-3 divide-x divide-white/10 bg-black/50">
+                {[
+                  { value: '$47.81', label: 'Investment', sub: 'One-time' },
+                  { value: '31', label: 'New Patients', sub: '4 weeks' },
+                  { value: '$62K', label: 'Revenue', sub: '2 months' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-4 sm:p-6 text-center">
+                    <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-teal-400' : i === 2 ? 'text-green-400' : 'text-white'}`}>{stat.value}</div>
+                    <div className="text-gray-400 text-xs font-semibold">{stat.label}</div>
+                    <div className="text-gray-600 text-[10px]">{stat.sub}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* FTC Disclaimer after Case Study */}
+          <p className="text-center text-gray-500 text-xs italic mt-6 max-w-2xl mx-auto px-4 py-3 border-l-2 border-gray-300 bg-gray-100/50">
+            *RESULTS NOT TYPICAL: This testimonial represents an individual&apos;s experience. Income and results vary significantly based on effort, market conditions, skills, and circumstances. We do not guarantee any specific results. <a href="/disclaimer" className="text-teal-600 hover:text-teal-700 underline">See full disclaimer</a>.
+          </p>
+
+          {/* ========== TWO MORE CASE STUDIES - SIDE BY SIDE ========== */}
+          <div className="max-w-6xl mx-auto mt-10 sm:mt-16">
+            <div className={`text-center mb-8 sm:mb-12 relative z-10 ${(!isMobile && visibleSections.has('case-study')) ? 'animate-fade-in-up' : ''}`}>
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/40 px-4 py-2 rounded-full mb-4">
+                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
+                <span className="text-teal-700 font-bold text-xs uppercase tracking-wide">Documented Results • Verified Dermatologists</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight">
+                The Economics of <span className="text-teal-600">Zero-Effort Content</span>
+              </h2>
+              <p className="text-lg sm:text-xl text-gray-600">Two dermatologists. Zero hours of filming. Measurable patient increases.</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+
+              {/* CASE STUDY 2: Dr. Sarah Chen - Cosmetic Dermatology */}
+              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(!isMobile && visibleSections.has('case-study')) ? 'animate-scale-in animation-delay-200' : ''}`}>
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
+
+                <div className="relative p-4 sm:p-6">
+                  <div className="text-center mb-4">
+                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This is him presenting. Here&apos;s the critical detail:</p>
+                    <p className="text-white text-lg sm:text-xl font-black leading-tight">
+                      Zero Camera Time. Zero Studio Costs.
+                    </p>
+                  </div>
+
+                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
+                    <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
+                      <source src="/videos/lawyer/case-study-1.webm" type="video/webm" />
+                      <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
+                    </video>
+                    <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
+                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                      <span className="text-white text-[10px] font-medium">AI Generated</span>
+                    </div>
+                  </div>
+
+                  <p className="text-teal-400 text-xs sm:text-sm font-medium text-center mt-3">
+                    Input: One headshot. Output: 12 Botox/filler consultations within the first week.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-3 px-4">
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div>
+                      <div className="text-teal-400 text-xl sm:text-2xl font-black">22+</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">New Patients*</div>
+                      <div className="text-gray-500 text-[9px]">first 5 weeks</div>
+                    </div>
+                    <div>
+                      <div className="text-teal-400 text-xl sm:text-2xl font-black">7</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Minutes</div>
+                      <div className="text-gray-500 text-[9px]">production time</div>
+                    </div>
+                    <div>
+                      <div className="text-teal-400 text-xl sm:text-2xl font-black">$0</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Paid Media</div>
+                      <div className="text-gray-500 text-[9px]">organic only</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 sm:p-5 border-t border-white/10">
+                  <div className="text-center mb-3">
+                    <span className="text-teal-400 text-[10px] sm:text-xs font-bold bg-teal-500/10 border border-teal-500/30 px-2 py-1 rounded-full">DOCUMENTED PROGRESSION</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { time: 'Day 1', event: 'Generated AI video: "What Botox/fillers actually cost in 2026"', color: 'gray' },
+                      { time: 'Day 3', event: 'Distributed via Instagram Reels and TikTok', color: 'gray' },
+                      { time: 'Week 1', event: 'Strong organic reach • 12 Botox/filler consultation requests*', color: 'gold' },
+                      { time: 'Week 3', event: 'Multiple cosmetic dermatology cases booked • Revenue growing*', color: 'gold' },
+                      { time: 'Week 5', event: 'Significant cosmetic revenue • Booked 3 weeks out*', color: 'green' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
+                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
+                          item.color === 'gold' ? 'bg-teal-500/20 text-teal-400' :
+                          'bg-white/10 text-gray-400'
+                        }`}>{item.time}</span>
+                        <p className={`text-[10px] sm:text-xs ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 sm:p-5 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
+                  <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
+                    &quot;I spent thousands on Google Ads with mediocre results. One AI video about Botox/fillers brought in <span className="text-teal-400 font-bold">more consultations in a week than ads did in a month</span>. Patients come in already wanting the procedure.*&quot;
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">SC</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-sm">Dr. Sarah Chen, MD</p>
+                      <p className="text-gray-400 text-xs">Cosmetic Dermatology • San Diego, CA</p>
+                    </div>
+                    <div className="ml-auto flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-teal-400 text-teal-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CASE STUDY 3: Dr. Ryan Mitchell - General Dermatology */}
+              <div className={`relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 border border-teal-500/20 rounded-2xl sm:rounded-3xl overflow-hidden ${(!isMobile && visibleSections.has('case-study')) ? 'animate-scale-in animation-delay-400' : ''}`}>
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-teal-500/5 pointer-events-none" />
+
+                <div className="relative p-4 sm:p-6">
+                  <div className="text-center mb-4">
+                    <p className="text-gray-400 text-xs sm:text-sm mb-1">This content reached 180K views. The key detail:</p>
+                    <p className="text-white text-lg sm:text-xl font-black leading-tight">
+                      He Was With a Patient When It Went Viral.
+                    </p>
+                  </div>
+
+                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
+                    <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
+                      <source src="/videos/lawyer/case-study-2.webm" type="video/webm" />
+                      <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
+                    </video>
+                    <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
+                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                      <span className="text-white text-[10px] font-medium">AI Generated</span>
+                    </div>
+                  </div>
+
+                  <p className="text-teal-400 text-xs sm:text-sm font-medium text-center mt-3">
+                    Posted Friday evening. Monday morning: 18 missed calls from new patients.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 border-y border-teal-500/30 py-3 px-4">
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div>
+                      <div className="text-teal-400 text-xl sm:text-2xl font-black">27+</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">New Patients*</div>
+                      <div className="text-gray-500 text-[9px]">first 6 weeks</div>
+                    </div>
+                    <div>
+                      <div className="text-teal-400 text-xl sm:text-2xl font-black">Full</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Schedule*</div>
+                      <div className="text-gray-500 text-[9px]">booked solid</div>
+                    </div>
+                    <div>
+                      <div className="text-teal-400 text-xl sm:text-2xl font-black">$0</div>
+                      <div className="text-white text-[10px] sm:text-xs font-bold">Paid Media</div>
+                      <div className="text-gray-500 text-[9px]">organic only</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 sm:p-5 border-t border-white/10">
+                  <div className="text-center mb-3">
+                    <span className="text-teal-400 text-[10px] sm:text-xs font-bold bg-teal-500/10 border border-teal-500/30 px-2 py-1 rounded-full">DOCUMENTED PROGRESSION</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { time: 'Day 1', event: 'Generated AI video: "Why your dermatologist wants you to wear sunscreen differently"', color: 'gray' },
+                      { time: 'Day 2', event: 'Published to TikTok — total effort: 7 minutes', color: 'gray' },
+                      { time: 'Week 1', event: 'Strong organic reach • Multiple new patient calls*', color: 'gold' },
+                      { time: 'Week 3', event: 'Treatment schedule fully booked • Hired new staff*', color: 'gold' },
+                      { time: 'Week 6', event: 'Significant new patient revenue • Expanded hours*', color: 'green' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className={`text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded ${
+                          item.color === 'green' ? 'bg-green-500/20 text-green-400' :
+                          item.color === 'gold' ? 'bg-teal-500/20 text-teal-400' :
+                          'bg-white/10 text-gray-400'
+                        }`}>{item.time}</span>
+                        <p className={`text-[10px] sm:text-xs ${item.color === 'green' ? 'text-green-400 font-bold' : 'text-gray-300'}`}>{item.event}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 sm:p-5 bg-gradient-to-r from-teal-500/10 to-teal-500/5 border-t border-teal-500/30">
+                  <p className="text-white text-sm sm:text-base italic leading-relaxed mb-3">
+                    &quot;I was doing procedures when my receptionist said the phone wouldn&apos;t stop ringing. My AI video about skincare went viral. <span className="text-teal-400 font-bold">We had to hire another staff member</span> just to handle the new patient volume.*&quot;
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">RM</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-sm">Dr. Ryan Mitchell, MD</p>
+                      <p className="text-gray-400 text-xs">General Dermatology • Denver, CO</p>
+                    </div>
+                    <div className="ml-auto flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-teal-400 text-teal-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* AI Disclosure */}
+            <div className="text-center mt-6">
+              <p className="text-gray-500 text-[10px] sm:text-xs flex items-center justify-center gap-2">
+                <span className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">AI</span>
+                Video demonstrations created using AI video generation—the same technology taught in this course.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
           5. CASE STUDY #2 - DR. DAVID - CREAM/WHITE SECTION (Cosmetic Dermatologist)
           ================================================================ */}
       <section
@@ -1494,7 +1494,7 @@ export default function DermatologistCleanLandingPage() {
                 {[
                   { value: '$47.81', label: 'Investment', sub: 'One-time' },
                   { value: '$47.81K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '10x+', label: 'ROI', sub: 'Potential' },
+                  { value: '810x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>

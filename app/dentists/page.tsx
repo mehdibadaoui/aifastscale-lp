@@ -131,7 +131,7 @@ export default function DentistCleanLandingPage() {
       location: 'Chicago, IL',
       image: '/images/dentist/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: 'Strong ROI',
+      results: '50x ROI',
     },
     {
       id: 5,
@@ -317,7 +317,7 @@ export default function DentistCleanLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Attract More New Patients
+                {' '}Get 100+ New Patients
               </span>
             </h1>
 
@@ -1461,7 +1461,7 @@ export default function DentistCleanLandingPage() {
                 {[
                   { value: '$47.81', label: 'Investment', sub: 'One-time' },
                   { value: '$47.81K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '10x+', label: 'ROI', sub: 'Potential' },
+                  { value: '810x', label: 'ROI', sub: 'Return' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>
