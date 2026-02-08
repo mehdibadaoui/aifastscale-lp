@@ -10,20 +10,34 @@ interface Credentials {
   name: string
 }
 
-// Track Purchase (fires once per session)
+// Track Purchase (fires once per session) — browser + server-side CAPI
 const trackPurchase = () => {
   if (typeof window === 'undefined') return
   if (sessionStorage.getItem('lawyer_purchase_tracked')) return
 
+  const eventId = `purchase_law_${Date.now()}`
   if ((window as any).fbq) {
     (window as any).fbq('track', 'Purchase', {
       content_name: 'CloneYourself for Lawyers',
       content_type: 'product',
       value: 47.82,
       currency: 'USD',
-    })
-    sessionStorage.setItem('lawyer_purchase_tracked', '1')
+    }, { eventID: eventId })
   }
+  fetch('/api/meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      niche: 'lawyers',
+      eventName: 'Purchase',
+      eventId,
+      value: 47.82,
+      currency: 'USD',
+      contentName: 'CloneYourself for Lawyers',
+      url: window.location.href,
+    }),
+  }).catch(() => {})
+  sessionStorage.setItem('lawyer_purchase_tracked', '1')
 }
 
 function ThankYouContent() {

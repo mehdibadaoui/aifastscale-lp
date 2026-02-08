@@ -94,34 +94,62 @@ const buttonTap = { scale: 0.97 }
 // META PIXEL TRACKING (No duplicates)
 // ===========================================
 
-// Track ViewContent (fires once per session)
+// Track ViewContent (fires once per session) — browser + server-side CAPI
 const trackViewContent = () => {
   if (typeof window === 'undefined') return
   if (sessionStorage.getItem('lawyer_vc_tracked')) return
 
+  const eventId = `vc_law_${Date.now()}`
   if ((window as any).fbq) {
     (window as any).fbq('track', 'ViewContent', {
       content_name: 'CloneYourself for Lawyers',
       content_type: 'product',
       value: 47.81,
       currency: 'USD',
-    })
+    }, { eventID: eventId })
     sessionStorage.setItem('lawyer_vc_tracked', '1')
   }
+  fetch('/api/meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      niche: 'lawyers',
+      eventName: 'ViewContent',
+      eventId,
+      value: 47.81,
+      currency: 'USD',
+      contentName: 'CloneYourself for Lawyers',
+      url: window.location.href,
+    }),
+  }).catch(() => {})
 }
 
-// Track InitiateCheckout (fires on CTA click)
+// Track InitiateCheckout (fires on CTA click) — browser + server-side CAPI
 const trackInitiateCheckout = () => {
   if (typeof window === 'undefined') return
 
+  const eventId = `ic_law_${Date.now()}`
   if ((window as any).fbq) {
     (window as any).fbq('track', 'InitiateCheckout', {
       content_name: 'CloneYourself for Lawyers',
       content_type: 'product',
       value: 47.81,
       currency: 'USD',
-    })
+    }, { eventID: eventId })
   }
+  fetch('/api/meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      niche: 'lawyers',
+      eventName: 'InitiateCheckout',
+      eventId,
+      value: 47.81,
+      currency: 'USD',
+      contentName: 'CloneYourself for Lawyers',
+      url: window.location.href,
+    }),
+  }).catch(() => {})
 }
 
 // 100+ World Languages - With comprehensive country aliases

@@ -56,16 +56,31 @@ export default function DermatologistCleanLandingPage() {
     return () => { clearTimeout(timeout); clearInterval(interval) }
   }, [])
 
-  // Track InitiateCheckout event for Meta Pixel
+  // Track InitiateCheckout event for Meta Pixel (browser + server-side CAPI)
   const trackCheckout = () => {
+    const eventId = `ic_derm_${Date.now()}`
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'InitiateCheckout', {
         value: 47.81,
         currency: 'USD',
         content_name: 'CloneYourself for Dermatologists',
         content_type: 'product',
-      })
+      }, { eventID: eventId })
     }
+    // Server-side CAPI (fire and forget)
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        niche: 'dermatologists',
+        eventName: 'InitiateCheckout',
+        eventId,
+        value: 47.81,
+        currency: 'USD',
+        contentName: 'CloneYourself for Dermatologists',
+        url: window.location.href,
+      }),
+    }).catch(() => {})
   }
 
   const faqs = [

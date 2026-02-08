@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { Resend } from 'resend'
 import { Redis } from '@upstash/redis'
+import crypto from 'crypto'
 import { createUser, recordPurchase } from '@/lib/user-db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -387,6 +388,43 @@ export async function POST(request: NextRequest) {
       subject: `🎉 Your ${product.productName} Login Details - Save This Email!`,
       html: generateWelcomeEmail(product, userPassword, normalizedEmail, buyerName),
     })
+
+    // Fire server-side Meta Conversions API Purchase event
+    const META_TOKEN = process.env.META_PIXEL_ACCESS_TOKEN
+    const PIXEL_MAP: Record<string, string> = {
+      dermatologist: '1435824824556725',
+      lawyer: '2660533017679840',
+    }
+    const pixelId = PIXEL_MAP[niche as string]
+    if (META_TOKEN && pixelId) {
+      try {
+        const hashedEmail = crypto.createHash('sha256').update(normalizedEmail).digest('hex')
+        const capiPayload = {
+          data: [{
+            event_name: 'Purchase',
+            event_time: Math.floor(Date.now() / 1000),
+            event_id: `purchase_${session.id}`,
+            action_source: 'website',
+            event_source_url: `https://aifastscale.com/${niche}s/thank-you`,
+            user_data: { em: hashedEmail },
+            custom_data: {
+              value: price,
+              currency: 'USD',
+              content_name: product.productName,
+              content_type: 'product',
+            },
+          }],
+        }
+        const capiResp = await fetch(
+          `https://graph.facebook.com/v21.0/${pixelId}/events?access_token=${META_TOKEN}`,
+          { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(capiPayload) }
+        )
+        const capiResult = await capiResp.json()
+        console.log(`📊 Meta CAPI Purchase sent to pixel ${pixelId}:`, capiResult)
+      } catch (capiErr) {
+        console.error('Meta CAPI error (non-blocking):', capiErr)
+      }
+    }
 
     console.log('═══════════════════════════════════════════════════════════')
     console.log(`✅ SUCCESS: ${normalizedEmail} | ${niche} | $${price}`)

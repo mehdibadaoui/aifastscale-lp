@@ -43,14 +43,32 @@ function ThankYouContent() {
         setCredentials({ email: data.email, password: data.password, name: data.name || '' })
         setIsLoading(false)
 
-        // Fire Meta Pixel Purchase event for conversion tracking
-        if (typeof window !== 'undefined' && (window as any).fbq) {
-          (window as any).fbq('track', 'Purchase', {
-            value: 47.81,
-            currency: 'USD',
-            content_name: 'CloneYourself for Dermatologists',
-            content_type: 'product',
-          })
+        // Fire Meta Pixel Purchase event for conversion tracking (browser + server-side CAPI)
+        if (typeof window !== 'undefined' && !sessionStorage.getItem('derm_purchase_tracked')) {
+          const eventId = `purchase_derm_${Date.now()}`
+          if ((window as any).fbq) {
+            (window as any).fbq('track', 'Purchase', {
+              value: 47.81,
+              currency: 'USD',
+              content_name: 'CloneYourself for Dermatologists',
+              content_type: 'product',
+            }, { eventID: eventId })
+          }
+          fetch('/api/meta-capi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              niche: 'dermatologists',
+              eventName: 'Purchase',
+              eventId,
+              email: data.email,
+              value: 47.81,
+              currency: 'USD',
+              contentName: 'CloneYourself for Dermatologists',
+              url: window.location.href,
+            }),
+          }).catch(() => {})
+          sessionStorage.setItem('derm_purchase_tracked', '1')
         }
 
         return true
