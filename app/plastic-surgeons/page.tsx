@@ -368,7 +368,7 @@ export default function PlasticSurgeonLandingPage() {
       location: 'Chicago, IL',
       image: '/images/plastic-surgeon/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: '50x ROI',
+      results: 'Strong ROI',
     },
     {
       id: 5,

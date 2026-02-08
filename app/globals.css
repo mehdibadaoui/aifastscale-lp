@@ -995,8 +995,8 @@ video {
 }
 
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 @keyframes pulse {
@@ -4417,8 +4417,17 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
 
 /* GPU-accelerate all animations */
 [style*="animation"],
-[class*="animate-"] {
+[class*="animate-"],
+.animate-pulse,
+.animate-bounce,
+.animate-spin,
+.animate-shimmer,
+.animate-fadeIn,
+.animate-slideUp,
+.animate-blur-in {
   will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Prevent images from causing layout shift */

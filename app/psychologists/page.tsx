@@ -178,7 +178,7 @@ export default function PsychologistLandingPage() {
       role: 'Trauma Recovery Specialist',
       location: 'Chicago, IL',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: '50x ROI',
+      results: 'Strong ROI',
     },
     {
       id: 5,

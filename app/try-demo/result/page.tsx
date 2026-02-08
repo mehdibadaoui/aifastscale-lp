@@ -45,7 +45,7 @@ export default function VideoResultPage() {
 
   const testimonials = [
     { name: 'Yasmin Al-Rashid', result: '15+ leads/week', text: "As a Dubai agent, I need to look premium. These AI videos make my listings look like million-dollar productions. Went from 2-3 leads to 15+ per week.", location: 'Dubai, UAE', avatar: '/images/Reviews/Review REA 3.webp' },
-    { name: 'Dr. Raj Patel', result: '50x ROI', text: "Was spending £800/month on video production. Now I create better content myself in minutes. ROI was immediate.", location: 'London, UK', avatar: '/images/Reviews/Review REA 5.webp' },
+    { name: 'Dr. Raj Patel', result: 'Strong ROI', text: "Was spending £800/month on video production. Now I create better content myself in minutes. ROI was immediate.", location: 'London, UK', avatar: '/images/Reviews/Review REA 5.webp' },
     { name: 'Jennifer Kim', result: 'Sold $80K over asking', text: "My listing video got 47K views. Sold the property in 5 days for $80K over asking. This system pays for itself daily.", location: 'Vancouver, Canada', avatar: '/images/Reviews/Review REA 9.webp' },
     { name: 'Carlos Mendoza', result: '6 closings from social', text: "25 years selling homes and I wish I had this sooner. 6 closings last month from social media alone.", location: 'Los Angeles, CA', avatar: '/images/Reviews/Review REA 6.webp' },
     { name: 'Sofia Martinez', result: '4 leads in first week', text: "I was skeptical about AI videos, but this changed everything. Created my first video in 7 minutes - got 4 qualified leads that same week.", location: 'Miami, FL', avatar: '/images/Reviews/Review REA 1.webp' },

@@ -1387,6 +1387,7 @@ export default function LawyerLandingPage() {
                       playsInline
                       className="w-full h-full object-contain"
                     >
+                      <source src="/videos/lawyer/case-study-1.webm" type="video/webm" />
                       <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
                     </video>
                     {/* AI Badge */}
@@ -1492,6 +1493,7 @@ export default function LawyerLandingPage() {
                       playsInline
                       className="w-full h-full object-contain"
                     >
+                      <source src="/videos/lawyer/case-study-2.webm" type="video/webm" />
                       <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
                     </video>
                     {/* AI Badge */}

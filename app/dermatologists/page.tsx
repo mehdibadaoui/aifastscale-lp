@@ -130,7 +130,7 @@ export default function DermatologistCleanLandingPage() {
       location: 'Chicago, IL',
       image: '/images/dentist/review-5.webp',
       review: "Was spending $2,000/month on video production. Now I create better content myself in minutes. ROI was immediate.",
-      results: '50x ROI',
+      results: 'Strong ROI',
     },
     {
       id: 5,
@@ -510,8 +510,10 @@ export default function DermatologistCleanLandingPage() {
                     playsInline
                     preload="none"
                     className="w-full h-full object-cover"
-                    src="/videos/dentist-case-study-mobile.mp4"
-                  />
+                  >
+                    <source src="/videos/dentist-case-study-mobile.webm" type="video/webm" />
+                    <source src="/videos/dentist-case-study-mobile.mp4" type="video/mp4" />
+                  </video>
                 </div>
 
                 {/* Verified Badge */}
@@ -662,6 +664,7 @@ export default function DermatologistCleanLandingPage() {
 
                   <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
                     <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
+                      <source src="/videos/lawyer/case-study-1.webm" type="video/webm" />
                       <source src="/videos/lawyer/case-study-1.mp4" type="video/mp4" />
                     </video>
                     <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
@@ -754,6 +757,7 @@ export default function DermatologistCleanLandingPage() {
 
                   <div className="relative w-full rounded-xl overflow-hidden border-2 border-teal-500/30 shadow-xl bg-black aspect-[4/3] max-w-[400px] mx-auto">
                     <video autoPlay loop muted playsInline preload="none" className="w-full h-full object-contain">
+                      <source src="/videos/lawyer/case-study-2.webm" type="video/webm" />
                       <source src="/videos/lawyer/case-study-2.mp4" type="video/mp4" />
                     </video>
                     <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-full">
@@ -872,6 +876,7 @@ export default function DermatologistCleanLandingPage() {
                   src="/images/dentist/course-demo-new.webp"
                   alt="CloneYourself 7-Minute Video System for Dermatologists"
                   fill
+                  sizes="(max-width: 768px) 100vw, 800px"
                   className="object-cover"
                   loading="lazy"
                 />
@@ -931,7 +936,7 @@ export default function DermatologistCleanLandingPage() {
               {allBonuses.map((bonus, index) => (
                 <div key={bonus.id} className={`bg-gradient-to-br from-white/8 to-white/3 border border-teal-500/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 ${(!isMobile && visibleSections.has('whats-inside')) ? 'animate-fade-in-up' : ''}`}>
                   <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
-                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill className="object-contain p-2" loading="lazy" />
+                    <Image src={bonus.image || '/images/dentist/course-demo.webp'} alt={bonus.title} fill sizes="(max-width: 768px) 100vw, 600px" className="object-contain p-2" loading="lazy" />
                   </div>
                   <div className="p-4 sm:p-5">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
