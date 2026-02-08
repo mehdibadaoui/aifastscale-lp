@@ -5,7 +5,7 @@ import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { LAWYER_BONUS_PRODUCTS } from '../../config/lawyer-bonus-products'
 
-// Whop checkout link for OTO (upsell)
+// Checkout link for OTO (Stripe coming soon)
 const CHECKOUT_LINK = '#'
 
 export default function LawyerOtoPage() {
@@ -15,7 +15,7 @@ export default function LawyerOtoPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('lawyer_purchase_email', email.toLowerCase().trim())

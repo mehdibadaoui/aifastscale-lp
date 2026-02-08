@@ -75,7 +75,7 @@ function ThankYouContent() {
       const storedUserId = sessionStorage.getItem('lawyer_purchase_user_id')
       const params = new URLSearchParams(window.location.search)
       const urlEmail = params.get('email')?.toLowerCase()
-      const urlUserId = params.get('user_id') || params.get('whop_user_id')
+      const urlUserId = params.get('user_id') || params.get('session_id')
 
       const email = urlEmail || storedEmail
       const userId = urlUserId || storedUserId

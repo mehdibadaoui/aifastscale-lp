@@ -4397,3 +4397,35 @@ html.js-ready .stagger-delay-6 { transition-delay: 600ms; }
     padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
   }
 }
+
+/* ============================================================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   Disable expensive decorative animations on mobile for better performance
+   ============================================================================ */
+
+@media (max-width: 639px) {
+  /* Kill expensive decorative orb animations on mobile */
+  .fixed.inset-0.pointer-events-none .absolute[class*="rounded-full"] {
+    display: none !important;
+  }
+
+  /* Tighten above-the-fold spacing for mobile */
+  section:first-of-type {
+    padding-top: 0.75rem;
+  }
+}
+
+/* GPU-accelerate all animations */
+[style*="animation"],
+[class*="animate-"] {
+  will-change: transform, opacity;
+}
+
+/* Prevent images from causing layout shift */
+img {
+  height: auto;
+}
+
+img[class*="rounded-full"] {
+  aspect-ratio: 1 / 1;
+}

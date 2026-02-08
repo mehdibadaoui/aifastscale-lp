@@ -177,15 +177,26 @@ export default function DentistCleanLandingPage() {
     }
   }, [])
 
-  // Countdown timer - REAL deadline: December 20th for Premium Bundle bonus
-  const BONUS_DEADLINE = new Date('2024-12-20T23:59:59')
-
+  // Countdown timer - Dynamic deadline: 3 days from first visit (stored in localStorage)
   useEffect(() => {
+    const getDeadline = () => {
+      const storedDeadline = localStorage.getItem('dentist_bonus_deadline')
+      if (storedDeadline) {
+        return new Date(storedDeadline)
+      }
+      const deadline = new Date()
+      deadline.setDate(deadline.getDate() + 3)
+      deadline.setHours(23, 59, 59, 999)
+      localStorage.setItem('dentist_bonus_deadline', deadline.toISOString())
+      return deadline
+    }
+
+    const BONUS_DEADLINE = getDeadline()
+
     const calculateTimeLeft = () => {
       const now = new Date()
       const diff = BONUS_DEADLINE.getTime() - now.getTime()
 
-      // If deadline passed, show zeros
       if (diff <= 0) {
         return { days: 0, hours: 0, minutes: 0, seconds: 0 }
       }
@@ -201,9 +212,6 @@ export default function DentistCleanLandingPage() {
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
     return () => clearInterval(timer)
   }, [])
-
-  // REMOVED: Fake scarcity that resets - kills trust
-  // Real urgency comes from the December 20th bonus deadline
   // Note: viewersNow replaced by memberStats.activeNow
 
   const scrollToSection = (id: string) => {
@@ -309,7 +317,7 @@ export default function DentistCleanLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Get 100+ New Patients
+                {' '}Attract More New Patients
               </span>
             </h1>
 
@@ -1449,7 +1457,7 @@ export default function DentistCleanLandingPage() {
                 {[
                   { value: '$47.81', label: 'Investment', sub: 'One-time' },
                   { value: '$47.81K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '810x', label: 'ROI', sub: 'Return' },
+                  { value: '10x+', label: 'ROI', sub: 'Potential' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -1669,7 +1677,7 @@ export default function DentistCleanLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${visibleSections.has('pricing') ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires December 20th</span>
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires in {timeLeft.days}d {timeLeft.hours}h</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Get Everything Today For
@@ -2384,13 +2392,13 @@ export default function DentistCleanLandingPage() {
             </p>
             {/* Wyoming LLC Identification */}
             <p className="text-gray-600 text-[10px] sm:text-xs mb-1">
-              Velon LLC, a Wyoming Limited Liability Company
+              Partnearn LLC, a Wyoming Limited Liability Company
             </p>
             <p className="text-gray-700 text-[9px] sm:text-[10px] mb-2">
               30 N Gould St Ste R, Sheridan, WY 82801
             </p>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
-              © {new Date().getFullYear()} Velon LLC. All rights reserved.
+              © {new Date().getFullYear()} Partnearn LLC. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -2413,7 +2421,7 @@ export default function DentistCleanLandingPage() {
                 <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
               </p>
               <p>
-                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Dental professionals must ensure compliance with their state dental board regulations and advertising guidelines. Velon LLC does not provide legal or professional compliance advice.
+                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Dental professionals must ensure compliance with their state dental board regulations and advertising guidelines. Partnearn LLC does not provide legal or professional compliance advice.
               </p>
             </div>
           </div>

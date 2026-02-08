@@ -222,7 +222,7 @@ const LoginScreen = memo(function LoginScreen({ onLogin, isLoggingIn, loginError
 // BLOCKED/PAYMENT REQUIRED SCREEN
 // ============================================
 
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_OGprA4gd4Lr7N'
+const CHECKOUT_LINK = '/#contact'
 
 const BlockedScreen = memo(function BlockedScreen() {
   return (

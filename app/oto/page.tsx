@@ -4,7 +4,7 @@ import { Shield, Clock, Zap, CheckCircle, Sparkles, Crown, Star } from 'lucide-r
 // Checkout link placeholder
 const CHECKOUT_LINK = '#'
 
-// Save tracking params to localStorage before Whop redirect
+// Save tracking params to localStorage before checkout redirect
 const saveTrackingParams = () => {
   if (typeof window === 'undefined') return
 

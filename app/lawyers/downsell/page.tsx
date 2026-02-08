@@ -5,8 +5,7 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { getLawyerUpsellBonuses } from '../../config/lawyer-bonus-products'
 
-// Whop checkout link for Downsell (Whop settings redirect to thank-you)
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_sdONQXGabaCd0'
+const CHECKOUT_LINK = 'https://buy.stripe.com/28EfZga6e3R2duOdhudUY06'
 
 export default function LawyerDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
@@ -15,7 +14,7 @@ export default function LawyerDownsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('lawyer_purchase_email', email.toLowerCase().trim())

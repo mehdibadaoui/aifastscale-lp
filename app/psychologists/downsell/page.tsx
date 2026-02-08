@@ -5,7 +5,7 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { getPsychologistUpsellBonuses } from '../../config/psychologist-bonus-products'
 
-// Whop checkout link for Downsell
+// Checkout link (Stripe coming soon)
 const CHECKOUT_LINK = '#'
 
 export default function PsychologistDownsellPage() {
@@ -15,7 +15,7 @@ export default function PsychologistDownsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('psychologist_purchase_email', email.toLowerCase().trim())

@@ -196,7 +196,7 @@ const BlockedScreen = memo(function BlockedScreen({ config }: BlockedScreenProps
           </p>
 
           <a
-            href={config.auth.whopCheckoutLink}
+            href={config.auth.checkoutLink}
             className="btn-premium inline-flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg text-white shadow-glow-gold focus-ring"
           >
             <Sparkles className="w-5 h-5" />

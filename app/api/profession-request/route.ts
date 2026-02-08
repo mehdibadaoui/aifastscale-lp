@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
             <div style="background-color: #22c55e20; border: 1px solid #22c55e40; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
               <p style="margin: 0; color: #22c55e; font-size: 14px; font-weight: 600;">
-                ✓ User was redirected to Whop checkout
+                ✓ User was redirected to Stripe checkout
               </p>
             </div>
 

@@ -132,7 +132,7 @@ export interface AuthConfig {
   legacyPassword: string       // Legacy shared password
   legacyEnabled: boolean       // Whether legacy login is enabled
   vipGuests: VipGuest[]        // VIP guest accounts
-  whopCheckoutLink: string     // Checkout link for blocked users
+  checkoutLink: string          // Checkout link for blocked users
   authStorageKey: string       // localStorage key for auth state
 }
 

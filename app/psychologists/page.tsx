@@ -304,7 +304,7 @@ export default function PsychologistLandingPage() {
   }, [])
 
   // REMOVED: Fake scarcity that resets - kills trust
-  // Real urgency comes from the December 20th bonus deadline
+  // Dynamic deadline stored in localStorage per user
   // Note: viewersNow replaced by memberStats.activeNow
 
   const scrollToSection = (id: string) => {
@@ -461,7 +461,7 @@ export default function PsychologistLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Get 100+ New Clients
+                {' '}Attract More New Clients
               </span>
             </h1>
 
@@ -2761,13 +2761,13 @@ export default function PsychologistLandingPage() {
             </p>
             {/* Wyoming LLC Identification */}
             <p className="text-gray-600 text-[10px] sm:text-xs mb-1">
-              Velon LLC, a Wyoming Limited Liability Company
+              Partnearn LLC, a Wyoming Limited Liability Company
             </p>
             <p className="text-gray-700 text-[9px] sm:text-[10px] mb-2">
               30 N Gould St Ste R, Sheridan, WY 82801
             </p>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
-              © {new Date().getFullYear()} Velon LLC. All rights reserved.
+              © {new Date().getFullYear()} Partnearn LLC. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -2790,7 +2790,7 @@ export default function PsychologistLandingPage() {
                 <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
               </p>
               <p>
-                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Mental health professionals must ensure compliance with their state licensing board regulations, APA ethics guidelines, and advertising requirements. Velon LLC does not provide legal or professional compliance advice.
+                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Mental health professionals must ensure compliance with their state licensing board regulations, APA ethics guidelines, and advertising requirements. Partnearn LLC does not provide legal or professional compliance advice.
               </p>
             </div>
           </div>

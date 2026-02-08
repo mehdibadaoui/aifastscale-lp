@@ -33,9 +33,9 @@ const VIP_GUESTS = [
     badge: 'VIP Guest',
   },
   {
-    id: 'whop-reviewer',
-    name: 'Whop Reviewer',
-    password: 'whop-review-2025',
+    id: 'reviewer',
+    name: 'Reviewer',
+    password: 'review-2025',
     welcomeMessage: 'Welcome! Thank you for reviewing CloneYourself for Dentists.',
     badge: 'Reviewer',
   },

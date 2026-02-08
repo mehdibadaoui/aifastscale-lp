@@ -88,7 +88,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold text-gray-900 mb-1">Mailing Address</h3>
                   <p className="text-gray-700">
-                    Velon LLC<br />
+                    Partnearn LLC<br />
                     30 N Gould St Ste R<br />
                     Sheridan, WY 82801
                   </p>

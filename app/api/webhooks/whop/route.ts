@@ -7,7 +7,7 @@ import { createUser, recordPurchase } from '@/lib/user-db'
 async function storeUserIdEmailMapping(userId: string, email: string): Promise<void> {
   try {
     const redis = getRedis()
-    await redis.set(`whop:user:${userId}`, email, { ex: 60 * 60 * 24 * 30 }) // 30 days
+    await redis.set(`checkout:user:${userId}`, email, { ex: 60 * 60 * 24 * 30 }) // 30 days
     console.log(`📝 Stored user mapping: ${userId} -> ${email}`)
   } catch (e) {
     console.error('Failed to store user mapping:', e)
@@ -18,7 +18,7 @@ async function storeUserIdEmailMapping(userId: string, email: string): Promise<v
 async function lookupStoredEmail(userId: string): Promise<string | null> {
   try {
     const redis = getRedis()
-    const email = await redis.get<string>(`whop:user:${userId}`)
+    const email = await redis.get<string>(`checkout:user:${userId}`)
     if (email) {
       console.log(`✅ Found stored email for ${userId}: ${email}`)
     }
@@ -29,54 +29,20 @@ async function lookupStoredEmail(userId: string): Promise<string | null> {
   }
 }
 
-// Fetch user email - try our stored mapping first, then Whop API as fallback
-async function fetchWhopUserEmail(userId: string): Promise<string | null> {
+// Fetch user email from stored mapping
+async function fetchUserEmail(userId: string): Promise<string | null> {
   if (!userId) {
-    console.log('❌ Cannot fetch Whop user: missing user ID')
+    console.log('❌ Cannot fetch user: missing user ID')
     return null
   }
 
-  // First, try our stored mapping (from previous payment.succeeded events)
+  // Try our stored mapping (from previous payment events)
   const storedEmail = await lookupStoredEmail(userId)
   if (storedEmail) {
     return storedEmail
   }
 
-  // Fallback: Try Whop API - try all API keys (Flow for plastic surgeons, Ayden for dentist/psychologist/lawyer)
-  const apiKeys = [
-    process.env.WHOP_API_KEY,
-    process.env.WHOP_API_KEY_FLOW,
-    process.env.WHOP_API_KEY_AYDEN,
-  ].filter(Boolean)
-
-  if (apiKeys.length === 0) {
-    console.log('❌ No Whop API keys configured')
-    return null
-  }
-
-  for (const apiKey of apiKeys) {
-    try {
-      console.log(`🔍 Fetching from Whop API for user: ${userId}`)
-      const response = await fetch(`https://api.whop.com/api/v1/users/${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      })
-
-      if (response.ok) {
-        const userData = await response.json()
-        if (userData.email) {
-          // Store for future lookups
-          await storeUserIdEmailMapping(userId, userData.email)
-          return userData.email
-        }
-      }
-    } catch (error) {
-      console.error('❌ Whop API error:', error)
-    }
-  }
-
+  console.log(`❌ No stored email mapping found for user: ${userId}`)
   return null
 }
 
@@ -141,29 +107,29 @@ const PRODUCTS = {
   }
 }
 
-// Plan IDs and prices - Add your plan IDs here
-// TODO: Configure your payment gateway plan IDs
+// Plan/Price IDs and prices
+// TODO: Add Stripe price IDs for remaining niches when ready
 const PLANS = {
-  // Dentist products
-  DENTIST_MAIN: { id: 'plan_chOBDoTBxc7NH', price: 47.82, type: 'main' as const, product: 'dentist' as const },
-  DENTIST_UPSELL: { id: 'plan_piIlcIeKKia85', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
-  DENTIST_DOWNSELL: { id: 'plan_fEnYsa70KFAWW', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
-  // Plastic Surgeon products
-  PLASTIC_SURGEON_MAIN: { id: 'plan_OGprA4gd4Lr7N', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_UPSELL: { id: 'plan_c7mDkR3oBXE7n', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
-  PLASTIC_SURGEON_DOWNSELL: { id: 'plan_3QGO1WJI50ujP', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
-  // Psychologist products
+  // Dentist products (Stripe links pending)
+  DENTIST_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'dentist' as const },
+  DENTIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'dentist' as const },
+  DENTIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'dentist' as const },
+  // Plastic Surgeon products (Stripe links pending)
+  PLASTIC_SURGEON_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'plastic-surgeon' as const },
+  PLASTIC_SURGEON_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'plastic-surgeon' as const },
+  // Psychologist products (Stripe links pending)
   PSYCHOLOGIST_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'psychologist' as const },
   PSYCHOLOGIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'psychologist' as const },
   PSYCHOLOGIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'psychologist' as const },
-  // Lawyer products
-  LAWYER_MAIN: { id: 'plan_GpUjd1q7kN6pj', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
-  LAWYER_UPSELL: { id: 'plan_97EdLFRTEConC', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
-  LAWYER_DOWNSELL: { id: 'plan_sdONQXGabaCd0', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
-  // Dermatologist products
-  DERMATOLOGIST_MAIN: { id: 'plan_vFSZPaRpLxAx7', price: 47.81, type: 'main' as const, product: 'dermatologist' as const },
-  DERMATOLOGIST_UPSELL: { id: 'plan_GfTKoexeqt9Mb', price: 9.95, type: 'upsell' as const, product: 'dermatologist' as const },
-  DERMATOLOGIST_DOWNSELL: { id: 'plan_SlklTW5v9meJ6', price: 4.95, type: 'downsell' as const, product: 'dermatologist' as const },
+  // Lawyer products (Stripe)
+  LAWYER_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'lawyer' as const },
+  LAWYER_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'lawyer' as const },
+  LAWYER_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'lawyer' as const },
+  // Dermatologist products (Stripe)
+  DERMATOLOGIST_MAIN: { id: '', price: 47.82, type: 'main' as const, product: 'dermatologist' as const },
+  DERMATOLOGIST_UPSELL: { id: '', price: 9.95, type: 'upsell' as const, product: 'dermatologist' as const },
+  DERMATOLOGIST_DOWNSELL: { id: '', price: 4.95, type: 'downsell' as const, product: 'dermatologist' as const },
 }
 
 // Get plan info from plan ID
@@ -551,18 +517,16 @@ export async function POST(request: NextRequest) {
 
     // DETAILED LOGGING FOR DEBUGGING
     console.log('═══════════════════════════════════════════════════════════')
-    console.log(`🔔 WHOP WEBHOOK RECEIVED @ ${timestamp}`)
+    console.log(`🔔 WEBHOOK RECEIVED @ ${timestamp}`)
     console.log('═══════════════════════════════════════════════════════════')
     console.log('Full payload:', JSON.stringify(body, null, 2))
 
     const action = body.action || body.event || body.type || ''
     const data = body.data || body
 
-    console.log(`📋 Action/Type: ${action || '(none - Whop sends event type via endpoint)'}`)
+    console.log(`📋 Action/Type: ${action || '(none)'}`)
 
     // Check if this looks like a valid purchase webhook
-    // Whop sends event type as the endpoint itself, not always in payload
-    // So we check: if there's user.email, it's likely a real purchase
     const hasUserEmail = data?.user?.email || data?.customer?.email || data?.email || data?.buyer?.email
 
     // If there's an action/type field, validate it
@@ -600,10 +564,10 @@ export async function POST(request: NextRequest) {
       await storeUserIdEmailMapping(userId, buyerEmail)
     }
 
-    // If no email in payload, try to fetch from our stored mapping or Whop API
+    // If no email in payload, try to fetch from our stored mapping
     if (!buyerEmail && userId) {
       console.log(`⚠️ No email in payload, looking up for user: ${userId}`)
-      const fetchedEmail = await fetchWhopUserEmail(userId)
+      const fetchedEmail = await fetchUserEmail(userId)
       if (fetchedEmail) {
         buyerEmail = fetchedEmail
         console.log(`✅ Successfully found email: ${buyerEmail}`)
@@ -614,8 +578,8 @@ export async function POST(request: NextRequest) {
     console.log(`👤 Buyer Name: ${buyerName || 'NOT FOUND'}`)
 
     if (!buyerEmail) {
-      console.error('❌ ERROR: No buyer email found in webhook or via Whop API')
-      await logWebhook({ reason: 'no user email (even after API lookup)' }, 'SKIPPED')
+      console.error('❌ ERROR: No buyer email found in webhook')
+      await logWebhook({ reason: 'no user email found' }, 'SKIPPED')
       return NextResponse.json({ received: true, processed: false, reason: 'No email found' })
     }
 
@@ -751,8 +715,8 @@ export async function POST(request: NextRequest) {
 // Handle GET for webhook verification
 export async function GET(request: NextRequest) {
   return NextResponse.json({
-    status: 'Whop webhook endpoint active',
-    version: '2.0-personalized-login',
+    status: 'Webhook endpoint active',
+    version: '3.0-stripe',
     timestamp: new Date().toISOString()
   })
 }

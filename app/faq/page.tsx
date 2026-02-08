@@ -56,7 +56,7 @@ export default function FAQPage() {
         },
         {
           q: 'What payment methods do you accept?',
-          a: 'We accept all major credit cards (Visa, MasterCard, American Express) and debit cards via our secure PCI-DSS Level 1 certified payment processor (Whop). Payments are secure and processed instantly.',
+          a: 'We accept all major credit cards (Visa, MasterCard, American Express) and debit cards via our secure PCI-DSS Level 1 certified payment processor (Stripe). Payments are secure and processed instantly.',
         },
         {
           q: 'Do you offer refunds?',
@@ -115,7 +115,7 @@ export default function FAQPage() {
       questions: [
         {
           q: 'How do I access the course?',
-          a: 'After purchase, you\'ll receive an email with login credentials to access the members area. You can also access it through Whop.com. Access is instant—within 5 minutes of payment.',
+          a: 'After purchase, you\'ll receive an email with login credentials to access the members area. Access is instant—within 5 minutes of payment.',
         },
         {
           q: 'What if I have technical issues?',
@@ -132,7 +132,7 @@ export default function FAQPage() {
       questions: [
         {
           q: 'Who operates this website?',
-          a: 'This website is operated by Velon LLC, a Wyoming Limited Liability Company. Address: 30 N Gould St Ste R, Sheridan, WY 82801. Email: support@aifastscale.com',
+          a: 'This website is operated by Partnearn LLC, a Wyoming Limited Liability Company. Address: 30 N Gould St Ste R, Sheridan, WY 82801. Email: support@aifastscale.com',
         },
         {
           q: 'Are there professional compliance requirements?',
@@ -213,7 +213,7 @@ export default function FAQPage() {
 
         {/* Legal Footer */}
         <div className="mt-12 text-center text-gray-500 text-sm">
-          <p className="mb-2">Velon LLC, a Wyoming Limited Liability Company</p>
+          <p className="mb-2">Partnearn LLC, a Wyoming Limited Liability Company</p>
           <p className="mb-4">30 N Gould St Ste R, Sheridan, WY 82801</p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link href="/privacy-policy" className="hover:text-gray-700">Privacy Policy</Link>

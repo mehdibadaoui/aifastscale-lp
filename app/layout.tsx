@@ -30,9 +30,9 @@ export const metadata: Metadata = {
     'Create AI talking videos in minutes. Perfect for lawyers, dentists, psychologists, and professionals. One-time $47.81 payment, lifetime access.',
   keywords:
     'AI video, professional marketing, talking AI videos, lead generation, lawyer marketing, dentist marketing, AI video course',
-  authors: [{ name: 'Velon LLC' }],
-  creator: 'Velon LLC',
-  publisher: 'Velon LLC',
+  authors: [{ name: 'Partnearn LLC' }],
+  creator: 'Partnearn LLC',
+  publisher: 'Partnearn LLC',
   formatDetection: {
     email: false,
     address: false,
@@ -196,7 +196,7 @@ export default function RootLayout({
                     priceValidUntil: '2026-12-31',
                     seller: {
                       '@type': 'Organization',
-                      name: 'Velon LLC',
+                      name: 'Partnearn LLC',
                     },
                   },
                   // aggregateRating removed - no verified review data to substantiate
@@ -250,7 +250,7 @@ export default function RootLayout({
                 {
                   '@type': 'Organization',
                   '@id': 'https://aifastscale.com/#organization',
-                  name: 'Velon LLC',
+                  name: 'Partnearn LLC',
                   url: 'https://aifastscale.com',
                   logo: {
                     '@type': 'ImageObject',
@@ -276,7 +276,7 @@ export default function RootLayout({
                 {
                   '@type': 'LocalBusiness',
                   '@id': 'https://aifastscale.com/#localbusiness',
-                  name: 'Velon LLC',
+                  name: 'Partnearn LLC',
                   description:
                     'AI video creation system for professionals. Turn photos into talking AI videos in minutes.',
                   url: 'https://aifastscale.com',

@@ -37,13 +37,13 @@ export default function ComplianceFooter({ variant = 'dark', className = '' }: C
         {/* Company Info */}
         <div className="text-center mb-6">
           <p className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-            Velon LLC, a Wyoming Limited Liability Company
+            Partnearn LLC, a Wyoming Limited Liability Company
           </p>
           <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
             30 N Gould St Ste R, Sheridan, WY 82801
           </p>
           <p className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
-            © {new Date().getFullYear()} Velon LLC. All rights reserved.
+            © {new Date().getFullYear()} Partnearn LLC. All rights reserved.
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export default function ComplianceFooter({ variant = 'dark', className = '' }: C
             <strong className={isDark ? 'text-purple-300' : 'text-purple-700'}>PROFESSIONAL COMPLIANCE NOTICE:</strong>{' '}
             This product is for educational purposes only. Licensed professionals (attorneys, physicians, dentists,
             psychologists, etc.) must ensure compliance with their state licensing board regulations, professional
-            association rules, HIPAA requirements (where applicable), and advertising guidelines. Velon LLC does
+            association rules, HIPAA requirements (where applicable), and advertising guidelines. Partnearn LLC does
             not provide legal, medical, or compliance advice.
           </p>
         </div>

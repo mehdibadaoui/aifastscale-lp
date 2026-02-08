@@ -332,7 +332,7 @@ export const lawyersConfig: NicheConfig = {
     legacyPassword: 'legal2026',
     legacyEnabled: true,
     vipGuests: [],
-    whopCheckoutLink: '#',
+    checkoutLink: '#',
     authStorageKey: 'lawyerMemberAuth',
   },
   blockedUsers: [],

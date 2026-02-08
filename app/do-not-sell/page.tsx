@@ -4,7 +4,7 @@ import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Do Not Sell My Personal Information | AI FastScale',
-  description: 'California Consumer Privacy Act (CCPA) - Do Not Sell My Personal Information for Velon LLC',
+  description: 'California Consumer Privacy Act (CCPA) - Do Not Sell My Personal Information for Partnearn LLC',
 }
 
 export default function DoNotSellPage() {
@@ -46,7 +46,7 @@ export default function DoNotSellPage() {
                   <h2 className="text-2xl font-black text-gray-900 m-0">Our Policy</h2>
                 </div>
                 <p className="mb-0 text-gray-700 text-lg">
-                  <strong>Velon LLC does NOT sell your personal information to third parties.</strong>
+                  <strong>Partnearn LLC does NOT sell your personal information to third parties.</strong>
                 </p>
               </div>
             </section>
@@ -98,7 +98,7 @@ export default function DoNotSellPage() {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     <tr>
-                      <td className="px-4 py-3 text-gray-700">Whop</td>
+                      <td className="px-4 py-3 text-gray-700">Stripe</td>
                       <td className="px-4 py-3 text-gray-600">Payment processing</td>
                     </tr>
                     <tr>

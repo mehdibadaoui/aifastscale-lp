@@ -255,7 +255,7 @@ export const dermatologistsConfig: NicheConfig = {
     legacyPassword: 'dermatologist2026',
     legacyEnabled: true,
     vipGuests: [],
-    whopCheckoutLink: '#',
+    checkoutLink: '#',
     authStorageKey: 'dermatologistMemberAuth',
   },
   blockedUsers: [],

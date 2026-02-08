@@ -217,7 +217,7 @@ function generateVipReviewEmail(
                             </tr>
                             <tr>
                               <td style="padding: 6px 0; color: ${textGray}; font-size: 13px;">
-                                <strong style="color: ${textWhite};">2.</strong> Whop Checkout ($47 main product)
+                                <strong style="color: ${textWhite};">2.</strong> Stripe Checkout ($47 main product)
                               </td>
                             </tr>
                             <tr>
@@ -282,7 +282,7 @@ export async function POST(request: NextRequest) {
     const { email, name, secret } = await request.json()
 
     // Security check
-    if (secret !== process.env.ADMIN_SECRET && secret !== 'whop-vip-review-2026') {
+    if (secret !== process.env.ADMIN_SECRET && secret !== 'vip-review-2026') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -303,8 +303,8 @@ export async function POST(request: NextRequest) {
       planId: 'vip-review',
       product: 'dentist',
       loginCount: 0,
-      notes: 'VIP Review Account - Whop Team',
-      tags: ['vip-review', 'whop-team'],
+      notes: 'VIP Review Account',
+      tags: ['vip-review'],
       revenue: { main: 0, total: 0 },
     }
 

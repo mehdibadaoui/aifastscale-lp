@@ -332,7 +332,7 @@ export const psychologistsConfig: NicheConfig = {
     legacyPassword: 'therapy2026',
     legacyEnabled: true,
     vipGuests: [],
-    whopCheckoutLink: '#',
+    checkoutLink: '#',
     authStorageKey: 'psychologistMemberAuth',
   },
   blockedUsers: [],

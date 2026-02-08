@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const webhookResponse = await fetch(`${baseUrl}/api/webhooks/whop`, {
+    const webhookResponse = await fetch(`${baseUrl}/api/webhooks/stripe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentWebhook)
@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     // ═══════════════════════════════════════════════════════════════
     // STEP 3: Verify user_id -> email mapping stored
     // ═══════════════════════════════════════════════════════════════
-    const storedEmail = await redis.get(`whop:user:${testUserId}`)
+    const storedEmail = await redis.get(`checkout:user:${testUserId}`)
 
     results.push({
       step: '3. User ID → Email Mapping',
@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const membershipResponse = await fetch(`${baseUrl}/api/webhooks/whop`, {
+    const membershipResponse = await fetch(`${baseUrl}/api/webhooks/stripe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(membershipWebhook)
@@ -171,7 +171,7 @@ export async function GET(request: NextRequest) {
     // CLEANUP: Remove test user (optional - keep for verification)
     // ═══════════════════════════════════════════════════════════════
     // await redis.del(`user:${testEmail}`)
-    // await redis.del(`whop:user:${testUserId}`)
+    // await redis.del(`checkout:user:${testUserId}`)
     // Note: Not deleting so you can verify the test user exists
 
     // ═══════════════════════════════════════════════════════════════

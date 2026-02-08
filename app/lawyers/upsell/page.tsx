@@ -5,8 +5,7 @@ import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { getLawyerUpsellBonuses } from '../../config/lawyer-bonus-products'
 
-// Whop checkout link for Upsell (Whop settings redirect to thank-you)
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_97EdLFRTEConC'
+const CHECKOUT_LINK = 'https://buy.stripe.com/bJe9ASguC9bm4Yi7XadUY05'
 
 export default function LawyerUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
@@ -15,7 +14,7 @@ export default function LawyerUpsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('lawyer_purchase_email', email.toLowerCase().trim())

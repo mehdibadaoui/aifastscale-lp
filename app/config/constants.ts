@@ -9,7 +9,7 @@
 
 export const SITE_CONFIG = {
   name: 'CloneYourself Video System',
-  companyName: 'Velon LLC',
+  companyName: 'Partnearn LLC',
   tagline: 'AI Videos for Professionals',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://aifastscale.com',
   supportEmail: 'support@aifastscale.com',

@@ -179,15 +179,26 @@ export default function DermatologistCleanLandingPage() {
     return () => observer.disconnect()
   }, [])
 
-  // Countdown timer - REAL deadline: December 20th for Premium Bundle bonus
-  const BONUS_DEADLINE = new Date('2024-12-20T23:59:59')
-
+  // Countdown timer - Dynamic deadline: 3 days from first visit (stored in localStorage)
   useEffect(() => {
+    const getDeadline = () => {
+      const storedDeadline = localStorage.getItem('derm_bonus_deadline')
+      if (storedDeadline) {
+        return new Date(storedDeadline)
+      }
+      const deadline = new Date()
+      deadline.setDate(deadline.getDate() + 3)
+      deadline.setHours(23, 59, 59, 999)
+      localStorage.setItem('derm_bonus_deadline', deadline.toISOString())
+      return deadline
+    }
+
+    const BONUS_DEADLINE = getDeadline()
+
     const calculateTimeLeft = () => {
       const now = new Date()
       const diff = BONUS_DEADLINE.getTime() - now.getTime()
 
-      // If deadline passed, show zeros
       if (diff <= 0) {
         return { days: 0, hours: 0, minutes: 0, seconds: 0 }
       }
@@ -203,9 +214,6 @@ export default function DermatologistCleanLandingPage() {
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
     return () => clearInterval(timer)
   }, [])
-
-  // REMOVED: Fake scarcity that resets - kills trust
-  // Real urgency comes from the December 20th bonus deadline
   // Note: viewersNow replaced by memberStats.activeNow
 
   const scrollToSection = (id: string) => {
@@ -318,7 +326,7 @@ export default function DermatologistCleanLandingPage() {
               <br />
               <span className="text-white drop-shadow-lg">&</span>
               <span className="text-gradient-premium">
-                {' '}Get 100+ New Patients
+                {' '}Attract More New Patients
               </span>
             </h1>
 
@@ -398,10 +406,19 @@ export default function DermatologistCleanLandingPage() {
             <div className={`mt-5 sm:mt-6 flex flex-col items-center gap-3 ${(!isMobile && visibleSections.has('hero')) ? 'animate-fade-in-up animation-delay-600' : ''}`}>
               <div className="flex items-center gap-3 sm:gap-4 glass-premium px-6 py-3 rounded-2xl">
                 <span className="text-gray-500 text-sm line-through">${getDermatologistTotalBonusValue() + 47}</span>
-                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.81</span>
+                <span className="text-gradient-premium font-black text-2xl sm:text-3xl">$47.82 USD</span>
                 <span className="bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">98% OFF</span>
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-medium">One-time payment • Lifetime access • 30-day guarantee</p>
+              {/* Card logos */}
+              <div className="flex items-center justify-center gap-3 mt-2">
+                <span className="text-gray-500 text-[10px] sm:text-xs">Accepted:</span>
+                <div className="flex items-center gap-2 text-gray-400 text-[10px] sm:text-xs font-bold">
+                  <span className="bg-white/10 px-2 py-0.5 rounded">VISA</span>
+                  <span className="bg-white/10 px-2 py-0.5 rounded">MC</span>
+                  <span className="bg-white/10 px-2 py-0.5 rounded">AMEX</span>
+                </div>
+              </div>
               <p className="text-gray-500 text-[10px] sm:text-xs mt-1">Must be 18+ years old to purchase</p>
             </div>
 
@@ -969,7 +986,7 @@ export default function DermatologistCleanLandingPage() {
               <div className="bg-black/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center border border-teal-500/30">
                 <p className="text-teal-400 font-bold text-sm sm:text-base mb-2">Get Everything Today For</p>
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
-                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
+                  <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82 USD</span>
                   <div className="text-left">
                     <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black block">98% OFF</span>
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5">One-time</p>
@@ -1000,6 +1017,15 @@ export default function DermatologistCleanLandingPage() {
                   <span>SSL Secured</span>
                 </div>
               </div>
+              {/* Card logos + compliance */}
+              <div className="mt-3 flex items-center justify-center gap-2 text-gray-500 text-[10px] sm:text-xs font-bold">
+                <span className="bg-white/10 px-2 py-0.5 rounded">VISA</span>
+                <span className="bg-white/10 px-2 py-0.5 rounded">MC</span>
+                <span className="bg-white/10 px-2 py-0.5 rounded">AMEX</span>
+              </div>
+              <p className="text-gray-500 text-[9px] sm:text-[10px] mt-2 text-center">
+                Sold by Partnearn LLC • 30 N Gould St Ste R, Sheridan, WY 82801 • <a href="/terms-of-service" className="underline hover:text-gray-300">Terms</a> • <a href="/privacy-policy" className="underline hover:text-gray-300">Privacy</a> • <a href="/refund-policy" className="underline hover:text-gray-300">Refund Policy</a>
+              </p>
             </div>
 
             {/* What Happens After - Hormozi Style */}
@@ -1463,7 +1489,7 @@ export default function DermatologistCleanLandingPage() {
                 {[
                   { value: '$47.81', label: 'Investment', sub: 'One-time' },
                   { value: '$47.81K', label: 'Revenue', sub: '2 weeks' },
-                  { value: '810x', label: 'ROI', sub: 'Return' },
+                  { value: '10x+', label: 'ROI', sub: 'Potential' },
                 ].map((stat, i) => (
                   <div key={i} className="p-4 sm:p-6 text-center">
                     <div className={`text-xl sm:text-2xl font-black mb-1 ${i === 1 ? 'text-green-600' : i === 2 ? 'text-teal-500' : 'text-gray-900'}`}>{stat.value}</div>
@@ -1683,7 +1709,7 @@ export default function DermatologistCleanLandingPage() {
             <div className={`text-center mb-6 sm:mb-10 ${(!isMobile && visibleSections.has('pricing')) ? 'animate-fade-in-up' : ''}`}>
               <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full mb-3 sm:mb-4">
                 <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires December 20th</span>
+                <span className="text-red-400 font-bold text-xs sm:text-sm">Bonus expires in {timeLeft.days}d {timeLeft.hours}h</span>
               </div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 sm:mb-4">
                 Get Everything Today For
@@ -1786,7 +1812,7 @@ export default function DermatologistCleanLandingPage() {
                 </div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-teal-400 font-black text-lg sm:text-xl">YOUR INVESTMENT:</span>
-                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.81</span>
+                  <span className="text-teal-400 font-black text-2xl sm:text-3xl">$47.82 USD</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-400 font-bold text-sm sm:text-base">YOUR SAVINGS:</span>
@@ -1803,7 +1829,7 @@ export default function DermatologistCleanLandingPage() {
               (!isMobile && visibleSections.has('pricing')) ? 'animate-fade-in-up animation-delay-400' : ''
             }`}>
               <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.81</span>
+                <span className="text-4xl sm:text-6xl font-black text-teal-400">$47.82 USD</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg text-xs sm:text-sm font-black">98% OFF</span>
                   <p className="text-gray-400 text-[10px] sm:text-sm mt-0.5">One-time</p>
@@ -1830,6 +1856,15 @@ export default function DermatologistCleanLandingPage() {
                   <span>SSL Secured</span>
                 </div>
               </div>
+              {/* Card logos + compliance */}
+              <div className="mt-3 flex items-center justify-center gap-2 text-gray-500 text-[10px] sm:text-xs font-bold">
+                <span className="bg-white/10 px-2 py-0.5 rounded">VISA</span>
+                <span className="bg-white/10 px-2 py-0.5 rounded">MC</span>
+                <span className="bg-white/10 px-2 py-0.5 rounded">AMEX</span>
+              </div>
+              <p className="text-gray-500 text-[9px] sm:text-[10px] mt-2 text-center">
+                Sold by Partnearn LLC • 30 N Gould St Ste R, Sheridan, WY 82801 • <a href="/terms-of-service" className="underline hover:text-gray-300">Terms</a> • <a href="/privacy-policy" className="underline hover:text-gray-300">Privacy</a> • <a href="/refund-policy" className="underline hover:text-gray-300">Refund Policy</a>
+              </p>
             </div>
           </div>
         </div>
@@ -2278,7 +2313,7 @@ export default function DermatologistCleanLandingPage() {
             <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl mb-3 sm:mb-6">
               {/* Price with Savings */}
               <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.81</span>
+                <span className="text-3xl sm:text-5xl font-black text-teal-400">$47.82 USD</span>
                 <div className="text-left">
                   <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-black block">SAVE ${totalBonusValue.toLocaleString()}</span>
                   <p className="text-gray-500 text-xs mt-0.5">One-time</p>
@@ -2304,6 +2339,15 @@ export default function DermatologistCleanLandingPage() {
                 <Shield className="w-4 h-4 text-green-500" />
                 <span>30-Day Money-Back Guarantee • No Questions Asked</span>
               </div>
+              {/* Card logos + compliance */}
+              <div className="mt-3 flex items-center justify-center gap-2 text-gray-500 text-[10px] sm:text-xs font-bold">
+                <span className="bg-white/10 px-2 py-0.5 rounded">VISA</span>
+                <span className="bg-white/10 px-2 py-0.5 rounded">MC</span>
+                <span className="bg-white/10 px-2 py-0.5 rounded">AMEX</span>
+              </div>
+              <p className="text-gray-500 text-[9px] sm:text-[10px] mt-2 text-center">
+                Sold by Partnearn LLC • <a href="/terms-of-service" className="underline hover:text-gray-300">Terms</a> • <a href="/privacy-policy" className="underline hover:text-gray-300">Privacy</a> • <a href="/refund-policy" className="underline hover:text-gray-300">Refund Policy</a>
+              </p>
             </div>
 
             {/* Final Reassurance */}
@@ -2399,13 +2443,13 @@ export default function DermatologistCleanLandingPage() {
             </p>
             {/* Wyoming LLC Identification */}
             <p className="text-gray-600 text-[10px] sm:text-xs mb-1">
-              Velon LLC, a Wyoming Limited Liability Company
+              Partnearn LLC, a Wyoming Limited Liability Company
             </p>
             <p className="text-gray-700 text-[9px] sm:text-[10px] mb-2">
               30 N Gould St Ste R, Sheridan, WY 82801
             </p>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
-              © {new Date().getFullYear()} Velon LLC. All rights reserved.
+              © {new Date().getFullYear()} Partnearn LLC. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -2428,7 +2472,7 @@ export default function DermatologistCleanLandingPage() {
                 <strong>EARNINGS DISCLAIMER:</strong> Results shown are not typical. Income and results vary based on effort, experience, and market conditions. We make no guarantees regarding income or results.
               </p>
               <p>
-                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Dermatology professionals must ensure compliance with their state medical board regulations and advertising guidelines. Velon LLC does not provide legal or professional compliance advice.
+                <strong>PROFESSIONAL NOTICE:</strong> This product is for educational purposes only. Dermatology professionals must ensure compliance with their state medical board regulations and advertising guidelines. Partnearn LLC does not provide legal or professional compliance advice.
               </p>
             </div>
           </div>
@@ -2446,7 +2490,7 @@ export default function DermatologistCleanLandingPage() {
             className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 shadow-2xl shadow-teal-500/30 active:scale-[0.98] transition-transform"
           >
             <span>Get Access</span>
-            <span className="text-teal-200 font-bold">$47.81</span>
+            <span className="text-teal-200 font-bold">$47.82 USD</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>

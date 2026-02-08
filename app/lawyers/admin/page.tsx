@@ -516,7 +516,7 @@ export default function LawyerAdminPage() {
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <DollarSign className="w-5 h-5 text-emerald-400" />
-                <Tooltip text="Total revenue tracked in this dashboard. NOTE: Only includes purchases since tracking started. For complete revenue, check your Whop dashboard." />
+                <Tooltip text="Total revenue tracked in this dashboard. NOTE: Only includes purchases since tracking started. For complete revenue, check your Stripe dashboard." />
               </div>
               <p className="text-3xl font-bold">${stats.totalRevenue.toLocaleString()}</p>
               <p className="text-sm text-slate-400 mt-1">Total Revenue</p>
@@ -685,7 +685,7 @@ export default function LawyerAdminPage() {
           <Info className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
           <div className="text-sm text-amber-300">
             <p className="font-medium mb-1">About this data</p>
-            <p className="text-amber-400/80">Revenue shown here is tracked from purchases since this system was set up. For complete revenue history, check your Whop dashboard. New purchases (including upsells) are tracked automatically.</p>
+            <p className="text-amber-400/80">Revenue shown here is tracked from purchases since this system was set up. For complete revenue history, check your Stripe dashboard. New purchases (including upsells) are tracked automatically.</p>
           </div>
         </div>
 

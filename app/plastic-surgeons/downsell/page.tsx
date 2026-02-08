@@ -5,8 +5,8 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { getPlasticSurgeonUpsellBonuses } from '../../config/plastic-surgeon-bonus-products'
 
-// Whop checkout link for Downsell (Flow account)
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_3QGO1WJI50ujP'
+// Checkout link (Stripe coming soon)
+const CHECKOUT_LINK = '/#contact'
 
 export default function PlasticSurgeonDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
@@ -15,7 +15,7 @@ export default function PlasticSurgeonDownsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('plastic_surgeon_purchase_email', email.toLowerCase().trim())

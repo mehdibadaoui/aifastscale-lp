@@ -4,7 +4,7 @@ import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Accessibility Statement | AI FastScale',
-  description: 'Accessibility commitment and statement for Velon LLC - CloneYourself Video System',
+  description: 'Accessibility commitment and statement for Partnearn LLC - CloneYourself Video System',
 }
 
 export default function AccessibilityPage() {
@@ -30,7 +30,7 @@ export default function AccessibilityPage() {
           <div className="prose prose-lg max-w-none">
             <div className="mb-8 rounded-xl border-2 border-blue-400 bg-blue-50 p-6">
               <p className="mb-0 text-gray-700">
-                Velon LLC is committed to ensuring digital accessibility for people with disabilities.
+                Partnearn LLC is committed to ensuring digital accessibility for people with disabilities.
                 We continually improve the user experience for everyone and apply relevant accessibility standards.
               </p>
             </div>
@@ -51,7 +51,7 @@ export default function AccessibilityPage() {
                 Measures We Take
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Velon LLC takes the following measures to ensure accessibility:
+                Partnearn LLC takes the following measures to ensure accessibility:
               </p>
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
@@ -189,7 +189,7 @@ export default function AccessibilityPage() {
                 Assessment Approach
               </h2>
               <p className="leading-relaxed text-gray-700">
-                Velon LLC assesses the accessibility of our website through self-evaluation, automated
+                Partnearn LLC assesses the accessibility of our website through self-evaluation, automated
                 testing tools, and user feedback. We conduct regular accessibility reviews and are
                 committed to continuous improvement.
               </p>

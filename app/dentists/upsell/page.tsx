@@ -5,8 +5,8 @@ import { Clock, Gift } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 
-// Whop checkout link for Upsell
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_piIlcIeKKia85'
+// Checkout link (Stripe coming soon)
+const CHECKOUT_LINK = '/#contact'
 
 export default function DentistUpsellPage() {
   const [timeLeft, setTimeLeft] = useState(10 * 60) // 10 minutes
@@ -15,7 +15,7 @@ export default function DentistUpsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('dentist_purchase_email', email.toLowerCase().trim())

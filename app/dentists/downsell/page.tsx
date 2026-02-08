@@ -5,8 +5,8 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { DENTIST_BONUS_PRODUCTS } from '../../config/dentist-bonus-products'
 
-// Whop checkout link for Downsell
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_fEnYsa70KFAWW'
+// Checkout link (Stripe coming soon)
+const CHECKOUT_LINK = '/#contact'
 
 export default function DentistDownsellPage() {
   const [timeLeft, setTimeLeft] = useState(3 * 60) // 3 minutes - ultra urgency
@@ -15,7 +15,7 @@ export default function DentistDownsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('dentist_purchase_email', email.toLowerCase().trim())

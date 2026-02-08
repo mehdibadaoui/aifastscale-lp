@@ -251,7 +251,7 @@ export default function LanguagesPage() {
       console.error('Error:', error)
     }
 
-    // Redirect to Whop checkout
+    // Redirect to checkout
     window.location.href = CHECKOUT_LINK
   }
 

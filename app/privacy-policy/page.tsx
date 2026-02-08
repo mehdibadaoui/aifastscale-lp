@@ -4,7 +4,7 @@ import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Privacy Policy | AI FastScale',
-  description: 'Privacy Policy for Velon LLC - CloneYourself Video System',
+  description: 'Privacy Policy for Partnearn LLC - CloneYourself Video System',
 }
 
 export default function PrivacyPolicy() {
@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
                 1. Introduction
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                Welcome to <strong>Velon LLC, a Wyoming Limited Liability Company</strong> ("we," "our," or "us"). We are committed
+                Welcome to <strong>Partnearn LLC, a Wyoming Limited Liability Company</strong> ("we," "our," or "us"). We are committed
                 to protecting your personal information and your right to
                 privacy. This Privacy Policy explains how we collect, use,
                 disclose, and safeguard your information when you visit our
@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
                 All services provided through this website are offered by:
               </p>
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
-                <p className="mb-1 font-bold text-gray-900">Velon LLC</p>
+                <p className="mb-1 font-bold text-gray-900">Partnearn LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
@@ -175,7 +175,7 @@ export default function PrivacyPolicy() {
                 Our Email Practices:
               </h3>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
-                <li><strong>Clear Identification:</strong> All marketing emails clearly identify Velon LLC as the sender</li>
+                <li><strong>Clear Identification:</strong> All marketing emails clearly identify Partnearn LLC as the sender</li>
                 <li><strong>Physical Address:</strong> Every email includes our physical mailing address: 30 N Gould St Ste R, Sheridan, WY 82801</li>
                 <li><strong>Unsubscribe Mechanism:</strong> Every marketing email contains a clear, conspicuous unsubscribe link</li>
                 <li><strong>Opt-Out Honoring:</strong> We process all unsubscribe requests within 10 business days</li>
@@ -204,7 +204,7 @@ export default function PrivacyPolicy() {
                 6. Payment Processing & PCI-DSS Compliance
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                <strong>Important:</strong> We do NOT store, process, or have access to your full credit card information. All payment processing is handled by our PCI-DSS Level 1 certified payment processor (Whop).
+                <strong>Important:</strong> We do NOT store, process, or have access to your full credit card information. All payment processing is handled by our PCI-DSS Level 1 certified payment processor (Stripe).
               </p>
               <h3 className="mb-3 text-xl font-bold text-gray-900">
                 Secure Payment Processing
@@ -244,7 +244,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
                 <li>
-                  <strong>Payment Processors:</strong> Our certified payment processor (Whop) for secure payment processing (see Section 5 for details)
+                  <strong>Payment Processors:</strong> Our certified payment processor (Stripe) for secure payment processing (see Section 5 for details)
                 </li>
                 <li>
                   <strong>Email Service Providers:</strong> To send course materials, updates, and transactional emails
@@ -468,7 +468,7 @@ export default function PrivacyPolicy() {
                 contact us:
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6 mb-6">
-                <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
+                <p className="mb-2 font-bold text-gray-900">Partnearn LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>

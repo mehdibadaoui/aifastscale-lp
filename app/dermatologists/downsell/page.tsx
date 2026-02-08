@@ -5,8 +5,8 @@ import { ArrowRight, Gift, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { DERMATOLOGIST_BONUS_PRODUCTS } from '../../config/dermatologist-bonus-products'
 
-// Whop checkout link for Downsell
-const CHECKOUT_LINK = 'https://whop.com/checkout/plan_SlklTW5v9meJ6'
+// Stripe checkout link for Downsell
+const CHECKOUT_LINK = 'https://buy.stripe.com/bJedR81zIbjuduO91edUY02'
 
 export default function DermatologistDownsellPage() {
   // Use sessionStorage to persist timer - does NOT reset on page refresh
@@ -27,7 +27,7 @@ export default function DermatologistDownsellPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const email = params.get('email')
-    const userId = params.get('user_id') || params.get('whop_user_id')
+    const userId = params.get('user_id') || params.get('session_id')
 
     if (email) {
       sessionStorage.setItem('dermatologist_purchase_email', email.toLowerCase().trim())

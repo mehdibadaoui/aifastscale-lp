@@ -450,7 +450,7 @@ const auth: AuthConfig = {
       badge: 'Demo',
     },
   ],
-  whopCheckoutLink: 'https://whop.com/clone-yourself-pro/',
+  checkoutLink: '/#contact',
   authStorageKey: 'members_auth',
 }
 

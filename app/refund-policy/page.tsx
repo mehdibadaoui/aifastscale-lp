@@ -4,7 +4,7 @@ import ComplianceFooter from '../components/ComplianceFooter'
 
 export const metadata = {
   title: 'Refund Policy | AI FastScale',
-  description: '30-Day Money-Back Guarantee for Velon LLC - CloneYourself Video System',
+  description: '30-Day Money-Back Guarantee for Partnearn LLC - CloneYourself Video System',
 }
 
 export default function RefundPolicy() {
@@ -50,7 +50,7 @@ export default function RefundPolicy() {
                 Operating Entity
               </h2>
               <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-6 mb-4">
-                <p className="mb-1 font-bold text-gray-900">Velon LLC</p>
+                <p className="mb-1 font-bold text-gray-900">Partnearn LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>
@@ -63,7 +63,7 @@ export default function RefundPolicy() {
                 1. Our Commitment to You
               </h2>
               <p className="mb-4 leading-relaxed text-gray-700">
-                At Velon LLC, we're confident that the CloneYourself Video System will transform your marketing and help you generate more leads with AI-powered videos. However, we understand that every professional's situation is unique.
+                At Partnearn LLC, we're confident that the CloneYourself Video System will transform your marketing and help you generate more leads with AI-powered videos. However, we understand that every professional's situation is unique.
               </p>
               <p className="mb-4 leading-relaxed text-gray-700">
                 That's why we offer a generous 30-day money-back guarantee with absolutely no questions asked. We want you to have plenty of time to:
@@ -418,7 +418,7 @@ export default function RefundPolicy() {
                 We're here to help! If you have any questions about this refund policy, your purchase, or the course itself, please don't hesitate to reach out.
               </p>
               <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6">
-                <p className="mb-2 font-bold text-gray-900">Velon LLC</p>
+                <p className="mb-2 font-bold text-gray-900">Partnearn LLC</p>
                 <p className="text-gray-700">A Wyoming Limited Liability Company</p>
                 <p className="text-gray-700">30 N Gould St Ste R, Sheridan, WY 82801</p>
                 <p className="text-gray-700">Email: support@aifastscale.com</p>

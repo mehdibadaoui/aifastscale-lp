@@ -484,7 +484,7 @@ export default function LawyerLandingPage() {
   }, [])
 
   // REMOVED: Fake scarcity that resets - kills trust
-  // Real urgency comes from the December 20th bonus deadline
+  // Dynamic deadline stored in localStorage per user
   // Note: viewersNow replaced by memberStats.activeNow
 
   const scrollToSection = (id: string) => {
@@ -3309,15 +3309,15 @@ export default function LawyerLandingPage() {
       </section>
 
       {/* ================================================================
-          ABOUT VELON LLC - Corporate Credibility Section
+          ABOUT PARTNEARN LLC - Corporate Credibility Section
           ================================================================ */}
       <section className="py-12 sm:py-16 bg-gradient-to-br from-stone-100 via-white to-stone-50 border-t border-gray-200">
         <div className="w-full px-3 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-3">About Velon LLC</h2>
+              <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-3">About Partnearn LLC</h2>
               <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
-                Velon LLC is a Wyoming-registered legal technology and education company founded in 2025.
+                Partnearn LLC is a Wyoming-registered legal technology and education company founded in 2025.
                 We develop AI-powered practice management tools designed specifically for legal professionals
                 who want to modernize client acquisition without compromising professional ethics.
               </p>
@@ -3401,7 +3401,7 @@ export default function LawyerLandingPage() {
             {/* Wyoming LLC Identification - Enhanced Corporate Display */}
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg px-4 py-3 mb-4 inline-block">
               <p className="text-gray-400 text-xs sm:text-sm font-medium mb-1">
-                Velon LLC — Established 2025
+                Partnearn LLC — Established 2025
               </p>
               <p className="text-gray-600 text-[10px] sm:text-xs">
                 Wyoming Limited Liability Company
@@ -3411,7 +3411,7 @@ export default function LawyerLandingPage() {
               </p>
             </div>
             <p className="text-gray-700 text-xs sm:text-sm mb-3">
-              © {new Date().getFullYear()} Velon LLC. All Rights Reserved.
+              © {new Date().getFullYear()} Partnearn LLC. All Rights Reserved.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-700 text-xs sm:text-sm mb-4">
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -3437,7 +3437,7 @@ export default function LawyerLandingPage() {
                 <strong className="text-white">RESULTS NOT TYPICAL:</strong> The income statements and examples shown on this website are not intended to represent or guarantee that everyone will achieve the same results. Results vary based on individual effort, experience, practice area, geographic location, and market conditions. We make no guarantees regarding specific income, client acquisition, or business outcomes.
               </p>
               <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                <strong className="text-white">ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar&apos;s Rules of Professional Conduct regarding advertising and client solicitation. Velon LLC does not provide legal advice regarding bar compliance.
+                <strong className="text-white">ATTORNEY ADVERTISING NOTICE:</strong> This product is for educational purposes only. Attorneys must ensure compliance with their state bar&apos;s Rules of Professional Conduct regarding advertising and client solicitation. Partnearn LLC does not provide legal advice regarding bar compliance.
               </p>
             </div>
 

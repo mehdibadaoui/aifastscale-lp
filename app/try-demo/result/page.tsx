@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Download, Play, Sparkles, CheckCircle, Star, Shield, Clock, Zap, Users, TrendingUp, ArrowRight, MessageCircle, Target, Video, Lock, Verified, Check, Gift, Crown, Flame, Award, Heart } from 'lucide-react'
 import Image from 'next/image'
 
-// Whop checkout link for $47.81
+// Checkout link for $47.82
 const CHECKOUT_LINK = '#'
 
 export default function VideoResultPage() {
